@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>显微共焦拉曼光谱学（2026 秋） · 第三章 拉曼散射理论基础（下）：光散射理论（经典电偶极辐射与量子理论）＋ 拉曼散射选择定则（群论基础）｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>显微共焦拉曼光谱学（2026 秋） · 第三章 拉曼散射理论基础（下）：光散射理论（经典电偶极辐射与量子理论）＋ 拉曼散射选择定则（群论基础）</h1>
+    <div class="sub">第三章 拉曼散射理论基础（下）：光散射理论（经典电偶极辐射与量子理论）＋ 拉曼散射选择定则（群论基础） ｜ 2026-09-22 ｜ 授课：林妙玲（第三章）</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 312 页 · 整理 17 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-s01">01 电偶极辐射与散射截面</option>
+<option value="sec-s02">02 辐射场的特性与坡印廷矢量</option>
+<option value="sec-s03">03 微分散射截面：ω⁴ 关系</option>
+<option value="sec-s04">04 感应偶极矩的泰勒展开与简正坐标</option>
+<option value="sec-s05">05 和差化积：瑞利、斯托克斯与反斯托克斯</option>
+<option value="sec-s06">06 拉曼选择定则与拉曼张量</option>
+<option value="sec-s07">07 水分子例子：对称性决定选择定则</option>
+<option value="sec-s08">08 闪锌矿例子：TO/LO 光学声子</option>
+<option value="sec-s09">09 拉曼光谱的五个物理量：频率与受激拉曼散射</option>
+<option value="sec-s10">10 强度、偏振与相位特性</option>
+<option value="sec-s11">11 量子理论表述：自然单位制与电偶极近似</option>
+<option value="sec-s12">12 升降算符与玻色-爱因斯坦分布</option>
+<option value="sec-s13">13 经典 VS 量子：微扰理论与跃迁概率</option>
+<option value="sec-s14">14 量子解释：瑞利/斯托克斯/反斯托克斯与共振拉曼</option>
+<option value="sec-s15">15 展宽：不确定性原理、寿命与仪器展宽</option>
+<option value="sec-s16">16 拉曼光谱 vs 红外光谱：选择定则举例</option>
+<option value="sec-s17">17 群论基础与特征标表</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 Ch3-拉曼散射理论基础-2026秋.pdf（p37–81 中讲述部分） 逐页渲染，转写原文见 record_20260922.txt。</div>
+<section class="sec" id="sec-s01">
+  <div class="slides"><figure class="slide" id="slide-270">
+<img src="slides/slide_270.png" alt="课件第270页 光散射理论导览：散射概率/截面、经典与量子描述">
+<figcaption><span class="sno">270</span><span class="stitle">光散射理论导览：散射概率/截面、经典与量子描述</span></figcaption>
+</figure>
+<figure class="slide" id="slide-271">
+<img src="slides/slide_271.png" alt="课件第271页 寻找由入射光场感生的电偶极矩 P（电偶极辐射）">
+<figcaption><span class="sno">271</span><span class="stitle">寻找由入射光场感生的电偶极矩 P（电偶极辐射）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>电偶极辐射与散射截面</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 270</span><span class="chip">课件 271</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>这一节我们从经典理论出发，通过两个例子碰撞，研究反射截面及反射概率的表示。这些公式是基于一些假定的物理量推导而成的。接下来讲解宏观（经典）与量子理论中物理量的具体表达——有了表达式，便可知拉曼反射的强度、概率或反射截面相互关联，只是概念略有差异。</p><p>比如反射截面是单位面积内的概率，单位立体角内的反射概率含义不同，但二者相关联。我们将用推导公式表示不同反射过程的物理量。代入公式后，可探究拉曼反射强度与哪些物理因子有关。主要分为经典理论和微观（量子）理论两部分。</p><p>首先看宏观理论，涉及电偶极辐射。入射电场照射材料，因介电常数激发感应电偶极矩；这个偶极矩辐射的电场在特定位置产生相互作用，这种辐射场就是电磁波场。我们探测方如何接收信息？就是看辐射场应该是什么样。这里通过电偶极辐射理论计算——经典电动力学中有跳跃部分，大家知晓即可，具体公式不推导，感兴趣可查阅电动力学或理论力学。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>从经典理论出发，通过两个例子碰撞，研究反射截面及反射概率的表示。这些公式基于假定物理量推导而成。</p><p>首先看宏观理论，涉及电偶极辐射。入射电场照射材料，因介电常数激发感应电偶极矩。该偶极矩辐射的电场在特定位置产生相互作用。这种辐射场即电磁波场。</p><p>这里通过电偶极辐射理论计算。经典电动力学中有跳跃部分，大家知晓即可。具体公式不推导。感兴趣可查阅电动力学或理论力学。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s02">
+  <div class="slides"><figure class="slide" id="slide-272">
+<img src="slides/slide_272.png" alt="课件第272页 α：分子光散射（极化率与 Px/Py/Pz）">
+<figcaption><span class="sno">272</span><span class="stitle">α：分子光散射（极化率与 Px/Py/Pz）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-273">
+<img src="slides/slide_273.png" alt="课件第273页 辐射场与微观极化（ΔV、球面波）">
+<figcaption><span class="sno">273</span><span class="stitle">辐射场与微观极化（ΔV、球面波）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-274">
+<img src="slides/slide_274.png" alt="课件第274页 辐射场特性：⟨⟩₀ 符号与方向性">
+<figcaption><span class="sno">274</span><span class="stitle">辐射场特性：⟨⟩₀ 符号与方向性</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>辐射场的特性与坡印廷矢量</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 272</span><span class="chip">课件 273</span><span class="chip">课件 274</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>主要看公式各项含义。坐标原点 R=0 处有感生电偶极矩，其振动频率为 ω₀。类似静态极化率 α₀，还有 α' 及 Qₖ、Q₀ 项——这表示本身振动带来的电偶极矩，它带有分子振动赋予的频率。这里的 ω 频率，即入射光子与材料作用后辐射出的反射光子频率。</p><p>回顾经典运动方程，含 ω²、ω₀ 及阻尼项，由此推导出 T 包含不同频率成分，即存在不同频率的反射光子——它既与入射光子有关，也与材料本身的晶格振动有关。另一个是电偶极矩，这是我们已知的两个物理量。</p><p>辐射场表达式分母含有 1/R，呈点光源辐射球面波形式：场强随距离 R 增大而减小，这是点光源辐射的典型特征。此外还包含 ω 平方项，表明辐射场与频率相关——频率越大，在同等距离下辐射场越强；还跟电偶极矩 P 大小有关。</p><p>还有 sinβ 项，β 为观测方向与 P 方向的夹角，体现辐射的方向性：当方向平行于振荡电偶极矩时（β=0°），辐射场为 0；当方向垂直时（β=90°），辐射场达到最大。最后的 cos(ωt−kr) 项代表波动方程，描述时间与空间相位。所以这部分表示方向——辐射沿着不同方向，会有相应的弧度。</p><p>前面提到的坡印廷矢量，PPT 上有点问题，我都进行了修改，回头讲完课把这个 PPT 重新转发给大家上传。根据坡印廷矢量，可以求出电偶极矩 p 辐射的瞬时能流密度——这是瞬时的能流密度，所以还带 cos(ωt−kr) 部分，分母是 4π。它其实就是 E 跟 B 之间的关系：C1 是在电磁场和电场之间，它们的大小存在模的关系，但方向相互垂直，这是电磁波的特性。</p><p>有了矢量积之后，坡印廷矢量的方向既垂直于 E 也垂直于 B，即沿着电磁波传播的方向，与 D 的传播方向相同。这里 E 跟 Er 是一样的。根据式子算出坡印廷矢量的表达式，基本上是振幅的平方乘以系数。对时间求平均值，cos 部分的平均值为 1/2，代入后得到平均能量密度的表达式。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>坐标原点R=0处，有感生电偶极矩。其振动频率为ω₀。类似静态极化率α₀，还有α'及Qₖ、Q₀项。这表示本身振动带来的电偶极矩。它带有分子振动赋予的频率。</p><p>场强随距离R增大而减小，这是点光源辐射的典型特征。此外还包含欧米伽平方项，表明辐射场与频率相关。频率越大，在同等距离下辐射场越强，且与电偶极矩P大小有关。</p><p>当方向平行于振荡电偶极矩时（β=0°），辐射场为0。当方向垂直时（β=90°），辐射场达到最大。</p><p>然后我们前面也提到这个所谓的坡印廷矢量。当然这里的话PPT上应该有点问题，我都进行修改了。我回头就是讲完课，我把这个PPT再重新转发了之后给大家上传。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s03">
+  <div class="slides"><figure class="slide" id="slide-282">
+<img src="slides/slide_282.png" alt="课件第282页 微分散射截面：ω⁴ 关系（1/8πc³·P²sin²θ）">
+<figcaption><span class="sno">282</span><span class="stitle">微分散射截面：ω⁴ 关系（1/8πc³·P²sin²θ）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>微分散射截面：ω⁴ 关系</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 282</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>根据前面经典微分散射截面的表达式，将坡印廷矢量部分带入，得到反射强度的相关表达式。从这里可以看到散射截面的大小与 ω 的四次方成正比，ω 表示散射光子的频率——所以频率越大，原则上强度越大；它与 P 的平方也成正比，这是这一部分的内容。</p><p>那么我们的这个 P 到底具体表达式是什么样子的？前面的式子含有 P，它等于电极化率乘以入射电场的分量，原则上可以得到 P 的 x、y、z 分量。在分子极化或散射过程中，每个分子都有特定的散射特性，即存在一个振荡的电偶极矩。</p><p>原则上，我们需要求光斑照射面积或体积内的总强度，这需要对所有电偶极矩进行求和：若是单位体积且连续，则用积分形式；若非连续，则用求和形式。这本质上是一个求和问题。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>从这里可以看到散射截面。它的大小与ω的四次方成正比，ω表示散射光子的频率。所以频率越大，原则上强度越大。它与P的平方也成正比，这是这一部分的内容。</p><p>原则上，我们需要求光斑照射面积或体积内的总强度。这需要对所有电偶极矩进行求和。若是单位体积且连续，则用积分形式；若非连续，则用求和形式。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s04">
+  <div class="slides"><figure class="slide" id="slide-275">
+<img src="slides/slide_275.png" alt="课件第275页 P=α·E 感应偶极矩与泰勒展开（∂²α/∂Qₖ∂Qₗ）">
+<figcaption><span class="sno">275</span><span class="stitle">P=α·E 感应偶极矩与泰勒展开（∂²α/∂Qₖ∂Qₗ）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>感应偶极矩的泰勒展开与简正坐标</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 275</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>再看 P 等于 αE。α 是极化率，包含静态极化率和由分子振动引起的变化部分。这里对 α 进行泰勒展开，取到 Q 的一阶或二阶项——原则上也可取更高阶，但通常只取到一阶或二阶。具体来看，一阶对应单声子过程，二阶含两个 Q，对应双声子过程。Q 代表简正坐标或简正模式。</p><p>还记得上节课讲的内容吗？即原子的振动模式——找出一组彼此独立、互不交叉的奇函数，每个原子的振动都可由这组独立振动按特定系数叠加求和。因此每个 Q 代表一个声子的振动模式，两个 Q 则对应双声子过程。这里只考虑了前面的简单近似情况。</p><p>这部分内容前面已讲过，此处相当于重写了一遍，包括 Q 的表达式及对其求偏导的部分，我们在第二章进行过详细推导。大家还记得想要得到的表达式吗？这里将电离部分与阿尔法导数部分分开处理。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>再看P等于αE。α是极化率，包含静态极化率和由分子振动引起的变化部分。这里对α进行泰勒展开。取到Q的一阶或二阶项，原则上也可取更高阶，但通常只取到一阶或二阶。</p><p>一阶对应单声子过程，二阶含两个Q，对应双声子过程。Q代表简正坐标或简正模式。还记得上节课讲的内容吗？即原子的振动模式。我找出一组彼此独立、互不交叉的奇函数。</p><p>这部分内容前面已讲过，此处相当于重写了一遍。包括Q的表达式及对其求偏导的部分。我们在第二章进行过详细推导。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s05">
+  <div class="slides"><figure class="slide" id="slide-280">
+<img src="slides/slide_280.png" alt="课件第280页 和差化积：瑞利、斯托克斯与反斯托克斯（P₀）">
+<figcaption><span class="sno">280</span><span class="stitle">和差化积：瑞利、斯托克斯与反斯托克斯（P₀）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-283">
+<img src="slides/slide_283.png" alt="课件第283页 Pₖ 的三部分：瑞利 + 斯托克斯 + 反斯托克斯">
+<figcaption><span class="sno">283</span><span class="stitle">Pₖ 的三部分：瑞利 + 斯托克斯 + 反斯托克斯</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>和差化积：瑞利、斯托克斯与反斯托克斯</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 280</span><span class="chip">课件 283</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>大家可以看到，这是一个简正模，即声子简正模。这里代表欧米伽 K，即某一个独立振动的形式。我们可以用 QK 表示，即 QK0×cos，它随时间不断震动，即简正坐标随时间变化。这部分是时间相位，这是初始相位部分。</p><p>把这些带入后，可以看到 P 等于阿尔法 E，写入后得到两个 cos 相乘的形式，大家还有印象吗？两个 cos 相乘，可以做余弦的和差化积——解释为两部分：一部分是欧米伽 0 减去欧米伽 K，另一部分是欧米伽 0 加上欧米伽 K。这里对应斯托克斯和反斯托克斯部分；还有一部分是前面的阿尔法0 乘以 cos 欧米伽0 T，即瑞利散射部分。由经典理论我们得到三部分。</p><p>这里忽略二阶部分，这是由一阶的分度反射过程得到的，大家可以下去再推导二阶的情况。如果有了经典理论，能得到什么信息？比如频率应该是什么样子的，大家可以下去详细推导。这里把 Pk 写成三部分：P0、斯托克斯部分和反斯托克斯部分。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>大家可以看到，这是一个简正模，即深子简正模。这里代表欧米伽K或欧米伽K的分子，即某一个独立振动的形式。我们可以用QK表示，即QK0×cos。它随时间不断震动，即简正坐标随时间变化。</p><p>两个cos相乘，可以做余弦的和差化积。可以解释为两部分：一部分是欧米伽0减去欧米伽K，另一部分是欧米伽0加上欧米伽K。这里对应斯托克斯和反斯托克斯部分。还有一部分是前面的阿尔法010cos欧米伽0T，即瑞利散射部分。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s06">
+  <div class="slides"><figure class="slide" id="slide-276">
+<img src="slides/slide_276.png" alt="课件第276页 拉曼活性与选择定则（α'ₖ≠0）">
+<figcaption><span class="sno">276</span><span class="stitle">拉曼活性与选择定则（α'ₖ≠0）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-277">
+<img src="slides/slide_277.png" alt="课件第277页 偏振拉曼：拉曼张量的形式">
+<figcaption><span class="sno">277</span><span class="stitle">偏振拉曼：拉曼张量的形式</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>拉曼选择定则与拉曼张量</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 276</span><span class="chip">课件 277</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>这时我们得到了微分反射平面。如果拉曼散射非零，即后面两部分非零，那么要求极化率对简正坐标的微商，即 α'k1，不等于 0。这是所谓的拉曼散射选择定则，我们后面还会看到这个条件的具体表现形式——它会告诉大家，这跟对称性是有关系的。</p><p>这里就是说 αk 原则上是否等于 0，是由体系的对称性决定的。大家可以想象，α 是一个二阶张量——我们之前也看到过，α 总的这样一个系数，它是一个 3×3 的量。所以我们在第一章的时候也给大家介绍过：当写成立方体的时候，它是对角形的，所以这些非对角的部分都是等于 0，这个我们后面会再看到这样的规定系统。</p><p>那么如何来决定振子的所谓选择定则？大家可以看到，假设一个模式是这样子的，你的拉曼活性决定了你的拉曼张量是这样子的一个形式。这里我们说的拉曼张量其实是这一部分，就跟介电常数它不是一回事——这个介电常数是 α 的对角部分。α 和介电常数有关系，但它不等价。所以我们后面会看到，你是需要用群论，用不可约表示的那一套对称性来进行具体的分析。</p><p>假设我们的拉曼张量是这样子 1 的形式，那么你这里是 EY1 对应的一个情况。假设你是这样的情况，那我只有 S 和 P，应该就是只有 SYZ 的一部分。所以你在 ES 有分量的时候，你只能在 S 的方向上看到它所谓的拉曼散射的程度；在如果你是 S 的方向给它一个偏振光，在 Y 方向观测，看不到拉曼散射强度。这点后面会讲——第三节讲偏振选择定则时会详解。</p><p>能否看到振动信息取决于两点：一是是否拉曼活性，由对称性决定；二是若为拉曼活性，其拉曼张量形式及特定偏振配置下能否观察到。需综合考察这两方面。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>如果拉曼散射非零，即后面两部分非零，那么要求极化率对简正坐标的微商，即α'k1，不等于0。这是所谓的拉曼散射选择定则。</p><p>这里就是说αk原则上是否等于0，是由体系的对称性决定的。大家可以想象，α是一个二阶张量，对不对？我们之前也看到过，α其实总的这样一个系数，它是一个3×3的量。</p><p>拉曼张量其实是这一部分，就跟我们介电常数它不是一回事。这个介电常数是α的对角部分。就是α和介电常数，但是介电常数就是拉曼张量和介电常数是有关系，但是它不等价。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s07">
+  <div class="slides"><figure class="slide" id="slide-278">
+<img src="slides/slide_278.png" alt="课件第278页 极化率张量 αₖ 与偶极矩（Q₂、Q₃ 水分子例子）">
+<figcaption><span class="sno">278</span><span class="stitle">极化率张量 αₖ 与偶极矩（Q₂、Q₃ 水分子例子）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div class="sec-tt">
+        <h2>水分子例子：对称性决定选择定则</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 278</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>举例说明，虽因缺后续知识难完全理解。以水分子为例，它有三种振动模式，即三个简正坐标 Q1、Q2、Q3，对应不同振动形式：Q1 是对称振动，氧在上、两氢在下；Q2 是两氢向内、氧向上的振动；Q3 是反对称振动，一键变长一键缩短。</p><p>这些振动的对称变化涉及对称性操作：若在对称操作下保持不变，记为 1，即特征标；若反对称，记为 −1。这与变换矩阵对角线元素有关，暂不讨论。阿尔法即界面常数，有不同表达形式。对于六偶极矩 P，施加 eDDz 电场时，不同界面常数得到的 P 不同：因具有对称性，乘以 ESdy1G 后仅有三个分量——ES 决定 PS 部分，EY 决定 TY 部分，二者无交叉。</p><p>Q1 与 Q2 对称性完全相同，对应两个振动模式：经 C2 轴旋转 180°、SZ 及 YZ 平面镜面反射等操作，Q1 与 Q2 不可区分，它们属于相同的不可约表示，拉曼张量形式一致。Q3 在 C2 和 YZ 操作下为负一，对称性与 Q1、Q2 不同，导致其拉曼张量形式不同。</p><p>施加 ES1YZ 入射电场时，PS 原则上由 Z 方向电场分量决定，而我的 PV 是由 F 方向上的电场向量决定。而且我的 Y 是没有的——不管你给多少 Y，我这个方向上永远是没有。所以不同的对称性，具有相同的拉曼张量；不同的对称性，拉曼张量不同，偏振特性不同，后面所说的选择定则也不同。</p><p>在平行的偏振配置下，由于 ES 决定的是 PS，Y 决定的是 TY——对于 Q1、Q2 来说，在平行偏振的配置下都可以观察到；但 Q3 这个模式观察不到。Q3 要怎么观察呢？需要入射电场和反射电场一个在 X 方向、一个在 Z 方向的时候，才能观察到这样的声子模式的拉曼强度。这里就是告诉我们，不同的对称性决定了它的选择定则。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>以水分子为例，它有三种振动模式，即三个简正坐标Q1、Q2、Q3，对应不同振动形式。Q1是对称振动，氧在上两氢在下。Q2是两氢向内、氧向上的振动。Q3是反对称振动，一键变长一键缩短。</p><p>Q1与Q2对称性完全相同，对应两个振动模式。经C2轴旋转180°、SZ及YZ平面镜面反射等操作，Q1与Q2不可区分。它们属于相同的不可约表示，拉曼张量形式一致。</p><p>所以在平行偏振的配置下，我的Q1跟Q2都是可以观察到的。但是我的这个Q3就这个模式就观察不到。那我的Q3要怎么观察呢？我是需要我的入射电场和我的反射电场，一个在X方向，一个在Z方向的时候，我才能观察到这样的一个声子模式。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s08">
+  <div class="slides"><figure class="slide" id="slide-279">
+<img src="slides/slide_279.png" alt="课件第279页 闪锌矿结构：TO/LO 光学声子（不同材料峰位）">
+<figcaption><span class="sno">279</span><span class="stitle">闪锌矿结构：TO/LO 光学声子（不同材料峰位）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">08</span>
+      <div class="sec-tt">
+        <h2>闪锌矿例子：TO/LO 光学声子</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 279</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第二个例子给了几种不同的半导体，它们都是闪锌矿的晶体结构。我们能够观察到的模式，大家可以看一下，都是 TO 跟 LO——纵向和横向的光学声子。这符合我们前面在第一章里面讲的结论：我们更多观察到的是光学声子。声学声子一般频率很低，比较难以测试，也比较难以观察；我们的光更容易看到这些光学声子，一般用 O 表示，就是光学声子。</p><p>由于它们的结构类似，所以我们观察到的曲线也是类似的；但元素不同——一是原子质量不同，二是原子间距或作用力不同，因此峰位不同，但属同类微分结构及分子。测偏振特性时，两模式对不同材料类似：结构对称性决定其特征，即拉曼散射的选择定则。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那么他们都是闪锌矿的这样一个晶体结构。那么我们可以看到，我们能够观察到的这样的一些模式，都是大家可以看一下，都是TO跟LO。就是纵向和横向的光学声子。</p><p>这个声学声子一般频率一个是频率很低，一个是它就比较难以去测试，还有比较难以去观察。我们的光更容易看到这样一些光学声子，就是一般是用O来表示，就是光学声子。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s09">
+  <div class="slides"><figure class="slide" id="slide-280">
+<img src="slides/slide_280.png" alt="课件第280页 和差化积：瑞利、斯托克斯与反斯托克斯（P₀）">
+<figcaption><span class="sno">280</span><span class="stitle">和差化积：瑞利、斯托克斯与反斯托克斯（P₀）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">09</span>
+      <div class="sec-tt">
+        <h2>拉曼光谱的五个物理量：频率与受激拉曼散射</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）</span><span class="chip">课件 280</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>基于前述分析，回顾拉曼散射主要分析内容。此处仅讨论部分物理量，重点关注拉曼散射光谱的 5 个物理量：峰位、强度、线型、峰宽和偏振特性。偏振特性与光子研究特征类似，因为散射光即散射光子——对一束光，通常研究频率、偏振、强度和位向：位向决定能否相干，故需讨论；此外还涉及谱宽，光束具有谱宽。</p><p>后续将讲解反射光子谱宽的决定因素。先讲频率，此前已多次提及，由晶格理论解释。一阶拉曼散射分三部分：瑞利散射，频率不变，属弹性散射；斯托克斯和反斯托克斯散射，即 ω₀±ω_q 部分。后面的 ω_q 应该是斯托克斯的部分，这是对的。我们在用经典理论推导时，类似于进行了调频——原来一束光具有唯一频率，但与物质相互作用后频率会发生改变。</p><p>拉曼散射其实是自发辐射过程：光进入物体发生作用，跳到能级后自动跳回，导致频率改变。后面会有一张 PPT 讲到受激拉曼散射——受激拉曼散射也是一种非线性散射：当它跳下来时，我们人为加一个激光，使其符合某两个能级间的功率，这时实现受激辐射，可人为提高某个频率。比如出射时打一个 ω₀ 或 ω_q 的激光，最终得到 ω₀−ω_q 和 ω_q 的光，这是一个非线性过程，人为放大了特定的激发光。</p><p>拉曼散射信号非常弱，是自发发生的，概率只有 10⁻¹¹ 到 10⁻¹²。但若人为实现受激辐射，原则上可显著提高某一频率——我们牺牲另一频率的光，使目标频率实现激射，因此能制成受激拉曼散射激光。通过该过程可调频，使原 ω₁ 的光发生微小频移，例如变为 ω₁±Ω。因 ω₀ 远大于 Ω，故能实现精细调频。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>重点关注拉曼散射光谱的5个物理量。这5个量为：峰位、强度、线型、峰宽和偏振特性。偏振特性与光子研究特征类似，因散射光即散射光子。</p><p>一阶拉曼散射分三部分：瑞利散射，频率不变，属弹性散射；斯托克斯和反斯托克斯散射；以及ω₀±ω_q部分。</p><p>拉曼散射信号非常弱，是自发发生的，概率只有10⁻¹¹到10⁻¹²。但若人为实现受激辐射，原则上可显著提高某一频率。我们牺牲另一频率的光，使目标频率实现激射。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s10">
+  <div class="slides"><figure class="slide" id="slide-281">
+<img src="slides/slide_281.png" alt="课件第281页 散射强度：sin²θ·|α'ₖ·E₀|²">
+<figcaption><span class="sno">281</span><span class="stitle">散射强度：sin²θ·|α'ₖ·E₀|²</span></figcaption>
+</figure>
+<figure class="slide" id="slide-277">
+<img src="slides/slide_277.png" alt="课件第277页 偏振拉曼：拉曼张量的形式">
+<figcaption><span class="sno">277</span><span class="stitle">偏振拉曼：拉曼张量的形式</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">10</span>
+      <div class="sec-tt">
+        <h2>强度、偏振与相位特性</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）</span><span class="chip">课件 281</span><span class="chip">课件 277</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>接下来回顾强度特征。前文已计算微分散射截面，它与坡印廷矢量的时间平均值及 1/r² 相关，这定义了辐射强度 I。将微分散射截面代入后，可得相应公式：拉曼散射强度即实测部分，它与 (ω₀±Ω)⁴ 成正比，且具有方向性。强度由拉曼张量和入射光子决定，这也决定了散射强度的大小。</p><p>这部分涉及偏振特性。对于特定外电场偏振方向，具体指什么？就是说我的 ES e1z 是特定的数值。比如说，我让它是一个线偏振，而且沿着 X 方向，那么意思就是说我的 ADC 等于 0，这个时候我的偏向方向就是沿着 X 方向。对于空间固定取向的分子，它的反射光一般是偏振的：如果我只有 ES，那么这里算出来 PS、PY、PV 有特定的数值，但它还是具有偏振特性——只是这个偏振特性和我们原来的 ES 不一定只是沿着 ES 方向上有分量，它可能沿着不同方向都会有相应的分量，但它仍然是一个偏振的光。</p><p>那如果说我的分子取向是不固定的，就是我在一个空间里面有多指向的这些分子——分子可能是不同的取向，那么我进行耦合的过程中，不同的偏振叠加，我辐射出来的反射光如果进行求和的话，那就不再是一个线偏光了：它就是一个沿着四面八方都有不同偏振方向的光，而且它的偏振取向原则上是取决于你的分子的排布的。</p><p>所以对于偏振拉曼光谱，原则上是可以测定分子在空间上的取向。比如说我们最近跟所里另外一个老师合作，他们做钙钛矿，做出一种分子，对比两种分子，有一种效率能够大大提高，另外一种效率就比较低。他们发现效率高的部分分子取向均一——若分子沿特定方向排列，反射光子也具偏振特性。通过拉曼探测反射光子的偏振取向，可判断分子是定向还是杂乱。客户希望鉴定材料取向：利用偏振拉曼光谱，旋转样品平面，取向固定时呈规则八字形；排布不均匀时呈圆形，因拉曼强度无偏向。这为材料验证提供了证据，与其他表征手段相互印证。</p><p>最后讲相位特征。初相位难以讨论，但若反射光子保持相同相位或特定相位差，就会出现干涉现象：干涉是场强相加后平方，在特定方向或时间发生相干增强或相消。但对于拉曼散射，不同分子发出的初始相位通常不同，不存在关联，因此研究拉曼散射时不用考虑相加效应，只需将不同位置或分子的信号相加即可得到结果。</p><p>例如光照射不同分子，它们之间无关联，通常无需考虑相位特性。对于物体表面反射，通常认为各点反射光是非相干的，所以在计算总拉曼强度时大多直接进行厚度积分，这是由拉曼散射的相位特性决定的。相比之下，瑞利散射的光子与入射光子相位完全相同，需考虑相干效应。本节课不过多讨论瑞利散射，只需记住拉曼散射无需过度考虑相干问题。先休息 5 分钟，再讲量子理论部分。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>拉曼散射强度即实测部分。它与(ω₀±Ω)⁴成正比，且具有方向性。强度由拉曼张量和入射光子决定。</p><p>通过拉曼探测反射光子的偏振取向，可判断分子是定向还是杂乱。客户希望鉴定材料取向。利用偏振拉曼光谱，旋转样品平面。取向固定时呈规则八字形；排布不均匀时呈圆形。</p><p>对于拉曼散射，不同分子发出的初始相位通常不同，不存在关联。因此研究拉曼散射时不用考虑相加效应，只需将不同位置或分子的信号相加即可得到结果。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s11">
+  <div class="slides"><figure class="slide" id="slide-284">
+<img src="slides/slide_284.png" alt="课件第284页 极化率与简正坐标：量子化表述起点（电偶极近似）">
+<figcaption><span class="sno">284</span><span class="stitle">极化率与简正坐标：量子化表述起点（电偶极近似）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">11</span>
+      <div class="sec-tt">
+        <h2>量子理论表述：自然单位制与电偶极近似</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（前）</span><span class="chip">课件 284</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>在表达式中，我们考虑它与经典理论的区别。主要从经典表达式出发，这部分大家很熟悉，即电偶极的表达式。再看非电偶极近似下的微分散射截面，涉及六极辐射场的比例系数。此前使用高斯单位制，此处改用自然单位制，故出现 190 这一参数。</p><p>反射变化量即电偶极矩变化量，相当于去除了瑞利散射部分。总强度中 G 是矢量 (Px, Py, Pz)，观察方向决定其在坐标轴上的投影——假设在 X、Y 或 Z 方向观察，即将该方向投影到三个坐标位上，图中 1F 部分即对矢量做投影，以获得该方向的散射强度。</p><p>后两部分为 Delta Alpha 与 Alpha' 乘 QK0 再相乘。原则上展开后可见，入射光作为平面波，具有时间和空间相位。前面的这部分是我的震动的贝塔阿尔法，它跟我的 QE 就跟我的震动频率相关系。如果对这一部分进行泰勒展开，就是后面的这一部分。</p><p>但通常情况下，我们考虑的入射光场波长很长：当它与原子或电子发生相互作用时，通常是在埃的尺度，即 1Å 量级；此时入射波波长很大，对于可见光来说是几百纳米，那么 KI×R 在相互作用过程中，KI·R 约等于 0。所以只需要考虑前面的 E20，即只有时间相位的部分。其实我们刚才讲很多事时，都直接忽略了这部分，只说 E 等于 E0×cos(ωt+φ)——不考虑空间相位问题，但这其实做了一定近似，即所谓的电偶极近似。很多讨论中可能没给大家说明，这里补充一下：很多时候直接用了这个近似条件。</p><p>有了这个式子后带入，就是最后的结果：入射电场的偏振矢量与反射电场的偏振矢量中间用 R 表示，即阿尔法撇乘 Q 的部分。这部分其实就是所谓的拉曼张量，目前我们还是在经典理论里讨论这些事情。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>此前使用高斯单位制，此处改用自然单位制，故出现190这一参数。反射变化量即电偶极矩变化量，相当于去除了瑞利散射部分。</p><p>此时入射波波长很大，对于可见光来说是几百纳米，那么KI×R在相互作用过程中，KI·R约等于0。所以只需要考虑前面的E20，即只有时间相位的部分。</p><p>我们不考虑空间相位问题，但这其实做了一定近似，即所谓的电偶极近似。很多讨论中可能没给大家说明，这里补充一下，很多时候直接用了这个近似条件。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s12">
+  <div class="slides"><figure class="slide" id="slide-285">
+<img src="slides/slide_285.png" alt="课件第285页 产生/湮灭算符：n、n+1 与 √n 系数">
+<figcaption><span class="sno">285</span><span class="stitle">产生/湮灭算符：n、n+1 与 √n 系数</span></figcaption>
+</figure>
+<figure class="slide" id="slide-286">
+<img src="slides/slide_286.png" alt="课件第286页 玻色-爱因斯坦分布与斯托克斯/反斯托克斯强度比">
+<figcaption><span class="sno">286</span><span class="stitle">玻色-爱因斯坦分布与斯托克斯/反斯托克斯强度比</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">12</span>
+      <div class="sec-tt">
+        <h2>升降算符与玻色-爱因斯坦分布</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（前）</span><span class="chip">课件 285</span><span class="chip">课件 286</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>那么，如何把经典理论放到量子中、让它带有量子的特性呢？量子的特性表示什么意思？就是经典的话，我说的物理量就是物理量，它没有什么特殊的，所以我的 Q 就是我的简正坐标，它就是一个坐标，它跟它的初动量乘积就是一个常数，可以这么认为。但是对于量子理论来说，我所有的物理量都是一个算符——算符的意思就是说，我是进行一定的操作，让这个波函数发生一个变化，就是我这个物理量会使得我的波函数发生什么样的变化。</p><p>既然以算符来看，那么我先操作每一个算符，这个时候它就会有差异性。比如说这里我们的 Q 跟 Q dagger，它其实就是一个湮灭算符、一个产生算符。湮灭算符跟产生算符，我们前面也看到过这样一个式子：它对于某个态上的粒子数去进行一个增减，就是它多了一个或者少了一个。就像小猫往上爬一步和往下爬了一步，前面出来的比例系数是不同的。所以这里的 a dagger 就是我的 Q 跟 Q star，其实就是这个 Q 跟 Q 带个 † 这个符号。</p><p>那么它的平均值就是说，我在它的前后加上对某个态，中间这部分应该是一个求和符号，这就是量子力学里面的一个表达式，大家也可以先不用管它。产生算符作用到 N 上的时候，它这里是 N+1，所以前面是根号 N+1；如果是湮灭算符作用到 N 上，这里应该是根号 N。所以我们可以把系数提取出来，就是根号 N 乘根号 N+1，这两个就是派的一个归一化。</p><p>下面是斯托克斯这部分，就是把上面两个式子带进去，最后它是一个 N+1 的量；如果是反斯托克斯，两个符号相反，这时如果前后还是乘以 N 的派，作用出来的结果就是一个 N。这里斯托克斯和反斯托克斯，在经典理论里没有任何区别——因为交换位置没有影响，它还是一个常数；但在量子力学中，算符得到的结果，交叉之后会发生显著的区别。</p><p>最后得到我们的斯托克斯 N，这里得到的 N 就是分子数，这个分子数服从玻色子分布，所以它是服从玻色-爱因斯坦分布，表达式为 1/(e^{ħω/kT}−1)。对于斯托克斯则要加 1，所以形式变为 (1+e^{ħω/kT}/(e^{ħω/kT}−1))；分母保持不变。将 ħω 除以 kBT，在分子分母同时除以该数，此处变为负值。对于反斯托克斯，即前面所说的 N，不用变。因此 IS 比上 IAS，即斯托克斯强度比反斯托克斯强度，得到此形式。</p><p>通常 ħω 除以 kBT 远大于 1，故斯托克斯与反斯托克斯强度比值一般大于 1，即斯托克斯强度通常大于反斯托克斯强度。这与实验现象及量子理论结果类似——当时考虑能级跃迁，从低或高等级跃迁得到该结果；由经典理论光场引入量子算符交换差异，也能得到相应本体论。当然，这并不一定远大于 1，是有条件的：若温度非常高，kBT 会很大，此时若频率不大，比值可能接近 1，但不太可能小于 1。</p><p>当然，我说小于 1 不太可能，前提是我们讨论非共振拉曼散射。假设没有相应例子，可能在第 5 章——若共振频率与反射光子反斯托克斯频率接近，反斯托克斯强度可能更强，这就是共振拉曼散射，它会改变原本讨论的一般理论，即非共振情况下的理论。所以在该前提下，考虑拉曼张量及偏振矢量关系，这与经典理论区别不大。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>对于量子力学里面，量子理论来说，我的所有的物理量都是一个算符。算符的意思就是说，我是进行一定的操作，然后我是让这个波函数发生了一个变化。</p><p>这个分子数服从玻色子分布。所以它是服从玻色-爱因斯坦分布，表达式为1/(e^(hω/kT)-1)。对于斯托克斯，则要加1。</p><p>通常H棒欧米伽除以KBT远大于1。故斯托克斯与反斯托克斯强度比值一般大于1。即斯托克斯强度通常大于反斯托克斯强度。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s13">
+  <div class="slides"><figure class="slide" id="slide-287">
+<img src="slides/slide_287.png" alt="课件第287页 经典 VS 量子：拉曼张量 A₁ᵍ">
+<figcaption><span class="sno">287</span><span class="stitle">经典 VS 量子：拉曼张量 A₁ᵍ</span></figcaption>
+</figure>
+<figure class="slide" id="slide-288">
+<img src="slides/slide_288.png" alt="课件第288页 微分散射截面与量子跃迁概率">
+<figcaption><span class="sno">288</span><span class="stitle">微分散射截面与量子跃迁概率</span></figcaption>
+</figure>
+<figure class="slide" id="slide-289">
+<img src="slides/slide_289.png" alt="课件第289页 微扰理论：体系波函数与哈密顿量">
+<figcaption><span class="sno">289</span><span class="stitle">微扰理论：体系波函数与哈密顿量</span></figcaption>
+</figure>
+<figure class="slide" id="slide-290">
+<img src="slides/slide_290.png" alt="课件第290页 跃迁概率：iω_nk·t 与 H_nk">
+<figcaption><span class="sno">290</span><span class="stitle">跃迁概率：iω_nk·t 与 H_nk</span></figcaption>
+</figure>
+<figure class="slide" id="slide-291">
+<img src="slides/slide_291.png" alt="课件第291页 极化率矩阵元（感生电偶极矩）">
+<figcaption><span class="sno">291</span><span class="stitle">极化率矩阵元（感生电偶极矩）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">13</span>
+      <div class="sec-tt">
+        <h2>经典 VS 量子：微扰理论与跃迁概率</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（中）</span><span class="chip">课件 287</span><span class="chip">课件 288</span><span class="chip">课件 289</span><span class="chip">课件 290</span><span class="chip">课件 291</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>若从微观理论出发，用能级跃迁概率讨论反射概率，需用量子力学描述。这在第二章讲过，我在黑板画过图，展示不同能级导致的跃迁，由此分析瑞利、斯托克斯和反斯托克斯散射。其程度取决于基态激发态声子占据数 N。大家看这个 N，是 ħω 对不对？如果是一排的话，这里原则上它的能量应该是 1/2ħω 吧。这里的 ω 其实是一个具体的能量：在不同能级上，能量是可以变化的，如果是在第一激发态，那它就是 3/2ħω 这样的能量。</p><p>如何通过能级跃迁来考虑跃迁概率？这是量子力学的内容，大家大概知道思路即可，具体推导不需要掌握，我希望能把思路讲一讲，大家能明白就可以。对于跃迁概率，通常是用微扰理论来进行描述：微扰理论简单来说，就是我本来如果没有外部条件、没有光照射的时候，体系处于静止状态，这时它满足定态薛定谔方程 H 作用在 ψ 上等于 Eψ。体系哈密顿量 H0 等于动能加上势能，动能加势能作用到波函数上，得出本征能量，在求解谐振子的能量和波函数时也是类似的。</p><p>但是假设给了它一个光，就会对系统进行微扰，这个微扰相当于用原来静态情况下的哈密顿量，加上围绕的电场所带来的哈密顿量变化。所以这个时候，它的整个哈密顿量就会包含两部分。我原来是一堆静态的能量和静止的波函数分布，但现在我加了一个外场，这个时候我的波函数还有能量就会发生相应的变化。它还是在原来的讨论基础上，也就是在我原来那些静态的能量或者波函数上去进行讨论，即我得到了一个新的波函数。</p><p>当然，这个新的波函数是可以用我原来的那一套波函数去进行叠加求解出来的，就是类似于我们本来求出来了一系列振子的简正模式——一系列 ω1、ω2、ω3 等等独立的一些频率。我加了外场之后，可能是我在不同的能级上，从 ω0 跃迁到它的第一激发态等等，那么这个跃迁的概率就是我们所要求的。所以它所谓的最后得到的这个波函数，就是由我原来的这一套静态的波函数去进行一个简单的相干叠加的过程。</p><p>所以我们首先是要用 H0，就是它不受干扰的那个状态下，把它的本征函数全部都求解出来；最后我们就是把我的本征函数去进行一个组合，得到了真正的一个波函数，以及我得到的一个能量的修正，这就是微扰理论本身的一套思想。</p><p>那么我们在这个计算跃迁概率的时候，就是我本身是在不同的能级上，已经有不同的粒子去分布了。但是我加上一个外场之后，那我的这个粒子会在我不同的能级上进行跃迁，就是我的初态本来是 ψk，那么我会跃迁到 φn。那么这个跃迁的概率，我们就是要去算这个概率。同样的，CN 这部分就是进行能量修正，相当于我的 PS。那么 RT，此时我对不同的波函数进行求和，即对原来那套静态波函数进行叠加，叠加后我得到最后的这一个波函数。</p><p>我原来的基态，原则上求出来也是一个基态的公函数，只是受了微量的基态公函数影响。但对于某一个态上，有多少这样的比例系数，就是这个 CM。原则上，从原来的资态跃迁到现在的太上，会有多少概率跃迁上去？就是我占据这样一个太上的投影系统，就是前面的 PD，大概就是这么一个思路。所以我要求解 V 之后的比例系数，即它投影在每一个波函数上的比例系数，这样我就知道每两个能级之间的跃迁概率是多少。</p><p>所以这里对于零，是一系列 CDT 的零阶、一阶、二阶的微导，这里有一系列通过量子力学微扰理论的求解方法。它相当于把原来的波函数带入进去，然后用 H1' 去作用。如果是一次微扰的情况下，没有微扰的情况下，我的 cos k 就 cos n，那么就是一模一样——也就是说我只有当我的 N=K 的情况下，我这个比例系数才是等于 1，这个能理解吧？</p><p>我原来就是一系列的这样的一个系数，没有微扰的情况下，就是我还是原来那套波函数，所以我只有当我的 N=K，就是我所谓的初态是 K 嘛。我的粒子数只会在 N 这个态上分布，或者是说，只会在 K 的这个态上进行分布。我在 N 上是没有投影的，因为由原来这一套这个哈密顿量 H0 求解出来的这一套基函数，它们都是彼此正交归一化的，所以他们彼此之间是没有分量的。所以这个时候，我的 Cn0 应该就是等于 δnk：N=K 的时候，它就等于 1；N≠K 的时候，它是等于 0。</p><p>然后一级微扰的话，就是用我这个 H1' 作用到我的这个原来的这个波函数，那么得到的这样的一个结果，这个大家也是大概了解一下就行了。然后这个 Hk 就是作用到它的这个 K，相当于就是求我 K 在这样的一个微扰下，我的态会变成有一个在 N 上面的投影。那么这个 N 上的投影有多少，那么就是用两个波函数进行一个累积，就是这样的一个结果，大家只要大概知道就行。最后，所以我们的这个跃迁概率如果只算到一阶微扰情况下，二阶三阶可能是一个更高阶，但是它的变化相对于第一阶就是一个小量。所以这个时候呢，我的一阶概率就是只用第一阶来这个表示。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>微扰理论简单来说，就是我本来如果没有外部条件，没有光照射的时候，体系处于静止状态。这时它满足定态薛定谔方程。H作用在ψ上等于Eψ。</p><p>我原来是一堆静态的能量和静止的波函数分布。但现在我加了一个外场，那么这个时候，我的波函数还有能量就会发生相应的变化。</p><p>没有微扰的情况下，我还是原来那套波函数。所以我只有当我的N=K，就是我所谓的初态是K嘛。所以这个时候，我的Cn0应该就是等于δnk。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s14">
+  <div class="slides"><figure class="slide" id="slide-292">
+<img src="slides/slide_292.png" alt="课件第292页 瑞利散射：α 为常数时仅同能级跃迁">
+<figcaption><span class="sno">292</span><span class="stitle">瑞利散射：α 为常数时仅同能级跃迁</span></figcaption>
+</figure>
+<figure class="slide" id="slide-293">
+<img src="slides/slide_293.png" alt="课件第293页 斯托克斯/反斯托克斯：能级跃迁图像（玻色因子）">
+<figcaption><span class="sno">293</span><span class="stitle">斯托克斯/反斯托克斯：能级跃迁图像（玻色因子）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-294">
+<img src="slides/slide_294.png" alt="课件第294页 电子参与：共振拉曼散射（m·p·A 项）">
+<figcaption><span class="sno">294</span><span class="stitle">电子参与：共振拉曼散射（m·p·A 项）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">14</span>
+      <div class="sec-tt">
+        <h2>量子解释：瑞利/斯托克斯/反斯托克斯与共振拉曼</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（后）</span><span class="chip">课件 292</span><span class="chip">课件 293</span><span class="chip">课件 294</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>对于分子振动回到原状引起的电极极化，我们将 H1' 中 α 变为 E 代入，可得极化率矩阵元。其表达式右侧为 FK 与 Fn 波函数在 αIZ 作用下的重叠积分，相当于投影分量。若极化率为标量常数，可提出 αZ，变为两波函数内积：因波函数正交归一，仅当 N=K 时有值；若 N≠K 则内积为 0，能级不变，对应瑞利散射——此时晶格或分子振动不引起 αI 变化。</p><p>上述用跃迁理论解释了瑞利散射。若要产生拉曼散射，需在不同能级间非弹性跃迁，能量改变，故 αIZ 不能为常数，否则仅限同能级跃迁。此时 αZ 应含随入射及分子振动产生的变化量，这与我们经典的理论其实是相辅相成的。这里还是回到原来的分子振动图像。</p><p>我处理的是一系列自动能级。若是斯托克斯散射，光子入射能量为 ħω₀，反射方程中该能量等于 ħω₀ 减去 ħω_v——这代表拉曼散射的跃迁过程：若初始态为基态，发生斯托克斯过程，从基态向上跃迁后回到基态，能量为 ħω₀−ħω_v；另一部分能量为 ħω₀+ħω_v，此时发生反斯托克斯散射。通过初末态能量可判断光散射类型。若要让跃迁有数值，α₁ᵈ 和 α₂ᵈ 应含非零项；若只含常数项 α₀，则不会发生拉曼散射，只有存在非零项时才会发生。</p><p>关于斯托克斯和反斯托克斯强度的表达式，源于量子力学能级跃迁。微扰量最终表现为电偶极振荡，即电偶极辐射。将其代入 H1'，分析不同热量情况下的后续过程。若是全量分析，从振动图可见仅涉及光子和声子——光子频率极高而声子频率极低，二者如何相互作用？实验表明该过程需电子辅助，即共振拉曼散射：当激发能量与系统允许的光学跃迁能级匹配时，拉曼强度显著增强，证实了电子的参与。</p><p>若仅考虑光子与声子相互作用，原则上与电子能级无关，此时注入光的强度遵循前文所述的 Ω⁴ 关系，基于电介质理论。因为不管用什么激发光的能量，它都会补充这个关系。但是我们在真正的实验过程中却发现，它并不仅仅只是用欧米伽的四次方来决定拉曼强度——它的拉曼强度还跟电子跃迁的能级有关系。所以这个时候我们就引入了电子这样的一个能量，在引入电子的这个量之后，我们这一个跃迁的图像就会发生一定的变化。</p><p>如果考虑电子，那么考虑的就是电子的基态，它的能级同样表示我的能级也属于基态的一个信号。如何来考虑瑞利散射、斯托克斯和反斯托克斯的过程？它是说我的入射光子过来之后，我的电子在基态上会发生跃迁而上来——当然这是一个虚线，我一会告诉大家为什么画虚线。它跃迁上来之后，到了一个虚能级，这个时候我的光场和我的能级会发生相互作用。相互作用有两种过程，它有可能往下走，这个时候是 AR1 的。</p><p>入射光子能量为 ħω₀，反射光子能量为 ħω'，这是康普顿散射过程，入射光子能量大于反射光子能量，电子与光子发生散射。为何这与能级有关？假设存在实能级和虚能级：若体系吸收能量与能级匹配，信号增强；到达实能级时，电子停留时间更长，与更多光子发生相干作用，反射强度极大增强，这就是共振拉曼假设。</p><p>用二阶微扰理论描述，基于费米黄金定则。公式中涉及初态、中间态及光子与电子相互作用：光子激发电子从基态到激发态，涉及辐射场与电路系统；电子与空穴复合放出光子，属于电子-光子耦合过程。分子项表示了这三个过程，分母则是关于能量相互匹配或不匹配的问题——当 I 与 M 之间的能量跟入射光子能量相匹配时，它处于分母，若两者相等，这里就是 0，拉曼强度就会得到极大增强。</p><p>这是一个三阶的过程，其概率用该公式表示。当然，这是斯托克斯过程；如果是反斯托克斯，其实很简单：系统受热后与声子作用，能级向上走，向下跃迁时放出的光，频率为入射光加声子频率，其概率同样可用该公式表示，此时后面这一项等于 0，拉曼强度同样能得到较大增强。如果反射光场和入射光场与两个能级间的差值相等或接近，反射概率就会得到最大增强——这就能解释刚才所说的实验现象：当激光频率接近电子跃迁能级之差时，拉曼强度得到极大增强。</p><p>这才是最正宗的拉曼散射量子理论模型。刚才讲的光子和声子模型忽略了一部分，不能完全解释所有实验结果；目前这个理论比较完备，能大部分解释这些现象。具体推导过程更为复杂。这部分对应经典理论中的二阶部分：比如电场与电极化率相关，这是 P 的部分，与散射光场相关；中间的电磁耦合及下面的系数，其实就是拉曼张量的一个表达式。量子的理论与经典的理论其实是可以对应的，当然这个比较复杂，我们在这里就不多讲。</p><p>如果需要做具体分析，就再去看一看经典文献，包括前面给大家看过的例子——其实就是去年在表二发表的这篇文章。根据全量子模型，讨论每个物理量在此过程中的变化：把差距用简单模型表示，各项都能用解析式表达后，就能完美算出拉曼强度。一般情况下很难得到完整的解析式，基本要通过定性原理等方法进行计算。好吧，那我们就再休息 5 分钟，然后一会儿再讲下面的内容。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>若极化率为标量常数，可提出αZ，变为两波函数内积。因波函数正交归一，仅当N=K时有值。若N≠K则内积为0，能级不变，对应瑞利散射。</p><p>若要产生拉曼散射，需在不同能级间非弹性跃迁，能量改变。故αIZ不能为常数，否则仅限同能级跃迁。</p><p>这才是最正宗的拉曼散射量子理论模型。刚才讲的光子和声子模型忽略了一部分，不能完全解释所有实验结果。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s15">
+  <div class="slides"><figure class="slide" id="slide-295">
+<img src="slides/slide_295.png" alt="课件第295页 光散射的量子力学诠释：能级展宽的必然性">
+<figcaption><span class="sno">295</span><span class="stitle">光散射的量子力学诠释：能级展宽的必然性</span></figcaption>
+</figure>
+<figure class="slide" id="slide-296">
+<img src="slides/slide_296.png" alt="课件第296页 自发辐射与能级寿命：N₂(t)=N₂₀exp(t/τ)">
+<figcaption><span class="sno">296</span><span class="stitle">自发辐射与能级寿命：N₂(t)=N₂₀exp(t/τ)</span></figcaption>
+</figure>
+<figure class="slide" id="slide-297">
+<img src="slides/slide_297.png" alt="课件第297页 辐射的展宽线型（洛伦兹线型）">
+<figcaption><span class="sno">297</span><span class="stitle">辐射的展宽线型（洛伦兹线型）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-298">
+<img src="slides/slide_298.png" alt="课件第298页 仪器展宽与分辨率（去卷积）">
+<figcaption><span class="sno">298</span><span class="stitle">仪器展宽与分辨率（去卷积）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">15</span>
+      <div class="sec-tt">
+        <h2>展宽：不确定性原理、寿命与仪器展宽</h2>
+        <div class="sec-meta"><span class="time">录音：第 3 段（前）</span><span class="chip">课件 295</span><span class="chip">课件 296</span><span class="chip">课件 297</span><span class="chip">课件 298</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>我们刚才通过经典理论分析了频率、强度及向位偏正等特性，并未涉及长宽或线形特性与什么有关。今年里较难讨论频率为何进行长宽变化，但在量子理论中，展宽变得顺其自然——因为量子理论中有不确定性原理：若两个物理量不对易，无法找到共同本征波函数，就不可能同时测准。</p><p>例如动量和位移无法同时测准，测准其中一个，另一个的不确定性就会非常大。另一组量是能级宽度（能量不确定度）ΔE 与时间或能级寿命 ΔT：它们不可对易，乘积一定大于等于 ħ/2。这是量子力学不确定性原理直接给出的结论：若能级寿命非常短，则 ΔT 很小，ΔE 就会比较大；若 ΔE 非常确切，寿命就会非常大。据此过程，我们来解释为何会出现所谓的能级展宽。</p><p>我们辐射分类分为自发辐射：用光子去测量一个材料体系本身的衰变程度，就是它自发发生的过程。你让电子在两个能级间跃迁上去后，它在高能级待不住，因为总是趋向于基态，所以电子会往下跃迁，这就是自发辐射过程。前面讲过受激辐射和受激吸收，需要另外一束光辅助完成；若无其他条件，电子就会从激发态掉回低能态。所以对于拉曼散射来说，其发射过程就是一个自发辐射的过程。</p><p>先来看两个能级之间来回跃迁的情况：B 表示 T 时刻能级 2 的粒子数是 N2，T=0 时记为 N2(0)，2 表示能级，0 表示 t=0 时刻。自发辐射的减少量相当于 ΔN2：随着时间变化，处于高能级的粒子会自然往低能级跃迁，导致粒子数减少，粒子数减少量等于 A21×N2(t)，其中 A21 是比例系数。换算后呈指数关系：初始系数为 N20，随时间呈指数下降趋势，该微分表达式可求解出 2T 表达式。此时 τ 为能级 2 的寿命，与 21 跃迁系数成反比——A21 越大，越易实现跃迁，在 2 能级停留时间越短，寿命越短。</p><p>辐射过程导致自然能级展宽：因有寿命，能级会有相应的能量展宽 Δν，展宽线型一般为洛伦兹线型，激光原理课程中有严格推导过程。需提醒，给出的 Δν 是能级能量宽度，若为半高值则是半高半宽，更多时候讲半高全宽（FWHM）：I 在 1/2I₀ 处为半高全宽，一半位置则为半高半宽。所以如果是一个半高全宽的宽，就要乘以 2，它跟能级的寿命直接成反比。所以我们这样的拉曼峰的峰宽，其实就能反映拉曼散射过程的时间尺度，因为它是直接成反比的。</p><p>这是第一个引起拉曼展宽的原因。一些荧光峰也会发生，就是一个大的宽峰，也是由能级之间的寿命导致的。很多光谱里面，如果它是一个能级非常确定的量，理论上在光谱里面看到的是一个个的线，就是一个 δ 函数，但其实并不是这样，主要就是由于我们会有各种各样的展宽机制。如果对应于自发辐射的展宽，那么它通常来说就是一个洛伦兹的展宽线型。</p><p>对于光谱来说，还会有其他的展宽，就是所谓的碰撞展宽：粒子之间发生碰撞，就会增加跃迁的概率，这个时候它的相应寿命就会变短，能级就会进一步展宽，这是另外一个展宽的类型。还有一个多普勒展宽：大家都学过多普勒效应，比如火车沿着面向你开来的方向，或者远离你的方向开，速度会有不同，这样子的不同频率也会导致展宽，这属于一个高斯线型。不同的类型，会出现不同的展宽线型。</p><p>但是对于拉曼来说，更多通常拉曼峰都是一个洛伦兹线型，当然除了一些特殊的情况，也有其他的这些线型，大家就是对具体问题具体分析。很多时候，大部分情况用洛伦兹线型都能很好地解释实验结果。关于拉曼或光谱里实际的线型和线宽，通常几种不同的展宽都存在，要看哪个机制占主导过程，从而影响展宽。展宽与时间成反比——从展宽能反映：若是荧光，反映能级和寿命；若是拉曼，反映光子与电子、声子作用再产生光子的全过程时间尺度。不同分子与电子相互作用时，半导体的寿命时间尺度不同；对于拉曼峰，大部分情况下相互作用过程通常在飞秒量级。</p><p>另外，上述讲的是本身效应。但仪器测量时，光学元件或光电转换等都有不同程度展宽，即仪器展宽。本身效应展宽与仪器展宽以卷积形式，得到观测到的光谱展宽效应，需严格去卷积计算，才能得到拉曼光谱本身的展宽。通常情况不需太复杂，可把仪器的展宽反测出来：怎么测？通常把入射光开到足够弱去探测，把后面会讲到的共焦小孔关到 0，让光足够弱进行测量，这时测出的长宽就是拉曼谱仪本身的长宽。将所有测出的拉曼峰减去谱仪本身的长宽，才是拉曼峰本身的长宽，它由自然辐射、碰撞、多普勒等效应引起，这是实验中需注意的点。</p><p>若谱仪长宽很大，测出的光谱分辨率就不行，峰也会很宽。不同谱仪的展宽不同，大家要注意这个问题。用长宽衡量晶体质量或其他性质时，必须在同一台谱仪上测，或减去谱仪长宽后再分析；不能在不同谱仪上直接比较，这不科学。以上是第二节光反射理论的内容：我们从经典和量子两个角度，分析关注的 5 个物理量的变化，理论基础围绕张量和向量讨论。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>另一组量是能级宽度（能量不确定度）ΔE与时间或能级寿命ΔT。它们不可对易，乘积一定大于等于ħ/2。若能级寿命非常短，则ΔT很小，ΔE就会比较大。</p><p>此时τ为能级2的寿命，与21跃迁系数成反比。A21越大，越易实现跃迁，在2能级停留时间越短，寿命越短。</p><p>本身效应展宽与仪器展宽以卷积形式，得到观测到的光谱展宽效应。需严格去卷积计算，才能得到拉曼光谱本身的展宽。</p><p>用长宽衡量晶体质量或其他性质时，必须在同一台谱仪上测，或减去谱仪长宽后再分析。不能在不同谱仪上直接比较，这不科学。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s16">
+  <div class="slides"><figure class="slide" id="slide-299">
+<img src="slides/slide_299.png" alt="课件第299页 拉曼散射选择定则：节前语（与红外对比）">
+<figcaption><span class="sno">299</span><span class="stitle">拉曼散射选择定则：节前语（与红外对比）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-300">
+<img src="slides/slide_300.png" alt="课件第300页 拉曼光谱 vs 红外光谱：波数范围与测试对比">
+<figcaption><span class="sno">300</span><span class="stitle">拉曼光谱 vs 红外光谱：波数范围与测试对比</span></figcaption>
+</figure>
+<figure class="slide" id="slide-301">
+<img src="slides/slide_301.png" alt="课件第301页 极化率与感应偶极矩：m_α=Σχ_αβE_β">
+<figcaption><span class="sno">301</span><span class="stitle">极化率与感应偶极矩：m_α=Σχ_αβE_β</span></figcaption>
+</figure>
+<figure class="slide" id="slide-302">
+<img src="slides/slide_302.png" alt="课件第302页 拉曼活性与红外活性的条件（感应偶极矩改变）">
+<figcaption><span class="sno">302</span><span class="stitle">拉曼活性与红外活性的条件（感应偶极矩改变）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-303">
+<img src="slides/slide_303.png" alt="课件第303页 举例：硫化碳 CS₂ 四种振动模式">
+<figcaption><span class="sno">303</span><span class="stitle">举例：硫化碳 CS₂ 四种振动模式</span></figcaption>
+</figure>
+<figure class="slide" id="slide-304">
+<img src="slides/slide_304.png" alt="课件第304页 举例：CO₂（O=C=O）对称与反对称伸缩">
+<figcaption><span class="sno">304</span><span class="stitle">举例：CO₂（O=C=O）对称与反对称伸缩</span></figcaption>
+</figure>
+<figure class="slide" id="slide-305">
+<img src="slides/slide_305.png" alt="课件第305页 拉曼活性与红外活性的适用范围">
+<figcaption><span class="sno">305</span><span class="stitle">拉曼活性与红外活性的适用范围</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">16</span>
+      <div class="sec-tt">
+        <h2>拉曼光谱 vs 红外光谱：选择定则举例</h2>
+        <div class="sec-meta"><span class="time">录音：第 3 段（中）</span><span class="chip">课件 299</span><span class="chip">课件 300</span><span class="chip">课件 301</span><span class="chip">课件 302</span><span class="chip">课件 303</span><span class="chip">课件 304</span><span class="chip">课件 305</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第三节介绍拉曼散射选择定则，主要是偏振选择定则。PPT 对此做了简单说明，涉及拉曼散射及红外吸收光谱的选择定则。通常两者不同，将红外光谱放进来是为了对比，帮助大家更好地理解相关问题，因此我们将拉曼光谱和红外光谱放在一起比较。拉曼散射与红外散射部分会用不同颜色字体分别表示。需强调本节未涉及二阶阿尔法散射过程，内容均关于一阶散射过程——一阶散射选择定则若涉及二阶、三阶，会有更多不同的选择定则，目前相关研究已比较透彻，有相应的文献支持。</p><p>下面简单比较拉曼光谱和红外光谱分析方法，第二章曾初步涉及。拉曼光谱使用可见光波段，光子与声子相互作用传递能量，属于散射光谱；红外光谱通常是吸收，入射光子为红外光，需与振动频率匹配才能被吸收。因此一个是散射光谱，一个是吸收光谱。</p><p>目前拉曼光谱技术可测 5 到 8000 个波数：5 个波数需借助特殊实验条件，即低波数拉曼技术才能实现；多数情况测到 2000 个波数，很多石墨烯区域可测到 8000 个波数。红外吸收通常测量 400~4000 个波数，这是常规探测器的测量范围；搭配不同探测器，原则上也可测到更低的波数。我们实验室的 CD 液和包光比，应该能测到 400 开始，但一般需有额外的波特探测器才能测到几十个波数。我们没有那个探测分析，可能从 400 个波束往上，但一般是 4000 个波束——可见光是 4000 个波束，应该是红外的。通过加一些 10、0 或微分 47 等，我们可以拓展到可见光波段，所以几万个波束目前测量不是大问题。但分析分子振动尤其是晶格振动时，通常无法达到那么高的连波数；对于分子，三四千五六千比较常见，没必要到那么高的频率。</p><p>拉曼光谱通常测量拉曼活性，即选择定则。区分拉曼活性和红外活性是本节主要内容，由分子结构决定，最主要的是对称性，后面会讲对称性来决定。样品的选择和质量等不同：对拉曼来说，通常样品放上去就能测；红外光谱很多是粉末，需压片后才能测试，以增加反射和吸收效果，稍微复杂一点。</p><p>关于极化率，拉曼光谱和红外光谱最大不同是一个吸收一个散射。我们刚才讲了散射光，一直在讨论极化率，即 α 的物理含义。但对于红外吸收，因为它是在两个振动能级之间，完全没有偶极矩参与——它相当于直接在两个能级之间跃迁，比如从基态到第一激发态或者第二激发态，完全是在两个能量之中进行一个跃迁。所以它涉及的是偶极跃迁，也就是感应电偶极矩，这里用 M 表示，其实就是那个 P。因此它更敏感的是这个偶极矩的变化。</p><p>这里涉及的 α 有不同的影响因素，会影响其极化率：比如有电子极化率、原子离子极化率以及取向极化率等。但我们这里跟振动相关，跟晶格振动有关，我们研究的是离子在平衡位置附近的振动特性，得到的是电子的能量结构。所以对于拉曼或红外光谱，影响更大的是原子和离子的极化率，这里不考虑电子和取向极化率的问题。</p><p>再来看拉曼活性和红外活性的区别。对于拉曼，散射强度非零要求 α 非零，且 α 必须发生改变——只有 α 发生改变，即 Δα 不为零，才能引起拉曼散射强度的变化；如果它只是静态的，只会产生瑞利散射。所以这里 α 的变化对应于晶胞内原子间距的改变：原子间距改变，极化率就会发生改变。对于红外，它是两个能级之间的跃迁，与电子跃迁不同，它是一个电偶极矩的变化，我们更关注电偶极矩的改变量：电偶极矩的改变量对应对称中心的交叠和无恒为零。若有等效电荷且始终对称，电偶极矩就没有变化，此时若变为 0，这两个能级之间就无法发生跃迁，这时就无法产生红外吸收光谱。</p><p>这里举一个硫化碳的例子。它有 4 个振动，其中两个是简并的。这一个是分子的振动模式，因为声子需有周期性结构：振动后，表现为相向振动或相互拉开。当往两侧运动时，硫原子相向振动，原子间距变长；当往中间运动时，原子间距变短。原子间距的变化引起极化率的改变，所以这个模式是拉曼活性的。对应下面的 V2、V3 或 V4 振动，硫原子间距不发生变化——不管往左还是往右震动，原子间距都没变，所以它是拉曼非活性的。但它的等效电荷中心在发生变化，可以左右运动，所以它就会呈现一个红外活性——这个对称中心的点下变荷不同为一，这个时候我就会引起这个偶极距的一个变化。</p><p>对于这样的一个分子，可以看到这是一个具有对称中心的分子，它的对称中心就是这个碳所在的这个位置。对于有对称中心或是有繁衍中心的这样的分子，它的拉曼活性和同化活性是互斥的：我是拉曼活性，那么我就不具有红外活性；我是红外活性，我就不具有拉曼活性。但是，如果是对于没有对称中心，比如说像水分子或者是氧化硫这样的分子，那么它们就可以是红外活性，也可以是拉曼活性，这个大家了解一下就可以。</p><p>第一个例子是这个二氧化碳：它有一个对称的伸缩振动，大家可以看到它的等效电荷中心也是保持不变的，所以它是没有红外活性的，但它的极化率是改变的——因为它两个原子之间的间距一直在发生变化，所以这个时候它是有拉曼活性的。那么对于右边的这一个的话，它的等效电荷是一会儿偏左一会偏右，所以它是有红外活性，但是没有拉曼活性。这一个就是一个简单的小结，大家看一下就行。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>拉曼光谱使用可见光波段，光子与声子相互作用传递能量，属于散射光谱。红外光谱通常是吸收，入射光子为红外光，需与振动频率匹配才能被吸收。因此一个是散射光谱，一个是吸收光谱。</p><p>对于拉曼，散射强度非零要求α非零，且α必须发生改变。只有α发生改变，即Δα不为零，才能引起拉曼散射强度的变化。如果它只是静态的，只会产生瑞利散射。</p><p>对于有对称中心的这样一或者是有繁衍中心的这样的一个分子，我们可以看到它的拉曼活性和同化活性是互斥的。就是，我是拉曼活性，那么我就不具有同化活性。我是同化活性，我就是我就不具有拉曼活性。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s17">
+  <div class="slides"><figure class="slide" id="slide-306">
+<img src="slides/slide_306.png" alt="课件第306页 群论入门：正三角形的对称操作与矩阵表示">
+<figcaption><span class="sno">306</span><span class="stitle">群论入门：正三角形的对称操作与矩阵表示</span></figcaption>
+</figure>
+<figure class="slide" id="slide-307">
+<img src="slides/slide_307.png" alt="课件第307页 补充：群表示——不等价不可约表示">
+<figcaption><span class="sno">307</span><span class="stitle">补充：群表示——不等价不可约表示</span></figcaption>
+</figure>
+<figure class="slide" id="slide-308">
+<img src="slides/slide_308.png" alt="课件第308页 等价表示：基函数变换与矩阵转换">
+<figcaption><span class="sno">308</span><span class="stitle">等价表示：基函数变换与矩阵转换</span></figcaption>
+</figure>
+<figure class="slide" id="slide-309">
+<img src="slides/slide_309.png" alt="课件第309页 直和与直积：可约表示的约化（Γ=Γa⊕Γb）">
+<figcaption><span class="sno">309</span><span class="stitle">直和与直积：可约表示的约化（Γ=Γa⊕Γb）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-310">
+<img src="slides/slide_310.png" alt="课件第310页 C3v 点群：不可约表示 A1、A2、E">
+<figcaption><span class="sno">310</span><span class="stitle">C3v 点群：不可约表示 A1、A2、E</span></figcaption>
+</figure>
+<figure class="slide" id="slide-311">
+<img src="slides/slide_311.png" alt="课件第311页 特征标表：D6h 点群与基本函数（偶极矩/极化率）">
+<figcaption><span class="sno">311</span><span class="stitle">特征标表：D6h 点群与基本函数（偶极矩/极化率）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-312">
+<img src="slides/slide_312.png" alt="课件第312页 特征标表：数字的含义（2、0、-2）">
+<figcaption><span class="sno">312</span><span class="stitle">特征标表：数字的含义（2、0、-2）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">17</span>
+      <div class="sec-tt">
+        <h2>群论基础与特征标表</h2>
+        <div class="sec-meta"><span class="time">录音：第 3 段（后）</span><span class="chip">课件 306</span><span class="chip">课件 307</span><span class="chip">课件 308</span><span class="chip">课件 309</span><span class="chip">课件 310</span><span class="chip">课件 311</span><span class="chip">课件 312</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>前面主要是通过一些例子或者一些振动来说明。但有没有更为普适的方法？对于很多的振动，其实它是相对来说很复杂的：分子的振动，如果只有简单的这几个原子，观察起来其实还是比较简单；但如果是对于很复杂很复杂的这样一些原子，就是一些晶包，或者是对于像金的振动，它是 N 个原子振动时，你能通过振动形式判断是拉曼活性还是红外活性吗？这时事情变得非常复杂。大家开始考虑如何有一个普适的方法，通过程序化的考量，轻松知道它是拉曼活性还是红外活性。接下来讲这件事需要群论知识。大家学过群论吗？没学过没关系，我尽量用易懂的语言来说明。</p><p>先从三角形讲起。它是二维平面的正三角形，有一些对称操作：比如保持位置不动，这是一个对称操作；旋转 120° 可回到原位，这也是对称操作——可以逆时针旋转 120°，也可以顺时针旋转 120°，此时 C3 和 C3⁻¹ 也是它的对称操作；还有镜面操作，沿三个角与对边中点的连线，有三条中线，这样的镜面对称操作存在。它总共有六个对称性操作，涵盖了所有对称性。我们把它叫做一个群，相当于把不同的对称操作作为一个集合，大家高中应该学过集合吧？这就是群的概念。</p><p>前面讲到的对称操作可以用矩阵表述，这相当于坐标的变化。对于二维平面，原则上可选择两个坐标 S 和 Y，从而描述清楚坐标变化；当然也可选择更高阶表示，如 X 平方减 Y 平方、2 倍 XY 和 X 平方加 Y 平方，变成三个坐标。大家可能会问为何选 3 个坐标，下面会解释：此时变换矩阵会相应变化，我们有三个基函数，变换矩阵变为 3×3 矩阵。这几个对称性操作的矩阵表示如下——这是由坐标决定的：例如 E 操作不动，三个坐标保持不变，矩阵为对角阵 111；对于 C3 操作，相对于这些基函数有相应的表达式，推导过程不用管，只需知道这对应不可约表示。</p><p>大家看这个矩阵表示，会发现什么？有的同学看到了，我们其实可以分块：它总是一个 2×2 加上一维表示，这里都是 0，我们可以把它分成一个 2×2 乘以一个 1，加上一个一维。这其实就是矩阵的分块。我们说这样一个矩阵是可约的，即这是一个可约的表示，大家先做个简单了解。</p><p>当然，我们还可以换一组基函数，即换一组坐标：现在变成了 X 平方、2XY 和 Y 平方。对于这一组新的基函数，变换矩阵是否要发生相应变化？这时对应于这一组基函数，其变化矩阵对应着上述 6 个微分操作，大家可以发现它有什么新特点？下面的没写出来，但它跟 C3 又有关系——大家可以看到 C3 是一个非常复杂的表示，没办法像上面所说那样分解，它不能分块，这时就是一个更复杂的表示。对于这样的基函数，原则上可以用 2 表示为 2×2，但我们可以选择复杂些，比如 3×3，或 3 个 1；你也可以选含有 5 个、10 个、50 个或 100 个的一组基函数，其实都可以，只是变换矩阵会相应变得越来越复杂。</p><p>那我们到底应该选择什么样的基函数，才能更好地表述这样的群操作呢？在此之前，还要给大家讲一件事：我们前面提到，选择不同基函数会导致变换矩阵不同，这两组变换矩阵的关系，取决于所选基函数间是否存在关联。实际上，两组基函数可通过变换矩阵相互转换，例如 G 与 F 通过 P 和 T 的逆矩阵进行相应变换。这意味着无论采用何种基函数表示，对称性操作的变换都具有等效性，因此我们可以选择更简单的形式来讨论对称性问题。</p><p>基于此，我们选择前文提到的可分块矩阵来分析其特性。分块相当于将矩阵写成直和的形式，此外还有直积，对应双生二、两分子三分子等对易性的乘积。此时矩阵分块呈现集合形式，我们可以将 E 写成 1A+EB，即一个二维和一个一维表示的组合，这只是将其写成新的表示形式。借此，我们将可约表示进行约化：我们要找的基函数，能使变换矩阵约化为一系列一维、二维、三维表示——如果有更为复杂的可能，到三维就没有了。我要选择这样的一组基函数，让我能够优化成 123 这样的一个形式，让我们更好地来讨论对称性的问题。</p><p>这其实就类似于我们前面所一直在讲的关于那个正则变化。我们可以想一下，正则变化是不是也大概是在干这么一件事情？就是说我们原本原子的振动，我们有一个晶体，有很多很多原子，那我的振动我们分不清它，它们的振动都会相互影响，这个时候很难去描述它。那么我们就去找出它一系列独立的、互不干扰的特定频率的振动，然后我的某一个原子的振动就可以用这样的一些振动进行一个叠加，就得到了我的原子。那么在这里其实也是类似的：我们就选择了一组基函数，让我的所有的这样的一个对称的操作，都可以用 1、2、3 不同的这样的一个矩阵，越简单越好这样的一些矩阵来进行描述进行表示。所以，我们后面会看到这样的一些结果。</p><p>那么我们选择出来的这样的一个基函数体现在哪些地方，它的变化矩阵又体现出在哪些地方？对于 C3v 的这样一个点群，大家可以看到这个表的横的这些一行一行的：最上面这一行，就是它的不同的对称性操作。我们刚才所说的三角形，其不同的对称性操作对应不可约表示，但这并非最终完整结果，此处仅为示例，实际表示更为复杂。它包含 A1、A2 和 E：A1 是一维表示，即前述的一维；A2 也是一维表示，但在镜面作用下需乘 −1 才回到本身；E 是二维表示，即刚才分化出的那一块。由此得到该表格，后续还会看到其他形式。</p><p>这里有 6 个对称性操作。不可约表示维度的平方和等于对称性操作个数，这是严格定理：A、B 表示一维，E、F 表示二维，G 表示三维——一维维度平方为 1+1+2 的平方，等于 6 个对称性操作。因此这三个不可约表示已完全描述所有对称性操作，不可约表示的数量由对称性操作决定。此外还有矩阵元的正交原理，这些矩阵都是正交归一化的，这与前面寻找独立简谐振动变化的道理相同。另外，不可约表示还有分解定理以及直积表示，这些内容后续还会涉及。</p><p>这里是一些关于群的定义，大家大概清楚就行。我们经常能看到这样一个表格，这其实是不可约表示的表格，在手册或网站上能查到的也是这种表格。可以看到表里这部分是点群 D6h，以及不可约表示的方法，有 A、B、E 等；还有这一系列对称性操作元素，另两列是偶极矩和对应的极化率。这部分都是刚才所说的基函数——选择什么样的基函数能把对称性操作进行分类，分类后就有对应的不可约表示，切块后一个小方块就对应一个不可约表示。</p><p>对于 D6h，其不可约表示较多，因为它总共有 24 个对称性操作元素，所以这里的不可约表示相对也比较多。这里与前面的表格不同，数字代表矩阵对角线上的求和，即特征标，这个表就是特征标表。例如在该模式下，特征标要么是 2，要么是 0 或 −2——因为它是二维的，所以只可能是 2、0、−2 这些数值；对于一维的话，它只有可能是 1、−1 或 1。这里好像有点问题，大家可以看到下面的系数：它是一个二维，所以对称信号都是 2；这里是 1，即 −1，乘以 2 就会变成 −2；这里还有一个 2。我们先给大家讲这个表表示的意思，至于这个表如何来看，下节课再给大家详细介绍。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>大家开始考虑如何有一个普适的方法，通过程序化的考量，轻松知道它是拉曼活性还是红外活性。接下来讲这件事需要群论知识。大家学过群论吗？没学过没关系，我尽量用易懂的语言来说明。</p><p>我们把它叫做一个群，相当于把不同的对称操作作为一个集合。大家高中应该学过集合吧？这就是群的概念。</p><p>不可约表示维度的平方和等于对称性操作个数，这是严格定理。……一维维度平方为1+1+2的平方，等于6个对称性操作。</p><p>这里与前面的表格不同，数字代表矩阵对角线上的求和，即特征标。这个表就是特征标表。例如在该模式下，特征标要么是2，要么是0或-2。……我们先给大家讲这个表表示的意思。至于这个表如何来看，下节课再给大家详细介绍。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（显微共焦拉曼光谱学）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>
