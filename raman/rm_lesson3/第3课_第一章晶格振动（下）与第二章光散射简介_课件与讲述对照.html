@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>显微共焦拉曼光谱学（2026 秋） · 第一章 晶格振动（下）：双原子链与声子色散 · 态密度与范霍夫奇点 ＋ 第二章 光散射及光谱简介｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>显微共焦拉曼光谱学（2026 秋） · 第一章 晶格振动（下）：双原子链与声子色散 · 态密度与范霍夫奇点 ＋ 第二章 光散射及光谱简介</h1>
+    <div class="sub">第一章 晶格振动（下）：双原子链与声子色散 · 态密度与范霍夫奇点 ＋ 第二章 光散射及光谱简介 ｜ 2026-09-15 ｜ 授课：林妙玲（第一、二章）</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 155 页 · 整理 21 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-s01">01 复习：晶格振动求解的四步法与玻恩-卡曼边界条件</option>
+<option value="sec-s02">02 长波极限：声速与连续介质弹性波的类比</option>
+<option value="sec-s03">03 短波极限与一个常见误区：声学支相邻原子也会反相</option>
+<option value="sec-s04">04 一维双原子链：模型与约化质量</option>
+<option value="sec-s05">05 运动方程与格波解：二元一次方程组</option>
+<option value="sec-s06">06 久期方程与两支色散：声学支、光学支</option>
+<option value="sec-s07">07 布里渊区折叠：质量相等时回到单原子链</option>
+<option value="sec-s08">08 声学支与光学支：振幅比、命名由来</option>
+<option value="sec-s09">09 二维晶体的晶格振动</option>
+<option value="sec-s10">10 三维晶体的晶格振动：3n 支声子</option>
+<option value="sec-s11">11 态密度：为什么要引入</option>
+<option value="sec-s12">12 态密度的推导：Q 空间密度 × 等频率面</option>
+<option value="sec-s13">13 一维链的态密度与 Debye 近似</option>
+<option value="sec-s14">14 范霍夫奇点与硅的研究实例</option>
+<option value="sec-s15">15 进入第二章：拉曼光谱学介绍的内容框架</option>
+<option value="sec-s16">16 光是什么：电磁波、波粒二象性与可见光</option>
+<option value="sec-s17">17 光的散射现象：蓝天白云与散射分类</option>
+<option value="sec-s18">18 汤姆逊散射与康普顿散射</option>
+<option value="sec-s19">19 光与物质相互作用：紫外灾难、普朗克与光电效应</option>
+<option value="sec-s20">20 ARPES 与正负电子对：光电效应的高能应用</option>
+<option value="sec-s21">21 线性/非线性散射、光谱单位与思考题</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 ch1-固体物理基础-2026秋.pdf（p73–119）＋ ch2-拉曼光谱学介绍-2026秋.pdf（p4–19） 逐页渲染，转写原文见 record_20260915.txt。</div>
+<section class="sec" id="sec-s01">
+  <div class="slides"><figure class="slide" id="slide-093">
+<img src="slides/slide_093.png" alt="课件第93页 2) 周期性边界条件：玻恩-卡曼边界条件（环状链、q=2π/(Na)·h）">
+<figcaption><span class="sno">093</span><span class="stitle">2) 周期性边界条件：玻恩-卡曼边界条件（环状链、q=2π/(Na)·h）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>复习：晶格振动求解的四步法与玻恩-卡曼边界条件</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 1 段（前）</span><span class="chip">课件 93</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>开场先回顾上节课一维单原子链的完整求解思路，四步走：第一步做受力分析，写出晶体中某个原子受周围原子作用的受力情况；第二步借助力学方程（F=ma，a 是位移对时间的二次导）建立运动方程；第三步假设格波形式的解（位移、时间相位、空间相位各项含义要清楚，A 是振幅、naq 是空间相位）；第四步把形式解代入受力方程，得到 ω 关于 q 的表达式，也就是色散关系。</p><p>有了色散关系还差最后一步：q 在什么范围内取值？由周期性边界条件约束。所以求解晶格振动就是这一整套流程，后面一维双原子链、二维、三维都沿用同样的思路——只是原子多了、维度多了，方程从 1 个变成 2N 个、3N 个，联立求解更麻烦，思路完全一致。</p><p>上节课最后讲到的玻恩-卡曼边界条件（本页）：把有限长原子链弯成环状，第 n 个原子增加到 N 个后必须与原来的第 n 个原子振动完全相同，于是 e^(-iNaq)=1，得到 q=2π/(Na)·h。本节课就从长波极限和短波极限讲起。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我们回想一下，我们在求解一维单元实验的时候，我们的思路是什么？我们首先是分析了这个原子它的收益情况对不对，那么第二步呢，借助了这样的一个力学方程……F=ma，然后这边其实这个A它就等于S对时间的二次求导……设它是符合一个类似于波动方程的这样的一个形式，对不对？所以我们假设了一些，假设它的解释满足什么样的一个形式。格波解对不对……最后得到我们得到了欧米伽随着Q的一个表达式……其实就是我们所说的什么对色相关系……只剩下最后一个小小的问题，什么问题？Q的取值范围对不对，所以我们要知道Q它是在什么位置进行取值，那么我们这个用什么条件来进行约束。周期性约定。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s02">
+  <div class="slides"><figure class="slide" id="slide-094">
+<img src="slides/slide_094.png" alt="课件第94页 3) 长波极限和短波极限：长波极限（ω=a√(β/m)|q|、伸长模量与线密度）">
+<figcaption><span class="sno">094</span><span class="stitle">3) 长波极限和短波极限：长波极限（ω=a√(β/m)|q|、伸长模量与线密度）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-095">
+<img src="slides/slide_095.png" alt="课件第95页 3) 长波极限和短波极限：长波极限——波速（v=√(伸长模量/密度)）">
+<figcaption><span class="sno">095</span><span class="stitle">3) 长波极限和短波极限：长波极限——波速（v=√(伸长模量/密度)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-096">
+<img src="slides/slide_096.png" alt="课件第96页 第 2 节 晶格振动：主要内容（提纲，标示“长波极限和短波极限”）">
+<figcaption><span class="sno">096</span><span class="stitle">第 2 节 晶格振动：主要内容（提纲，标示“长波极限和短波极限”）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-097">
+<img src="slides/slide_097.png" alt="课件第97页 3) 长波极限和短波极限：长波极限推导（ω=vq、v=a√(β/m)）">
+<figcaption><span class="sno">097</span><span class="stitle">3) 长波极限和短波极限：长波极限推导（ω=vq、v=a√(β/m)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-098">
+<img src="slides/slide_098.png" alt="课件第98页 3) 长波极限和短波极限：波速：晶格视为连续介质（弹性波类比）">
+<figcaption><span class="sno">098</span><span class="stitle">3) 长波极限和短波极限：波速：晶格视为连续介质（弹性波类比）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>长波极限：声速与连续介质弹性波的类比</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 1 段（前）</span><span class="chip">课件 94</span><span class="chip">课件 95</span><span class="chip">课件 96</span><span class="chip">课件 97</span><span class="chip">课件 98</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>什么是长波极限？q 是波矢，与波长 λ 成反比（常用单位 cm⁻¹）。波长很长 → q 趋近于 0。注意：长波极限是 q→0，短波极限不是 q→∞——q 不可能无限大，最大只能到第一布里渊区边界。</p><p>长波极限推导：把色散关系 ω²=4β/m·sin²(aq/2) 在 q→0 处展开，sin(aq/2)≈aq/2，得到 ω=(a√(β/m))|q|=vq——ω 与 q 成正比，斜率恒定，这个斜率就是声速 v=dω/dq=a√(β/m)。这和连续介质中弹性波的形式一样。</p><p>进一步讨论：把相邻原子相对位移写成 (μₙ₊₁-μₙ)/a（相对伸长量），相互作用力 βδ 改写为 βδ=βa·(δ/a)，前面 βa 就是伸长模量（拉伸单位长度需要的弹性力），后面是相对伸长量。于是 v=√(βa/(m/a))=√(伸长模量/密度)——与连续介质弹性波的波速 c=√(弹性模量/介质密度) 完全同构。长波极限下晶格可以看作连续介质，原子链上传播的弹性波就是声波。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>当我的Q趋近于0的时候，我的这个3in1/2AQ也是趋近于0的对吧？所以Sin1/2AQ……它的展开的话，那它就是1/2AQ，所以我们就得到了欧米伽等于前面A根号贝塔除以M然后Q，所以它是正的等于Q……它相当于欧米伽跟Q之间的这样的一个斜率，是一个恒定的，就是我们自己所说的它的声速V等于欧米伽除以DQ，它其实是一波数。</p><p>如果是相当邻原子相对位移就是A分之点阿尔法，我的这个位移相对于我原子之间的间距的这个比值，我们把它称之为相对的生成量……前面这一部分就是我们所说的这个伸长模量……我们再把这样子的一个式子，把它的声速V也进行一个改写的话，我们就会发现它其实就相当于是伸长模量除以密度。那么这个一些的定义，其实都跟我的这个弹性介质波连续的这样的一个介质波，它的定义，基本上是可以类比的。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s03">
+  <div class="slides"><figure class="slide" id="slide-099">
+<img src="slides/slide_099.png" alt="课件第99页 3) 长波极限和短波极限：短波极限（ω=2√(β/m)、相邻原子反相振动）">
+<figcaption><span class="sno">099</span><span class="stitle">3) 长波极限和短波极限：短波极限（ω=2√(β/m)、相邻原子反相振动）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>短波极限与一个常见误区：声学支相邻原子也会反相</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 1 段（前）</span><span class="chip">课件 99</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>短波极限：q=±π/a（第一布里渊区边界），对应波长 λ=2a，ω_max=2√(β/m)。把 q=π/a 代回格波解，相邻原子 (n+1)、n、(n-1) 的相位相差 π，即 μₙ₋₁=-μₙ=-μₙ₊₁——相邻原子振动方向相反。</p><p>课堂特别纠正一个常见误区：很多同学说「光学声子相邻原子反向振动、声学声子同向振动」——这句话只在长波极限下成立！在短波极限（布里渊区边界）下，声学声子同样可以表现为相邻原子反相振动（一维单原子链里只有声学支，反相照样存在）。所以讨论任何结论都要先说清楚前提条件。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>在短波极限的时候，那么我相邻原则是不是也可能存在着它们的之间的相位是相反的？……所以这个时候尽管对于声学声子，我在短波极限和长波极限下，我的原子的振动是表现出不同的性质的。只有在靠近物理原区中心的时候，我的原子才是在声学支的时候，它的相邻原子之间才是同向振动的。……所以刚才说的那一句话其实是不对的，大家一定要去分清楚我们讨论的这个前提，或者是假设的这个条件是什么样子的。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s04">
+  <div class="slides"><figure class="slide" id="slide-100">
+<img src="slides/slide_100.png" alt="课件第100页 第 2 节 晶格振动：主要内容（提纲，标示“一维双原子链”）">
+<figcaption><span class="sno">100</span><span class="stitle">第 2 节 晶格振动：主要内容（提纲，标示“一维双原子链”）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-101">
+<img src="slides/slide_101.png" alt="课件第101页 4) 一维双原子链的晶格振动：弹簧振动、约化质量与双原子链模型">
+<figcaption><span class="sno">101</span><span class="stitle">4) 一维双原子链的晶格振动：弹簧振动、约化质量与双原子链模型</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>一维双原子链：模型与约化质量</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 1 段（中）</span><span class="chip">课件 100</span><span class="chip">课件 101</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>从弹簧振动讲起：两个质量分别为 m、M 的小球由弹簧相连，受力 F=β(μ₁-μ₀)，方程 f₁=β(μ₁-μ₀) 等。求解得到恒定的振动频率 ω(2)=√(β/μ)，其中 μ=mM/(m+M) 是两个原子之间的约化质量。双原子分子的振动频率由约化质量决定——这是后面光学支频率的物理基础。</p><p>一维双原子链：把这两种小球周期性交替排列，P 原子（质量 m、偶编号 2n）和 Q 原子（质量 M、奇编号 2n+1）一个周期包含两个原子，是「最简单的复式晶格」。受力分析要分别对偶数和奇数原子做：每个原子都受左右两个弹簧力，方程形式和单原子链类似，只是两种原子的质量不同。若晶体含 N 个周期，就共有 2N 个运动方程需要联立求解。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那么我们还是从这样的一个弹簧振动给大家讲起，这个时候呢，我们是两个原子……我变成一个小的，还有一个大的，我中间也是用这个长度连起来……它的这样的一个振动的频率，就是它是这两个小球是一个恒定的这样的一个振动频率……那么它的这样的一个频率是贝塔除以M6ML，是它这个两个原子之间的一个约化质量。</p><p>那么我这边就是应该要排一个小球了，然后再排一个大球……不断的就是这两边不断的进行一个延伸。那么这个时候我就相当于我一个周期的单元里面，我们应该是包含这两个部分……所以我可以把它设为一个是2N，一个是2N+1，一个是奇数，一个是偶数。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s05">
+  <div class="slides"><figure class="slide" id="slide-102">
+<img src="slides/slide_102.png" alt="课件第102页 4) 一维双原子链的晶格振动：运动方程（mμ̈ₙ=β(μₙ₊₁+μₙ₋₁-2μₙ)）">
+<figcaption><span class="sno">102</span><span class="stitle">4) 一维双原子链的晶格振动：运动方程（mμ̈ₙ=β(μₙ₊₁+μₙ₋₁-2μₙ)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-103">
+<img src="slides/slide_103.png" alt="课件第103页 4) 一维双原子链的晶格振动：运动方程（P/Q 原子、2N 个联立方程）">
+<figcaption><span class="sno">103</span><span class="stitle">4) 一维双原子链的晶格振动：运动方程（P/Q 原子、2N 个联立方程）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-104">
+<img src="slides/slide_104.png" alt="课件第104页 4) 一维双原子链的晶格振动：格波解（μ₂ₙ、μ₂ₙ₊₁ 与 A/B 方程组）">
+<figcaption><span class="sno">104</span><span class="stitle">4) 一维双原子链的晶格振动：格波解（μ₂ₙ、μ₂ₙ₊₁ 与 A/B 方程组）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>运动方程与格波解：二元一次方程组</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 1 段（中）</span><span class="chip">课件 102</span><span class="chip">课件 103</span><span class="chip">课件 104</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>运动方程：类比一维单原子链 mμ̈ₙ=β(μₙ₊₁+μₙ₋₁-2μₙ)，偶原子（P，质量 m、编号 2n）和奇原子（Q，质量 M、编号 2n+1）各有一组类似的方程，区别只是质量不同。N 个周期共 2N 个联立方程。</p><p>第二步引入格波解：单原子链里相位是 naq，双原子链里偶原子相位是 (2n)aq、奇原子相位是 (2n+1)aq——μ₂ₙ=Ae^{i[ωt-(2n)aq]}、μ₂ₙ₊₁=Be^{i[ωt-(2n+1)aq]}，P、Q 原子的振幅 A、B 不同。把两组形式解代入运动方程，得到同时含 A 和 B 的两个方程，且 A、B 都只出现一次——这是一个二元一次线性方程组。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>类比于一维单元子链的受力，我们就可以得到对于奇数和偶数原子它们的分别的受力情况……它们的这个原子的质量都是不同的，一个是小M，一个是大M。那么这个时候我们就相当于有对于一个周期两个原子分别的受力情况。那么总共有N个周期，那么总共我们就有2N个这样的一个方程。</p><p>如果这里变成2N和2N+1的时候，那我的相位的这个N相应的就要变成2N还有2N+1……我发现它是既含有A，也含有这个B的这样的一个方程，而且它们是只有一次，所以它相当于是一个二元一次方程。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s06">
+  <div class="slides"><figure class="slide" id="slide-105">
+<img src="slides/slide_105.png" alt="课件第105页 4) 一维双原子链的晶格振动：格波解有解条件（久期行列式=0）">
+<figcaption><span class="sno">105</span><span class="stitle">4) 一维双原子链的晶格振动：格波解有解条件（久期行列式=0）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-106">
+<img src="slides/slide_106.png" alt="课件第106页 4) 一维双原子链的晶格振动：色散关系（ω±²=ω(2)²{1±√[1-(4mμ²/mM)sin²(aq)]}）">
+<figcaption><span class="sno">106</span><span class="stitle">4) 一维双原子链的晶格振动：色散关系（ω±²=ω(2)²{1±√[1-(4mμ²/mM)sin²(aq)]}）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-107">
+<img src="slides/slide_107.png" alt="课件第107页 4) 一维双原子链的晶格振动：色散曲线（光学支/声学支、q 范围 ±π/2a）">
+<figcaption><span class="sno">107</span><span class="stitle">4) 一维双原子链的晶格振动：色散曲线（光学支/声学支、q 范围 ±π/2a）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>久期方程与两支色散：声学支、光学支</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 1 段（中）</span><span class="chip">课件 105</span><span class="chip">课件 106</span><span class="chip">课件 107</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>线性方程组有非零解的条件：系数行列式等于 0。把 A、B 的系数写成行列式并令其为零，得到久期方程（线性代数的标准内容），关于 ω² 是一个一元二次方程，用求根公式解得 ω² 有正、负两个值，再开方（频率取正）得到两支色散：ω±²=ω(2)²{1±√[1-(4mμ²/mM)sin²(aq)]}。</p><p>两支的含义：ω₋ 从 0 开始、与单原子链更接近，叫声学支；ω₊ 在 q=0 时频率有限（ω=√2ω(2)），叫光学支。两支之间有一个带隙——在这个频率范围内没有声子分布，态密度为零，就像能带结构里的能隙。带隙宽度与两种原子的质量差有关：质量比越大，带隙越大；如果 M=m，带隙消失，退化为单原子链。</p><p>q 的取值范围：双原子链周期是 2a，所以第一布里渊区是 -π/(2a)<q≤π/(2a)，即 ±π 除以周期。以后给出不同周期的模型，第一布里渊区边界永远是 ±π/周期，不是固定数值。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>要让它有解，那么就是这个行列式，它应该是等于0……我们把这个行列式等于0这样的一个方程求解出来，我们就可以得到欧米伽跟Q之间的一个关系了。这个其实它也是一个久期方程……我们把它改写之后，它相当于是一个关于欧米伽的平方的一元二次方程。</p><p>所以这个时候我们就只有两支这样的一个生子支。那么，对于下面这个，我们把它叫做声学生子。对于上面的这个，我们通常把它叫光学生子……对于光学值的话，它的在Q=0的时候呢，它的频率是一个有限的数值。……我中间还有一个跟能带结构里面一样的代系……这个带系的大小取决于什么呢？跟我的两个原子之间质量的差距是有关系的，它们两个的比值越大，原则上我的带系会越大。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s07">
+  <div class="slides"><figure class="slide" id="slide-108">
+<img src="slides/slide_108.png" alt="课件第108页 4) 一维双原子链的晶格振动：布里渊区（相邻原胞位相差 2aq）">
+<figcaption><span class="sno">108</span><span class="stitle">4) 一维双原子链的晶格振动：布里渊区（相邻原胞位相差 2aq）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-109">
+<img src="slides/slide_109.png" alt="课件第109页 4) 一维双原子链的晶格振动：周期性边界条件（q=2πh/(2Na)、N 个取值）">
+<figcaption><span class="sno">109</span><span class="stitle">4) 一维双原子链的晶格振动：周期性边界条件（q=2πh/(2Na)、N 个取值）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-110">
+<img src="slides/slide_110.png" alt="课件第110页 4) 一维双原子链的晶格振动：解的完备性（2N 个格波=自由度）">
+<figcaption><span class="sno">110</span><span class="stitle">4) 一维双原子链的晶格振动：解的完备性（2N 个格波=自由度）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div class="sec-tt">
+        <h2>布里渊区折叠：质量相等时回到单原子链</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 1 段（中）</span><span class="chip">课件 108</span><span class="chip">课件 109</span><span class="chip">课件 110</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>双原子链第一布里渊区也可从色散表达式判断：sin²(aq) 是周期函数，最小正周期对应 -π/(2a)<q≤π/(2a)。相邻原胞（一个原胞含两个原子、长度 2a）之间的位相差是 2aq，2aq 变化 2π 的整数倍振动不变，所以 q 只需取这一小段。</p><p>周期性边界条件：N 个原胞成环，N·(2aq)=2πh，即 q=2πh/(2Na)，h 取 -N/2 到 N/2 共 N 个取值——与单原子链的 q=2πh/(Na) 形式一致，只是分母多了周期长度 2a。每个 q 对应两个解（两支），共 2N 个格波，恰好等于 2N 个自由度（N 个原胞×2 原子），解的完备性成立。</p><p>M=m 的特殊情形：退化为单原子链，但画出的仍是两支——因为此时只画出了第一布里渊区的一半（±π/2a）。把外面的分支平移 ±π/a 折进来，就拼回单原子链在 ±π/a 范围内的完整色散。这就是布里渊区折叠：周期加倍 → 布里渊区减半。推广到超晶格：A/B 两种材料按周期（A+B）交替生长 N 层，出现大的调制周期，所有声子都折进小的第一布里渊区——不同激发光能量会选中一系列不同的折叠声子，拉曼谱中出现新的峰，这正是绪论里那张超晶格拉曼峰随激发光能量移动的图的来源。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>假设我的M等于小M的话，那么我会变成什么样子没有代替对不对……为什么它这个时候它还是两只呢？因为这个时候我们就画出来了它的一半……其实就是涉及到这样的一个，就是我们的这个折叠的会员去折叠的这么一个方法。……就是原来你一个大的周期，你的声子都会进行一个折叠的一个效应。</p><p>比如说你一层材料的话，你的这个垂直方向上的定一个程数是A，但是我假设我是两种材料，把它通过一定的周期系统，这个就是一个所谓的超晶格的这样的一个材料，我不断的进行一个增长，一个A一个B，生长到N层的话，那么这个时候我就可以A+B的这样一个周期……我的所有的能量结构，所有的性质也会受到这样的一个大的周期的一个调制。……大家在那个绪论里面，有看到过这么一张图，就是超晶格的声子随着激发光能量的变化，我的拉曼峰就会发生一个偏移。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s08">
+  <div class="slides"><figure class="slide" id="slide-111">
+<img src="slides/slide_111.png" alt="课件第111页 第 2 节 晶格振动：主要内容（提纲，标示“声学波和光学波”）">
+<figcaption><span class="sno">111</span><span class="stitle">第 2 节 晶格振动：主要内容（提纲，标示“声学波和光学波”）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-112">
+<img src="slides/slide_112.png" alt="课件第112页 5) 声学波和光学波：振幅比讨论（(B/A)₊=-m/M 光学、(B/A)₋=1 声学）">
+<figcaption><span class="sno">112</span><span class="stitle">5) 声学波和光学波：振幅比讨论（(B/A)₊=-m/M 光学、(B/A)₋=1 声学）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-113">
+<img src="slides/slide_113.png" alt="课件第113页 5) 声学波和光学波：声学波长波极限（ω²₋≈2β/(m+M)(aq)²、B/A→1）">
+<figcaption><span class="sno">113</span><span class="stitle">5) 声学波和光学波：声学波长波极限（ω²₋≈2β/(m+M)(aq)²、B/A→1）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-114">
+<img src="slides/slide_114.png" alt="课件第114页 5) 声学波和光学波：光学波长波极限（ω₊→√(2β/mμ)、B/A→-m/M）">
+<figcaption><span class="sno">114</span><span class="stitle">5) 声学波和光学波：光学波长波极限（ω₊→√(2β/mμ)、B/A→-m/M）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-115">
+<img src="slides/slide_115.png" alt="课件第115页 5) 声学波和光学波：光学波长波极限图象（P/Q 相对振动、质心不变）">
+<figcaption><span class="sno">115</span><span class="stitle">5) 声学波和光学波：光学波长波极限图象（P/Q 相对振动、质心不变）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-116">
+<img src="slides/slide_116.png" alt="课件第116页 5) 声学波和光学波：振动图象（横声学波/横光学波、横模与纵模）">
+<figcaption><span class="sno">116</span><span class="stitle">5) 声学波和光学波：振动图象（横声学波/横光学波、横模与纵模）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-117">
+<img src="slides/slide_117.png" alt="课件第117页 5) 声学波和光学波：离子晶体中的长光学波（电偶极矩、远红外吸收）">
+<figcaption><span class="sno">117</span><span class="stitle">5) 声学波和光学波：离子晶体中的长光学波（电偶极矩、远红外吸收）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">08</span>
+      <div class="sec-tt">
+        <h2>声学支与光学支：振幅比、命名由来</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 2 段（前）</span><span class="chip">课件 111</span><span class="chip">课件 112</span><span class="chip">课件 113</span><span class="chip">课件 114</span><span class="chip">课件 115</span><span class="chip">课件 116</span><span class="chip">课件 117</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>把解代回方程组求振幅比：q=0 时，光学支 (B/A)₊=-m/M——两种原子反相振动；声学支 (B/A)₋=1——同相振动且幅度一致。长波极限：声学支 ω²₋≈2β/(m+M)(aq)²，是线性弹性波（声速 v=√(2βa²/(m+M))）；光学支 ω₊→√(2β/mμ)，且 mA+MB=0——P、Q 两个亚格子相对振动而质心不动。注意「同向/反向」的区分只在长波极限成立，短波极限下声学支同样可以反相。</p><p>命名由来：红外光子色散 ω=cq 斜率极大（光速），与声子色散只在 q≈0 附近与光学支相交——于是红外光只能激发光学声子（离子晶体中长光学波产生电偶极矩、可与电磁波共振，对应远红外强吸收），这就是傅里叶红外光谱仪测声子的原理：它只能探测到光学声子，所以这一支叫「光学支」。下面这一支长波极限的性质与弹性介质波、声波一致，所以叫「声学支」。</p><p>横模与纵模：振动方向垂直于传播方向的是横波（横声学波 TA、横光学波 TO），振动方向平行于传播方向的是纵波（纵声学波 LA、纵光学波 LO）。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>为什么把它称之为光学的生子呢？因为我们用红外的光谱去打到这个材料上，那么这个材料会进行在特定的频率上会进行一个吸收……因为光子的波长很长，它所对应的Q是非常小的，欧米伽等于CQ，这个斜率是很大，所以它的交叠的部分就是在原点这个位置，跟光学值才有会有一个交点。……探测这个用红外吸收光谱来探测声子，通常也就是傅里叶变换光谱仪，我们通常只能探测到这个光学声子。</p><p>声学的这一支呢，在长波极限下，我的这个声学声子支，它的性质是跟我的弹性介质波的这样的一个性质是一样的，所以跟我们的这样的一个声波它传递的这样的一个性质也是类似的，所以我们就把下面的这一支称之为声学支。</p><p>我的这个不管是声学波还有光学波，它们还有一个横纵之分。横波的意思就是我的震动的方向跟我这个波动的这个方向是垂直的……如果我的位移还是在这个方向上进行震动的话，那么这个时候我们就把它称为纵光学波。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s09">
+  <div class="slides"><figure class="slide" id="slide-118">
+<img src="slides/slide_118.png" alt="课件第118页 第 2 节 晶格振动：主要内容（提纲，标示“二维/三维晶体的晶格振动”）">
+<figcaption><span class="sno">118</span><span class="stitle">第 2 节 晶格振动：主要内容（提纲，标示“二维/三维晶体的晶格振动”）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-119">
+<img src="slides/slide_119.png" alt="课件第119页 6) 二维/三维晶体的晶格振动：二维晶体振动（平面方格子、垂直振动）">
+<figcaption><span class="sno">119</span><span class="stitle">6) 二维/三维晶体的晶格振动：二维晶体振动（平面方格子、垂直振动）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-120">
+<img src="slides/slide_120.png" alt="课件第120页 6) 二维/三维晶体的晶格振动：运动方程与色散（Mω²=2c[2-cos(qₓa)-cos(qᵧa)]）">
+<figcaption><span class="sno">120</span><span class="stitle">6) 二维/三维晶体的晶格振动：运动方程与色散（Mω²=2c[2-cos(qₓa)-cos(qᵧa)]）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-121">
+<img src="slides/slide_121.png" alt="课件第121页 6) 二维/三维晶体的晶格振动：长波极限（ω=√(c/M)aq、声速 v）">
+<figcaption><span class="sno">121</span><span class="stitle">6) 二维/三维晶体的晶格振动：长波极限（ω=√(c/M)aq、声速 v）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">09</span>
+      <div class="sec-tt">
+        <h2>二维晶体的晶格振动</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 2 段（中）</span><span class="chip">课件 118</span><span class="chip">课件 119</span><span class="chip">课件 120</span><span class="chip">课件 121</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>二维例子取最简单的形式：所有原子全同（无质量差、力常数无差别），且原子垂直于格子平面振动——只有垂直于平面的一个位移分量，不用考虑方向，所以受力分析跟一维很像。中心原子 (i,j) 有四个最近邻（横轴 i±1、纵轴 j±1），把两个方向上的受力相加即可。</p><p>第三步代入格波解：位移 u=Ae^{i(ωt-q·r)}，q·r=qₓ·ia+qᵧ·ja。代入运动方程得到二维色散 Mω²=2c[2-cos(qₓa)-cos(qᵧa)]——ω 是 qₓ、qᵧ 两个变量的函数，描述二维平面上声子色散的曲面结构。</p><p>长波极限：用 1-cosθ≈θ²/2 展开，ω 正比于 √(qₓ²+qᵧ²)，即 ω=√(c/M)·a·q——仍是线性关系，与连续介质弹性波一致，声速 v=√(c/M)·a。二维单原子体系只有一支（声学支）。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>首先它的这个原子是全同的，所以我所有的原子都是一模一样的……而且它是垂直于这个原格子的平面来做振动。所以不管是我的横轴上的这两个原子对它的重力，还是纵轴上的这两个原子进行受力，原则上我们只假设它的受力情况都是一样的。</p><p>这个时候我们要注意我的Q还有我的R，我的R应该是有两个方向，有X跟Y两个方向……q·R等于qₓia和qᵧja……代入化简，同样的，我们得到的是欧米伽跟Q之间的一个关系，只是这个时候我们是有一个两个维度……在长波极限下，我们可以得到它的这个欧米伽跟Q之间的关系，还是服从这样的一个线性的这样一个关系。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s10">
+  <div class="slides"><figure class="slide" id="slide-122">
+<img src="slides/slide_122.png" alt="课件第122页 6) 二维/三维晶体的晶格振动：三维晶体振动（复式晶格、运动方程、形式解）">
+<figcaption><span class="sno">122</span><span class="stitle">6) 二维/三维晶体的晶格振动：三维晶体振动（复式晶格、运动方程、形式解）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-123">
+<img src="slides/slide_123.png" alt="课件第123页 6) 二维/三维晶体的晶格振动：3n 个声子支（3 声学+3n-3 光学）">
+<figcaption><span class="sno">123</span><span class="stitle">6) 二维/三维晶体的晶格振动：3n 个声子支（3 声学+3n-3 光学）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-124">
+<img src="slides/slide_124.png" alt="课件第124页 6) 二维/三维晶体的晶格振动：周期性边界条件（q=h₁b₁/N₁+h₂b₂/N₂+h₃b₃/N₃）">
+<figcaption><span class="sno">124</span><span class="stitle">6) 二维/三维晶体的晶格振动：周期性边界条件（q=h₁b₁/N₁+h₂b₂/N₂+h₃b₃/N₃）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-125">
+<img src="slides/slide_125.png" alt="课件第125页 6) 二维/三维晶体的晶格振动：q 点数与格波总数（GaAs 色散实例）">
+<figcaption><span class="sno">125</span><span class="stitle">6) 二维/三维晶体的晶格振动：q 点数与格波总数（GaAs 色散实例）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">10</span>
+      <div class="sec-tt">
+        <h2>三维晶体的晶格振动：3n 支声子</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 2 段（后）</span><span class="chip">课件 122</span><span class="chip">课件 123</span><span class="chip">课件 124</span><span class="chip">课件 125</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>三维复式晶格的一般推导：原胞含 n 个原子，位移记 μ(Lκ)——L 是第几个原胞、κ 是原胞内第几个原子（L=1..N，κ=1..n）。受力分析要考虑原胞内外所有相邻原子：受力矩阵 Φ 表示 L'κ' 原子对 Lκ 原子的影响。形式解 μ=Aκe^{i(R·q-ωt)}，其中 R 是三维格点、q 是三维波矢。</p><p>代入后得到 3n 个线性齐次方程（AK 的系数行列式=0，久期方程），解出 3n 个 ωⱼ——即 3n 支声子：其中 3 支是声学波（原胞内原子整体平移振动），其余 3n-3 支是光学波（原胞内原子相对振动）。</p><p>周期性边界条件：q=h₁b₁/N₁+h₂b₂/N₂+h₃b₃/N₃，第一布里渊区里共有 N（=N₁N₂N₃）个 q 点，每个 q 点占据体积 V*=(2π)³/V/N；每个 q 点对应 3n 个 ω，所以格波总数 3nN，恰好等于晶体全部自由度。这里大 N（原胞数）决定 q 取值个数，小 n（原胞内原子数）决定声子支数。</p><p>例子：闪锌矿（GaAs）是复式晶格，原胞含 2 个原子（两套面心立方嵌套），应有 6 支=3 声学+3 光学。但沿 Γ-L 方向有简并，只能看到 4 支；沿 Γ-X 方向可以看到全部 6 支。所以从声子谱的支数就能反推原胞里的原子数。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我总共有3个声学支，还有3N-3个光学支……这个N是我的一个原胞里面所含有的原子的数目，而我的大N是说我的晶体里面所含有的原胞的这个数目。原子的数目决定了我的声学支的这个数量，而我的整个晶体里面所含有的原胞的数量，决定了我的所有的声子可以取多少个。</p><p>加深它的这个普式金格，它的原胞里面有多少个原子……它就是两个原子，一个原胞里面只有两个原子……它总共应该有6个生子支，3个声学支和3个光学支。如果我们只看伽马L这个方向，我们可以看到好像没有6只对不对，只有4只。主要是因为在这个伽马L方向，它有一些频率发生了减并，两只就进行重合了。如果大家看L和X方向，这个时候我们可以看到所有的只数6只。所以我们可以通过这样的一个声子色散图，就可以去推断出它的一个原胞里面总共会有多少个原子。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s11">
+  <div class="slides"><figure class="slide" id="slide-126">
+<img src="slides/slide_126.png" alt="课件第126页 第 2 节 晶格振动：主要内容（提纲，标示“晶格振动态密度”）">
+<figcaption><span class="sno">126</span><span class="stitle">第 2 节 晶格振动：主要内容（提纲，标示“晶格振动态密度”）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-127">
+<img src="slides/slide_127.png" alt="课件第127页 7) 晶格振动态密度：重要意义（热容、热力学、电学光学性质）">
+<figcaption><span class="sno">127</span><span class="stitle">7) 晶格振动态密度：重要意义（热容、热力学、电学光学性质）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-128">
+<img src="slides/slide_128.png" alt="课件第128页 7) 晶格振动态密度：为什么要引入态密度（孤立能级 vs 能带）">
+<figcaption><span class="sno">128</span><span class="stitle">7) 晶格振动态密度：为什么要引入态密度（孤立能级 vs 能带）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">11</span>
+      <div class="sec-tt">
+        <h2>态密度：为什么要引入</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 2 段（末）</span><span class="chip">课件 126</span><span class="chip">课件 127</span><span class="chip">课件 128</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>孤立原子或孤立的分子振动（比如弹簧振动模型、孤立双原子分子）没有周期性排列，只有一个确定频率 ω₀——色散是水平线，是一个「分立能级」。一旦有了周期性结构，电子能级或声子频率就会随 q 扩展成能带（声子色散曲线就是声子的能带结构）。</p><p>问题来了：能带展开后，外部激发（光、红外）在哪个频率处作用更强？如果外部条件能级与样品某个能级「吻合」，相互作用就强。于是引入态密度：单位能量范围内的态（声子）数目，g(ω)=lim(Δω→0) Δn/Δω。态密度高意味着在该频率处声子多、光与声子的相互作用强、拉曼强度高；在红外吸收里决定哪个声子吸收得多。这也与吸收/发射光谱、晶格热容等宏观性质直接相关。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>如果是单独的某个原子，我们知道的能级是一般是什么样子呢？平了对不对……我的能级是很分立的……但是我们一旦有了一个周期性的一个结构，不管是我的电子的能量结构还是我身子的能量结构，那么原来有这么一个平的能级就会进行一个扩散……这就是我们所谓的形成能带，那么声子其实我们所讲的声子色散曲线，其实也是声子的能带结构。</p><p>在拉曼光谱里面，我的激发光跟每个声子能发生更强的相互作用，我的拉曼光谱的强度会更强。这个就跟我们的这个所谓的晶格的振动态密度是息息相关的……我的态密度是指我的单位能量范围内我所含有的态是多少……我的德尔塔N除以我的德尔塔欧米伽。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s12">
+  <div class="slides"><figure class="slide" id="slide-129">
+<img src="slides/slide_129.png" alt="课件第129页 7) 晶格振动态密度：态密度的一般表达式（g(ω)=lim Δn/Δω、等频率面）">
+<figcaption><span class="sno">129</span><span class="stitle">7) 晶格振动态密度：态密度的一般表达式（g(ω)=lim Δn/Δω、等频率面）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-130">
+<img src="slides/slide_130.png" alt="课件第130页 7) 晶格振动态密度：数值计算说明">
+<figcaption><span class="sno">130</span><span class="stitle">7) 晶格振动态密度：数值计算说明</span></figcaption>
+</figure>
+<figure class="slide" id="slide-131">
+<img src="slides/slide_131.png" alt="课件第131页 7) 晶格振动态密度：解析表达式（g(ω)=V/(2π)³∫dS/|∇qω|）">
+<figcaption><span class="sno">131</span><span class="stitle">7) 晶格振动态密度：解析表达式（g(ω)=V/(2π)³∫dS/|∇qω|）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">12</span>
+      <div class="sec-tt">
+        <h2>态密度的推导：Q 空间密度 × 等频率面</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 3 段（前，休息后）</span><span class="chip">课件 129</span><span class="chip">课件 130</span><span class="chip">课件 131</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>思路：q 空间里 q 点是均匀分布的——一维 q 点密度 L/2π（或 Na/(2π)），二维 (L/2π)²，三维 V/(2π)³。态密度=「频率落在 ω 到 ω+Δω 之间的 q 点数目」除以 Δω。</p><p>在 q 空间画出 ω(q)=常数 的等频率面：Δn=V/(2π)³×（ω 与 ω+Δω 两个等频率面之间的体积）。两个等频率面之间的体积=∫dS·dq，而 dq=Δω/|∇qω|。于是得到一般表达式 g(ω)=V/(2π)³∫dS/|∇qω|——q 空间密度乘以等频率面面积、再除以色散梯度的模。</p><p>注意：公式里的 V/(2π)³ 是三维的 q 空间密度，一维、二维的密度公式不同（L/2π、(L/2π)²），不能随便代同一个式子。ω(q) 关系复杂时解析积分困难，就用数值方法计算态密度。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这个唯一除以2π的三次方，这个是我们三维空间上的一个态密度……我给出来是一维的，那么就是L÷2π，这个是二维的，那么应该是L的平方除以2π的平方，对于三维的话，L的三次方除以2π的三次方。所以这里大家要注意一下，不是说随便代入一个公式，你就可以去计算这个一维二维三维，它是不同的。</p><p>我们把DQ换算成德尔塔欧米伽跟这个求偏导的这个关系……我的目的就是把我的德尔塔欧米伽引入进去。因为我的定义就是德尔塔N除以德尔塔欧米伽，所以这个时候我最终的一个态密度的表达式，就是我的Q空间上的一个密度，再乘以我所占据的这个面积和我的声子色散曲线它的一个求微分的这样的一个形式。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s13">
+  <div class="slides"><figure class="slide" id="slide-132">
+<img src="slides/slide_132.png" alt="课件第132页 7) 晶格振动态密度：一维单原子链态密度（g(ω)=2N/π(ωₘ²-ω²)^(-1/2)）">
+<figcaption><span class="sno">132</span><span class="stitle">7) 晶格振动态密度：一维单原子链态密度（g(ω)=2N/π(ωₘ²-ω²)^(-1/2)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-133">
+<img src="slides/slide_133.png" alt="课件第133页 7) 晶格振动态密度：声子态密度特点（一维双原子链、声子带隙）">
+<figcaption><span class="sno">133</span><span class="stitle">7) 晶格振动态密度：声子态密度特点（一维双原子链、声子带隙）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-134">
+<img src="slides/slide_134.png" alt="课件第134页 7) 晶格振动态密度：振动态密度的特点（硅烯）">
+<figcaption><span class="sno">134</span><span class="stitle">7) 晶格振动态密度：振动态密度的特点（硅烯）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-135">
+<img src="slides/slide_135.png" alt="课件第135页 7) 晶格振动态密度：Debye 近似下的态密度（ω=cq、g(ω)=V/(2π²c³)ω²）">
+<figcaption><span class="sno">135</span><span class="stitle">7) 晶格振动态密度：Debye 近似下的态密度（ω=cq、g(ω)=V/(2π²c³)ω²）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">13</span>
+      <div class="sec-tt">
+        <h2>一维链的态密度与 Debye 近似</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 3 段（前）</span><span class="chip">课件 132</span><span class="chip">课件 133</span><span class="chip">课件 134</span><span class="chip">课件 135</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>计算态密度：g(ω)=q 空间密度 × 等频率面面积 × 1/|dω/dq|。一维还要乘因子 2——ω(q) 是中心对称的，q>0 与 q<0 等价（类似电子结构里自旋因子 ±2）。用一维单原子链 ω(q)=ωₘ|sin(aq/2)| 代入，得到 g(ω)=2N/π·(ωₘ²-ω²)^(-1/2)——ω 趋近 ωₘ 时发散。一维双原子链的态密度在声子带隙两侧出现极大。</p><p>直观规律：色散越平缓（dω/dq 越接近 0），态密度越高。因为 q 点均匀分布，同样的 Δω 范围在平缓处切过的 q 区间更宽。所以看到声子色散曲线，就能大致判断态密度高的位置，不必先求解析式。</p><p>Debye 近似：假定 ω=cq（线性色散），代入一般公式得到 g(ω)=V/(2π²c³)ω²——态密度是平坦的二次曲线，不随体系发散。一维 Debye 模型 g(ω)=2N/πωₘ 是常数，与一维单原子链的发散形态形成对比。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>对于一维的话，我们通常这里还要乘以一个2，因为它是一个中心对称，就是0的左右，它是完全一样的。……我们考虑到Q，它可以是大于0和小于0是完全等价的，所以这个时候一般情况下前面再乘以一个2。</p><p>它这个斜率变化是比较平缓接近0的……我的公式这个d欧米伽DQ其实就是它的斜率，所以我的斜率越接近于0，这个时候我的态密度是不是越高？所以你可以大概预测我给出来一个声子色散曲线，那么我大概在哪些点，我的声子态密度会比较高。</p><p>德拜近似就是我欧米伽等于CQ，是一个线性的这样的一个色散关系……对于德拜模型的话，我的态密度在不同的频率范围内，它都是一个很平的这么一个数值。对于一维的单原子链，我得到是一个随着欧米伽变化的一个式子，我趋近于欧米伽M的时候，它是会趋近于无穷大的。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s14">
+  <div class="slides"><figure class="slide" id="slide-136">
+<img src="slides/slide_136.png" alt="课件第136页 第 2 节 晶格振动：主要内容（提纲，标示“范霍夫奇点”）">
+<figcaption><span class="sno">136</span><span class="stitle">第 2 节 晶格振动：主要内容（提纲，标示“范霍夫奇点”）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-137">
+<img src="slides/slide_137.png" alt="课件第137页 8) 范霍夫奇点：定义（|∇qω|=0 临界点、一维链 ω=ωₘ 处发散）">
+<figcaption><span class="sno">137</span><span class="stitle">8) 范霍夫奇点：定义（|∇qω|=0 临界点、一维链 ω=ωₘ 处发散）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-138">
+<img src="slides/slide_138.png" alt="课件第138页 8) 范霍夫奇点：物理意义（态密度尖锐峰/斜率突变、高对称点）">
+<figcaption><span class="sno">138</span><span class="stitle">8) 范霍夫奇点：物理意义（态密度尖锐峰/斜率突变、高对称点）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-139">
+<img src="slides/slide_139.png" alt="课件第139页 8) 范霍夫奇点：拉曼光谱中的范霍夫奇点（硅的声子色散与 532 nm 拉曼）">
+<figcaption><span class="sno">139</span><span class="stitle">8) 范霍夫奇点：拉曼光谱中的范霍夫奇点（硅的声子色散与 532 nm 拉曼）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">14</span>
+      <div class="sec-tt">
+        <h2>范霍夫奇点与硅的研究实例</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 3 段（中）</span><span class="chip">课件 136</span><span class="chip">课件 137</span><span class="chip">课件 138</span><span class="chip">课件 139</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>范霍夫奇点（临界点）：ω(q) 对 q 的梯度为零（|∇qω|=0）的点，即色散平缓到斜率消失的地方，态密度 g(ω) 在该处显示奇异性（发散或尖锐峰）。一维单原子链 ω=ωₘ（q=±π/a）就是临界点。物理意义：实际三维晶体的态密度曲线中那些尖锐的峰和斜率突变，正是范霍夫奇点；临界点与晶体对称性相联系，常出现在布里渊区高对称点上。</p><p>为什么单独定义它：宏观性质（吸收峰、拉曼峰）通常对应这些微观特殊点。态密度极大处 → 电子能带结构里的吸收极大、红外吸收峰、拉曼光谱中的强峰，以及二阶拉曼散射中能被激活的峰。</p><p>硅的研究实例：左边是硅的声子色散，右边是 532nm 激发下硅的拉曼光谱（纵轴是对数坐标）。① 4.5cm⁻¹（低频）：LA/TA 横纵声学支在 Γ 点减并，532nm 激发对应的 q≈2π/λ 切到色散上该频率处——换不同激发波长 q 会移动，声学支峰位会有小移动；② 520.7cm⁻¹（15 THz 左右）：LO/TO 光学支；③ 2TA≈300cm⁻¹：二阶双声子拉曼散射（TA 约 150cm⁻¹，色散平坦、态密度高），非共振时强度弱（对数坐标下才明显），共振激发下增强。</p><p>研究实例的详细展开老师预告放在第 4 章（和第 5、6 章）里细讲，本课到此收束第一章。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>范霍夫奇点它的简单的含义就是说，我在哪个地方，我的态密度出现了极大，我就把这个点叫做范霍夫奇点……它不是一个特定的点，它是指我任意的加不同的这个声子的振动态密度或者是能带结构态密度的这样一个图上，那些极大的点，我都把它称之为范霍夫奇点。</p><p>这个是硅的声子色散曲线，这个是我们通常所测到的一个硅的拉曼的结果。4.5的波数对应5322nm的时候，这个就是LA跟TA，就是所谓的这个横纵声学声子对应呢，就是这一个位置它的一个频率……五百二十一，通常520.7的波数的这样的一个LO和TO，对应的就是上面的光学声子……2倍TA大概是在300个波数，TA应该大概是150个波数左右的这个位置，它的声子色散是非常平的，也就是它们态密度比较高，所以这样的一些声子，它的高阶的拉曼散射就能够体现在我们的拉曼光谱里面……只有在共振激发的情况下，那么这样的一些峰就能够被更多的共振激发，所以这个时候它的强度才会更强。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s15">
+  <div class="slides"><figure class="slide" id="slide-140">
+<img src="slides/slide_140.png" alt="课件第140页 第二章 拉曼光谱学介绍：主要内容（1 光散射及光谱简介 等 6 项）">
+<figcaption><span class="sno">140</span><span class="stitle">第二章 拉曼光谱学介绍：主要内容（1 光散射及光谱简介 等 6 项）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">15</span>
+      <div class="sec-tt">
+        <h2>进入第二章：拉曼光谱学介绍的内容框架</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 3 段（后）</span><span class="chip">课件 140</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第一章收尾：晶体结构怎么描述 + 振动怎么求解，加上声学声子/光学声子的特点、态密度、范霍夫奇点等概念性内容。第一章的习题放在第一章 PPT 的最后，习题课集中讲，作业下一周交。</p><p>第二章「拉曼光谱学介绍」主要讲两件事：先讲散射概念，再讲拉曼概念、光谱概念。概念层级：光谱是一个更大的领域（吸收光谱、荧光光谱、反射光谱、散射光谱……），描述光的强度随能量的变化；散射是其中一种；拉曼散射又是散射的一种。第二章六部分：①光散射及光谱简介、②拉曼光谱简介、③拉曼光谱测试、④晶格振动的其它实验探测方法、⑤拉曼光谱的应用概述、⑥晶格振动理论及计算方法。重点是前三部分。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>第一章的习题放在了第一章的PPT的最后了，所以大家可以开始做第一章的这个作业，然后我们后面应该习题课会集中讲第一章……好，那我们接下来就来看一下第二章。那么第二章的话，主要讲的是拉曼光谱学的一个基本的介绍。</p><p>我们一般先讲散射的一个概念，然后讲拉曼的概念，还有讲光谱的概念。光谱它是一个更大的一个领域，有吸收光谱、反射光谱、发光光谱、散射光谱等等……光谱是用来描述我的所有的这个光的这个强度，随着我能量的这个变化和这个规律……那么我散射的话，其中的一种就是拉曼。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s16">
+  <div class="slides"><figure class="slide" id="slide-141">
+<img src="slides/slide_141.png" alt="课件第141页 1) 光散射及光谱简介：电磁波谱与蓝天白云（瑞利 I∝λ⁻⁴、米散射）">
+<figcaption><span class="sno">141</span><span class="stitle">1) 光散射及光谱简介：电磁波谱与蓝天白云（瑞利 I∝λ⁻⁴、米散射）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-142">
+<img src="slides/slide_142.png" alt="课件第142页 1) 光散射及光谱简介：光散射概念与分类（19 世纪/20 世纪后、按研究对象）">
+<figcaption><span class="sno">142</span><span class="stitle">1) 光散射及光谱简介：光散射概念与分类（19 世纪/20 世纪后、按研究对象）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">16</span>
+      <div class="sec-tt">
+        <h2>光是什么：电磁波、波粒二象性与可见光</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 3 段（后）</span><span class="chip">课件 141</span><span class="chip">课件 142</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>光是一种电磁波，具有波粒二象性，按波长分类：波长很长的射频、微波；依次是红外、可见、紫外；波长更短、能量更高是 X 射线。本课程研究的主要是可见光波段（人眼可见的 400~800nm），光散射大部分是用可见光做的。X 射线波长与原子间距同量级，可用于研究晶体结构（第一节课讲的 X 射线衍射）。</p><p>散射实验关心的是散射光相对入射光的变化，而「光散射」现象本身在日常生活中就有直观例子：蓝天、白云、灰尘中的丁达尔效应、牛奶的乳光——这些都将在下一节分类讲解。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>其实光就是一种电磁波，我们光是具有这个波粒二象性，所以我们通常根据它的波长可以进行分类……波长很长的，我们有这个射频，微波等等。然后对于波长越来越短，我们首先有这个红外的光，然后我们中间是可见的，然后我们再有一个就是这个紫外的，那么再在能量再高、波长再短，那么就是我们的X射线。</p><p>我们通常研究的话，就是研究的是这个可见光波段的这个，因为我们人眼能看到的光，这个400~800nm，我们通常把它称之为可见光。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s17">
+  <div class="slides"><figure class="slide" id="slide-143">
+<img src="slides/slide_143.png" alt="课件第143页 1) 光散射及光谱简介：根据散射性质分类（弹性/非弹性、布里渊/拉曼能量范围）">
+<figcaption><span class="sno">143</span><span class="stitle">1) 光散射及光谱简介：根据散射性质分类（弹性/非弹性、布里渊/拉曼能量范围）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-144">
+<img src="slides/slide_144.png" alt="课件第144页 1) 光散射及光谱简介：汤姆逊散射（ν≪mc²/h、弹性散射、偶极辐射）">
+<figcaption><span class="sno">144</span><span class="stitle">1) 光散射及光谱简介：汤姆逊散射（ν≪mc²/h、弹性散射、偶极辐射）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">17</span>
+      <div class="sec-tt">
+        <h2>光的散射现象：蓝天白云与散射分类</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 3 段（后）</span><span class="chip">课件 143</span><span class="chip">课件 144</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>蓝天是瑞利散射：粒子尺寸远小于波长（如大气分子），散射强度与 λ⁴ 成反比——蓝光波长短、散射强，所以白天的天空是蓝色；早晚阳光穿过大气层路径长、短波被散射掉更多，看到的是红霞。白云是米散射：粒子尺寸与波长相当（水滴），各波长散射强度相近，叠加成白色。灰尘里的丁达尔效应、牛奶的乳光也属于光散射现象。</p><p>散射定义：光通过不均匀介质（密度、折射率不均匀），一部分光偏离原来的传播方向，能被其他方向收集到——这些现象统称光散射。19 世纪关注小粒子/分子（丁达尔、乳光，关心散射强度与什么物理量有关）；20 世纪后关注更小的粒子（原子、电子、准粒子、分子激发），以及固体里的声子等。</p><p>两种分类角度：①按研究对象区分；②按散射前后光能量是否改变：能量不变是弹性散射（瑞利散射；汤姆逊散射也不交换能量），能量改变是非弹性散射（拉曼散射、布里渊散射——光子与声子交换能量，能量转移给物质或从物质获得能量）。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>蓝天，它是由于瑞利散射。瑞利散射通常描述的是我的粒子的大小跟我的光波长相比，粒子远小于我这个光子的波长的情况下……我的这个强度跟我的波长的四次方是成反比的。……蓝光的话，它比红光的这个波长要短，所以它的散射强度通常也会更强。</p><p>白云的话，对应通常是这个米散射，就是我的粒子粒径的大小跟我的光子的波长是相当的情况下……我的这个散射的强度和我的波长就没有什么绝对的关系……所有的光的散射到人眼的这个强度都是一样的情况下，我们看到的就是白色。</p><p>光通过不均匀介质……我的光在穿过这么一个介质的时候，我的光就会偏离原来的这个方向，所导致的能够被其他方向所收集到的这样的一些现象，那么这一些光，那么都是称之为光的散射现象。</p><p>根据我的这个散射前后，这个光能量有没有发生改变……没有改变能量，我们把它称之为弹性散射。如果它的能量发生改变了，我们把它称之为非弹性散射。对于瑞利散射，它是弹性散射。对于拉曼或者是布里渊散射，都是属于我的光子的能量会有一部分转移到我的物质上……所以我们把它称之为非弹性散射。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s18">
+  <div class="slides"><figure class="slide" id="slide-145">
+<img src="slides/slide_145.png" alt="课件第145页 1) 光散射及光谱简介：康普顿散射（Δλ=λC(1-cosθ)、证实光子动量）">
+<figcaption><span class="sno">145</span><span class="stitle">1) 光散射及光谱简介：康普顿散射（Δλ=λC(1-cosθ)、证实光子动量）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-146">
+<img src="slides/slide_146.png" alt="课件第146页 1) 光散射及光谱简介：射线与物质相互作用（光电/康普顿/对产生、截面）">
+<figcaption><span class="sno">146</span><span class="stitle">1) 光散射及光谱简介：射线与物质相互作用（光电/康普顿/对产生、截面）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">18</span>
+      <div class="sec-tt">
+        <h2>汤姆逊散射与康普顿散射</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 3 段（后）</span><span class="chip">课件 145</span><span class="chip">课件 146</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>汤姆逊散射：低能光子（ν≪mc²/h）+ 非相对论自由带电粒子（电子或正离子）。电子被入射电场驱动做周期振荡、偶极辐射，光的方向改变但能量不交换——弹性散射；散射电磁波沿各个方向发散，但以入射波前进方向为主。</p><p>康普顿散射：高能光子与（准）自由电子发生粒子碰撞，同时满足动量守恒和能量守恒：Δλ=λC(1-cosθ)，λC=h/(m₀c) 是康普顿波长。散射前后光子能量改变（波长变长），是非弹性散射。康普顿效应第一次从实验上证实了爱因斯坦关于「光子具有动量」的假设。</p><p>把光子与电子相互作用的能量区间画在一起：低能是光电效应（光子把电子激发出来），中能是汤姆逊/康普顿散射，高能是对产生（光子变成正负电子对）。总作用截面 σ总=σ光电+σ康普顿+σ对产生，且 σ光电∝Z⁵、σ康普顿∝Z、σ对产生∝Z²，随光子能量和吸收体原子序数各有优势区间。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>汤姆逊散射，它是一种自由电子的散射，它是一种低能量的光子和非相对论自由电子……它是不交换能量，就是我只是光的散射的方向发生了改变……它是由偶极的辐射，就跟我的晶体散射其实是有点类似的。</p><p>康普顿散射，这个时候它是一种高能的光子，它能够跟电子发生粒子的这个碰撞。这个时候，我是满足能量和动量的守恒……它的能量通常来说是会发生这个改变，就是入射光跟散射光这样的一个能量会有差异。所以这个也是康普顿的效应，也是证实了爱因斯坦所提出的光子具有动量的这个假设。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s19">
+  <div class="slides"><figure class="slide" id="slide-147">
+<img src="slides/slide_147.png" alt="课件第147页 1) 光散射及光谱简介：紫外灾难（玻尔兹曼分布、瑞利-金斯与维恩公式）">
+<figcaption><span class="sno">147</span><span class="stitle">1) 光散射及光谱简介：紫外灾难（玻尔兹曼分布、瑞利-金斯与维恩公式）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-148">
+<img src="slides/slide_148.png" alt="课件第148页 1) 光散射及光谱简介：普朗克黑体辐射（能量量子化、短波/长波极限）">
+<figcaption><span class="sno">148</span><span class="stitle">1) 光散射及光谱简介：普朗克黑体辐射（能量量子化、短波/长波极限）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-149">
+<img src="slides/slide_149.png" alt="课件第149页 1) 光散射及光谱简介：紫外灾难—光量子—光电效应（E=hv）">
+<figcaption><span class="sno">149</span><span class="stitle">1) 光散射及光谱简介：紫外灾难—光量子—光电效应（E=hv）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-150">
+<img src="slides/slide_150.png" alt="课件第150页 1) 光散射及光谱简介：角分辨光电子能谱 ARPES（光电效应的应用实例）">
+<figcaption><span class="sno">150</span><span class="stitle">1) 光散射及光谱简介：角分辨光电子能谱 ARPES（光电效应的应用实例）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">19</span>
+      <div class="sec-tt">
+        <h2>光与物质相互作用：紫外灾难、普朗克与光电效应</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 3 段（后）</span><span class="chip">课件 147</span><span class="chip">课件 148</span><span class="chip">课件 149</span><span class="chip">课件 150</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>回到光的波粒二象性，讲黑体辐射的紫外灾难：如果按经典玻尔兹曼分布理解，能量连续分布，推导出的瑞利-金斯公式 ρ(ν,T)=8πν²/c³·kT 在高频段发散（紫外灾难），维恩公式则在低频段与实验不符。</p><p>普朗克的突破：假设能量是分立的——振子只能交换整数倍 hν 的能量。把玻色-爱因斯坦分布代入，得到 ρ(ν,T)=8πh/c³·ν³/(e^{hν/kT}-1)，与实验完美吻合；短波区（ν 大）退化为维恩公式形式，长波区（ν 小）退化为瑞利-金斯公式形式——完整描述了黑体辐射。</p><p>光电效应：1887 年赫兹发现光电现象（光电流随光强增大但有饱和值；每种材质存在极限波长，只有更短波长的光才能激发出电子）。1905 年爱因斯坦提出光量子假设：光子能量 E=hν，只取决于频率、与光强无关，圆满解释光电效应（获诺贝尔物理学奖）。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>如果用瑞利金斯公式的话，那么它会发生这个发散的结果。用维恩公式的话，那么在低能区域就没办法跟他完全吻合，所以这个时候是普朗克就提出了我的能量是分立的，就是我的光子的能量，我只能交换这样的一个整数倍的这个光子的这个能量……我就可以得到黑体辐射的这个能量密度跟频率之间的一个关系，这个时候是可以很好的去吻合我实验的一个结果。</p><p>1887年，德国物理学家赫兹发现了光电现象……1905年，26岁的爱因斯坦发表了《关于光的产生和转化的一个试探性观点》，光可以看作由携带着量子化能量的载流子所组成的粒子，他将这种载流子称为光子，光子的能量等于普朗克常数与其频率的乘积，E=hv。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s20">
+  <div class="slides"><figure class="slide" id="slide-151">
+<img src="slides/slide_151.png" alt="课件第151页 1) 光散射及光谱简介：反物质历史——正负电子">
+<figcaption><span class="sno">151</span><span class="stitle">1) 光散射及光谱简介：反物质历史——正负电子</span></figcaption>
+</figure>
+<figure class="slide" id="slide-152">
+<img src="slides/slide_152.png" alt="课件第152页 1) 光散射及光谱简介：正负电子对产生与湮灭（PET/PET-CT）">
+<figcaption><span class="sno">152</span><span class="stitle">1) 光散射及光谱简介：正负电子对产生与湮灭（PET/PET-CT）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-153">
+<img src="slides/slide_153.png" alt="课件第153页 1) 光散射及光谱简介：线性与非线性光散射（根据入射激光功率密度）">
+<figcaption><span class="sno">153</span><span class="stitle">1) 光散射及光谱简介：线性与非线性光散射（根据入射激光功率密度）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">20</span>
+      <div class="sec-tt">
+        <h2>ARPES 与正负电子对：光电效应的高能应用</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 3 段（后）</span><span class="chip">课件 151</span><span class="chip">课件 152</span><span class="chip">课件 153</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>ARPES（角分辨光电子能谱）是光电效应的重要应用：用高能光子把占据态电子打出来，通过控制入射光子能量、测出射电子动能与角度，得到电子的能量-动量关系。光电子动能 Eₖ=hν-|E_B|-φ，动量平行分量 P∥=ħk∥=√(2mEₖ)·sinθ。石墨烯的 ARPES 能谱在 K 点附近呈线性色散（狄拉克锥），直接把能带结构测出来，与理论计算对照。</p><p>ARPES 测的是占据态：它只能测费米能级以下的电子（导带难测，需要掺杂——二维材料尤其难掺到高位）。目前物理所、清华、南科大、南大等很多组都在用，用于新型半导体、强关联电子体系、二维材料（如魔角体系）的电子结构研究。</p><p>正负电子对产生：高能光子与原子核作用，产生一个电子和一个正电子（能量阈值 2m₀c²）；正负电子对湮灭时放出两个 γ 光子。应用：正电子发射断层扫描（PET/PET-CT），利用正负电子对湮灭产生的 γ 射线，可对大多数实体肿瘤进行初诊、鉴别诊断、临床分期、放疗定位等。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我用高能量的这个光子，我去跟这个物质发生相互作用，我能够把电子从它占据的那个能量位置给它打出来……我可以控制我外面的这个光子的能量，还有我测试得到的这个能量的差异，以及我动量的这个关系，我就可以把这个能带的色散关系给它得到。</p><p>我们可以看到它在K点附近，就是这么一个类似线性的能量关系，就是一个狄拉克锥的这么一个形式。……通常来说，大部分大家可以看到的这些ARPES的结果都是这样的，就是导带是比较难测的。如果你要说导带也可以，那你需要对材料进行掺杂。</p><p>正负电子对的一个产生就是一个光子产生一个正电子还有一个负电子。那么，这个的应用就是在这样的一个断层扫描，也是一种医学上的扫描探测的这么一种手段。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s21">
+  <div class="slides"><figure class="slide" id="slide-154">
+<img src="slides/slide_154.png" alt="课件第154页 1) 光散射及光谱简介：光照射介质产生的各种过程与光谱定义">
+<figcaption><span class="sno">154</span><span class="stitle">1) 光散射及光谱简介：光照射介质产生的各种过程与光谱定义</span></figcaption>
+</figure>
+<figure class="slide" id="slide-155">
+<img src="slides/slide_155.png" alt="课件第155页 1) 光散射及光谱简介：思考题——经典光学现象（反射/折射/衍射）与光散射">
+<figcaption><span class="sno">155</span><span class="stitle">1) 光散射及光谱简介：思考题——经典光学现象（反射/折射/衍射）与光散射</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">21</span>
+      <div class="sec-tt">
+        <h2>线性/非线性散射、光谱单位与思考题</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 3 段（末）</span><span class="chip">课件 154</span><span class="chip">课件 155</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>按入射激光功率密度分类：线性（自发）散射——散射强度与激发光功率成正比，常规拉曼和布里渊散射属于此类；非线性散射——场强的二次项、三次项等，包括受激拉曼散射、受激布里渊散射、反拉曼散射、超拉曼散射、相干反斯托克斯拉曼散射等，要求材料非线性效应强，优点是抑制荧光热辐射、信噪比高、相干性好。</p><p>光照射到介质上不只发生散射：还有反射、透射、吸收（半导体吸收后可发光、稀土发光）、折射等现象。光谱就是描述这些现象中光的强度随能量的变化——对应吸收光谱、反射光谱、发光光谱、散射光谱。横坐标：吸收/反射/发光光谱常用电子伏特（或纳米）；散射光谱（尤其拉曼/布里渊散射）用波数 cm⁻¹，而且是「拉曼位移」——相对入射光能量的平移坐标：不管入射波长是 532nm 还是 633nm，都把它设为 0 波数，出射光子相对入射光子的能量差用 cm⁻¹ 表示，直接对应声子能量。注意红外吸收光谱虽然也用 cm⁻¹，但那是绝对波数（能量单位），与拉曼位移不同。</p><p>思考题（下课留的）：反射、折射、衍射（如 X 射线衍射）这些宏观光学现象，是不是光散射？散射的定义是「光通过不均匀介质时一部分光偏离原来的方向」——反射、折射、衍射都偏离了方向，但它们所经过的介质有没有不均匀性？留给大家回去思考。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>根据我们入射激发光的功率密度来区分的话，我们还可以区分为线性的光散射和非线性光散射。线性的话，就是我的随着我的激发光功率的增大，我的散射的强度跟我的激发光功率是线性关系的……如果是非线性的话，那么我可以是二次方三次方，那么通常就有一些受激拉曼散射等等这样的一些现象。</p><p>对于散射光谱的话，那么我们通常用的是波数cm⁻¹的这么一个单位，而且它是一个平移……我是相对于入射光能量所做的一个平移。所以我不管是我的入射光的这个波长是多少，我永远都把它定在532的这个波长，我把它对应的绝对波数设置为0波数，633波长我也把它设置为0波数，那么其他的这个，我散射光子的能量相对于我入射光子的这个能量的差异，用波数的这个单位来表示。</p><p>我们刚才讲了反射、折射，还有另外一个现象就是衍射，那么这样的一些宏观的光学现象，跟我们所说的光散射有没有关系？我们刚才讲的散射就是光在跟物质发生相互作用之后，光的传播方向偏离了原来的方向……但是这些现象它是不是光散射？大家回去可以思考一下这些现象属不属于光的这样的一个散射，好，那我们这节课就先上到这里吧。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（显微共焦拉曼光谱学）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>

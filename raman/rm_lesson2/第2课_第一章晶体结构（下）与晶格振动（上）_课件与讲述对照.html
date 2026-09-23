@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>显微共焦拉曼光谱学（2026 秋） · 第一章 晶体结构（下）：对称性与倒格子 · 晶格振动（上）｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>显微共焦拉曼光谱学（2026 秋） · 第一章 晶体结构（下）：对称性与倒格子 · 晶格振动（上）</h1>
+    <div class="sub">第一章 晶体结构（下）：对称性与倒格子 · 晶格振动（上） ｜ 2026-09-10 ｜ 授课：林妙玲（第一章）</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 92 页 · 整理 20 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-s01">01 立方体的对称元素与 48 个对称操作</option>
+<option value="sec-s02">02 点群的两种标记方法</option>
+<option value="sec-s03">03 对称性与宏观物理量：正交变换</option>
+<option value="sec-s04">04 例子：立方晶体的介电常数为标量</option>
+<option value="sec-s05">05 进入倒格子：周期性 → 傅里叶变换</option>
+<option value="sec-s06">06 倒格矢与倒格子基矢的定义</option>
+<option value="sec-s07">07 正倒格子的对应：简单立方与思考题</option>
+<option value="sec-s08">08 倒格子点阵与倒格子空间</option>
+<option value="sec-s09">09 第一布里渊区</option>
+<option value="sec-s10">10 三维晶格的第一布里渊区</option>
+<option value="sec-s11">11 倒格子的对称性与 Wigner-Seitz 原胞</option>
+<option value="sec-s12">12 石墨烯的布里渊区与色散关系</option>
+<option value="sec-s13">13 进入第 2 节：晶格振动</option>
+<option value="sec-s14">14 一维单原子链：定义与研究意义</option>
+<option value="sec-s15">15 相互作用能与力常数 β</option>
+<option value="sec-s16">16 运动方程与格波解</option>
+<option value="sec-s17">17 色散关系与第一步里渊区</option>
+<option value="sec-s18">18 格波的物理意义与 q 的取值范围</option>
+<option value="sec-s19">19 小结：格波特性与有限长链</option>
+<option value="sec-s20">20 玻恩-卡曼周期性边界条件</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 ch1-固体物理基础-2026秋.pdf（p36–72） 逐页渲染，转写原文见 record_20260910.txt。</div>
+<section class="sec" id="sec-s01">
+  <div class="slides"><figure class="slide" id="slide-56">
+<img src="slides/slide_56.png" alt="课件第56页 6) 晶格的宏观对称性：立方体的对称元素（24 个对称操作）">
+<figcaption><span class="sno">56</span><span class="stitle">6) 晶格的宏观对称性：立方体的对称元素（24 个对称操作）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-57">
+<img src="slides/slide_57.png" alt="课件第57页 6) 晶格的宏观对称性：立方体的 48 个对称操作">
+<figcaption><span class="sno">57</span><span class="stitle">6) 晶格的宏观对称性：立方体的 48 个对称操作</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>立方体的对称元素与 48 个对称操作</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第一章·第 2 段（前）</span><span class="chip">课件 56</span><span class="chip">课件 57</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>上节课讲了对称素：旋转轴、旋转-反演轴、镜面等。这节课以立方体为例，把对称性操作完整数一遍。立方体的对称性操作总共有 48 个：先是旋转操作 24 个——二重轴 6 条（沿面对角线，即相对两个面的对棱连线），每条转 180°，共 6 个；四重轴 3 条（沿 x、y、z 三个基矢方向），每条可以转 90°、180°、270°，共 9 个；三重轴 4 条（沿体对角线，八个顶点两两成线），每条可转 120°、240°，共 8 个；再加一个恒等操作（转 360° 相当于不动），1 个。加起来 6+9+8+1=24。</p><p>立方体还有一个反演中心，所有对称操作配上反演中心依然是对称操作，所以又是 24 个，总共 48 个。它的点群就是我们说的最高对称点群 Oₕ，对应简单立方。如果从镜面角度去数：一共有 9 个镜面——3 个沿轴方向的面加 6 个对角面。其实这些镜面操作都可以由旋转加反演组合出来：比如沿某条轴转 180° 再作反演，等价于该轴对应的镜面；大家可以取一个点的坐标，先作旋转反演、再直接作镜面操作，比较两套坐标就一一对应上了。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>立方体的对称性操作总共有一，这个应该是48个对称性操作……二重轴，它是沿着我这个面对角线……总共就有六条。四重轴，沿着XYZ这三条……每一条都可以有三种旋转的方式，就是90°、180°和270°，所以我们总共有9个。三重轴，沿着体对角线，四条，每一条可以进行120°、240°……所以总共有8个。再加上一个本身不动，总共加起来就有24个对称性操作。它还有一个反演中心……再加上一个反演中心就又是24个，所以它总共有48个对称性操作。它的点群就是我们所说的最高的对称数最高的点群，就是Oh点群。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s02">
+  <div class="slides"><figure class="slide" id="slide-58">
+<img src="slides/slide_58.png" alt="课件第58页 6) 晶格的宏观对称性：点群的两种标记方法（熊夫利记号与赫尔曼-莫甘记号）">
+<figcaption><span class="sno">58</span><span class="stitle">6) 晶格的宏观对称性：点群的两种标记方法（熊夫利记号与赫尔曼-莫甘记号）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>点群的两种标记方法</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第一章·第 2 段（前）</span><span class="chip">课件 58</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>点群有两种标记方法：熊夫利记号（物理学家多用）和赫尔曼-莫甘记号（化学家多用）。历史上物理和化学两个圈子几乎同时研究对称性，沟通不便，就留下了两套记号。Cₙ（循环群）：有一根 n 次旋转轴；Cₙₕ 是 Cₙ 加上一根与旋转轴垂直的镜面（h 表示 horizontal 水平）；Cₙᵥ 是 Cₙ 加上一根与旋转轴平行的镜面（v 表示 vertical 垂直）。S₂ₙ：只有一根 2n 次旋转-反演轴（映轴）。Dₙ（二面体群）：一根 n 次旋转轴加 n 根垂直于主轴的二重轴；Dₙₕ 再加大平镜面，Dₙ𝒹 加 n 根与主轴平行的镜面。T（四面体群）：有四面体对称性，T𝒹 含旋转-反演操作而 T 本身不含，Tₕ 是 T 加镜面；O（八面体群）：八面体或立方体的对称性，Oₕ 含旋转-反演、O 不含。</p><p>我们现在用的拉曼不可约表示（A₁g、E₂g 等）就是熊夫利记号下的。只要把晶体里所有对称操作找全、组成群，才能确定它的点群：比如立方体不是 C₄ₕ——因为它的对称操作远不止一根四重轴加垂直镜面。参考手册可以在 crystals 网站上查：每个点群包含哪些对称操作、拉曼与超拉曼张量的形式都能查到，我们后续用点群对称性推拉曼张量、判断哪些声子模拉曼可见时，都以这个为根据。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>所以它对应的其实就是以前最早的时候，这个科学家们沟通交流没有现在这么方便……一波是搞物理的，一波是搞化学的，所以导致两套记号那个时候没有统一。物理的可能更偏向于用赫尔曼-莫干记号，化学的更多用熊夫利记号。</p><p>比如说CN群，它有一个N重的旋转轴。CNH呢，就是在后面加一个H，表示的是我CN再加上一个与旋转轴垂直的镜面。CNV，在N后面加一个V，表示的是旋转轴平行的镜面。D呢，就是我有一个N重旋转轴，再有N根垂直于这个主轴的二重轴……我们用的比较多的是A1g、B2g这些，都属于熊夫利记号下面不可约表示的记号。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s03">
+  <div class="slides"><figure class="slide" id="slide-59">
+<img src="slides/slide_59.png" alt="课件第59页 6) 晶格的宏观对称性：对称性简化宏观物理量（节标题）">
+<figcaption><span class="sno">59</span><span class="stitle">6) 晶格的宏观对称性：对称性简化宏观物理量（节标题）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-60">
+<img src="slides/slide_60.png" alt="课件第60页 6) 晶格的宏观对称性：晶格的对称性变换是正交变换（AᵀA=I）">
+<figcaption><span class="sno">60</span><span class="stitle">6) 晶格的宏观对称性：晶格的对称性变换是正交变换（AᵀA=I）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>对称性与宏观物理量：正交变换</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第一章·第 2 段（前）</span><span class="chip">课件 59</span><span class="chip">课件 60</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第六小节讲宏观对称性，核心是：晶体内部的对称性，能反推出某些宏观物理量具有什么样的特征。因为物理量通常用数学描述，先把对称操作写成数学的语言——变换矩阵。对称操作是刚性的：变换前后晶体中任意两点的距离保持不变，因此变换矩阵 A 满足 x'²+y'²+z'²=x²+y²+z²，即 AᵀA=I、行列式 |A|=±1——A 是正交矩阵。前面讲的旋转、反演、镜面，都属于这类正交变换。</p><p>为什么对称性有用？有了对称性，只需要研究材料的一小部分，其余部分都可以由对称操作对应过去，大大简化研究与计算。后面还会看到，研究晶格性质时并不在实空间做，而是在倒空间（导格空间）里讨论，只需研究第一布里渊区里特定高对称区域的性质就够了。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这个对称性就是晶体内部的对称性，能够反推出我们某些物理量具有什么样的一些特性，这个是我们想要告诉大家的。</p><p>由于对称操作是刚性的，变换前后晶体中任意两点距离保持不变，所以对变换矩阵A有 x'²+y'²+z'²=[x' y' z']AᵀA[x y z]ᵀ=x²+y²+z²，所以AᵀA=I，行列式|A|=±1，即A是正交矩阵。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s04">
+  <div class="slides"><figure class="slide" id="slide-61">
+<img src="slides/slide_61.png" alt="课件第61页 6) 晶格的宏观对称性：例子——立方晶体的介电常数为标量（一）">
+<figcaption><span class="sno">61</span><span class="stitle">6) 晶格的宏观对称性：例子——立方晶体的介电常数为标量（一）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-62">
+<img src="slides/slide_62.png" alt="课件第62页 6) 晶格的宏观对称性：例子——立方晶体的介电常数为标量（二）">
+<figcaption><span class="sno">62</span><span class="stitle">6) 晶格的宏观对称性：例子——立方晶体的介电常数为标量（二）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-63">
+<img src="slides/slide_63.png" alt="课件第63页 6) 晶格的宏观对称性：绕 Z 轴转 π/2 推导介电常数（ε₁₁=ε₂₂、ε₁₂=0）">
+<figcaption><span class="sno">63</span><span class="stitle">6) 晶格的宏观对称性：绕 Z 轴转 π/2 推导介电常数（ε₁₁=ε₂₂、ε₁₂=0）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>例子：立方晶体的介电常数为标量</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第一章·第 2 段（前）</span><span class="chip">课件 61</span><span class="chip">课件 62</span><span class="chip">课件 63</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>宏观物理量里，介电常数是二阶张量：加一个电场 E，产生电位移 D（或极化 P），D 与 E 通过三乘三矩阵 ε 联系——因为是三维空间，所以 ε 有 9 个分量。若 ε 是标量，电场沿 x 方向只产生 x 方向的 D；若 ε 是张量，x 方向的电场还可能产生 y、z 方向的 D。二阶张量在坐标变换下按 ε'=AεA⁻¹（分量形式 ε'αβ=Σᵢⱼ aαᵢ aβⱼ εᵢⱼ）变化。关键一步：若 A 是晶体的对称操作，操作前后晶体重合，ε'=ε。</p><p>以立方晶体的一个对称操作——绕 Z 轴转 π/2 为例，变换矩阵 A=[[0,-1,0],[1,0,0],[0,0,1]]。代入张量变换式展开 ε'₁₁，很多项因为 a₁₁=a₁₃=0 而消失，得到 ε₁₁=ε₂₂；再考虑介电张量本身的性质 ε₁₂=ε₂₁，结合 ε₁₂=-ε₂₁ 得到 ε₁₂=ε₂₁=0。类似地对绕 X、绕 Y 轴旋转等其它对称操作重复，最终得到 ε₁₁=ε₂₂=ε₃₃，且所有非对角元为零——即 εαβ=ε₀δαβ，立方晶体的介电常数是标量。</p><p>这就是对称性带来的便利：原来 9 个分量，现在只需测量一个数值（比如给 x 方向加电场测出 ε₁₁）就确定了整个张量。不管用第一性原理算还是实验测，都知道该测哪些量，大大简化计算与测试过程。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>二阶张量就是3乘3的一个矩阵……我x轴上加一个电场，不再只是产生x轴上的P，还可能在其他方向上也产生P。</p><p>二阶张量它的变化规律：ε'=AεA⁻¹。如果A是我的晶体的对称性操作所对应的矩阵，那做了这样的变换之后，ε'应该跟ε是一样的。</p><p>绕Z轴旋转π/2，矩阵代入之后很多都是0，得到ε₁₁跟ε₂₂相等。再考虑介电函数本身的性质ε₁₂=ε₂₁，就得到ε₁₂=ε₂₁=0。类似地进行其他对称变换，ε₁₁=ε₂₂=ε₃₃，所以εαβ=ε₀δαβ，立方晶体的介电常数为标量。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s05">
+  <div class="slides"><figure class="slide" id="slide-64">
+<img src="slides/slide_64.png" alt="课件第64页 第 1 节 晶体结构：主要内容（提纲，标示“倒格子和布里渊区”）">
+<figcaption><span class="sno">64</span><span class="stitle">第 1 节 晶体结构：主要内容（提纲，标示“倒格子和布里渊区”）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-65">
+<img src="slides/slide_65.png" alt="课件第65页 7) 倒格子和布里渊区：晶格周期性与周期函数（傅里叶变换引入）">
+<figcaption><span class="sno">65</span><span class="stitle">7) 倒格子和布里渊区：晶格周期性与周期函数（傅里叶变换引入）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-66">
+<img src="slides/slide_66.png" alt="课件第66页 7) 倒格子和布里渊区：晶体中物理量的傅立叶展开（G·R=2πm）">
+<figcaption><span class="sno">66</span><span class="stitle">7) 倒格子和布里渊区：晶体中物理量的傅立叶展开（G·R=2πm）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>进入倒格子：周期性 → 傅里叶变换</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第一章·第 2 段（中）</span><span class="chip">课件 64</span><span class="chip">课件 65</span><span class="chip">课件 66</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第七小节讲倒格子和布里渊区。前面讲的都是实空间（所见即所得：CIF 文件里写原子坐标就能在软件里摆出晶体）。为什么还要引入倒空间？晶格最核心的特性是周期性，一旦函数具有周期性，数学上就可以做傅里叶变换。设 V(r) 是某个以正格矢为周期的三维周期函数，V(r)=V(r+Rₙ)，Rₙ=l₁a₁+l₂a₂+l₃a₃。</p><p>把 V(r) 作傅里叶展开：V(r)=Σ_{Gₕ} V(Gₕ)e^{iGₕ·r}。利用周期性 V(r+Rₙ)=V(r)，必须有 e^{iGₕ·Rₙ}=1，即 Gₕ·Rₙ=2πm（m 为整数）。这个条件决定了倒空间里允许的 Gₕ 取值——倒格矢，正是傅里叶变换对周期性的自然回应。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我们前面讲的都是从实空间，实空间就是所见即所得……你看到的这样一个空间，我们就把它称为实空间。</p><p>一旦有了周期性，在数学上你就可以做傅里叶变换……V(r)是周期函数，V(r)=V(r+Rₙ)。做傅里叶展开后，多出来的e^{iGₕ·Rₙ}应该等于1，所以Gₕ·Rₙ=2πm。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s06">
+  <div class="slides"><figure class="slide" id="slide-67">
+<img src="slides/slide_67.png" alt="课件第67页 7) 倒格子和布里渊区：引入倒格子——倒格矢与倒格子基矢的定义">
+<figcaption><span class="sno">67</span><span class="stitle">7) 倒格子和布里渊区：引入倒格子——倒格矢与倒格子基矢的定义</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>倒格矢与倒格子基矢的定义</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第一章·第 2 段（中）</span><span class="chip">课件 67</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>怎么构造满足 Gₕ·Rₙ=2πm 的矢量？定义倒格子基矢 b₁、b₂、b₃ 与正格子基矢满足 aᵢ·bⱼ=2πδᵢⱼ：i=j 时等于 2π，i≠j 时等于 0。构造方法：b₁=2π(a₂×a₃)/[a₁·(a₂×a₃)]——a₂×a₃ 同时垂直于 a₂ 和 a₃，保证 b₁ 与 a₂、a₃ 正交；分母 a₁·(a₂×a₃)=V 是正格子原胞体积，作归一化后 a₁·b₁=2π。b₂、b₃ 循环定义。</p><p>于是倒格矢 Gₕ=h₁b₁+h₂b₂+h₃b₃（h 为整数），倒格子原胞体积为 (2π)³/V。注意：必须用原胞基矢（而不是晶胞/单胞基矢）来构造倒格子。因为只有原胞基矢能把所有原子位置都表达出来，用晶胞基矢算倒格矢会丢掉体心、面心上的原子（课后思考题：用面心立方、体心立方的原胞基矢算倒格基矢）。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>要让A1跟B1乘起来等于2π，同时让A1跟B2、B3垂直。所以B1用A2×A3来构造，它同时垂直于A2和A3，再除以正格子原胞的体积做归一化。</p><p>一定要找出我所对应的这个原胞的基矢，然后再去计算出它的倒格矢，这个是我们要注意的，不是单胞或者晶胞的矢量，因为你如果是晶胞的话，算出来没办法把体心那个原子的位置在倒空间反映出来。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s07">
+  <div class="slides"><figure class="slide" id="slide-68">
+<img src="slides/slide_68.png" alt="课件第68页 7) 倒格子和布里渊区：简单立方晶格的倒格基矢（仍是简单立方）">
+<figcaption><span class="sno">68</span><span class="stitle">7) 倒格子和布里渊区：简单立方晶格的倒格基矢（仍是简单立方）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-69">
+<img src="slides/slide_69.png" alt="课件第69页 7) 倒格子和布里渊区：体心立方和面心立方晶格的倒格基矢（思考题）">
+<figcaption><span class="sno">69</span><span class="stitle">7) 倒格子和布里渊区：体心立方和面心立方晶格的倒格基矢（思考题）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div class="sec-tt">
+        <h2>正倒格子的对应：简单立方与思考题</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第一章·第 2 段（中）</span><span class="chip">课件 68</span><span class="chip">课件 69</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>算一个最简单的例子：简单立方。正格子基矢 a₁=aî、a₂=aĵ、a₃=ak̂，a₁·(a₂×a₃)=a³。代入定义：b₁=2π/a î、b₂=2π/a ĵ、b₃=2π/a k̂——倒格子也是简单立方，只是边长变成了 2π/a：方向相同、数值按倒数关系变化，且带 2π 比例系数。但这不是普适规律，要具体问题具体分析。</p><p>体心立方和面心立方则要小心：体心立方的倒格子是面心立方，面心立方的倒格子是体心立方（下一节会看到，它们的布里渊区也相应互换）。课后思考题：用体心立方、面心立方的原胞基矢，代入公式算出各自的倒格基矢。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>简单立方晶格，a1=ai、a2=aj、a3=ak，代入定义得到b1=2π/a i、b2=2π/a j、b3=2π/a k，方向跟正格子一样，只是数值变了。倒格子也是简单立方。</p><p>体心立方和面心立方晶格的倒格基矢？……它是课后思考题，用原胞基矢去计算。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s08">
+  <div class="slides"><figure class="slide" id="slide-70">
+<img src="slides/slide_70.png" alt="课件第70页 7) 倒格子和布里渊区：倒格子点阵（R·G=2πm、倒格子空间与原胞）">
+<figcaption><span class="sno">70</span><span class="stitle">7) 倒格子和布里渊区：倒格子点阵（R·G=2πm、倒格子空间与原胞）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">08</span>
+      <div class="sec-tt">
+        <h2>倒格子点阵与倒格子空间</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第一章·第 2 段（中）</span><span class="chip">课件 70</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>倒格子点阵的精确定义：对于布拉伐格子中所有格矢 Rₙ，满足 Rₙ·Gₕ=2πm 的全部空间矢量 Gₕ 的端点集合，构成该布拉伐格子的倒格子点阵，这些点称为倒格点，Gₕ 为倒格矢。正格子基矢在空间平移成正格子，倒格子基矢在空间平移成倒格子。由正格子组成的空间是位置空间（坐标空间）；由倒格子组成的空间是状态空间（倒格子空间）。</p><p>正格子基矢组成的平行六面体叫正格子原胞，倒格子基矢组成的平行六面体叫倒格子原胞。另一种常用的原胞定义是 Wigner-Seitz 原胞：由倒格基矢作最近邻连线、画垂直平分面围出的区域——它就是后面要讲的第一布里渊区。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>对于布拉伐格子中所有格矢Rₙ，有一系列空间矢量Gₕ满足Rₙ·Gₕ=2πm，全部端点的集合构成该布拉伐格子的倒格子点阵。</p><p>正格子基矢在空间平移成正格子，倒格子基矢在空间平移成倒格子。由正格子组成的空间是位置空间，称为坐标空间；由倒格子组成的空间是状态空间，称为倒格子空间。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s09">
+  <div class="slides"><figure class="slide" id="slide-71">
+<img src="slides/slide_71.png" alt="课件第71页 7) 倒格子和布里渊区：第一布里渊区（定义：垂直平分面）与二维正方晶格">
+<figcaption><span class="sno">71</span><span class="stitle">7) 倒格子和布里渊区：第一布里渊区（定义：垂直平分面）与二维正方晶格</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">09</span>
+      <div class="sec-tt">
+        <h2>第一布里渊区</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第一章·第 2 段（中）</span><span class="chip">课件 71</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第一布里渊区：倒格子空间中以原点为中心的部分区域。从原点向最近邻、次近邻、再次近邻倒格点……作连线，再画出这些连线的垂直平分面，包含原点的多面体包围的区域就是第一布里渊区。二维正方晶格为例：最近邻 4 个格点（上下左右），四条垂直平分线围出中心正方形——边长 2π/a 的正方形就是它的第一布里渊区。</p><p>注意：如果最近邻连线围不成封闭区域，就要扩展到次近邻、再次近邻，直到围出最里面的封闭区域；往外依次是第二、第三布里渊区——第二布里渊区是除去第一布里渊区后由次近邻垂直平分线围出的几个不连续区域之和。一般情况下我们只讨论第一布里渊区，所有问题都在第一布里渊区里解决。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>第一布里渊区的定义：倒格子空间中以原点为中心，作最近邻、次近邻倒格点的连线，再画这些连线的垂直平分面，包含原点的多面体包围的区域就是第一布里渊区。</p><p>第二个布里渊区怎么画呢？四近邻……它不是说我蓝色围出来的这个区域就是第二个布里渊区，它是除掉中心第一布里渊区之后，周围的四个不连续分布的四个区域才是第二布里渊区。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s10">
+  <div class="slides"><figure class="slide" id="slide-72">
+<img src="slides/slide_72.png" alt="课件第72页 7) 倒格子和布里渊区：简单立方晶体的第一布里渊区（Γ/X/R/S/T 等）">
+<figcaption><span class="sno">72</span><span class="stitle">7) 倒格子和布里渊区：简单立方晶体的第一布里渊区（Γ/X/R/S/T 等）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-73">
+<img src="slides/slide_73.png" alt="课件第73页 7) 倒格子和布里渊区：体心立方晶格的第一布里渊区（菱形十二面体）">
+<figcaption><span class="sno">73</span><span class="stitle">7) 倒格子和布里渊区：体心立方晶格的第一布里渊区（菱形十二面体）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-74">
+<img src="slides/slide_74.png" alt="课件第74页 7) 倒格子和布里渊区：面心立方晶格的第一布里渊区（体心立方结构）">
+<figcaption><span class="sno">74</span><span class="stitle">7) 倒格子和布里渊区：面心立方晶格的第一布里渊区（体心立方结构）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">10</span>
+      <div class="sec-tt">
+        <h2>三维晶格的第一布里渊区</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第一章·第 2 段（中）</span><span class="chip">课件 72</span><span class="chip">课件 73</span><span class="chip">课件 74</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>简单立方：倒格基矢 2π/a，与原点相近邻的倒格矢是 ±b₁、±b₂、±b₃，它们的垂直平分面围出一个简单立方体——第一布里渊区就是边长 2π/a 的立方体。立方体上标有 Γ（原点，保持全部点群对称性，最高对称点）、X（面心）、R（顶点）、S、T、Σ、M、Z 等高对称点。</p><p>体心立方：倒格子是面心立方，第一布里渊区是菱形十二面体，高对称点 Γ、H、N、P。面心立方：倒格子是体心立方，第一布里渊区是截角八面体（斜截八面体，八个面被截掉），高对称点 Γ、X、K、L。注意体心立方要沿体心到最近邻连线作垂直平分面，若 8 个顶点围不成封闭空间，还要沿次近邻（相邻体心）连线补面——这就是截角八面体来源。</p><p>高对称点为什么重要：在 Γ 点，晶体点群的全部对称操作都成立，对称性最高；在其它点（如面心 X、顶点 R），只保持点群的一个子群。比如石墨烯是 D₆ₕ 点群，Γ 点也是 D₆ₕ，但 K 点、M 点可能只有 C₃ 或更低的对称性——分析 K 点的声子/电子特性时，要查该点对应的子群不可约表示，不能直接沿用晶体的整个点群。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>对于简单立方，与原点相近邻的倒格矢的垂直平分面构成简单立方体，即简单立方晶体的第一布里渊区为简单立方晶格。</p><p>体心立方晶格，倒格子基矢计算出来是面心立方，第一步里渊区是菱形十二面体，有Γ、H、N、P这些点。</p><p>面心立方，倒格子基矢是体心立方，第一步里渊区是截角八面体……这个点，它并没有保持点群所有的对称性，需要用子群来表示。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s11">
+  <div class="slides"><figure class="slide" id="slide-75">
+<img src="slides/slide_75.png" alt="课件第75页 7) 倒格子和布里渊区：倒点阵保留正点阵的全部宏观对称性（证明）">
+<figcaption><span class="sno">75</span><span class="stitle">7) 倒格子和布里渊区：倒点阵保留正点阵的全部宏观对称性（证明）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-76">
+<img src="slides/slide_76.png" alt="课件第76页 7) 倒格子和布里渊区：Wigner-Seitz 原胞即第一布里渊区（具点群全部对称性）">
+<figcaption><span class="sno">76</span><span class="stitle">7) 倒格子和布里渊区：Wigner-Seitz 原胞即第一布里渊区（具点群全部对称性）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">11</span>
+      <div class="sec-tt">
+        <h2>倒格子的对称性与 Wigner-Seitz 原胞</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第一章·第 2 段（中）</span><span class="chip">课件 75</span><span class="chip">课件 76</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>一个重要问题：实空间有对称操作，倒空间是否还保持正格子点阵的全部宏观对称性？如果保持，就可以用实空间的对称性只研究倒空间里某些特征区域，再推及全部。证明思路：设 α 为正格子点群的任一对称操作，αRₙ 仍为正格矢（点群操作不改变格点间距离）；按群的定义 α⁻¹ 也是同一点群的操作，α⁻¹Rₙ 亦为正格矢。由 Gₙ·Rₙ=2πm 得 Gₙ·(α⁻¹Rₙ)=2πm；对 Gₙ 和 α⁻¹Rₙ 同时施加 α（点群操作不改变距离），有 (αGₙ)·(α⁻¹Rₙ)=Gₙ·(α⁻¹Rₙ)=2πm；另一方面 (αGₙ)·α(α⁻¹Rₙ)=(αGₙ)·Rₙ。所以 (αGₙ)·Rₙ=2πm——αGₙ 也是倒格矢。即正格子的任一对称操作同样是倒格子的对称操作，正倒格子有相同的点群对称性。</p><p>因此，倒格子空间中的 Wigner-Seitz 原胞——即第一布里渊区（简约布里渊区）——具有晶格点群的全部对称性。这就是第一布里渊区特别重要的原因：我们只需研究其中一小部分（如不可约布里渊区），其余部分可由对称操作得到。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我要证明倒格子点阵是保持了正点阵的全部宏观对称性……设α为正格子的一个点群的任取对称操作，αRₙ亦为正格矢；α⁻¹亦为同一点群的对称操作。由Gₙ·Rₙ=2πm ⇒ Gₙ·(α⁻¹Rₙ)=2πm，接受同一点群对称操作α后，αGₙ·α(α⁻¹Rₙ)=Gₙ·α⁻¹Rₙ=2πm，同时等于αGₙ·Rₙ，所以(αGₙ)·Rₙ=2πm，αGₙ亦为倒格矢。</p><p>倒格子空间中的Wigner-Seitz原胞，亦即第一布里渊区，也就是所谓的简约布里渊区，具有晶格点群的全部对称性，所以第一布里渊区具有特别重要的意义。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s12">
+  <div class="slides"><figure class="slide" id="slide-77">
+<img src="slides/slide_77.png" alt="课件第77页 7) 倒格子和布里渊区：石墨烯的布里渊区、电子能带与声子色散关系">
+<figcaption><span class="sno">77</span><span class="stitle">7) 倒格子和布里渊区：石墨烯的布里渊区、电子能带与声子色散关系</span></figcaption>
+</figure>
+<figure class="slide" id="slide-78">
+<img src="slides/slide_78.png" alt="课件第78页 第 1 节 晶体结构：主要内容（提纲，标示“倒格子和布里渊区”）">
+<figcaption><span class="sno">78</span><span class="stitle">第 1 节 晶体结构：主要内容（提纲，标示“倒格子和布里渊区”）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">12</span>
+      <div class="sec-tt">
+        <h2>石墨烯的布里渊区与色散关系</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第一章·第 2 段（中）</span><span class="chip">课件 77</span><span class="chip">课件 78</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>以石墨烯为例：单层石墨烯是六角（蜂巢）晶格，正格子基矢 a₁、a₂ 夹角不是直角。二维体系可令 a₃ 为垂直二维平面的单位矢量，用 a₂×a₃、a₃×a₁ 构造倒格基矢 b₁、b₂——倒格子仍是六角形，方向由垂直关系定、长度由定义算。再作最近邻连线的垂直平分面，得到六边形的第一布里渊区：中心 Γ 点、六边形顶点 K 与 K'（原胞内两个不等价碳原子，K、K' 也相互不等价）、边中点 M 点。</p><p>石墨烯的电子能带是线性的狄拉克锥——这只存在于 K、K' 点附近；声子色散关系通常不在三维倒空间画，而是沿高对称轴展开成二维曲线：如 Γ→K→M→Γ 把第一布里渊区的三角形三条边展开，横轴标注这些高对称点、纵轴是频率，常见的声子色散图都是这么画的。一般研究高对称轴上的色散就够了，但有时不够——比如量子限域效应里峰的蓝移红移，需要看整个二维色散的态密度权重，这就引出后面的态密度与范霍夫奇点。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>单层石墨烯的正格子是六边形……二维体系让a3等于垂直于二维平面的单位矢量，就可以把b1、b2确定出来。倒格子也是六边形。</p><p>第一布里渊区中心是Γ点，顶点是K点和K撇点（两个不等价的原子），中间是M点。石墨烯的线性电子能带，狄拉克锥只存在于K和K撇点。</p><p>声子色散曲线都是沿着特定的轴，比如Γ到K、K到M、M到Γ，把三角形的三条边在二维平面上展开，再把对应的频率画上去。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s13">
+  <div class="slides"><figure class="slide" id="slide-79">
+<img src="slides/slide_79.png" alt="课件第79页 主要内容：1 晶体结构 → 2 晶格振动（进入第 2 节）">
+<figcaption><span class="sno">79</span><span class="stitle">主要内容：1 晶体结构 → 2 晶格振动（进入第 2 节）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-80">
+<img src="slides/slide_80.png" alt="课件第80页 第 2 节 晶格振动：主要内容（9 个知识点）">
+<figcaption><span class="sno">80</span><span class="stitle">第 2 节 晶格振动：主要内容（9 个知识点）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">13</span>
+      <div class="sec-tt">
+        <h2>进入第 2 节：晶格振动</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第一章·第 2 段（后）</span><span class="chip">课件 79</span><span class="chip">课件 80</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第 1 节晶体结构到此讲完，进入第 2 节晶格振动。晶格振动的研究最早是从晶体热学性质开始的：固体热容在低温下随温度下降不断降低，与经典理论不符——按经典模型热容应与温度无关。这个矛盾促使爱因斯坦提出量子热容理论，确立晶格“格波”的研究方法。晶格振动对晶体的电、光、磁、超导等性质都有关键影响。</p><p>第 2 节共 9 个知识点：一维单原子链的晶格振动、周期性边界条件、长波极限和短波极限、一维双原子链的晶格振动、声学波和光学波、二维/三维晶体的晶格振动、晶格振动态密度、范霍夫奇点、研究实例。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>对晶格振动的研究最早是从晶体热学性质开始的，热运动在宏观上最直接的表现便是热容。固体热容在低温下随温度降低不断下降，与经典理论不符，促使爱因斯坦提出量子热容理论，确立了晶格“格波”的研究方法。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s14">
+  <div class="slides"><figure class="slide" id="slide-81">
+<img src="slides/slide_81.png" alt="课件第81页 2) 一维单原子链的晶格振动：定义、研究起源与研究意义">
+<figcaption><span class="sno">81</span><span class="stitle">2) 一维单原子链的晶格振动：定义、研究起源与研究意义</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">14</span>
+      <div class="sec-tt">
+        <h2>一维单原子链：定义与研究意义</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第一章·第 2 段（后）</span><span class="chip">课件 81</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>原子在平衡格点附近的振动便是晶格振动。一维单原子链是最简单的晶格：原子限制在沿链的一维方向运动，每个原胞只含一个原子。先从最简单的模型入手——两个原子用一根弹簧连着：原子离开平衡位置，弹簧把它拉回；向另一侧运动，弹簧又把它撑开，两个原子在弹簧作用下绕平衡位置做微小振动。对两个原子分别列牛顿方程，解出唯一的振动频率 ω₀=√(2β/m)——这就是分子的振动频率。</p><p>过渡到晶体：把所有原子一个一个串起来。区别在于两端还有原子延伸出去，每个原子受左右两个近邻的作用，必须联立 N 个方程求解。问题来了：晶体里是不是也像分子那样只有一个频率？答案藏在色散关系里——不同波矢 q 对应不同频率 ω，而不是单一频率。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我们假设只有一根弹簧连接着两个原子……原子一旦离得远一点，弹簧就会把它拉回来；向下运动的时候弹簧又会给它撑开。两个原子在弹簧作用下绕平衡位置做微小振动。</p><p>解运动方程，得到振动频率ω₀=√(2β/m)。它只有一个固有频率。那么在晶体里面是不是也类似，所有的原子只有一种振动的频率呢？</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s15">
+  <div class="slides"><figure class="slide" id="slide-82">
+<img src="slides/slide_82.png" alt="课件第82页 2) 一维单原子链的晶格振动：分子（弹簧）振动与单原子链模型">
+<figcaption><span class="sno">82</span><span class="stitle">2) 一维单原子链的晶格振动：分子（弹簧）振动与单原子链模型</span></figcaption>
+</figure>
+<figure class="slide" id="slide-83">
+<img src="slides/slide_83.png" alt="课件第83页 2) 一维单原子链的晶格振动：相互作用能的泰勒展开与力常数 β">
+<figcaption><span class="sno">83</span><span class="stitle">2) 一维单原子链的晶格振动：相互作用能的泰勒展开与力常数 β</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">15</span>
+      <div class="sec-tt">
+        <h2>相互作用能与力常数 β</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第一章·第 2 段（后）</span><span class="chip">课件 82</span><span class="chip">课件 83</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>为什么原子间的力可以类比弹簧？把原子间相互作用能 v(a+δ) 在平衡位置 a 附近作泰勒展开：一阶项系数 (∂v/∂δ)₀ 是平衡位置处的受力，平衡时受力为零，所以一阶项为零；保留到二阶，v(a+δ)=v(a)+½(∂²v/∂δ²)₀δ²+高阶项。定义力常数 β=(∂²v/∂δ²)₀，原子偏离平衡位置 δ 时受到的恢复力 F=-dv/dδ≈-βδ——这就是简谐近似，与胡克定律形式完全一致。</p><p>一维单原子链的参数：平衡时相邻原子间距 a、每个原胞一个质量为 m 的原子、偏离格点位移用 μₙ 表示（μₙ₋₁、μₙ、μₙ₊₁……），原子间用劲度系数 β 的“弹簧”连接。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>在简谐近似下，相邻两原子间的作用力F=-dv/dδ≈-βδ，其中β=(∂²v/∂δ²)₀。弹性恢复力：在简谐近似下，离开平衡位置时相邻原子间存在正比于相对位移的力，类似于胡克定律。</p><p>平衡位置处晶体能量最低，偏离平衡位置，晶体的内能发生改变。只考虑近邻原子间的相互作用，相互作用能可以在平衡位置展开。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s16">
+  <div class="slides"><figure class="slide" id="slide-84">
+<img src="slides/slide_84.png" alt="课件第84页 2) 一维单原子链的晶格振动：简谐近似与弹性恢复力（F=-βδ）">
+<figcaption><span class="sno">84</span><span class="stitle">2) 一维单原子链的晶格振动：简谐近似与弹性恢复力（F=-βδ）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-85">
+<img src="slides/slide_85.png" alt="课件第85页 2) 一维单原子链的晶格振动：单个原子的运动方程（N 个联立方程）">
+<figcaption><span class="sno">85</span><span class="stitle">2) 一维单原子链的晶格振动：单个原子的运动方程（N 个联立方程）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">16</span>
+      <div class="sec-tt">
+        <h2>运动方程与格波解</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第一章·第 2 段（后）</span><span class="chip">课件 84</span><span class="chip">课件 85</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>对第 n 个原子列方程：左边第 n-1 个原子与它的相对位移 δ=μₙ-μₙ₋₁，作用力 -β(μₙ-μₙ₋₁)；右边第 n+1 个原子相对位移 δ=μₙ₊₁-μₙ，作用力 -β(μₙ₊₁-μₙ)。两力方向相反，得到运动方程 mμ̈ₙ=β(μₙ₊₁+μₙ₋₁-2μₙ)。每个原子对应一个方程，N 个原子就是 N 个联立的线性齐次方程——直接解 N 元方程组很困难。</p><p>运动方程与波动方程 mμ̈+ω²μ=0 形式类似。波动方程有平面波形式的解 μ=Ae^{i(ωt-kx)}。但晶格是离散的，原子只存在于格点 x=na 处，所以形式解取 μₙ=Ae^{i(ωt-naq)}（格波解），q 是晶格中的波矢。代入方程：左边给出 -mω²，右边 e^{±iaq} 合并后是 2β(cos(aq)-1)，于是 -mω²=2β(cos(aq)-1)，即 ω²=4β/m·sin²(aq/2)——ω 与 q 的关系，就是色散关系。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>第n个原子受到左右两个最近邻原子的作用力，左边相对位移δ=μₙ-μₙ₋₁、作用力-β(μₙ-μₙ₋₁)；右边相对位移δ=μₙ₊₁-μₙ、作用力-β(μₙ₊₁-μₙ)，方向相反，得到müₙ=β(μₙ₊₁+μₙ₋₁-2μₙ)。</p><p>格波解：μₙ=Ae^{i(ωt-naq)}，q为晶格中的波矢。代入方程，-mω²=β[e^{-iaq}+e^{iaq}-2]=2β[cos(aq)-1]，所以ω²=4β/m·sin²(aq/2)。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s17">
+  <div class="slides"><figure class="slide" id="slide-86">
+<img src="slides/slide_86.png" alt="课件第86页 2) 一维单原子链的晶格振动：格波解与色散关系（ω²=4β/m·sin²(aq/2)）">
+<figcaption><span class="sno">86</span><span class="stitle">2) 一维单原子链的晶格振动：格波解与色散关系（ω²=4β/m·sin²(aq/2)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-87">
+<img src="slides/slide_87.png" alt="课件第87页 2) 一维单原子链的晶格振动：色散关系曲线（ω₀=√(2β/m)）">
+<figcaption><span class="sno">87</span><span class="stitle">2) 一维单原子链的晶格振动：色散关系曲线（ω₀=√(2β/m)）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">17</span>
+      <div class="sec-tt">
+        <h2>色散关系与第一步里渊区</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第一章·第 2 段（后）</span><span class="chip">课件 86</span><span class="chip">课件 87</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>格波解与 n 无关，说明 N 个联立方程都归结为同一个方程：只要 ω 与 q 满足色散关系 ω(q)=±√(4β/m)·sin(aq/2)=√(4β/m)|sin(aq/2)|，格波解就是联立方程组的解。格波解表示所有原子同时以频率 ω 振动，相邻原子之间的位相差是 aq。</p><p>色散曲线：横轴 q 取 -π/a 到 +π/a（sin 的一个周期），纵轴 ω。在 q=0 处 ω=0；在布里渊区边界 q=±π/a 处 ω 取最大值 √(4β/m)。中间频率 ω₀=√(2β/m) 正是前面两个原子弹簧模型的频率——把分子周期性地扩展成原子链，单一频率变成了随 q 变化的色散曲线，最高频率是分子频率的 √2 倍。</p><p>这个 √2 很重要：二维材料是一层一层堆起来的，层间相对振动可用层间力常数描述，等效于一维单原子链模型。无限堆叠的层状材料，面外声学模最高频率正是两层材料对应频率的 √2 倍——面外振动是声子在另一方向空间受限后折叠出来的频率。后面讲双原子链时还会看到类似的 √2 关系。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>格波解与n无关，表明N个联立方程都归结为同一个方程，只要ω和q之间满足这个关系，格波解就表示了联立方程组的解。ω和q之间的关系称为色散关系。</p><p>ω₀=√(2β/m)，这个是分子弹簧的振动频率。把分子用周期性扩展出来之后，得到的是色散关系，最高频率在布里渊区边界，跟ω₀差一个√2倍。</p><p>二维材料垂直方向的振动，等效于一维单原子链模型，体材料垂直方向的频率等于两层材料频率的√2倍。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s18">
+  <div class="slides"><figure class="slide" id="slide-88">
+<img src="slides/slide_88.png" alt="课件第88页 2) 一维单原子链的晶格振动：格波解的物理意义（q 量纲 cm⁻¹）">
+<figcaption><span class="sno">88</span><span class="stitle">2) 一维单原子链的晶格振动：格波解的物理意义（q 量纲 cm⁻¹）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-89">
+<img src="slides/slide_89.png" alt="课件第89页 2) 一维单原子链的晶格振动：q 与 q'=q+2π 的等价性说明">
+<figcaption><span class="sno">89</span><span class="stitle">2) 一维单原子链的晶格振动：q 与 q'=q+2π 的等价性说明</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">18</span>
+      <div class="sec-tt">
+        <h2>格波的物理意义与 q 的取值范围</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第一章·第 2 段（后）</span><span class="chip">课件 88</span><span class="chip">课件 89</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>格波 μₙ=Ae^{i(ωt-naq)} 与连续介质波 μ=Ae^{i(ωt-kx)} 形式完全相同：ω=2πν 是圆频率，q=2π/λ 是波数。本质区别在于离散性：连续介质波中 x 连续，格波中 x 只能取格点位置 na。波数 q 的量纲：naq 无量纲，所以 q 的量纲是 cm⁻¹，与倒格矢相同。</p><p>q 的取值不唯一：若把 aq 改变 2π 的整数倍，μ'ₙ=Ae^{i(ωt-naq+2nπ)}=μₙ，ω 也不变——所有原子的振动完全没有任何不同。看图示：实线是 q=π/2a（波长 λ=4a）的波，虚线是 q'=q+2π=5π/2a（波长 λ=4a/5）的波，两波在原子格点上的取值完全相同；前一种相邻原子位相差 π/2，后一种相当于 2π+π/2，效果完全一样。所以 q 只需取一个周期：-π/a<q≤π/a——这就是一维单原子链的第一布里渊区（与倒格矢定义一致）。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>格波与连续介质波的区别：连续介质波x是连续的，格波x是离散的，只能取格点位置na。naq无量纲，所以q量纲应为cm⁻¹，与倒格矢相同。</p><p>如果把aq改变一个2π的整数倍，μ'ₙ=Ae^{i(ωt-naq+2nπ)}=μₙ，ω'=ω，所有原子的振动实际上完全没有任何不同。所以-π/a<q≤π/a，这是第一布里渊区。</p><p>实线表示q=π/2a（波长4a），虚线表示同样的原子振动看成q'=5π/2a（波长4a/5）。前一种相邻原子位相差π/2，后一种相当于2π+π/2，效果完全一样。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s19">
+  <div class="slides"><figure class="slide" id="slide-90">
+<img src="slides/slide_90.png" alt="课件第90页 2) 一维单原子链的晶格振动：小结（格波特性、有限长链引入）">
+<figcaption><span class="sno">90</span><span class="stitle">2) 一维单原子链的晶格振动：小结（格波特性、有限长链引入）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-91">
+<img src="slides/slide_91.png" alt="课件第91页 第 2 节 晶格振动：主要内容（提纲，标示“周期性边界条件”）">
+<figcaption><span class="sno">91</span><span class="stitle">第 2 节 晶格振动：主要内容（提纲，标示“周期性边界条件”）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">19</span>
+      <div class="sec-tt">
+        <h2>小结：格波特性与有限长链</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第一章·第 2 段（后）</span><span class="chip">课件 90</span><span class="chip">课件 91</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>小结：晶格具有周期性，因此晶格振动具有波的形式，称为格波；格波与一般连续介质波的本质区别是原子分布的离散性。一个格波解表示所有原子同时做频率为 ω 的振动，不同原子之间有位相差，相邻原子位相差 aq。波数 q 的取值范围是 -π/a<q<π/a，这个范围以外的 q 值并不能提供其它不同的波。</p><p>以上讨论都限于无穷长的一维单原子链。对于无限长链，q 是连续取值的；但真实晶体有限长，接下来就要处理边界问题——有限长单原子链。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>小结：晶格具有周期性，因此晶格振动具有波的形式，称为格波。格波和一般连续介质波本质区别：原子分布的离散性。波数q的取值范围-π/a<q<π/a，范围以外的q值并不能提供其它不同的波。以上所有的讨论仅限于无穷长的一维单原子链 ⇒ 有限长单原子链。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s20">
+  <div class="slides"><figure class="slide" id="slide-92">
+<img src="slides/slide_92.png" alt="课件第92页 2) 周期性边界条件：玻恩-卡曼环状链模型（有限长原子链）">
+<figcaption><span class="sno">92</span><span class="stitle">2) 周期性边界条件：玻恩-卡曼环状链模型（有限长原子链）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">20</span>
+      <div class="sec-tt">
+        <h2>玻恩-卡曼周期性边界条件</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第一章·第 2 段（后）</span><span class="chip">课件 92</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>有限长原子链的问题：两端原子只受一个最近邻的作用，运动方程与内部原子不同，虽然只是少数原子，但所有方程联立，求解复杂得多。玻恩-卡曼（Born-von Karman）提出环状链模型：把链首尾相接，第 N 个原子拉着第 1 个原子，第 1 个原子拉着第 N 个原子——所有原子受力情况完全一样，都满足同一个方程。</p><p>边界条件带来的限制：μₙ₊ₙ=μₙ（第 n+N 个原子回到第 n 个原子）。代入格波解，要求 e^{-iNaq}=1，即 q=2πh/(Na)（h 为整数）——q 不再是连续取值，而是离散的。Na=L 是链长。原子数 N 越大，q 的间隔越小，q 趋于准连续。这就是周期性边界条件：它只限制 q 的取值，不影响前面所有的求解过程。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>有限长原子链的两端原子受力情况和内部原子不同，只有少数原子的运动方程不同，但由于所有原子的方程都是联立的，具体解方程要复杂得多。如何简化？</p><p>玻恩-卡曼环状链模型：第一个原子由第N个原子拉着，第N个原子由第一个原子拉着，所有原子满足同样的方程。周期性条件μₙ₊ₙ=μₙ代入格波解，要求e^{-iNaq}=1，所以q=2πh/(Na)，q的取值是离散的。原子数越多，q的间距越小，趋于准连续。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（显微共焦拉曼光谱学）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>

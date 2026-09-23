@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>矿物物理学（180083070901P2003H） · 第一章 绪论｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>矿物物理学（180083070901P2003H） · 第一章 绪论</h1>
+    <div class="sub">第一章 绪论 ｜ 2026-09-08 ｜ 授课：郭光军</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 52 页 · 整理 27 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-s01">01 课程导入与授课团队</option>
+<option value="sec-s02">02 矿物与矿物学</option>
+<option value="sec-s03">03 矿物物理学：定义与研究内容</option>
+<option value="sec-s04">04 与相关学科的联系和作业</option>
+<option value="sec-s05">05 认识地球的开端：地球的形状</option>
+<option value="sec-s06">06 地球的半径</option>
+<option value="sec-s07">07 地球的质量</option>
+<option value="sec-s08">08 地球内部是什么：圈层结构与矿物组成</option>
+<option value="sec-s09">09 人类能到达的深度与地球空心说</option>
+<option value="sec-s10">10 简单计算：地球的平均密度</option>
+<option value="sec-s11">11 地球的密度分布：Williamson-Adams关系式</option>
+<option value="sec-s12">12 Birch 1952：地球内部的弹性和组成</option>
+<option value="sec-s13">13 矿物的同质多象：石墨与金刚石</option>
+<option value="sec-s14">14 矿物的高温高压相变</option>
+<option value="sec-s15">15 地幔过渡带间断面的解释</option>
+<option value="sec-s16">16 地幔过渡带储水</option>
+<option value="sec-s17">17 钙钛矿-后钙钛矿相变与D″层</option>
+<option value="sec-s18">18 地幔成分与地核轻元素</option>
+<option value="sec-s19">19 内核铁相</option>
+<option value="sec-s20">20 高温高压实验技术</option>
+<option value="sec-s21">21 观测手段与大科学装置</option>
+<option value="sec-s22">22 理论计算：从经典模拟到第一性原理</option>
+<option value="sec-s23">23 地球内部动力学演化</option>
+<option value="sec-s24">24 重要参量与长期目标</option>
+<option value="sec-s25">25 课程内容预览</option>
+<option value="sec-s26">26 课程目的、要求与考核</option>
+<option value="sec-s27">27 课后要点：作业与联系方式</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 矿物物理学-1.1-绪论.pdf 逐页渲染，转写原文见 record_20260908.txt。</div>
+<section class="sec" id="sec-s01">
+  <div class="slides"><figure class="slide" id="slide-01">
+<img src="slides/slide_01.png" alt="课件第1页 封面：第一章 绪论">
+<figcaption><span class="sno">01</span><span class="stitle">封面：第一章 绪论</span></figcaption>
+</figure>
+<figure class="slide" id="slide-02">
+<img src="slides/slide_02.png" alt="课件第2页 授课团队介绍">
+<figcaption><span class="sno">02</span><span class="stitle">授课团队介绍</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>课程导入与授课团队</h2>
+        <div class="sec-meta"><span class="time">录音 00:00:00 – 00:01:23</span><span class="chip">课件 1</span><span class="chip">课件 2</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>今天我们讲矿物物理学的第一节课——<b>绪论</b>。先介绍一下授课团队：我和张志刚老师都来自中国科学院地质与地球物理研究所。我负责讲<b>第一到第四章</b>，张志刚老师讲<b>第五、六、七章</b>。我的研究方向是非常规油气分子模拟；张志刚老师研究地球与行星内部物质成分与性质，他讲的内容跟这门课关系最直接，我前面这几章算是做一些铺垫。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>咱大家都是喜欢矿物物理学课的，今天呢我们讲这个第一节课。就是绪论。</p><p>先介绍一下那个授课团队，我我是郭光军，然后以前是在那个北大……我我讲前半第一章到第四章……五、六七章呢是由张志刚。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s02">
+  <div class="slides"><figure class="slide" id="slide-03">
+<img src="slides/slide_03.png" alt="课件第3页 矿物">
+<figcaption><span class="sno">03</span><span class="stitle">矿物</span></figcaption>
+</figure>
+<figure class="slide" id="slide-04">
+<img src="slides/slide_04.png" alt="课件第4页 矿物学及其分支">
+<figcaption><span class="sno">04</span><span class="stitle">矿物学及其分支</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>矿物与矿物学</h2>
+        <div class="sec-meta"><span class="time">录音 00:01:23 – 00:05:01</span><span class="chip">课件 3</span><span class="chip">课件 4</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>矿物物理学，先从“矿物”说起。按定义，矿物是在各种地质作用中产生和发展着的、在一定地质和物理化学条件下处于相对稳定的自然元素的单质及其化合物；它有相对固定的化学组成，固态矿物还具有确定的内部结构，是组成岩石和矿石的基本单元。</p><p>矿物学是地质学的一门基础分支学科，系统研究矿物的化学成分、晶体结构、物理性质、成因产状、时空分布及其演化规律。矿物学本身又分出很多分支：系统矿物学、成因矿物学、实验矿物学、结构矿物学、光性矿物学、环境矿物学、粘土矿物学、宝石矿物学、地幔矿物学、陨石矿物学、海洋矿物学、工艺矿物学、矿物形貌学、矿物材料学，还有我们这门课要讲的<b>矿物物理学</b>。</p><p>世界上研究清楚的矿物已有三千多种，矿物学的“大厦”建得相当完整；但每年还会零星增加几个新矿物——比如从陨石、稀土矿、月球样品里发现的，要由国际矿物学协会的新矿物及矿物命名委员会评审认可。课堂上我考了考大家：水晶（石英）、橄榄石、石榴石、绿柱石——这些中国地质博物馆里都有，周末有空值得去转转，那里的宝石馆很多同学都喜欢。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>就是地质作用中产生的，在一定条件下呢是稳定的这个自然元素的单质或者化合物……</p><p>矿物学是地质学的一门基础的分支学科……3000多种矿物，大家都已经研究透了。</p><p>矿物物理学，就是这个矿物学众多分支里头的其中的一支。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s03">
+  <div class="slides"><figure class="slide" id="slide-05">
+<img src="slides/slide_05.png" alt="课件第5页 矿物物理学">
+<figcaption><span class="sno">05</span><span class="stitle">矿物物理学</span></figcaption>
+</figure>
+<figure class="slide" id="slide-06">
+<img src="slides/slide_06.png" alt="课件第6页 矿物物理学的研究内容">
+<figcaption><span class="sno">06</span><span class="stitle">矿物物理学的研究内容</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>矿物物理学：定义与研究内容</h2>
+        <div class="sec-meta"><span class="time">录音 00:05:01 – 00:08:11</span><span class="chip">课件 5</span><span class="chip">课件 6</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>矿物物理学是矿物学众多分支中的一支。它是把<b>固体物理学、量子化学理论</b>和<b>谱学实验方法</b>引入矿物学形成的交叉学科，研究矿物在原子级别的微观结构、组成、物理性质、成因及其相互关系，用来解释矿物、岩石、地球乃至宇宙的地质问题。研究手段主要是实验探测——X射线、光谱（红外等）——还有很重要的一方面：计算机模拟计算。</p><p>矿物物理学的研究内容大致有六个方面：一、矿物的化学键理论（晶体场理论、配位场理论、分子轨道理论、能带理论）；二、矿物谱学（矿物与入射电磁波相互作用产生吸收、发射和共振谱）；三、矿物的热力学状态方程及相图（辉石、橄榄石、钙钛矿、方镁石等）；四、矿物的物理和化学性质（光、电、磁、声、热、力，以及溶解、吸附、配分性质）；五、矿物晶体的缺陷及流变性质（位错、滑移、蠕变、各向异性）；六、矿物的高压相态及物性（高压装置、相变、物性）。</p><p>按学科分类这样讲知识结构很完整，但咱们这门课不这么讲——研究生阶段需要的是实用工具，所以我们从实验方法和计算方法的角度来讲，比如我后面要讲的<b>分子动力学模拟</b>、张志刚老师要讲的<b>第一性原理计算</b>；实验太重要了，虽然我们俩都是做计算的，也一定要讲。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>他就是研究矿物的……用固体物理学、量子化学理论和谱学实验的方法去研究……</p><p>拿X光、拿光谱去探测它，红外……还有很重要的一方面就是拿计算机去计算它。</p><p>这个课也不是这样去讲……给你们讲那个最实用的东西……一些实用的实验方法、计算方法。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s04">
+  <div class="slides"><figure class="slide" id="slide-07">
+<img src="slides/slide_07.png" alt="课件第7页 矿物物理学与相关学科">
+<figcaption><span class="sno">07</span><span class="stitle">矿物物理学与相关学科</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>与相关学科的联系和作业</h2>
+        <div class="sec-meta"><span class="time">录音 00:08:11 – 00:10:40</span><span class="chip">课件 7</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>矿物物理学的英文名是 Mineral Physics。对咱们专业来说这是一门<b>专业核心课</b>，它和很多学科都有交叉：地球动力学、地球化学、气候学、岩石学、行星科学、地震学、材料科学、地磁学等。比如与行星科学交叉，涉及地球内部的物理化学过程和撞击过程；与材料科学交叉，涉及超硬和新型材料；与地磁学交叉，涉及电磁性质和铁合金性质。</p><p>课件上这张“矿物物理学与其他学科的关系图”就是今天课后的一个小作业——<b>MP1.1</b>：两人合作翻译这张图，并简述你对矿物物理学的初步理解；方法不限，如果用AI工具完成，需要写明流程（包括工具和提示词）。课件我课后会放到课程网站上，大家不用急着拍，主要还是听讲。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>它确实和很多学科有联系，像地球动力学、地球化学、气候学、岩石学、行星科学、地震学、材料地磁学……</p><p>这张图就是今天课后的一个小作业……回头就是让你们翻译……然后你们去理解一下矿物物理学和这些学科之间的关系。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s05">
+  <div class="slides"><figure class="slide" id="slide-08">
+<img src="slides/slide_08.png" alt="课件第8页 太阳系八大行星与地球">
+<figcaption><span class="sno">08</span><span class="stitle">太阳系八大行星与地球</span></figcaption>
+</figure>
+<figure class="slide" id="slide-09">
+<img src="slides/slide_09.png" alt="课件第9页 地球是圆的吗？（月食）">
+<figcaption><span class="sno">09</span><span class="stitle">地球是圆的吗？（月食）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-10">
+<img src="slides/slide_10.png" alt="课件第10页 地球是圆的吗？（帆船）">
+<figcaption><span class="sno">10</span><span class="stitle">地球是圆的吗？（帆船）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>认识地球的开端：地球的形状</h2>
+        <div class="sec-meta"><span class="time">录音 00:10:40 – 00:15:03</span><span class="chip">课件 8</span><span class="chip">课件 9</span><span class="chip">课件 10</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>接下来讲矿物物理学的发展历史——说到底，就是人类认识地球的过程。地球是太阳系八大行星之一（冥王星因为轨道偏心率大、个头太小，被排除出了行星行列），距太阳约1.5亿公里，质量5.965×10²⁴千克，自转周期1日、公转周期1年，平均半径6371公里，赤道周长约4万公里，表面积5.1亿平方公里，其中71%是海洋、29%是陆地，外部还有水圈、大气圈和磁场。这些高中地理都讲过，大家司空见惯。</p><p>但要追问一句：古人没有卫星，是怎么知道这些的？比如“地球是圆的”——最早的证据之一来自古希腊：<b>亚里士多德</b>在公元前300多年观察到，月食时月球上的阴影是地球的影子，阴影边缘呈圆弧状，由此推测地球是球形的。另一个常见的例子：远望地平线，船只出现或消失时，最先、最后看到的都是上部桅杆而不是船体，说明海平面是弯曲的。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那古人呢？他怎么一开始就知道是这样一些东西？……最开始最开始，古人的话甚至连地球是圆的都不知道。</p><p>就是古希腊的亚里士多德，从公元前300多年就开始思考……观察那个月食……这个影子你看这个边界，它不是直的、是弯的，是个曲线。</p><p>你远远的看地平线的时候……你先看见那帆，你看不见船体……说明海平面是弯曲的。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s06">
+  <div class="slides"><figure class="slide" id="slide-11">
+<img src="slides/slide_11.png" alt="课件第11页 地球的半径是多少？">
+<figcaption><span class="sno">11</span><span class="stitle">地球的半径是多少？</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>地球的半径</h2>
+        <div class="sec-meta"><span class="time">录音 00:15:03 – 00:17:32</span><span class="chip">课件 11</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>知道地球是圆的，下一个问题就是：半径是多少？最早测量的是古希腊的<b>埃拉托色尼</b>（公元前200多年）。他发现埃及的赛伊城（今阿斯旺）有一口井，某一天正午阳光能直直照到井底；而同一天同一时刻，在相距约800公里的亚历山大城，阳光照在竖直木杆上，却留下了一个7.2°的影子夹角——也就是两地太阳高度角相差7.2°，对应的正是两地在地心处的夹角。</p><p>用弧长公式一算：地球半径 ≈ 800 km ÷ (7.2°×π/180°) ≈ 6366 km，和现在测量的6371公里非常接近。那可是公元前200多年，比卫星早了2000多年。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>就是古希腊的埃拉托色尼，公元前200年的时候，他测量了这个……</p><p>同一天的那个时刻，这两个地有7.2度的差别……然后你一算，大约6366km。</p><p>跟现在的测量非常准……6371。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s07">
+  <div class="slides"><figure class="slide" id="slide-12">
+<img src="slides/slide_12.png" alt="课件第12页 地球的质量是多少？">
+<figcaption><span class="sno">12</span><span class="stitle">地球的质量是多少？</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div class="sec-tt">
+        <h2>地球的质量</h2>
+        <div class="sec-meta"><span class="time">录音 00:17:32 – 00:20:35</span><span class="chip">课件 12</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>知道地球多大之后，大家还关心：地球有多重？这件事是三位大科学家接力完成的。<b>伽利略</b>1590年测出了重力加速度约9.8 m/s²；<b>牛顿</b>1687年提出万有引力定律 F=GMm/r²——有了它，只要再测出万有引力常数G，结合地球表面的重力，就能解出地球的质量M。</p><p>但G太小了，很难测。<b>卡文迪许</b>1798年用扭秤实验第一个测出了它：两个铅球之间的引力使悬丝发生极微小的扭转，他拿一束光打到小镜子上，用反射光在房间墙上移动，把偏转角放大来测量，得到 G=6.67×10⁻¹¹ m³·kg⁻¹·s⁻²，进而算得地球质量约5.965×10²⁴千克。人类从公元前知道地球是圆的，到1798年终于知道了地球有多重——认识地球就是这样一步一步来的。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>伽利略1590年的时候呢他测了重力加速度9.8那个值……牛顿发现了万有引力定律……</p><p>卡文迪许是第一个测出万有引力常数的……拿一束光打在一个小镜子上，镜子反射过来的光就能在这个房间的墙上移动，测那根纽丝的偏转角……</p><p>1798年，我们终于知道了地球有多重。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s08">
+  <div class="slides"><figure class="slide" id="slide-13">
+<img src="slides/slide_13.png" alt="课件第13页 地球内部是什么？">
+<figcaption><span class="sno">13</span><span class="stitle">地球内部是什么？</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">08</span>
+      <div class="sec-tt">
+        <h2>地球内部是什么：圈层结构与矿物组成</h2>
+        <div class="sec-meta"><span class="time">录音 00:20:35 – 00:24:49</span><span class="chip">课件 13</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>接下来大家最关心的是：地球内部装的是什么？学过地质、地球物理的同学都知道，地球是<b>圈层结构</b>：地壳、上地幔、地幔过渡带、下地幔，再往里是<b>外核（液态）</b>和<b>内核（固态）</b>。这套分层是地震学给出的：某地发生地震，地震波（P波、S波）传播到各处被台站接收，根据波速变化就能判断内部的圈层。</p><p>如果把地震学给出的圈层结构比作“骨架”，矿物物理学要做的就是给这副骨架“贴上肉”：上地幔主要是橄榄石+辉石+石榴子石，过渡带是尖晶石相的矿物组合，下地幔是镁钙钛矿+方镁石（铁方镁石）+钙钙钛矿，D″层可能是后钙钛矿，外核是液态的铁镍（含轻元素），内核是固态铁。矿物物理学作为一个学科，大约有70年的历史，它的出现主要就是为了认识地球内部。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>地球内部是啥？地壳、地幔、地核……上地幔、地幔过渡带、下地幔……外核是液态的，内核呢是固态。</p><p>哪个地方一地震了，它的地震波……传过来到哪儿再一接收，这些东西呢是地震学的一些知识。</p><p>这个上面呢有橄榄石、辉石、石榴子石……下地幔呢是镁钙钛矿、方镁石、钙钙钛矿……外核是液态铁镍，内核是固态铁。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s09">
+  <div class="slides"><figure class="slide" id="slide-14">
+<img src="slides/slide_14.png" alt="课件第14页 古人有地球空心说">
+<figcaption><span class="sno">14</span><span class="stitle">古人有地球空心说</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">09</span>
+      <div class="sec-tt">
+        <h2>人类能到达的深度与地球空心说</h2>
+        <div class="sec-meta"><span class="time">录音 00:24:49 – 00:27:39</span><span class="chip">课件 14</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>大家学习这些知识要抱着怀疑的态度，不要被动接收。想想看：谁真正到过地球内部？人类下过最深的矿井也就几百米到一千米左右；取到过的最深样品，是苏联科拉半岛的超深钻，钻了12公里多；我国在塔里木盆地打的超深井也已突破一万米，估计很快会超过12公里。但和6371公里的地球半径相比，这连“皮毛”都算不上。</p><p>正因为看不见、摸不着，古人甚至有过“地球空心说”：画一张图，地球内部是空心的，里面还有中央太阳、香巴拉之类。现在当然不能再这么认为了——你能找出什么证据反驳它吗？</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>你下过矿井没有？……反正我也下过矿井，我下那矿井可能有1000米……</p><p>人类现在往底下取到样品的东西，最深最深也就是苏联那个科拉半岛打的超深钻，一万一千多……12km多。</p><p>地球是圆的可以啊，画个图，地球是空心的可以啊……但是现在你就不能再认为地球内部是空心的。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s10">
+  <div class="slides"><figure class="slide" id="slide-14">
+<img src="slides/slide_14.png" alt="课件第14页 古人有地球空心说">
+<figcaption><span class="sno">14</span><span class="stitle">古人有地球空心说</span></figcaption>
+</figure>
+<figure class="slide" id="slide-15">
+<img src="slides/slide_15.png" alt="课件第15页 地球的密度分布">
+<figcaption><span class="sno">15</span><span class="stitle">地球的密度分布</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">10</span>
+      <div class="sec-tt">
+        <h2>简单计算：地球的平均密度</h2>
+        <div class="sec-meta"><span class="time">录音 00:27:39 – 00:32:59</span><span class="chip">课件 14</span><span class="chip">课件 15</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>一个很简单的计算就能反驳空心说。已知地球质量5.965×10²⁴千克、半径6371公里，用体积公式 V=4/3πR³ 一算，平均密度约<b>5.5 g/cm³</b>。而地表常见的岩石——黄土、花岗岩、玄武岩——平均密度只有3 g/cm³左右。地表这么轻，整个地球平均却有5.5，说明内部一定有重得多的物质，绝不可能是空心；铁的密度约7.8 g/cm³，把铁的成分带进去一估就明白了。</p><p>所以很多基础常识，值得自己动手算一算、琢磨琢磨背后的道理，而不是直接照单全收。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>大家迅速的计算一下地球的密度是多少？……5.5左右……5.5g/cm³。</p><p>咱们地表的岩石一般也就是黄土、花岗岩啊或者玄武岩，平均密度也就是个3左右。</p><p>地球内部绝不可能有空腔……一定有更重的东西在底下。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s11">
+  <div class="slides"><figure class="slide" id="slide-15">
+<img src="slides/slide_15.png" alt="课件第15页 地球的密度分布">
+<figcaption><span class="sno">15</span><span class="stitle">地球的密度分布</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">11</span>
+      <div class="sec-tt">
+        <h2>地球的密度分布：Williamson-Adams关系式</h2>
+        <div class="sec-meta"><span class="time">录音 00:32:59 – 00:35:22</span><span class="chip">课件 15</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>对地球内部的认识，确实是从认识地球的密度、温度开始的。<b>Williamson和Adams（1923）</b>提出了一个关系式，把地球物理观测量和矿物物理性质联系起来：dρ(r)/ρ(r) = −g(r)dr/φ(r)，其中 φ(r) = Vp²(r) − (4/3)Vs²(r) = Ks(r)/ρ(r)。这里的g是重力加速度，Vp、Vs是地震P波、S波速度，Ks是矿物的体变模量——它反映矿物的压缩性：给你多大的压力，体积变化多大。</p><p>也就是说，只要知道地震波速随深度的变化（地震学可以探测），再拿到地球内部组成矿物的体变模量，就能算出地球内部密度随深度的分布。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>他提出来了一个Williamson-Adams关系式……这个是密度，这个是重力加速度，这个是地震学的参数……</p><p>体变模量表现的是矿物的压缩性——我给你多大的压力，你变化了多大。</p><p>你只要观测地球内部的P波速度和S波速度……再把矿物的Ks弄来，就能得到地球密度的变化。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s12">
+  <div class="slides"><figure class="slide" id="slide-16">
+<img src="slides/slide_16.png" alt="课件第16页 地球内部的弹性和组成">
+<figcaption><span class="sno">16</span><span class="stitle">地球内部的弹性和组成</span></figcaption>
+</figure>
+<figure class="slide" id="slide-17">
+<img src="slides/slide_17.png" alt="课件第17页 地球内部的弹性和组成（续）">
+<figcaption><span class="sno">17</span><span class="stitle">地球内部的弹性和组成（续）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">12</span>
+      <div class="sec-tt">
+        <h2>Birch 1952：地球内部的弹性和组成</h2>
+        <div class="sec-meta"><span class="time">录音 00:35:22 – 00:37:37</span><span class="chip">课件 16</span><span class="chip">课件 17</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>套用上面的关系式，需要知道矿物弹性性质随温度、压力的变化。早期<b>Murnaghan（1937）</b>和<b>Birch（1938）</b>研究了压力对矿物压缩性的影响；在此基础上，<b>Birch 1952年</b>基于矿物状态方程，在《Journal of Geophysical Research》上发表了经典论文《Elasticity and Constitution of the Earth's Interior（地球内部的弹性和组成）》——这是矿物物理学历史上非常重要的一篇论文。</p><p>论文画出了地震波速随地球深度的变化，以及地球内部的密度、压力、重力加速度随深度的分布，还给出了描述矿物压力-体积关系的状态方程。今天地球物理学研究里到处在用的那些模型——包括PREM等——都离不开这套框架，所以Birch这篇1952年的文章地位非常高。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>最开始呢像Murnaghan他们就开始研究压力对矿物的压缩性的影响……</p><p>到了1952年，Birch就写了这么一个经典的经验论文……就叫《Elasticity and Constitution of the Earth's Interior》。</p><p>现在地球物理学这一研究过程中，到处画的这个封面，包括那个PREM模型，都离不开这个结构。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s13">
+  <div class="slides"><figure class="slide" id="slide-18">
+<img src="slides/slide_18.png" alt="课件第18页 矿物的同质多象">
+<figcaption><span class="sno">18</span><span class="stitle">矿物的同质多象</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">13</span>
+      <div class="sec-tt">
+        <h2>矿物的同质多象：石墨与金刚石</h2>
+        <div class="sec-meta"><span class="time">录音 00:37:37 – 00:39:03</span><span class="chip">课件 18</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>1952年这个突破之后，大家知道地球内部密度是这样变化的，高温高压实验就迅速发展起来：把矿物一个一个拿去压——今天压金刚石，明天压石英，后天压橄榄石，只要拿到关键参数，底下的事就越来越清楚。一加压就发现了很多矿物的<b>同质多象</b>现象。</p><p>最经典的例子是碳：石墨层状结构（空间群P6₃mc，层间靠范德华力），是最软的矿物之一；加压到约15 GPa时，石墨和金刚石的吉布斯自由能发生交叉，P>15 GPa时金刚石的自由能更低、更稳定，于是石墨相变成金刚石——金刚石里每个碳原子与4个碳原子成键，形成四面体（空间群F4-3m）。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>马上一加压就发现矿物的同质多象……石墨最软的东西，你加压加到一定程度呢它就发生了相变。</p><p>随着压的增高，它的自由能……金刚石的自由能交叉……就会从石墨变成金刚石。</p><p>金刚石呢，每一个碳跟4个碳相连，形成一个一个四面体。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s14">
+  <div class="slides"><figure class="slide" id="slide-19">
+<img src="slides/slide_19.png" alt="课件第19页 矿物的高温高压相变">
+<figcaption><span class="sno">19</span><span class="stitle">矿物的高温高压相变</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">14</span>
+      <div class="sec-tt">
+        <h2>矿物的高温高压相变</h2>
+        <div class="sec-meta"><span class="time">录音 00:39:03 – 00:39:54</span><span class="chip">课件 19</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>这类同质多象在很多矿物里都会发生。比如二氧化硅：α-石英加压，<b>Coes（1953）</b>发现了柯石英（coesite）；继续加压，<b>Stishov和Popova（1961）</b>发现了斯石英（stishovite），相图里还有鳞石英、方石英和硅酸盐熔体等相区。</p><p>橄榄石（α相）加压则依次变成β相（<b>瓦兹利石</b>）、γ相（<b>林伍德石</b>），再高压分解为钙钛矿+方镁石。<b>Ringwood（1959）</b>就发现了α橄榄石的β相和γ相。在Pyrolite地幔岩模型里，约60%的橄榄石加上辉石、石榴子石等，随着压力增加依次发生这些相变——当年这类研究铺天盖地，高温高压实验也随之迅速发展起来。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>石英……阿尔法石英加压之后，53年的时候Coes就发现了柯石英coesite。</p><p>Stishov and Popova (1961)发现了斯石英stishovite。</p><p>橄榄石一加压，从α相变成β相（瓦兹利石），继续加压变成γ相（林伍德石），再加压就变成了钙钛矿加方镁石。</p><p>Ringwood（1959）发现α橄榄石的β相瓦兹利石和γ相林伍德石。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s15">
+  <div class="slides"><figure class="slide" id="slide-20">
+<img src="slides/slide_20.png" alt="课件第20页 地幔转换带界面起伏不平">
+<figcaption><span class="sno">20</span><span class="stitle">地幔转换带界面起伏不平</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">15</span>
+      <div class="sec-tt">
+        <h2>地幔过渡带间断面的解释</h2>
+        <div class="sec-meta"><span class="time">录音 00:39:54 – 00:42:43</span><span class="chip">课件 20</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>这些相变有什么了不起？关键在于它们正好解释了地震学观测到的两个<b>间断面</b>。橄榄石在410 km深度（约14 GPa）发生α→β相变，变成瓦兹利石；在660 km深度（约24 GPa），γ相林伍德石分解为钙钛矿+方镁石。相变导致矿物结构变化、波速突变，地震波在那些深度探测到的间断面，对应的正是这些相变。</p><p>这两个相变的克拉珀龙斜率还不一样：橄榄石→瓦兹利石相变 dP/dT&gt;0，<b>促进</b>地幔对流；林伍德石→钙钛矿相变 dP/dT&lt;0，<b>抑制</b>地幔对流。这解释了为什么有些俯冲板片会“滞留”在过渡带下不去——比如太平洋板块俯冲到中国大陆之下，就可能因为界面效应停滞在过渡带附近。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>橄榄石到达15-14GPa的那个地方有一个相变，从α相橄榄石变成了β相橄榄石，叫瓦兹利石……再往下变成了γ相的橄榄石，叫林伍德石。</p><p>到了410km的时候就是14GPa，660km对应的是……24GPa。</p><p>到了过渡带的时候你能够相变，结构变化了，所以波速才会变化，才会被地震波探测到那个地方有个间断面。</p><p>底下这个板块俯冲下来之后，有时候俯冲到那为什么平摊着滞留到那儿下不去……太平洋板块插到中国底下。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s16">
+  <div class="slides"><figure class="slide" id="slide-21">
+<img src="slides/slide_21.png" alt="课件第21页 地幔过渡带富含水">
+<figcaption><span class="sno">21</span><span class="stitle">地幔过渡带富含水</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">16</span>
+      <div class="sec-tt">
+        <h2>地幔过渡带储水</h2>
+        <div class="sec-meta"><span class="time">录音 00:42:43 – 00:45:21</span><span class="chip">课件 21</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>进一步研究还发现，瓦兹利石和林伍德石这两个矿物很特殊：别的矿物很难把水放进去，但研究它们的晶格结构之后发现，里头有可以容纳氢（水）的空间——把氢塞进去，就相当于把水存进去了。</p><p>估算显示，地幔过渡带（410–670 km这一薄层）里储存的水量，可能和地球上所有海洋的水量相当！俯冲板片把水带下来，在过渡带这个“高储水区”（约13–24 GPa）储存起来；有些区域水饱和后会释放出来，引发部分熔融——这就是某些俯冲带上方出现弧火山和岩浆活动的重要原因。矿物物理学的实验和计算告诉我们：瓦兹利石、林伍德石的储水能力远高于橄榄石。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这两个矿物比较特殊，其他矿物你想让它含水很难，这两个矿物可以……它里头能够有容纳水的空间。</p><p>就这一层过渡带里头含的水的量，就跟地球上的海洋所有的水一样。</p><p>这个俯冲板片……到这儿安放那么多水了，它就出来了……出现一个高储水区。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s17">
+  <div class="slides"><figure class="slide" id="slide-22">
+<img src="slides/slide_22.png" alt="课件第22页 钙钛矿-后钙钛矿相变的发现">
+<figcaption><span class="sno">22</span><span class="stitle">钙钛矿-后钙钛矿相变的发现</span></figcaption>
+</figure>
+<figure class="slide" id="slide-23">
+<img src="slides/slide_23.png" alt="课件第23页 D″层可能由MgSiO₃后钙钛矿组成">
+<figcaption><span class="sno">23</span><span class="stitle">D″层可能由MgSiO₃后钙钛矿组成</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">17</span>
+      <div class="sec-tt">
+        <h2>钙钛矿-后钙钛矿相变与D″层</h2>
+        <div class="sec-meta"><span class="time">录音 00:45:21 – 00:48:01</span><span class="chip">课件 22</span><span class="chip">课件 23</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>再往下，到了核幔边界（2741–2891 km，压力约127–136 GPa），地震学早就探测到一个波速明显偏低的薄层——<b>D″层</b>，但一直搞不清是为什么。</p><p>2004年，<b>Oganov等</b>首先通过第一性原理计算预测：在这个温压条件下，MgSiO₃钙钛矿会相变为一种新的<b>后钙钛矿</b>结构（Cmcm，取代Pbnm的钙钛矿结构——也就是布里奇曼石）；同年，<b>Murakami等</b>在《Science》上用实验证实了这一相变。结构不同，波速就不同——D″层波速异常于是解释通了：那个地方存在另一种矿物。地球内部这副“骨架”上的“肉”，就是这样一点一点贴上去的。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>核幔边界这个地方呢有一个薄层，2741~2891km……叫D″层，地震波速到这儿明显的要低一点，一直搞不清楚为什么。</p><p>直到2004年，首先由计算发现的，说到了这个地方的时候呢，钙钛矿可以相变为后钙钛矿。随后同年呢，又被实验所证实。</p><p>127GPa和136GPa在这个区间，它就会发生一次重要的相变，所以你就知道这个地方是后钙钛矿。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s18">
+  <div class="slides"><figure class="slide" id="slide-24">
+<img src="slides/slide_24.png" alt="课件第24页 地幔成分的相关关系">
+<figcaption><span class="sno">24</span><span class="stitle">地幔成分的相关关系</span></figcaption>
+</figure>
+<figure class="slide" id="slide-25">
+<img src="slides/slide_25.png" alt="课件第25页 地核轻元素">
+<figcaption><span class="sno">25</span><span class="stitle">地核轻元素</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">18</span>
+      <div class="sec-tt">
+        <h2>地幔成分与地核轻元素</h2>
+        <div class="sec-meta"><span class="time">录音 00:48:01 – 00:52:12</span><span class="chip">课件 24</span><span class="chip">课件 25</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>地幔的成分随深度越来越复杂：上地幔是橄榄石、单斜辉石、斜方辉石、石榴子石，过渡带是瓦兹利石、林伍德石，下地幔是含铁铝的镁钙钛矿、铁方镁石（高自旋/低自旋）、钙钙钛矿，D″层是后钙钛矿。</p><p>到了地核，大家发现一个“密度缺失”问题：外核的实测密度（PREM模型）比纯铁在不同温度（4273 K、6273 K、8273 K）下算出来的密度都要低。地核主要是铁，加一点比铁更重的镍也补不上这个差距——那里面一定还有更轻的元素：可能含硅、硫、氧、碳、氢等。<b>地核轻元素</b>的种类和含量是地球科学的一大热点：谁做实验加点硫、算一点碳，能解释观测就是好文章。</p><p>这也说明地球内部的研究没有止境——我们钻不到那么深，但挡不住人们去思考和探索。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>地核的密度总是比铁低……那一定里头还有其他的轻元素……</p><p>可能有点硫、有点氧，里头有碳、有氢、有氮这些东西……</p><p>就是涉及到地球内部有很大一个问题，就是地核的轻元素。</p><p>地球内部确实很困难，因为它有不可入性……但是呢，那里头的问题，不能够阻止人们去思考。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s19">
+  <div class="slides"><figure class="slide" id="slide-26">
+<img src="slides/slide_26.png" alt="课件第26页 内核铁相的晶体结构">
+<figcaption><span class="sno">26</span><span class="stitle">内核铁相的晶体结构</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">19</span>
+      <div class="sec-tt">
+        <h2>内核铁相</h2>
+        <div class="sec-meta"><span class="time">录音 00:52:12 – 00:53:35</span><span class="chip">课件 26</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>到了内核，以为会简单一些——不都是结晶的铁吗？但仍然有很多问题没弄清楚，最基础的一个：铁的晶体结构到底以哪种形式存在？是面心立方（fcc）、体心立方（bcc），还是六方密堆（hcp），甚至dhcp？</p><p>从相图上看，很多界线还是虚线，实验点和计算点都很少，<b>纯铁的相图至今仍不确定</b>。这就是矿物物理学还要继续研究的方向。我们做这些的目标，就是认识地球内部是怎么组合的、有什么成分、有什么结构。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>内一核……这个铁的项目呢到现在他还没确定，你看上面经抄的都是虚线，实验点和控制点都很少。</p><p>就是最简单的一个，你说你是固体的铁，那你告诉我你那个铁呢，是fcc结构还是bcc结构，还是六方结构？</p><p>仍然有很多人没弄清楚，这就是矿物物理学不停在走的方向。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s20">
+  <div class="slides"><figure class="slide" id="slide-27">
+<img src="slides/slide_27.png" alt="课件第27页 高温高压实验不可或缺">
+<figcaption><span class="sno">27</span><span class="stitle">高温高压实验不可或缺</span></figcaption>
+</figure>
+<figure class="slide" id="slide-28">
+<img src="slides/slide_28.png" alt="课件第28页 高温高压实验技术">
+<figcaption><span class="sno">28</span><span class="stitle">高温高压实验技术</span></figcaption>
+</figure>
+<figure class="slide" id="slide-29">
+<img src="slides/slide_29.png" alt="课件第29页 金刚石压腔（DAC）">
+<figcaption><span class="sno">29</span><span class="stitle">金刚石压腔（DAC）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-30">
+<img src="slides/slide_30.png" alt="课件第30页 大压机（LVP）">
+<figcaption><span class="sno">30</span><span class="stitle">大压机（LVP）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-31">
+<img src="slides/slide_31.png" alt="课件第31页 活塞圆筒装置（PCA）">
+<figcaption><span class="sno">31</span><span class="stitle">活塞圆筒装置（PCA）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-32">
+<img src="slides/slide_32.png" alt="课件第32页 冲击波动高压实验">
+<figcaption><span class="sno">32</span><span class="stitle">冲击波动高压实验</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">20</span>
+      <div class="sec-tt">
+        <h2>高温高压实验技术</h2>
+        <div class="sec-meta"><span class="time">录音 00:53:35 – 00:56:36</span><span class="chip">课件 27</span><span class="chip">课件 28</span><span class="chip">课件 29</span><span class="chip">课件 30</span><span class="chip">课件 31</span><span class="chip">课件 32</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>说到这儿，矿物物理学的重要作用和历史就介绍完了。要认识地球内部，绝大多数知识都靠<b>高温高压实验</b>做出来。下一节课（第二章）专门讲这些技术：金刚石压腔、大压机、动高压实验、原位测试表征。高压实验技术分两大类——静高压和动高压：</p><p>静高压里，<b>金刚石压腔（DAC）</b>目前能产生最高静压力，可达550 GPa，配合激光加热能到6000 K；金刚石强度高、透光性好，可以做各种物理化学参数的原位测量，但样品腔只有微米级。<b>大压机（多顶砧装置）</b>能到约30 GPa（碳化钨砧28 GPa、烧结金刚石砧75 GPa），好处是样品腔可以做到厘米级。<b>活塞圆筒装置</b>一般5–10 GPa以下，样品腔大。水热静压用高压釜，1 GPa以下，研究地壳范围的成岩成矿。</p><p>动高压方面，<b>二级轻气炮</b>产生0.5–1 TPa的瞬态高压（微秒量级），<b>强激光驱动</b>可达10 TPa量级（纳秒量级），用于模拟行星形成早期的撞击碰撞、陨石坑形成以及核幔边界物质的状态方程等。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>下一节课讲这个金刚石压腔……大压机呢，六面顶一级压砧、6-8型二级压砧……</p><p>金刚石压腔压力可以达到550GPa，但是样品腔的体积很小，连半个平方毫米都不到。</p><p>冲击波动高压实验……打一炮，炮弹打到样品上之后，那里头的压力能达到1TPa……强激光还能更高，10TPa。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s21">
+  <div class="slides"><figure class="slide" id="slide-33">
+<img src="slides/slide_33.png" alt="课件第33页 观测手段">
+<figcaption><span class="sno">33</span><span class="stitle">观测手段</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">21</span>
+      <div class="sec-tt">
+        <h2>观测手段与大科学装置</h2>
+        <div class="sec-meta"><span class="time">录音 00:56:36 – 00:58:20</span><span class="chip">课件 33</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>做完高压实验，还要用谱学手段去原位探测样品：<b>X射线衍射</b>看结构、<b>拉曼散射</b>看振动和相变、<b>穆斯堡尔谱</b>看铁的价态与磁性、<b>布里渊散射</b>看弹性等。</p><p>这些测量需要高亮度的光源——医院里的X光机强度太低，那么小的样品根本测不出信息，所以要用大科学装置：同步辐射光源（比如怀柔附近的高能同步辐射光源HEPS）、中国散裂中子源等。当然光源不只服务矿物学，矿物学只是其中的一两个线站，周围几十个线站都在做分子、生物、材料等研究。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>做完那些实验之后，主要就是要用一些光谱学的东西去探测……最重要的X射线衍射。</p><p>平常医院里头那个X光，强度太低，看不见，就那么点儿样品……</p><p>同步辐射光源……怀柔附近的HEPS，还有中国散裂中子源……矿物学只是其中的一个线站，最多两个线站。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s22">
+  <div class="slides"><figure class="slide" id="slide-34">
+<img src="slides/slide_34.png" alt="课件第34页 理论计算">
+<figcaption><span class="sno">34</span><span class="stitle">理论计算</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">22</span>
+      <div class="sec-tt">
+        <h2>理论计算：从经典模拟到第一性原理</h2>
+        <div class="sec-meta"><span class="time">录音 00:58:20 – 00:59:32</span><span class="chip">课件 34</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>这门课的重点还不在高压实验，而在<b>计算</b>——因为矿物的宏观性质，取决于矿物结构中原子和声子的微观相互作用。早期主要是地幔相的晶格振动模拟和半定量的热力学计算；现在发展到精确、定量的量子力学计算，也就是<b>第一性原理（ab initio）</b>，比如VASP软件。</p><p>后面的课程里，我主要讲<b>分子动力学模拟</b>，张志刚老师讲<b>第一性原理计算</b>——给你们提供两个真正能上手的计算工具，将来做研究很可能用得上。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我们这门课重点介绍的不是高压实验，我们重点介绍的是计算。</p><p>因为矿物的宏观性质取决于矿物结构中原子和声子的微观相互作用。</p><p>初期主要是地幔相的晶格振动模拟和热力学计算（半定量），目前发展到量子力学计算（ab initio、精确、定量）。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s23">
+  <div class="slides"><figure class="slide" id="slide-35">
+<img src="slides/slide_35.png" alt="课件第35页 地球内部动力学演化">
+<figcaption><span class="sno">35</span><span class="stitle">地球内部动力学演化</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">23</span>
+      <div class="sec-tt">
+        <h2>地球内部动力学演化</h2>
+        <div class="sec-meta"><span class="time">录音 00:59:32 – 01:02:51</span><span class="chip">课件 35</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>再看地球内部：它是一台生机勃勃的机器——外核源源不断地散热，产生地幔柱，推动板块运动；板块俯冲、火山喷发，在这一过程中产生矿物、油气。要是内部“僵死”了，就会像月球一样一片死寂。</p><p>要搞清楚地表的自然灾害、矿产形成、油气形成，归根结底要了解地球内部的动力学：地幔对流模型需要地幔物相的流变性质和热导率；地核对流模型需要液态、固态铁的物理性质——液态外核的对流产生了地磁场，没有磁场，太阳风会把大气剥蚀掉（高纬度看到的极光，就是太阳风与磁场作用的例子）；核幔边界的研究则涉及地幔物质的高压熔融。</p><p>所有这些问题都离不开矿物物理学提供的参数：矿物的PVT状态方程、波速（Vp、Vs）、输运性质、各向异性与导电性等。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>地球内部呢就是一架机器，它生机勃勃的原因就是里头还热着……地核源源不断的散热，地幔柱的产生，推动板块运行……</p><p>地核对流模型……外核对流了之后就会产生磁场，没有磁场，太阳风一吹，大气就被剥蚀掉了。</p><p>就所有的这些地球动力学的变化，都离不开矿物物理学的解释。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s24">
+  <div class="slides"><figure class="slide" id="slide-36">
+<img src="slides/slide_36.png" alt="课件第36页 认识地球的几个重要矿物物理学参量">
+<figcaption><span class="sno">36</span><span class="stitle">认识地球的几个重要矿物物理学参量</span></figcaption>
+</figure>
+<figure class="slide" id="slide-37">
+<img src="slides/slide_37.png" alt="课件第37页 矿物物理学的长期目标">
+<figcaption><span class="sno">37</span><span class="stitle">矿物物理学的长期目标</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">24</span>
+      <div class="sec-tt">
+        <h2>重要参量与长期目标</h2>
+        <div class="sec-meta"><span class="time">录音 01:02:51 – 01:06:17</span><span class="chip">课件 36</span><span class="chip">课件 37</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>矿物物理学的长期目标，用一句话说：<b>全面解释地震层析成像，提供地球内部的矿物学、成分、热结构的三维描述</b>。地震学用遍布全球的流动和固定台站、每年那么多次地震，已经把地球内部结构探测得相当清楚；我们的任务，就是给这些结构提供矿物学成分和热结构的解释。</p><p>这需要两方面条件：一方面，地球物理观测越来越精确、分辨率越来越高；另一方面，靠新的实验和计算技术，拿到地球内部物相的物理性质——相平衡、弹性、热导、流变。两个学科这样迭代：地球物理观测到什么新结构，矿物物理学就去解释那里由什么矿物、什么成分组成；解释清楚了，又去迎接新的观测。地球内部就这样被描述得越来越清楚、越来越准确。</p><p>目前矿物学的各个分支里，没有比矿物物理学更活跃的了。搞清楚地球内部，一方面关系到人类的命运（比如磁场），另一方面也满足人类的好奇心——说不定将来真有同学去研究别的星球呢。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>长期目标就是全面解释地震层析成像，提供地球内部的矿物学、成分、热结构的三维描述。</p><p>一方面我们需要地球物理学的观测越来越精确……另一方面，取决于我们的实验和计算技术来获得地球内部物相的物理性质。</p><p>矿物物理学和地球物理学是迭代的，共同把地球内部描述的越来越清楚、越来越准确。</p><p>现在矿物学这些分支就比较成熟了，没有一个比矿物物理学更活跃。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s25">
+  <div class="slides"><figure class="slide" id="slide-38">
+<img src="slides/slide_38.png" alt="课件第38页 第二章 高温高压实验（6学时）">
+<figcaption><span class="sno">38</span><span class="stitle">第二章 高温高压实验（6学时）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-39">
+<img src="slides/slide_39.png" alt="课件第39页 第三章 分子动力学模拟（12学时）">
+<figcaption><span class="sno">39</span><span class="stitle">第三章 分子动力学模拟（12学时）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-40">
+<img src="slides/slide_40.png" alt="课件第40页 第三章 分子动力学模拟（续）">
+<figcaption><span class="sno">40</span><span class="stitle">第三章 分子动力学模拟（续）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-41">
+<img src="slides/slide_41.png" alt="课件第41页 第四章 分子模拟在熔流体研究中的应用（8学时）">
+<figcaption><span class="sno">41</span><span class="stitle">第四章 分子模拟在熔流体研究中的应用（8学时）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-42">
+<img src="slides/slide_42.png" alt="课件第42页 第四章 分子模拟在熔流体研究中的应用（续）">
+<figcaption><span class="sno">42</span><span class="stitle">第四章 分子模拟在熔流体研究中的应用（续）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-43">
+<img src="slides/slide_43.png" alt="课件第43页 第五章 第一性原理计算（8学时）">
+<figcaption><span class="sno">43</span><span class="stitle">第五章 第一性原理计算（8学时）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-44">
+<img src="slides/slide_44.png" alt="课件第44页 第五章 第一性原理计算（续）">
+<figcaption><span class="sno">44</span><span class="stitle">第五章 第一性原理计算（续）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-45">
+<img src="slides/slide_45.png" alt="课件第45页 第六章 地幔矿物的性质（8学时）">
+<figcaption><span class="sno">45</span><span class="stitle">第六章 地幔矿物的性质（8学时）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-46">
+<img src="slides/slide_46.png" alt="课件第46页 第六章 地幔矿物的性质（续）">
+<figcaption><span class="sno">46</span><span class="stitle">第六章 地幔矿物的性质（续）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-47">
+<img src="slides/slide_47.png" alt="课件第47页 第七章 地核铁合金的性质（6学时）">
+<figcaption><span class="sno">47</span><span class="stitle">第七章 地核铁合金的性质（6学时）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-48">
+<img src="slides/slide_48.png" alt="课件第48页 第七章 地核铁合金的性质（续一）">
+<figcaption><span class="sno">48</span><span class="stitle">第七章 地核铁合金的性质（续一）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-49">
+<img src="slides/slide_49.png" alt="课件第49页 第七章 地核铁合金的性质（续二）">
+<figcaption><span class="sno">49</span><span class="stitle">第七章 地核铁合金的性质（续二）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">25</span>
+      <div class="sec-tt">
+        <h2>课程内容预览</h2>
+        <div class="sec-meta"><span class="time">录音 01:06:17 – 01:18:02</span><span class="chip">课件 38</span><span class="chip">课件 39</span><span class="chip">课件 40</span><span class="chip">课件 41</span><span class="chip">课件 42</span><span class="chip">课件 43</span><span class="chip">课件 44</span><span class="chip">课件 45</span><span class="chip">课件 46</span><span class="chip">课件 47</span><span class="chip">课件 48</span><span class="chip">课件 49</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>最后介绍一下这门课的整体安排。第二章“高温高压实验”（6学时）：金刚石压腔、大压机、动高压实验、原位测试表征方法——下一节课我会把金刚石压腔带到课堂，让大家亲手摸一摸、看一看；学完这些，看文献时遇到高压实验的术语就不会陌生。</p><p>第三章“分子动力学模拟”（12学时）：讲基本原理和并行计算基础，带大家上机实际操作——从Linux操作系统、Gromacs安装、参数设置、模拟运行、制作动画、轨迹观察到数据分析，初步入门分子动力学。第四章“分子模拟在熔流体研究中的应用”（8学时）：讲很多实例——地质流体的状态方程（如CO₂）、熔体-液态铁两相平衡、页岩气的纳米流动、煤的力解产气、天然气水合物的成核与结晶，很多是我们课题组自己做过的研究。</p><p>从第五章开始由张志刚老师讲。第五章“第一性原理计算”（8学时）：基于密度泛函理论求解薛定谔方程，得到结构、电子、振动、热力学和动力学性质，软件用VASP和VESTA，会带大家尝试计算钛酸钙（CaTiO₃）的状态方程和矿物的弹性性质。第六章“地幔矿物的性质”（8学时）：讲地球物理观测约束下的地幔矿物组成、温度-成分-物相的关系，还涉及行星地幔（火星、月球）和核幔相互作用。第七章“地核铁合金的性质”（6学时）：深入讲地核——铁合金的相图、轻元素（S、Si、O、C、H）、核幔分异、地核成分，以及地核动力学与演化：从岩浆海冷却、铁先结晶形成地核、地壳逐渐长大，到内核还在慢慢长大；等地球内部能量耗散完、外核也凝固了，板块运动可能就停止了。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>第二章……下一节课呢我一定拿那个金刚石压腔过来，你们摸一摸手看一看。</p><p>第三章讲分子动力学模拟的基本原理，让大家在这个机器上进行实际操作，讲并行计算的基础……Gromacs的使用。</p><p>第四章……会给你讲很多实例……页岩气的纳米流动、煤的力解产气、天然气水合物的成核和结晶。</p><p>第五章开始就是张志刚老师讲，第一性原理计算……VASP、VESTA。</p><p>第七章……地核铁合金……讲这个地核的动力学与地核的演化……从岩浆海、铁先结晶形成地核，一直到内核还在长大。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s26">
+  <div class="slides"><figure class="slide" id="slide-50">
+<img src="slides/slide_50.png" alt="课件第50页 这门课的目的、要求">
+<figcaption><span class="sno">50</span><span class="stitle">这门课的目的、要求</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">26</span>
+      <div class="sec-tt">
+        <h2>课程目的、要求与考核</h2>
+        <div class="sec-meta"><span class="time">录音 01:18:02 – 01:25:37</span><span class="chip">课件 50</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>这门课的目的：理解矿物物理学的基本概念、基本原理和基本方法；初步掌握经典分子模拟软件和第一性原理模拟软件；理论联系实际、学以致用、开阔视野、拓展能力；为将来开展地球科学领域相关前沿研究打下基础。考核不会考得很深，考的就是基本概念、基本原理和基本方法。</p><p>学习上，“四个到位”：认真听、用心想、多交流、多练习；“勇闯四关”：<b>自学关</b>（现在有AI工具，查概念很方便，自学能力是科研的基本功）、<b>操作关</b>（软件要动手用，摸摸就会、不摸就不会）、<b>提问关</b>（不会就问，当堂讨论是效率最高的学习方式）、<b>社交关</b>（同学之间互相认识，找科研搭子；思想不像苹果——给了别人，自己还有）。</p><p>成绩构成：期末闭卷考试50% + 日常课外作业35% + 课程考勤15%。这一点和往届不同——往届考试成绩占比更高。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>就是理解矿物物理学的基本概念、基本原理、基本方法……初步的掌握分子模拟软件Gromacs……第一性原理的模拟软件VASP。</p><p>四个到位：认真听，用心想，多交流，多练习。勇闯四关：自学关、操作关、提问关、社交关。</p><p>课程成绩=期末闭卷考试×50%+日常课外作业×35%+课程考勤×15%。跟往届不一样，往届呢考试成绩占得更多。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s27">
+  <div class="slides"><figure class="slide" id="slide-51">
+<img src="slides/slide_51.png" alt="课件第51页 作业MP1.1">
+<figcaption><span class="sno">51</span><span class="stitle">作业MP1.1</span></figcaption>
+</figure>
+<figure class="slide" id="slide-52">
+<img src="slides/slide_52.png" alt="课件第52页 联系方式">
+<figcaption><span class="sno">52</span><span class="stitle">联系方式</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">27</span>
+      <div class="sec-tt">
+        <h2>课后要点：作业与联系方式</h2>
+        <div class="sec-meta"><span class="time">录音 课后</span><span class="chip">课件 51</span><span class="chip">课件 52</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>课后作业<b>MP1.1</b>：两人合作，翻译课件第7页的“矿物物理学与其他学科关系图”，并简述你对矿物物理学的初步理解；方法不限，如果用AI工具完成，需要写明流程（含工具和提示词）。</p><p>课程微信群：矿物物理学2026。联系教师：郭光军、张志刚（联系方式见课件最后一页）；机房管理员唐伟负责上机事宜。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>（本节为课件要点，非录音转写内容。）</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>

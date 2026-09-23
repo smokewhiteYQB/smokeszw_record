@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>密度泛函理论与应用（2026 秋） · 密度泛函理论（二）：原子单位、多粒子哈密顿量与 Born-Oppenheimer 近似、Hartree 方法与变分自洽求解｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>密度泛函理论与应用（2026 秋） · 密度泛函理论（二）：原子单位、多粒子哈密顿量与 Born-Oppenheimer 近似、Hartree 方法与变分自洽求解</h1>
+    <div class="sub">密度泛函理论（二）：原子单位、多粒子哈密顿量与 Born-Oppenheimer 近似、Hartree 方法与变分自洽求解 ｜ 2026-09-18 ｜ 潘金波</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 60 页 · 整理 17 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-s01">01 开场：自我介绍与课程概要</option>
+<option value="sec-s02">02 原子单位</option>
+<option value="sec-s03">03 回顾：氢原子的薛定谔方程</option>
+<option value="sec-s04">04 多粒子体系的哈密顿量</option>
+<option value="sec-s05">05 水分子：78 项相互作用</option>
+<option value="sec-s06">06 思考与讨论：精确求解的困境</option>
+<option value="sec-s07">07 Born-Oppenheimer（绝热）近似</option>
+<option value="sec-s08">08 核运动方程与近似合理性</option>
+<option value="sec-s09">09 绝热近似的成立条件</option>
+<option value="sec-s10">10 第二部分：密度泛函理论（知识框架）</option>
+<option value="sec-s11">11 Hartree-Fock：平均场思想</option>
+<option value="sec-s12">12 Hartree 近似的期望值计算</option>
+<option value="sec-s13">13 变分近似法</option>
+<option value="sec-s14">14 泛函变分与 Hartree 方程</option>
+<option value="sec-s15">15 自洽迭代求解</option>
+<option value="sec-s16">16 Hartree 求解总结与缺点</option>
+<option value="sec-s17">17 讨论班介绍与如何进行</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 第2次课 BO H.pdf 逐页渲染，转写原文见 record_20260918.txt。</div>
+<section class="sec" id="sec-s01">
+  <div class="slides"><figure class="slide" id="slide-01">
+<img src="slides/slide_01.png" alt="课件第1页 第一部分：导论（PPT 首页）">
+<figcaption><span class="sno">01</span><span class="stitle">第一部分：导论（PPT 首页）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-02">
+<img src="slides/slide_02.png" alt="课件第2页 课程概要（时间安排与三大板块）">
+<figcaption><span class="sno">02</span><span class="stitle">课程概要（时间安排与三大板块）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-03">
+<img src="slides/slide_03.png" alt="课件第3页 第二部分：密度泛函理论（目录）">
+<figcaption><span class="sno">03</span><span class="stitle">第二部分：密度泛函理论（目录）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>开场：自我介绍与课程概要</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（开头）</span><span class="chip">课件 1</span><span class="chip">课件 2</span><span class="chip">课件 3</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>老师来自中科院物理所纳米物理与器件实验室 N11 科技组（n11），是杜老师团队的成员（上一堂课的杜老师给大家上了导论课）。自我介绍中提到主要研究方法是密度泛函理论（第一性原理）计算，研究方向围绕低维材料（包括其中的磁性、演生物理）展开，还涉及高性能计算、统计学习（机器学习），以及信息功能材料与器件的设计；同学们今后遇到问题可以发邮件或直接联系。</p><p>先简单回顾课程安排：时间安排杜老师上次已经讲过；物理学院发了调休通知，但没有影响到我们——下周、下下周正常上课，10 月 9 号开始下一堂课。上堂课杜老师主要讲了密度泛函理论的重要性以及必备的专业知识，举了很多例子；杜老师也说了这门课虽然是开卷考试，但不应该冲着开卷来选，所以劝退了十几个同学；去年开卷考试有同学没带资料，所以不要冲着开卷选课。</p><p>本课程主要围绕三方面展开：①密度泛函理论的建立——用到哪些近似、哪些基本定理（绝热近似、Hartree 近似、交换关联）；②DFT 的计算方法——介绍几种常用方法（平面波方法、原子轨道方法、全势方法等）；③DFT 的扩展——半经验方法、分子动力学方法等。这门课帮助大家从理论到应用完整掌握 DFT。核心概念非常清楚：能量是电子密度的泛函——体系的基态性质可以由电子密度确定。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>非常幸会给大家一课，那首先呢，我我做一个简单的一个自我介绍，我是来自中中国科学家物理研究所安多，那么我是在纳米物理七电实验室1011科技组。其实我我跟上一上一堂课是杜老师给大家上的那个导课，那我是杜老师团队的一个介一绍，因为因为中系统就是进，那这个是我的一个邮箱。</p><p>那我的研究方向主要是围绕一维材料，包括它里面的一些磁性演变物理展开的，因为我们是属于纳米物理器械实验室。所以呢，这个跟纳米还是相关的。除了这个PS进程屏物，还有一些信息工程材料，还有器件的设计，其实都是用到前面我们提到的，主要是用到我们1中行理论。</p><p>这个是我们这个课程的一个时间安排，那杜老师上一次其实已经讲了，那上一周又是物理物理学院又发了一件，说一有调休，但是调休没有影响到我们。所以我们这个目前看呢，就是下周还有下下周。我们是上课的，然后开始在下周至11月11过后，10月9号开始上下一堂课。</p><p>那杜老师其实也说了，我们这个课是。虽然是开卷考试。但是同学们也不应该，盯着我们开卷来选这门课，所以也劝退了十几个同学吧。……有同学没有带资料，所以一算好。所以为什么不要专的？我们这个是开卷的，你如果发现子太大，是可能一不太合适。</p><p>那我们这个课程其实主要是围绕三个方面展开的。那第一个呢。我们这个三个板块呢，第一个是一度保理论的一个建立……包括绝2近似它后近似这个物风扇关，还有交换关联……然后，我们就开始具体讲一几个一法人论的一个计算方法和这个方法很多。那么我们呢，其实主要是介绍几种比较常用的方法，包括电视平面播方法，还有看轨道方法，还有全电阻方法。那最后讲了最后呢，我们会讲一点点知法人理论的一个扩展，包括高方法，还有数方法，还有分子学方法。</p><p>那我们这门课，它通过这门课呢，我们是干助大家从理论到应用它的一个完整的一个掌握一个发理论，那我们这堂课它这个这个。其实也非常核心概念其实非常清楚，那么说的呢，我们密度法围理论，那么什么是密度，什么是放行，其实这个主要说的是能量是电子密度的一个大。那么体系的七态性质，它其实是可以由密度可以确定，这个就是我们的整个课程围绕着一个核心概念。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s02">
+  <div class="slides"><figure class="slide" id="slide-04">
+<img src="slides/slide_04.png" alt="课件第4页 原子单位：国际单位制（SI）的困境">
+<figcaption><span class="sno">04</span><span class="stitle">原子单位：国际单位制（SI）的困境</span></figcaption>
+</figure>
+<figure class="slide" id="slide-05">
+<img src="slides/slide_05.png" alt="课件第5页 Hartree 原子单位：四个量设为 1">
+<figcaption><span class="sno">05</span><span class="stitle">Hartree 原子单位：四个量设为 1</span></figcaption>
+</figure>
+<figure class="slide" id="slide-06">
+<img src="slides/slide_06.png" alt="课件第6页 Hartree 单位：长度、能量与换算">
+<figcaption><span class="sno">06</span><span class="stitle">Hartree 单位：长度、能量与换算</span></figcaption>
+</figure>
+<figure class="slide" id="slide-07">
+<img src="slides/slide_07.png" alt="课件第7页 Rydberg 原子单位">
+<figcaption><span class="sno">07</span><span class="stitle">Rydberg 原子单位</span></figcaption>
+</figure>
+<figure class="slide" id="slide-08">
+<img src="slides/slide_08.png" alt="课件第8页 原子单位在 DFT 实际运用中的优势">
+<figcaption><span class="sno">08</span><span class="stitle">原子单位在 DFT 实际运用中的优势</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>原子单位</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 4</span><span class="chip">课件 5</span><span class="chip">课件 6</span><span class="chip">课件 7</span><span class="chip">课件 8</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>先讲原子单位。国际单位制（SI）在量子力学里面会面临比较现实的困难：把氢原子的薛定谔方程写出来，-ħ²/(2m)∇² - e²/(4πε₀r) = Eψ，其中 ħ≈1.054×10⁻³⁴ J·s、电子质量、电子电荷、ε₀ 等常数数值极小、有效数字非常多。这带来两个问题：①推导时每一步都要写冗长的数值（冗余推导），非常复杂，而且数值丢了可能就错了；②数值计算有精度隐患——计算机处理数量级悬殊的数值会引入舍入误差，导致迭代发散或结果失真，推高计算成本；单位换算也会增加很多负担。</p><p>科学家的办法是采用原子单位（量子力学原理件）：原子单位（常称 Hartree 原子单位，Hartree 在量子化学中系统推广并应用，其思想建立在 Bohr 等人关于原子尺度自然单位的思想之上）的核心想法是——把电子质量 m_e、元电荷 e、约化普朗克常数 ħ、以及 4πε₀ 通通设为 1。这样氢原子方程就从 -ħ²/(2m)∇² - e²/(4πε₀r) 变成 -½∇² - 1/r：剥离所有物理常数干扰，聚焦能量与相互作用的核心关系，大幅降低理论复杂度。</p><p>直观理解：跑步一圈 400 米，跑三圈就是 1200 米；但在原子单位视角下，我们把“一圈”定义为 1，你跑了 3 圈就不用写 3×400，物理效率倍增。原子单位是微观世界的自然语言，让理论推导回归物理本质，已成为量子力学与量子化学通用的标准。</p><p>换算：采用 Hartree 原子单位把四个量设为 1 后，凡是公式里遇到长度的单位就是 Bohr（玻尔）：1 Bohr = 0.529 Å = 5.29×10⁻¹¹ m（做纳米相关工作常用 Å）；遇到能量的单位就是 Hartree（哈特里）：1 Hartree = 27.2114 eV；涉及时间有 1 t_AU ≈ 2.4189×10⁻¹⁷ s；速度 ≈ 2.1877×10⁶ m/s。本课程主要讲静态问题，记住长度和能量两个就够了。</p><p>也有其他定义方法，例如 Rydberg（里德伯）原子单位：ħ²=1、m=1/2、e²/(4πε₀)=1（前四项定义略有不同），长度单位变为 2 个 Bohr，能量单位 1 Rydberg = ½ Hartree = 13.6057 eV，时间单位 4.83777×10⁻¹⁷ s，速度 1.09385×10⁶ m/s。在 DFT 理论的实际运用中主要用 Hartree 单位。</p><p>原子单位除了简化写法，数值计算也会非常稳定：物理量的数值集中于 0~10 之间，恰好落在计算机浮点运算的最佳精度区间，有效规避舍入误差与溢出。主流第一性原理软件（VASP、QE 等）均默认采用原子单位制，保障跨平台计算结果的一致性。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那什么是原子单位呢？那我们首先我们来看一下，我们同学们都应该知道的，都每个人都知道，叫国际单位制。那么，国际单位制在量子力学里面呢，它其实是会面临一个一较多要证据的比较的现实的分类。</p><p>然后你看这个实1的方程，负H2平方比上21Co3角平方减去4派一次乘10/8平方，然后Co3等1123。……你会发现这个H8。它是一个1.054×10的-34的次方焦……包括电子电子的电荷，还有一层的0，它这些数据呢，都是非常非常小的。</p><p>它就有一两个问题，第一个我们我们我们如果要推导这个公式，每一下一步。我们需要把这个数写出来，非常非常的没有必要，非常非常的复杂……然后另外呢，你看它里面的有数值计算，它有一个轻度的一个隐患。那么计算机处理数量值悬殊的数值是它会1引入5.1算误差，导致迭代发散或者结果失真，进而推高计算成本。</p><p>那么，原子单位是什么呢？……这个原子单位呢，其实不是哈克这个人提出来的，他他其实是建立在托尔还有多他等人关于原子尺度自然单位的一个思想上，主要是他水呢，它是把这个原子单位在量子化学中系统推广并应用。……我们就是把电子质量、原电荷，还有普拉克长约2，普朗克长度H8，还有一次排列子。我们通通把它设置成1。前面的那些数我们都不管那些，就那那么小的数，我们就不用再写了。</p><p>就是说我们跑跑步，我们跑一圈400米，那么如果是跑三圈呢，那么就是1200米，然后呢，但是如果是在原子单位视角呢，我们就是我们就定义域一圈，我们把一圈为单位……它就能够物理冷效率倍增。</p><p>那么它给量子单位呢，它就是波尔，那么1波尔呢，还有原子单位是1波尔。……一波2呢，就等于51.529I12=10的-14方米。……对于能量，遇到能量，那么它的单位是二水。……那么1电阻272114电阻。</p><p>那么还有涉及到我们这堂课，可能是主要是讲静态的问题，所以这两个呢，对大多数同学来说，你知道这两个其实就够，但是涉及时间的。那么设计时间呢，它它也有一个二元子单位t AU,AU的意思是米这子单位，那么它17U呢，是你要换算成秒呢，它就是2.4189×10的41743秒，还有速度呢。它是201877=768每秒。</p><p>那么在这个你德法人子单位里面，它是H2=1M=1/2。11等于√24派14211=1，然后这个长度单位呢，它1两次-2。然后能量单位呢，它就变成什么一得堡，一里得堡呢，它是等于2分12乘，也就是13.6057个电阻伏特……那么我们就一叫李大卫，他所以呢，其实他正是因为他挺保佑的，所以在我们这个一术法人理论课程的一个实际运用中呢，它其实也是用到的，而且我们主要用到的，我们用的更多的就是，其实是哈两个单位。</p><p>采用原子单位呢，它它除了解决它还会数值计算，它也会非常的稳定，你看物理物理量数数物理量的数值呢，它集中集中集中于0~10。零六十，它是恰好落在计算机浮点运算的最佳结构区间，有效规避选入误差，还有艺术风。……像我们常用的1G原理计算，1进1原理计算软件，像化高手还有风等主游戏的软件，它均默认采用原子单位制，保障跨平台计算结果的一致性。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s03">
+  <div class="slides"><figure class="slide" id="slide-09">
+<img src="slides/slide_09.png" alt="课件第9页 回顾：氢原子的薛定谔方程">
+<figcaption><span class="sno">09</span><span class="stitle">回顾：氢原子的薛定谔方程</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>回顾：氢原子的薛定谔方程</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 9</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>在讲 DFT 的第一个基本概念之前，先简单回顾一个量子力学里最简单的例子——氢原子。对一般形式的（非相对论）定态薛定谔方程：不含时间的静态薛定谔方程，Ĥψ = Eψ，能量算符 = 动能 + 势能。氢原子的定态方程是 (-½∇² - 1/r)ψ = Eψ：第一项是动能，第二项是一价电子与原子核之间的库仑吸引势。</p><p>氢原子是量子力学中少数可以精确求解的体系：在量子力学教材里通常把它当作重要内容，采用球坐标下分离变量法求解。虽然可以精确求解，但求解过程其实比较复杂。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那么。对一般形式的现代一学六用版本，因为我们九一的新原子医学六二版本时，它是不考虑时间的。就是说它是不含时间的，所以叫静态全二端程。对于静态全运动量程，我们都能写出来，A,cos=1和3，它们能量乘以1万函数，那么就等于能量乘以公导数本身就1是一公函数，那么这个发现能量呢。它其实就是动能上火加上势能转角，这个是氢原子的全定方程。那么它是-123/2角平方减去1/2，乘上cos2=1cos阿。这个这一下第一项动，然后第二项呢，它是。他是试了一价电子跟原子核，核的一个不能性。</p><p>量子力学里面可以确求解的其实不是很多，那么这一个呢，它是一个精确可以精确求解的一个确定的方程，那么虽然它可以精确求解，但是呢，你要真的是需要求解。在在量子力学原理里面，其实都有都有它的一个，都把它当成一个一个一个重了一部分，那么它其实采用了求坐标下分你变量，就是虽然我可以求解，但是其实呢，你看它那个结果呢，它其实是还是很复杂的，所以它的那个求解过程其实是。比较复杂。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s04">
+  <div class="slides"><figure class="slide" id="slide-10">
+<img src="slides/slide_10.png" alt="课件第10页 多粒子体系的哈密顿量（总式）">
+<figcaption><span class="sno">10</span><span class="stitle">多粒子体系的哈密顿量（总式）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-11">
+<img src="slides/slide_11.png" alt="课件第11页 多粒子哈密顿量（各项与标记惯例）">
+<figcaption><span class="sno">11</span><span class="stitle">多粒子哈密顿量（各项与标记惯例）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-12">
+<img src="slides/slide_12.png" alt="课件第12页 核-核排斥、外势与电子-电子项">
+<figcaption><span class="sno">12</span><span class="stitle">核-核排斥、外势与电子-电子项</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>多粒子体系的哈密顿量</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 10</span><span class="chip">课件 11</span><span class="chip">课件 12</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>氢原子是一个质子一个电子的体系；现在要考虑多粒子系统（封闭无外场），它的哈密顿量应该怎么写？真实情况下体系里有原子核也有电子：能量算符 = 动能 + 势能 = 原子核动能 + 电子动能 + 原子核之间的库仑排斥 + 电子与原子核之间的库仑吸引 + 电子与电子之间的库仑排斥。</p><p>记号与定义：U_nucl（原子核之间相互作用）、V_ext 叫外势（电子与原子核之间的库仑吸引——在 DFT 语言里把原子核产生的势当作外势，记住这个定义就行）、U_ee（电子-电子之间的库仑相互作用）。核动能项写作 ∑_α -1/(2M_α)∇_α²，其中 M_α 采用原子单位后是核质量与电子质量的比值（一个质子约是电子的 1836 倍）；电子的动能项形式上与核类似，区别是下面没有 M（因为 m_e 已经设为 1）。</p><p>习惯用法：在密度泛函理论里，通常喜欢用 α、β 表示原子核，用 i、j 表示电子。核-核排斥项写作 ∑_{α<β} Z_αZ_β/|R_α-R_β|，α<β 的意思是避免把每一对相互作用算两次；外势 V_ext = ∑_i -Z_α/|r_i-R_α|（电子与每个原子核的库仑吸引，共 3×10 项量级）；U_ee = ∑_{i<j} 1/|r_i-r_j|——这些式子本质上都是两个粒子之间的距离。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那么对于一个，对于一个封闭无外卡的多粒子系统。氢项，一个是电子的动能项，还有一个电子的一个比表，它之间的一个库存，库存相互都有，那其实它省掉了什么？它其实是原子核的，它的一些动能项其实是没有考虑的，那么真实情况下，我们对于一个风闭五外产离系统呢，它其实也是一，就是说我们有原子核，有电子，他们里面的电子相互用有哪些呢？还有它的有动能有势能，那么所以呢，它也是动能加势能。第一项有原子核，所以有原子核的作用，对吧？电子电子也有动能，那么势能呢？那么原子核，原子核跟原子核之间它会有相互作用。原子核有原子核跟原子核区间间有不能排斥。那么电子跟原子核之间有一个库仑吸引。那么电阻跟电子之间它其实也是有一个不仑排斥的。</p><p>这个EST呢，这个我们记录一下，这个叫外式，它其实是电阻跟原子核之间的一个。负的作用，它为什么这么为什么这么取呢，你们记住就好了，这个这个一马理论，它它就是这么定义。</p><p>一动能阿尔法一转角阿尔法13，那么这个阿尔法呢，是指我们有多有很多个原子核，然后这个M阿尔法呢。我们记住我们采用了原子单位之后。这个需要跟电子的质量的一个比值，你就比如说我们如果是一个质子。它应该是电子的18365。……那么形式上是跟原子核的其实是类似的，区别是这里下面没有M了，因为它M已经设置成1了。我们说明一下，就是对于在在运动量理论里面呢，通常喜欢用阿尔法贝塔这种来表示原子核，然后用I这这种去表示电阻。这是一个习惯的一个用法。</p><p>那么这个核跟原子核跟原子核之间的一个相互作用呢，它叫排斥，那么c nu CL呢，它是贝塔阿尔法减去贝塔阿尔法小于贝塔，C阿尔法C贝塔，然后比上阿阿尔法减去阿贝塔……因为它会我猜这同应该比较容易理解，因为我们算它的相互作用的时候呢，它容易算两次是吧？如果是你不这么写的话，就可以重复算一次。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s05">
+  <div class="slides"><figure class="slide" id="slide-13">
+<img src="slides/slide_13.png" alt="课件第13页 水分子 H₂O 的多体薛定谔方程">
+<figcaption><span class="sno">13</span><span class="stitle">水分子 H₂O 的多体薛定谔方程</span></figcaption>
+</figure>
+<figure class="slide" id="slide-14">
+<img src="slides/slide_14.png" alt="课件第14页 核-核相互作用：排斥（3 项）">
+<figcaption><span class="sno">14</span><span class="stitle">核-核相互作用：排斥（3 项）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-15">
+<img src="slides/slide_15.png" alt="课件第15页 核与电子相互作用（30 项）">
+<figcaption><span class="sno">15</span><span class="stitle">核与电子相互作用（30 项）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-16">
+<img src="slides/slide_16.png" alt="课件第16页 电子-电子相互作用（45 项）">
+<figcaption><span class="sno">16</span><span class="stitle">电子-电子相互作用（45 项）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-17">
+<img src="slides/slide_17.png" alt="课件第17页 全部相互作用放到一起：78 项">
+<figcaption><span class="sno">17</span><span class="stitle">全部相互作用放到一起：78 项</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>水分子：78 项相互作用</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 13</span><span class="chip">课件 14</span><span class="chip">课件 15</span><span class="chip">课件 16</span><span class="chip">课件 17</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>看一个稍微复杂一点的例子——水分子。一个水分子有 3 个原子核和 10 个电子，把它的定态薛定谔方程写出来：哈密顿量有五项——两项动能（单体项，每个粒子只与自己有关）+ 三项相互作用（双体项，与两个粒子有关）。</p><p>数一数单体项和双体项分别有多少：单体项 = 3（原子核）+ 10（电子）= 13 项；双体项中——核-核两两相互作用 3 项（C₃²）、电子-核相互作用 3×10 = 30 项（每个电子都可以与每个原子核有库仑作用）、电子-电子相互作用 C₁₀² = 45 项。一个氢原子方程只有 2 项，而一个水分子（才 3 个原子）哈密顿量已经变成了 78 项——复杂度急剧上升。</p><p>思考：一个水分子 78 项，两个水分子有多少项？26 个粒子，相互作用 C₂₆² = 325 项，是 78 项的 4.166 倍。真实世界远比水分子复杂——尽管能把多体体系的哈密顿量写出来，但相互作用项特别多，精确求解这样的薛定谔方程是不可能的。物理学的思想起作用了：先近似、再近似（所以 DFT 也有人叫 DFA——Density Functional Approximation，密度泛函近似）。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我们现在来看一个复杂一点吧，其实也是非常简单的一系叫水分子。那么一个水分子，它是有3个原子核，还有10个电解。我们把它的一个静态学定文文方程也写出来……它的还变量呢，它是有。它是有五项。其中两项动能项，它其实是一到单一项，也就是说它一个例子，它的一个价值动能嘛，就是它自己动能只跟自己有关，然后后面的呢，叫双一项。</p><p>你看我们前面讲。像氢原子缺电方程，它其实只有两项，那么对一个水分子，它3个原子10个电阻。这里单体项还有双极项，分别是有多少项？同学们能不能快速的。快速的想到。三这个是三项，先是3项是吧，它有三个粒子，那么这个呢，它是10项13项，那么对于这一个呢。三下它是一个三体的，三体的两两相都有，它是3张，那么这个呢。30，因为每一个电子它都可以跟原子核，它是有那个相对论，所以是30，然后这个呢。我听到同学们说，45，45是正确的，那么你看一个氢原子，我们写出来只有两项，那么就是一个水分子，就三个原子而已，那么它的分子量已经变成了78项。</p><p>你看这里是具体的一个，你看这是。具体的一个相互作用，你看原子核与原子核之间的相互作用，两两相互作用有三项。然后，这个是电子连接，电子跟电子之间的相互作用。这个是电子跟原子核的相互作用，三直像。然后呢，这个一就是电子跟电子之间的一个相互作用。那么，四五一下。</p><p>那么总共它其实就有。70多项，你看它只有78项，那么你看我们一个水分子有78项，两个水分子还有多少？……对于两个人子，它有26个粒子。那么它的销售费用算就是动能销售费用，象26一以25÷23于325上，你看它是4.166倍。</p><p>那么，真实世界我们只是说一个三个原子的一一个水分子，那么真实世界它其实远比水分子复杂。那么，我们想精确求解这样的一个确定方程呢，它是不可能的。那么，我们这个物理学，它的思想就起到了一个作用，叫先近似再近似，这就是我们叫近似再近似。所以我们对一度方函理论，有的人也直接我们叫DD，其实也还有另外一个说法叫D，F A叫密度方函近似。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s06">
+  <div class="slides"><figure class="slide" id="slide-18">
+<img src="slides/slide_18.png" alt="课件第18页 思考与讨论：两个水分子 325 项">
+<figcaption><span class="sno">18</span><span class="stitle">思考与讨论：两个水分子 325 项</span></figcaption>
+</figure>
+<figure class="slide" id="slide-19">
+<img src="slides/slide_19.png" alt="课件第19页 量子力学求解问题面临的困境">
+<figcaption><span class="sno">19</span><span class="stitle">量子力学求解问题面临的困境</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>思考与讨论：精确求解的困境</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 18</span><span class="chip">课件 19</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>思考与讨论：一个水分子总共有 78 项相互作用，两个水分子会有多少项？计算依据：一个水分子有 13 个粒子，相互作用有 C₁₃² = 13×12/2 = 78 项；两个水分子有 26 个粒子，相互作用有 C₂₆² = 26×25/2 = 325 项；325/78 = 4.166……</p><p>量子力学求解问题面临的困境：能否精确求解这样一个多体的量子力学问题？Ĥ_tot Φ({r_i},{R_α}) = E_tot Φ({r_i},{R_α})。H₂O 全部相互作用放到一起，势能项就有 78 项，真实世界系统远比 H₂O 复杂——精确求解，毫无希望！这时候物理学的思想起作用了：近似再近似。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>一个水分子有13个粒子，相互作用有C13的平方等于78项。……两个水分子有26个粒子，相互作用有C26的平方等于325项。……325除以78等于4.166点点点。（课件：思考与讨论）</p><p>能否精确求解这样一个多体的量子力学问题？……H₂O全部相互作用放到一起，势能项78项。真实世界系统远比H₂O复杂。精确求解，毫无希望！！！物理学思想起作用了：近似再近似！（课件：量子力学求解问题面临的困境）</p><p>那么，我们想精确求解这样的一个确定方程呢，它是不可能的。那么，我们这个物理学，它的思想就起到了一个作用，叫先近似再近似。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s07">
+  <div class="slides"><figure class="slide" id="slide-20">
+<img src="slides/slide_20.png" alt="课件第20页 Born-Oppenheimer（绝热）近似（1927）">
+<figcaption><span class="sno">20</span><span class="stitle">Born-Oppenheimer（绝热）近似（1927）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-21">
+<img src="slides/slide_21.png" alt="课件第21页 Born-Oppenheimer 近似原始论文">
+<figcaption><span class="sno">21</span><span class="stitle">Born-Oppenheimer 近似原始论文</span></figcaption>
+</figure>
+<figure class="slide" id="slide-22">
+<img src="slides/slide_22.png" alt="课件第22页 Born-Oppenheimer 近似出发点">
+<figcaption><span class="sno">22</span><span class="stitle">Born-Oppenheimer 近似出发点</span></figcaption>
+</figure>
+<figure class="slide" id="slide-23">
+<img src="slides/slide_23.png" alt="课件第23页 Born-Oppenheimer 近似物理图像">
+<figcaption><span class="sno">23</span><span class="stitle">Born-Oppenheimer 近似物理图像</span></figcaption>
+</figure>
+<figure class="slide" id="slide-24">
+<img src="slides/slide_24.png" alt="课件第24页 Born-Oppenheimer 近似（分离变量）">
+<figcaption><span class="sno">24</span><span class="stitle">Born-Oppenheimer 近似（分离变量）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-25">
+<img src="slides/slide_25.png" alt="课件第25页 Born-Oppenheimer 近似（电子运动方程）">
+<figcaption><span class="sno">25</span><span class="stitle">Born-Oppenheimer 近似（电子运动方程）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-26">
+<img src="slides/slide_26.png" alt="课件第26页 绝热近似下的电子运动方程（单体项/双体项）">
+<figcaption><span class="sno">26</span><span class="stitle">绝热近似下的电子运动方程（单体项/双体项）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div class="sec-tt">
+        <h2>Born-Oppenheimer（绝热）近似</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段末～第 2 段初</span><span class="chip">课件 20</span><span class="chip">课件 21</span><span class="chip">课件 22</span><span class="chip">课件 23</span><span class="chip">课件 24</span><span class="chip">课件 25</span><span class="chip">课件 26</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>在此背景下，1927 年 Born 和 Oppenheimer 提出了波恩-奥本海默近似（也叫绝热近似）：核心思想是把多体哈密顿量中原子核与电子的运动进行分离。这是他们的原始论文（Zur Quantentheorie der Molekeln，Ann. d. Physik 84, 1927, No.20），用德语写成，同学们感兴趣可以下载原文看看。</p><p>出发点：原子核与电子质量相比，电子质量非常小。质子和电子的质量比 M_nucl/m_e = 1836；对于重元素（包含很多质子和中子），质量比可达到数十万。写出原子核动能项 -1/(2M_α)∇_α²，会发现它远小于电子动能——说明原子核相比于电子是不容易移动的，或者说电子运动速度比原子核快很多。就像我们在地球上跑步，怎么跑对地球都没有影响。</p><p>物理图像：处理电子问题时，把原子核近似看成不动、只作为一个正电背景（并非不考虑原子核——电子与原子核的相互作用仍保留在势能里，只是把原子核当成不动的正电背景）；处理完电子问题之后，再处理原子核问题：原子核每移动一点，电子会迅速调整到新的状态，于是得到势能面 E({R})。分成两步：①电子运动（原子核固定）；②原子核运动（在势能面上）。</p><p>数学表达：由一般方程出发，Ĥ_tot Φ({r_i},{R_α}) = E_tot Φ({r_i},{R_α})；设体系可分离变量（若只有一个态），总波函数 Φ({r_i},{R_α}) = Ψ({r_i})χ({R_α})（电子波函数 × 原子核波函数）。若 T_N Ψχ = Ψ T_N χ 这一近似成立（一般不成立），则电子的运动方程为 Ĥ_el Ψ_{R_β}({r_i}) = E({R_β})Ψ_{R_β}({r_i})，其中电子的哈密顿量 Ĥ_el = T_e + V_ext + U_ee = ∑ᵢ ĥᵢ + U_ee，单体项 ĥᵢ = -½∇ᵢ² + Vᵢ，U_ee 是双体项。</p><p>绝热近似下的电子运动方程：ĤΨ({r_i}) = EΨ({r_i})，Ĥ_el = ∑ᵢ ĥᵢ + U_ee 可以分离变量。课件特别注明：凝聚态物理的复杂性（包括强关联等）都来源于 U_ee 这一项（双体项）——后面讲完 Kohn-Sham 方程之后再细讲什么是强关联，简单来说强关联就来源于这一项。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那么在此背景下，这个1927年波恩还有奥本海默，他们提出了一个，提出了波恩奥本海默定事也叫绝热，他们的一个核心思想呢，其实就是把多体哈质量和原子核，还有电子的，还有电子运动，其实把它进行一个分离。</p><p>那这个是呢，这是他们1927年的一个一个原始六个，故这里截一个图是用一个条文写的。同学们，如果想看的话，也可以看1就是去找一下这个这个文章。</p><p>其实他们。因为我们知道这个原子核跟电子质量。它相比呢，电子这两电呢，它其实属于一个小数点，那么我们如果是原子物理，原子物理如果还有印象，那么我们就会知道这个对于一个质子，它跟电子它的一个动量的一个比值呢，是一一千八百三十六倍。……对于一些动量素。重元素它是包含很多个质子，然后也包含了很多个中子，所以它的一个质量呢，它远比1836倍要大，它是达到了数十万，这个我是算过的。</p><p>那么我们把这个原子核的动能如我写出来，-2阿尔法分之1倒转角倒3角18，然后呢。我们把这个写出来，你会发现它这个这个这个远比电子要大，那说明什么问题呢？就是说它相比于电子来说，原子核它是不容易移动的。或者说，原子核也不是不位移动，或者是说电子，它的运动速度会比原子核要快很多。就是说我们在我们跑步。我们跑步，我们在地球上跑步，地我们怎么跑对地球没有影响，对吧？</p><p>我们在处理电子问题时，我们把原子核近似看成不动，只作为一个芯片背景。就是我们，我们把电子运动跟原子核的运动要分开。我们处理电子运动时，原子核就当成一个背景，你就不动了。……这个其实并不是说我们没有考虑一原子核，并不是把原子核丢掉了。因为我们前面讲那个安定能量的时候，它里面其实是有一个就电离跟原子核之间的一个互能性吧，所以并没有扔掉原子核，只是说原子核当成的一个正电的一个背景，它不动。</p><p>我们在处理原子核位移时。电子运动要比原子核快很多，电子会迅速调整到新的状态，所以我们要算原子核的时候。我们会换一个，也会得到一个势能面。五。你原子核每动一点，它的电阻会迅速的调整到它该去的地方，然后你就把它的那个势能给算出来。</p><p>那么，它的一个运动方程呢，也是动能加，动能算图加势能转图。……之一，所以呢，像什么强关联这种其实都是源于这一项。那那这一项呢，我们说强关联，这要我们等一讲完垂还有方程的时候，我们再讲什么是强关人。就简单来说，这个强光其实就是来源于这一项一义算开。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s08">
+  <div class="slides"><figure class="slide" id="slide-27">
+<img src="slides/slide_27.png" alt="课件第27页 核运动方程与受力">
+<figcaption><span class="sno">27</span><span class="stitle">核运动方程与受力</span></figcaption>
+</figure>
+<figure class="slide" id="slide-28">
+<img src="slides/slide_28.png" alt="课件第28页 Born-Oppenheimer 近似合理性">
+<figcaption><span class="sno">28</span><span class="stitle">Born-Oppenheimer 近似合理性</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">08</span>
+      <div class="sec-tt">
+        <h2>核运动方程与近似合理性</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（前）</span><span class="chip">课件 27</span><span class="chip">课件 28</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>考虑原子核运动时，体系的总能量为 E_tot = ∑_α P_α²/(2M_α) + ∑_{α<β} Z_αZ_β/|R_α-R_β| + E({R_β})（核动能 + 核-核排斥 + 电子对核的贡献，即势能面 E({R})）；原子核的运动方程是 (T_nucl + U_nucl + E({R_β}))χ({R_α}) = E_tot χ({R_α})。因此核所受到的势能是 U_tot({R_β}) = ∑_{α<β} Z_αZ_β/|R_α-R_β| + E({R_β})（核-核排斥 + 所有电子对该核的相互作用）；核所受到的力是 F_β = -∇_{R_β} U_tot({R_β})。</p><p>有了势能之后，对坐标做一阶微分（带负号）就得到受力——这是一个经典的牛顿方程。做第一性原理计算的同学应该知道：前面自洽求解电子问题叫“电子步”，这个根据受力优化原子核位置叫“离子步”（原子结构优化）——电子步与离子步交替进行。</p><p>有同学提问：为什么把电子-核的相互作用项加进核的总能量里，那不是电子的能量吗？老师回答：这一项是电子与原子核之间的库仑相互作用，不是电子的总能量——电子总能量是前面电子哈密顿量的期望值（电子能量算符），两者不一样，这是一个很好的问题。</p><p>BO 近似合理吗？它的精度可以通过微扰展开的方法讨论：把电子质量与原子核质量之比作为微扰参量（参考《固体能带理论》《Electronic Structure Calculations for Solids and Molecules》）。结论：在 Born-Oppenheimer 近似下，波函数和能级的误差都是高阶小量，对于大多数情况来说这是足够好的近似。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那么我们考虑了电子运动之后，我们再进一步考虑原子核的运动。……那么对于体系的，我们体系的总能量呢，因为我们讲原子核的运动的时候，我们体系的总能量它有。原子核的功能，原子核跟原子核之间的相互作用，还有电子。这个是电子对原子核的相互作用，就是所有电子对我们要求的这一个，原子核还有一个相互作用。然后呢，所有的原子核的这个相互作用一加起来。</p><p>那么核受到的那个势能呢，它其实就是原子核跟原子核之间的一个不能排斥。然后呢，还有就是，电子电子，我们我们先讲，我们把我们电子呢，前面我们假设我们现已经求出来了，电子在哪里我们已经知道了……所以那么我们就能知道原子核它那个整个体系，它的一个势能是是多少。</p><p>然后它有了势能之后呢，我们就是势能对。坐标。进行一阶微分，然后前面有符号。然后，我们就得到能得到受力这一个方程呢，它是一个牛顿方程，是一个经典的方程。……接触过做地一原理计算的同学们，可能对对那个叫离子部离子部去优化，叫原子结构优化。其实是在调解，它是有电子通感发式的，一个一个发生这么一个手段。在前面的那个前面的那个呢，叫四洽机，叫叫叫叫电子步，我们在二平面计算机呢，叫前面那个叫电子步，然后这个叫一子步，是它原组合的一个工种。</p><p>就是为什么就是在虚拟化到这个系统电阻的子5个能量加进去，那个不是电阻能量。它那个是你说这一项，这一项是电子原子之间的一个库存。是。这是上。一对一二一，这个是不一样的，这是不一样的，它这个显显一问题，这个其实是电子对原子核之间的一个互相相互作用，相互作用的。这个它不是电子的一个总流量。最最前面那个电子。那。那个是一个算，那个是一个算图的对的是的就是电子，这个是电阻对它的一个不能操作用那个还是这这两个是不一样的，这是一个很好的问题。</p><p>那么这个波海近似它合理吗？这个因为它是近似，它肯定也会它会有有合理的不合理的一情判对断。……我们可以通过微导打开的方法讨论，把电子质量还有原子核的质量一比作为一个微导向量。……那么我们这里大概也是讲一个结论就是。说在波多下波函数和能级的误差，它其实都是一些高阶小量。对于大多数情况来说，这是足够好的一资。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s09">
+  <div class="slides"><figure class="slide" id="slide-29">
+<img src="slides/slide_29.png" alt="课件第29页 绝热近似是否一定成立（三条件）">
+<figcaption><span class="sno">29</span><span class="stitle">绝热近似是否一定成立（三条件）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-30">
+<img src="slides/slide_30.png" alt="课件第30页 一点点说明（Dirac 1929）">
+<figcaption><span class="sno">30</span><span class="stitle">一点点说明（Dirac 1929）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-31">
+<img src="slides/slide_31.png" alt="课件第31页 思考与讨论：BO 解决的问题与理论基础">
+<figcaption><span class="sno">31</span><span class="stitle">思考与讨论：BO 解决的问题与理论基础</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">09</span>
+      <div class="sec-tt">
+        <h2>绝热近似的成立条件</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（前）</span><span class="chip">课件 29</span><span class="chip">课件 30</span><span class="chip">课件 31</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>绝热近似是否一定成立？成立必须满足三个物理条件：①核运动足够慢，电子态有时间跟随核坐标变化；②能级间隔足够大，避免相邻电子态之间发生跃迁；③远离交叉且耦合弱，非绝热耦合项相对能隙足够小。能级演化图中：慢变时跟随同一条势能面；能级近交叉时发生跃迁、概率上升；强耦合区对应绝热面（避免交叉）与透热面（虚线）的差别。</p><p>不满足时会怎样？典型非绝热过程：锥形交叉（电子态能隙趋近于零，核-电子能量快速交换）、光诱导跃迁（吸收光子后电子跨越电子态，激发态动力学主导）、强振电耦合（原子/电子转移伴随振动，多个电子态混合）。考虑绝热近似与不考虑绝热近似在这些区域差别很大，会影响到光学线宽、强振电耦合等性质——这时绝热近似就不太合适了。更详细的情况可以搜索 Beyond Born-Oppenheimer；同学们将来做非绝热分析时也会用到。</p><p>一点点说明：Dirac 在 1929 年说过——“大范围物理和整个化学所需的数学理论的基本物理定律已经完全清楚，困难只在于这些定律的精确应用会导出太复杂而无法求解的方程。”方程可以严格写出来，只是太复杂没有办法求解，所以需要近似——这并不代表物理图像不清楚。</p><p>思考与讨论：BO 近似解决什么问题？在分子或固体中，哈密顿量包含电子和离子的运动，直接求解面临两大难题：①自由度极高——一个简单分子（如水分子）就有 10 个电子和 3 个原子核，总自由度超过 30 个，直接求解薛定谔方程在数学上几乎不可能；②运动耦合复杂——电子与离子之间存在库仑相互作用，离子的位置变化会改变电子的势能场，电子的运动又会反过来影响离子的受力，形成强耦合，无法直接拆分计算。BO 近似将“电子-原子核耦合的全体系多体问题”拆分为“固定核位置的多电子问题”和“基于电子势能面的多离子问题”。其理论基础：原子核质量远大于电子质量，电子运动比原子核快很多，考虑电子运动时可以认为原子核不动；当原子核位移时电子迅速调整到新状态——电子波函数和原子核波函数可以分离、独立求解。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>所以呢，我们一般做学二心子的时候，它必须满足一些条件，也就是一说电子运动要足够的慢，不是原子核的运动量足够的慢，那么电阻它有时间跟随原子核后折变化。第二个呢，一般是能级间隔要足够大，避免相邻电子态之间的一个发生跃迁，还有一些远离交叉角和弱，那么对于非绝热耦合下相对能吸一到不少。</p><p>那么，如果是对某一些情况，你如果是考虑绝得近似跟不考虑绝得近似，它差别挺大的，它会有一些差别，但有些区域它会有一些差别。那么，而且这些差别呢，它会影响到什么一些性质，比如说光六等6线，什么强正电偶荷这种，那么它可能就这个全二性子可能就不太就不太很好。就不太合适。那么更详细的情况呢，同学们可以去搜索，一包海报。同学们，将来可能也会有一奥运，这组合能也是做非学生分析的那。</p><p>那么我们要用到这样的一个数字，那是不是说这个物理图像不清楚呢？它其实这里呢，伊拉克他曾经就讲过一些话，他总的意思来说呢，就是我们这个量子力学里面这个问题呢，我们需要利用到那个解二进数计定数呢，它并不代表物理图像不清楚。它这个物理图像，它它的这个薛定谔方程，它是可以严格写出来的一个薛定谔方程，可以可以严格写出来，只是说我们没有办法求解区，因为它太复杂了，所以我们需要用到近似。</p><p>那么第二个。二他的理论基础。我们这里就直那么就是说，奥本海默金4它解释了什么问题呢？就是在分子或者是固体中，固体固体中呢，它们热量包含电阻和离子运动，直接求解会面临两个难题。那么，第一个是自由度极高。那么一个简单的分子，一个简单的分子就是说一个水分子它就要包含10个电子和3个电子，总自由度。超过30个直接求解确6的氧化程在数学上不可能。那么第二个呢，运动组合复杂，电子与离子之间存在互热相互作用，两者的运动相互影响，离子的位置变化会改变电子势能。势能场电子的运动又会反过来影响离子的受力，形成强耦合，无法直接拆分计算。那么多诺本海默就4，它是将电子层耦合的全体系玻一位移，拆分为固体固定核位置的多电子体和基于电子势能电的多离子位移。</p><p>它是理论基础是原子核的质量化于电阻质量。那么电阻运动比原子核快很多。那么，考虑电子运动时，可以近似认为原子核不动。当原子核位移时，电子会迅速调整到新的状态。波电子波函数和原子和波函数可以分离。一求解，这就是波奥奥本海默近似，或者是说血热近似。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s10">
+  <div class="slides"><figure class="slide" id="slide-32">
+<img src="slides/slide_32.png" alt="课件第32页 第二部分：密度泛函理论（目录，HF 突出）">
+<figcaption><span class="sno">32</span><span class="stitle">第二部分：密度泛函理论（目录，HF 突出）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">10</span>
+      <div class="sec-tt">
+        <h2>第二部分：密度泛函理论（知识框架）</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（中）</span><span class="chip">课件 32</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第二部分：密度泛函理论。本部分的知识框架：原子单位 → 绝热近似 → 哈特里-福克近似（本节课的重点，红色突出）→ 密度泛函理论 → 交换关联泛函。有了绝热近似，多体问题变成了两个问题（核的问题比较简单，电子问题大大简化），但只看电子运动依然非常复杂（水分子还有 78 项）——所以需要在近似的基础上再做一次近似，这就引出了 Hartree 方法。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那我们想。学二近四，我们把。一个多体问题，它变成了两个问题，但是呢，你看我们把它变成了核的问题，核的问题好像比较简单，然后电子问题呢。它会大大的简化，但实际上如果我们再来看一下，比如说它是一个水，还有78项，那如果你考虑只考虑电子运动的时候呢，它依然是非常复杂的，对吧。所以呢，我们有了折射定子，它简化了，但是呢，它并不能够依然不能够收敛。所以呢，我们需要在进步的基础上再做一次，这里呢，我们就提先。我们需要提到一个叫金以及水。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s11">
+  <div class="slides"><figure class="slide" id="slide-33">
+<img src="slides/slide_33.png" alt="课件第33页 Hartree-Fock 历史（1928/1930）">
+<figcaption><span class="sno">33</span><span class="stitle">Hartree-Fock 历史（1928/1930）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-34">
+<img src="slides/slide_34.png" alt="课件第34页 电子运动方程：为什么 U_ee 复杂">
+<figcaption><span class="sno">34</span><span class="stitle">电子运动方程：为什么 U_ee 复杂</span></figcaption>
+</figure>
+<figure class="slide" id="slide-35">
+<img src="slides/slide_35.png" alt="课件第35页 Hartree 近似（平均场理论）">
+<figcaption><span class="sno">35</span><span class="stitle">Hartree 近似（平均场理论）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">11</span>
+      <div class="sec-tt">
+        <h2>Hartree-Fock：平均场思想</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（中）</span><span class="chip">课件 33</span><span class="chip">课件 34</span><span class="chip">课件 35</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>先看一段历史：Hartree 方法 1928 年由 D.R. Hartree（1897-1958，英国剑桥）提出；Fock 在 Hartree 方法的基础上做了进一步改进，1930 年提出 Hartree-Fock 方法（V.A. Fock，1898-1974，列宁格勒）。</p><p>为什么 U_ee 复杂？前面讲绝热近似时说过：原子核质量大、速度慢，处理电子问题时可以把原子核看成不动；但电子与电子之间质量相同，不存在这种快慢关系——你讲一个电子运动，它瞬间就会引起周围其他电子运动，多电子相互耦合在一起，非常难以求解。所以 U_ee 这一项（双体项）非常复杂。</p><p>Hartree 近似的平均场思想：考虑电子运动时，把其他电子的作用用平均静电场来表示——这是一个非常大但大胆的假设。对第 i 个电子，它感受到的其他电子的平均场记为 ĝᵢ(r)，则 U_ee ≈ ∑ᵢ ĝᵢ(r)；于是 Ĥ_el = ∑ᵢ ĥᵢ + U_ee ≈ ∑ᵢ(-½∇ᵢ² + v̂ᵢ + ĝᵢ) ≡ ∑ᵢ Ĥᵢ——本来一个很复杂的双体项，硬生生变成了单体项的组合：每个电子的哈密顿量变成单电子哈密顿量的求和。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那么哈水四是哈水1928年提出的。然后还有一点点问题。然后错在二水进程的基础上又做了进一步。改进，然后就就提出了他结构，这是。一一。它是近似，它采它的物理图像其实是比较简单，它也是比较简单，它其实采第一个是采用了一个叫平均范式，第二个采用了一个叫沉积波函数假设。</p><p>同学们想想一下这个u EE为什么复杂，同学们，有没有知道的？……我们如果是看电子运动能一呢，电子跟电子它不存在这样的一个电子层核之间的相关关系，对不对？所以电子呢，它的质量都是一样的，所以你看这个东西，我们讲一个电子运动的时候呢。比2的比的原电子呢，它其实你可一道一个电子运动，其实它瞬间它就会引起周围的比的电子也会发生运动。所以它是会非常非常复杂的。它不像它不像原来的那么简单，所以它这一项是非常复杂，所以你讲一个电子运动。这个相互耦合在一起，我们其实是很难调解的。</p><p>那么平均一，那么也是打。他说的是，我们考虑电子运动时，把其他电阻作用用平均静电感表示。他又做了一个非常大胆的一个假设，那是一个非常大胆的政策。</p><p>所以这一项非常非常的复杂，然后所以它水晶四呢，它。就直接硬来，你看，直接把这个东西直接写成了在其他电子的平均平均作用，电子作用用平均场静电场来表示……所以这么干呢，你看本来一一是一个很复杂的一个双体项，它硬生生变成了一个单体项的一个组合了。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s12">
+  <div class="slides"><figure class="slide" id="slide-36">
+<img src="slides/slide_36.png" alt="课件第36页 Hartree 近似（乘积波函数）">
+<figcaption><span class="sno">36</span><span class="stitle">Hartree 近似（乘积波函数）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-37">
+<img src="slides/slide_37.png" alt="课件第37页 Hartree 近似计算 Ĥ 的期望值">
+<figcaption><span class="sno">37</span><span class="stitle">Hartree 近似计算 Ĥ 的期望值</span></figcaption>
+</figure>
+<figure class="slide" id="slide-38">
+<img src="slides/slide_38.png" alt="课件第38页 三粒子 Hartree 近似计算">
+<figcaption><span class="sno">38</span><span class="stitle">三粒子 Hartree 近似计算</span></figcaption>
+</figure>
+<figure class="slide" id="slide-39">
+<img src="slides/slide_39.png" alt="课件第39页 计算期望值（展开）">
+<figcaption><span class="sno">39</span><span class="stitle">计算期望值（展开）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-40">
+<img src="slides/slide_40.png" alt="课件第40页 计算期望值（合并）">
+<figcaption><span class="sno">40</span><span class="stitle">计算期望值（合并）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">12</span>
+      <div class="sec-tt">
+        <h2>Hartree 近似的期望值计算</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段末～第 3 段初</span><span class="chip">课件 36</span><span class="chip">课件 37</span><span class="chip">课件 38</span><span class="chip">课件 39</span><span class="chip">课件 40</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>Hartree 近似：在平均场近似下，Hartree 假设波函数形式为单电子轨道的乘积 Ψ({r_i}) = ∏ᵢ φᵢ(rᵢ)——把复杂的多电子波函数问题降解成一个个独立的单电子问题，极大降低了计算难度，让多电子体系的求解第一次具备了数学上的可行性。</p><p>有了波函数，下一步就可以计算它的期望值（平均值）：<Ĥ>_Hartree = <Ψ({r_i})|(∑ᵢ ĥᵢ + U_ee)|Ψ({r_i})> = ∑ᵢ <φᵢ(r)|ĥᵢ|φᵢ(r)> + ½∑_{i≠j} <φᵢ(r)φⱼ(r')|1/|r-r'||φᵢ(r)φⱼ(r')>。目的：根据变分原理，最接近真实物理的态是能量最低的态——波函数的具体形式还不知道，需要先算出总能量的表达式，才能求极值得到基态波函数和能量。</p><p>三粒子例子（理解为什么长这个样子）：三个粒子的哈密顿量 H(r₁,r₂,r₃) = h(r₁)+h(r₂)+h(r₃) + 1/|r₁-r₂| + 1/|r₁-r₃| + 1/|r₂-r₃|；Hartree 波函数 Ψ(r₁,r₂,r₃) = φ₁(r₁)φ₂(r₂)φ₃(r₃)；注意单电子波函数是正交归一的：<φᵢ|φⱼ> = δᵢⱼ——意思是每个电子彼此独立，i=j 时为 1（全空间总概率为 1）。</p><p>计算期望值：把狄拉克符号写成积分形式，哈密顿量写成单体项 + 双体项。处理 h(r₁) 时，由于 φ₂、φ₃ 彼此独立且正交归一，它们的积分可以提到前面（=1）约掉；处理双体项 1/|r₁-r₂| 时，φ₃ 的积分约掉，φ₁φ₂ 保留在积分里。最后合并得到 <Ĥ> = ∑ᵢ∫φᵢ*(r)h(r)φᵢ(r)dr + ½∑ᵢ∑_{j(≠i)}∬φᵢ*(r)φⱼ*(r')1/|r-r'|φᵢ(r)φⱼ(r')drdr'——这就是 Hartree 期望值能写成那个样子的原因。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>在平均场近似下，Hartee假设波函数形式为单电子轨道的乘积。把复杂的多电子波函数问题，降解成了一个个独立的单电子问题，极大降低了计算难度，让多电子体系的求解第一次具备了数学上的可行性。（课件：Hartree近似）</p><p>那么我们已经前面讲了，它有它的已经已经有了他数的量，也有它的一个不函数，那么有了这两个呢，我们下一步呢，我们就需要就可以算他的一个还上的他的一个期望值平均值。那么我们的这个目的呢？其实它是因为根据变更。真最接近真实的物理，应该是能量最低的。因为我们有包函数，然后包函数它具体形式我们只是给出了一个沉积的一个形式，它具体是什么样子的呢？它其实我们现在还不知道，那么根据这个原理，我们其实可以求极值，然后得到它的一个基派的一个一个一个长数的，也能求出最分值的。</p><p>你举个例子看一下三子的含量，然后我们来看一看它为什么长这个样子。那么，这是一个三个粒子的含能量，我们写R 12 R3, 那么它就等于AR1。3 AR 2.……那么波函数呢，它就是这个单电子多导数的乘积等于1R12R2乘上派323。然后呢，这里这里呢，我们注意一个不同的订单，电阻光数它是。正交的。就是左是在I，然后带G6是那么它就等于带了IG，它这个其实就意思是说，我们每一个电子，它的单电话说呢，它其实是彼此独立的。然后呢，这里会一一话呢，如果是I=G，它等于1说的是我们在全空间总概率，它是总概率之一。</p><p>你看，我们把这个总总的过数，我们写成把它写成这个单电子单电子过数的乘积，把这个把这个伊拉克符号钠写成积分的形式。然后，这个含名能量呢，把它写成。单体项加双体项。然后呢，你看我们这一步。我们这一步呢，派1大2122派2大R2派3。四二这个作用到，因为这个一个它等于1H。……那么对于双底价。R1跟R2它有相互作用，它有一个势能，那么我们处理R1跟R2的时候呢，那么这个外一R12222,我们必须写在这里，那么派三二，派323跟23233呢，又把它提到前面去了。……那么我们合并一下，那么我们就能得到上面的边一个式子，这就是为什么那个，他水四它的一个期望值可以写成那个样子。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s13">
+  <div class="slides"><figure class="slide" id="slide-41">
+<img src="slides/slide_41.png" alt="课件第41页 变分近似法（变分原理）">
+<figcaption><span class="sno">41</span><span class="stitle">变分近似法（变分原理）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-42">
+<img src="slides/slide_42.png" alt="课件第42页 历史上有名的变分问题：最速降线">
+<figcaption><span class="sno">42</span><span class="stitle">历史上有名的变分问题：最速降线</span></figcaption>
+</figure>
+<figure class="slide" id="slide-43">
+<img src="slides/slide_43.png" alt="课件第43页 函数 vs 泛函">
+<figcaption><span class="sno">43</span><span class="stitle">函数 vs 泛函</span></figcaption>
+</figure>
+<figure class="slide" id="slide-44">
+<img src="slides/slide_44.png" alt="课件第44页 微分 vs 变分">
+<figcaption><span class="sno">44</span><span class="stitle">微分 vs 变分</span></figcaption>
+</figure>
+<figure class="slide" id="slide-45">
+<img src="slides/slide_45.png" alt="课件第45页 函数的微分 vs 泛函的变分">
+<figcaption><span class="sno">45</span><span class="stitle">函数的微分 vs 泛函的变分</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">13</span>
+      <div class="sec-tt">
+        <h2>变分近似法</h2>
+        <div class="sec-meta"><span class="time">录音：第 3 段（前）</span><span class="chip">课件 41</span><span class="chip">课件 42</span><span class="chip">课件 43</span><span class="chip">课件 44</span><span class="chip">课件 45</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>有了期望值的形式，下一步怎么求？需要用变分法（对泛函求极值、推导最优化函数条件，最终得到单电子的运动方程）。变分近似法：自然界中广泛碰到有相互作用的多粒子体系，例如研究分子、原子、原子核和粒子结构，研究固体中电子运动以及电子与晶格的相互作用——与经典力学中的情况相似，有相互作用的多粒子体系很难严格求解，实际上不能严格求解，而只能近似处理。这里包含两个含义：一是采用适当的模型把物理问题简化；二是即使对已简化模型，往往也只能用近似计算方法求解——这些近似方法中用得最广泛的是微扰论和变分法。</p><p>变分原理（曾谨言《量子力学》）：设体系的能量平均值表示为 H̄ = ∫ψ*Hψdr，则体系的能量本征值及本征函数，可以在条件（归一化）下让 H̄ 取极值而得到，即 δH̄ - λδ∫ψ*ψdr = 0，λ 为 Lagrange 乘子。</p><p>历史上有名的变分问题——最速降线问题（Johann Bernoulli 提出，Leibniz、Newton、Jacob Bernoulli 完成）：小球从斜坡上下到 B 点，哪一条路最快？可以有不同的走法。这里只有势能转换为动能：mgy = ½mv²，v = √(2gy)；ds = √(2gy)dt，ds = √(1+(dy/dx)²)dx，总时间 T = ∫₀ˣ¹√(1+(dy/dx)²)/√(2gy) dx。选择不同曲线，时间完全不同；最优的路径不是直线，而是某一条曲线（摆线）。关键：自变量是一个函数 y(x)，对不同的 y(x) 时间 T 不同——T 是 y(x) 的泛函。这就有点像 DFT 里“密度是坐标的函数、总能量是密度的泛函”。</p><p>函数 vs 泛函：函数的定义——变量 x 区域中每一个 x 都对应一个 y 值，则称变量 y 是变量 x 的函数 y=y(x)；泛函的定义——对于某一类函数 y(x) 中每一个 y(x) 都对应一个 Π 值，则称变量 Π 是变量 y(x) 的泛函 Π=Π(y(x))。连续性：x 的微小改变对应 y(x) 的微小改变，则函数连续；y(x) 的微量改变对应泛函的微量改变，则泛函连续。所以说泛函其实是一种广义的函数。</p><p>微分 vs 变分：函数的宗量 x 的增量 Δx 是指两值之差（Δx = x-x₁），x 的微分用 dx 表示，dx 也是增量的一种，增量很小时 dx = Δx；泛函 Π(y(x)) 的宗量 y(x) 的增量很小时称为变分，用 δy(x) 或 δy 表示，δy(x) = y(x)-y₁(x)——δy(x) 也是 x 的函数，只是在指定的 x 区域中都是微量。函数的微分与泛函的变分可以类比。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我这里呢，其实就是增章里面有一个内容，直接这个就是直接的一阅读。就是说，这是自然界中我们广泛碰到有相互作用的多一子体系，例如说一究分子原子原子核，还有粒子结构研究不一中电子运动以及电子与金的相互作用的，那么碰到的都是有相互作用的波粒子体件。……有相互作用的波粒子问题是很难严格组解的，实际上是不能严格求解，而只能用近似的处理。那么这里包含两个概念，两个含义，一个是采用适当的模型把物理问题简化，其次是对于已简化的模型，往往也只能用近似计算方法出现，这些近似方法用的最广泛的是微色辩证法。</p><p>然后呢，这个是，你看一动原理头的是设体系统能量平均值。为这样的一个就是我们刚才写的，我们已经把1写出来了。那么则体系的能量本质值以1本量函数，可以在条件上面的条件这里证明。然后在有个条件下，那这个哈一的量样的取极值而得到，也就是需要对它进行一个变更。</p><p>速下一限问题，我相信很多同学们应该都看过，说这里如果是一个小球，然后呢，从这个斜坡下面到达B。它哪一条路是最快的？……但是呢，我们会发现你如果是选择不同的曲线。它是时间是完全不一样的，然后最优的这一条，最最优的这条直线呢，它其实不是直线，而是某一条直线。……具体它的那个选哪条哪条线就有点像我们的这个密度就在密度码里面，就就类于度，然后也就是说它的自变量，它是一个函数，然后对于不同的那个函数呢，它的一个时间都是不同。</p><p>你看这个函数它的定义呢，就是说我们变量X区具有每一个X都对应一个Y值的称为变量Y，是变量X函数。……对于放行呢，对于某一量函数YS中，每一个YS对应一个派值域一对，则生变量派是变量YS的大。……所以说呢，函它其实是一种广义的一种。</p><p>那么变更呢，就是说泛函派YS与中量YS增量很小时称为变更，用X、Y S或者XY表示。那么塔YS=YS-Y1X。我们应该提出加YS也是X的函数，只是YS在平定的区域中都是1量化。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s14">
+  <div class="slides"><figure class="slide" id="slide-46">
+<img src="slides/slide_46.png" alt="课件第46页 极大极小问题">
+<figcaption><span class="sno">46</span><span class="stitle">极大极小问题</span></figcaption>
+</figure>
+<figure class="slide" id="slide-47">
+<img src="slides/slide_47.png" alt="课件第47页 泛函的变分（拉格朗日乘子）">
+<figcaption><span class="sno">47</span><span class="stitle">泛函的变分（拉格朗日乘子）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-48">
+<img src="slides/slide_48.png" alt="课件第48页 Hartree 近似计算的变分（变分核心）">
+<figcaption><span class="sno">48</span><span class="stitle">Hartree 近似计算的变分（变分核心）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-49">
+<img src="slides/slide_49.png" alt="课件第49页 Hartree 近似计算的变分（电子独立）">
+<figcaption><span class="sno">49</span><span class="stitle">Hartree 近似计算的变分（电子独立）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-50">
+<img src="slides/slide_50.png" alt="课件第50页 Hartree 近似计算的变分（ĝᵢ Hartree 项）">
+<figcaption><span class="sno">50</span><span class="stitle">Hartree 近似计算的变分（ĝᵢ Hartree 项）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-51">
+<img src="slides/slide_51.png" alt="课件第51页 自洽迭代流程图">
+<figcaption><span class="sno">51</span><span class="stitle">自洽迭代流程图</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">14</span>
+      <div class="sec-tt">
+        <h2>泛函变分与 Hartree 方程</h2>
+        <div class="sec-meta"><span class="time">录音：第 3 段（中）</span><span class="chip">课件 46</span><span class="chip">课件 47</span><span class="chip">课件 48</span><span class="chip">课件 49</span><span class="chip">课件 50</span><span class="chip">课件 51</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>极大极小问题：如果函数 y(x) 在 x=x₀ 附近的任一点上的值都不大（小）于 y(x₀)，则称函数在该点有极大（小）值，即 dy/dx = 0；如果泛函 Π(y(x)) 在任何一条与 y=y₀(x) 接近的曲线上的值不大（小）于 Π(y₀(x))，则 Π(y(x)) 在曲线 y₀(x) 上达到极大（极小）值，即 δΠ/δy(x) = 0——函数与泛函的极值条件形式相同。</p><p>泛函的变分：设有泛函 F[φ(x)]，极值条件为 δF[φ] = 0，可推出 δF[φ] = ∫(δF[φ]/δφ(x))δφ(x)dx = 0；由于 δφ 的任意性，因此 δF[φ]/δφ(x) = 0。对有条件 G[φ] = 0 的极值问题，利用拉格朗日乘子法，定义 Ω[φ] = F[φ] - λG[φ]，极值条件变为 δΩ[φ]/δφ(x) = 0——量子力学中变分法正是建立在上述泛函变分与约束极值原理之上。</p><p>Hartree 近似计算的变分：δ[<Ĥ> - ∑ᵢEᵢ(<φᵢ(r)|φᵢ(r)> - 1)] = 0。变分原理的核心是改变试探波函数，寻找使能量得到极值的波函数；现在仅改变 <φᵢ(r)|。展开得到：∑ᵢ<δφᵢ|ĥᵢ|φᵢ> + ∑_{i≠j}<δφᵢφⱼ|1/|r-r'||φᵢφⱼ> - ∑ᵢEᵢ(<δφᵢ|φᵢ>) = 0。</p><p>推导：每个电子都是独立的，对第 i 个电子：<δφᵢ|{ĥᵢ + ∑_{j(≠i)}<φⱼ|1/|r-r'||φⱼ> - Eᵢ}|φᵢ> = 0；由于 δφᵢ(r) 是任意的，因此 {ĥᵢ + ∑_{j(≠i)}<φⱼ|1/|r-r'||φⱼ> - Eᵢ}|φᵢ> = 0，即 {-½∇² + v̂ + ∑_{j(≠i)}∫dr'|φⱼ(r')|²/|r-r'|}|φᵢ> = Eᵢ|φᵢ>——这就是 Hartree 方程。</p><p>其中 ĝᵢ(r) = ∑_{j(≠i)}∫dr'|φⱼ(r')|²/|r-r'| 这一项常称为 Coulomb 项或 Hartree 项；注意：需要自洽计算——Hᵢ(ĝᵢ) ⇒ φᵢ ⇒ ĝᵢ ⇒ Hᵢ(...) 循环迭代。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那么对于函数我们要求极大值，极小值问题呢。是什么呢？就是他的。他的意见微分的内容就是能够得到他的基时。那么对于发行它也是。它也是它的一大值呢，也是并不等一零。所以我们只要知道的，其实这个都是类似的。</p><p>那么，对于有条件的提决问题。一。正常情况下是这个样子的。它是等于01么？但是呢，如果是对于一些有条件的提实问题，就比如说我们想一量子力学原理面，它的那个它有一个正交不一的5吧，它必须满足什么？在全空间积分等于0=1，它是有条件的，它的这个叫有限制条件的。那么它对这个有限制条件的呢，我们就需要定义这样一个欧米伽快等于。F,然后呢，这个G呢，就是那个限性条件，那么其实条件就变成。那么我们呢，其实主要是用到的，后面呢，其实主要是用到了这样的一个式子。那么他这个变更要力学的变更法，就是建立在这个法人变更与它的一个约束机的原理之上。</p><p>然后它的核心呢，就是改变适当波函数，寻找使能量得到极值的波函数。你看现在我们开始对那个。你看，我们现在，因为我们只要改变市三方通到什能量的及时的花，现在我们对他这个左边进，我们现在我们改变。……我们改变的是左边，左边的那个快I大，所以我们把这个变更符号写到那个左边。选择左边，然后呢，这里也选择左边，那么但是这里有一个问题，就是BY，by I,它都是可以的，所以之前这里应该1/12。就变成了一。</p><p>那么最后呢，因为这个就是任意。这个板块AR就是任意的，所以呢，我们就可以把右边的小说来，右边的数相等于0。……那么最后呢，我们就能得到21项。后面再下1010，然后把这个1I挪到右边去，那么我们就能得到它方程，这就叫他数方程。</p><p>然后呢，其中呢，这个一。然后呢，我们也可以把后面的一项写成这样的一个GI填写一项，然后呢，其中这一项呢，GI项就叫哈项或者叫不能项。那那我们有了。你看，我们得到了这个哈水方程了之后，我们怎么去求解呢？……这个呢，我们需要用到一个叫自洽迭代</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s15">
+  <div class="slides"><figure class="slide" id="slide-52">
+<img src="slides/slide_52.png" alt="课件第52页 自洽迭代举例（构造迭代公式）">
+<figcaption><span class="sno">52</span><span class="stitle">自洽迭代举例（构造迭代公式）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-53">
+<img src="slides/slide_53.png" alt="课件第53页 自洽迭代举例（数值逼近）">
+<figcaption><span class="sno">53</span><span class="stitle">自洽迭代举例（数值逼近）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-54">
+<img src="slides/slide_54.png" alt="课件第54页 迭代数值表（8 步收敛）">
+<figcaption><span class="sno">54</span><span class="stitle">迭代数值表（8 步收敛）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-55">
+<img src="slides/slide_55.png" alt="课件第55页 自洽求解中的混合方法">
+<figcaption><span class="sno">55</span><span class="stitle">自洽求解中的混合方法</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">15</span>
+      <div class="sec-tt">
+        <h2>自洽迭代求解</h2>
+        <div class="sec-meta"><span class="time">录音：第 3 段（中）</span><span class="chip">课件 52</span><span class="chip">课件 53</span><span class="chip">课件 54</span><span class="chip">课件 55</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>有了 Hartree 方程怎么求解？需要用到自洽迭代的过程：方程里的波函数是未知的（很复杂，确实求解不出来），先猜测一组初始波函数 φᵢ⁰；由初始波函数计算库仑项 ĝᵢ(r) = ∫dr'|φⱼ(r')|²/|r-r'|；再求解方程 (T̂ᵢ+v̂ᵢ+ĝᵢ)φᵢ = εᵢφᵢ 得到新的波函数；比较新波函数与初始波函数是否收敛（|φᵢ-φᵢ⁰| < 阈值）：收敛则输出结果、进一步计算想要的性质；不收敛则把新波函数当作下一步的猜测波函数，重新计算 ĝᵢ、再求解方程——一直循环，直到差值小于一定值就认为收敛。</p><p>自洽迭代法是通过迭代方法逐次逼近：①构造相应的迭代公式；②选取方程的初始近似根 x₀；③代入迭代公式反复校正根的近似值。例如求方程 f(x) = x³-x-1 = 0 的根：先把问题改写成等价迭代公式 x = g(x) = ∛(x+1)；取初始近似根 x₀ = 1.5；代入得 x₁ = g(x₀) = ∛(1.5+1) = 1.35721；由于 |x₀-x₁| > 10⁻⁴，继续迭代：x₂ = ∛(x₁+1) = 1.33086、x₃ = 1.32588、x₄ = 1.32494……迭代 8 步收敛到 1.32472——一步步循环，最后数值稳定下来，这就是想要的值。</p><p>真实情况下的自洽求解会更复杂，还会用到不同的混合方法：自洽求解就是从一个初始猜测 ρ₀ 出发，循环求解得到 ρ₁、ρ₂……最终需要 ρ_{n+1} ≈ ρ_n 收敛，找到方程的解。因为物理系统非常复杂，直接迭代很难找到解，所以需要混合方法——把每次迭代计算得到的 ρ_n 按一定算法进行加权平均，得到新的猜测值进行下一步迭代。常用的混合方法有 Linear、Pulay、Broyden 等。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那么首先，这是你看这个方程，你看这个叫咖水方程。长这个样子的这个里面呢，这个不函数是什么样的呢？因为它很复杂，然后什么样的呢？你们不知道，其实确求候者不知道，那怎么办？我们先来参与一组光函数，你要先我们猜测它的初始光函数快I。阿玲。我们不知道，我们先猜一下，那么有了这个，初始的默函数呢，你看这里不是一项，就G一项吗？你看ti跟VI的形式都是一一的，对吧，G形式呢，它长成这个样子的。那么我们猜测了一组多函数之后呢，我们就能够求出来这个边。那么我们求出来一个BI呢？好，这一在也知道了，那么这里的形式上都知道了。那么我们再去求一解这样的一个方程。那么我们求解这样一个方程之后呢。我们就能得到这个波函数，新的包函数是吧，得到了新的波函数，那么如果这个新的波函数跟我们猜猜测的波函数非常非常的接近了，那么我们就认为这个它的真实波函数就长成这样的。那么如果差的还挺远怎么办呢？……那么我们又能得到一个新，又能得到一个新的波函数。就一直循环，那么直到它这两个差的非常非的小，也就是说他们两个的差值小于一定的一值，那么我们就认为收敛，然后我们就把这个得到的那个波函数呢，就当成。就大成我们收敛的结果，然后进一步计算我们想要的一个性质。</p><p>你看，我们这里用一个非常简单的一个例子。然后可能同学们就觉得很神奇，他为什么可以做到？你看，例如说我们求解一个方程的一个根，你看FX等10X33的1X1，它的101。……首先第一步。X它就等于G，X=X+1的一方根……那么我大概猜测，我发现把它输不入进6，发现1它1.3512有点长好发现还不收敛，系开的有点离谱，那么我们就把这个。这个进一步带进去，那么X2呢，它等于1.33126。你看。你看我们一步一步的一步一步的进去循环看多呢，你看1.5，然后1.3多，然后最后呢，你看搞了什么七八部之后呢，你看。它就一样的，所以所以这个东西一是要收敛，然后这个值呢，就是我们想要的一个值。</p><p>那当然在我们真实的情况下呢，四下的图解呢，它会更复杂一点，然后呢，但是它的原理呢，其实原理呢，还是比较简单的，然后具体呢，这里用用到一些什么很的方法。它会有不同化发放，我们这就不讲了。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s16">
+  <div class="slides"><figure class="slide" id="slide-56">
+<img src="slides/slide_56.png" alt="课件第56页 Hartree 近似求解过程总结">
+<figcaption><span class="sno">56</span><span class="stitle">Hartree 近似求解过程总结</span></figcaption>
+</figure>
+<figure class="slide" id="slide-57">
+<img src="slides/slide_57.png" alt="课件第57页 Hartree 近似的缺点">
+<figcaption><span class="sno">57</span><span class="stitle">Hartree 近似的缺点</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">16</span>
+      <div class="sec-tt">
+        <h2>Hartree 求解总结与缺点</h2>
+        <div class="sec-meta"><span class="time">录音：第 3 段（末）</span><span class="chip">课件 56</span><span class="chip">课件 57</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>总结 Hartree 近似的求解过程（5 步）：①利用单电子波函数的乘积作为变分波函数——简化问题：真实多体波函数难以求解，假设电子独立运动（乘积形式）是最基础的近似，将复杂的多体问题大幅降维；②计算体系总能量的平均值——建立目标：根据变分原理，最接近真实的物理态是系统能量最低的态，必须先算出总能量表达式，才能去寻找这个最低点；③构造一个总能量附加波函数归一化条件的泛函——守恒约束：电子不能凭空消失，利用拉格朗日乘数法引入归一化条件，强制保证在能量求极小的过程中，单个电子的概率分布总和始终为 1；④对泛函取变分极小得到有效势的单电子方程——寻找最优解：对泛函求导找极小值，推导出最优波函数需满足的条件，即单个电子在其他电子形成的“平均势场”中运动的单体方程；⑤对单电子方程自洽求解——解开循环依赖：势场怎么分布取决于波函数，波函数怎么变化又取决于势场，只能“先猜一个势场算波函数，再用新波函数算新势场”，不断循环迭代直到结果不再改变。后面要讲的 Hartree-Fock 近似、KS 理论求解过程都是类似的。</p><p>Hartree 近似有两大缺点：①在 Hartree 近似中，多电子的本征波函数是单电子本征波函数的乘积，这种近似没有考虑电子是费米子、需要满足泡利不相容原理——泡利不相容原理体现在两个方面：两个电子不能处于相同的电子态；两个电子进行交换，波函数需要变号。②Hartree 近似采用平均场理论，没有考虑电子的关联相互作用。下一节课讲 Hartree-Fock：Fock 的方法会解决泡利不相容（电子交换反对称性），但电子关联问题依然不能完全解决——这就是后面要讲的内容。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我们来总结一下我们咖啡进一个过程。对吧。第一步，首先我们是利用单电阻波函数乘积作为变更波函数。然后，他的他的问他的目标是干什么呢？首先是简化问题，因为真实多体光函数难以求减。那么假设电子独立运动，那么也就是它的一个波放器的一个沉积，单电子波放器的一个沉积形式是最基础的，金似将复杂的多有问题大幅度降为那么第二步，我们有了多函数之后，第二步，我们就计算体系所能量的一个平均值。那么它的一个目标呢，目的呢，其实是建定目标。我们根据这个原理，最接近真实的物理态是系统能量最低的一个派，必须先算出能量的，算出总能量的一个表达式，还能去寻找这样的一个最机点。那么，第三步，我们构造一个总能量附加多函数规一化条件的一个方。它其实是，用到了一个守恒的一个约束，那么电子不能凭空消失。那么，利用阿尔法反乘乘数法呢，引入一个非异化条件，强制保证在能量收集导的过程中，三个电子的概率分布总和使用为一。那么第四步，对半函取变更极导得到有效式的三正方程。那么它其实就是寻找最优解对半函求导找几小时，在数学上推导出最优化函数满足的条件，及单个电子在其他电子层成的平均市场中利用的一个三体范式。第五步，对单电子方程四下求解了，我们是解开循环依赖，那么市场怎么分布，它其实是取决于波函数。那么波函数怎么变化呢？它就取决于市场。那么只能先开一个市场上波函数。先给他一个不函数算市场，那么又有一个市场就能算不函数，然后不断循环迭代，直到结果不断改变。所以这个就是哈水近似的一个求解的一个过程。那么对于后面我们要讲的，他学到的近似或者是一特理论，它过程其实都是类似的，都是这都是这样的一个过程。</p><p>那么他水近似，我们前面讲了，既然近似嘛，它肯定是有问题的，有缺点的。这里呢，哈的金四，它其实主要是有两大缺点。第一大缺点呢，它是电子的多电子本身波函数是单电子本身波函数的沉积，那么这种近似它没有考虑电子的电离子电子需要满足套利第相同感品。这个抛水的能量理，它体现在两个方面，那么，第一呢，就是我们两个电子它不能有一相同的电子。那么，第二个问题是说我们两个电子进行交换，波函数需要变号。这是，这是套利物权的方一。那么第二个问题，就是因为他水定是采用了一个平均场的一个平均场理论。平均场就是它没有考虑电阻原告光。这就是二水句子的一个一个一个缺点，那么我们下一节课会讲2做的句子。二水后的信子呢，它会解决这个化学键4不能满足化相，它电阻不满足化个问题。然后呢，但是呢，电子相用这个问题呢，它一然是能解的。然后这个我们就下节课讲。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s17">
+  <div class="slides"><figure class="slide" id="slide-58">
+<img src="slides/slide_58.png" alt="课件第58页 《密度泛函理论与应用讨论班》介绍">
+<figcaption><span class="sno">58</span><span class="stitle">《密度泛函理论与应用讨论班》介绍</span></figcaption>
+</figure>
+<figure class="slide" id="slide-59">
+<img src="slides/slide_59.png" alt="课件第59页 讨论班如何进行">
+<figcaption><span class="sno">59</span><span class="stitle">讨论班如何进行</span></figcaption>
+</figure>
+<figure class="slide" id="slide-60">
+<img src="slides/slide_60.png" alt="课件第60页 讨论班如何进行（续）">
+<figcaption><span class="sno">60</span><span class="stitle">讨论班如何进行（续）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">17</span>
+      <div class="sec-tt">
+        <h2>讨论班介绍与如何进行</h2>
+        <div class="sec-meta"><span class="time">录音：第 3 段（末）</span><span class="chip">课件 58</span><span class="chip">课件 59</span><span class="chip">课件 60</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>最后介绍《密度泛函理论与应用讨论班》（这门课配套的研讨课）：主要介绍密度泛函的各种理论发展及实际使用，为从事计算材料物理或相关材料实验的学生提供必要的理论基础与动手能力；特别强调已有 DFT 程序的实际运用，要求在给定程序及说明书后，能够结合研究项目进行计算，通过同学自学和阅读文献，使同学们尽早进入研究状态。</p><p>讨论班如何进行：一共 7 次课，每人做一个 30~35 分钟的报告（PPT），并回答同学和老师的提问。可选方案：①利用软件实战，演示方法、过程、结果及结果分析；②自学并讲解 DFT 相关专题（强关联、拓扑电子学、自旋电子学、拓扑磁子学、机器学习势、机器学习哈密顿量、科研智能体等）；③选定与自己的研究可能相关的其它讨论内容。</p><p>老师提醒：中间有两周不上课，从现在到报告还有一段时间；我们按照名单往后排，排在前面的同学早点准备，总共 7 次课。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>就是我们这个一书法理论研讨一论研讨吧，然后呢，这个呢，其实这一页这一个呢，朱老师上课期有有二，我们这主要是介绍一化论的六种理论方法实际运用。然后呢，希望同学们一就是实际运用，然后要求点进程序说明书能够结合一究目标计算，通过同学们自觉的阅读，使同学们尽早进入文一个状态。</p><p>因为同学们。排到前面的就是我们看那个那个那个名单，我们会是按照名单往后排，所以同学们选择这门课的，你们早点准备。然后，如果是如果是后面的那些同学，如果是排在后面的，如果前面的，然后啊，总共是7次课，每个人总做3个小时左右的一个报告，然后方案可以是用PD比一些计。然后的方大。其他我们的一些朋友。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（密度泛函理论与应用）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>

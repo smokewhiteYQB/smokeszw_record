@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>课程笔记主页 · 课件与讲述对照</title>
+<meta name="description" content="四门研究生课程课件与课堂讲述逐节对照笔记：矿物物理学、密度泛函理论与应用、显微共焦拉曼光谱学、生成式模型与科学智能应用。持续更新。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://miaoda.feishu.cn">
+<link href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0a1f38;
+  --ink-2:#14365f;
+  --amber:#d4a017;
+  --amber-lt:#ffd97a;
+  --red:#d64545;
+  --steel:#3d7edb;
+  --paper:#f2f4f8;
+  --card:#ffffff;
+  --line:#e2e7ee;
+  --text:#24303c;
+  --muted:#6b7686;
+  --radius:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:"Noto Sans SC","Microsoft YaHei","PingFang SC",system-ui,sans-serif;
+  background:var(--paper);color:var(--text);line-height:1.75;
+  -webkit-font-smoothing:antialiased;
+}
+a{text-decoration:none;color:inherit;}
+
+/* ===== Hero ===== */
+.hero{
+  background:
+    radial-gradient(1200px 480px at 82% -10%, rgba(61,126,219,.28), transparent 60%),
+    radial-gradient(900px 420px at 8% 110%, rgba(212,160,23,.20), transparent 55%),
+    var(--ink);
+  color:#fff;padding:64px 24px 52px;position:relative;overflow:hidden;
+}
+.hero::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px);
+  background-size:44px 44px;
+}
+.hero-inner{max-width:960px;margin:0 auto;position:relative;z-index:1;}
+.kicker{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:12.5px;letter-spacing:.14em;color:var(--amber-lt);
+  border:1px solid rgba(212,160,23,.45);border-radius:20px;
+  padding:3px 14px;margin-bottom:18px;background:rgba(212,160,23,.10);
+}
+.kicker svg{width:13px;height:13px;}
+.hero h1{
+  font-family:"Noto Serif SC","Songti SC",serif;
+  font-size:clamp(30px,5vw,44px);font-weight:900;letter-spacing:.02em;
+  margin-bottom:12px;
+}
+.hero .sub{
+  font-size:15.5px;color:#c3d2e5;max-width:660px;margin-bottom:28px;
+  font-weight:300;
+}
+.stats{display:flex;flex-wrap:wrap;gap:14px;}
+.stat{
+  display:flex;align-items:baseline;gap:8px;
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);
+  border-radius:var(--radius);padding:10px 16px;
+}
+.stat b{font-size:20px;color:var(--amber-lt);font-weight:700;font-family:"Noto Serif SC",serif;}
+.stat span{font-size:12.5px;color:#c3d2e5;}
+
+/* ===== 课程导航条 ===== */
+.course-nav{
+  max-width:960px;margin:-26px auto 0;position:relative;z-index:2;
+  display:flex;flex-wrap:wrap;gap:8px;padding:0 24px;
+}
+.course-nav a{
+  font-size:13px;color:var(--ink-2);background:#fff;
+  border:1px solid var(--line);border-radius:20px;padding:5px 14px;
+  box-shadow:0 1px 3px rgba(10,31,56,.06);transition:all .16s ease;
+}
+.course-nav a:hover{border-color:var(--amber);color:var(--amber);}
+
+/* ===== 主体 ===== */
+main{max-width:960px;margin:0 auto;padding:36px 24px 20px;}
+.chapter{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:22px 24px 14px;margin-bottom:22px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);
+}
+.chapter-head{display:flex;align-items:baseline;gap:12px;margin-bottom:2px;}
+.chapter-no{
+  flex:none;font-family:"Noto Serif SC",serif;font-weight:700;font-size:15px;
+  color:var(--amber);letter-spacing:.06em;
+}
+.chapter-head h2{font-family:"Noto Serif SC","Songti SC",serif;font-size:21px;font-weight:700;color:var(--ink);}
+.chapter .desc{font-size:13px;color:var(--muted);margin:2px 0 14px;}
+.lessons{border-top:1px solid var(--line);}
+.lesson{
+  display:flex;align-items:center;gap:16px;
+  padding:14px 8px;border-bottom:1px solid #edf0f5;
+  transition:background .18s ease, padding-left .18s ease;
+}
+.lesson:last-child{border-bottom:none;}
+.lesson:hover{background:#f7f9fc;padding-left:16px;}
+.lesson .no{
+  flex:none;width:46px;height:46px;border-radius:9px;
+  background:var(--ink);color:var(--amber-lt);
+  display:flex;align-items:center;justify-content:center;
+  font-size:13.5px;font-weight:700;
+}
+.lesson .info{min-width:0;flex:1;}
+.lesson .info .name{display:block;font-size:16px;font-weight:600;color:var(--ink-2);}
+.lesson .info .meta{display:block;font-size:12.5px;color:var(--muted);margin-top:2px;}
+.lesson .go{
+  flex:none;color:var(--steel);font-size:20px;opacity:.4;
+  transition:opacity .18s ease, transform .18s ease;
+}
+.lesson:hover .go{opacity:1;transform:translateX(3px);}
+
+/* ===== 更新说明 ===== */
+.update{
+  background:#fff8ec;border:1px solid #ecd9a8;border-radius:var(--radius);
+  padding:16px 20px;margin:8px 0 26px;
+}
+.update h3{font-size:14.5px;color:#7a5c0a;font-weight:600;margin-bottom:6px;}
+.update p, .update li{font-size:13px;color:#6d5b22;line-height:1.9;}
+.update ul{padding-left:20px;}
+
+/* ===== Footer ===== */
+footer{
+  max-width:960px;margin:0 auto;padding:26px 24px 48px;
+  color:var(--muted);font-size:12.5px;text-align:center;line-height:2;
+}
+footer .dot{color:var(--amber);margin:0 6px;}
+
+@media (max-width:560px){
+  .hero{padding:44px 18px 38px;}
+  .lesson .no{width:40px;height:40px;font-size:12px;}
+  .lesson .info .name{font-size:15px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+   ★ 新增课程方法（维护说明）★
+   1. 把新课时的文件夹（含 html 与 slides/ 图片）放入对应课程的
+      子目录（mineral-physics / dft / raman / generative-models）。
+   2. 在下方对应课程的 <section class="chapter"> 里复制一段
+      <a class="lesson" href="...">...</a>，改成实际相对路径与课名。
+   3. git add / commit / push 到 GitHub，Vercel 会自动重新部署。
+============================================================ -->
+
+<header class="hero">
+  <div class="hero-inner">
+    <span class="kicker">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 3 7v10l9 5 9-5V7l-9-5Z"/><path d="M3 7l9 5 9-5M12 12v10"/></svg>
+      课件与课堂讲述逐节对照
+    </span>
+    <h1>smokeszw的学习记录</h1>
+    <p class="sub">2026年秋收录四门核心课程。课件与课堂讲述逐节对照整理，随课程进度持续更新。点击任意课时即可进入对应讲义页面。</p>
+    <div class="stats">
+      <div class="stat"><b>4</b><span>门课程</span></div>
+      <div class="stat"><b>17</b><span>个课时</span></div>
+      <div class="stat"><b>2026-09-22</b><span>最近更新</span></div>
+    </div>
+  </div>
+</header>
+
+<nav class="course-nav">
+  <a href="#mineral">矿物物理学</a>
+  <a href="#dft">密度泛函理论与应用</a>
+  <a href="#raman">显微共焦拉曼光谱学</a>
+  <a href="#gen">生成式模型与科学智能应用</a>
+</nav>
+
+<main>
+
+  <!-- ========== 课程一：矿物物理学 ========== -->
+  <section class="chapter" id="mineral">
+    <div class="chapter-head">
+      <span class="chapter-no">课程一</span>
+      <h2>矿物物理学</h2>
+    </div>
+    <p class="desc">课程号 180083070901P2003H · 地球深部结构与矿物 · 高温高压实验 · 计算模拟</p>
+    <div class="lessons">
+      <a class="lesson" href="mineral-physics/mp_lesson1/第1课_第一章绪论_课件与讲述对照.html">
+        <span class="no">第1课</span>
+        <span class="info">
+          <span class="name">绪论</span>
+          <span class="meta">课件与讲述对照 · 全文转录</span>
+        </span>
+        <span class="go">→</span>
+      </a>
+      <a class="lesson" href="mineral-physics/mp_lesson2/第2课_第二章金刚石压腔实验技术_课件与讲述对照.html">
+        <span class="no">第2课</span>
+        <span class="info">
+          <span class="name">金刚石压腔实验技术</span>
+          <span class="meta">课件与讲述对照 · 全文转录</span>
+        </span>
+        <span class="go">→</span>
+      </a>
+      <a class="lesson" href="mineral-physics/mp_lesson3/第3课_第二章大压机和动高压实验技术_课件与讲述对照.html">
+        <span class="no">第3课</span>
+        <span class="info">
+          <span class="name">大压机和动高压实验技术</span>
+          <span class="meta">课件与讲述对照 · 全文转录</span>
+        </span>
+        <span class="go">→</span>
+      </a>
+      <a class="lesson" href="mineral-physics/mp_lesson4/第4课_第二章原位测试表征方法_课件与讲述对照.html">
+        <span class="no">第4课</span>
+        <span class="info">
+          <span class="name">原位测试表征方法</span>
+          <span class="meta">课件与讲述对照 · 全文转录</span>
+        </span>
+        <span class="go">→</span>
+      </a>
+      <a class="lesson" href="mineral-physics/mp_lesson5/第5课_第三章分子动力学模拟原理_课件与讲述对照.html">
+        <span class="no">第5课</span>
+        <span class="info">
+          <span class="name">分子动力学模拟原理</span>
+          <span class="meta">课件与讲述对照 · 全文转录</span>
+        </span>
+        <span class="go">→</span>
+      </a>
+      <a class="lesson" href="mineral-physics/mp_lesson6/第6课_第三章并行计算基础_课件与讲述对照.html">
+        <span class="no">第6课</span>
+        <span class="info">
+          <span class="name">并行计算基础（高性能计算）</span>
+          <span class="meta">课件与讲述对照 · 全文转录</span>
+        </span>
+        <span class="go">→</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ========== 课程二：密度泛函理论与应用 ========== -->
+  <section class="chapter" id="dft">
+    <div class="chapter-head">
+      <span class="chapter-no">课程二</span>
+      <h2>密度泛函理论与应用</h2>
+    </div>
+    <p class="desc">第一性原理计算 · 电子结构 · 授课 杜世萱</p>
+    <div class="lessons">
+      <a class="lesson" href="dft/dft_lesson1/第1课_导论与基础知识_课件与讲述对照.html">
+        <span class="no">第1课</span>
+        <span class="info">
+          <span class="name">导论与基础知识</span>
+          <span class="meta">课件与讲述对照 · 全文转录</span>
+        </span>
+        <span class="go">→</span>
+      </a>
+      <a class="lesson" href="dft/dft_lesson2/第2课_密度泛函理论（二）_课件与讲述对照.html">
+        <span class="no">第2课</span>
+        <span class="info">
+          <span class="name">密度泛函理论（二）</span>
+          <span class="meta">课件与讲述对照 · 全文转录</span>
+        </span>
+        <span class="go">→</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ========== 课程三：显微共焦拉曼光谱学 ========== -->
+  <section class="chapter" id="raman">
+    <div class="chapter-head">
+      <span class="chapter-no">课程三</span>
+      <h2>显微共焦拉曼光谱学</h2>
+    </div>
+    <p class="desc">晶体结构与晶格振动 · 拉曼光谱 · 授课 林妙玲</p>
+    <div class="lessons">
+      <a class="lesson" href="raman/rm_lesson1/第1课_绪论与第一章晶体结构（上）_课件与讲述对照.html">
+        <span class="no">第1课</span>
+        <span class="info">
+          <span class="name">绪论与晶体结构（上）</span>
+          <span class="meta">课件与讲述对照 · 全文转录</span>
+        </span>
+        <span class="go">→</span>
+      </a>
+      <a class="lesson" href="raman/rm_lesson2/第2课_第一章晶体结构（下）与晶格振动（上）_课件与讲述对照.html">
+        <span class="no">第2课</span>
+        <span class="info">
+          <span class="name">晶体结构（下）与晶格振动（上）</span>
+          <span class="meta">课件与讲述对照 · 全文转录</span>
+        </span>
+        <span class="go">→</span>
+      </a>
+      <a class="lesson" href="raman/rm_lesson3/第3课_第一章晶格振动（下）与第二章光散射简介_课件与讲述对照.html">
+        <span class="no">第3课</span>
+        <span class="info">
+          <span class="name">晶格振动（下）与光散射简介</span>
+          <span class="meta">课件与讲述对照 · 全文转录</span>
+        </span>
+        <span class="go">→</span>
+      </a>
+      <a class="lesson" href="raman/rm_lesson4/第4课_第二章拉曼光谱学介绍（中）与第三章拉曼光谱测试_课件与讲述对照.html">
+        <span class="no">第4课</span>
+        <span class="info">
+          <span class="name">拉曼光谱学介绍与光谱测试</span>
+          <span class="meta">课件与讲述对照 · 全文转录</span>
+        </span>
+        <span class="go">→</span>
+      </a>
+      <a class="lesson" href="raman/rm_lesson5/第5课_第三章拉曼散射理论基础（上）_课件与讲述对照.html">
+        <span class="no">第5课</span>
+        <span class="info">
+          <span class="name">拉曼散射理论基础（上）</span>
+          <span class="meta">课件与讲述对照 · 全文转录</span>
+        </span>
+        <span class="go">→</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ========== 课程四：生成式模型与科学智能应用 ========== -->
+  <section class="chapter" id="gen">
+    <div class="chapter-head">
+      <span class="chapter-no">课程四</span>
+      <h2>生成式模型与科学智能应用</h2>
+    </div>
+    <p class="desc">深度生成建模 · AI for Science</p>
+    <div class="lessons">
+      <a class="lesson" href="generative-models/gm_lesson3/第3课_自回归模型简介_课件与讲述对照.html">
+        <span class="no">第3课</span>
+        <span class="info">
+          <span class="name">自回归模型（上）：基础与常见架构</span>
+          <span class="meta">课件与讲述对照 · 全文转录</span>
+        </span>
+        <span class="go">→</span>
+      </a>
+      <a class="lesson" href="generative-models/gm_lesson4/第4课_AR网络架构与AI4S蛋白质序列设计_课件与讲述对照.html">
+        <span class="no">第4课</span>
+        <span class="info">
+          <span class="name">AR 网络架构与 AI4S 蛋白质序列设计</span>
+          <span class="meta">课件与讲述对照 · 全文转录</span>
+        </span>
+        <span class="go">→</span>
+      </a>
+      <a class="lesson" href="generative-models/gm_lesson5/第5课_最大似然学习_课件与讲述对照.html">
+        <span class="no">第5课</span>
+        <span class="info">
+          <span class="name">最大似然学习（Maximum Likelihood）</span>
+          <span class="meta">课件与讲述对照 · 全文转录</span>
+        </span>
+        <span class="go">→</span>
+      </a>
+      <a class="lesson" href="generative-models/gm_lesson6/第6课_隐变量模型I_课件与讲述对照.html">
+        <span class="no">第6课</span>
+        <span class="info">
+          <span class="name">隐变量模型 I（Latent Variable Models）</span>
+          <span class="meta">课件与讲述对照 · 全文转录</span>
+        </span>
+        <span class="go">→</span>
+      </a>
+    </div>
+  </section>
+
+  <div class="update">
+    <h3>站点维护提示</h3>
+    <p>本主页由 GitHub 仓库 + Vercel 自动部署托管。新增课程时，在仓库中放入新的课时文件夹并在对应课程区域添加链接，推送后网站将自动更新。</p>
+  </div>
+
+</main>
+
+<footer>
+  <div>课程笔记 · 课件与讲述对照</div>
+  <div>本主页由 GitHub + Vercel 自动部署，内容随课程持续更新<span class="dot">·</span>© 2026</div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>显微共焦拉曼光谱学（2026 秋） · 绪论与第一章 晶体结构（上）｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>显微共焦拉曼光谱学（2026 秋） · 绪论与第一章 晶体结构（上）</h1>
+    <div class="sub">绪论与第一章 晶体结构（上） ｜ 2026-09-08 ｜ 授课：谭平恒（绪论）、林妙玲（第一章）</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 55 页 · 整理 23 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-s01">01 课程定位与考核方式</option>
+<option value="sec-s02">02 为什么要学：结构决定性质</option>
+<option value="sec-s03">03 晶格振动、声子谱与研究技术</option>
+<option value="sec-s04">04 拉曼光谱的应用领域</option>
+<option value="sec-s05">05 学什么：课程六章</option>
+<option value="sec-s06">06 如何学好（一）：学以致用</option>
+<option value="sec-s07">07 如何学好（二）：学会转变与思考</option>
+<option value="sec-s08">08 如何学好（三）：成功博士生的品质</option>
+<option value="sec-s09">09 学习要求与拉曼谱两大特点</option>
+<option value="sec-s10">10 教学安排与考核</option>
+<option value="sec-s11">11 参考书与结束语</option>
+<option value="sec-s12">12 进入第一章：固体物理基础只讲两节</option>
+<option value="sec-s13">13 晶格定义：晶体、非晶体与准晶体</option>
+<option value="sec-s14">14 从一维到三维：晶格、最密堆积与化合物结构</option>
+<option value="sec-s15">15 原胞和基矢：周期性的数学描述</option>
+<option value="sec-s16">16 简单晶格和复式晶格</option>
+<option value="sec-s17">17 布拉伐格子：从一维到三维</option>
+<option value="sec-s18">18 七大晶系与 14 种布拉伐格子</option>
+<option value="sec-s19">19 二维晶格的晶系与布拉伐格子</option>
+<option value="sec-s21">20 布拉伐格子的选择原则与晶胞</option>
+<option value="sec-s22">21 对称性：为什么要研究</option>
+<option value="sec-s23">22 对称操作的数学描述：正交变换</option>
+<option value="sec-s24">23 晶格对称素与下节课预告</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 Ch0-绪论-2026.pdf；ch1-固体物理基础-2026秋.pdf 逐页渲染，转写原文见 record_20260908.txt。</div>
+<section class="sec" id="sec-s01">
+  <div class="slides"><figure class="slide" id="slide-01">
+<img src="slides/slide_01.png" alt="课件第1页 封面：显微共焦拉曼光谱学（谭平恒，国科大材料学院/中科院半导体研究所）">
+<figcaption><span class="sno">01</span><span class="stitle">封面：显微共焦拉曼光谱学（谭平恒，国科大材料学院/中科院半导体研究所）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-02">
+<img src="slides/slide_02.png" alt="课件第2页 主要内容：为什么要学、学什么、如何学好、教学安排、参考书">
+<figcaption><span class="sno">02</span><span class="stitle">主要内容：为什么要学、学什么、如何学好、教学安排、参考书</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>课程定位与考核方式</h2>
+        <div class="sec-meta"><span class="time">录音 录音：绪论段（开场）</span><span class="chip">课件 1</span><span class="chip">课件 2</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>咱们这门课叫《显微共焦拉曼光谱学》。名字里特意加了“共焦”两个字，就是想强调它是一门与技术相关的课——不仅要懂拉曼光谱的基本知识，更要会操作共焦显微系统、掌握这门技术。历史上很多重要的贡献，恰恰是在研究手段不发达、只有极少数人掌握某种手段的时候做出来的；现在条件好了，但掌握技术仍然是做开创性工作的基础。面试研究生时问“你会什么”，如果只会把样品放在显微镜下点一下鼠标、拷个数据就走，那价值就很有限了。</p><p>这门课选课的人很多，几乎有接近 20 个一级学科的同学来选，跨领域跨门类，所以听不懂是常态，听不懂不要紧，做科研的时候能用上就行。考核方式：出勤 10%（考勤系统记录）、平时作业 30%、开卷考试 60%。开卷考试按学校安排，原则上可以带资料但不能上网。开课至今还没有人不及格，但前提是平时作业要交、考试题目要答——这是规则，按规则行事。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那么呢，我们这门课呢，是大家一听名字共第一一课本第一课上绪论好吧，我们就把这门课的大概情况说一下……这个是我们跟技术相关的，就是我们整个和技学基本然。</p><p>我们这门课开课至今还没有及格的好吧。但是金个不及格是靠你们好吧。</p><p>出勤10%，平时作业30%，最终开卷考试占60%。开卷考试怎么考？学校怎么要求你们怎么考，原则上可以带资料但不能上网。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s02">
+  <div class="slides"><figure class="slide" id="slide-03">
+<img src="slides/slide_03.png" alt="课件第3页 为什么要学：晶体结构与原子间相互作用决定材料物理性质（金刚石与石墨）">
+<figcaption><span class="sno">03</span><span class="stitle">为什么要学：晶体结构与原子间相互作用决定材料物理性质（金刚石与石墨）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>为什么要学：结构决定性质</h2>
+        <div class="sec-meta"><span class="time">录音 录音：绪论段</span><span class="chip">课件 3</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>把材料往深处看：原子里面是电子（电子理论大家学得很多），那原子核是靠什么研究的？靠拉曼。原子与原子之间相互作用，原子会振动，振动又会带动周围的原子振动，传播开来就形成波——这就是晶格振动产生的波。晶体结构和原子间的相互作用，决定了材料的物理性质：钻石和石墨都是碳，但一个很硬、一个很软，价格天差地别，原因就是晶体结构不同，进而力学、光学、电学性质完全不同。</p><p>结构不一样，晶格振动的特性就不一样，所以晶格振动光谱是晶体材料的“指纹”。晶格振动是波，波会传播，对称性不同传播形式也不同，还与原子间相互作用的强度有关。硅和金刚石都是金刚石结构，但原子不同，拉曼/振动谱不同；金刚石和石墨都是碳，但结构不同，谱也不同。一般规律：原子越重振动频率越低，原子越轻振动频率越高。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我们的金合。结构和它原子之间的相互作用。它就决定了材料的性质……钻石很贵，石墨很便宜，钻石很硬，我们石墨柔软。是一个什么原因导致的呢。一下它的经验的一个特点。</p><p>既然它的结构不一样，那么它的晶格振动的特性就不一样。晶格振动，它属们晶体材料的一个指分材料。</p><p>原子越重，它可能相对论一大振动频率很低吧，原子越轻，它的振动频率就越高。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s03">
+  <div class="slides"><figure class="slide" id="slide-04">
+<img src="slides/slide_04.png" alt="课件第4页 晶格振动是晶体材料的“指纹”：硅、金刚石、石墨的特征谱">
+<figcaption><span class="sno">04</span><span class="stitle">晶格振动是晶体材料的“指纹”：硅、金刚石、石墨的特征谱</span></figcaption>
+</figure>
+<figure class="slide" id="slide-05">
+<img src="slides/slide_05.png" alt="课件第5页 研究声子谱的技术：非弹性电子隧道谱、红外吸收谱、拉曼光谱">
+<figcaption><span class="sno">05</span><span class="stitle">研究声子谱的技术：非弹性电子隧道谱、红外吸收谱、拉曼光谱</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>晶格振动、声子谱与研究技术</h2>
+        <div class="sec-meta"><span class="time">录音 录音：绪论段</span><span class="chip">课件 4</span><span class="chip">课件 5</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>晶格振动研究的是什么？是声子谱。研究声子谱的技术有很多种：非弹性电子隧道谱、红外吸收谱、拉曼光谱等。拉曼光谱跟其它技术比有独特的优势：样品用量少、空间分辨率高、信息量大、无损、无接触、无污染；但也有缺点：产生效率低、高速测量困难。这些涉及的技术问题，后面专门有一章来讲。</p><p>通过改变环境——温度、压强、原子位移、对称性改变——材料的振动特性会跟着变，所以拉曼光谱不仅能看“指纹”，还能探测材料的其它物理性质：除了声子，还能研究其它元激发，比如电子元激发、磁振子等。非晶材料和晶体材料差别很大，但它们最近邻原子的排布差不了太多，所以研究非晶材料的振动性质时，方法上可以沿用晶体材料的那一套。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>研究生子子的技术是啥？有很多技术，其中一个是拉曼。拉曼它跟其它材料比起来，它有优势，它样品用量少，空间分辨率高，信息量大，无损，无损伤，无接触，然后四定损是吧。但是还有缺点，它的产生效率低，高速测速困难。</p><p>除了研究声子以外，还1可研究其他元计划。1包括电子的元计划，包括机那个保证机子，包括还有一个那个政治方方面面。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s04">
+  <div class="slides"><figure class="slide" id="slide-06">
+<img src="slides/slide_06.png" alt="课件第6页 拉曼光谱探测材料的其它物理性质及其应用">
+<figcaption><span class="sno">06</span><span class="stitle">拉曼光谱探测材料的其它物理性质及其应用</span></figcaption>
+</figure>
+<figure class="slide" id="slide-07">
+<img src="slides/slide_07.png" alt="课件第7页 拉曼光谱广阔的研究领域">
+<figcaption><span class="sno">07</span><span class="stitle">拉曼光谱广阔的研究领域</span></figcaption>
+</figure>
+<figure class="slide" id="slide-08">
+<img src="slides/slide_08.png" alt="课件第8页 拉曼光谱学在半导体材料研究中的应用">
+<figcaption><span class="sno">08</span><span class="stitle">拉曼光谱学在半导体材料研究中的应用</span></figcaption>
+</figure>
+<figure class="slide" id="slide-09">
+<img src="slides/slide_09.png" alt="课件第9页 超低波数拉曼光谱学：相关研究领域与实例">
+<figcaption><span class="sno">09</span><span class="stitle">超低波数拉曼光谱学：相关研究领域与实例</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>拉曼光谱的应用领域</h2>
+        <div class="sec-meta"><span class="time">录音 录音：绪论段</span><span class="chip">课件 6</span><span class="chip">课件 7</span><span class="chip">课件 8</span><span class="chip">课件 9</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>拉曼光谱的研究领域非常广：高温高压、表面增强、紫外拉曼、低波数拉曼、共振拉曼、电化学拉曼、应力拉曼等等，任何一个领域都值得深入去做。它横跨物理、材料、化学、生物、医药等多个学科，在物理学界还专门设有拉曼光谱的专业委员会。</p><p>在半导体材料研究中，拉曼有大量应用场景。当年碳纳米管出现后，其直径不同会对应不同的特征谱线，这个特性直接推动了拉曼光谱在纳米材料研究中的普及——几乎每个做碳纳米管、做二维材料的课题组都要用拉曼。做材料研究时别人发来的样品、论文里的谱，如果自己没掌握拉曼，就没法判断他做得对不对。</p><p>超低波数拉曼光谱学也有很多应用实例：气体、蛋白质分子的超低波数拉曼模、纳米材料中研究非晶玻璃液态-玻璃态相变的“波色峰”、碳材料、矿物和有机材料等。石墨烯材料拉曼研究是当前热点，谭老师团队写了书，还在不断更新。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>你看这个拉曼光谱，你看它这个它的研究领域，我们研究啥量……高温的，高压的，表面增强的紫外拉曼然，包括低波速一源，包括共振，拉曼电阻。拉曼向应力等方方面面。</p><p>碳纳米管的直直径不一样，它有个特征的呼系统是跟它的直径直接相关的。以是以至于就是因为这个特性，就推动了拉姆光伏在纳米材料中的，以至于基本上每一个做碳纳米管的单一碳纳米管的研究。</p><p>大家真的去做材料研究的时候，多多少少都有一到大高……但如果说你是你去仔细的去分析它，你就发现它可能一甚至一一可能是错的。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s05">
+  <div class="slides"><figure class="slide" id="slide-10">
+<img src="slides/slide_10.png" alt="课件第10页 我们要学些什么：课程六章">
+<figcaption><span class="sno">10</span><span class="stitle">我们要学些什么：课程六章</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>学什么：课程六章</h2>
+        <div class="sec-meta"><span class="time">录音 录音：绪论段</span><span class="chip">课件 10</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>这门课一共六章：第一章固体物理基础、第二章拉曼光谱学介绍、第三章拉曼散射理论基础、第四章拉曼散射测试仪器与技术、第五章材料物性的拉曼光谱研究、第六章石墨烯材料拉曼光谱研究进展。绪论、第四章仪器和第六章石墨烯进展由谭老师讲，其余章节和习题课由林老师讲。</p><p>跨专业来选课的同学放心，最基本的布里渊区那些纯固体物理概念不会拿来考大家，考试形式后面会详细说。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>第一章固体物理基础，第二章拉曼光谱学介绍，第三章拉曼散射理论基础，第四章拉曼散射测试仪器与技术，第五章材料物性的拉曼光谱研究，第六章石墨烯材料拉曼光谱研究进展。</p><p>我们不会考大家最基本的什么不区，一开物的最基本的概念，我们肯定不会考。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s06">
+  <div class="slides"><figure class="slide" id="slide-11">
+<img src="slides/slide_11.png" alt="课件第11页 如何学好：学以致用、学用相长">
+<figcaption><span class="sno">11</span><span class="stitle">如何学好：学以致用、学用相长</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>如何学好（一）：学以致用</h2>
+        <div class="sec-meta"><span class="time">录音 录音：绪论段</span><span class="chip">课件 11</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>学这门课的总原则是“学以致用、学用相长”，具体四条：夯基础——学习晶体材料晶格振动的基本常识；重设备——了解拉曼光谱仪的基本结构以及关键功能；精技术——掌握拉曼光谱应用中常用的各种技术；演实例——通过具体材料来诠释拉曼技术。</p><p>光谱仪内部很复杂：不同波长的信号要先分散开、再聚焦到探测器，任何一个环节出错都测不出谱。测不出来可能是样品的问题，也可能是设备的问题——比如挡板把激光挡了，或者用掌上大功率光谱仪（激光几百毫瓦）把样品烧出个洞，测出来的谱当然一直在变。所以测评要讲规范，不能以为只是放样品、点鼠标、拷数据那么简单。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>学以致用，学用相长！夯基础、重设备、精技术、演实例。</p><p>它固定波长的信号分散开，然后再聚焦到探测器……任何一个过程期间，任何一个地方出错了，都测不出图。</p><p>有些人用掌上阳光，掌上光谱仪激光一下子300mW……我只要找我的地方，那会有一个洞，知道样品被经过烧了。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s07">
+  <div class="slides"><figure class="slide" id="slide-12">
+<img src="slides/slide_12.png" alt="课件第12页 如何学好：学会转变（研究生与本科生的差别）">
+<figcaption><span class="sno">12</span><span class="stitle">如何学好：学会转变（研究生与本科生的差别）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-13">
+<img src="slides/slide_13.png" alt="课件第13页 如何学好：学会思考（成果不一定是正确的，要有判断力）">
+<figcaption><span class="sno">13</span><span class="stitle">如何学好：学会思考（成果不一定是正确的，要有判断力）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div class="sec-tt">
+        <h2>如何学好（二）：学会转变与思考</h2>
+        <div class="sec-meta"><span class="time">录音 录音：绪论段</span><span class="chip">课件 12</span><span class="chip">课件 13</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>首先要意识到研究生和本科生的差别。有些大学生觉得“在规定时间内学完规定内容，学校肯定会给我发证”；研究生的重点是“研究”——研究是突破知识的边界，越往深处越保守、越知道自己不懂什么。</p><p>其次要学会思考。发表的科研成果不一定全对，任何成果都只经过有限的专家甚至非专家评审；本科教材经过千锤百炼、错误较少、知识是闭环的，研究生教材或参考书可能错误就比较多。所以要学会判断：比如有篇文章把波数写成波长、声称测到了 200 nm 以下的“真空紫外”，这种低级错误要能一眼看出来。我们后面讲课也会讲一些发表过的不成功案例，提醒大家要特别小心。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>有些大学生认为，学位证却是“在规定的时间内，学完规定的内容”，因此学校肯定会给我发证的！研究生的重点是“研究”。</p><p>发表的科研成果不一定全对，因为任何科研成果都只经过有限名专家甚至非专家的评审！本科教材经过千锤百炼，错误较少。但研究生教材或参考书可能错误就比较多！</p><p>他把波数负一写成了波长……但那个时的一用没多，那同面我看见一找找出来很难，但是一定是有有遇到过。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s08">
+  <div class="slides"><figure class="slide" id="slide-14">
+<img src="slides/slide_14.png" alt="课件第14页 Nature 论文：如何成为一个成功的博士生">
+<figcaption><span class="sno">14</span><span class="stitle">Nature 论文：如何成为一个成功的博士生</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">08</span>
+      <div class="sec-tt">
+        <h2>如何学好（三）：成功博士生的品质</h2>
+        <div class="sec-meta"><span class="time">录音 录音：绪论段</span><span class="chip">课件 14</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>Nature 上有一篇文章讲“如何成为一个成功的博士生”，列举了几条品质：有明确的目的和动机（不是为找工作或推迟找工作）、有创造力、非常聪慧思维敏捷、非常努力、熟练掌握实验技术。</p><p>很多时候“幸运”来自这些品质：非常努力会给你带来幸运，掌握实验技术会给你带来幸运，思维敏捷也会给你带来幸运。如果认真读书、训练、钻研，博士毕业时应当在自己所在的领域成为一个专家。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>一在一个前有一个明确的目的和动机……另外一个那就有创造力，这个第三个非常聪慧，思思维敏捷。那么工作非常努力，这个是必须的，还有一个你看专门说了这一非常熟练掌握实业技术。</p><p>努力会给你带来幸运，实验技术会给你带来幸运，思维敏捷也会给你带来幸运。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s09">
+  <div class="slides"><figure class="slide" id="slide-15">
+<img src="slides/slide_15.png" alt="课件第15页 如何学好：了解基本知识、从物理上理解、注意前提条件">
+<figcaption><span class="sno">15</span><span class="stitle">如何学好：了解基本知识、从物理上理解、注意前提条件</span></figcaption>
+</figure>
+<figure class="slide" id="slide-16">
+<img src="slides/slide_16.png" alt="课件第16页 拉曼谱两大特点与反例 1：超晶格布里渊区折叠">
+<figcaption><span class="sno">16</span><span class="stitle">拉曼谱两大特点与反例 1：超晶格布里渊区折叠</span></figcaption>
+</figure>
+<figure class="slide" id="slide-17">
+<img src="slides/slide_17.png" alt="课件第17页 反例 2：碳材料拉曼选择定则">
+<figcaption><span class="sno">17</span><span class="stitle">反例 2：碳材料拉曼选择定则</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">09</span>
+      <div class="sec-tt">
+        <h2>学习要求与拉曼谱两大特点</h2>
+        <div class="sec-meta"><span class="time">录音 录音：绪论段</span><span class="chip">课件 15</span><span class="chip">课件 16</span><span class="chip">课件 17</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>学习这门课（甚至其它研究生课程）要做到三点：一是了解拉曼光谱学的基本知识和学术规范，能用专业术语说话——术语不明确，表达就讲不清楚；二是尽量从物理上理解讲授的内容，而不是死记硬背；三是了解不同结论的前提条件，避免做错误的推广或得出错误结论。</p><p>拉曼谱有两大特点：拉曼峰频率不随激发光能量改变而改变；Stokes 与 anti-Stokes 频率相等。但有两个著名的反例。反例 1：超晶格材料——布里渊区折叠加上拉曼选择定则，使得拉曼峰频率随激发光能量改变而改变；反例 2：碳材料——拉曼选择定则使 Stokes 与 anti-Stokes 频率不相等。比如金刚石的一阶拉曼模两者频率相等，但其它一些模式频率能差几十个波数。这些反例后面会解释原因。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>要了解它的基本知识和组织规范，一定得要用专业的术语来说话……尽量从物理上理解所讲授的内容，而不是死记硬背。了解不同结论的前提条件，避免做错误的推广或做出错误的结论。</p><p>拉曼峰频率不随激发光能量改变而改变，Stokes和anti-Stokes频率相等。反例1：超晶格，布里渊区折叠，拉曼选择定则决定了拉曼峰频率随激发光能量改变。反例2：碳材料，拉曼选择定则决定了拉曼光谱违背这两大特点。</p><p>对金刚4的拉曼模，它的生度之间反射线平均的1，但是你看，对其他这几个模式，它的频率相差了几十多数。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s10">
+  <div class="slides"><figure class="slide" id="slide-18">
+<img src="slides/slide_18.png" alt="课件第18页 教学时间安排（课程各章课时与授课教师）">
+<figcaption><span class="sno">18</span><span class="stitle">教学时间安排（课程各章课时与授课教师）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-19">
+<img src="slides/slide_19.png" alt="课件第19页 教学时间安排（图示）">
+<figcaption><span class="sno">19</span><span class="stitle">教学时间安排（图示）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-20">
+<img src="slides/slide_20.png" alt="课件第20页 教学安排：52 课时、周二四晚 10-12 节、教一楼 207/209">
+<figcaption><span class="sno">20</span><span class="stitle">教学安排：52 课时、周二四晚 10-12 节、教一楼 207/209</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">10</span>
+      <div class="sec-tt">
+        <h2>教学安排与考核</h2>
+        <div class="sec-meta"><span class="time">录音 录音：绪论段</span><span class="chip">课件 18</span><span class="chip">课件 19</span><span class="chip">课件 20</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>教学时间安排：绪论课程简介 1 课时（谭平恒），第一章固体物理基础 7 课时（林妙玲），第二章拉曼光谱学介绍 4 课时（林妙玲），第三章拉曼散射理论基础 8 课时（林妙玲），习题课 3 课时（林妙玲），第四章拉曼散射测试仪器与技术 8 课时（谭平恒），后面还有材料物性与石墨烯进展部分。因为一次课是连上三节，习题课就分成了两次、每次三节。9 月 20 号那个周日还要补一次课。</p><p>这门课共 52 课时，时间：每周二晚上 10-12 节（教一楼 207）、每周四晚上 10-12 节（教一楼 209）。课程网站提供教学课件；习题答疑也是周二、周四晚上。考核：出勤 10% + 平时作业 30% + 开卷考试 60%，开卷考试按学校安排，可以带资料但不能上网。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>绪论课程简介(1)谭平恒，第一章固体物理基础(7)林妙玲，第二章拉曼光谱学介绍（4）林妙玲，第三章拉曼散射理论基础（8）林妙玲，习题课（3）林妙玲，第四章拉曼散射测试仪器与技术（8）谭平恒。</p><p>共52课时。时间：每周二、晚上10-12节，地点：教一楼207；每周四、晚上10-12节，地点：教一楼209。课程网站提供教学课件。</p><p>出勤10%，平时作业30%，开卷考试占60%。开卷考试怎么考？学校怎么要求你们怎么考，原则上可以带资料但不能上网。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s11">
+  <div class="slides"><figure class="slide" id="slide-21">
+<img src="slides/slide_21.png" alt="课件第21页 参考书（5 本）">
+<figcaption><span class="sno">21</span><span class="stitle">参考书（5 本）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-22">
+<img src="slides/slide_22.png" alt="课件第22页 结束页：拉曼光谱——晶体材料最基本的无损表征技术之一">
+<figcaption><span class="sno">22</span><span class="stitle">结束页：拉曼光谱——晶体材料最基本的无损表征技术之一</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">11</span>
+      <div class="sec-tt">
+        <h2>参考书与结束语</h2>
+        <div class="sec-meta"><span class="time">录音 录音：绪论段</span><span class="chip">课件 21</span><span class="chip">课件 22</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>参考书共五本：《石墨烯基材料的拉曼光谱研究》（谭平恒、丛鑫著，华东理工大学出版社）、《石墨烯相关体系的拉曼光谱学》（谭平恒、林妙玲、李晓莉译，国防工业出版社）、《晶格振动光谱学》（张光寅等著，高等教育出版社）、《激光光散射谱学》（张明生著，科学出版社）以及《拉曼光谱学与……》。这些资料在课程网站上大多可以下载，前两本中文书学校陈列有少量，需要的话可以联系；后面几本在网上基本都能找到。</p><p>绪论的最后落脚在一句话：拉曼光谱——晶体材料最基本的无损表征技术之一。讲课过程中谭老师还特别提了一句黄先生（黄昆）的话：学习知识不是越多越好、越深越好，而是应当对自己驾驭知识的能力有要求。每个人会有天花板，但物理的天花板不表示技术的天花板——这门课不仅讲物理，还得讲技术。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>《石墨烯基材料的拉曼光谱研究》谭平恒丛鑫著，《石墨烯相关体系的拉曼光谱学》谭平恒林妙玲李晓莉译，《晶格振动光谱学》张光寅等著，《激光光散射谱学》张明生著，《拉曼光谱学与……》。</p><p>这句话是谁说的？黄先生说的……学习知识不是越多越好，越深越好，而是应当对自己驾驭知识的能力上现。</p><p>拉曼光谱：晶体材料最基本的无损表征技术之一！</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s12">
+  <div class="slides"><figure class="slide" id="slide-23">
+<img src="slides/slide_23.png" alt="课件第23页 第 1 节 晶体结构（节标题页）">
+<figcaption><span class="sno">23</span><span class="stitle">第 1 节 晶体结构（节标题页）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">12</span>
+      <div class="sec-tt">
+        <h2>进入第一章：固体物理基础只讲两节</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第一章·第 1 段（休息后）</span><span class="chip">课件 23</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>先交代一下：这里说的“固体物理基础”并不包含固体物理的全部内容。参考书是黄昆先生的《固体物理》，但我们只涉及第一章晶体结构和第三章晶格振动这两部分；第二章原子结合、电子那一套不讲。当然，电子的能量结构对分析拉曼光谱或声子的特性也有作用，后面需要的时候可以再去查。</p><p>第一章里重点就是这七部分：晶格定义、原胞和基矢、简单晶格和复式晶格、布拉伐（Bravais）格子、对称性简介、晶格的宏观对称性、倒格子和布里渊区。整个逻辑线是：先学会如何描述一个晶体（从实空间再到倒空间），再讲在这些原子排布下晶格振动有什么特性，然后才进入拉曼光谱——结构决定性质，这是贯穿始终的主线。后面讲振动时会用最简单的例子：一维单原子链、双原子链，再过渡到二维、三维。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我们参考书籍应该是黄坤先生的那个固体物理，但是我们这里其实只涉及到了第一章和第三章的内容……第二章就是它的原子之间怎么结合，这个我们不讲，然后就是电子的那一套，我们也不讲。</p><p>我们是先从晶体到晶和振动然后再到拉拉光谱，是这样的一个逻辑线……结构决定性质。</p><p>我们会以最简单的例子就是一一维的单元组链，双元组链，然后再过渡到二维三维的情况。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s13">
+  <div class="slides"><figure class="slide" id="slide-24">
+<img src="slides/slide_24.png" alt="课件第24页 1) 晶格定义：固体分类——晶体、非晶体、准晶体">
+<figcaption><span class="sno">24</span><span class="stitle">1) 晶格定义：固体分类——晶体、非晶体、准晶体</span></figcaption>
+</figure>
+<figure class="slide" id="slide-25">
+<img src="slides/slide_25.png" alt="课件第25页 1) 晶格定义：晶体与晶格（周期重复、X 射线衍射/电镜、金刚石）">
+<figcaption><span class="sno">25</span><span class="stitle">1) 晶格定义：晶体与晶格（周期重复、X 射线衍射/电镜、金刚石）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">13</span>
+      <div class="sec-tt">
+        <h2>晶格定义：晶体、非晶体与准晶体</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第一章·第 1 段</span><span class="chip">课件 24</span><span class="chip">课件 25</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>固体材料由大量原子组成（数量级 10²³ cm⁻³），固体结构就是原子排列的方式，固体分为晶体、非晶体和准晶体三类。晶体：原子排列在长程上具有周期性（平移有序），蓝宝石晶体、硅单晶都是典型代表；非晶体：原子排列在宏观（长程）上是杂乱无序的，比如玻璃；准晶体：原子排列具有长程的规律性（取向序），但不能简单平移重复，比如钛镁锌准晶体。</p><p>晶体是有明确衍射图案的固体，其原子或分子在空间按一定规律周期重复地排列，通常具有规则的几何外形。晶格就是原子排列的具体形式——点阵 = 重复单元 + 周期性，特点就是周期性（平移对称性）和长程有序。怎么观察原子怎么排？研究方法有 X 射线衍射、透射电镜等。为什么先讲晶体？因为晶格振动、声子、拉曼光谱这些概念都建立在周期性结构之上——先描述清楚原子排布（晶格），才能讨论振动。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>固体材料由大量原子(N_A~10²³ cm⁻³)组成，固体结构：原子排列的方式称为固体结构。固体分类：晶体、非晶体和准晶体。</p><p>非晶体：原子排列在宏观上（长程）是杂乱无序的。准晶体：原子排列具有长程的规律性（取向序），但不能简单平移重复。</p><p>晶体：有明确衍射图案的固体，其原子或分子在空间按一定规律周期重复地排列。晶格：原子排列的具体形式称为晶格(点阵=重复单元+周期性)。晶体的晶格特点：周期性(平移对称性)、长程有序。研究方法：X射线衍射、透射电镜等。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s14">
+  <div class="slides"><figure class="slide" id="slide-26">
+<img src="slides/slide_26.png" alt="课件第26页 1) 晶格定义：一维/二维/三维晶格与石墨烯堆垛">
+<figcaption><span class="sno">26</span><span class="stitle">1) 晶格定义：一维/二维/三维晶格与石墨烯堆垛</span></figcaption>
+</figure>
+<figure class="slide" id="slide-27">
+<img src="slides/slide_27.png" alt="课件第27页 1) 晶格定义：原子最密堆积（fcc、六角密排）">
+<figcaption><span class="sno">27</span><span class="stitle">1) 晶格定义：原子最密堆积（fcc、六角密排）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-28">
+<img src="slides/slide_28.png" alt="课件第28页 1) 晶格定义：典型化合物晶体结构（闪锌矿/NaCl/CsCl/纤锌矿）">
+<figcaption><span class="sno">28</span><span class="stitle">1) 晶格定义：典型化合物晶体结构（闪锌矿/NaCl/CsCl/纤锌矿）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">14</span>
+      <div class="sec-tt">
+        <h2>从一维到三维：晶格、最密堆积与化合物结构</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第一章·第 1 段</span><span class="chip">课件 26</span><span class="chip">课件 27</span><span class="chip">课件 28</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>从最简单的情形开始。一维：原子排成一条链，周期性一目了然（一维晶格？）；二维：最小单元一般为平行四边形，比如正六边形的形状本身就包含了六边形的一些对称性特征；三维：最小单元为平行六面体，常见的为立方体。石墨烯这类层状材料还有不同的层间堆垛方式：AB stacking、ABC stacking、AA stacking。</p><p>三维最密堆积：第二层原子要排在下面三个小球球心连线的中心正上方，三个球加上上面一个球形成正四面体，四面体的边长、高度与小球直径之间有确定的关系。最密堆积只有在所有原子直径都相同（只有一类原子）时才能实现——两种原子直径不同，就很难让所有小球都相切，自然界里真正的最密堆积其实比较难找到。单原子晶体的最密堆积有两种：面心立方（ABC 堆积，如 Al、Cu、Ag、Au）和六角密排（ABAB 堆积，如 Be、Mg、Zn、Cd）。</p><p>两种以上原子构成的典型化合物晶体结构：面心立方嵌套的闪锌矿与 NaCl 岩盐结构、简单立方嵌套的 CsCl 结构、六角密排嵌套的纤锌矿结构。小结：晶格 = 最小单元 + 周期性。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>晶格：原子周期性地填充整个空间（原子球规则排列）。二维晶格：最小单元一般为平行四边形。三维晶格：最小单元为平行六面体，常见的为立方体。</p><p>对于三维的这样的一个情况，哪怕三维的情况下的平面内的这样的一个原子的排布，其实跟二维是一样的。只是说这个时候我们再沿第三个方向在Z轴方向上的一个排布。</p><p>正的四面体是可以把它的边长跟这样一个小球的直径，以及它的高度跟小球的直径是可以有相应的这个对话的关系。</p><p>典型的化合物晶体结构（两种以上原子）：面心立方嵌套：闪锌矿与NaCl岩盐结构；简单立方嵌套：CsCl结构；六角密排嵌套：纤锌矿结构。小结：晶格=最小单元+周期性。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s15">
+  <div class="slides"><figure class="slide" id="slide-29">
+<img src="slides/slide_29.png" alt="课件第29页 第 1 节 晶体结构：主要内容（七个知识点提纲）">
+<figcaption><span class="sno">29</span><span class="stitle">第 1 节 晶体结构：主要内容（七个知识点提纲）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-30">
+<img src="slides/slide_30.png" alt="课件第30页 2) 原胞和基矢：周期性、原胞选取、石墨烯">
+<figcaption><span class="sno">30</span><span class="stitle">2) 原胞和基矢：周期性、原胞选取、石墨烯</span></figcaption>
+</figure>
+<figure class="slide" id="slide-31">
+<img src="slides/slide_31.png" alt="课件第31页 2) 原胞和基矢：二维/三维晶格（图示）">
+<figcaption><span class="sno">31</span><span class="stitle">2) 原胞和基矢：二维/三维晶格（图示）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-32">
+<img src="slides/slide_32.png" alt="课件第32页 第 1 节 晶体结构：主要内容（提纲，标示“原胞和基矢”）">
+<figcaption><span class="sno">32</span><span class="stitle">第 1 节 晶体结构：主要内容（提纲，标示“原胞和基矢”）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">15</span>
+      <div class="sec-tt">
+        <h2>原胞和基矢：周期性的数学描述</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第一章·第 1 段</span><span class="chip">课件 29</span><span class="chip">课件 30</span><span class="chip">课件 31</span><span class="chip">课件 32</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>周期性是所有晶格的共同特点。晶格周期性的数学描述就是原胞和基矢：原胞是一个晶格最小的周期性单元，基矢是原胞的边矢量（二维两个 ā₁、ā₂，三维三个 ā₁、ā₂、ā₃）。</p><p>二维简单晶格中，1、2、3 都是合法的原胞选择，4 不是最小单元——判断方法很简单：数原胞里包含的原子个数。简单晶格只有一类原子时，原胞里应只含一个原子：4 个顶点各占 1/4 共一个原子，所以 1、2、3 都满足；而 4 的两条边上还各占半个原子，共含两个原子，不是最小单元。原胞的选取并不唯一，只要面积等于一个格点的面积就行。石墨烯是嵌套结构：画出来的平行四边形含两个不等价的碳原子，所以它不是简单晶格的最小单元——有多类不等价原子时，要结合结构式判断。</p><p>三维晶格的原胞选取方式是平行六面体，原胞体积公式 Ω = (ā₁ × ā₂)·ā₃。以三维简单晶格为例：简单立方取坐标轴作基矢（ā₁=aî、ā₂=aĵ、ā₃=ak̂），原胞体积 a³，含 1 个原子；面心立方取 ā₁=a(î+ĵ)/2、ā₂=a(ĵ+k̂)/2、ā₃=a(k̂+î)/2，原胞体积 a³/4，含 1 个原子；体心立方取 ā₁=a(î+ĵ−k̂)/2、ā₂=a(ĵ+k̂−î)/2、ā₃=a(k̂+î−ĵ)/2，原胞体积 a³/2，含 1 个原子。三个基矢要满足右手螺旋定则。一维的情况最简单：原胞就是一个矢量，长度等于相邻原子间距——这就是后面讲振动时一维单原子链、双原子链的例子。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>周期性是所有晶格的共同特点，晶格周期性的数学描述：原胞和基矢。原胞：一个晶格最小的周期性单元；基矢：原胞的边矢量。</p><p>如果对于简单金子来说，就是它只有一类原子……那么这个时候它的原告里面应该只包含一个原子。4个顶点包含了4个原子，每个是1/4，所以加起来是一个。4它上下两条边还有两个原子，各占一半，所以这个原胞里含有两个原子。</p><p>石墨烯画出来的A1A2做出来的平行四边形……它有多少个原子？两个对吧？这两个原子是不等价。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s16">
+  <div class="slides"><figure class="slide" id="slide-33">
+<img src="slides/slide_33.png" alt="课件第33页 3) 简单和复式晶格：Fe、CsCl、NaCl">
+<figcaption><span class="sno">33</span><span class="stitle">3) 简单和复式晶格：Fe、CsCl、NaCl</span></figcaption>
+</figure>
+<figure class="slide" id="slide-34">
+<img src="slides/slide_34.png" alt="课件第34页 3) 简单和复式晶格：单元素晶体也可能是复式晶格（金刚石/NaCl）">
+<figcaption><span class="sno">34</span><span class="stitle">3) 简单和复式晶格：单元素晶体也可能是复式晶格（金刚石/NaCl）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-35">
+<img src="slides/slide_35.png" alt="课件第35页 3) 简单和复式晶格：CsCl 与金刚石的嵌套结构">
+<figcaption><span class="sno">35</span><span class="stitle">3) 简单和复式晶格：CsCl 与金刚石的嵌套结构</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">16</span>
+      <div class="sec-tt">
+        <h2>简单晶格和复式晶格</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第一章·第 1 段</span><span class="chip">课件 33</span><span class="chip">课件 34</span><span class="chip">课件 35</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>晶格按原胞中原子个数分类：简单晶格——每个原胞只有一个原子，晶格中所有原子完全等价；复式晶格——原胞中存在两种或更多种不等价原子/离子（不一定非得是不同原子，金刚石就是同种碳原子但有两套不等价位）。复式晶格的例子：NaCl、CsCl、六角密排、金刚石、闪锌矿。图上三个例子：Fe 是简单晶格；CsCl 晶格（类体心的复式简单立方），Cl⁻ 在顶点、Cs⁺ 在体心；NaCl 晶格，Cl⁻ 和 Na⁺ 各自构成一套面心立方相互嵌套。</p><p>注意：单元素晶体也可能是复式晶格——因为占据的晶格位置在几何上可能是不等价的（如金刚石的近邻四面体具有不同的空间取向）。复式晶格有三个特点：每一种等价原子形成一个简单晶格；不同等价原子（可能同种原子也可能不同原子）形成的简单晶格是相同的；各等价原子组成的简单晶格相互嵌套而成。</p><p>CsCl 晶格可看成由 Cs⁺ 的简单立方晶格和 Cl⁻ 的简单立方晶格嵌套而成；金刚石晶格中，顶点和对角线原子各形成面心立方晶格，相对位移是体对角线的 1/4。小结：复式晶格 = 各不等价原子组成的基元 + 相应的简单晶格（嵌套的结果）。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>简单晶格：每一个原胞只有一个原子，晶格中所有原子是完全等价的。复式晶格：晶格(原胞)中存在两种或更多种不等价原子/离子，不一定是不同原子。e.g. NaCl、CsCl、六角密排、金刚石、闪锌矿。</p><p>注: 单元素晶体也可能是复式晶格: 占据的晶格位置在几何上可能是不等价的。复式晶格的特点：每一种等价原子形成一个简单晶格；不同等价原子形成的简单晶格是相同的；各等价原子组成的简单晶格相互嵌套而成。</p><p>CsCl晶格：可看成由Cs⁺的简单立方晶格和Cl⁻的简单立方晶格嵌套而成。金刚石晶格：顶点和对角线原子各形成面心立方晶格，可看成两个面心立方晶格嵌套而成，相对位移是体对角线的1/4。复式晶格=各不等价原子组成的基元+相应的简单晶格（嵌套的结果）。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s17">
+  <div class="slides"><figure class="slide" id="slide-36">
+<img src="slides/slide_36.png" alt="课件第36页 第 1 节 晶体结构：主要内容（提纲，标示“布拉伐格子”）">
+<figcaption><span class="sno">36</span><span class="stitle">第 1 节 晶体结构：主要内容（提纲，标示“布拉伐格子”）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-37">
+<img src="slides/slide_37.png" alt="课件第37页 4) 布拉伐格子：格点与布拉菲格子（晶格=基元+布拉伐格子）">
+<figcaption><span class="sno">37</span><span class="stitle">4) 布拉伐格子：格点与布拉菲格子（晶格=基元+布拉伐格子）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-38">
+<img src="slides/slide_38.png" alt="课件第38页 4) 布拉伐格子：一维格子（简单/复式晶格）">
+<figcaption><span class="sno">38</span><span class="stitle">4) 布拉伐格子：一维格子（简单/复式晶格）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-39">
+<img src="slides/slide_39.png" alt="课件第39页 4) 布拉伐格子：二维格子与石墨烯">
+<figcaption><span class="sno">39</span><span class="stitle">4) 布拉伐格子：二维格子与石墨烯</span></figcaption>
+</figure>
+<figure class="slide" id="slide-40">
+<img src="slides/slide_40.png" alt="课件第40页 4) 布拉伐格子：三维格子与 CsCl（复式简单立方）">
+<figcaption><span class="sno">40</span><span class="stitle">4) 布拉伐格子：三维格子与 CsCl（复式简单立方）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-41">
+<img src="slides/slide_41.png" alt="课件第41页 4) 布拉伐格子：原子位置坐标与小结（14 种）">
+<figcaption><span class="sno">41</span><span class="stitle">4) 布拉伐格子：原子位置坐标与小结（14 种）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">17</span>
+      <div class="sec-tt">
+        <h2>布拉伐格子：从一维到三维</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第一章·第 1 段</span><span class="chip">课件 36</span><span class="chip">课件 37</span><span class="chip">课件 38</span><span class="chip">课件 39</span><span class="chip">课件 40</span><span class="chip">课件 41</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>把结构抽象出来就是布拉伐格子。晶格周期性体现在空间格子上：用位于基元平衡位置的几何点替代每一个基元，就得到与晶体几何特征相同、但无任何物理实质的几何图形，这些几何点被称为格点，格点在空间周期性排列的总体连成的网格称布拉菲格子。晶格 = 基元 + 布拉伐格子：把基元以相同的方式放置在每个格点上，就得到实际的晶体结构；若基元由两个或两个以上的原子构成，晶体结构可看成由两个或两个以上相同的布拉菲格子套构而成。</p><p>一维格子：用 l₁ā₁ 表示空间点阵，l₁ 为整数；简单晶格只有一个格点 l₁ā₁，复式晶格（基元含 2 个格点）的格点 i 为 l₁ā₁ + r⃗ᵢ。二维格子：用 l₁ā₁ + l₂ā₂ 表示，一组 (l₁, l₂) 表示一个格点；石墨烯的基元含 2 个格点。三维格子：用 l₁ā₁ + l₂ā₂ + l₃ā₃ 表示，复式晶格格点 i 为 l₁ā₁ + l₂ā₂ + l₃ā₃ + r⃗ᵢ（r⃗ᵢ 是原胞内原子 i 的相对位移），金刚石结构 r⃗₁=0、r⃗₂=(ā₁+ā₂+ā₃)/4。CsCl 是类体心的复式简单立方，抽象出来其布拉伐格子就是简单立方。</p><p>小结：晶格 = 布拉伐格子 + 基元——把一组原子安置在布拉伐格点上就构成了晶格，基元由原胞中的不等价原子组成；三维空间共有十四种布拉伐格子：晶体对称性决定点阵共有七种（晶系），再加上简单格子、底心格子、体心格子和面心格子，三方晶系的菱形原胞用 R 表示。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>用位于基元平衡位置的几何点替代每一个基元，结果得到一个与晶体几何特征相同、但无任何物理实质的几何图形。处于基元平衡位置的几何点被称为格点。格点在空间周期性排列的总体连成的网格称布拉菲格子。</p><p>一维格子：用l₁ā₁表示空间点阵，l₁为整数。二维格子：用l₁ā₁+l₂ā₂表示空间点阵。三维格子：用l₁ā₁+l₂ā₂+l₃ā₃表示空间点阵。复式晶格格点i: l₁ā₁+l₂ā₂+l₃ā₃+r⃗ᵢ。</p><p>小结：晶格 = 布拉伐格子 + 基元。三维空间：共有十四种布拉伐格子。晶体对称性决定点阵共有七种，加上简单格子、底心格子、体心格子和面心格子，三方晶系的菱形原胞用R表示。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s18">
+  <div class="slides"><figure class="slide" id="slide-42">
+<img src="slides/slide_42.png" alt="课件第42页 4) 布拉伐格子：七大晶系与 14 种布拉伐格子总表">
+<figcaption><span class="sno">42</span><span class="stitle">4) 布拉伐格子：七大晶系与 14 种布拉伐格子总表</span></figcaption>
+</figure>
+<figure class="slide" id="slide-43">
+<img src="slides/slide_43.png" alt="课件第43页 4) 布拉伐格子：七大晶系分类表（一）">
+<figcaption><span class="sno">43</span><span class="stitle">4) 布拉伐格子：七大晶系分类表（一）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-44">
+<img src="slides/slide_44.png" alt="课件第44页 4) 布拉伐格子：七大晶系分类表（二）">
+<figcaption><span class="sno">44</span><span class="stitle">4) 布拉伐格子：七大晶系分类表（二）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">18</span>
+      <div class="sec-tt">
+        <h2>七大晶系与 14 种布拉伐格子</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第一章·第 1 段</span><span class="chip">课件 42</span><span class="chip">课件 43</span><span class="chip">课件 44</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>布拉伐格子按晶体的对称性分类：七个晶系——立方、四方、正交、六角、三角（三方）、单斜、三斜。每个晶系内部再按体心、面心、底心等中心类型细分：立方有简单(P)、体心(I)、面心(F)，四方有简单、体心，正交有 P/I/F/C，单斜有 P/C，三斜只有简单……7 个晶系（7 Crystal Classes）共对应 14 种布拉伐格子（14 Bravais Lattices）。</p><p>课上的表格列出了每个晶系的单胞基矢特性和所属点群：三斜（C₁、Cᵢ）、单斜（C₂、Cₛ、C₂ₕ）、正交（D₂、C₂ᵥ、D₂ₕ）、三角（C₃、C₃ᵢ、D₃、C₃ᵥ、D₃𝒹）等。这些点群记号后面会逐个总结：比如 C₂ 表示有二重旋转对称性（旋转 180° 复原），i 是反演中心，C₂ₕ 还含一个镜面——镜面在哪里决定了是 h 还是 v，这是约定俗成的表示方法。</p><p>单元素晶格通常对称性更高：比如立方晶系最高的对称性是 Oₕ 点群，简单立方和金刚石都属于 Oₕ（金刚石两套原子不等价，但对称变换下宏观看不出来）；而闪锌矿（ZnS）这类化合物结构对称性较低，属于 T𝒹 附近。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>根据我的对称性，我总共是有14种布拉伐格子……首先是它的分类是以晶体的对称性来进行分类，立方、四方、正交、六角、三角、单斜、三斜，七大晶系。</p><p>7 Crystal Classes → 14 Bravais Lattices。立方有简单立方、体心立方、面心立方；四方有简单四方、体心四方；正交有体心的、面心的、底心的……</p><p>最高的对对称性就是这个Oh点群，简单立方就属于这个Oh点群，还有这个金刚石其实它也属于Oh。加深的话，它就没有这么高的叶群对称性，应该是Td，正四面体类似于这种。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s19">
+  <div class="slides"><figure class="slide" id="slide-45">
+<img src="slides/slide_45.png" alt="课件第45页 4) 布拉伐格子：二维晶格的晶系和布拉伐格子">
+<figcaption><span class="sno">45</span><span class="stitle">4) 布拉伐格子：二维晶格的晶系和布拉伐格子</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">19</span>
+      <div class="sec-tt">
+        <h2>二维晶格的晶系与布拉伐格子</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第一章·第 1 段</span><span class="chip">课件 45</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>二维晶格按对称性分 4 个晶系、共 5 种布拉伐格子：斜方（a≠b，γ≠90°，简单斜方）、长方（a≠b，γ=90°，简单长方和中心长方）、正方（a=b，γ=90°，简单正方）、六角（a=b，γ=120°，简单六方）。</p><p>为什么有中心长方却没有中心正方？因为四个中心正方形拼在一起，中心的点连起来又变回简单正方——它真正的原胞是简单正方，所以二维布拉伐格子只有中心长方这一种带中心的类型。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>对于二维的金格的话，那么它同样的就是二维平面内，我同样的根据它的精细来进行区分。我有4大晶体，但是我总共有5类的，布拉法格子。</p><p>如果是一个正方形的话，一个中心，但是我们一要把一个把4个正方形把它放在一起……它的中心连起来，其实是一个就是变成了一又一，其实变成了一个简单的正方。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s21">
+  <div class="slides"><figure class="slide" id="slide-46">
+<img src="slides/slide_46.png" alt="课件第46页 4) 布拉伐格子：补充说明——1850 年三原则与晶胞定义">
+<figcaption><span class="sno">46</span><span class="stitle">4) 布拉伐格子：补充说明——1850 年三原则与晶胞定义</span></figcaption>
+</figure>
+<figure class="slide" id="slide-47">
+<img src="slides/slide_47.png" alt="课件第47页 4) 布拉伐格子：晶体学单胞（晶胞）与原胞">
+<figcaption><span class="sno">47</span><span class="stitle">4) 布拉伐格子：晶体学单胞（晶胞）与原胞</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">20</span>
+      <div class="sec-tt">
+        <h2>布拉伐格子的选择原则与晶胞</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第一章·第 1 段</span><span class="chip">课件 46</span><span class="chip">课件 47</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>1850 年布拉伐提出选择平行六面体的三条基本原则：第一，所选的平行六面体必须充分反映格子的点群和平移群，即必须与整个格子的晶系特征一致——这意味着要最大程度地保证对称性，所以体心、面心立方选的是有直角对称性的晶胞而不是原胞；第二，各棱之间夹角为直角的数目最多，不为直角者尽可能地接近直角（直角的对称性比非直角高）；第三，满足前两条之后，才考虑体积最小。</p><p>所以布拉伐格子（晶胞/单胞）和原胞并不等价：晶胞一般大于或等于原胞。简单立方三者（原胞、晶胞、布拉伐格子）等价；而面心、体心立方的原胞与晶胞不同。七个晶系共可用十四种不同的格子表示，即布拉伐格子；像这样考虑对称性后的最小重复单元称之为晶胞（Unit Cell）——Kittel 认为 “unit” 一词是多余的，直接用 Cell 表述即可。在晶胞的基础上便于表述晶体的方向，常用晶向指数与晶面指数表征。晶体学里更常用晶胞讨论：X 射线衍射分析出来的很多性质都是在晶胞里讨论的。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>1850年布拉伐格子提出选择平行六面体作为布拉伐格子的三条基本原则：充分反映格子的点区和平移区；各个棱之间的直角数目最多；在满足一二条件之后，才考虑体积最小。</p><p>布拉法盒子跟圆包其实是不等价的……单包一般就是等价或大于等于原包。</p><p>七个晶系共可用十四种不同的格子(Lattice)表示，称之布拉伐格子。考虑对称性后的最小重复单元称之为晶胞（Unit Cell）。在晶胞的基础上便于表述晶体的方向，常用晶向指数与晶面指数表征。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s22">
+  <div class="slides"><figure class="slide" id="slide-48">
+<img src="slides/slide_48.png" alt="课件第48页 第 1 节 晶体结构：主要内容（提纲，标示“对称性简介”）">
+<figcaption><span class="sno">48</span><span class="stitle">第 1 节 晶体结构：主要内容（提纲，标示“对称性简介”）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-49">
+<img src="slides/slide_49.png" alt="课件第49页 5) 对称性分析：对称性定义与实例（故宫、圆、三角形）">
+<figcaption><span class="sno">49</span><span class="stitle">5) 对称性分析：对称性定义与实例（故宫、圆、三角形）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-50">
+<img src="slides/slide_50.png" alt="课件第50页 5) 对称性分析：对称操作、对称元素、点/非点对称操作">
+<figcaption><span class="sno">50</span><span class="stitle">5) 对称性分析：对称操作、对称元素、点/非点对称操作</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">21</span>
+      <div class="sec-tt">
+        <h2>对称性：为什么要研究</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第一章·第 2 段（休息后）</span><span class="chip">课件 48</span><span class="chip">课件 49</span><span class="chip">课件 50</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>晶格的描述方法有两套：周期性和对称性。前面讲的原胞、布拉伐格子是描述周期性的东西，现在开始讲晶格里面的对称性。晶体的宏观对称性是内部原子周期排列的结果。为什么研究对称性？有了对称性，只需要研究材料的一部分，其余部分可以由对称操作直接推出，从而大大简化研究范围。</p><p>对称性的定义：物体经过某种不改变两点间距离的操作后，保持不变或者能复原的性质。直觉上的对称性：故宫沿中轴对称，对应 180° 旋转或镜面操作；矩形有 180° 旋转对称性；圆绕任意过圆心的轴转任意角度都不变，对称性最高；三角形旋转 120° 复原。</p><p>对称操作越多，对称性越高；对称操作过程中保持不变的几何要素称为对称元素（点、线、面）——反演中心、三重旋转轴、反映面都是对称元素。对称操作分两类：点对称操作——操作过程中至少有一点保持不动（旋转、反演、反映）；非点对称操作——平移操作。旋转、反演及其组合在这些操作下实现坐标变换，可以用数学表示，后面马上讲。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>晶格的描述方法：周期性和对称性。晶体的宏观对称性是内部原子周期排列的结果。对称性:物体经过某种不改变两点间距离的操作后，保持不变或者能复原的性质。</p><p>故宫沿着中轴对称，类似于我们这样的一个180°旋转微分性，其实也是镜面的这样一个对称性。圆任意转动的角度都可以保持原来不变，它的对称性就是最高的。</p><p>对称操作越多，对称性越高。对称操作过程中保持不变的几何要素称为对称元素（点、线、面）。点对称操作:在对称操作过程中至少有一点保持不动的操作；非点对称操作: 平移操作。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s23">
+  <div class="slides"><figure class="slide" id="slide-51">
+<img src="slides/slide_51.png" alt="课件第51页 5) 对称性分析：正交变换及其数学描述">
+<figcaption><span class="sno">51</span><span class="stitle">5) 对称性分析：正交变换及其数学描述</span></figcaption>
+</figure>
+<figure class="slide" id="slide-52">
+<img src="slides/slide_52.png" alt="课件第52页 5) 对称性分析：绕 Z 轴转动矩阵推导">
+<figcaption><span class="sno">52</span><span class="stitle">5) 对称性分析：绕 Z 轴转动矩阵推导</span></figcaption>
+</figure>
+<figure class="slide" id="slide-53">
+<img src="slides/slide_53.png" alt="课件第53页 5) 对称性分析：各点对称操作矩阵与正方形例子">
+<figcaption><span class="sno">53</span><span class="stitle">5) 对称性分析：各点对称操作矩阵与正方形例子</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">22</span>
+      <div class="sec-tt">
+        <h2>对称操作的数学描述：正交变换</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第一章·第 2 段</span><span class="chip">课件 51</span><span class="chip">课件 52</span><span class="chip">课件 53</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>点对称操作（旋转、反演、镜面）可以用正交变换来数学描述：变换前后矢量的模长和夹角保持不变，是线性变换的一种；欧几里得空间中正交变换只可能是旋转、反射及其组合（点对称操作）。数学上用一个正交矩阵 A 表示，满足 AAᵀ = E；变换前后的坐标关系是 [x′ y′ z′]ᵀ = A·[x y z]ᵀ。</p><p>课上推导了绕 Z 轴转动角度 θ 的矩阵：旋转前后两点间距离不变，利用投影关系 x₁ = x/cosα·cos(θ+α) = xcosθ − ysinθ、y₁ = x/cosα·sin(θ+α) = xsinθ + ycosθ、z₁ = z（其中 tanα = y/x），就得到旋转矩阵 A = [[cosθ, −sinθ, 0],[sinθ, cosθ, 0],[0, 0, 1]]。思考题：绕任意轴转动角度 θ 对应的矩阵是什么？</p><p>其它点对称操作的矩阵表示：反演 I 是 diag(−1,−1,−1)，XY 平面反映 m/σ 是 diag(1,1,−1)，恒等操作 1/E 是单位矩阵。以正方形 ABCD 为例：恒等（不动）、镜面反映、90° 旋转、180° 旋转、反演都让顶点位置变化，但正方形本身保持不变——它们都是正方形的对称操作。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>变换前后矢量的模长和夹角保持不变，通常用正交变换表示……正交矩阵：AA^T=E。</p><p>x₁ = x/cosα·cos(θ + α) = xcosθ − ysinθ；y₁ = x/cosα·sin(θ + α) = xsinθ + ycosθ；z₁ = z。绕z轴转动角度θ对应矩阵为A=[[cosθ,−sinθ,0],[sinθ,cosθ,0],[0,0,1]]。</p><p>反演(Inversion): I，A=diag(-1,-1,-1)；反映(Reflection, XY平面): m或σ，A=diag(1,1,-1)；恒等操作: 1或E。各对称性操作的作用效果，以正方形为例：E(不动)、M(镜面)、90°旋转、180°旋转、i(反演)。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s24">
+  <div class="slides"><figure class="slide" id="slide-54">
+<img src="slides/slide_54.png" alt="课件第54页 第 1 节 晶体结构：主要内容（提纲，标示“晶格的宏观对称性”）">
+<figcaption><span class="sno">54</span><span class="stitle">第 1 节 晶体结构：主要内容（提纲，标示“晶格的宏观对称性”）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-55">
+<img src="slides/slide_55.png" alt="课件第55页 6) 晶格的宏观对称性：晶格对称素及其表示">
+<figcaption><span class="sno">55</span><span class="stitle">6) 晶格的宏观对称性：晶格对称素及其表示</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">23</span>
+      <div class="sec-tt">
+        <h2>晶格对称素与下节课预告</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第一章·第 2 段</span><span class="chip">课件 54</span><span class="chip">课件 55</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>把对称性概念迁移到晶格里。晶体里的对称操作和对称素：对称素是指那些不动的对象——反演中心、旋转轴、镜面；对称操作是绕着旋转轴转多少度这样的动态过程。晶格里的对称素有：n 重旋转轴（绕轴转 2π/n 及其倍数不变，记作 n），晶体中由于周期性的限制，n 只可能是 1、2、3、4、6 这几种；n 重旋转-反演轴（绕轴转 2π/n 再作中心反演的联合操作，记作 n̄），二重旋转-反演实际等价于存在一个对称面，即镜面 m。</p><p>对称素是理解晶格宏观对称性的基础。今天先讲到这里，下节课再讲立方体的对称元素。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>一个物体的旋转轴和旋转-反演轴统称为对称素。若绕某一个旋转轴转2π/n及其倍数不变，该轴称为物体的n重旋转轴，记作n。</p><p>绕某一转轴转2π/n加上中心反演的联合操作不变，称为n重旋转-反演轴，记作n̄。二重旋转-反演实际表明存在一个对称面，这个对称素一般称为镜面，记为m。</p><p>它只有只有几种不同的类型吧。1然后2346，只有这一个不同的这个类型，使得它能够满足它是它的一个对称操作。……我们今天就先讲到这里吧，下面我们再下节课再讲这个立方体它的对称的元素。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（显微共焦拉曼光谱学）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>

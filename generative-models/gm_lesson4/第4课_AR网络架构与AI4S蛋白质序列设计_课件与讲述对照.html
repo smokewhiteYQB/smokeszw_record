@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>生成式模型与科学智能应用 · 第4节 自回归模型的网络架构与 AI4S 蛋白质序列设计｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>生成式模型与科学智能应用 · 第4节 自回归模型的网络架构与 AI4S 蛋白质序列设计</h1>
+    <div class="sub">第4节 自回归模型的网络架构与 AI4S 蛋白质序列设计 ｜ 2026-09-17 ｜ 刘云帆</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 73 页 · 整理 23 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-open">01 课程事务与本节安排</option>
+<option value="sec-framework">02 框架回顾：统一架构与共享权重</option>
+<option value="sec-serial-parallel">03 常见架构：串行与并行之分</option>
+<option value="sec-rnn">04 RNN：公式、动机与问题</option>
+<option value="sec-charrnn">05 CharRNN：维基百科字符模型</option>
+<option value="sec-pixelrnn">06 PixelRNN：用 RNN 建模图像</option>
+<option value="sec-cnn">07 CNN 实现与 WaveNet</option>
+<option value="sec-pixelcnn">08 PixelCNN：盲区与图像结果</option>
+<option value="sec-nll">09 NLL 定量比较与审稿人视角</option>
+<option value="sec-attention">10 Attention：Transformer 与 GPT</option>
+<option value="sec-imagegpt">11 imageGPT：把图像当语言建模</option>
+<option value="sec-parallel">12 并行性：训练时还是推理时？</option>
+<option value="sec-inference">13 自回归推理与反传</option>
+<option value="sec-teacher">14 Teacher Forcing 的缺点：Exposure Bias</option>
+<option value="sec-running">15 运行示例：推理 vs 训练</option>
+<option value="sec-ai4s-open">16 AI4S 开篇：蛋白质为什么是主战场</option>
+<option value="sec-protein-basics">17 蛋白质科普：结构与几何</option>
+<option value="sec-traditional">18 传统方法 vs 现代方法</option>
+<option value="sec-challenge">19 设计挑战与四种表示</option>
+<option value="sec-tasks">20 表征学习与各类设计任务</option>
+<option value="sec-progen">21 ProGen：条件自回归蛋白质语言模型</option>
+<option value="sec-progen-eval">22 ProGen 评估：多样、可表达、有功能</option>
+<option value="sec-proteinmpnn">23 ProteinMPNN：order-agnostic 解码</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 Lecture3_Autoregressive_Models_update260917.pdf + AI4S_AR_Protein_Sequence_Design.pdf 逐页渲染，转写原文见 record_20260917.txt。</div>
+<section class="sec" id="sec-open">
+  <div class="slides"><figure class="slide" id="slide-01">
+<img src="slides/slide_01.png" alt="课件第1页 封面：Lecture 3 Autoregressive Models（update 版）">
+<figcaption><span class="sno">01</span><span class="stitle">封面：Lecture 3 Autoregressive Models（update 版）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>课程事务与本节安排</h2>
+        <div class="sec-meta"><span class="time">00:00:00 – 00:04:00</span><span class="chip">课件 1</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>先说课程事务。咱们第一次作业助教已经帮我检查过了，已经做好了，检查过后可以直接上传。如果有些同学提到可以用开头的平台、用信用额度去加速运算，是可以用的；用助教开好的也可以用，稍微慢一点。</p><p>有一些同学会有请假或者其他事务，会加我微信好友。但我微信好友加得太多，可能就忽略、过期了。如果是一些事务性的沟通、时效性的事，可以直接在群里头发消息，或者通过企业微信给我发微信，不用加好友；急的话也可以联系助教，加他们的好友——张璐和云他们就在群里。</p><p>今天这个安排是这样的：前半节课把上节课 AR 模型剩下的一部分讲完。因为我们这个课程是「生成式模型与科学智能应用」，不能只讲生成模型那部分，科学智能应用这一类也得稍微讲一讲。所以我的安排是：讲完一部分模型，就把它相应的典型应用作为专题科普稍微讲一下。今天可能会稍微轻松一点。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>然后，咱们第一次作业已经助教已经给我看了一经做好了。然后检查过后可以直接上传。如果有一些同学提有可以三信用开头平台，自然人去去加速一运算是可以用的。</p><p>如果你一些这种事务性的沟通，或者一些时效性的一些事，其实你也可以直接在我们的群里头发发信息。你通过企业微信给我发发给我，通过企业微信给我直接发微信，不用可加我好友。</p><p>对，然后咱们今天这个安排是这样的，前半节课会把上节课的这个AR模型剩下的一部分给大家讲完，然后下一节课我们这么安排就是咱们AR模型讲完了以后再讲一个。因为咱们的课程是这个生成式人工智能生成式模型和科学智能应用的，咱们不能只讲其他部分科学智能应用这一类稍微讲一讲。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-framework">
+  <div class="slides"><figure class="slide" id="slide-02">
+<img src="slides/slide_02.png" alt="课件第2页 Framework Comparison：MADE 细节">
+<figcaption><span class="sno">02</span><span class="stitle">Framework Comparison：MADE 细节</span></figcaption>
+</figure>
+<figure class="slide" id="slide-03">
+<img src="slides/slide_03.png" alt="课件第3页 Framework Comparison：多网络 vs 单网络">
+<figcaption><span class="sno">03</span><span class="stitle">Framework Comparison：多网络 vs 单网络</span></figcaption>
+</figure>
+<figure class="slide" id="slide-04">
+<img src="slides/slide_04.png" alt="课件第4页 Framework Comparison：联合分布公式">
+<figcaption><span class="sno">04</span><span class="stitle">Framework Comparison：联合分布公式</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>框架回顾：统一架构与共享权重</h2>
+        <div class="sec-meta"><span class="time">00:04:00 – 00:06:00</span><span class="chip">课件 2</span><span class="chip">课件 3</span><span class="chip">课件 4</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>上节课咱们讲了 AR 模型基本的定义和性质，还引入了三个基本的 AR 模型。最后我们通过讨论得到这一页：通过一些 weight mask 的操作，可以避免用多个模型去建模不同的条件分布，而是用一个统一的架构、共享的结构或共享的权重去实现 AR 的性质。</p><p>我们把中间这个结构稍微遮起来看——意思就是说，我们对中间具体怎么实现没有一个硬性要求。从生成模型建模的角度来看，只要上面那一行满足就可以了：输出 x_i 只依赖 x_{<i}。中间这部分具体怎么实现，就是我们接下来要讨论的几种比较典型的实现方法。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>上节课咱们讲了这个AR模型，它基本的一个它的定义，它的一些性质，而且引入了3个是3个基本的一个AR模型，就是PS三个模后。最后我们通过讨论之后，得到到了这么一得到了这可大在大概这么一页是吧，我们说通过一些wait MAS和的一些操作，可以避免用多个模型去建模它不同的这个条件分布。</p><p>然后说意思就是我们对中间怎么具体怎么实现有一个具体的要求。从生态模型建模角度来看，只要上面一行满足就可以了。那中间这部分具体怎么去实现呢，我们就接下来讨论几个几种比较典型的实现方法。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-serial-parallel">
+  <div class="slides"><figure class="slide" id="slide-05">
+<img src="slides/slide_05.png" alt="课件第5页 Summary: Common Architectures（单网络共享实现）">
+<figcaption><span class="sno">05</span><span class="stitle">Summary: Common Architectures（单网络共享实现）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-06">
+<img src="slides/slide_06.png" alt="课件第6页 Common Architectures：RNN / CNN / Attention 总览">
+<figcaption><span class="sno">06</span><span class="stitle">Common Architectures：RNN / CNN / Attention 总览</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>常见架构：串行与并行之分</h2>
+        <div class="sec-meta"><span class="time">00:06:00 – 00:09:00</span><span class="chip">课件 5</span><span class="chip">课件 6</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>其实上节课我们已经讲过这一页了：基于 RNN 的实现、基于 CNN 的实现、基于 attention 的实现。当时我们把它画成左右两部分，为什么来着？马上有同学反问了——因为那是并行跟串行的区别，对吧？</p><p>RNN 只能是串行结构：它在每一层里面，只能依赖于前一个时间点的同层隐藏层输入，所以你没法一次前传就计算出所有时间点的节点。而 CNN 和 attention 实现 AR 模型，虽然也依赖之前时间步的一些特征，但它只依赖前一层的特征，所以一次前传就可以直接计算出所有不同时间点的输出。</p><p>那 RNN 跟右边这两个的区别是串行和并行，那 CNN 跟 attention 这种实现之间又有什么区别？从计算图上来讲，没有什么太大的区别——隐藏层都依赖前一层、前一时间点。区别主要在一个连接的度数：比如一个第二层的节点，在 CNN 里可以跟前面一层所有时间点相连，因为它的感受野是有限的、局部的；而 attention 一个节点可以感受前面所有的输入。这是一个比较高层面的浅显讨论，接下来我们逐个结构展开。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>其实我们上节课也讲这一页了对吧？想有基因的一种实现，基于CN和attention的一实现，然后我们说把它划成两部分左右两部分是因为什么来着？马上反问了这个问题。因为那是并行跟串行的区间，对吧？</p><p>因为RN，它只能是串行结构，因为它在每一个里边的每一个一层界面，它只能支受。它一不是只能接受，它依赖于前一个时间点的这个同层的一个隐藏层的一个收入。所以说，你不能一次串一次，前串一计算所有的一能节点。</p><p>它其实区别主要在一个连接的度。比如说对于这样一个第二层最后一个节点，它一可三里面，一是可以跟前面所有这种，前一层的这个时一所有一实相C一时间一条线相连。我们管它叫感受也是吧，它的感受也是有限的。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-rnn">
+  <div class="slides"><figure class="slide" id="slide-07">
+<img src="slides/slide_07.png" alt="课件第7页 Common Architectures: RNN（折叠与展开）">
+<figcaption><span class="sno">07</span><span class="stitle">Common Architectures: RNN（折叠与展开）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-08">
+<img src="slides/slide_08.png" alt="课件第8页 Formulation of RNN：动机与更新公式">
+<figcaption><span class="sno">08</span><span class="stitle">Formulation of RNN：动机与更新公式</span></figcaption>
+</figure>
+<figure class="slide" id="slide-09">
+<img src="slides/slide_09.png" alt="课件第9页 Issues with RNNs：历史总结与串行限制">
+<figcaption><span class="sno">09</span><span class="stitle">Issues with RNNs：历史总结与串行限制</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>RNN：公式、动机与问题</h2>
+        <div class="sec-meta"><span class="time">00:09:00 – 00:14:00</span><span class="chip">课件 7</span><span class="chip">课件 8</span><span class="chip">课件 9</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>比如循环神经网络 RNN，大家可能在其他课学过。它主要有三类权重：从输入到隐藏层的权重、从隐藏层到输出层的权重，最关键的是从隐藏层到自己更新的权重——随着输入不断进来，它自己会自我更新。</p><p>如果自己更新不太好画，我们可以把它沿着时间轴展开，把每个输入画成不同的节点。那它的隐藏层就有同层自动更新的机制，所以必须串起来计算。除了沿时间轴展开，我们还可以继续加深 RNN——在数据的维度上不断加深，形成一个多层、深度的网络结构。</p><p>稍微介绍一下它为什么会提出这样的网络、动机是什么。之前介绍的那些比较基础的模型，随着输入序列长度变长，你很难适应它不断变长的「历史」：比如预测第 7 个输出，就要处理前面 6 个输入，网络的输入维度不断变长。RNN 的想法就是：维护一个固定大小的隐藏状态（hidden state），不断总结历史，把它当做一个历史的总结，然后沿着时间轴不断迭代更新。</p><p>它的更新公式就是：t+1 时刻的隐藏层有两个输入——前一个隐藏层（乘一个权重）加上当前的输入（乘一个权重），得到当前的历史总结；基于当前的历史总结再乘输出权重，得到对应时间的输出。这就是 RNN 最基本的特性。</p><p>那这样的设置当然也有自己的问题。它的一个显著优点是可以不断重复 RNN 的操作、不断迭代，生成任意长的序列——只要你有输入，不断更新隐藏节点、不断输出就行。缺点是：随着输入不断变长，用一个单独的中间变量去总结不断延伸的历史，总会有遗忘——前面有些信息可能就丢了。</p><p>但这个缺点其实还是其次，因为我们可以设计更复杂的结构、加深网络、把每步的权重做得不一样。RNN 计算图一个无法避免的问题就是：它的计算图永远是序列化的——训练和 inference 都是序列化的计算，很难并行化。另外，沿着历史更新无限变长的话，迭代太多，计算梯度时可能会出现梯度爆炸或梯度消失，就跟深度学习里网络变深以后反向传播爆掉是一个意思。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>比如说种模大，上过有具学过一课，可有大家介绍一下，像2ner network对吧，它是一个循环的神经网络。它主要有三类的这个权重，一个是从输入到输入到隐藏层的这个一个一个权重，然后从隐藏层到输出层的一个权重。最关键的是，它有一个从隐藏层到自己更新的一个权重。</p><p>那随着它不断变长的话，那你相应处理的这个网络的维度一经变长，那人他提出了一种想法，就是我可以维护一个固定大小的一个隐藏的叫hidden c管，叫hidden c隐藏的一个状态，然后去不断的去总结历史，把它当做一个历史的总结。</p><p>它的一个最显著的优点就是，我可以不断的去不断的去重复这个R的这个操作，不断迭代，不断迭代，使得我可以生成任意一长的一个序列。那缺点呢，可以想象就是随着我输入的不断变长，那我用一个single pd AR中间的用一个单独的中间一个变量，它每个变量都是一样的。</p><p>但是呢，这个RN它这样的计算图，一个无法避免的一个你永远就是无法去，无法去不让一个问题就是它它的计算图永远是序列化，是吧，是永远是一个SE分。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-charrnn">
+  <div class="slides"><figure class="slide" id="slide-10">
+<img src="slides/slide_10.png" alt="课件第10页 CharRNN（Andrey Karpathy）：维基百科字符模型">
+<figcaption><span class="sno">10</span><span class="stitle">CharRNN（Andrey Karpathy）：维基百科字符模型</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>CharRNN：维基百科字符模型</h2>
+        <div class="sec-meta"><span class="time">00:14:00 – 00:15:30</span><span class="chip">课件 10</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>对每一种结构，我们大概看几个例子。对于 RNN 来说，最初步、最基本的一个就是 CharRNN（Karpathy 很早就提出来的）。它是基于字符的：每个字符不断去训练，在维基百科上训练，然后在这个模型上采样，得到一个采样的结果。</p><p>如果不看它具体的内容，其实这个结果还是不错的。比如说它有一些格式——markdown 这种类似格式、括号包、网址的格式都还挺像样的。虽然和很自然的文本相比还是有差距，但作为早期的字符模型已经挺有意思。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>比如说，对于RN来说，它可能最最初步或者最基本的就是一个叫character或者叉。它是我们这个cart，它这个很早就提出来的一种1。它是一种基于，因为它是叉2嘛，可以想象它是基于这个不同，每个字符不断去训练的一个有个维基百科上去训练，然后去把它审在在这个模型上进行采样，得到一个采样的结果。</p><p>可能大家训练过一些语言模型，可能输出的你可难，很自然的文本相比，但是我们说它生成的还不错，不错，但是比如说它有一些新彩，它的这个格式吧，比如说这种mark大这种类似于这种格式，或者它的括号包。或者它的网址的这种格式都还不错。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-pixelrnn">
+  <div class="slides"><figure class="slide" id="slide-11">
+<img src="slides/slide_11.png" alt="课件第11页 PixelRNN：动机（光栅扫描逐像素建模）">
+<figcaption><span class="sno">11</span><span class="stitle">PixelRNN：动机（光栅扫描逐像素建模）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-12">
+<img src="slides/slide_12.png" alt="课件第12页 PixelRNN：图像补全 occluded / completions / original">
+<figcaption><span class="sno">12</span><span class="stitle">PixelRNN：图像补全 occluded / completions / original</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>PixelRNN：用 RNN 建模图像</h2>
+        <div class="sec-meta"><span class="time">00:15:30 – 00:20:00</span><span class="chip">课件 11</span><span class="chip">课件 12</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>RNN 虽然是一维序列模型，建模文本比较合适，但其实一个很著名的工作也用 RNN 做图像像素的建模，就是 PixelRNN——微软的 van den Oord 他们在 ICML 2016 发表的文章，当年的 best paper 之一。</p><p>它的动机非常简单：就想用 RNN 去建模图像的像素，采用逐行扫描的方式——建模当前像素和它之前扫描过的像素，把之前扫过的像素当作条件。它有一些特殊的设计：因为建模的是 RGB 彩色图像，所以预测当前像素的时候，得对 R、G、B 三个通道分别解码。它采用这种分解：先预测 R 通道的值，把 R 作为条件去采样 G 通道，G 采完再采 B 通道。</p><p>可以想象，这样的分解也引入了上节课说的那种归纳偏置：你为什么不先采绿色、不先采蓝色？可能不同数据集、不同任务，通道采样顺序的效果不太一样——自然图像可能先预测绿色或蓝色好一点，人脸图像先采红色通道会不会更好？这个具体还得看实验效果。对于 AR 模型来说，不同变量之间的依赖信息本身就是建模的一部分。</p><p>它还有一个比较小的设计：两层 mask。比如要预测 B 通道的值，给定 context（之前回归出来的 R 通道值），R 和 G 通道已经确定了，那按理说预测 B 只能看到前面的同通道——这是第一层 mask；它基于第一层再设第二层 mask，让当前这个值能看到当前的（R 的预测），通过第二层再修正一下。</p><p>其实我推荐大家去看一下它的原文：它不是单纯用 RNN 建模，而是用双向 LSTM；而且为了提升建模效率，它不是横向一条一条扫的，而是通过对角线去建模的，加快信息在图像轨迹上的传播。它这个对角线建模还比较复杂，是通过平移实现的。有兴趣可以去看看原文的设计。</p><p>这是 RNN 在图像建模上的一个应用例子——文章的首图，做的是图像补全：把图像下半部分 mask 掉，只给上半部分输入，然后不断预测下面。可以看到，它的补全效果其实还是可以的：首先它展示了多样性——生成的图像分布跟真实图像分布是接近的，而不纠结于每个样本是否完美呈现。如果硬要说，其实离给定部分越近的地方越好、越往外越差。如果你被老师抓住问这个问题，可能就要展示一些定量的结果去统计这个事儿了。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这是pexel RNA这前psel RNA结果，它是微软的投包人在SML2016发表的文章，这是当年的best paper AR best之一嘛。而他的这个想法，其实他的动机也是非常简单的。他其实就是想要这个RN来黑黑去去建模这个图像做的这种像素。</p><p>你得对这个RG到B键分别是解码吧。你看，它也采用了这种分解式，就是先它预测R通道的这个采样二通道值，然把二通道值作为条件去采样G通道，G通道采完了，采B通道。那么它这个通道不同颜色的采样，它也是你模型设计一部分。</p><p>他其实也不是这样横横向这么这么一一个一一条一条扫的，它其实就是如果大家看过原文，它是通过对角线这样去建模的。是加快图像在这个轨迹上的一个传播的速度。</p><p>比如说，我们把这个图像给ma掉，下半部分只给他上半部分的一个输入。这个这就是一个非常适合AR建模的一个一个问题，我把上面一给定的输入看后，你不断的预测下面可以。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-cnn">
+  <div class="slides"><figure class="slide" id="slide-13">
+<img src="slides/slide_13.png" alt="课件第13页 Common Architectures: CNN">
+<figcaption><span class="sno">13</span><span class="stitle">Common Architectures: CNN</span></figcaption>
+</figure>
+<figure class="slide" id="slide-14">
+<img src="slides/slide_14.png" alt="课件第14页 CNN-based AR: WaveNet（因果空洞卷积）">
+<figcaption><span class="sno">14</span><span class="stitle">CNN-based AR: WaveNet（因果空洞卷积）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div class="sec-tt">
+        <h2>CNN 实现与 WaveNet</h2>
+        <div class="sec-meta"><span class="time">00:20:00 – 00:24:00</span><span class="chip">课件 13</span><span class="chip">课件 14</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>接下来是 AR 模型的 CNN 实现。CNN 虽然基础的是用于图像，但我们既然一直在讲序列建模，就先从序列看起：比如四个输入节点，我们采取一维卷积（比如 kernel 大小 3）。这样的模型相对于之前的 AR 模型有什么问题？</p><p>首先它不满足 AR 的性质——每个输出节点能看到后面（沿着时间轴能看到后面的节点）；其次输出的个数和输入对不上——每个输入节点要预测它下一个可能的值。所以我们要给它加一个排列（padding），并且为了满足 AR 性质，让卷积核只能接收前一个时间节点的输入、不能碰后面节点的输入——这个可以通过 mask 或者别的方式实现。</p><p>这种模型最有代表性的就是微软那帮人在 2016 年提出的 WaveNet——一个声音合成网络。声音是我们最常见的 1D 信号。它的动态结构图就是满足「causal」的：causal 1D conv，中文叫空洞卷积？不对，causal 是因果卷积，空洞卷积是 dilated。它的隐藏层用 dilation=1、2、4、8 这样逐层扩大的空洞卷积。</p><p>空洞卷积直观上的好处就是扩大感受野：每个节点能接收的范围变大了；或者说在相同感受野的情况下减少参数、在相同参数的情况下扩大感受野。那中间空洞掉的东西丢了怎么办？因为音频是模拟信号转过来的，有局部的连续性，稍微跳过一点损失也不太大；图像也有局部连续性，用空洞卷积可以把感受野扩大两倍。</p><p>如果只看它静态的计算图，其实它就像我们上节课说的 masked autoencoder：输入输出维度相等，中间有些边被故意去掉，但整体是一个自编码器结构。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那比如说这四个输入，我采取一个331111。那这样的一个模型，相对于我们之前的AR模型还有什么什么问题？首先，它既然是AR模型，它肯定不满足这个AR的性质是吧，因为你每一个你每一个输出节点，你能看到后边。</p><p>那这种模型，它其实最可能是最具有代表性的一个就是，还是这个人，还是这个这个微软的这个人，他们在2016年提出来一个VC，一个一个声音合同的一个网络。因为声音可能是我们最最常见的一种一味信号。</p><p>那所谓空中选题什么意思？就是比如说中一这两个节点出他空了中间一个，这二是所谓的公众剪辑。但这种公共学习，它它有什么好处呢？我们说直观来讲有什么好处？扩大感受一是吧。</p><p>而且他其实我觉得，就是我这边可能他还是性质。比如说，他可能是比如说在这种音频音为，因为音频它可能是比如说是模拟信号转过来，它可能一些什么局部的这种连续性，那我可能是稍微跳过一点儿，可能也损失不太大这种意象。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-pixelcnn">
+  <div class="slides"><figure class="slide" id="slide-15">
+<img src="slides/slide_15.png" alt="课件第15页 CNN-based AR: PixelCNN（右上角盲区问题）">
+<figcaption><span class="sno">15</span><span class="stitle">CNN-based AR: PixelCNN（右上角盲区问题）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-16">
+<img src="slides/slide_16.png" alt="课件第16页 CNN-based AR: PixelCNN（ImageNet 结果）">
+<figcaption><span class="sno">16</span><span class="stitle">CNN-based AR: PixelCNN（ImageNet 结果）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">08</span>
+      <div class="sec-tt">
+        <h2>PixelCNN：盲区与图像结果</h2>
+        <div class="sec-meta"><span class="time">00:24:00 – 00:27:00</span><span class="chip">课件 15</span><span class="chip">课件 16</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>除了音频建模，CNN 既然叫 CNN，我们肯定想让它做图像建模。另一个比较有代表性的工作就是用 CNN（或者说一种分布神经网络）做图像：对一个当前预测的节点，它只能看到左边和上面的像素，看不到右边和下面——这是用 mask 实现的机制。这个我们作业一就会让大家去尝试实践，先预告一下。</p><p>这样的设计好像挺完美：用一层卷积，把不应该看到的节点 mask 掉，卷积操作就可以得到它的分布。有什么问题？大家想想——实现 CNN 的时候，想要输入输出维度一样大，你得做 padding。但其实它的问题可能不是那么直观：作者在文章里发现，当你采用这样的卷积，因为不是一层的 CNN，随着层不断堆叠，右上角这个点会形成一个盲区——到下一层，它就可能落到了感受野之外。</p><p>然后他们 17 年还是 18 年提出了一种改进方法，有兴趣可以稍微看一下，这里就提一下。</p><p>说了这么多结构，看一下结果：左边是 32×32，右边是 64×64 的 ImageNet。可以看出这个网络很努力地在建模一些比较粗的图像特征——颜色分布、细节纹理。但其实仔细看，你还是很难看出里面到底是什么东西。虽然它是当年比较有名的工作，效果比当时的 GAN 好得多，但后来大家用 GAN 去生成图像，用 AR 模型建模图像的研究就很少了。</p><p>顺带澄清一点：我展示的虽然是 PixelCNN 的结果，但底下引用的其实还是 PixelRNN 那篇文章——他们是在同一篇文章里提出 PixelRNN，把 PixelCNN 作为 baseline 跟 RNN 模型做定量比较。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这是一个比另外一个比较有代表性的用C1。或者一色一个分布神经网络应该看到的信对吧，比如说对一个当前预测的节点来说，他只能采用这种由向向右的描，只能看到前边左边点。你就看不到右边和下面节点，这就是我们我ma同实现的一个机制。然后我们一次作业就就会让大家去尝试实践。</p><p>就是右上角这个这个这个点。它随着你这样的一个蝌蚪不断的去堆叠的话，它会形成一个盲区。一右上角这个点，可能一到了这一层，那下一层你可能就会落到，落到这种地比较大一个问题。</p><p>可以看出来，其实这个网络它它很努力的在建模一些比捉的图像的一些特征，对吧，比如说它颜色的一些分布，或者一些细节的纹理。但是其实如果看的话，你还是很难去去看到它里边到底是到底是发了什么东西。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-nll">
+  <div class="slides"><figure class="slide" id="slide-17">
+<img src="slides/slide_17.png" alt="课件第17页 CNN-based AR: PixelCNN（NLL 定量比较）">
+<figcaption><span class="sno">17</span><span class="stitle">CNN-based AR: PixelCNN（NLL 定量比较）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">09</span>
+      <div class="sec-tt">
+        <h2>NLL 定量比较与审稿人视角</h2>
+        <div class="sec-meta"><span class="time">00:27:00 – 00:30:00</span><span class="chip">课件 17</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>稍微看一下它的定量结果：用 NLL test——在测试数据上的 NLL 值。NLL 是 negative log-likelihood，负对数似然。我们大概讲过：模型对给定图像计算似然，表示这个图像是真实的概率。在测试集上（测试数据是真实数据），似然越大越好，所以负对数似然越小越好。</p><p>可以看到右边这个定量结果：它提出的 Diagonal BiLSTM 确实是最小的、最优的。虽然我们没讲具体含义，但可以看到 PixelRNN 和 PixelCNN 的结构差不多，都优于之前的结果——之前的结果就包括了 NADE、MADE 这些上节课讲过的 AR 模型代表性方法。</p><p>那我想问大家一个问题：如果你是一个审稿人，一篇文章叫 PixelRNN，只展示了一个定性结果（图像补全图）加一个定量表，那其实还有一个比较大的硬伤——当时大家可能还没那么关心算力问题，但既然要比效率，CNN 的实现肯定是一次前传就能算出来的。如果你的文章缺少了这个效率比较，那是一个很大的问题。事实上这篇 ICML 2016 的文章，我其实没有怎么见过它做这种架构上的效率对比。大家可以讨论一下。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>然后我们可以看看它这个稍微看一下它的结果，它的这个结果是用这个NL l test,在test的数据上上1MLL这个这个值。净值我们都没讲过是吧？我给大家注释了，它是这个negative复对数自然的这样一个值。</p><p>可以看到它确实是这个右边一个重量结果，也是表示了它提出来这个结果是是是最小的，应该所以说是最优的。但是我们可以看到，虽然说我们没有讲它的具体的含义，但是，可以看到这个比索R跟PS索CN他俩的结构其实是差不多的，都优于之前的一些结果。</p><p>那这时候我想就是想问大家一个问题，比如说大家是一个作一个审稿人的话，那你比如说我的一个文章黑色RNA。他只展示了这样一个这样一个。这样一个定向结果，然后展示了下面如下这种定量的结果，二可能是更好一点。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-attention">
+  <div class="slides"><figure class="slide" id="slide-18">
+<img src="slides/slide_18.png" alt="课件第18页 Common Architectures: Attention">
+<figcaption><span class="sno">18</span><span class="stitle">Common Architectures: Attention</span></figcaption>
+</figure>
+<figure class="slide" id="slide-19">
+<img src="slides/slide_19.png" alt="课件第19页 Attention-based AR: Transformer & GPT">
+<figcaption><span class="sno">19</span><span class="stitle">Attention-based AR: Transformer & GPT</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">10</span>
+      <div class="sec-tt">
+        <h2>Attention：Transformer 与 GPT</h2>
+        <div class="sec-meta"><span class="time">00:30:00 – 00:34:00</span><span class="chip">课件 18</span><span class="chip">课件 19</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>最后看一下 attention 实现 AR 模型。大家现在都比较熟悉了：从 full attention 的模型出发，它不满足 AR 性质——没有因果性。那你可以去掉一些连接的边，让每个中间的节点只从前面这些输入得到，跟之前一样把它加深，就得到了一个用 attention 实现的 AR 模型。</p><p>这部分最有代表性的模型就是 Transformer，到现在就是 GPT 这一系列的模型了。刚才说 RNN 最大的问题是：用一个单独的隐藏状态去建模所有的历史信息。Transformer 最大的改进就是：对所有的历史输入都维护一个类似于隐藏表示的表示；把当前的这个位置当作 query，跟历史信息做相似度计算（点积），计算出 attention distribution——可以把它当作重要性或者相似性的体现。然后用这个重要性对历史信息加权求和，得到一个历史总结，再和当前输入融合起来，就得到当前输出。</p><p>它解决了历史信息问题，那代价是什么？存储和计算量——计算内部点积的时候，需要跟序列长度相关的、O(T²) 量级的复杂计算。这也是当今大模型最关键的一个优化点。</p><p>右边展示的是 GPT-2 内部 attention 的一个例子：输入是「a robot must obey the orders given to it」这样的句子。输入到 masked self-attention 模块以后，跟「it」关联最大的其实是「a robot」——哪怕隔了这么多单词，它也能建立比较强的关联，这就解决了 RNN 的长距离依赖问题。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我们从一个full attention这样的一个一个模型出发，是吧，那我们说它不满足AR模型的性质，是因为它没有这种没满足这个Co是它没满足这种规性。这样的话，你可以去掉它一些连接的边，让你每个中间的节点是从前面这些输入得到的。</p><p>那transform它的一个最大的改进，可能就是我们可以把它想象成对于所有的这种这种历史的这种输入，我都给它维护一个类似于这种就是隐藏表示这样一个这种表示。然后对于我现在单独的现在这个速度，我把它当做que的话，和我们就拿它当做que，跟之前的历史信息给它做的计算，这个ma过计算相似性这一种点成。</p><p>那它的这个代价。这里是一。存储和计算量是吧，因为你在计算它内部的这个点层的时候，你得一一个很大的，跟你这个长度序列长度相关的，这么一个tra平方的这样一个复杂组合计算，这也是我们当今的这个大圆模型和基金木的它的一个最关键的优化。</p><p>然后1输入到这个3，Self attention模块以后，它1。最以跟他关联最大的其实就是a robot,是吧？因为这A，你们知道一个指示代数，它只是这个a robot,所以说哪怕是隔了这么多单词，它也是可以跟它建立比较强的关联，这样就是解决这个儿童的问题。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-imagegpt">
+  <div class="slides"><figure class="slide" id="slide-20">
+<img src="slides/slide_20.png" alt="课件第20页 Attention-based AR: imageGPT（token 化图像）">
+<figcaption><span class="sno">20</span><span class="stitle">Attention-based AR: imageGPT（token 化图像）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">11</span>
+      <div class="sec-tt">
+        <h2>imageGPT：把图像当语言建模</h2>
+        <div class="sec-meta"><span class="time">00:34:00 – 00:37:00</span><span class="chip">课件 20</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>除了建模语言，Attention 还可以用来建模二维图像。这里展示的是 OpenAI 他们在 2020 年提出的 imageGPT。他们的工作比较简单：想把语言模型用来建模图像——把图像下采样、拉成一个向量，然后转化成语言能处理的分词：用一个简单的方法（color quantization），把下采样以后的图像通过聚类形式给成 512 类的一个 token 序列，再把它转换成 token 序列。</p><p>从这张图可以比较清晰地看出来，它就是一个 AR 的结构：每个输出都只能关系到之前的输入，不同输入输出对应关系都塞到一个整体的结构里面。</p><p>这个文章还把 GPT 的技术路线跟 BERT 做了对比：BERT 是给输入、mask 掉中间的一些 token，利用一个模型预测被 mask 掉的图——这是跟 next token prediction 不同的一种建模目标；而且它的中间是双向的，是一个全局的双向 mask，不遵守 AR 的因果性。</p><p>还有一个问题：GPT 这种 AR 模型大家都知道可以作为生成模型，那 BERT 这样的模型能作为生成模型吗？做不了——如果用传统的这种模型做采样，效果不好。所以现在大家知道的离散扩散模型，很大程度上就是给这种双向模型设计一个合适的采样过程。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这里展示的是福特能，他们在2020年提出这个I GDP一美GDP的一个一个例子，他们提出就是把比如说我想要建模，用这个语言模型建模一个图像。他的文章中采阳了一个采用一个结果就比较简单，1color法，把它把它下载样以后，是一个一个PS的11，然后用色种聚类形式给512类的一个死掉。</p><p>可从个图可以比较比较清晰的看出来，它每一个输出都只能关系到之前的输入。还一个模型，就是把一不同的一种输入对应和输出对应关系，塞到一个整体的结构里面去。</p><p>而且除了这个目标以外，它中间就是双，可以看到它中间1较大的区别，它的中间的这个3是双向是吧，它是一个全局的双向的开，不是这种不遵守这种的特性。</p><p>其实如果是用文明的这种传统的这种二模型，它确实是。做不了什么或者效果不好的采样，一种采样的过程设计中是它可以做一个生成模型去实现。其实，我们这个现在可大家都知道，这种离散扩散模型可能很大成度就是二析性能。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-parallel">
+  <div class="slides"><figure class="slide" id="slide-21">
+<img src="slides/slide_21.png" alt="课件第21页 Framework Comparison：并行性是训练时还是推理时的性质？">
+<figcaption><span class="sno">21</span><span class="stitle">Framework Comparison：并行性是训练时还是推理时的性质？</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">12</span>
+      <div class="sec-tt">
+        <h2>并行性：训练时还是推理时？</h2>
+        <div class="sec-meta"><span class="time">00:37:00 – 00:40:00</span><span class="chip">课件 21</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>在进入推理和训练之前，我备课的时候发现应该先讲一部分。我们之前讲了这三个模型，还说它们有很大的区别：前两个是每个条件分布用不同的模型建，后面用 mask 的是同一个模型建。但不管你用几个模型，所有的条件分布计算——那这种并行性，到底是训练时候的性质，还是测试和采样时的性质？</p><p>应该都是可以。但我觉得更严谨地说，这种并行推理的性质应该是训练时的性质：你测试的时候没法直接预测某个点，因为你不知道它前面的几个数字，只能一步一步推理；但训练的时候你有整个数据，可以只建模从输入到输出的某一部分映射。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那我们在之前的课程中讲了这三个模型，对吧？我而且我们还说这三个模型有很大的区别，就是前两个模型它是用不同的每个条件分布用不同的模型去建的，然后之后去用一个这种或者ma，其它是同一同一个模型去建。那你不管他用几个模型去建模，它所有的这个对条件分布计算。那这种一个问题就是那一个并行性是训练时候的性质，还是是他测试和采样时的性质？</p><p>我觉得可能不太不太不太严谨，就是这种并行推理的性质，按理来说应该是训练出的性质是吧。因为你测试的时候，你你没法直接预测这个点是吗？因为你不知道前三个数字。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-inference">
+  <div class="slides"><figure class="slide" id="slide-22">
+<img src="slides/slide_22.png" alt="课件第22页 Autoregressive Inference：联合分布">
+<figcaption><span class="sno">22</span><span class="stitle">Autoregressive Inference：联合分布</span></figcaption>
+</figure>
+<figure class="slide" id="slide-23">
+<img src="slides/slide_23.png" alt="课件第23页 Autoregressive Inference：p(x₂∣x₁)">
+<figcaption><span class="sno">23</span><span class="stitle">Autoregressive Inference：p(x₂∣x₁)</span></figcaption>
+</figure>
+<figure class="slide" id="slide-24">
+<img src="slides/slide_24.png" alt="课件第24页 Autoregressive Inference：p(x₃∣x₁,x₂)">
+<figcaption><span class="sno">24</span><span class="stitle">Autoregressive Inference：p(x₃∣x₁,x₂)</span></figcaption>
+</figure>
+<figure class="slide" id="slide-25">
+<img src="slides/slide_25.png" alt="课件第25页 Autoregressive Inference：p(x₄∣x₁,x₂,x₃)">
+<figcaption><span class="sno">25</span><span class="stitle">Autoregressive Inference：p(x₄∣x₁,x₂,x₃)</span></figcaption>
+</figure>
+<figure class="slide" id="slide-26">
+<img src="slides/slide_26.png" alt="课件第26页 Autoregressive Inference：p(x₅∣…)">
+<figcaption><span class="sno">26</span><span class="stitle">Autoregressive Inference：p(x₅∣…)</span></figcaption>
+</figure>
+<figure class="slide" id="slide-27">
+<img src="slides/slide_27.png" alt="课件第27页 Autoregressive Inference：p(x₆∣…) 递归过程">
+<figcaption><span class="sno">27</span><span class="stitle">Autoregressive Inference：p(x₆∣…) 递归过程</span></figcaption>
+</figure>
+<figure class="slide" id="slide-28">
+<img src="slides/slide_28.png" alt="课件第28页 Backpropagation：x₆ 的梯度路径">
+<figcaption><span class="sno">28</span><span class="stitle">Backpropagation：x₆ 的梯度路径</span></figcaption>
+</figure>
+<figure class="slide" id="slide-29">
+<img src="slides/slide_29.png" alt="课件第29页 Backpropagation：梯度经过所有之前输出">
+<figcaption><span class="sno">29</span><span class="stitle">Backpropagation：梯度经过所有之前输出</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">13</span>
+      <div class="sec-tt">
+        <h2>自回归推理与反传</h2>
+        <div class="sec-meta"><span class="time">00:40:00 – 00:44:00</span><span class="chip">课件 22</span><span class="chip">课件 23</span><span class="chip">课件 24</span><span class="chip">课件 25</span><span class="chip">课件 26</span><span class="chip">课件 27</span><span class="chip">课件 28</span><span class="chip">课件 29</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>那我们就把它给展示一下。考虑一个模型和它对应的计算图构建，不考虑具体实现：假设都用同一个模型来实现，那不同块用同一个模型就可以了。考虑一个前传过程有 6 个输入的话：第一个模型建模 p(x2|x1) 这个条件分布；第二个模型按理说要接受 x1 和 x2、输出 x3 的条件分布，但这时候的 x2 应该是前一个模型的输出——因为测试的时候你没有数据，只能从第一个模型、第一个前传得到。</p><p>然后第二个、第三个、第四个……一直得到所有输出。每个网络的输入都是前面网络的输出，所以它是一个迭代的过程——其实也就是我们之前说的那个网络。</p><p>那如果我们想训练呢？假设想通过 BP 算法反传，这时候最大的问题就是：你反传的这个梯度，需要经过之前所有的模型——因为计算图是迭代的，梯度要经过前面所有网络才能传到。</p><p>那怎么办？非常自然的想法：既然最大的问题是这种迭代，那最直接的方法就是不管怎么样，必须把不同模型之间的连接给断开。这样反传的前向和反向计算就不用经过这么多网络了。连接断掉以后，每个网络的输入就不再依赖前一个输出——训练的时候，每个网络接收的输入不再是前一步的预测，而是真实数据的一个点。这就是 AR 模型在训练和测试时最大的区别。</p><p>这就叫 teacher forcing。它的优点就是 BP 的路径变短了，训练变得简单——对每个节点，监督信号只经过当前这个网络，只不过输入不同。还有一个优点：一般讨论时不会提到——如果你用前一个网络给后一个网络输入，会有误差累积的效果；用 teacher forcing 可以把误差累积这个计算给解除。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那如果考虑一个前传过程有6个输入的话，还有5个输入的话，那我就比如说第一个模型建模这个PS5PVX2的这样一个条件分布，对吧，这是第一个。那第二。那你到第二个模型的时候，按理来说，你是要接受X2和X4，然后输出X3的这第三个点的一个组合布。但是你这时候的X4采样的时候，你应该是前一个模型的输出对吧。</p><p>那如果我们想训练呢，比如说我就想训练么的，假设我们能够得到他的这个。他想要通过BP算法来反弹。那时候，这个时候最大的一个问题就是你这个反传的这个梯度，你需要经过之前所有的这个模型吧。</p><p>你把这些连接全去掉的话，就相当于你每个网络你没有一一个对应的输入，你只能是比如说在训练的时候，每个网络的接收和输入不再是前一的预测。而是真实的一个一数据的一个点，就是AR模型在训练和测试的时候最大的一个区别。这就是我们所说的这个teacher PS的一个一个一个一个一个改进一个技巧。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-teacher">
+  <div class="slides"><figure class="slide" id="slide-30">
+<img src="slides/slide_30.png" alt="课件第30页 Teacher Forcing：输入不是前一步输出">
+<figcaption><span class="sno">30</span><span class="stitle">Teacher Forcing：输入不是前一步输出</span></figcaption>
+</figure>
+<figure class="slide" id="slide-31">
+<img src="slides/slide_31.png" alt="课件第31页 Teacher Forcing：输入来自真值数据">
+<figcaption><span class="sno">31</span><span class="stitle">Teacher Forcing：输入来自真值数据</span></figcaption>
+</figure>
+<figure class="slide" id="slide-32">
+<img src="slides/slide_32.png" alt="课件第32页 Teacher Forcing：Pros——反传路径更短">
+<figcaption><span class="sno">32</span><span class="stitle">Teacher Forcing：Pros——反传路径更短</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">14</span>
+      <div class="sec-tt">
+        <h2>Teacher Forcing 的缺点：Exposure Bias</h2>
+        <div class="sec-meta"><span class="time">00:44:00 – 00:47:00</span><span class="chip">课件 30</span><span class="chip">课件 31</span><span class="chip">课件 32</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>其实讨论它的优点不是我们最终想说明的，讨论它的缺点才是我们最终想展示的点。它最大的缺点是什么？就是训练和测试的不一致性。</p><p>为什么不一致？推理的时候，每个模型看的是自身的输出——自己前一步生成的东西作为输入；而你训练的时候，相当于每个模型看的是不「干净」的数据——真实数据。你训练时建模的是「干净数据 → 当前点的输出」，但测试时每个模型的输入分布是不一样的。就会出现这种 distribution mismatch，或者叫暴露偏差（exposure bias）：训练的时候和推理的时候，模型实际接收的输入不一样。</p><p>这种偏差在只要是这种一步一步生成的、都是可能会有问题的。除了 AR 模型，像我们现在的 diffusion 模型，无论训练还是后训练，只要你训练时的设计跟测试时的设计不一样，就总会有一个问题。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>他最大的缺点是什么？下写的就是训练和测试的就是不一致性，推不一致的一个情况。推理的时候是拿他的输出作为三对，推理的时候你是输出的，就是你推理的时候，按理来说，你每个模型看的应该是自身的输入，对吧？</p><p>但你在去在你的测试的时候，你每个模型你的输入是分布是不一样的，就会发现这种出现这种distribution，或者我们叫暴露偏差1exposure b训练的时候跟推理的时候，你的这个实际的模型接入的不一样。</p><p>除了这个AR模型，像看我们现在的比模型，你在设计的时候，无论你是训练还是你是后训练或者怎么样，它都有一么问题，只要你你在训练的时候的设计跟你测试的时候设计不一样，一就会总会有一个问题。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-running">
+  <div class="slides"><figure class="slide" id="slide-33">
+<img src="slides/slide_33.png" alt="课件第33页 Running Example：推理采样 p(x₁)">
+<figcaption><span class="sno">33</span><span class="stitle">Running Example：推理采样 p(x₁)</span></figcaption>
+</figure>
+<figure class="slide" id="slide-34">
+<img src="slides/slide_34.png" alt="课件第34页 Running Example：推理采样 p(x₂∣x₁)">
+<figcaption><span class="sno">34</span><span class="stitle">Running Example：推理采样 p(x₂∣x₁)</span></figcaption>
+</figure>
+<figure class="slide" id="slide-35">
+<img src="slides/slide_35.png" alt="课件第35页 Running Example：推理采样 p(xₙ∣…)">
+<figcaption><span class="sno">35</span><span class="stitle">Running Example：推理采样 p(xₙ∣…)</span></figcaption>
+</figure>
+<figure class="slide" id="slide-36">
+<img src="slides/slide_36.png" alt="课件第36页 Running Example：训练 Teacher-Forcing">
+<figcaption><span class="sno">36</span><span class="stitle">Running Example：训练 Teacher-Forcing</span></figcaption>
+</figure>
+<figure class="slide" id="slide-37">
+<img src="slides/slide_37.png" alt="课件第37页 Running Example：训练与推理过程">
+<figcaption><span class="sno">37</span><span class="stitle">Running Example：训练与推理过程</span></figcaption>
+</figure>
+<figure class="slide" id="slide-38">
+<img src="slides/slide_38.png" alt="课件第38页 Running Example：Inference vs Training 对比图">
+<figcaption><span class="sno">38</span><span class="stitle">Running Example：Inference vs Training 对比图</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">15</span>
+      <div class="sec-tt">
+        <h2>运行示例：推理 vs 训练</h2>
+        <div class="sec-meta"><span class="time">00:47:00 – 00:49:00</span><span class="chip">课件 33</span><span class="chip">课件 34</span><span class="chip">课件 35</span><span class="chip">课件 36</span><span class="chip">课件 37</span><span class="chip">课件 38</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>最后看一个简单的结果，咱们就下课。我们考虑上一节课 MADE 那个模型在 MNIST 上的生成过程。推理的时候，你先采样第一个像素（采它的边际分布），然后通过条件分布采样第二个点，一直采样到中间这个点。这时候你每一个步骤，网络接收的输入都是前面一些绿色的点——这些点都是它自己的输出。</p><p>但是你在实际训练的时候，你看的不是自己的输出：你看的是一个真实的、clean 的、我们已知的训练样本，把前面这些给到网络。所以训练训练的是右边，但你测试的时候测试的是左边——前面那些绿色和蓝色的点，分布肯定差很多。这就是我们说的 teacher forcing。</p><p>好，那咱们按惯例稍微休息一会儿，休息到 5 点 20 之前。这就是我们 AR 模型的全部内容。下面我们讲一个「科学智能应用」的专题。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我们就考虑上一节课的这个m ma这个书籍的一个一个生成过生成过程。我考一一个推理过程，比如说，你在推理的时候，你先采用一个第一个像素，采用它一个边际分布，然后呢，通过这个条件分布，采用第二个第二个点。</p><p>但是你在实际训练的时候，你看的不是自己的输出是吧？你看的是一个真实的一个clean，我们已知的一个训练样本，我们把前面这些给到这个网络，然后测所图直。你训练训练的是右边，但你测试的时候测试是左边。前面一些绿色跟蓝色点，它的分布肯定是差的很多。</p><p>有就是我么说的这个teacher好，那咱们一惯稍微休息一会儿吧，休息到五五二十之前，这就是我们AR模型的全部的一个内容。下面我们讲一个电容赛制的应用。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-ai4s-open">
+  <div class="slides"><figure class="slide" id="slide-39">
+<img src="slides/slide_39.png" alt="课件第39页 封面：AI4S in AR: Protein Sequence Design">
+<figcaption><span class="sno">39</span><span class="stitle">封面：AI4S in AR: Protein Sequence Design</span></figcaption>
+</figure>
+<figure class="slide" id="slide-40">
+<img src="slides/slide_40.png" alt="课件第40页 AI4Proteins 四大突破：AlphaFold2 / ProteinMPNN / ESM / RFdiffusion">
+<figcaption><span class="sno">40</span><span class="stitle">AI4Proteins 四大突破：AlphaFold2 / ProteinMPNN / ESM / RFdiffusion</span></figcaption>
+</figure>
+<figure class="slide" id="slide-41">
+<img src="slides/slide_41.png" alt="课件第41页 Why Study Proteins：中心作用与治疗价值">
+<figcaption><span class="sno">41</span><span class="stitle">Why Study Proteins：中心作用与治疗价值</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">16</span>
+      <div class="sec-tt">
+        <h2>AI4S 开篇：蛋白质为什么是主战场</h2>
+        <div class="sec-meta"><span class="time">00:00:00 – 00:06:00（休息后）</span><span class="chip">课件 39</span><span class="chip">课件 40</span><span class="chip">课件 41</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>咱们就先开始，给大家稍微科普一下 AR 和蛋白质结合的一些基础信息。AR 在蛋白质上是一个很「样板戏」的应用场景：Transformer 大力发展以后，把它从序列建模的生成模型应用到蛋白质的结构预测、结构设计上。</p><p>一个代表性工作就是 ESM——直接训练一个基座模型，用语言模型去建模蛋白质序列、做表征学习，学习化学结构化的信息。除了这两个，还有 2022 年发表的一个 inverse 工作：从结构去预测序列（ProteinMPNN），这个待会儿最后我会讨论它一个比较好的设计。还有最重磅的 AlphaFold2——蛋白质结构预测。这些就是 AI 和蛋白质交叉领域近几年比较突出的突破性工作。</p><p>那为什么蛋白质相关的研究在 AI4S 里这么重要？当然第一，蛋白质本身重要——它在生物学里是一个非常关键的作用，比如肌肉的拉伸收缩、酶、血红蛋白携带氧气，通过血液把氧气供到全身；在药物设计上，抗体设计、小蛋白设计都很有应用价值。</p><p>但重要的东西很多，为什么偏偏是蛋白质？大概有几方面原因：第一，蛋白质的表示——它这种序列化的表示，跟我们的数据表示比较好处理；第二，我们有大规模的上游数据库；第三，我们有相对成熟的评价方式。这三点共同决定了 AI 在蛋白质方向进展比较快。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>OK,那咱们就先开始，先给大家稍微的科普一下这个AR和protein的一些基础的一些信息，一个知识其实AR和比较比较一应样板戏一样的一个应用场景，一个一个工作。他可能是在transform所大力发展以后，把它应用，这是从种虚拟化建模的功模型，给它应用到这个蛋白质的一个结构的一测上，结构设计上一个工。</p><p>一个结构就是ESM，这个它就是直接训练一个基膜来进行通散，用一个语言模型去建模蛋白质这个序列，去做一些表征，学习化学结构化的信息。除了这两个以外，还有这个三发表的三，这个2022年的这个一个一个逆本一一工作，就是我们从结构去预测序列这样一个。</p><p>那当然当然呢，原因就是因为PS它重要，对吧？它是在这个我们生物学里边，一非常这个中信是个非常这个关键的一个作用。比如说它有很多这个这种功能或种类。</p><p>它其实有比较比较有几方面的原因吧。当然，第一方面就是蛋白质，它的这个表示一后会介绍它这种序列化的表示，这跟我们的数据的表示是我们可以比较好处理。第二点就是我们有这个大规模的上一个这个数据库。第三点就是我们有一种相对成熟的一些评价方式。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-protein-basics">
+  <div class="slides"><figure class="slide" id="slide-42">
+<img src="slides/slide_42.png" alt="课件第42页 蛋白质一级结构：氨基酸线性序列">
+<figcaption><span class="sno">42</span><span class="stitle">蛋白质一级结构：氨基酸线性序列</span></figcaption>
+</figure>
+<figure class="slide" id="slide-43">
+<img src="slides/slide_43.png" alt="课件第43页 20 种氨基酸与组合爆炸">
+<figcaption><span class="sno">43</span><span class="stitle">20 种氨基酸与组合爆炸</span></figcaption>
+</figure>
+<figure class="slide" id="slide-44">
+<img src="slides/slide_44.png" alt="课件第44页 From Sequence to Structure：链 / 局部折叠 / 全局折叠 / 协作">
+<figcaption><span class="sno">44</span><span class="stitle">From Sequence to Structure：链 / 局部折叠 / 全局折叠 / 协作</span></figcaption>
+</figure>
+<figure class="slide" id="slide-45">
+<img src="slides/slide_45.png" alt="课件第45页 Protein Geometry：主链与侧链、二面角">
+<figcaption><span class="sno">45</span><span class="stitle">Protein Geometry：主链与侧链、二面角</span></figcaption>
+</figure>
+<figure class="slide" id="slide-46">
+<img src="slides/slide_46.png" alt="课件第46页 Dynamic Structure：动态构象与开合">
+<figcaption><span class="sno">46</span><span class="stitle">Dynamic Structure：动态构象与开合</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">17</span>
+      <div class="sec-tt">
+        <h2>蛋白质科普：结构与几何</h2>
+        <div class="sec-meta"><span class="time">00:06:00 – 00:12:00</span><span class="chip">课件 42</span><span class="chip">课件 43</span><span class="chip">课件 44</span><span class="chip">课件 45</span><span class="chip">课件 46</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>把蛋白质一层一层抛开来看，最基本的结构（一级结构）就是氨基酸序列。每个小球是一个氨基酸，通过肽键相连。和语言类比的话，每个氨基酸可以看作一个词或者一个 token——所以蛋白质的一维结构天然就能用语言模型处理，这可能是最本质的原因。</p><p>更跟语言相像的一点是它的「自然」：自然界构成蛋白质的氨基酸不是随便、无限的，它主要就是这 20 种左右——带电的、不带电的、带正电带负电的。相当于语言里的词表只有 20 个 token。虽然氨基酸种类有限，但随着序列不断增长，它的复杂性会成组合数上升；而且它还可以在空间中进行折叠，复杂度就越来越高。</p><p>一维结构是链式的，之后还有更高级的结构：局部氨基酸发生局部折叠，形成两种主要的二级结构——α-helix（阿尔法螺旋，就像弹簧一样的飘带）和 β-sheet（贝塔折叠）。继续折叠、变得越来越复杂，还有三级结构——整体发生更大的扭曲旋转折叠；多个氨基酸链还可以共同组合形成一个具有某种功能的四级结构。</p><p>如果打破这种抽象的表示、看具体化学结构，蛋白质的几何可以分成主链（backbone）和侧链（side chain）。主链就是氮-碳-碳三种原子不断重复形成的骨架；侧链甩出来，提供了蛋白质的一些功能，包括之后怎么折叠、怎么结合。另外它还有二面角：三维空间中原子之间怎么连接、怎么旋转，这些角度直接决定它能形成什么状态。</p><p>还有一点：蛋白质不是一个刚体，它是可以随着能量变化、在生物体中不断发生形态改变的——可以在不同状态之间转化，打开、闭合、半开半闭，有动态的性质。这样它才能完成生物体内的一些功能。这是蛋白质很粗略的一个科普。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>如果我们把蛋白质给它一层一层抛开来看的话，它最基本的就是可以看出它的PS方。一个最基础的结构和主结构，就是1a sequ I I知道什么意思吗？氨基酸是吧。哪个小球是这个氨基酸，它通时通过这个这个肽键是就是通过肽键项。</p><p>首先我们说自然界它的这个构成蛋白质的氨基酸就是。它不是无限，不是随便就能构成。其实它最主要的自然的这种蛋白质，氨基酸，就是这五一大概有20多种。相当于说在我们语言里。相当于你的词表只有25分。</p><p>比如说像这种阿尔法的飘带。贝塔这个点种形式就是好像我们看一些一些蛋白质的，它一些可视化的效果，它里边老一种跟弹簧的。这是它的蛋白质，一个二级的系统。</p><p>所以它的主链，它就是一种氮碳，就是三碳原子的这样一个不断的不断的这个重重复。然后它侧量呢，这三线甩出来以后，提供了一些蛋白质，它有一些一些功能。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-traditional">
+  <div class="slides"><figure class="slide" id="slide-47">
+<img src="slides/slide_47.png" alt="课件第47页 Traditional Approaches：同源建模与分子动力学">
+<figcaption><span class="sno">47</span><span class="stitle">Traditional Approaches：同源建模与分子动力学</span></figcaption>
+</figure>
+<figure class="slide" id="slide-48">
+<img src="slides/slide_48.png" alt="课件第48页 Modern Approaches：序列数据库与结构数据库">
+<figcaption><span class="sno">48</span><span class="stitle">Modern Approaches：序列数据库与结构数据库</span></figcaption>
+</figure>
+<figure class="slide" id="slide-49">
+<img src="slides/slide_49.png" alt="课件第49页 Modern Approaches：UniProt 大规模数据驱动">
+<figcaption><span class="sno">49</span><span class="stitle">Modern Approaches：UniProt 大规模数据驱动</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">18</span>
+      <div class="sec-tt">
+        <h2>传统方法 vs 现代方法</h2>
+        <div class="sec-meta"><span class="time">00:12:00 – 00:16:00</span><span class="chip">课件 47</span><span class="chip">课件 48</span><span class="chip">课件 49</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>介绍 AR 做蛋白质的具体工作之前，先看看传统方法。传统方法如果分类的话可以分两大类：第一类是相似性方法（同源建模）——从已知的结构或者模板里找相似度，找到一个符合目标功能的模板，然后改进迭代设计。可以想象这种方法很依赖于我们已经掌握的信息，泛化能力和外形都非常有限。</p><p>第二种是基于分子动力学（MD）模拟：给定初始状态，利用已知的物理规律让它自己演化，最后得到一个最终的状态。这种模拟方法一般非常耗时，计算量大、不可控，这是两种传统方法的主要问题。</p><p>可以想象，跟我们现在基于 AI 的方法最大的区别是：这两种方法都是基于规则的方法（基于样本或基于模拟），而我们现在的方法是数据驱动的、端到端学习的。那这种数据驱动的方法要成立，就需要大规模数据库：序列数据库（比如 UniProt，不同物种的蛋白质序列）和结构数据库（PDB，蛋白质的 3D 结构）。</p><p>另外需要解释的是：因为蛋白质序列数据的标定、采样成本比结构数据低，所以随着时间的推移，蛋白质序列数据库的增长速度比结构数据库更快——这也是序列相关的工作发展更好的一个原因。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>传统方法可以，如果分类的话，可以分为两大类，第一类就是这种模，就是类，可用这种相，或者说用相似性来进行蛋白质设计。比如说，大家可以看这个框图里边，我们有一个他一个目标的一个序列。然后呢，我们怎么基它进行设计呢？我们可以就是只能从我们已知的一些结构或者已知的这种结构叫做板，求一个相似度。</p><p>另外一种呢，就是我们现写的是基于这种分子动态的，就是我dynamic分子动力学的一个模拟假设，我们给定一个在时间维度上给定一个初始的一个状态。然后呢，我们利用我们已知的物理规律，让它自己去演化。这种模拟的这种方法一般都是非常的耗时。</p><p>这两种方法都是一种或者说基因基于样本或者基因模拟的方法，它都是什么都是基于一种规则的一种方法。我们现在的方法都是什么数据驱动贝塔水准的一个C种方法是吧？</p><p>当然，除了序列以外，我们刚才说还有更高维的结构，一个结构化就是一结构化，就是蛋白质解构的这样一个数据带，两个不同的数据库，这样的大，这种大规模数据库的建成了以后。它才能让我们用AI这种基于这种数据驱动的方法可以成立。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-challenge">
+  <div class="slides"><figure class="slide" id="slide-50">
+<img src="slides/slide_50.png" alt="课件第50页 Programmable Protein Design：三大挑战（映射 / 表征 / 评估）">
+<figcaption><span class="sno">50</span><span class="stitle">Programmable Protein Design：三大挑战（映射 / 表征 / 评估）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-51">
+<img src="slides/slide_51.png" alt="课件第51页 Representative Tasks：1D 序列 / 2D MSA / 3D 结构 / 4D 动态">
+<figcaption><span class="sno">51</span><span class="stitle">Representative Tasks：1D 序列 / 2D MSA / 3D 结构 / 4D 动态</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">19</span>
+      <div class="sec-tt">
+        <h2>设计挑战与四种表示</h2>
+        <div class="sec-meta"><span class="time">00:16:00 – 00:19:00</span><span class="chip">课件 50</span><span class="chip">课件 51</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>聚焦到 AI 辅助蛋白质设计：我们可以先不管具体怎么实现，从广义上看，通过 AI 模型让它预测符合功能的蛋白质结构、或者输出更简单的序列。这样一个范式其实没有太多的现成路径，总结下来大概有三个挑战。</p><p>第一点，从生物学的角度，从 sequence 到 structure 的映射、再到蛋白质功能的映射，我们还没有完全搞明白。第二点，生物学的东西怎么表征成模型可以处理、操作、读取、建模的形式，这是一个比较大的问题。第三点，就是怎么评估。</p><p>从 AR 模型的角度，蛋白质的表示大概有四种：第一种是一维的 sequence；第二种是二维的 MSA（Multiple Sequence Alignment）——把多个有相关性（同功能、同家族）的蛋白质对齐以后，看每个位置氨基酸的分布：有些位点一起变，有些分布不一样，一起变的可能就比较重要，AlphaFold 就利用了这种表示；第三种是三维结构——刚才说的螺旋、飘带组成的空间形式；第四种是四维动态——随着时间怎么开合、关闭。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那其实，如果总结下来，这个大概有这三种挑战。比如说，第一点就是在我们生物学的角度，其实在我们这个一个BI2这个层面来看，从sequence从这个序列到structure的映射，再到sequence和structure到最后的这个蛋白质的功能的映射，其实我们还是没有搞得搞得很懂。</p><p>另外一点就是，如果你想做AI和通信的话，那你这个通信的东西怎么能表征成我们AR可以去可以去处理、去操作、去读取、去建模的一些东西呢？另外就是我们对他进行一个评估，这也是另外一第三个问题。</p><p>那除了这个一维102维的这个数据，叫做这个ence ADC这样一个，其实alpha就利用了这样一个一表形式，它它这个Mac是什么意思呢？其实如果从字面意义上来看的话，它其实就是把不同的这个多个蛋白质的，它相关性的就是同样的功能，或者同样的成员那种蛋白质给大给它对齐了以后，看看每个节点到底是什么什么样的一个。分布。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-tasks">
+  <div class="slides"><figure class="slide" id="slide-52">
+<img src="slides/slide_52.png" alt="课件第52页 Learning on Protein Sequences (1D)：表征学习">
+<figcaption><span class="sno">52</span><span class="stitle">Learning on Protein Sequences (1D)：表征学习</span></figcaption>
+</figure>
+<figure class="slide" id="slide-53">
+<img src="slides/slide_53.png" alt="课件第53页 Learning on Protein Sequences：Next / Masked 氨基酸预测">
+<figcaption><span class="sno">53</span><span class="stitle">Learning on Protein Sequences：Next / Masked 氨基酸预测</span></figcaption>
+</figure>
+<figure class="slide" id="slide-54">
+<img src="slides/slide_54.png" alt="课件第54页 Protein Sequence Design (1D)：自回归与离散扩散">
+<figcaption><span class="sno">54</span><span class="stitle">Protein Sequence Design (1D)：自回归与离散扩散</span></figcaption>
+</figure>
+<figure class="slide" id="slide-55">
+<img src="slides/slide_55.png" alt="课件第55页 Inverse Folding (3D→1D)：给定骨架设计序列">
+<figcaption><span class="sno">55</span><span class="stitle">Inverse Folding (3D→1D)：给定骨架设计序列</span></figcaption>
+</figure>
+<figure class="slide" id="slide-56">
+<img src="slides/slide_56.png" alt="课件第56页 Learning on Protein Structure (3D)：几何图深度学习">
+<figcaption><span class="sno">56</span><span class="stitle">Learning on Protein Structure (3D)：几何图深度学习</span></figcaption>
+</figure>
+<figure class="slide" id="slide-57">
+<img src="slides/slide_57.png" alt="课件第57页 Structure Prediction (1D+2D→3D)：AlphaFold2">
+<figcaption><span class="sno">57</span><span class="stitle">Structure Prediction (1D+2D→3D)：AlphaFold2</span></figcaption>
+</figure>
+<figure class="slide" id="slide-58">
+<img src="slides/slide_58.png" alt="课件第58页 Structure Design (3D)：扩散与流匹配（RFDiffusion）">
+<figcaption><span class="sno">58</span><span class="stitle">Structure Design (3D)：扩散与流匹配（RFDiffusion）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-59">
+<img src="slides/slide_59.png" alt="课件第59页 Ensembles Design (1D→4D)：动态设计">
+<figcaption><span class="sno">59</span><span class="stitle">Ensembles Design (1D→4D)：动态设计</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">20</span>
+      <div class="sec-tt">
+        <h2>表征学习与各类设计任务</h2>
+        <div class="sec-meta"><span class="time">00:19:00 – 00:22:00</span><span class="chip">课件 52</span><span class="chip">课件 53</span><span class="chip">课件 54</span><span class="chip">课件 55</span><span class="chip">课件 56</span><span class="chip">课件 57</span><span class="chip">课件 58</span><span class="chip">课件 59</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>针对这四种表示形式，AI 方法有一些主要的研究工作。第一点，最简单的就是对蛋白质序列做表征学习：通过语言模型的自监督学习——比如挖空一部分，让模型用自回归或者 mask 的方式补全——来挖掘不同氨基酸之间的结构性信息。</p><p>表征学习也可以有不同形式：GPT 风格的是预测下一个氨基酸，BERT 风格的是预测 mask 掉的中间 token。除了表征学习，我们还可以做设计：给定一些已知的氨基酸序列，用自回归、离散扩散等方法做一维序列设计。</p><p>和一维相关的还有一个 inverse folding（逆折叠）问题：不一定非得从一维结构开始，我们可以从三维结构出发、得到它的一维序列。为什么要这样？比如你得到一维表征以后，可以对序列做编辑调整，反向得到跟它相似但具有不同功能的其他蛋白——这在语言编辑里也是一种常见做法。</p><p>有了三维结构，还可以在三维结构上继续做方法：利用 PDB 等数据库，用图神经网络做结构任务微调。另外就是 AlphaFold2——它做了从一维和二维信息到三维信息的一个映射：输入经过相关性的训练、建模以后，得到它的三维结构。</p><p>那有了一维设计，还可以直接进行三维设计——RFDiffusion 这个工作就是直接利用最先进的 3D 生成模型（扩散/流匹配）直接做三维的蛋白设计。甚至还可以用更先进的算法直接进行四维设计：输入一个序列，直接得到它的时间动态——不同构象的类别。这些就是 AR 和 AI4S 的工作版图。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>然后呢，针对这四种表示形式，我们AI这个方法，它主要是一些研究工作，就比如说第一点，最简单的就是我们怎么去对sequence，这蛋白质的sequence，怎么对它进行一个表征学习。这个最简单的就是，我们可以通过这个语言模型，类似的比如说刚才，或者是那种方法，比如说给挖空一点，然后让这模型去用自的方法对这个地方进行补全。</p><p>比如说，GPD待要现在是下一个氨基酸的一测，通过这种方法来去建模，这个去进行这个自建度的合同学习。或者用利用中间的一些一些可。那这是表征学习的一些一些一些工作。</p><p>就1verse所一个问题。比如说，我们现在已经有，我们不一定非得从一一结构始计，三结构ence表达得到它的这个一维的特征。那为什么要这样呢？比如说，你得到一维表征以后，你可以对这个对这个sequence进一些编辑或者调整以后，反向的表达得到一个跟它相似，但是具有一些不一样功能的其他类型的本比。</p><p>除了这样以外，还有啊，还可以进行这个像阿尔法后的，它就是做了一个从一维和二维这个蛋白质序列，一维和二维信息到三维信息一个一个映射。</p><p>甚至我们还可以直接进行一个利用更先进的这种多算法，进行一个四维的直接得到从一维直接进行四维的格式设计。我们输入一个SE管制，然后直接得到它的这个动态的一一个时间动态的一个。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-progen">
+  <div class="slides"><figure class="slide" id="slide-60">
+<img src="slides/slide_60.png" alt="课件第60页 AI for Protein Sequence Design：专题标题">
+<figcaption><span class="sno">60</span><span class="stitle">AI for Protein Sequence Design：专题标题</span></figcaption>
+</figure>
+<figure class="slide" id="slide-61">
+<img src="slides/slide_61.png" alt="课件第61页 Protein Sequence Design：设计目标">
+<figcaption><span class="sno">61</span><span class="stitle">Protein Sequence Design：设计目标</span></figcaption>
+</figure>
+<figure class="slide" id="slide-62">
+<img src="slides/slide_62.png" alt="课件第62页 Partial Sequence / Property → Sequence（Madani et al. 2023）">
+<figcaption><span class="sno">62</span><span class="stitle">Partial Sequence / Property → Sequence（Madani et al. 2023）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-63">
+<img src="slides/slide_63.png" alt="课件第63页 Protein Sequences as a Language：氨基酸即 token">
+<figcaption><span class="sno">63</span><span class="stitle">Protein Sequences as a Language：氨基酸即 token</span></figcaption>
+</figure>
+<figure class="slide" id="slide-64">
+<img src="slides/slide_64.png" alt="课件第64页 ProGen: Conditional Autoregressive Protein LM">
+<figcaption><span class="sno">64</span><span class="stitle">ProGen: Conditional Autoregressive Protein LM</span></figcaption>
+</figure>
+<figure class="slide" id="slide-65">
+<img src="slides/slide_65.png" alt="课件第65页 ProGen：控制标签与条件 AR 分解">
+<figcaption><span class="sno">65</span><span class="stitle">ProGen：控制标签与条件 AR 分解</span></figcaption>
+</figure>
+<figure class="slide" id="slide-66">
+<img src="slides/slide_66.png" alt="课件第66页 From Pretraining to Family-specific Generation">
+<figcaption><span class="sno">66</span><span class="stitle">From Pretraining to Family-specific Generation</span></figcaption>
+</figure>
+<figure class="slide" id="slide-67">
+<img src="slides/slide_67.png" alt="课件第67页 ProGen：预训练→微调→采样流程">
+<figcaption><span class="sno">67</span><span class="stitle">ProGen：预训练→微调→采样流程</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">21</span>
+      <div class="sec-tt">
+        <h2>ProGen：条件自回归蛋白质语言模型</h2>
+        <div class="sec-meta"><span class="time">00:22:00 – 00:30:00</span><span class="chip">课件 60</span><span class="chip">课件 61</span><span class="chip">课件 62</span><span class="chip">课件 63</span><span class="chip">课件 64</span><span class="chip">课件 65</span><span class="chip">课件 66</span><span class="chip">课件 67</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>最后给大家介绍两个最有代表性的工作，都是蛋白质序列设计的。第一个是 ProGen——利用部分序列或者属性信息设计序列，2023 年发表在 Nature Biotechnology 上，是 AR 领域很早、最有代表性的工作之一。</p><p>它的最原始动机就是：把氨基酸当作 token、把蛋白质序列当作语言，用语言建模的方式去建模。它其实是一种条件 AR（conditional autoregressive）模型——它的控制信息有这几类：来源（物种）、功能（比如 Actin-binding）、位置（比如在细胞质里）、参与的过程（比如心脏疾病的过程），另外还可以给一些已知的氨基酸序列（YMIQEE 这种），在给定序列下补全。把这些控制信息通过结构化的表达输进模型，模型就基于这些条件生成受控的序列。</p><p>它中间的网络设计完全不出所料：直接类似 Transformer 的 decoder 结构，用标准的 AR 建模，输入是那些 control tag、输出氨基酸序列，用标准的最大似然训练。整个训练和建模过程跟我们现在的语言建模完全一致。</p><p>它的规模：在 2.8 亿（280M）参数、19K 个蛋白家族上做了预训练；预训练完以后，针对想要生成的家族范围做微调；微调之后，再利用给定的控制信息实现目标功能的生成。整个流程就是「预训练 → 微调 → 采样」。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那在最后就是给大家介绍两个基本上就是最具有代表性的，一就是EPS sequence,这个当然是序列一维设计的这样一个工作，就是我们刚才说的PRO这个PS和刚才这个P S、P S这两个工作。</p><p>那我稍微讲一下他的工作的一些细节，其实在我们现在看来是非常简单的，他的一个最原始的动机就是我们把。这个氨基酸当做一个token，把这个蛋白质的一个序列就是氨基酸这个序列当做语言，然后把通过语言进行建模，这就是它的一个最原始的想法。</p><p>但它具体来说呢，它其实是因为我们要通过我们想要的一个功能，或者已经知道的部分的氨基酸的序列，得到最终的一个氨基酸的表达，所以它其实是其实是一种control condition AR.这是一个条件的一AR的一个模型，它的控制信息有这几类，比如说它这个它这个来源和它的方式功能。Location.就是这个重用的位置。</p><p>最后他整个他除了跟我们语言和更语言建模更一致，是它除了结构一二。这个是二百二百八十million系统ence上面再有19K单上进行了预训练，预训练完了以后，针对我们想要生成的这个通信范围进行微调。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-progen-eval">
+  <div class="slides"><figure class="slide" id="slide-68">
+<img src="slides/slide_68.png" alt="课件第68页 Generated Proteins: Diverse（多样性）">
+<figcaption><span class="sno">68</span><span class="stitle">Generated Proteins: Diverse（多样性）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-69">
+<img src="slides/slide_69.png" alt="课件第69页 Generated Proteins: Expressed（可表达性）">
+<figcaption><span class="sno">69</span><span class="stitle">Generated Proteins: Expressed（可表达性）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-70">
+<img src="slides/slide_70.png" alt="课件第70页 Generated Proteins: Functional（功能性）">
+<figcaption><span class="sno">70</span><span class="stitle">Generated Proteins: Functional（功能性）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">22</span>
+      <div class="sec-tt">
+        <h2>ProGen 评估：多样、可表达、有功能</h2>
+        <div class="sec-meta"><span class="time">00:30:00 – 00:37:00</span><span class="chip">课件 68</span><span class="chip">课件 69</span><span class="chip">课件 70</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>它的训练和建模过程没什么太多可讲的，但 AI4S 研究里最大的一个问题就是：怎么评估你的模型？首先你设计的模型肯定得满足需求——给定想要的功能，得到对应的氨基酸序列。然后你得到序列以后，不能光说它符合自然分布，还得真的去验证它有没有想要的功能。功能是由三维结构表达的，所以还要看能不能得到三维结构、能不能表达、表达出来是否具有功能。</p><p>多样性这个结果搞 AR 的同学比较直观：把采样结果和自然蛋白质做分布对比。红色的点是自然蛋白质的分布，大概分成 4 个 cluster；我们模型建模除了捕捉到自然的分布，在中间这些点也预测了一些自然判断里没有的点——展示了一定的多样性。他们还做了一个实验：对每个预测的序列，去自然蛋白质中找最近的一个序列，统计氨基酸相差多少个。可以看到：和自然最相近的点（80%~90% 相似）分布最多，60%~80% 的中段也有，甚至只有 50% 相似的点也有分布——这说明我们设计的序列跟自然序列相比还是有一些多样性的。</p><p>第二点是能否表达：他们真的把预测的氨基酸序列拿到实验室合成 DNA、验证有没有功能。统计能成功表达的序列比例：在 80%~90%、70%~80% 这些高相似度区间，能表达的比例相对高一些，有 70%；即使在只有一半氨基酸相似的区间，也有 60% 的蛋白质可以表达。他们把所有序列放一起看，人工蛋白质和自然蛋白质在实验环境下能表达的比例其实是差不多的——体现了方法在实验环境下的有效性。</p><p>第三点是功能：你表达出来还得有对应的功能。他们选了一种溶菌酶（一种酶）的不同位点，统计检测到功能的比例。结果很奇怪：他们合成的蛋白检测到功能的比例好像比自然蛋白还高一点。按理说应该不如自然蛋白，但我也很困惑，我也不是这个领域的，不太能解读为什么会这样——但至少说明了方法的有效性。</p><p>右边这个图在 AI 文章里比较少见：纵坐标是和自然最近蛋白质不同的氨基酸数分布，最上面是自然蛋白质；中间箱体表示活性——横坐标是检测到的活性，箱体表示 25%~75% 分位点中间 50% 序列对应的活性。可以看到，哪怕有 50%~61% 甚至多一半不一样的序列，还是有相当一部分能表达；蓝色是中位数情况，红色是选择的一个强表达的例子——说明解构之后可以得到一个表达得比较好的蛋白。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那其实他在ARF3的这个研究里面，它最大的一个问题就是我们怎么去，就是怎。这个设计如果是各位去进行这样一个工作，设定这样一个非常直接的一个系统的话，怎么去怎么去评估你的这个模型。</p><p>比如说这个红色的点就是它这个自然自然蛋白质的一个分布。可以看到它分为大概这么4个cluster，对蛋白质相近的。所以说，我们的这个理功建模1自然蛋白质一个捕捉到我们系统分布以外，还在中间的这些点，可以把它捕捉到一些其他自然自然这判断是没有的一些点。</p><p>然后可以看到，他们相微统计了一下，这个能够成功表达的一个合成蛋白质的这个合同sequence的一个比例。在80%~90%相似度的这个，在80%90%，百分7080%这种比较高相似度的情况下，它可以比能够表达的，能够表达的这个比例还相对高一些。有70%。</p><p>然后，第三个实验就是说，你能表达还不行，是吧？你表达出一个蛋白质，你还得具有对应的这个方式，有对应具有对应的一个功能。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-proteinmpnn">
+  <div class="slides"><figure class="slide" id="slide-71">
+<img src="slides/slide_71.png" alt="课件第71页 Structure→Sequence：ProteinMPNN（Science 2022）">
+<figcaption><span class="sno">71</span><span class="stitle">Structure→Sequence：ProteinMPNN（Science 2022）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-72">
+<img src="slides/slide_72.png" alt="课件第72页 ProteinMPNN：order-agnostic AR decoding">
+<figcaption><span class="sno">72</span><span class="stitle">ProteinMPNN：order-agnostic AR decoding</span></figcaption>
+</figure>
+<figure class="slide" id="slide-73">
+<img src="slides/slide_73.png" alt="课件第73页 ProteinMPNN：随机解码顺序与训练采样">
+<figcaption><span class="sno">73</span><span class="stitle">ProteinMPNN：随机解码顺序与训练采样</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">23</span>
+      <div class="sec-tt">
+        <h2>ProteinMPNN：order-agnostic 解码</h2>
+        <div class="sec-meta"><span class="time">00:37:00 – 00:42:00</span><span class="chip">课件 71</span><span class="chip">课件 72</span><span class="chip">课件 73</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>最后的工作是 ProteinMPNN，2022 年发表在 Science 上。它做的是从三维蛋白质结构反推一维氨基酸序列的逆过程（inverse folding）。它里面指出了一个我们 AR 课程里没提到过的点：假设我们从三维结构中知道了中间两个位置（比如第 3 和第 4 位）是 G 和 E，如果生成过程还是从左到右，我怎么在生成过程中输入这样的先验信息？</p><p>为什么会有这样的设置？因为从三维结构反推一维序列时，三维里离得比较远的两个残基，在一维序列里可能离得很近。所以从三维结构反推，可能先推出一些中间确定的位置。但我们想生成的时候，不想从左往右生成——我们想已经知道中间信息，就从中间开始，首尾相连。</p><p>但这里有个问题：采样第一个点的时候，你不知道后面两个点。如果你按中间（G、E）开始采样，得把 G、E 当作上下文。这仍然有一个问题：你生成是这个顺序，训练的时候怎么办？肯定得加位置编码——不加位置编码你不知道位置。但除了位置编码还有一些问题：就是我们上节课说过的，AR 模型不断采样存在训练和推理不一致的情况——这里推理是随意的顺序。</p><p>那模型训练的时候就得能适应这样的顺序。这个文章采用了比较聪明的一点：它的建模虽然看起来跟 AR 的分解差不多，但其实是 p(s_πₜ | s_{π<t}, X)，π 是随机出来的解码顺序。训练的时候，对每一个序列不是从左到右预测，而是强行随机出来一个解码顺序，让模型按随机的顺序预测。这样训练时模型就见过不同的解码顺序，测试的时候你输入两个特定的点、再输入相应的解码顺序，解码效果就会更好。</p><p>最后再特别讲一下：训练的时候，既要从数据中采样训练样本，也要从 decoding order 里采样一个顺序——decoding order 也是模型的一部分。在这个采样顺序下对输入数据做训练，在这个分布下去最大化似然。这样你的模型就既能适应数据，也能适应采样的过程。大家可以想一想，这个其实已经脱离了我们 AR 模型基础理论课的范畴，涉及到比较前沿的设计。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这个是这是三一发表在32022上的那个工作，然后我想跟大家讨论一点，就是他们想做的是一个这个图，刚才咱们看过了是吧，就是从三维的蛋白质的一个结构。输出先推测先应一维的这个氨基酸序列的一个逆反向的一个过程。</p><p>假设我们从三维的结构中推导知道。比如说你，比如说你只有5排第三，我知道了，第三个位置和第四个位置。这是G和1这两氨基酸，那如果我的生成过程还是像我们一直介绍的从左到右这么生成的话。我怎么去在这种生成的过程中去输入这样的一个先验信息？</p><p>但它其实是一个派T和派小于T的一个表示。这个派是什么派？其实就是它随机出来的一扣的顺序。就是他在训练的时候，对于每一个序列，我不是从左到右的去预测，我就强行的去随机出来一个解码顺序，让我的模型从左就是按照我随机出来的一个顺序预测。</p><p>就是我们在训练的时候，既要从数据中采样我们的训练样本。也要从我们的一些一些，比如说deco order,deco order它也是我们模型的一部分，也要从就抵Co order里面采样一个。一个一个顺序，在这个采样顺序的情况下，对我们这个输入数据进行一个修理。这样在这个在这个分布下去最大化一式，那你的这个模型就既能适应数据，也能适应他的这个采样的过程。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（生成式模型与科学智能应用）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>

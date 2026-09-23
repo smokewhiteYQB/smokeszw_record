@@ -1,0 +1,7 @@
+# course-notes 网站仓库忽略文件
+# 本目录是完整的可部署站点，正常 git add . 即可；
+# 以下仅为开发中可能产生的临时产物。
+
+_shots/
+_preview/
+_backup/

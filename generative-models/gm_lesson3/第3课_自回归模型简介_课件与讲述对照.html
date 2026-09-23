@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>生成式模型与科学智能应用 · 第3节 自回归模型（上）：基础与常见架构｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>生成式模型与科学智能应用 · 第3节 自回归模型（上）：基础与常见架构</h1>
+    <div class="sub">第3节 自回归模型（上）：基础与常见架构 ｜ 2026-09-15 ｜ 刘云帆</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 40 页 · 整理 17 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-open">01 开场与课程安排</option>
+<option value="sec-recap">02 上节课回顾：从三要素到参数化</option>
+<option value="sec-roadmap">03 路线图与本节计划</option>
+<option value="sec-intro-ar">04 什么是自回归：Next Token Prediction 与拆文解字</option>
+<option value="sec-flexible">05 AR 分解：灵活性与无近似</option>
+<option value="sec-bias1">06 归纳偏置：时序与空间排序</option>
+<option value="sec-bias2">07 归纳偏置：VAR 与相似参数化</option>
+<option value="sec-one-dist">08 一个条件分布的表示</option>
+<option value="sec-mnist">09 任务设定：MNIST 手写数字</option>
+<option value="sec-logistic">10 逻辑回归实现 AR 模型</option>
+<option value="sec-fvsbn">11 FVSBN：最简单的 AR 模型</option>
+<option value="sec-mlp">12 从逻辑回归到 MLP：非线性与共享权重</option>
+<option value="sec-nade">13 NADE 与灰度图像扩展</option>
+<option value="sec-ae">14 AR 模型 vs 自编码器</option>
+<option value="sec-made">15 MADE：掩码自编码器</option>
+<option value="sec-framework">16 三种框架对比：多网络 vs 单网络</option>
+<option value="sec-arch">17 常见架构总览与下节预告</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 Lecture3_Autoregressive_Models.pdf 逐页渲染，转写原文见 record_20260915.txt。</div>
+<section class="sec" id="sec-open">
+  <div class="slides"><figure class="slide" id="slide-01">
+<img src="slides/slide_01.png" alt="课件第1页 封面：Lecture 3 Autoregressive Models">
+<figcaption><span class="sno">01</span><span class="stitle">封面：Lecture 3 Autoregressive Models</span></figcaption>
+</figure>
+<figure class="slide" id="slide-02">
+<img src="slides/slide_02.png" alt="课件第2页 Announcements：9/20 补课、作业一发布、GPU 使用">
+<figcaption><span class="sno">02</span><span class="stitle">Announcements：9/20 补课、作业一发布、GPU 使用</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>开场与课程安排</h2>
+        <div class="sec-meta"><span class="time">00:00:00 – 00:02:00</span><span class="chip">课件 1</span><span class="chip">课件 2</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>咱们这节课就针对其中最简单最直接的一种建模方式，就是标题里写的自回归模型（AR 模型）。虽然它说起来简单直接，但其实是现在最常见、也最重要的一类生成模型。</p><p>上课之前，按老惯例先说一下课程安排。第一件事，提醒大家：这周日 9 月 20 号是要补课的。咱们这个课周二、周四一共也没上几节，现在还排在周日补课，所以后排课的时候大家好好看一下日历，随时别忘了。</p><p>第二件事，作业一应该在这一周发布，给大家多一点时间做，大概在 11 号之后提交。如果大家有 GPU 使用的问题，需要尽快开始。另外官网会上线更新，到时候会给大家说。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这节课我们就针对其中最简单最直接的一种，一种分类方式所对应的一种模型进行介绍，就是写的这个关系种的一四回规模型或者AR模型。虽然说这个模型非常简单和直接，但是是现在最常见或者最最重要的一点。</p><p>首先是提醒大家，这一周这周日的9月20号好像是有课程吧。咱们这个课周二周四好像一共这么多假期，一共也没充到几节，而现在还子在那个最一开始的周日补课，所以后排课的时候可能还得教你好好看一下这个日历，随时别忘了。</p><p>然后，第二点就是我们的作业，一次作业可能在这一周要要一出来，然后能给大家多一点时间来做吧，大概在这个11之后去。然后如果大家对个GPU使用一问要话需要尽快开始。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-recap">
+  <div class="slides"><figure class="slide" id="slide-03">
+<img src="slides/slide_03.png" alt="课件第3页 Recap：统计机器学习的三要素">
+<figcaption><span class="sno">03</span><span class="stitle">Recap：统计机器学习的三要素</span></figcaption>
+</figure>
+<figure class="slide" id="slide-04">
+<img src="slides/slide_04.png" alt="课件第4页 Recap：链式法则——联合分布的无损分解">
+<figcaption><span class="sno">04</span><span class="stitle">Recap：链式法则——联合分布的无损分解</span></figcaption>
+</figure>
+<figure class="slide" id="slide-05">
+<img src="slides/slide_05.png" alt="课件第5页 Recap：参数化概率表示——逻辑回归的线性依赖">
+<figcaption><span class="sno">05</span><span class="stitle">Recap：参数化概率表示——逻辑回归的线性依赖</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>上节课回顾：从三要素到参数化</h2>
+        <div class="sec-meta"><span class="time">00:02:00 – 00:06:30</span><span class="chip">课件 3</span><span class="chip">课件 4</span><span class="chip">课件 5</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>正式进入这节课内容之前，先回顾一下上节课。上节课我们从统计机器学习的三要素出发：第一个是模型或者模型组合，它定义了我们能表示什么样的分布；之后对应的是学习准则，以及用什么算法去优化。这两个问题我们可能会在周日的课上再整理。</p><p>上节课结束以后，有同学问我说最后有一部分讲得不是很清楚——时间不太够，讲得有点跳跃。所以这节课一开始，正好从上节课结尾的地方再给大家稍微讲清楚一点，作为复习和引入。</p><p>上节课最后我们得到了：所谓建模，其实就是对数据联合分布的一个分解。通过一个完全通用的分解——就是链式法则——没有任何额外的假设或限制，可以把它展开成这个形式。这个分解没有任何信息损失，但它的一个问题就是参数是指数级的。</p><p>那我们想提供一种方法来降低参数量，用一种可实现的方式来表示条件分布。我们讲了一种现在可能不太常用、但比较直观的方法，就是 CPD——条件概率表（CP table），一种查表的方式。但它的第一个问题是：变量之间内部的依赖关系我们其实是不知道的，除非借助经验知识；第二个问题是：变量一多，取值范围和组合数就爆炸了。</p><p>为了解决这个问题，我们最后引入了参数化方法，也就是现在都在用的：不借助任何先验知识，强行把条件分布参数化成一个形式，通过学习来优化参数。这样简化之后，一方面不需要先验知识，另一方面参数量跟我们变量的取值、变量多少没有关系，只跟参数化的方式有关。</p><p>上节课最后还稍微讲了一下 logistic——其实它就是最简单的一种条件分布参数化形式：把输入做线性加权求和、编码，再过 sigmoid 输出概率。它本身也可以看作一种生成模型。最后留了个问题：为什么还要讨论神经网络？每一步简化都降低了参数量，但同时也限制了模型的表达能力——没有一劳永逸的做法，分布足够复杂的时候，简单的参数化不一定能拟合好。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>首先，上节课我们从这个最开始的从一统计机器学习的三要素，所从三要素出发，引出了我们要讨论的内容，它生成模型，它也是机器学习模型中的一种嘛。</p><p>那上节课最一开最最后的时候，我们得到了就是入包括企业这一三对们所谓的深入，其实就是对我们的一个数据的联合分布。我们通过一个数据的变化，完全是完全这种加入通用一的变化，没有任何额外的额外的这个假设或者等等一些其他的一些限制，然后可以把它改开成这个形式。</p><p>我们讲了一种可能现在不是很常用，但是比较直观的方法，就是一个CPD的方式，就是1用conditional PB table一种查表look看table概率。那为了解决这个问题，我们最后其实才才引入了这种参数化方法，就我们最最现在都使用一种。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-roadmap">
+  <div class="slides"><figure class="slide" id="slide-06">
+<img src="slides/slide_06.png" alt="课件第6页 Roadmap：课程路线图">
+<figcaption><span class="sno">06</span><span class="stitle">Roadmap：课程路线图</span></figcaption>
+</figure>
+<figure class="slide" id="slide-07">
+<img src="slides/slide_07.png" alt="课件第7页 Lecture Outline：本节计划">
+<figcaption><span class="sno">07</span><span class="stitle">Lecture Outline：本节计划</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>路线图与本节计划</h2>
+        <div class="sec-meta"><span class="time">00:06:30 – 00:07:30</span><span class="chip">课件 6</span><span class="chip">课件 7</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>今天讨论的内容，还是我们这节课整个路线图的第一部分。上次我们讨论怎么建模，这节课我们讨论其中一种有代表性的建模方法——自回归模型。这个可能要讲两节课；最后一节课会讲建模之后再怎么训练，介绍一些比较常见的训练方法。</p><p>这是这节课的计划：第一部分简单介绍一下 AR 模型；第二部分介绍一些基础的 AR 模型。我们可能讲不完，讲到哪算哪。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>然后，我们今天讨论的一些内容，还是我们这节课整个的这个路线图的第一部分。刚才上次我们是讨论怎么去建模，对吧？然后，这节课我们讨论其中一种比较代表性的建模方法，就是这个自回归的模型，然后可能会讲两节课。</p><p>好，这是我们这节课的一个一个计划，我们可能讲不完，然后我们讲到哪，大概大概讲到哪就算哪。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-intro-ar">
+  <div class="slides"><figure class="slide" id="slide-08">
+<img src="slides/slide_08.png" alt="课件第8页 Introduction：Next Token Prediction">
+<figcaption><span class="sno">08</span><span class="stitle">Introduction：Next Token Prediction</span></figcaption>
+</figure>
+<figure class="slide" id="slide-09">
+<img src="slides/slide_09.png" alt="课件第9页 Autoregression (自回归) = Auto + Regression">
+<figcaption><span class="sno">09</span><span class="stitle">Autoregression (自回归) = Auto + Regression</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>什么是自回归：Next Token Prediction 与拆文解字</h2>
+        <div class="sec-meta"><span class="time">00:07:30 – 00:09:30</span><span class="chip">课件 8</span><span class="chip">课件 9</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>AR 模型大家可能已经不陌生了——现在最常见的大语言模型，比如 GPT，核心就是 next token prediction：给定现在已经有的内容、历史或者代码，模型给出接下来的回复。</p><p>如果深入解释一下，可以从拆文解字的角度看：autoregression 是 Auto + Regression 两个词组成。Auto 就是 self——用我们自己的输出作为输入来做下一步预测；Regression 在机器学习里大家应该都熟悉。所以合起来就是自回归的意思。</p><p>需要特别说明的是：这种 progressive 的性质，描述的是我们建模、推理、预测采样时的一个性质，并不是训练时候的性质。训练的时候它不是这样逐步进行的，而是用一种叫 teacher forcing 的方式、或者说是并行的方式去训练。它虽然高效，但是有什么问题，我们留到课程后面再解释。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>一经很常见的就是我们最常见的这种大语言模型的基础，比如说这个GPT，或者大家可能接触过这种next ton predict connection的一个概念。</p><p>那如果我们想再深入的解释一下呢，其实我们还可以从说文解字的这个拆文解字的一个角度去说明。就比如说question是一个中回归实有两个两分组合，一个是一是所当于比如说aation和自动化。</p><p>那需要向大家说明的是，这种PS的模型，它其实是描述了我们建模，或者是我们在分就是推理的时候，或者在预测采样的时候，一个一个性质。但并不是我们训练的时候的一个性质。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-flexible">
+  <div class="slides"><figure class="slide" id="slide-10">
+<img src="slides/slide_10.png" alt="课件第10页 Autoregressive Models：条件分布乘积">
+<figcaption><span class="sno">10</span><span class="stitle">Autoregressive Models：条件分布乘积</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>AR 分解：灵活性与无近似</h2>
+        <div class="sec-meta"><span class="time">00:09:30 – 00:12:00</span><span class="chip">课件 10</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>AR 模型就是把联合分布写成条件分布的乘积：第二个变量依赖于第一个变量，之后一直依赖前面所有变量。大家可能觉得这隐含了对数据的一些要求，但其实它非常灵活。</p><p>数据本身并不一定非得是序列——你可以强行把任何数据拆成序列的形式，用 AR 模型建模，这只是建模方式的要求。划分方向也是可以反过来的：文本可以从最后一个词开始建模，让前面的词依赖于后面的词——当然那样拟合可能会非常困难，因为数据自身的属性是前面的词决定后面的词，但你没有天然的限制说不能这么做。</p><p>每个维度可以是单变量也可以是向量；条件分布可以是任意分布——CP 表、参数化神经网络、甚至决策树都可以。变量可以是离散的、连续的或者混合的，都没有问题。</p><p>关键的一点：AR 分解本身不是近似，它是链式法则的应用，任何联合分布都可以写成这种拆解形式。真正的问题在于怎么对数据分解、怎么建模任务，让它符合这个形式——不同的拆解方式，对每个条件分布拟合的难易影响很大。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>然后之后就是对，接下来就是对我们这个AR11011这一，第二个变量依赖于第一个变量，然后之后一直依赖于前面变量。它给写成这样一个分布式。大家可能看的话，会觉得它隐含了一些一些对我们数据的要求，但是其实我在这里跟大家说一下，其实它还是非常的一个灵活。</p><p>你的数据本身并不一定非得是游戏。我可以强行把它拆成一种水归头的形式，这种序列的形式，然后强行用个AR模型对它进行建模，这个是完全可以的，这只是我建模方式的一个要求。</p><p>刚才说了这个AR的分解，它本身这种概率联合概率的分解，它本身并不是一种近似，它是完全数学上一个全能的概念，它是一个链式法则的一个应用。所以说，任何一联合分布其实都可以写成这样一个拆解的形式。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-bias1">
+  <div class="slides"><figure class="slide" id="slide-11">
+<img src="slides/slide_11.png" alt="课件第11页 Inductive Bias：定义与诱导简单分布">
+<figcaption><span class="sno">11</span><span class="stitle">Inductive Bias：定义与诱导简单分布</span></figcaption>
+</figure>
+<figure class="slide" id="slide-12">
+<img src="slides/slide_12.png" alt="课件第12页 Inductive Bias：时序建模">
+<figcaption><span class="sno">12</span><span class="stitle">Inductive Bias：时序建模</span></figcaption>
+</figure>
+<figure class="slide" id="slide-13">
+<img src="slides/slide_13.png" alt="课件第13页 Inductive Bias：空间排序（图像分块）">
+<figcaption><span class="sno">13</span><span class="stitle">Inductive Bias：空间排序（图像分块）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>归纳偏置：时序与空间排序</h2>
+        <div class="sec-meta"><span class="time">00:12:00 – 00:17:00</span><span class="chip">课件 11</span><span class="chip">课件 12</span><span class="chip">课件 13</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>有些分解方式会更好地拟合数据，这背后就是归纳偏置（Inductive Bias）的概念。归纳偏置就是模型或学习算法自带的一些隐含假设，指导它从有限的训练数据推广到没见过的数据。</p><p>比如用时序建模语言或语音的时候，沿着时间顺序建模是符合数据本身的：语言里每个词都依赖于前面的词。但并不是所有数据都有这种自带的顺序——图像就没有。</p><p>但图像也照样可以用 AR 建模：把图像划分成大大小小的块，按某种顺序排列，做分解。这时候不同的顺序就代表不同的隐含假设。比如你从左上角一行行扫下来，第一列的第二个块和第一行的第二个块——它们在空间上是紧邻的、相关性很高，但在你的序列里却离得很远。你就强行让模型去拟合一个很随机、很难拟合的依赖关系。</p><p>也有一些工作去预测下一个块到底离当前块多远、预测一个偏移量，这种建模方式提升了灵活性，但参数量很大、复杂度高。这里想说的是：数据和建模方式的偏置最好能对齐——你总不能一直强迫模型去拟合不自然的关系，那样训练肯定很难。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那AR分布它的这个单，就是我们的这个变量之间的依赖关系是吧，它有一个顺序的一个依赖关系。比如说在我们用持续建模的时候，对建模我们一个语言或者是一个一段speech一段这个语音的话，那你沿着时序，刚才说了，沿着这个时间的顺序对它进行建模，它是比较比较符合我们的编码分解的对吧。</p><p>但是其实并不是所有的，我们想建模所有的数据都有这种自身的这种数据性质，对吧，比如说我们的图像。对于一个图像来说，它本身它空间就没有一个自带的顺序。</p><p>就这一块跟这一块离有太远了吧，就是说在不是不是我说的是第一列单一排和第二排的量。的这个看，他们两个在空间上是紧邻的，他们应该相关性很高，但是他们的这VR里面离更远。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-bias2">
+  <div class="slides"><figure class="slide" id="slide-14">
+<img src="slides/slide_14.png" alt="课件第14页 Inductive Bias：VAR（next-scale 预测）">
+<figcaption><span class="sno">14</span><span class="stitle">Inductive Bias：VAR（next-scale 预测）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-15">
+<img src="slides/slide_15.png" alt="课件第15页 Inductive Bias：相似参数化与共享架构">
+<figcaption><span class="sno">15</span><span class="stitle">Inductive Bias：相似参数化与共享架构</span></figcaption>
+</figure>
+<figure class="slide" id="slide-16">
+<img src="slides/slide_16.png" alt="课件第16页 Inductive Bias：分解无近似，实现引入近似">
+<figcaption><span class="sno">16</span><span class="stitle">Inductive Bias：分解无近似，实现引入近似</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div class="sec-tt">
+        <h2>归纳偏置：VAR 与相似参数化</h2>
+        <div class="sec-meta"><span class="time">00:17:00 – 00:20:30</span><span class="chip">课件 14</span><span class="chip">课件 15</span><span class="chip">课件 16</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>其实我们的 order 并不一定要建在数据本身的维度上，可以建在其他的维度上。大家可能见过一个 2024 年的工作，叫 VAR——它观察到图像有不同的尺度，那既然不能去预测下一个 patch，就可以把图像构造成一个二维的 AR 模型：从前一个尺度预测下一个尺度，再从下一个尺度预测再下一个尺度，让输出分辨率越来越高。这就等于强行给图像赋予了 AR 的一种性质。</p><p>另外，有些分解可以导出更简单的分布，有些分解允许我们用更相似的实现。把 AR 分解写成这个形式，其实每一个条件分布都是不同的映射。如果每个分布都用不同的模型拟合，参数量就太大了。所以我们想用一个同样的模型去建模所有这些条件分布。</p><p>但这件事本身也需要归纳偏置的配合：x2 依赖 x1 的关系，和 xn 依赖前面所有变量的关系，未必一样。所以最好把分解设计成具有同样依赖性的形式。最后总结一下：数学分解本身没有任何近似，但实现方式、数据本身自带的性质，都会引入近似的成分——所以表示和表示之间是不一样的。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那其实我们的order并不一定要建模在我们数据本身的这个表中的维度上，对吧。我们其实可以建模在一些其他的其他的维度上，就是相当于就是可能大家见过一个，他是我们这个2024里边的，他这个工作叫VR这个工作。</p><p>我们既然不能去predict ma PS或者predict ma PA,我们可以把它把图像给它结构成二维的一个AR的一个方法，一个一个一个模型，对吧？我们在scale就图像它是有不同的scale，它有不同的尺度的，那么们可以从前一个尺度去预测下一个尺度。</p><p>所以说，我们最终的想法就是我们想用一个同样一个模型去建模所有的这种。但是其实这个事儿，其实本身它也是一个相当于是也是一也一快一，就是按理说你这种分解，你并不一定自然而然的导出一个，可以用同一样一个模型去拟合的这样一个分解。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-one-dist">
+  <div class="slides"><figure class="slide" id="slide-17">
+<img src="slides/slide_17.png" alt="课件第17页 Representing One Distribution：一个条件分布的表示">
+<figcaption><span class="sno">17</span><span class="stitle">Representing One Distribution：一个条件分布的表示</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">08</span>
+      <div class="sec-tt">
+        <h2>一个条件分布的表示</h2>
+        <div class="sec-meta"><span class="time">00:20:30 – 00:21:30</span><span class="chip">课件 17</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>如果我们不再关注分解，而是关注每一个小的条件分布：输入是从 x1 到 x_{i-1} 的历史，输出是 x_i 的一个条件分布。这个输出可以是连续的，也可以是离散的。</p><p>现在更多的模型关注离散输出——语言模型就是在词表上预测下一个词是哪一个类。如果关注离散分布的话，这个网络就表现得像一个分类网络：基于之前的输入去预测下一个类别。这也是为什么我们下一部分要讲 logistic——接下来马上就会用到。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那如果我们不再关注分解，而是关注每一个小的这个条件分布的话，我们可以它的分布其实本身也是非常的灵活的，我们的输入是这个从。那它输出呢，可以是连续的，也可以是离散的。</p><p>那如果是如果是我们关注这个离散的一个输出一个分布的话，那它的其实这个网络它的表现的相当于是一个是一个分类的网络，对吧？建基于我们之前的这个输入，然后去预测下一个的下一个的类。这问题就是为什么我们下节课要讲一个logisticion。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-mnist">
+  <div class="slides"><figure class="slide" id="slide-18">
+<img src="slides/slide_18.png" alt="课件第18页 A Toy Example on MNIST：手写数字任务">
+<figcaption><span class="sno">18</span><span class="stitle">A Toy Example on MNIST：手写数字任务</span></figcaption>
+</figure>
+<figure class="slide" id="slide-19">
+<img src="slides/slide_19.png" alt="课件第19页 Recall：Neural Networks for Classification">
+<figcaption><span class="sno">19</span><span class="stitle">Recall：Neural Networks for Classification</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">09</span>
+      <div class="sec-tt">
+        <h2>任务设定：MNIST 手写数字</h2>
+        <div class="sec-meta"><span class="time">00:21:30 – 00:23:30</span><span class="chip">课件 18</span><span class="chip">课件 19</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>接下来进入第二部分，介绍一些基础的 AR 模型——看看 AR 模型从头开始是怎么构造的。这些模型现在可能已经不太常用了，但对理解 AR 本身的性质会很有帮助。</p><p>我们考虑 MNIST 手写数字生成任务：28×28 的图像，也就是 784 个变量，每个变量是一个二值（白/黑）的随机变量。我们希望用一个分布去表示这 784 个变量的联合分布，然后用 AR 模型去建模它。</p><p>具体怎么做？就是把联合分布参数化：每个条件分布用参数化的形式表示。如果大家还记得上节课提到的内容，我们可以用最简单的方法——一种线性参数化的编码方式，得到某个像素是白还是黑的概率。换句话说，这个模型假设不同维度之间的关系是线性的——当然这不一定是数据本身的属性，是我们的参数化选择限制了它只能捕捉线性关系。</p><p>也可以用更复杂、参数更多的方法引入非线性，比如三层 MLP：输入先过一个隐层、激活，得到隐藏表示 H，再和权重加权组合、再过激活函数，通过两层非线性变换得到输出。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那我们这节课还是来考虑这个M手写数据集的，手写数字的这个这个这个图像的生成的一个任务。这样一个图像跟大家复习一下，它就是一对20的数学数字的图像，然后每个图像它是一个28×28。</p><p>换句话说，就是这个模型，它假设我们这个不同维度之间它的变量的关系是线性的，它不一定是线性，对吧？但是我们的参数化的这种选择，使得我们只能捕捉它之间线性的一个关系。</p><p>当然我们可以用一用一些更更复杂的，更这个更多参数的一些方法，来引入一些天线性的模型，比如说我们可以用一个MLP三层的NLP给他进程对吧。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-logistic">
+  <div class="slides"><figure class="slide" id="slide-20">
+<img src="slides/slide_20.png" alt="课件第20页 Logistic Regression-based Models：选定排序">
+<figcaption><span class="sno">20</span><span class="stitle">Logistic Regression-based Models：选定排序</span></figcaption>
+</figure>
+<figure class="slide" id="slide-21">
+<img src="slides/slide_21.png" alt="课件第21页 Logistic Regression-based Models：链式分解">
+<figcaption><span class="sno">21</span><span class="stitle">Logistic Regression-based Models：链式分解</span></figcaption>
+</figure>
+<figure class="slide" id="slide-22">
+<img src="slides/slide_22.png" alt="课件第22页 Logistic Regression-based Models：784 维太复杂">
+<figcaption><span class="sno">22</span><span class="stitle">Logistic Regression-based Models：784 维太复杂</span></figcaption>
+</figure>
+<figure class="slide" id="slide-23">
+<img src="slides/slide_23.png" alt="课件第23页 Logistic Regression-based Models：CPT 与 logit 参数化">
+<figcaption><span class="sno">23</span><span class="stitle">Logistic Regression-based Models：CPT 与 logit 参数化</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">10</span>
+      <div class="sec-tt">
+        <h2>逻辑回归实现 AR 模型</h2>
+        <div class="sec-meta"><span class="time">00:23:30 – 00:28:00</span><span class="chip">课件 20</span><span class="chip">课件 21</span><span class="chip">课件 22</span><span class="chip">课件 23</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>参数化方法在 AR 模型里其实不是最重要的，重要的是把数据设置成一种顺序、进行分解，再用参数化方法去建模。对 MNIST，我们选一个 raster scan（光栅扫描）顺序：从左上角的 x1 到右下角的 x784，一行行扫下来。</p><p>确定排序以后，每个像素和它之前变量的依赖关系就可以写成链式分解的形式——这就是最简单的 AR 模型。联合分布写出来以后，784 个变量的条件分布如果用查表（CP table）表示，那只能是一个天文数字，所以最简单的方法就是把每个条件分布参数化。</p><p>第一个不是条件分布，是先验分布 p(x1)——它还可以用一个参数、一个 CPT 来表示，就是一个伯努利分布。之后比如 x2 的条件分布：把 x1 乘以权重、加上偏置，经过 sigmoid 函数得到 x2 是 1（黑）还是 0（白）的概率。x3 就依赖 x1 和 x2，把它们线性组合加偏置，再过 sigmoid。</p><p>这就是 AR 最简单的实现：依赖于之前的数据输入，预测当前输出的概率。每个变量的分布都是一个条件的伯努利分布，之后我们会不断用这种形式。它也可以从重建（reconstruction）的角度去看——基于之前的输入对当前像素做重建，后面我们还会再讲。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>比如说，我们这对，然后用这个模型去拟和相应像素之间这样一个。叫是用的一个一个顺序。他这里写的，这里展示的是一个灰度图，我没有找到一个比较好的一个黑白图像让大家展示，大家可以先理解一。</p><p>所以一个它其实是在我一的图像建模中比较比较简单一些情况是吧，是从左上角一直到右下角这么一行一行一行给它扫下来。这样一个人。然后确定了这个欧以后，我们可以就可以写出相应相应的分布。</p><p>那X3的话，X3的话就是它依赖1X1和X2，就相当于把X1X2给它线程组合以后，再加一个偏值量。它的这个加求和之后，再经过这个C摩尔的激活，就得到我们这个3的分布。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-fvsbn">
+  <div class="slides"><figure class="slide" id="slide-24">
+<img src="slides/slide_24.png" alt="课件第24页 FVSBN：计算图">
+<figcaption><span class="sno">24</span><span class="stitle">FVSBN：计算图</span></figcaption>
+</figure>
+<figure class="slide" id="slide-25">
+<img src="slides/slide_25.png" alt="课件第25页 FVSBN：如何评估似然">
+<figcaption><span class="sno">25</span><span class="stitle">FVSBN：如何评估似然</span></figcaption>
+</figure>
+<figure class="slide" id="slide-26">
+<img src="slides/slide_26.png" alt="课件第26页 FVSBN：如何采样">
+<figcaption><span class="sno">26</span><span class="stitle">FVSBN：如何采样</span></figcaption>
+</figure>
+<figure class="slide" id="slide-27">
+<img src="slides/slide_27.png" alt="课件第27页 FVSBN：Caltech 101 Silhouettes 结果">
+<figcaption><span class="sno">27</span><span class="stitle">FVSBN：Caltech 101 Silhouettes 结果</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">11</span>
+      <div class="sec-tt">
+        <h2>FVSBN：最简单的 AR 模型</h2>
+        <div class="sec-meta"><span class="time">00:28:00 – 00:33:00</span><span class="chip">课件 24</span><span class="chip">课件 25</span><span class="chip">课件 26</span><span class="chip">课件 27</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>这个模型叫 FVSBN——Fully Visible Sigmoid Belief Network，可以说是最简单的一种 AR 模型实现，一个比较经典的原型。它的计算图就是：x1 的边缘分布不依赖任何输入；x2 的条件分布依赖 x1；x3 依赖 x1、x2；x4 依赖前三个。每个条件分布都写成这种 sigmoid 参数化的形式。</p><p>给定这样一个模型，怎么计算一个数据的似然？就是把所有的条件分布都算出来、乘起来——就是刚才说的分解形式。比如给定一个 784 维的图像，它的似然就是把所有条件概率连乘起来。</p><p>怎么采样？AR 模型采样的特点就是必须一个一个来：先从 x1 的先验伯努利分布采样，把结果作为第二个条件分布的输入，采样得到 x2，再一直输进去得到 x3……所以 AR 模型的采样复杂度一定是 O(N)，必须逐步进行。</p><p>这个模型有多少参数？上节课算过：1 + 2 + … + N，约二分之一 N 平方的参数量——第一个条件需要 1 个参数，第二个 2 个，第三个 3 个……如果用 logistic 参数化，它就跟参数维度有关，是一个 N 平方量级的参数量。</p><p>虽然模型很简单，但它是可以训练的。这里展示的是它在 Caltech 101 Silhouettes（轮廓）数据集上的结果：只用轮廓图像训练，采样出来是外黑内白、有轮廓但很模糊的样子——它只学到了一个大概的形态。至于怎么评价模型好坏，这不是这节课的内容，后面再解释。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那其实刚才这些都比较简单是吧，我看大家都好像也比较熟，比较熟悉的样子。那其实它就对应着我们一个。它其实也是一个AR模型的一个一个一个实，它其实一个比较经典的原型，可是可以说是最简单的一种AR模型实现，它叫一个full VC1的个模一计算。</p><p>其实其他所谓的自然就是计算它每一个，它取到每一个，我们给定了谁的概率，对吧，其实对于g AR模型的话，我们就是把所有的这种条件分布全都给计算出来，然后乘下来就可以。</p><p>所以说，我们这个AR模型的采样，它的复杂度一定是O，它一定是一个一个一个进行采样。</p><p>比如说这样一个模型，它具有多少的参数？其实我们上节课已经计算出来，它就是1+211直加到后面，等12分之N方一个3数量1分1需要一个参数是吧？第二项是它需要两个参数。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-mlp">
+  <div class="slides"><figure class="slide" id="slide-28">
+<img src="slides/slide_28.png" alt="课件第28页 From Logistic Regression to MLP：非线性增强">
+<figcaption><span class="sno">28</span><span class="stitle">From Logistic Regression to MLP：非线性增强</span></figcaption>
+</figure>
+<figure class="slide" id="slide-29">
+<img src="slides/slide_29.png" alt="课件第29页 From Logistic Regression to MLP：共享权重">
+<figcaption><span class="sno">29</span><span class="stitle">From Logistic Regression to MLP：共享权重</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">12</span>
+      <div class="sec-tt">
+        <h2>从逻辑回归到 MLP：非线性与共享权重</h2>
+        <div class="sec-meta"><span class="time">00:33:00 – 00:40:00</span><span class="chip">课件 28</span><span class="chip">课件 29</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>下课之前再给大家介绍一个改进方法。刚才的方法用 logistic 参数化条件分布，太简单了——它只能捕捉数据不同维度之间的线性关系。我们可以用三层 MLP 来提升它的非线性。</p><p>把参数化改成三层 MLP（一个隐层）以后，数学表达式还是这种 sigmoid 形式的条件分布，但参数变复杂了：隐层是输入变量到隐层的映射，把 x_i 之前的所有变量做线性组合、加偏置、再过激活函数；输出层是隐层到输出之间的一组参数 α 和 β。隐层只看到 x_i 之前这些变量——这就是它 AR 自回归性质的体现。</p><p>如果把隐层的计算写成矩阵形式：比如 h2 是 x1 乘一个矩阵、加偏置再过激活；h3 是 x1、x2 分别乘不同行再加偏置……看起来直接，但计算复杂度变高了。最复杂的是这个矩阵——它的维度跟输入变量的数量相关，是 N×D 的参数量（N 是输入变量数，D 是隐层维度），总计算复杂度是 N 平方量级。</p><p>N 平方量级的复杂度还是太高，我们可以考虑：这些参数是不是都必须。其实不用——在计算第二个、第三个隐变量时虽然用了不同的参数，但如果从第一个维度去提取特征，完全可以复用这个矩阵的第一列。把权重共享（shared weights）以后，就可以把第一层的参数合并成一个大矩阵，每个小矩阵只用它前几列：输入 1 维用第 1 列，输入 2 维用前 2 列，输入 3 维用前 3 列。</p><p>这里注意：输入层到隐层的权重做了复用，但隐层到输出层没有复用——α_i、β_i 对每个条件分布还是不一样。为什么这么设计？这本身就是一个确实存在的模型的设计。大家可以想一想：输入层到隐层是对输入特征做提取，作用差不多，可以共享；输出层每个条件分布对应不同的输出，参数自然应该不同。</p><p>共享以后的计算复杂度：最大的参数来源还是那个矩阵，只不过我们不用维护 N 个不同的矩阵，只维护一个 N×D 的大矩阵就行了。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>然后在第一节课下课之前，我想在讨论再给大家介绍一个改进的一个方法，就是一个刚才我们说了这个方法，它是利用这个log实现的这个。条件分布的一个参数化，对吧？一个最简单的方法其实就是把这个它太简单了，它是一个线，一个线性的一个，它是捕捉到了这个数据不同维度线性一关，然后把它给给提升它的这个非线性性。</p><p>那如果我们把这个隐藏的导数给写成矩阵的形式写出来的话，那它就是原形成这样一形式。比如说，第二个变量，这个H2这个地方，第二个网络，它的隐藏就是我们把S1给输入给它进行用2×2再加1偏项，再经过一个CH2。</p><p>所以说，如果我们在不同的数据的维度去做一个微的话，我们可以很大成度上去减少一简化一个成本，比如说我们原来的原来这个数学本能是这样的。我们把它进行一个微share的话，就可以把第一层。给，把这些A给它合并起来，用一个大矩阵的前几列来表示。</p><p>另外跟大家讲一下，在这个参数化的情况下，虽然说我们在输入从输入输入层到隐层之间的这个权重进行了复用，但是从隐层到输出层。在这一点，在隐层到输出层并没有进行复用。就如说阿尔法I跟BI还是1，阿尔法2跟BI对于每个普通的I还是不一样。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-nade">
+  <div class="slides"><figure class="slide" id="slide-30">
+<img src="slides/slide_30.png" alt="课件第30页 NADE：采样结果与条件概率">
+<figcaption><span class="sno">30</span><span class="stitle">NADE：采样结果与条件概率</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">13</span>
+      <div class="sec-tt">
+        <h2>NADE 与灰度图像扩展</h2>
+        <div class="sec-meta"><span class="time">00:40:00 – 00:42:00</span><span class="chip">课件 30</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>下课之前再给大家留一个问题：我们目前建模的还是二值（黑白）图像，怎么把它改成灰度图？所谓改成灰度图，就是把每个条件分布从伯努利分布改成一个分类分布——256 个类别（每个像素 256 个灰度级别）。</p><p>这里就是 NADE（Neural Autoregressive Density Estimation）的采样结果：左边是训练好的改进模型采样出来的图，可以看到有一些离散的点、不连续的情况；右边是每个样本对应的条件概率——每个位置每个像素取值的分布。对比一下：右边更模糊、更连续、更自然一点；左边斑斑驳驳的，是因为它是从右边这个分布中采样得到的。</p><p>好，那咱们先下课休息一会儿，等会儿我们再讲最后一部分。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那所谓结构灰改成灰度图的模型，就是把我们这个条，把我们这个条件分布，把从一个2分布波动利的分布给它改成一个一个分类分布改成1，可那这样的话，我们就把这个地方从改成一个ma，可把它收购了256个G。</p><p>左边是刚才训练刚才讲的这个改进模型一个采样的结果，那这个二值可以看到它有一些离散的一个点不连续的情况出现。右边是它的每个样本相对应的样本，它的这个条件的分布。</p><p>好像是右边更模糊，更更连对更模糊更连续一点是吧，好像更更自然一点。左边的这个图好像这个斑弯驳驳的一个点。好，那咱们先下课休息一会儿，大家一会有点累了，等一后我们再讲一个痛。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-ae">
+  <div class="slides"><figure class="slide" id="slide-31">
+<img src="slides/slide_31.png" alt="课件第31页 AR Models vs. Auto-encoders：结构对比">
+<figcaption><span class="sno">31</span><span class="stitle">AR Models vs. Auto-encoders：结构对比</span></figcaption>
+</figure>
+<figure class="slide" id="slide-32">
+<img src="slides/slide_32.png" alt="课件第32页 Autoencoder：组成与目标函数">
+<figcaption><span class="sno">32</span><span class="stitle">Autoencoder：组成与目标函数</span></figcaption>
+</figure>
+<figure class="slide" id="slide-33">
+<img src="slides/slide_33.png" alt="课件第33页 AR 与 AE 的主要区别">
+<figcaption><span class="sno">33</span><span class="stitle">AR 与 AE 的主要区别</span></figcaption>
+</figure>
+<figure class="slide" id="slide-34">
+<img src="slides/slide_34.png" alt="课件第34页 AR 模型 = 做预测重建的 Autoencoder">
+<figcaption><span class="sno">34</span><span class="stitle">AR 模型 = 做预测重建的 Autoencoder</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">14</span>
+      <div class="sec-tt">
+        <h2>AR 模型 vs 自编码器</h2>
+        <div class="sec-meta"><span class="time">00:00:00 – 00:10:00（休息后）</span><span class="chip">课件 31</span><span class="chip">课件 32</span><span class="chip">课件 33</span><span class="chip">课件 34</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>接下来给大家展示的就是 AR 模型和 autoencoder 的对比。把刚才介绍的两个 AR 模型和一个典型的 autoencoder 摆在一起看，从实现的角度、表面上来看其实很像：输入和输出都是 N 维的，输入输出之间都有一种重建的关系——AR 模型输出的是每个变量的概率。</p><p>先给大家复习一下 autoencoder：编码器对输入变量做加权求和、再对结果做变换，得到隐藏层表示；解码器用这个表示做重建；目标函数就是让解码结果和输入尽可能相似——也就是一个重建损失。</p><p>但如果只有这个损失，会有一个很直观的问题：编码器解码器完全可以学成一个恒等变换，那输入当然等于输出，学不到任何有意义的东西。所以我们一般会限制编码器的表达能力：降维——让隐藏层维度小于输入；或者加噪——对输入加一些噪声，再从有噪图像中恢复原来的结构；还可以用 sparse——约束隐藏层激活值。这些都是为了强迫模型学到有意义的表示。</p><p>那 AR 模型和 autoencoder 的区别在哪？看左边两个模型：它们输入的维度等于输出的维度，都等于数据的维度；但它们的输出只依赖输入中它之前的部分——x1 不需要任何输入，x2 只看 x1，x3 只看 x1、x2。而 autoencoder 的每个输出能看到所有输入——它没法满足 AR 建模的要求。</p><p>换句话说，如果我们让一个 autoencoder 满足这个要求——每个输出只能看到它之前的输入——不就可以了？AR 模型对你的实现方法没有任何要求，只要求满足这个 AR 特性。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我们现在就是接下来我们大看多，那这里头给大家展示的就是我们这个AR模型versus是这个OCR，我们把这个两个刚才介绍的两个模型和一个典型的OCR的一个模型，给它进行一个给它摆在一起，摆在一起，给大家比较一下。</p><p>一个一编码一编码。那它的编码器就是对于输入输入变量，对它进一个加权求和，然后对再对输出的这个结果再进行加权求和。之后经过一个非线程一编码结构。然后它的解码器就是用刚才的这个编码得到这个隐藏层，这个表示我一解码器。</p><p>就左边两个模型跟右边这个模型它不同。它都是输入的维度等于输出的维度是吧，都是等于数据的维度。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-made">
+  <div class="slides"><figure class="slide" id="slide-35">
+<img src="slides/slide_35.png" alt="课件第35页 Masked Auto-encoders（MADE）">
+<figcaption><span class="sno">35</span><span class="stitle">Masked Auto-encoders（MADE）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">15</span>
+      <div class="sec-tt">
+        <h2>MADE：掩码自编码器</h2>
+        <div class="sec-meta"><span class="time">00:10:00 – 00:16:00</span><span class="chip">课件 35</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>实现的方法就是在这个 autoencoder 的计算里面，把这些不应该有的边 mask 掉——把权重置成 0。这个模型叫 MADE（Masked Autoencoder for Distribution Estimation），ICML 2015 年的工作。</p><p>对每一层全连接的变量施加 mask 以后，得到的模型长这样。它建模的是一个维度为 3 的数据的联合分布：比如某个输出只建模 x2 的边际分布 p(x2)——它不依赖任何输入节点，不管是隐藏层还是输入层，没有一条边跟它相连。</p><p>有的同学可能会问：这个点跟网络都不连着，它能训练吗？其实可以——训练是靠反向传播，它虽然跟前面没有连接，但依然可以通过 loss 反传得到参数。所以以后看这种图不要被误导：它建模的就是 x2 的边际分布，可以是一个可训练的参数。</p><p>再看其他点：比如某个输出建模的条件分布，它只依赖 x5 这一个点——可见性就是由 mask 决定的。最后验证一下：最后一个条件分布对前面所有点都可见。所以对 autoencoder 施加 mask，就能得到一个满足 AR 性质的模型。</p><p>顺带说一句：MADE 的权重 mask 跟 Transformer 里的 attention mask，实现的位置不一样，但实现的功能是一样的——都是通过 mask 约束可见性来实现 AR 性质。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那我们这才写的，为了实现这个方法，就是我们在这个奥1后的它的计算里面，把这些不应该有的这些边给它马斯克掉，把这个权重给它支成0。我只成0，或者给他乘一个为0的话子，就可以实现等效的实现一个AR解。这个模型呢，其实就叫我们这一个叫叫这个模型叫做ma，也是在15ML1实。</p><p>他这个他是这个节点输出的，所以换句话跟大家说一下，它每个输出的值，它并不一定是顺序的这样一个建模的方式，只是它它原文中是随机建模。这样一个点，它输出的是我这个X2这个第一个值，第一个变量，它的一个编译性PS2，它可以从这个连接图中可以看出来，它不依赖于任何一一显置的节点的关系。</p><p>他现在这个AR公司的一个。其实made的这个模型里边，它的这个所谓的这个全重的ma，它虽然是对一个一型的ma是吧，但其实我们现在这个transformer反一个attention ma其实是它虽然实现的位置不一样，但其实它实现的功能不一样的。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-framework">
+  <div class="slides"><figure class="slide" id="slide-36">
+<img src="slides/slide_36.png" alt="课件第36页 Framework Comparison：FVSBN / NADE / MADE">
+<figcaption><span class="sno">36</span><span class="stitle">Framework Comparison：FVSBN / NADE / MADE</span></figcaption>
+</figure>
+<figure class="slide" id="slide-37">
+<img src="slides/slide_37.png" alt="课件第37页 Framework Comparison：多网络 vs 单网络">
+<figcaption><span class="sno">37</span><span class="stitle">Framework Comparison：多网络 vs 单网络</span></figcaption>
+</figure>
+<figure class="slide" id="slide-38">
+<img src="slides/slide_38.png" alt="课件第38页 Framework Comparison：联合分布公式">
+<figcaption><span class="sno">38</span><span class="stitle">Framework Comparison：联合分布公式</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">16</span>
+      <div class="sec-tt">
+        <h2>三种框架对比：多网络 vs 单网络</h2>
+        <div class="sec-meta"><span class="time">00:16:00 – 00:20:00</span><span class="chip">课件 36</span><span class="chip">课件 37</span><span class="chip">课件 38</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>最后给第三部分稍微开个头。前面讲的 AR 模型，从 logistic 实现、到 MLP 非线性增强、再到 MADE 这种 autoencoder+mask，其实最大的跨度、最本质的改变是最后这个：完全改变了 AR 模型的建模策略。</p><p>之前我们是通过网络结构——网络之间的依赖——来实现 AR 特性：输出的某个 x_i 只依赖于 x_{<i} 的输入。而 MADE 是每次直接把所有输入都送进网络、得到所有输出，再通过额外的 mask 限制，让它满足 AR 的性质。</p><p>如果忽略网络的具体实现、把它建模成计算图的话：前面一类是多个网络，每个条件分布用不同的网络建模，输入维度也各不相同；后面一类是单个网络，每次接收所有维度的输入，只要保证输出只依赖之前的输入就行。</p><p>这两者的本质区别：前者是用结构化的方式——通过网络结构或计算图的画法——来实现 AR 性质；后者是把 AR 性质作为强加给它的一个软的或者说硬的约束。除了输出不完全等于输入，整个网络结构差不多，但我们通过额外的约束来调节。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那大家可以看到，其实里边三个模型，就我们刚才介绍这三个模型，这样一点一点一点改进的，它里边最大的一个或者最大的跨度，最本质的改变1。应该是我们这个最后介绍的这个有魅的模型是吧，就相当于是我们完全改变了这个AR模型一个建模的策略。</p><p>然后之后的这种网络可以选择这种系统，就是只有一个单一个网络，一个大的网络，然后呢，他每次接收所有维度的输入。然后，我只要保证这红字线，只要保证输出是依赖于之前的输入就可以。</p><p>它两种计算方法，它有一个比较本质的区别，就是我之前的这个算法，我们之前的这个实现方法，它是用这种结构化，通过通过这个网络实现的，通过这个网络实现的这个结构方法，或者用计算图的这种画法来实现这个AR的一个性质。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-arch">
+  <div class="slides"><figure class="slide" id="slide-39">
+<img src="slides/slide_39.png" alt="课件第39页 Common Architectures：单网络共享实现">
+<figcaption><span class="sno">39</span><span class="stitle">Common Architectures：单网络共享实现</span></figcaption>
+</figure>
+<figure class="slide" id="slide-40">
+<img src="slides/slide_40.png" alt="课件第40页 Common Architectures：RNN / CNN / Attention 总览">
+<figcaption><span class="sno">40</span><span class="stitle">Common Architectures：RNN / CNN / Attention 总览</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">17</span>
+      <div class="sec-tt">
+        <h2>常见架构总览与下节预告</h2>
+        <div class="sec-meta"><span class="time">00:20:00 – 00:23:30</span><span class="chip">课件 39</span><span class="chip">课件 40</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>接下来的内容就是我们下节课要讲的，这里先提个头。接下来我们会介绍几种比较常见的 AR 模型实现方法，包括 RNN——如果不展开的话，它隐藏层的变量在各个时间步是这样循环的；如果把它展开的话，每一步都依赖前一步。</p><p>然后 CNN 的实现形式是向右窜的——它一次接收所有输入、得到所有输出，只是加了一些 mask 让它实现 AR 性质。Attention 也是：它也是接收所有输入、得到所有输出。那为什么 RNN 是串起来的？因为它计算 x3 的时候，必须先得到前一步的隐状态，前一步又必须等更前一步——时间维度上相互依赖。</p><p>但在 CNN 或者 attention 这种结构里，同一层内部没有依赖关系：你只要得到前一层的值，后面这一层的 AR 性质可以一次性全部算出来。这是它们最大的区别。</p><p>最后留一个问题，大家可以记一下：刚才讲的 MLP 参数化方法，它到底是不是 RNN？跟 RNN 有什么区别？你看 h3 和 h2 之间只差一个输入变量，似乎也可以展开写成依赖前面隐藏层的形式——那它是必须串行，还是可以并行？其实在这个参数化形式下，输出只依赖于隐藏层，而隐藏层可以用矩阵相乘直接由之前的输入得到，所以它是可以并行的——它并不显式地依赖于前面的 h。RNN 的映射是非线性的，没法这样展开。这几个结构的详细介绍，咱们就回到下节课再讲。这节课就先到这儿，谢谢大家。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>接下来的话，我们就可能会介绍几种比较，常见的这种VR模型的实现方法，包括这个RNRN，如果我们不把它给不把它给展开的话，是这个是这样形，它隐空间在隐藏层的这个变量在不同的这个。时间部呢，它是一个子这样的一个输入形吧，我果们把它展开的话，平行的每个影子都依赖于前一个一头。</p><p>他为什么串起来，那他不也是吗？这不也是一样输入和同一层。它有好边那个线是吧，你要来计算，相当于你计算，比如说你计算X3的时候，你就必须有先得到这个值，得到这个值就只能写必须得得到这个值。</p><p>那要回答刚才那个问题，可以大家大家可以想想一想，对吧，你比如说把按照这个参数化的形式，你的输出肯定是你的输出的话，只依赖于这个隐藏层，你隐藏层就可以用这个矩阵相乘，乘以之前的输入直接得到，那它肯定是一个。可以并行的一个话，对吧。</p><p>那针对这几个，这针对这几个结构的一个展开的介绍，咱们就回到下节课，咱们就不不给大家。一四给大家讲完了，那咱们节课就先到这儿，谢谢大家。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（生成式模型与科学智能应用）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>

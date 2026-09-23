@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>矿物物理学（180083070901P2003H） · 第三章 分子动力学模拟的原理｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>矿物物理学（180083070901P2003H） · 第三章 分子动力学模拟的原理</h1>
+    <div class="sub">第三章 分子动力学模拟的原理 ｜ 2026-09-20 ｜ 授课：郭光军</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 49 页 · 整理 31 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-s01">01 课程引入：自然科学的三大研究方法</option>
+<option value="sec-s02">02 科学计算的概念</option>
+<option value="sec-s03">03 随堂求解：理论法、实验法与牛顿迭代法</option>
+<option value="sec-s04">04 科学计算的作用</option>
+<option value="sec-s05">05 科学计算的实例</option>
+<option value="sec-s06">06 高性能计算机的应用</option>
+<option value="sec-s07">07 分子动力学模拟的定位</option>
+<option value="sec-s08">08 MD 的前提：分子运动论</option>
+<option value="sec-s09">09 分子动力学模拟的原理：三句话</option>
+<option value="sec-s10">10 从微观参量到宏观性质</option>
+<option value="sec-s11">11 统计力学基本原理</option>
+<option value="sec-s12">12 系综理论（ensemble）</option>
+<option value="sec-s13">13 常用的系综：NVE、NVT、NPT、μVT</option>
+<option value="sec-s14">14 小结：宏观性质 = 〈微观参量〉</option>
+<option value="sec-s15">15 问题：怎样才能得到每个分子的微观参量</option>
+<option value="sec-s16">16 初始位置：随意指定</option>
+<option value="sec-s17">17 初始速度：有限随机赋值</option>
+<option value="sec-s18">18 周期边界条件（PBC）</option>
+<option value="sec-s19">19 固体墙边界条件</option>
+<option value="sec-s20">20 分子碰撞后为什么改变方向</option>
+<option value="sec-s21">21 SPC/E 水模型与其他水模型</option>
+<option value="sec-s22">22 水分子间势能方程</option>
+<option value="sec-s23">23 计算分子间相互作用力</option>
+<option value="sec-s24">24 截断半径与最近镜像约定</option>
+<option value="sec-s25">25 牛顿-欧拉方程与数值求解</option>
+<option value="sec-s26">26 模拟细节</option>
+<option value="sec-s27">27 平衡化：初始阶段与平衡阶段</option>
+<option value="sec-s28">28 小结：MD 工作流程</option>
+<option value="sec-s29">29 应用十分广泛</option>
+<option value="sec-s30">30 势能方程（力场）的获得</option>
+<option value="sec-s31">31 计算资源与作业 MP3.1</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 矿物物理学-3.1-分子动力学模拟原理.pdf 逐页渲染，转写原文见 record_20260920.txt。</div>
+<section class="sec" id="sec-s01">
+  <div class="slides"><figure class="slide" id="slide-01">
+<img src="slides/slide_01.png" alt="课件第1页 封面：分子动力学模拟的原理">
+<figcaption><span class="sno">01</span><span class="stitle">封面：分子动力学模拟的原理</span></figcaption>
+</figure>
+<figure class="slide" id="slide-02">
+<img src="slides/slide_02.png" alt="课件第2页 自然科学的三大研究方法：科学计算、理论、实验">
+<figcaption><span class="sno">02</span><span class="stitle">自然科学的三大研究方法：科学计算、理论、实验</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>课程引入：自然科学的三大研究方法</h2>
+        <div class="sec-meta"><span class="time">录音 00:00:00 - 00:02:00</span><span class="chip">课件 1</span><span class="chip">课件 2</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>从这节课开始，实验部分就结束了，咱们开始玩计算。第三章第一次课，先讲分子动力学模拟的原理。自然科学搞了这么久，研究方法其实就三个：最开始的时候只有理论和实验两个支柱。理论只要一张纸一支笔写写画画，像爱因斯坦的相对论那样，纯理论研究论文就出来了；实验的开创先河是伽利略，比萨斜塔上抛一个重的球和一个轻的球，看见两个小球同时落地——这东西瞎猜没用，做实验扔一下就知道。</p><p>后来计算机出来了，发现它有个好处：可以做科学计算。科学计算逐渐成长起来，成为自然科学的第三大支柱。三者之间是相互指导、相互验证的关系：理论可以指导实验，实验可以验证理论；科学计算可以指导实验，实验可以验证科学计算；科学计算也可以验证理论，理论也可以指导科学计算——科学计算相当于架起了一座中间桥梁。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>第一就第三章第一次课呢，就是先讲分子动力学模拟的原理。这个自然科学，这个这个做了很久了，其实这个方法，就就就3个。</p><p>最开始的时候呢，有一论的和实验的理论呢……就是纯五纯理论研究。然后呢，另外一个支柱呢，就是实验方法，这实验方法那个开创的先河就是像伽利略。</p><p>科学计算呢，也可以去验证理论，理论也可以指导科学计算。科学计算相当于起到一个中间桥梁的作用。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s02">
+  <div class="slides"><figure class="slide" id="slide-03">
+<img src="slides/slide_03.png" alt="课件第3页 科学计算的概念">
+<figcaption><span class="sno">03</span><span class="stitle">科学计算的概念</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>科学计算的概念</h2>
+        <div class="sec-meta"><span class="time">录音 00:02:00 - 00:05:00</span><span class="chip">课件 3</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>科学计算的定义（讲义上是摘自网络的定义，读一遍就行）：利用计算机再现、预测和发现客观世界运动规律和演化特征的全过程，是为解决科学和工程中的数学问题利用计算机进行的数值计算。自然科学的规律通常用各种类型的数学方程式表达，科学计算的目的就是去解这些方程——方程很复杂，不是人能解的，我们也不需要精确的解析解，只需要数值解就够了。</p><p>比如算出一个 3.5876 米这样的数值，就可以拿去干工程上的事、科研上的事了。总的来说，计算的过程就三个步骤：第一步，建一个数学模型，描述自然界某个关心的现象；第二步，建立求解这个模型的数值求解方法；第三步，用计算机去实现。分子模拟、量子计算、宏观的天气模拟、核爆炸模拟、汽车碰撞模拟，所有这些模拟计算的过程都是：建模型、掌握求解方法、最后用计算机实现。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>就是利用计算机在线预测，发现客观规律，为解决科学的和工程中的数学问题。然后呢，必须要用计算机进行的数理计算，这叫科学计算。</p><p>就是计算的这个过程，就是三个步骤：一个步骤呢，你建一个数学模型；第二个呢，你要搞一套对这个建立的模型要求解它的数值的一个求解的方法；有了这个方法之后，第三步用计算机去实现。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s03">
+  <div class="slides"><figure class="slide" id="slide-04">
+<img src="slides/slide_04.png" alt="课件第4页 随堂求解：f(x) = x² − 9.20（理论法、实验法）">
+<figcaption><span class="sno">04</span><span class="stitle">随堂求解：f(x) = x² − 9.20（理论法、实验法）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-05">
+<img src="slides/slide_05.png" alt="课件第5页 随堂求解：牛顿迭代法求数值解">
+<figcaption><span class="sno">05</span><span class="stitle">随堂求解：牛顿迭代法求数值解</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>随堂求解：理论法、实验法与牛顿迭代法</h2>
+        <div class="sec-meta"><span class="time">录音 00:05:00 - 00:13:00</span><span class="chip">课件 4</span><span class="chip">课件 5</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>科学计算听起来抽象，拿一个简单例子就明白了。求解 f(x) = x² − 9.20（今天 9 月 20 号，就写个 920）。理论法：这是二元一次方程，套解析表达 x = (−b±√(b²−4ac))/2a，把系数带进去，对 9.20 开平方就行——这是最精确的理论解。实验法：不知道理论解也没关系，猜嘛——3 小了，3.5 大了，3.4 又小了，反复试错，只要试的次数足够多，也能凑到 3.033 这种精度，但这是粗略的瞎试。</p><p>科学计算怎么做？模型搁那儿，找到算法——用牛顿迭代法求数值解。思路是：不知道解在哪儿，就先瞎猜一个初始值 X₀，做这个点的切线，用斜率算一步，得到下一个值，再在下一个值上做切线，一步一步逼近真正的解 X*。公式很简单：Xₙ₊₁ = Xₙ − f(Xₙ)/f′(Xₙ)。课上口算演示：X₀=3，X₁ = 3 − (3²−9.2)/(2×3) = 3.0333…，再迭代一次 X₂ = 3.03315，开方 9.2 的准确值就是 3.03315——简单迭代两三步就出来了，而且很准。把迭代写成程序交给计算机，很快就能算得很精确。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>用到了理论解，这个理论点呢，就是二元一次方程的这个解析表达，这是最精确的。X等于2A分之负B加减根号下B平方减4AC，把系数往里一带，对这个9.20开平方就可以。</p><p>实验方法咋弄呢？我猜嘛，反正9.20嘛，3附近，设个3，大了，调小点，3.5又大了，往小点调，反复去试错，只要试的次数足够多，也能达到两位小数三位小数。</p><p>用牛顿迭代法，先瞎猜一个X0，带这个公式，X减去FX0除以它那个导数，试一次得到X2，再把X一套进去，来回迭代，这就是你找的那个算法。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s04">
+  <div class="slides"><figure class="slide" id="slide-06">
+<img src="slides/slide_06.png" alt="课件第6页 科学计算的作用">
+<figcaption><span class="sno">06</span><span class="stitle">科学计算的作用</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>科学计算的作用</h2>
+        <div class="sec-meta"><span class="time">录音 00:13:00 - 00:14:00</span><span class="chip">课件 6</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>科学计算的作用是什么呢？理论推导在纸上写写画画，公式可能越推越复杂，最后弄不下去；实验也有做不下去的地方——高温高压实验成天压，金刚石压腔压到 550 GPa 是几十年前的事，现在能压到 1000 GPa，但你让我压 2000、3000 GPa 就很难；加温外加热到一千三四百度，激光加温聚焦到样品腔能到五六千度，但你要八千度就做不到了。一往高温高压上弄，最后就被客观条件和设备卡住极限。</p><p>理论研究描述不了、实验研究做不下去的领域，正是科学计算的用武之地。它的好处：科学计算的结果可以检验理论的优劣，也可以反过来指导实验的方向，甚至在一定程度上取代实验——后头会讲一些例子，科学计算玩得好、算得准，就不用做实验，拿计算机一算就完了。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>总有实验的东西，就尤其像高温高压实验，一往那个高温上弄，一往高压上弄，弄到最后就是被客观的条件和设备就就就极限了。好在这种情况下，那理论研究描述不了、实验研究做不下去的这个地方，就是科学计算的用武之地。</p><p>科学计算的结果弄出来之后，你就可以检验理论的好坏；你也可以拿科学计算的结果去指导实验的方向，甚至在一定程度上就可以取代实验。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s05">
+  <div class="slides"><figure class="slide" id="slide-07">
+<img src="slides/slide_07.png" alt="课件第7页 科学计算的实例：数值天气预报、模拟核实验、模拟汽车碰撞、药物筛选">
+<figcaption><span class="sno">07</span><span class="stitle">科学计算的实例：数值天气预报、模拟核实验、模拟汽车碰撞、药物筛选</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>科学计算的实例</h2>
+        <div class="sec-meta"><span class="time">录音 00:14:00 - 00:16:00</span><span class="chip">课件 7</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>几个非常典型的实例。数值天气预报：现在天气预报很准，5 天、7 天、15 天都能查——以前是凭经验（看云识天气、日晕三更雨月晕午时风、诸葛亮借东风看鳞片云），现在全是计算机算的。把全球分成网格：以前算力差，100 km 一个网格点；现在 10 km，将来要朝 1 km 弄。每个网格点上输入温度、气压、风速、湿度等监测数据，建的是大气环流大模型，考虑能量守恒、动量守恒、物质守恒，然后让大气进行环流，算完就能预报哪儿气压高了、哪儿水汽大了要下雨了。国家气象局有很大的机器，监测数据一过来，跑模型一两个小时就预报出来了。</p><p>模拟核实验：1996 年前后大家都不让做核试验了，但美国比较先进，还能拿计算机去模拟核试验。模拟汽车碰撞：真车天天撞毁多少车就亏了，计算机上算一算成本低。药物筛选：要在十几万种化合物里找一种有特定特征的，一个一个做实验人得累死，先拿计算机预筛一遍，剩下几十种、一百种，人类再上实验精筛——大大提高了新药研发效率。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>以前那怎么天气预报？看云识天气，那时候是凭经验。现在全是计算机算的，把全球分成网格，网格上温度、气压、风速、湿度那些信息输进去，建大气环流大模型，考虑能量守恒、动量守恒、物质守恒，然后让大气进行环流。</p><p>核试验后来到了九六年，大家都不让做核试验了，但美国比较先进，他还可以拿计算机去模拟核试验。</p><p>药物筛选，先拿计算机进行一次预筛，把十几万种化合物输进去算一遍，剩下几十种，那人类就可以上实验了，是不是大大提高了新药发展的效率？</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s06">
+  <div class="slides"><figure class="slide" id="slide-08">
+<img src="slides/slide_08.png" alt="课件第8页 高性能计算机的应用">
+<figcaption><span class="sno">08</span><span class="stitle">高性能计算机的应用</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>高性能计算机的应用</h2>
+        <div class="sec-meta"><span class="time">录音 00:16:00 - 00:17:00</span><span class="chip">课件 8</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>这些都用到了计算机——大型计算机，很多机柜顶到一块儿。卫星遥感、航空航天、气候预报、生物医药、石油勘探、金融保险，全都离不开计算机，而且离不开大型计算机。中间有一块应用叫科学计算：如果利用计算机来进行科学研究，这一部分应用就叫科学计算，也就是咱们这门课的主题。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这个呢，就是一个大型计算机了，很多机柜顶到一块儿，然后呢，用用处呢，你看卫星遥感、航空航天、气候预报、生物医药、勘探石油勘探，金融保险全都离不开计算机，而且是大型计算机。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s07">
+  <div class="slides"><figure class="slide" id="slide-09">
+<img src="slides/slide_09.png" alt="课件第9页 自然科学的三大研究方法：分子动力学模拟的定位">
+<figcaption><span class="sno">09</span><span class="stitle">自然科学的三大研究方法：分子动力学模拟的定位</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div class="sec-tt">
+        <h2>分子动力学模拟的定位</h2>
+        <div class="sec-meta"><span class="time">录音 00:17:00 - 00:18:00</span><span class="chip">课件 9</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>回到三大支柱：科学计算、理论、实验，互相指导、互相验证。今天要讲的课，就是科学计算里头的其中一种——分子动力学模拟。科学计算有很多应用方向：数值分析、有限元分析、有限差分、图论、蒙特卡洛方法、分子动力学、数值线性代数等。分子动力学模拟的英文叫 Molecular Dynamics Simulation，简称 MD——以后看文献一看到 MD，又跟计算有关的，就是分子动力学模拟的意思。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这个科学计算刚才不是说说了很多很很多应用里头，可能涉及数值分析吧，有限元分析吧，然后图论，蒙特卡洛分子动学就是其中的一种，我们今天呢，就就讲这个分子动力学模拟。</p><p>它简称MD，所以以后大家在看文献里头一看，哪个地方什么简称MD，又又是跟计算有关的，那那就是分子动能学的意思。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s08">
+  <div class="slides"><figure class="slide" id="slide-10">
+<img src="slides/slide_10.png" alt="课件第10页 Molecular Dynamics（MD）的前提——分子运动论">
+<figcaption><span class="sno">10</span><span class="stitle">Molecular Dynamics（MD）的前提——分子运动论</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">08</span>
+      <div class="sec-tt">
+        <h2>MD 的前提：分子运动论</h2>
+        <div class="sec-meta"><span class="time">录音 00:18:00 - 00:21:00</span><span class="chip">课件 10</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>做分子动力学模拟，前提是承认分子运动论。大家高中都接触过：物质是由原子、分子构成的，这些原子分子永不停歇地做着热运动。很简单，实验就能证实。布朗运动：科学家在显微镜下发现花粉颗粒在水里来回乱颤、跑出不同的轨迹——花粉为什么会乱跑？因为水是由分子构成的，水分子不停运动，碰到花粉去砸它；不是大家一块儿均匀地砸，左边可能 7 个分子砸过来、右边只有 1 个，劲儿不一样大，花粉就被推着东一歪西一歪——花粉的运动反映的是水分子的运动。</p><p>另一个例子是墨水扩散：滴一滴墨水进去，一坨蓝色慢慢沉淀下去，吃饭回来整杯都变蓝了——显色物质在水里到处扩散，扩散均匀了整杯就变蓝了。而且热水扩散得快、冷水扩散得慢，说明热水里的分子运动快、冷水里的运动慢。这些简单例子都说明：物质由分子构成，分子在做热运动。只要承认这一点，就可以玩分子动力学了。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这个分子运动论，大家高中的时候都已经接触到了，物质是由原子分子构成的，然后这些原子分子呢，永不停歇的做着热运动。</p><p>布朗运动，花粉的颗粒很小，来回来回的跑出不同的轨迹。那是因为水分子去砸它，有可能左边有7个分子砸过来，右边只有一个，左边的劲儿大，我就往左边去一。花粉的运动反映的是水分子在运动。</p><p>墨水扩散，热水温度高它很快就扩散均匀了，冷水就花的时间长一点，说明热水里头的分子运动的快。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s09">
+  <div class="slides"><figure class="slide" id="slide-11">
+<img src="slides/slide_11.png" alt="课件第11页 分子动力学模拟的原理：三句话">
+<figcaption><span class="sno">11</span><span class="stitle">分子动力学模拟的原理：三句话</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">09</span>
+      <div class="sec-tt">
+        <h2>分子动力学模拟的原理：三句话</h2>
+        <div class="sec-meta"><span class="time">录音 00:21:00 - 00:24:00</span><span class="chip">课件 11</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>分子动力学模拟的原理，做这行二十多年，总结下来就三句话，记住、理解了，这个原理就过了——考试如果问模拟的原理是什么，答上这三句话就 OK。第一句：分子动力学通过解运动方程获得分子的微观参量——解什么运动方程？牛顿运动方程。在这个分子运动的微观世界尺度下，牛顿运动定律在发挥控制作用，大家都服从牛顿运动定律。</p><p>第二句：应用统计物理学的原理求取物质的宏观性质——获得微观参量后（每个粒子的空间坐标、速度、动量、加速度这些值），应用统计物理学一处理，就能求出宏观性质。第三句：在分子水平上直接观测物质的微观过程——轨迹算出来了，还可以拿动画播放，直接观测微观过程。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>考试如果问咋说说模拟的原理是啥？你只要答出这三句话那就OK了。第一句就是说分子动力学呢，就是通过解运动方程获得分子的微观参量。解什么运动方程？牛顿运动方程。</p><p>第二句，你应用统计物理学的原理去求取物理的宏观性。把那些微观参量获得了之后，就求出宏观性质。第三句，还可以用刚才的那个坐标去直接的观测物体的微观过程。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s10">
+  <div class="slides"><figure class="slide" id="slide-12">
+<img src="slides/slide_12.png" alt="课件第12页 分子动力学模拟：宏观性质 = 〈微观参量〉">
+<figcaption><span class="sno">12</span><span class="stitle">分子动力学模拟：宏观性质 = 〈微观参量〉</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">10</span>
+      <div class="sec-tt">
+        <h2>从微观参量到宏观性质</h2>
+        <div class="sec-meta"><span class="time">录音 00:24:00 - 00:29:00</span><span class="chip">课件 12</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>这三句话看着抽象，用这一张片子细细理解。这是一个 1000 个水分子的体系，计算出来之后它就在那儿无规则地乱动、不停做热运动。对每一个分子，我都可以计算它怎么跑、轨迹是一条什么样的路径，1000 个分子全都算出来——获得的那些就是微观参量：分子的坐标、速度、加速度、受力、动量，都是描述一个分子微观那点事儿的量。</p><p>把这些量放到一个尖括号〈 〉里，代表对它做统计平均——这一平均，宏观性质就出来了：密度、自由能、焓、熵、热容、膨胀系数、表面张力、化学势、溶解度、相平衡、弹性模量、声速、结构、光谱、扩散系数、粘滞度、热导率、电导率、介电常数，所有这些都可以计算出来。那我费劲巴拉做高温高压实验，不就是为了测一个声速、开一个分数吗？这些我都能算出来，我还做什么实验？这就是它最大的好处——相当于做了一个高温高压实验，而且温度压力非常容易控制：要 500 度就写个 500，要 2000 度就写个 2000；压力写 100 不够就写 200，想写多少写多少，模拟软件都能算出来，比高温高压实验好控制太多了。</p><p>第二步，分子轨迹都算出来了，还可以把它播放成动画——每隔一个时间步拍一张照片，连续拍很多张，把 100 张照片连续播放就是动画。这就是在分子水平上的观测。观测手段一路发展：放大镜不够用显微镜，显微镜不够用电子显微镜，一直到扫描隧道显微镜（STM），分辨率已经达到 0.01 nm，能看出原子的形状——但就算这样，成出来的像还是有点模糊。分子动力学模拟不一样，你得到的是直接的空间坐标，精确得不得了，别说 0.01 nm，可以精确到 0.001 nm，拍出来的照片非常清晰。所以从这角度讲，分子动力学模拟就相当于一架超级显微镜，直接看到分子级。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这是一个好像1000个水分子的一个体系，它就是这样无规则的在到处乱动，对每一个分子都可以计算它是怎么跑的，获得了那么多微观参量，分子的坐标、速度、加速度、受力、动量都是很微观的。</p><p>我把它放到这儿进行一个统计平均，这一平均，它的宏观性质就出来了，密度、自由能、焓、熵、热容、膨胀系数、表面张力、相平衡、弹性、能量、声速、光谱、扩散系数、电导率，所有的这些东西都可以计算出来。</p><p>温度压力非常容易控制，就在你输入的参数里头，你说要500度就写个500，要2000度就写个2000，比高温高压实验容易控制太多了。</p><p>扫描隧道显微镜分辨率已经能够达到0.01个纳米，但成出来的像还是有点模糊。分子模拟你得到的是直接的空间坐标，可以精确到0.001nm，所以分子动力学模拟就相当于一架超级显微镜。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s11">
+  <div class="slides"><figure class="slide" id="slide-13">
+<img src="slides/slide_13.png" alt="课件第13页 统计力学的基本原理">
+<figcaption><span class="sno">13</span><span class="stitle">统计力学的基本原理</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">11</span>
+      <div class="sec-tt">
+        <h2>统计力学基本原理</h2>
+        <div class="sec-meta"><span class="time">录音 00:29:00 - 00:36:00</span><span class="chip">课件 13</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>继续深入理解第一句话：微观参量怎么变成宏观性质？它基于统计物理学（统计力学）的一个基本原理，最核心的一句话就是：宏观体系的性质是微观性质的综合体现，体系的热力学量是微观量的统计平均。怎么理解？看温度这个公式：温度在宏观上体现为 25 度挺舒服、23 度更舒服，微观上它等于什么？统计力学已经把公式推好了：T = (2/(3Nk_B))·〈1/2mv²〉——N 是粒子个数，k_B 是玻尔兹曼常数，尖括号是系统平均，平均的对象是 1/2mv²，也就是分子的动能：质量是它的微观参量，速度也是它的微观参量，从第一个分子一直累加到第 N 个分子，除以 N 就是平均。</p><p>所以温度反映的是微观里运动的粒子跑得快慢：分子跑得快，出来的温度就高，你喝杯水就觉得烫；分子跑得慢，水就凉了。温度是微观粒子速度的一个统计体现——后面还会讲，速度不是所有粒子都一样，它是一个分布，有跑得快的也有跑得慢的，但 1/2mv² 平均之后对应的温度就是那么多。另一个例子是剪切粘滞度 η：它反映的是蜂蜜泼不出去、水一泼就洒了那种黏稠程度。它等于 (V/k_BT) 乘一个积分，对 P_αβ(0) 时刻与 P_αβ(t) 时刻的自相关函数积分——P_αβ 是应力，等于 (1/V)[Σ m·v·v + Σ r·f]，这些全是微观参量，一坨扔进去做系统平均，平均完得到的就是剪切粘滞度。统计力学已经把宏观和微观之间的方程都推导得好好儿的，就等着我们用。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>统计力学最核心的一句话：宏观体系的性质是微观性质的综合体现，体系的热力学量是微观量的统计平均。</p><p>温度等于2/3NKB分之1，然后一个系统平均，平均的是1/2MV方，是动能，就是它的一个微观参量。温度反映出来的是微观里头运动的粒子运动的快慢，是微观的粒子速度的一个统计体现。</p><p>剪切粘滞度反映蜂蜜泼不出去、水一泼就洒了那种黏稠程度，它等于KBT分之V乘一个积分，对P阿尔法贝塔0时刻乘P阿尔法贝塔T时刻的自相关函数积分，这些全是微观参量，平均完了之后得到的就是剪切粘滞度。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s12">
+  <div class="slides"><figure class="slide" id="slide-14">
+<img src="slides/slide_14.png" alt="课件第14页 系综理论（ensemble）：氢电子云">
+<figcaption><span class="sno">14</span><span class="stitle">系综理论（ensemble）：氢电子云</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">12</span>
+      <div class="sec-tt">
+        <h2>系综理论（ensemble）</h2>
+        <div class="sec-meta"><span class="time">录音 00:36:00 - 00:41:00</span><span class="chip">课件 14</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>刚才反复提到一个词：系统平均（系综平均）。这个概念其实很简单。先看系统：咱们教室这个系统就是 16 个学生加一个老师，一共 17 个人。系综（ensemble）就是大量宏观上完全相同的系统的一个集合。怎么理解？看氢的电子云：中间是一个氢核（一个质子），周围是电子，绕核运动形成一坨电子云。这个系统就是一个质子加一个电子，电子怎么运动不知道，你就给它拍照：拍一张，电子点在这儿；再拍一张，点在那儿；对同一系统拍一万张照片，摞起来一看——电子在氢核周围是这样分布的，这就是一个统计的体现。你拍的每一张照片就是一个系统，把这些系统摞起来、对它一平均，就是系综平均。</p><p>分子模拟里也一样：体系里有一堆原子分子，它们不停地运动，你每隔一个 Δt（一个时间步长）拍一张照片，每张照片都不一样；拍 1000 张，这一系列照片的集合就是系综。这个平均相当于是对时间进行了平均；而且体系可能还有好多份——上头再来一行，另一个体系在这些原理下在另一个位置跑，旁边还有一个体系——那不但对时间平均，还要对空间平均，对所有这些相同的体系做平均之后，就是一个很好的系综平均。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>系统，大家经常说系统，现咱们教室这个系统里头不就是16个学生加一个老师吗？一共17个人，这就是一个系统。系综就是大量宏观上完全相同的系统的一个集合。</p><p>氢的电子云，你就对它拍照，拍一张照片这个点在这儿，再拍一张点在这儿，拍了一万张照片摞起来一看，就是长这样，这个整体反应出来的东西就是系综。你拍的每一张照片就是一个系统。</p><p>分子模拟里头，隔一个德尔塔T拍一张照片，拍1000张，这个系统的集合就称之为系综。不但对时间平均，而且对空间平均，对所有这些相同的体系做平均，就是一个很好的系综平均。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s13">
+  <div class="slides"><figure class="slide" id="slide-15">
+<img src="slides/slide_15.png" alt="课件第15页 常用的系综：NVE、NVT、NPT、μVT">
+<figcaption><span class="sno">15</span><span class="stitle">常用的系综：NVE、NVT、NPT、μVT</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">13</span>
+      <div class="sec-tt">
+        <h2>常用的系综：NVE、NVT、NPT、μVT</h2>
+        <div class="sec-meta"><span class="time">录音 00:41:00 - 00:47:00</span><span class="chip">课件 15</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>分子动力学里头有这么几种常用的系综，得记住——学过分子动力学，一说系综是啥都不知道，那就白学了。统计力学定义一个系综，一般由三个量构成：粒子数 N、体积 V、能量 E。第一种是微正则系综（NVE），是孤立系统的集合：想象一个绝热盒子，墙壁不传热，每一个体系的能量不一样、体积一样、分子数一样——N、V、E 三个量不变，另外的量（温度和压力）就要波动。第二种是正则系综（NVT），封闭系统的集合：墙允许传热，但把分子封闭住，分子数不变，粒子只能在房间之间交换热量——这是恒温体系。第三种是恒温恒压系综（NPT），也是封闭系统：N、P 不变，体积和能量可以变化。第四种是巨正则系综（μVT），开放系统的集合：分隔的墙壁都是网眼的，粒子可以来回移动，但必须保证每个房间的化学势一样——化学势高的往低的流，达到平衡后每个房间化学势都一样，这时粒子数可以变化（这间房子 1000 个原子、那间 980 个、那间 1030 个）。</p><p>做分类模型做了几十年，常用的也就这四种系综，其他的不方便，日常用的就这四种。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>第一种系统它是孤立的，NVE，三个量不变，温度压力就要波动。第二种NVT，它表达的是一个封闭体系，墙允许传热，但分子封闭住，粒子只能在房间之间交换热量。</p><p>第三种NPT，恒温恒压，封闭系统。第四种巨正则系统μVT，墙壁都是网眼的，粒子可以来回移动，但必须保证每个房间的化学势一样，化学势高的往低的流，粒子数是可以变化的。</p><p>做分类模型做了几十年，也就用了这四种系综，其他的不方便。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s14">
+  <div class="slides"><figure class="slide" id="slide-16">
+<img src="slides/slide_16.png" alt="课件第16页 宏观性质 = 〈微观参量〉：应变不变">
+<figcaption><span class="sno">16</span><span class="stitle">宏观性质 = 〈微观参量〉：应变不变</span></figcaption>
+</figure>
+<figure class="slide" id="slide-17">
+<img src="slides/slide_17.png" alt="课件第17页 小结：分子动力学模拟连接宏观与微观">
+<figcaption><span class="sno">17</span><span class="stitle">小结：分子动力学模拟连接宏观与微观</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">14</span>
+      <div class="sec-tt">
+        <h2>小结：宏观性质 = 〈微观参量〉</h2>
+        <div class="sec-meta"><span class="time">录音 00:47:00 - 00:49:00</span><span class="chip">课件 16</span><span class="chip">课件 17</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>再看这一页就容易了：对微观参量进行统计平均就可以得到宏观性质。这里最大的好处是：等式右边是微观量，左边是宏观性质——物体的宏观性质有好多，刚才列了十几个二十几个，实验要测的话，每一种都要设计不同的实验去测定；但我们这边只要计算它的微观参量就行——把轨迹算下来，把粒子怎么跑的那条轨迹画出来，往统计物理公式里一带，宏观性质全都得了，这叫以不变应万变。</p><p>小结一下前半节课：分子动力学模拟是在统计物理学基础上的一种科学计算方法，它把宏观和微观连接起来，相当于架起一座桥梁。目标很单一：只要把轨迹算准，把坐标、速度那些参量算出来，经过统计物理一折腾，就能得到宏观性质。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>只要去计算它的微观参量就行，我们把轨迹算下来，把那个粒子怎么跑的那条轨迹画出来，再往里头一带，这边宏观性质都得了，就叫以不变应万变。</p><p>分子动力学模拟是在统计物理学的基础上的一种科学计算的方法，把宏观和微观给连接起来，相当于架起来一个桥梁。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s15">
+  <div class="slides"><figure class="slide" id="slide-18">
+<img src="slides/slide_18.png" alt="课件第18页 问题：怎样才能得到每个分子的微观参量">
+<figcaption><span class="sno">18</span><span class="stitle">问题：怎样才能得到每个分子的微观参量</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">15</span>
+      <div class="sec-tt">
+        <h2>问题：怎样才能得到每个分子的微观参量</h2>
+        <div class="sec-meta"><span class="time">录音 00:49:00 - 00:50:00</span><span class="chip">课件 18</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>讲到这儿，你最关心的问题一定是：说一千道一万，你怎么样去得到每一个分子的微观参量？坐标、速度、受力等等，也不多，就那么几样——得到了就可以算宏观性质了。具体数值怎么得到？我们从头开始讲。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>你你你说破了一千，说一千道1万，你你怎么样去得到每一个分子的微观参量？坐标、速度、受力等等，也不多，反正就那么几样，这个具体的值怎么得到呢？我们从头开始讲。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s16">
+  <div class="slides"><figure class="slide" id="slide-19">
+<img src="slides/slide_19.png" alt="课件第19页 初始位置（随意指定）：256 个水分子">
+<figcaption><span class="sno">19</span><span class="stitle">初始位置（随意指定）：256 个水分子</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">16</span>
+      <div class="sec-tt">
+        <h2>初始位置：随意指定</h2>
+        <div class="sec-meta"><span class="time">录音 00:50:00 - 00:53:00</span><span class="chip">课件 19</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第一步，想知道这些粒子的初始位置。这最容易搞定：这儿有一个盒子，往里怼 256 个水分子。初始位置是你自己放进去的，坐标当然能得到——其实不用规则排列，跟倒水一样哗啦倒进去散得乱七八糟的也完全没问题，反正初始位置是你自己指定的：空盒子，往中间放一个，坐标就是 0.25、0.25、0.25。说白了就是人为指定，你们爱咋指定咋指定——它不影响后头的结果。</p><p>有个小计算：放 256 个水分子，要求密度是 1 g/cm³，正方体盒子，边长是多少？算出来约 1.97 nm。因为涉及到计算，经常要做一些简单的换算，所以大家手机里下载一个好使点的计算器——考试要自带计算器，题型有一部分是问答、有一部分是计算，算出来的值要交给老师。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>初始位置呢，这是最容易搞定的。你这儿有一个盒子，就这么大，往里头怼了256个水分子，灌进去之后，初始位置是你自己放进去的，那那个位置肯定你能够把它的值算出来。</p><p>说白了，这就是人为指定。你们爱咋指定咋指定，他不影响后头的结果。</p><p>放256个水分子，密度是1，算一算盒子边长，你算出来1.97多少？1.97nm。考试的时候呢，有两部分题型，一部分是问答，另外一部分是计算，所以计算器的使用一定要熟练。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s17">
+  <div class="slides"><figure class="slide" id="slide-20">
+<img src="slides/slide_20.png" alt="课件第20页 初始速度（有限随机赋值）：N₂ 麦克斯韦分布">
+<figcaption><span class="sno">20</span><span class="stitle">初始速度（有限随机赋值）：N₂ 麦克斯韦分布</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">17</span>
+      <div class="sec-tt">
+        <h2>初始速度：有限随机赋值</h2>
+        <div class="sec-meta"><span class="time">录音 00:53:00 - 00:57:00</span><span class="chip">课件 20</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>初始位置随机指定，初始速度也是随机给的，但给的时候有两个约束条件。第一个约束：一个盒子里放了这么多分子，盒子整体不能平移——我们画一个盒子，希望它在跑的时候整体的速度是 0，所以要求总动量为 0：分子 4444 处乱跑可以，但总动量得是 0。第二个约束：速度要服从玻尔兹曼分布（麦克斯韦-玻尔兹曼分布）。统计力学已经研究清楚了：微观世界的粒子速度服从这个分布——曲线从零开始，往大的方向可以延伸得很远，是一个不对称的分布。比如氮气在 300 K 是一条蓝色曲线，1200 K 就变成另一条更宽的。你给这些粒子随意赋值，只要赋值能满足这个分布要求、在这个范围内就 OK。</p><p>图上还有氧气和氢气：都是 300 K，氢气的质量只有 2，氧气的质量是 16，氧气质量大，所以它的速度一定会低一些——要不然 1/2mv² 就不对了。即使氢气的速度这么大、氧气的速度小，统计出来的 1/2mv² 平均完之后，它们都是 300 K。除了服从麦克斯韦分布、总动量为 0，其他的值随意给就行了。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>初始速度呢，那也是随机给的。但是给的时候有一些约束条件：第一个约束条件就是整体的这个盒子没动，要求一个总动量是0；第二个就是要求这个速度它要服从玻尔兹曼分布，麦克斯韦玻尔兹曼分布，不对称的分布，从零开始往这边可以往很大的去。</p><p>氢气质量只有2，氧气的质量是16，氧气质量大，所以它的速度一定会低一些。即使清理的速度这么大，统计出来的1/2MV方平均完了之后，它们都是300K。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s18">
+  <div class="slides"><figure class="slide" id="slide-21">
+<img src="slides/slide_21.png" alt="课件第21页 周期边界条件（Periodic Boundary Conditions, PBC）">
+<figcaption><span class="sno">21</span><span class="stitle">周期边界条件（Periodic Boundary Conditions, PBC）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">18</span>
+      <div class="sec-tt">
+        <h2>周期边界条件（PBC）</h2>
+        <div class="sec-meta"><span class="time">录音 00:57:00 - 01:00:00</span><span class="chip">课件 21</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>初始位置、初始速度给了之后，问题来了：这个分子给了这个方向的初始速度，两两秒就飞出盒子了，盒子里空空如也，粒子数都变了，模拟就没法做了。做分子模拟做统计力学的人很聪明，给盒子加了一个周期边界条件。什么意思？中间有一个盒子，把这个盒子复制、搬到旁边去——对二维来说复制 4 份，对三维来说要复制几份？3×3×3 是 27 个块块，减去中间那个，复制 26 份把它包起来——魔方就是最典型的代表。</p><p>因为是复制的，这个边界有个好处：1 号分子向上跑跑出去了，必然有它的一个影像从底下跑进来；另一个分子朝这边跑出去，必然有影像从那边跑进来。这样一来，中间盒子的分子数一直不变。就这么一个简单的构造，就做出了周期边界条件（PBC）。这是一种近似、是非物理的——自然状态下确实不是周期边界条件，但为了计算的方便、让模拟能进行下去，这是一种简化，它使得分子数跑不出去。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>给这个盒子加了一个周期边界条件。中间有一个盒子，把这个盒子复制了搬到旁边用，三维来说的话应该复制26份，3×3×3是27个块块，减去中间一个，魔方就是一个最典型的代表。</p><p>1号分子向上跑跑出去了，必然有它的一个影像从底下跑进来，中间这个盒子里头的分子数是不是一直没变化？这叫周期边界条件PBC。</p><p>这是一种近似，本身是非物理的，为了计算的方便、让这个模拟能够进行下去，这是一种简化。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s19">
+  <div class="slides"><figure class="slide" id="slide-22">
+<img src="slides/slide_22.png" alt="课件第22页 固体墙边界条件">
+<figcaption><span class="sno">22</span><span class="stitle">固体墙边界条件</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">19</span>
+      <div class="sec-tt">
+        <h2>固体墙边界条件</h2>
+        <div class="sec-meta"><span class="time">录音 01:00:00 - 01:01:00</span><span class="chip">课件 22</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>另一种边界：如果你想让这一头的分子跑不出去，就给体系构造一个固体墙的边界——跟这房间一样，四周一围。分子跑到这儿出不去，撞着墙了，撞着墙之后往这个方向弹回来。这样一来，你就得描述这堵墙以什么样的力量把分子推回去：墙要是软，跑过来的劲儿就小；墙要是特硬，碰一下就撞回来了。反正没出去，体系就被围住了。</p><p>所以常见的计算模拟边界设置就两种：周期边界条件、固体墙边界。大家常用的就是这两种。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>如果你想让这一头的分子数跑不出去这个体系，那你就给它构造一个固体墙的边界，就跟这个房间一样，四周一围。它撞着墙了，撞着墙之后往这个方向弹了，你就得描述一下这堵墙是以什么样的力量把你这个分子从这推过去的。</p><p>一种是周期边界条件，一种是固体墙面，大家常用的就这两种。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s20">
+  <div class="slides"><figure class="slide" id="slide-23">
+<img src="slides/slide_23.png" alt="课件第23页 分子碰撞后为什么改变方向？">
+<figcaption><span class="sno">23</span><span class="stitle">分子碰撞后为什么改变方向？</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">20</span>
+      <div class="sec-tt">
+        <h2>分子碰撞后为什么改变方向</h2>
+        <div class="sec-meta"><span class="time">录音 01:01:00 - 01:03:00</span><span class="chip">课件 23</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>把边界画好，分子出不去，它就在里头运动。运动过程中两个分子一定有机会撞一下：密度大的话撞的机会很多，气体密度小撞的机会少，液体撞的机会很大，固体在晶格附近震动不怎么撞。像水这种液体体系，粒子一定会撞在一起，撞在一起怎么办？弹开了，跟台球一样——但得看入射角度和互相碰着的力度，它会弹到其他方向去。</p><p>问题来了：你撞上之后弹开、改变了方向，为什么会改变方向？经验地回答是撞上了肯定改变方向，但从物理角度说——加速度！按照牛顿第二运动定律：物质会保持直线运动或静止，直到有外力改变它的方向。加速度乘以 M 就是它受的力。只要把它们的受力计算出来，加速度就有了。那好，我们就算一算它的受力。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>两个分子一定有机会撞一下，液体撞的机会就很大。撞在一起怎么办？它就弹开了，跟台球一样，得看入射的角度、互相碰着的力度，它会弹到其他的方向去。</p><p>为什么会改变方向？加速度，对了，就是加速度。按照牛顿第二运动定律，物质会保持直线运动，直到有外力改变它的方向。加速度乘以M就是它受的力，只要把它们的受力计算出来，加速度就有了。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s21">
+  <div class="slides"><figure class="slide" id="slide-24">
+<img src="slides/slide_24.png" alt="课件第24页 SPC/E 水模型（力场）">
+<figcaption><span class="sno">24</span><span class="stitle">SPC/E 水模型（力场）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-25">
+<img src="slides/slide_25.png" alt="课件第25页 其他的水势能模型：100 多种">
+<figcaption><span class="sno">25</span><span class="stitle">其他的水势能模型：100 多种</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">21</span>
+      <div class="sec-tt">
+        <h2>SPC/E 水模型与其他水模型</h2>
+        <div class="sec-meta"><span class="time">录音 01:03:00 - 01:06:00</span><span class="chip">课件 24</span><span class="chip">课件 25</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>要计算受力，先得有模型。以水分子为例：一般做模拟从水开始玩比较有意思，看着很简单，里头又有足够的一点复杂性。SPC/E 是其中一个水模型：一个氧两个氢，规定好氢氧之间的键长、键角是 109.47°，氧上头带负电荷 -0.8476e，两个氢各带正电荷 +0.4238e——加起来正好是 -0.8476，整体是中和的。这样一个东西，称之为一个模型化的水。其实水到底长啥样，到现在都没弄清楚，只是提出了很多个水模型。</p><p>近百年光一个水分子提出的模型就有上百个：有刚性的、柔性的、可极化的；作用点有 3 点的、4 点的、5 点的。3 点模型就是一个氧两个氢三个作用点；有的模型把一个电荷扔到虚拟的位置上，更准一些，叫 4 点模型；5 点模型把两个负电荷往两个方向呲出去，支成一个四面体。以后遇到的时候再说。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>SPC/E水模型，一个氧两个氢，氢氧之间的键长、键角是109.47度，氧上头带负的0.8476个电，两个氢带的是正电荷0.4238，加起来正好是0.8476，整体是中和的。</p><p>光一个水分子，近百年来的提出的模型就有上百个，有刚性的柔性的可极化的，作用点有3点的、4点的、5点的，以后遇到的时候我们接着再说。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s22">
+  <div class="slides"><figure class="slide" id="slide-26">
+<img src="slides/slide_26.png" alt="课件第26页 SPC/E 水分子间势能方程">
+<figcaption><span class="sno">26</span><span class="stitle">SPC/E 水分子间势能方程</span></figcaption>
+</figure>
+<figure class="slide" id="slide-27">
+<img src="slides/slide_27.png" alt="课件第27页 其他势能方程类型：L-J、Exp-6、MCY">
+<figcaption><span class="sno">27</span><span class="stitle">其他势能方程类型：L-J、Exp-6、MCY</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">22</span>
+      <div class="sec-tt">
+        <h2>水分子间势能方程</h2>
+        <div class="sec-meta"><span class="time">录音 01:06:00 - 01:10:00</span><span class="chip">课件 26</span><span class="chip">课件 27</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>有了结构，最重要的一点是要描述这些氧原子之间怎么相互作用——这个东西叫水分子之间的势能方程。这个势能方程长这样：能量从 0 到远处，单位是埃（1 埃就是一个纳米分成 10 份）。曲线从上往下走，到最低点再回升。这个曲线是由 Lennard-Jones（林纳德-琼斯）方程画出来的——这是做分子模拟的人必须记住的一个方程，连这个方程都没记住，就跟没学一样；每次考试必考，肯定要用一下这个方法。</p><p>LJ 方程描述的是两个氧原子之间的相互作用：越靠近的时候是排斥（能量为正），靠远了之后开始吸引，在一个位置上达到吸引的最大值（最低点），再往远处就接近于 0 了——两个粒子互相看不见、感受不到，相互作用是 0。从远到近先吸引、吸到最大、再往上去开始排斥。这种氧-氧的相互作用叫 Lennard-Jones 相互作用，实际上就是范德华相互作用，只不过大家描述范德华相互作用的时候常用 LJ 方程：U(r) = 4ε[(σ/r)¹² − (σ/r)⁶]。另外，氧原子上有负电、氢原子上有正电：两个氧原子碰一块儿同性排斥，氢和氧碰到一块儿互相吸引——这又有一个静电（库仑）力。LJ 势能衰减得很快，近距离内就衰减到 0 了；静电势能衰减得比较慢，10 埃的时候还没衰减完。一个叫近程作用，一个叫远程作用。</p><p>其他还有别的势能方程形式：Exp-6（A·exp(−Br) − C/r⁶）、MCY 等，跟拟合出来的效果也挺好。势能方程不都是 LJ 方程，也有一些其他的方程形式，回头涉及的时候再提。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>Lennard-Jones方程，那是我们做分子模拟的人必须要记得住的一个方程，如果连这个方程都没有记住的话，就跟没学一样。每次考试呢，是必考一个方面。</p><p>越靠近的时候排斥，能量是正的，靠远了之后开始吸引，在一个位置上达到吸引的最大值，再往远处就变成接近于0了。这实际上是范德华相互作用，用LJ方程来描述。</p><p>氧原子上有负电、氢原子上有正电，两个氧碰一块儿同性排斥，氢和氧碰到一块儿互相吸引，这又有一个电磁力。LJ势能量衰减的很快，静电势能衰减得比较慢，一个叫近程作用，一个叫远程作用。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s23">
+  <div class="slides"><figure class="slide" id="slide-28">
+<img src="slides/slide_28.png" alt="课件第28页 计算分子间相互作用力">
+<figcaption><span class="sno">28</span><span class="stitle">计算分子间相互作用力</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">23</span>
+      <div class="sec-tt">
+        <h2>计算分子间相互作用力</h2>
+        <div class="sec-meta"><span class="time">录音 01:10:00 - 01:13:00</span><span class="chip">课件 28</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>有了这些铺垫，就有条件计算分子之间的相互作用力了。这张片子就讲这一件事：如果 5 个分子摆成这个样子，我想知道 1 号分子和 2 号分子的相互作用力是多少？没什么好办法，就求它们的距离——刚才那几个方程都是距离的函数：LJ 势底下是两两之间的距离，把距离求出来往里头一带，LJ 力就出来了；库仑项也是两个电荷除距离，距离求出来，静电力也就出来了。</p><p>要算 1 号分子和 2 号分子之间的相互作用力，只能把 1 号分子的氧分别和 2 号分子的三个原子算一遍：氧和氧算一个距离、出来一个力，氧和氢算一个、出来一个，氧和第二个氢再算一个——1 号和 2 号之间就得算 9 个距离才能搞定。1 号分子的氧受一个排斥力，另外一个氢那边可能是吸引，最后这些力经过平行四边形合成，总能得到 1 号和 2 号之间的总力。然后 1 号和 3 号、1 号和 4 号、1 号和 5 号……旁边还有一百多个，全都算一遍。1 号分子身上的总受力就是 100 个分子对它的作用——哪怕浑身像个刺猬那么多方向，最后也能合成一个方向。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我们没什么好办法，就求它的距离就行了。刚才那几个方程都是距离的函数，你只要把距离一求出来，往里头一带，就可以把那个力求出来。</p><p>要计算1号分子和2号分子之间的相互作用力，只能是一号分子的氧和这三个原子分别做一遍，9个距离才能搞定。最后它的重力是它的合外力，经过平行四边形那个合成，总能得到1号分子和2号分子之间的一个总力。</p><p>1号分子身上的总受力受到了100个分子对它的作用，哪怕你浑身就像一个刺猬，那么多方向，最后也能合成一个方向。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s24">
+  <div class="slides"><figure class="slide" id="slide-29">
+<img src="slides/slide_29.png" alt="课件第29页 最近镜像约定（Minimum Image Convention）">
+<figcaption><span class="sno">29</span><span class="stitle">最近镜像约定（Minimum Image Convention）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">24</span>
+      <div class="sec-tt">
+        <h2>截断半径与最近镜像约定</h2>
+        <div class="sec-meta"><span class="time">录音 01:13:00 - 01:15:00</span><span class="chip">课件 29</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>算完这一步你终于获得了 1 号原子最终的一个受力。有了初始坐标、初始速度、算出来的受力，按照牛顿运动定律，这个分子下一步去哪儿就是唯一确定的。但一想：我的妈，太费事儿了——100 个分子挨个算太费劲儿。为了简化计算，画一个圈：这个半径叫截断半径 r_c。意思就是跟你挨得近的 1 号、2 号、5 号分子算一算就行了，隔得远的算出来跟 0 差不多，就不用算了。跟孙悟空画圈一样：里头的咱一算，外头的不要。这是一种简化，像 PBC 周期边界条件一样，计算模拟里用到了很多重要的简化。</p><p>这张片子稍微难理解一点，其实是一个约定，叫最近镜像约定（Minimum Image Convention）。意思是：2 号分子在中间，周围几个原子受力算完了没问题；但 1 号分子比较贴边儿，跟 5 号、3 号算不太合适，可旁边好像还有粒子跟它挺近的——那怎么办？把盒子做一个平移，把 1 号原子平移到盒子的中间，再画一个圈，如果有影像在这个圈里头，就按这个影像跟它算距离，而不是按真实的那一个。就这么简单。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>为了简化计算呢，就给它画了一个圈儿，这个半径是R，叫截断半径。跟你挨得近的算算就行了，隔得远的算出来也就跟0差不多，就不用算了。跟孙悟空画一个圈儿一样，里头的咱一算，外头的不要。</p><p>最近镜像约定，就是说把这个盒子做了一个平移，把1号原子平移到盒子的中间，然后画一个圈儿，如果有影像在这个圈儿里头，你就算那个影像跟它的距离，而不是算真实的那一个。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s25">
+  <div class="slides"><figure class="slide" id="slide-30">
+<img src="slides/slide_30.png" alt="课件第30页 牛顿——欧拉方程：平动与转动">
+<figcaption><span class="sno">30</span><span class="stitle">牛顿——欧拉方程：平动与转动</span></figcaption>
+</figure>
+<figure class="slide" id="slide-31">
+<img src="slides/slide_31.png" alt="课件第31页 数值求解运动方程：蛙跳算法等">
+<figcaption><span class="sno">31</span><span class="stitle">数值求解运动方程：蛙跳算法等</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">25</span>
+      <div class="sec-tt">
+        <h2>牛顿-欧拉方程与数值求解</h2>
+        <div class="sec-meta"><span class="time">录音 01:15:00 - 01:20:00</span><span class="chip">课件 30</span><span class="chip">课件 31</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>下一步就要讲控制它运动的方程。大家最熟悉的就是牛顿运动方程，描述刚体平动：这个分子该去哪儿，最终由 F = ma 决定（R 的两点导是加速度、一点导是速度、R 是位移），这是控制物体平动的。但因为水分子长成一个三角形的样子，它还有转动——转动由欧拉方程控制：力矩等于惯量乘以角加速度加角速度叉乘项。大家知道一下就行：有线性运动方程描述平动、有欧拉方程描述转动，因为两个水分子砸一块儿不光弹开，弹开之后水分子还要转一个角度。</p><p>搞了半天，要让这些分子动起来，就是解牛顿方程和欧拉方程。解这些方程如果硬算解析解，效率上不划算、比较慢；快一点的办法有——数学家编程序的时候提出了好多数值求解算法：Verlet 算法、Leap-frog（蛙跳）算法、Beeman 算法、Gear 的校正预测法等。所有这些算法只有一个目的：解这个方程的时候解得快一点、平稳一点，别解崩了。蛙跳算法比较聪明：把位置和速度错开半个时间步——已知位置和 1/2 步前的速度，先算受力、算加速度，让加速度往前走一步，再让速度往前走一步，最后让位置往前走一步，如此循环迭代。为什么叫蛙跳？坐标这样跳、速度从半个时刻跳到下一个半时刻，引入 1/2Δt 之后，只涉及到一点加减乘除，没有什么开方，计算量也小，计算非常平稳。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>控制它运动的方程，大家最熟悉的就是牛顿运动方程，描述刚体平动，ma等于F，控制这个物体的平动。水分子长的成一个三角形，它还有转动，转动由欧拉方程控制，力矩等于惯量乘以角加速度和角速度交叉项，知道一下就行了。</p><p>常用的数值求解算法：Verlet算法、leap-frog蛙跳算法、Beeman算法及Gear的校正预测法。所有的这些算法只有一个目的，就是解这个方程的时候解的快一点和平稳一点，别解崩了。</p><p>蛙跳算法把位置和速度错开半个时间步，引入1/2德尔塔T之后，只涉及到一点加减乘除，没有什么开方那些东西，计算量也小，计算非常平稳。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s26">
+  <div class="slides"><figure class="slide" id="slide-32">
+<img src="slides/slide_32.png" alt="课件第32页 模拟细节：项目与方法和参数">
+<figcaption><span class="sno">32</span><span class="stitle">模拟细节：项目与方法和参数</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">26</span>
+      <div class="sec-tt">
+        <h2>模拟细节</h2>
+        <div class="sec-meta"><span class="time">录音 01:20:00 - 01:23:00</span><span class="chip">课件 32</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>讲到这儿，东西挺复杂，总结一下：你跑了一个模拟，怎么跑的呢？拿这一页来回答——微正则（NVE）系综，用 SPC/E 水模型，放 256 个水分子，密度设计成 0.999 g/cm³，理想温度 303 K，周期边界条件，总步长 2000000 步、单步长 0.1 fs，真实空间截取半径 10 Å，使用偏移力势能，长程库仑力用 Ewald 加和法，倒易空间截取半径 3 Å⁻¹，分配系数 0.4 Å⁻¹，k-矢量个数 1715，模拟程序 Gromacs-4.5.6，算法 Leap-Frog（蛙跳）算法。</p><p>这些统统称之为模拟细节。列在这儿干啥？就像你报告实验怎么做：我用金刚石压腔，研究一块绿帘石样品、用红宝石做压标、放了什么传压介质，温度设计到 1000 度、压力设到 50 GPa——这些是实验细节。你写一篇论文，得去描述这些东西。做模拟也一样，要把模拟细节描述出来，它就跟实验一样。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我用了微正则系综，用了一个SPC/E水模型，我放了256个水分子，密度设计成0.999，让它在303K底下算，给一个周期边界条件，又用了什么蛙跳算法，Gromacs几点几的程序。所有的这些都称之为模拟细节。</p><p>这跟你报告实验怎么做一样：我用的是金刚石压腔，研究一块绿帘石，用红宝石做压标，放了什么传压介质，温度给它设计到1000度，压力给它设到50GPa，这不都是实验细节吗？你写一篇论文，得去描述这些东西。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s27">
+  <div class="slides"><figure class="slide" id="slide-33">
+<img src="slides/slide_33.png" alt="课件第33页 模拟的初始阶段（不取数据）">
+<figcaption><span class="sno">33</span><span class="stitle">模拟的初始阶段（不取数据）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-34">
+<img src="slides/slide_34.png" alt="课件第34页 模拟的平衡阶段（提取数据）">
+<figcaption><span class="sno">34</span><span class="stitle">模拟的平衡阶段（提取数据）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">27</span>
+      <div class="sec-tt">
+        <h2>平衡化：初始阶段与平衡阶段</h2>
+        <div class="sec-meta"><span class="time">录音 01:23:00 - 01:26:00</span><span class="chip">课件 33</span><span class="chip">课件 34</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>模拟终于开始走起来了。最开始分子扔进去之后，谁也不敢说随便扔进去的那个体系是平衡体系——它绝对不是平衡体系。怎么办？可控地调节，让它跑几步，最后跑成平衡体系。只有体系达到平衡之后，后头拍的照片才有意义，提取的轨迹数据才有意义，才能进行热力学计算、宏观统计平均；前头没有平衡的那一段不能算数。</p><p>一个形象的例子：一开始把大米扔进瓶子，有这么高，拿起来哐哐哐一摇，就变低了——低的那个就是平衡状态。课上让大家摇了摇瓶子，确实低了一点。就是这意思：开始随便放的位置不平衡，你让体系跑、调节，盒子就变成平衡了。跑平衡了之后就可以取数据、进行分析了——将来大家用 Gromacs 之后，动画肯定可以做出来，会引导你们把这种动画做出来。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>最开始你分子扔进去之后，随便位移扔进去的那个体系，绝对不是平衡体系。可控的调节，让他跑几步，最后跑成平衡体系。只有在你体系达到平衡之后，你后头拍的照片才有意义，提取的那些轨迹数据才有意义。前头的没有平衡的这一段，不能算数。</p><p>一开始你扔进一这些大米，有这么高，你拿起来哐哐哐啷一摇，就变低了，那个低的就是平衡。就这点事。跑平衡了之后，就可以取数据了，就可以进行分析了。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s28">
+  <div class="slides"><figure class="slide" id="slide-35">
+<img src="slides/slide_35.png" alt="课件第35页 小结：MD 工作流程">
+<figcaption><span class="sno">35</span><span class="stitle">小结：MD 工作流程</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">28</span>
+      <div class="sec-tt">
+        <h2>小结：MD 工作流程</h2>
+        <div class="sec-meta"><span class="time">录音 01:26:00 - 01:29:00</span><span class="chip">课件 35</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>小结一下 MD 的工作流程。最开始分子势能的参数都查到了，给一个初始位置——随便给无所谓，张三给这样的位置、李四给那样的位置，爱哪里哪里；初始速度也是随机的，你爱咋地咋地，随便编。有了势能——势能描述两个物体相距多远、受力多大，就能算出来；有了位置、速度和受力，就可以拿牛顿运动方程跑了。让它运动，意思就是它下一个时刻去哪儿、再下一个时刻去哪儿，连续地不停算下去。</p><p>然后经过一些可控的调节——这些可控的调节就是把可控参数带进去：你要设多少温度，就跑到那个温度；要多少压力，就跑到那个压力。一直让体系趋于平衡。趋于平衡之后开始提取微观参量：算到第 100 秒的时候说可以提取了，相当于咔拍了一张照片——把第 100 秒所有分子的空间位置、速度坐标、受力坐标（都是矢量，XYZ 三个分量）全部写到硬盘上，这叫拍一张照片；第 101 秒再拍一张，102 秒、啪啪啪连续拍下去，这就是提取微观参量。</p><p>微观参量取出来干两件事：第一，直接把它播放成动画，观测它的微观过程；第二，利用统计物理学的公式，把密度、扩散系数、温度、焓这些宏观性质算出来。这分两半看：上头相当于控制了实验的进行，下头相当于观测实验数据——整体叫什么呢？计算机实验。所以分子动力学说到这儿，记住这一句话就行：我只不过是拿计算机做了一个实验。前面高温高压实验，我给提供金刚石压腔、大压机；计算机实验就拿计算机算：前头控制实验怎么做，做好了之后取数据，观测微观过程、计算宏观性质。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>MD的工作流程：最开始的势能参数都查到了，给一个初始位置随便给，初始速度随机的随便编。有了势能、位置、速度和受力，就可以拿牛顿运动方程跑了。经过一些可控的调节，一直让这个体系趋于平衡。</p><p>趋于平衡之后就开始提取微观参量，算到第100秒的时候，相当于咔拍了一张照片，把所有的空间位置、速度坐标、受力坐标XYZ三个分量全部写到硬盘上，这就是拍一张照片。连续拍下去，就是把微观参量取出来。</p><p>微观参量取出来干两件事：第一播放一个动画，观测微观过程；第二利用统计物理学的公式，把宏观性质算出来。整体叫什么呢？就是计算机实验。分子动力学说到这儿，你就记住这一个就行了：我只不过是拿计算机做了一个实验。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s29">
+  <div class="slides"><figure class="slide" id="slide-36">
+<img src="slides/slide_36.png" alt="课件第36页 应用十分广泛">
+<figcaption><span class="sno">36</span><span class="stitle">应用十分广泛</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">29</span>
+      <div class="sec-tt">
+        <h2>应用十分广泛</h2>
+        <div class="sec-meta"><span class="time">录音 01:29:00 - 01:31:00</span><span class="chip">课件 36</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>应用太广泛了，这上面列的还只是非常少的一点点。物理学：模拟各种凝聚态物质在广泛温压条件下的微观状态、纳米分子簇、物质界面性质、熔化结晶现象、材料破裂方式等。化学：模拟溶液的各种现象、有机分子的疏水和亲水效应、酸碱反应中的质子转移等。生物学用得太多：模拟蛋白质折叠、粘膜表面等。我们在地学上这几年连续用过的东西：地质流体的热力学状态方程，各种溶体的性质和外来物质的性能，天然气水合物的分解合成，天然气的扩散吸附，煤的解吸、气水两相流——都可以玩。</p><p>最近我刚刚完成了一项研究，指导学生完成的是水垢形成过程中的氢同位素分馏、甲烷的氢同位素分馏，也拿分子动力学做出来了。应用特别广泛。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>物理学化学生物学用的太多了，模拟蛋白质折叠、粘膜表面，界面性质、融化结晶。我们在地学上这几年连续用过的：地质流体的热力学状态方程，天然气水合物的分解合成，天然气的扩散吸附，煤的解吸，气水两相流。</p><p>最近我刚刚完成了一项研究，指导学生完成的就是那个水垢形成过程中的氢同位素的分馏、甲烷氢同位素的分馏，也拿分子动力学做出来了。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s30">
+  <div class="slides"><figure class="slide" id="slide-37">
+<img src="slides/slide_37.png" alt="课件第37页 势能方程（力场）的获得：递归拟合">
+<figcaption><span class="sno">37</span><span class="stitle">势能方程（力场）的获得：递归拟合</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">30</span>
+      <div class="sec-tt">
+        <h2>势能方程（力场）的获得</h2>
+        <div class="sec-meta"><span class="time">录音 01:31:00 - 01:35:00</span><span class="chip">课件 37</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>讲了那么多概念，里头最重要的一个概念实际上是势能——放个核弹、周期边界都是小 case，决定两个物质怎么样相互作用这件事儿最重要，那个就是势能。势能就相当于自然界的法则：比方说规定班里座位必须是男同学女同学分着坐、同性相斥异性相吸，按照这个规则一弄，班里的同学位置就开始自己调整，调整完的位置一定尽量做到男女分开坐——这是自然界的法则，势能就是自然界的法则。</p><p>这个法则最开始怎么来的？是递归拟合出来的。不能无缘无故给水分子定那些电荷多大、LJ 方程那些参数——那不知道。方法是：先给参数随便赋个值（电荷、LJ 里头的 σ 和 ε），拿这个值去跑模拟，跑完之后测一个实验量——比方说测体积最后出来的密度是多少，一测怎么跑了个 1.5 g/cm³，实验值是 1.0 不对，那就去改那几个主要的参数（σ、ε 和电荷数），反复迭代几次，终于获得一个参数组合，使得这个量和水密度比较一致——这就是获得的力场参数。</p><p>这一步不容易过，经常要做大量的实验，所以这些提出力场方程的人的论文都被上万次引用——大家都用这个方法。后续的发展就是第一性原理计算，下回再讲。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>前头讲了那么多概念里头，最重要的一个概念实际上是势能。你放一个核弹、周期性边界，那都是小case，决定两个物质怎么样相互作用这件事儿最重要，那个就是势能，相当于自然界的法则。</p><p>最开始叫递归拟合出来的。先给那些参数随便赋个值，拿那个值去跑模拟，跑完之后测一个实验量，比方说测一下密度，跑出来1.5，实验值是一不对，那你就去改那几个主要的量，反复迭代几次，终于获得一个参数组合，使得这个量和水密度比较一致，你就获得了力场参数。</p><p>提出力场方程的人的那些论文，都是被上万次的引用。后续的发展呢，就是第一性原理计算，下回再讲。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s31">
+  <div class="slides"><figure class="slide" id="slide-46">
+<img src="slides/slide_46.png" alt="课件第46页 计算模拟实验室">
+<figcaption><span class="sno">46</span><span class="stitle">计算模拟实验室</span></figcaption>
+</figure>
+<figure class="slide" id="slide-47">
+<img src="slides/slide_47.png" alt="课件第47页 超级计算实验室">
+<figcaption><span class="sno">47</span><span class="stitle">超级计算实验室</span></figcaption>
+</figure>
+<figure class="slide" id="slide-49">
+<img src="slides/slide_49.png" alt="课件第49页 MP 作业 3.1：LJ 势能曲线的几个重要点">
+<figcaption><span class="sno">49</span><span class="stitle">MP 作业 3.1：LJ 势能曲线的几个重要点</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">31</span>
+      <div class="sec-tt">
+        <h2>计算资源与作业 MP3.1</h2>
+        <div class="sec-meta"><span class="time">录音 01:35:00 - 01:37:00</span><span class="chip">课件 46</span><span class="chip">课件 47</span><span class="chip">课件 49</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>这门课后面就要开始给你们提供真正的算力资源。以前我们实验室经常有很多服务器，后来一步步更新——这些实验室都是我组织建设的，同学们实习就在这个一体化集群上实习。今年有新变化：要改成国科大的一套新集群，咱们的计算要在那远程连接，你们回去就做作业，用那样的计算机跑计算。</p><p>今天的作业是 MP3.1：回去研究研究 Lennard-Jones 方程那个曲线的几个重要点（如与 x 轴的交点、最小极值点、无穷远点），再研究研究方程那两个参数（ε 和 σ）对曲线是怎么影响的——具体的参数都可以在讲义上查到，拿 AI 搜也能搜到。因为今天这节课嵌在周日、两次课时间也比较紧，下次课来的时候先把势能那两件事说完，可能再需要五六分钟。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这是以前我们实验室呢，就经常有很多这个服务器，后来它就变成更新一步了，这些实验室都是我组织建设的。同学们实习呢，就在这个一体化集群上实习。今年有新变化，咱们要改成那个国科大的一套新集群，咱们的计算要远程连接，你们回去就做作业，就用那样的计算机跑计算。</p><p>作业的话，你们回去先干一件事儿，研究研究那个林纳德琼斯方程那个曲线的几个重要点，再研究研究那几个方程的两个参数是对那个曲线是怎么样影响的。下次课来的时候呢，我先把那个势能那两件事说完，可能再需要五六分钟。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（180083070901P2003H）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>

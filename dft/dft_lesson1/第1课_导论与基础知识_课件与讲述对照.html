@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>密度泛函理论与应用（2026 秋） · 导论：密度泛函理论及其重要性 ＋ 基础知识（薛定谔方程与隧道效应、氢原子、晶体结构与能带、并行计算与超算）｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>密度泛函理论与应用（2026 秋） · 导论：密度泛函理论及其重要性 ＋ 基础知识（薛定谔方程与隧道效应、氢原子、晶体结构与能带、并行计算与超算）</h1>
+    <div class="sub">导论：密度泛函理论及其重要性 ＋ 基础知识（薛定谔方程与隧道效应、氢原子、晶体结构与能带、并行计算与超算） ｜ 2026-09-11 ｜ 授课：杜世萱（导论）</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 167 页 · 整理 44 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-s01">01 开场：授课团队与课程安排</option>
+<option value="sec-s02">02 物理学地图与凝聚态物理的尺度</option>
+<option value="sec-s03">03 凝聚态物理的九大研究领域</option>
+<option value="sec-s04">04 计算：现代物理学的三大分支之一</option>
+<option value="sec-s05">05 郝柏林与计算物理的地位</option>
+<option value="sec-s06">06 国家战略：材料基因组与超算平台</option>
+<option value="sec-s07">07 高通量计算与课题组数据库</option>
+<option value="sec-s08">08 DFT 的定义与重要性</option>
+<option value="sec-s09">09 沃尔特·科恩与 DFT 文献</option>
+<option value="sec-s10">10 DFT 的引用统计：论文山</option>
+<option value="sec-s11">11 DFT 相关软件资源</option>
+<option value="sec-s12">12 Feynman：What I cannot create, I do not understand.</option>
+<option value="sec-s13">13 案例：MoSi2N4 论文与代算广告</option>
+<option value="sec-s14">14 就业、代算与数据可靠性</option>
+<option value="sec-s15">15 软件黑箱：科学计算软件能作为黑箱吗？</option>
+<option value="sec-s16">16 计算机模拟结果可信吗？（柴静-丁仲礼）</option>
+<option value="sec-s17">17 球形奶牛：合理近似是物理学的精髓</option>
+<option value="sec-s18">18 可靠性：四类误差与可重复性</option>
+<option value="sec-s19">19 课程目标与讨论班</option>
+<option value="sec-s20">20 考核、习题与课程特点</option>
+<option value="sec-s21">21 本课程关心的问题</option>
+<option value="sec-s22">22 还原论与突现论</option>
+<option value="sec-s23">23 DFT 涉及的时空尺度</option>
+<option value="sec-s24">24 参考书与学习方法</option>
+<option value="sec-s25">25 课程概要、选课必要性与学习态度</option>
+<option value="sec-s26">26 基础知识：波函数与量子态</option>
+<option value="sec-s27">27 量子力学奠基人：薛定谔、狄拉克、海森堡</option>
+<option value="sec-s28">28 薛定谔方程与定态方程</option>
+<option value="sec-s29">29 求解定态问题：四步法</option>
+<option value="sec-s30">30 一维无限深方势阱</option>
+<option value="sec-s31">31 一维有限深势阱</option>
+<option value="sec-s32">32 有限高势垒：隧道效应</option>
+<option value="sec-s33">33 扫描隧道显微镜（STM）与 1986 年诺奖</option>
+<option value="sec-s34">34 原子操纵与石墨烯折纸术</option>
+<option value="sec-s35">35 1973 年诺奖与隧穿时间</option>
+<option value="sec-s36">36 平均值与狄拉克符号</option>
+<option value="sec-s37">37 氢原子：分离变量与量子数</option>
+<option value="sec-s38">38 晶体结构与布拉菲格子</option>
+<option value="sec-s39">39 倒格子与布里渊区</option>
+<option value="sec-s40">40 固体能带理论</option>
+<option value="sec-s41">41 并行计算与 MPI</option>
+<option value="sec-s42">42 VASP 并行</option>
+<option value="sec-s43">43 超级计算机与超算桂冠</option>
+<option value="sec-s44">44 神威·太湖之光与中国 TOP100</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 1-课程概要-20260911.pdf（p8–96 中讲述部分）＋ 2-基础知识-20260911.pdf（p1–85 中讲述部分） 逐页渲染，转写原文见 record_20260911.txt。</div>
+<section class="sec" id="sec-s01">
+  <div class="slides"><figure class="slide" id="slide-001">
+<img src="slides/slide_001.png" alt="课件第1页 2026 年秋课程时间安排（校历）">
+<figcaption><span class="sno">001</span><span class="stitle">2026 年秋课程时间安排（校历）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>开场：授课团队与课程安排</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（开头）</span><span class="chip">课件 1</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>课程由跨学科团队讲授：主讲杜世萱（北大高分子物理本科、北师大物理化学硕士、中科院物理所研究员，2015 年成立课题组，方向为单分子层次的结构-物性关系与计算模拟），以及潘金波（2016 年物理所博士、天大博后、2019 年回所，负责课程后半部分）；助教为牟昊天与张兴磊（物理学院），有问题可在课后或课程群咨询。</p><p>课程方案：讲课 40 学时、2 学分，压缩讲授最基本内容，课堂讲授为主、部分内容靠自学；另开设《密度泛函理论与应用研讨》讨论班，20 学时、1 学分，以学生讨论为主，目的是帮助大家从本科“老师让学什么就学什么”过渡到研究生阶段的自主科研。</p><p>时间安排：中秋、国庆各休一次（补休视调休调整）；第 18 号之前可退选；讨论班第一次安排在 11 月 29 日晚；考试初步定在 12 月 25 日。本讲导论分四部分：DFT 及其重要性、为什么需要学习理论知识、课程概要及特点、学习方法与选课必要性。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我们这个课程的方案呢，就是讲课程，讲课是40学时，是两个学分。……另外开设了民理论与应用研讨讨论班。讨论班的课程呢，是20个学时一个学分，需要你选修了这一门课，以学生讨论为主。</p><p>蓝色的部分，首先就是我们今天上午这个课在中秋和国庆呢，会休休两次，补休一四。……如果国庆还要调休呢，我能再调整。</p><p>11月29号晚上，我们的课呢，是在晚上讨论，那29号开始第一次讨论课……25号呢，就是考试。12月25号考试限制初步是这么定的。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s02">
+  <div class="slides"><figure class="slide" id="slide-002">
+<img src="slides/slide_002.png" alt="课件第2页 物理学地图（The Map of Physics）">
+<figcaption><span class="sno">002</span><span class="stitle">物理学地图（The Map of Physics）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-003">
+<img src="slides/slide_003.png" alt="课件第3页 凝聚态物理：空间尺度">
+<figcaption><span class="sno">003</span><span class="stitle">凝聚态物理：空间尺度</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>物理学地图与凝聚态物理的尺度</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 2</span><span class="chip">课件 3</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>老师展示了一张英国物理学家、科普作家奥尔特（Dominic Walliman）绘制的“物理学地图”：整个物理学大致分为经典物理、相对论、量子物理四大板块，板块之间是被作者称为“无尽的深渊”（The Chasm of Ignorance）的未知区域——各板块目前关联性不强，本质上各领域之间的深层联系尚未找到。</p><p>凝聚态物理在量子物理这个大板块中只占很小一块。从空间尺度看，它研究的尺度非常小；其研究对象是大量粒子组成的凝聚态结构中的性质与动力学过程，分析宏观物性的起源。涉及的尺度可以从原子分子层次一直到宏观层次（比天体物理和工程类略小）。凝聚态物理连接着原子尺度的物理与日常事物的各种性质。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这个图呢，是一个英国的物理学家，也是一个科普作家，叫奥尼尼克瓦一玛，他做了一个物理学地图……主要分为四大板块，一个经典物理一相对论，在一个。还有就是量子物理……再一个呢，就是说这一这一部分是他认为是一个未知的，还有区域以及无尽的深渊。</p><p>其实名一探物理其实是研究这个大量粒子，它组成了凝聚态结构中，它的性质和供学过程，然后分析宏观物性的起源。然后他这样一个这样一门学科，实际上涉及的尺度可以到原子分子层次，同时也可以到宏观层次。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s03">
+  <div class="slides"><figure class="slide" id="slide-004">
+<img src="slides/slide_004.png" alt="课件第4页 凝聚态物理：研究领域（九大领域）">
+<figcaption><span class="sno">004</span><span class="stitle">凝聚态物理：研究领域（九大领域）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-005">
+<img src="slides/slide_005.png" alt="课件第5页 凝聚态物理研究对象与前沿热点">
+<figcaption><span class="sno">005</span><span class="stitle">凝聚态物理研究对象与前沿热点</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>凝聚态物理的九大研究领域</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 4</span><span class="chip">课件 5</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>老师用 AI 辅助梳理并结合教材，把凝聚态物理的研究领域大体归为九类：固态物理（固体材料性质、晶体与无序结构及其电子结构）、超导（极低温度下无电阻导电，高温超导仍在探索）、磁性（铁磁/反铁磁/亚铁磁以及非常规磁性）、相变（温度与外场导致的物态转变）、拓扑绝缘体（体材料是绝缘体、表面/边界态导电）、量子计算与信息、纳米科学与纳米技术、软凝聚态（聚合物、胶体、合金等）、热电材料（热-电转换）。</p><p>每个领域都有当下的研究热点，例如磁性方向的非常规磁性也将在讨论班作为专题介绍。冯端、金国钧《凝聚态物理学》可作为参考书。凝聚态物理的尺度跨越原子到宏观，与先进材料、强关联体系、拓扑量子场论、量子计算、自旋电子学、精密测量等前沿热点密切相关。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>就是说，用AI查了一下，然后呢，有结合自己的一些理解，还有就是教科书上的一些认识，那基本上可以，分为这九类呢，基本上都包含在动态物理的研究领域。</p><p>对于你研究云云天物理的人来说……明一他在这本书里，他对这个物理学的分支和研究对象也给了一个图，就是这个左边呢，是物体的大小……右边呢，是对于对应于我们真实世界你所能理解到的距离。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s04">
+  <div class="slides"><figure class="slide" id="slide-006">
+<img src="slides/slide_006.png" alt="课件第6页 计算：现代物理学的三大分支之一">
+<figcaption><span class="sno">006</span><span class="stitle">计算：现代物理学的三大分支之一</span></figcaption>
+</figure>
+<figure class="slide" id="slide-007">
+<img src="slides/slide_007.png" alt="课件第7页 计算：物理发现的一种工具">
+<figcaption><span class="sno">007</span><span class="stitle">计算：物理发现的一种工具</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>计算：现代物理学的三大分支之一</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 6</span><span class="chip">课件 7</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>现代物理学有三大分支：实验物理、理论物理与计算物理，三者相辅相成。实验物理为理论提供数据、利于理论建模；理论可以解释实验、指导实验目的；计算物理既能模拟实验、提出新实验指导实验物理发展，又能为理论物理提供模拟结果、启发理论建模。</p><p>早期仅凭实验或仅凭理论或仅凭计算都可能发很好的文章；但现在要发好文章、发现好的结果，往往需要三大块紧密结合——这也是开设本课程的初衷。计算是物理发现的一种工具：等离子体静电湍流模拟、玻色-爱因斯坦凝聚（BEC）模拟、LHC 希格斯玻色子事件模拟、两个黑洞融合的引力波模拟、太阳表面对流层模拟等，都是计算驱动新发现的例子。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那现在物理学的三大分支，一个是实验物理同物理和计算物理……那三大块之间实际上是相辅相辅相成的，那在早期的理论当中。仅仅凭实间论语，或仅凭理论语，或者是你这个计算界可能都能发很好的一章。</p><p>那计算呢，其实是物理发现的一种工具，不光在我这个。就一看物理有用学在这个等离子体这个方面，论模拟那个波三因斯坦凝聚，还有就是7个斯波色子的这个直线的模拟，还有黑洞的融合……其实都都可。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s05">
+  <div class="slides"><figure class="slide" id="slide-008">
+<img src="slides/slide_008.png" alt="课件第8页 郝柏林《漫谈物理学和计算机》">
+<figcaption><span class="sno">008</span><span class="stitle">郝柏林《漫谈物理学和计算机》</span></figcaption>
+</figure>
+<figure class="slide" id="slide-009">
+<img src="slides/slide_009.png" alt="课件第9页 实验＋理论＋模拟＝真实">
+<figcaption><span class="sno">009</span><span class="stitle">实验＋理论＋模拟＝真实</span></figcaption>
+</figure>
+<figure class="slide" id="slide-010">
+<img src="slides/slide_010.png" alt="课件第10页 CMMP2010 前瞻摘要">
+<figcaption><span class="sno">010</span><span class="stitle">CMMP2010 前瞻摘要</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>郝柏林与计算物理的地位</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 8</span><span class="chip">课件 9</span><span class="chip">课件 10</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>郝柏林院士在 1988 年出版的《漫谈物理学和计算机》中就指出：物理学作为纯实验科学的时期早已结束，仅作为实验与理论密切结合科学的时代也正在过去，新的物理学立足于实验、理论和计算三大支柱之上。</p><p>俄勒冈州立大学的 R.H. Landau 提出“实验＋理论＋模拟＝真实”：计算和模拟的使用已变得如此普遍和重要，成为科学过程的一部分，许多人认为科学范式已扩展到把仿真作为附加维度——光有实验和理论并不能描述真实事件。</p><p>老师还引用了一个著名的反例笑话：Jürgen Mayer 等在 American Journal of Physics 上用 4 个参数拟合出一头大象、5 个参数让大象鼻子晃动，批评盲目参数拟合；但“三种方法”描述大象（实验/理论/模拟结合）更为实际和合理。CMMP2010 前瞻委员会也强调：强大的计算机模拟将集成进测量工具，扩展解析理论可触及的范围。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那郝博林呢，他是一个理论物理学家，他在出版的1988年的一个论谈物理学和计算机里头，他就说了这么一段话，那物理学作为纯实验科学的时代早已结束……新的物理学立足于实验理论和计算三大支柱上。</p><p>这个俄勒冈大学的这个朗道……计算和模拟的使用现在也变得如此普遍和重要，成为科学过程的一部分。以至于许多人认为科学范式已经扩散到将仿真作为一个附加的维度，也就是这个光是实验和理论其实并不能描述一个真实的事件。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s06">
+  <div class="slides"><figure class="slide" id="slide-011">
+<img src="slides/slide_011.png" alt="课件第11页 美国能源部投资 1600 万美元">
+<figcaption><span class="sno">011</span><span class="stitle">美国能源部投资 1600 万美元</span></figcaption>
+</figure>
+<figure class="slide" id="slide-012">
+<img src="slides/slide_012.png" alt="课件第12页 Materials Genome 数据库统计">
+<figcaption><span class="sno">012</span><span class="stitle">Materials Genome 数据库统计</span></figcaption>
+</figure>
+<figure class="slide" id="slide-013">
+<img src="slides/slide_013.png" alt="课件第13页 中科院“十三五”规划：实验平台与计算平台并列">
+<figcaption><span class="sno">013</span><span class="stitle">中科院“十三五”规划：实验平台与计算平台并列</span></figcaption>
+</figure>
+<figure class="slide" id="slide-014">
+<img src="slides/slide_014.png" alt="课件第14页 “十四五”规划：大数据中心与 E 级超算">
+<figcaption><span class="sno">014</span><span class="stitle">“十四五”规划：大数据中心与 E 级超算</span></figcaption>
+</figure>
+<figure class="slide" id="slide-015">
+<img src="slides/slide_015.png" alt="课件第15页 “十四五”规划：制造业核心竞争力">
+<figcaption><span class="sno">015</span><span class="stitle">“十四五”规划：制造业核心竞争力</span></figcaption>
+</figure>
+<figure class="slide" id="slide-016">
+<img src="slides/slide_016.png" alt="课件第16页 中国的材料基因组（Atomly）">
+<figcaption><span class="sno">016</span><span class="stitle">中国的材料基因组（Atomly）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>国家战略：材料基因组与超算平台</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 11</span><span class="chip">课件 12</span><span class="chip">课件 13</span><span class="chip">课件 14</span><span class="chip">课件 15</span><span class="chip">课件 16</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>美国能源部 2016 年投资 1600 万美元支持新材料计算设计（Materials Genome 计划），说明从国家战略层面开始部署计算设计。课件展示了 Materials Genome 数据库统计：无机化合物、能带结构、分子、纳米多孔材料等各类数据量级（15 万余无机化合物、7 万余能带结构等），数据持续增长，做科研时可查询已有材料结构数据。</p><p>中国也启动了相应计划：中科院“十三五”发展规划把实验平台与计算平台并列；国家“十四五”规划提出加快构建全国一体化大数据中心体系、建设若干国家枢纽节点和大数据中心集群、建设 E 级和 10E 级超级计算中心；在制造业核心竞争力方面涉及高端新材料、重大技术装备、智能制造与机器人技术——制造正向原子/分子尺度靠近。</p><p>中国的材料基因组：物理所刘淼、孟胜等建立的 Atomly 网站已计算近 35 万种材料的相关数据（覆盖 ICSD 大部分结构），包含 34 万余种材料的能带、态密度等电子结构信息，以及近 7 万组热力学相图。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那美国能量部呢，其实他在16年的时候。他投投资了1600万支持这个系统是要设计。那就是说，这个从国家战略上提出一流量，他们也开始部署了。</p><p>中国呢，也。也启动了相应的一些计划，有科学院的十三五的发展规划呢，将数据计算平台和实验平台是并列的。……建设一级和10亿级的这个超级计算中心。</p><p>这个呢，是物理所的刘淼王孟盛研究人呢，他们在中国的材料基金组织持计划支询下建立的这个方米网站建立呢，已经计算将近三三十五万多种的材料的相关数据。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s07">
+  <div class="slides"><figure class="slide" id="slide-017">
+<img src="slides/slide_017.png" alt="课件第17页 基于 DFT 的高通量计算（Nature Nanotech.）">
+<figcaption><span class="sno">017</span><span class="stitle">基于 DFT 的高通量计算（Nature Nanotech.）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-018">
+<img src="slides/slide_018.png" alt="课件第18页 二维铁磁材料的系统搜索（Phys. Rev. Mater.）">
+<figcaption><span class="sno">018</span><span class="stitle">二维铁磁材料的系统搜索（Phys. Rev. Mater.）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-019">
+<img src="slides/slide_019.png" alt="课件第19页 机器学习辅助固态锂离子导体发现（Chem. Mater.）">
+<figcaption><span class="sno">019</span><span class="stitle">机器学习辅助固态锂离子导体发现（Chem. Mater.）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-020">
+<img src="slides/slide_020.png" alt="课件第20页 课题组数据库（张现利/邓俊/潘金波）">
+<figcaption><span class="sno">020</span><span class="stitle">课题组数据库（张现利/邓俊/潘金波）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div class="sec-tt">
+        <h2>高通量计算与课题组数据库</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 17</span><span class="chip">课件 18</span><span class="chip">课件 19</span><span class="chip">课件 20</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>除了大型数据库，基于 DFT 的高通量计算也有一些小型数据库：例如 Nature Nanotechnology 的工作从 108,423 种已知三维化合物出发，用范德瓦尔斯密度泛函高通量计算筛选出约 1825 种可剥离二维材料，其中 258 种具有振动、电子、磁性和拓扑性质信息，含 56 种铁磁/反铁磁体系。</p><p>郭鸿（Hong Guo）教授团队在 Phys. Rev. Mater. 上做二维铁磁材料的系统筛选：从 ICSD 18.7 万条记录中找出具有二维网络结构、磁性原子和重原子的 15 个候选，第一性原理计算确定磁序，其中 Cr3Te4 的居里温度比其他材料高一个量级。</p><p>还有用机器学习方法发现新锂离子导体（Chem. Mater.）：基于 Materials Project 数据筛选 12000+ 含锂材料，找到 21 种快离子导体候选，压缩了 99.8% 的搜索空间。</p><p>本课题组也有数据库：二维材料/金属基底界面数据库（Layered DB，已发布在 Science Data Bank）以及二维离子材料数据库等，分别由张现利、邓俊、潘金波完成，其中层状材料数据库收录了从三维离子型材料中剥离的二维材料及其功能分类，并据此堆积设计新的三维材料。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>除了这样大型的数据库以外呢，其实基于密克尔理论的高能量计算呢，领也有一些小型的数据库……这个包包含这个1万多种三维材料，可以剥离出的二维材料大概是1到五千多种。</p><p>这里呢，其实这个这个工作呢，是南特大学的郭博教授呢，他们做的一个二五铁磁的材料的一个筛选，他们从这个3SD的18万多的材料里头找到了15个专一的容。</p><p>那我们我自己课题组呢，我们其实也有一个数据库……这个数据库里面也把一二维一子材料材料对比，然把它对应的功能来做分类。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s08">
+  <div class="slides"><figure class="slide" id="slide-021">
+<img src="slides/slide_021.png" alt="课件第21页 计算机与计算软件（VASP/Gaussian）">
+<figcaption><span class="sno">021</span><span class="stitle">计算机与计算软件（VASP/Gaussian）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-022">
+<img src="slides/slide_022.png" alt="课件第22页 密度泛函理论（定义）">
+<figcaption><span class="sno">022</span><span class="stitle">密度泛函理论（定义）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-023">
+<img src="slides/slide_023.png" alt="课件第23页 密度泛函理论（Web of Science 文章量）">
+<figcaption><span class="sno">023</span><span class="stitle">密度泛函理论（Web of Science 文章量）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">08</span>
+      <div class="sec-tt">
+        <h2>DFT 的定义与重要性</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 21</span><span class="chip">课件 22</span><span class="chip">课件 23</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>计算与计算机和软件密切相关，要用对、用好计算机，需要理论基础——这正是开设《密度泛函理论与应用》的必要性。密度泛函理论（Density Functional Theory, DFT）是一种研究多电子体系电子结构的量子力学方法，在物理、化学、材料上都有广泛应用，特别用于研究分子和凝聚态的性质，是凝聚态物理和计算化学领域最常用的方法之一。</p><p>从 Web of Science 的统计数据看，以“Density functional theory”为关键词的论文量从 1990 年代开始持续增长（蓝色为化学、绿色为材料、灰色为其他），增长非常快甚至接近指数增长——DFT 的应用越来越重要。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那这里我们要说的计算好说跟计算机和软件非常相关。那其实你要用对用好计算机和计算机项目理论基础，那这也就是说，开设这一全理论及应用的一个必要性。</p><p>那这个瓦特霍呢，就因为他嵌立了这个六汉人理论呢，获得了一些国家的诺贝尔物理学奖……就是我们的研发的的关用用到内理论计算的这个文章的数量，那这里头我其实这个是。……这个数据。数据也是在持续增长，而且就是超现实一增长。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s09">
+  <div class="slides"><figure class="slide" id="slide-024">
+<img src="slides/slide_024.png" alt="课件第24页 沃尔特·科恩（Walter Kohn，1923-2016）">
+<figcaption><span class="sno">024</span><span class="stitle">沃尔特·科恩（Walter Kohn，1923-2016）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-025">
+<img src="slides/slide_025.png" alt="课件第25页 DFT 相关文献">
+<figcaption><span class="sno">025</span><span class="stitle">DFT 相关文献</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">09</span>
+      <div class="sec-tt">
+        <h2>沃尔特·科恩与 DFT 文献</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 24</span><span class="chip">课件 25</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>沃尔特·科恩（Walter Kohn，1923-2016）：出生于维也纳的犹太家庭，16 岁逃亡英格兰，辗转加拿大后进入多伦多大学，用约一年半时间获得数学和物理双学士；在多伦多大学获应用数学硕士，1948 年在哈佛大学获物理学博士（导师 Julian Schwinger，1965 年诺贝尔奖得主）；先后在哈佛、卡内基梅隆、UCSD 任教，1961 年任 UCSD 物理系主任，后创办 UCSB 理论物理研究所并任所长，直至去世。</p><p>科恩因犹太身份当年不能学化学，最后却获得了诺贝尔化学奖；他同时是伦敦皇家学会外籍会员、量子分子科学国际科学院、国家科学院与美国艺术与科学院院士。关于 DFT 的历史，可参考 Zangwill（Physics Today 2015）、R.O. Jones（RMP 2015）等人的综述文章。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>他其实是二三年呢，出生在维也纳一个犹太家庭……他两年半就获得了数学和物理学的双学士，然后在这期间呢，还有一年呢，入五同业，那实际上他达到这两个双学位的。其实用了一年半的时间。</p><p>他最后拿到了拿了诺贝尔化学奖，其实他自己也也觉得。应该你心里有不甘……但是呢，它也是一个能量子分子科学国际科学院，还有国家科学院美国艺术与科学院三院院士。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s10">
+  <div class="slides"><figure class="slide" id="slide-026">
+<img src="slides/slide_026.png" alt="课件第26页 论文山：The Top 100 papers">
+<figcaption><span class="sno">026</span><span class="stitle">论文山：The Top 100 papers</span></figcaption>
+</figure>
+<figure class="slide" id="slide-027">
+<img src="slides/slide_027.png" alt="课件第27页 Beck 对 DFT 的评价">
+<figcaption><span class="sno">027</span><span class="stitle">Beck 对 DFT 的评价</span></figcaption>
+</figure>
+<figure class="slide" id="slide-028">
+<img src="slides/slide_028.png" alt="课件第28页 Physical Review 高引文章列表">
+<figcaption><span class="sno">028</span><span class="stitle">Physical Review 高引文章列表</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">10</span>
+      <div class="sec-tt">
+        <h2>DFT 的引用统计：论文山</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 26</span><span class="chip">课件 27</span><span class="chip">课件 28</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>Nature 2014 年统计了 Web of Science 索引的论文“论文山”：如果把每篇论文首页打印出来堆在一起，高度可达乞力马扎罗山（5895 m）；最上面 1.5 米是引用超 1000 次的论文，1.5 cm 是引用超 10000 次的，只有前 100 篇引用超过 12000 次——Top 100 中有 12 篇与 DFT 相关，其中 2 篇进入 Top 10。</p><p>Beck 评价道：DFT 可以描述所有化学、生物化学、生物学、纳米系统和材料——地球上的一切都取决于电子的运动，因此 DFT 从根本上支撑着一切。在 Physical Review 系列引用超 1000 次的文章列表中，Kohn-Sham（1965）、Hohenberg-Kohn（1964）、Perdew-Zunger（1981）等 DFT 奠基文章高居前列。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>他把从五三能所引的五章的首页呢，打印出来堆在一起，这个高度能达到最高峰七马扎罗山这么高，最上面的1.5米的文章呢，已用超过了一千四一千次……只有前100天。他的一用额是超过了一万5400。</p><p>他说了一句话，就是describe allistry biology,就所有everything word看。所以呢，从从这个理论上来说，它是1under under,所以就是说这个他给了这个电气一非常高的评价。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s11">
+  <div class="slides"><figure class="slide" id="slide-029">
+<img src="slides/slide_029.png" alt="课件第29页 计算机、计算软件与理论基础">
+<figcaption><span class="sno">029</span><span class="stitle">计算机、计算软件与理论基础</span></figcaption>
+</figure>
+<figure class="slide" id="slide-030">
+<img src="slides/slide_030.png" alt="课件第30页 第一部分：导论（目录）">
+<figcaption><span class="sno">030</span><span class="stitle">第一部分：导论（目录）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-031">
+<img src="slides/slide_031.png" alt="课件第31页 DFT 相关的部分软件资源">
+<figcaption><span class="sno">031</span><span class="stitle">DFT 相关的部分软件资源</span></figcaption>
+</figure>
+<figure class="slide" id="slide-032">
+<img src="slides/slide_032.png" alt="课件第32页 HF 相关的部分程序">
+<figcaption><span class="sno">032</span><span class="stitle">HF 相关的部分程序</span></figcaption>
+</figure>
+<figure class="slide" id="slide-033">
+<img src="slides/slide_033.png" alt="课件第33页 半经验电子结构计算程序">
+<figcaption><span class="sno">033</span><span class="stitle">半经验电子结构计算程序</span></figcaption>
+</figure>
+<figure class="slide" id="slide-034">
+<img src="slides/slide_034.png" alt="课件第34页 分子动力学（MD）与 MC 程序">
+<figcaption><span class="sno">034</span><span class="stitle">分子动力学（MD）与 MC 程序</span></figcaption>
+</figure>
+<figure class="slide" id="slide-035">
+<img src="slides/slide_035.png" alt="课件第35页 可视化与分析程序">
+<figcaption><span class="sno">035</span><span class="stitle">可视化与分析程序</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">11</span>
+      <div class="sec-tt">
+        <h2>DFT 相关软件资源</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 29</span><span class="chip">课件 30</span><span class="chip">课件 31</span><span class="chip">课件 32</span><span class="chip">课件 33</span><span class="chip">课件 34</span><span class="chip">课件 35</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>为什么要学习理论知识？从数据看 DFT 很重要，从软件生态看同样如此：DFT 相关软件非常多，例如纯 DFT 程序 ABINIT、CASTEP、CPMD、Octopus（含含时 DFT）、PWSCF、SIESTA（LCAO）、VASP、WIEN2k（LAPW）等，还有考虑相对论的 DIRAC、MOLFDIR 程序；以 HF 方程为核心的数值方法（Gaussian 等）软件也很多。</p><p>半经验电子结构程序通过实验或其他渠道估算积分、忽略全部三中心和四中心积分，大大简化薛定谔方程的求解（适合生物体系，老师自己用过 HyperChem）。分子动力学（MD）与蒙特卡罗（MC）程序从 1980 年恒压动力学、1983 年非平衡态、1984 年恒温、1985 年第一性原理 MD 到 1991 年巨正则系综，一步步发展；MD 依靠牛顿力学抽样计算构型积分与热力学量，MC 用（伪）随机数不断抽样、逐渐逼近，起源于 20 世纪 40 年代中期。</p><p>结果出来了还需要可视化：Avogadro、Jmol、PyMOL、VMD、RasMol 等可视化与分析程序可以方便地把数据画成图，不必再像老师读书时那样自己写绘图程序。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那这里我们可以看到其一个编译相关的软件非常多。然后这里就是说，列举了一些常用的存的电气的，还是一个相关的一些电解构计算的程序等等。</p><p>除了就是说GDP还有是后近四的计算软件以外，其实它还有一些是半经验的电解构计算程序。这里头呢，是通过实验课的其他一的一些渠道估算了一些积分，忽略全部的三年一四年一积分，大大简化了这个切分方程的一解构一解计算。</p><p>那除了这样一些计算电路结构研究过的过程中，信些软件以外，其实还有一些可视化的。……现在学生就都很幸福，就有各种各样的可视化的分析的程序呢，可以用来来做，不用自己动脑子分析。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s12">
+  <div class="slides"><figure class="slide" id="slide-036">
+<img src="slides/slide_036.png" alt="课件第36页 Feynman：What I cannot create, I do not understand.">
+<figcaption><span class="sno">036</span><span class="stitle">Feynman：What I cannot create, I do not understand.</span></figcaption>
+</figure>
+<figure class="slide" id="slide-037">
+<img src="slides/slide_037.png" alt="课件第37页 Feynman：Know how to solve every problem that has been solved.">
+<figcaption><span class="sno">037</span><span class="stitle">Feynman：Know how to solve every problem that has been solved.</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">12</span>
+      <div class="sec-tt">
+        <h2>Feynman：What I cannot create, I do not understand.</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 36</span><span class="chip">课件 37</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>现成软件都有，直接用就行——那为什么还要学这门课？如果会操作计算机、会读软件说明就够了，大学也不用读了。Feynman 说：“What I cannot create, I do not understand.”（我不能创造的，我就不理解），Quantum Espresso 把它改编为“What I cannot compute, I do not understand.”。</p><p>Feynman 这句话下面还有一句更关键的：“Know how to solve every problem that has been solved.”——并不是算一算就行，你要知道算出来的结果是怎么来的、为什么会有这样的结果、软件解决这个问题背后的本质是什么。这也是为什么要读研究生、为什么要做研究，而不是本科毕业会操作软件就够了的根本原因。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那现成的软件都有，直接用就行。那为什么我们还要学习这个？那如果是这样的，如果软件和计算机都有就能做，那可能我们的大学也不用读了。</p><p>那这里一就提到了这个费曼说的……What I cannot create,I understand.……他就说。Know how to solve every problem that has been solved.这是问题的关键，那就是说其实我们并不是算一算就行。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s13">
+  <div class="slides"><figure class="slide" id="slide-038">
+<img src="slides/slide_038.png" alt="课件第38页 金属所任文才团队 Science：MoSi2N4 材料">
+<figcaption><span class="sno">038</span><span class="stitle">金属所任文才团队 Science：MoSi2N4 材料</span></figcaption>
+</figure>
+<figure class="slide" id="slide-039">
+<img src="slides/slide_039.png" alt="课件第39页 计算服务广告">
+<figcaption><span class="sno">039</span><span class="stitle">计算服务广告</span></figcaption>
+</figure>
+<figure class="slide" id="slide-040">
+<img src="slides/slide_040.png" alt="课件第40页 Fig.3 MoSi2N4 原子结构、能带与性质">
+<figcaption><span class="sno">040</span><span class="stitle">Fig.3 MoSi2N4 原子结构、能带与性质</span></figcaption>
+</figure>
+<figure class="slide" id="slide-041">
+<img src="slides/slide_041.png" alt="课件第41页 Fig.4 DFT 对 MA2Z4 家族的预测">
+<figcaption><span class="sno">041</span><span class="stitle">Fig.4 DFT 对 MA2Z4 家族的预测</span></figcaption>
+</figure>
+<figure class="slide" id="slide-042">
+<img src="slides/slide_042.png" alt="课件第42页 MoSi2N4 论文 Abstract（DFT 预测）">
+<figcaption><span class="sno">042</span><span class="stitle">MoSi2N4 论文 Abstract（DFT 预测）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-043">
+<img src="slides/slide_043.png" alt="课件第43页 计算服务广告（续）">
+<figcaption><span class="sno">043</span><span class="stitle">计算服务广告（续）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-044">
+<img src="slides/slide_044.png" alt="课件第44页 MoSi2N4 作者与贡献（理论计算）">
+<figcaption><span class="sno">044</span><span class="stitle">MoSi2N4 作者与贡献（理论计算）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">13</span>
+      <div class="sec-tt">
+        <h2>案例：MoSi2N4 论文与代算广告</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 38</span><span class="chip">课件 39</span><span class="chip">课件 40</span><span class="chip">课件 41</span><span class="chip">课件 42</span><span class="chip">课件 43</span><span class="chip">课件 44</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>老师用亲身经历说明为什么要认真学：刚上论文课看到金属所任文才团队 Science 论文（CVD 法制备耐水耐氧的高度稳定层状二维 MoSi2N4）的推送，中间插了一条“做计算找××”的广告，暗示该论文计算是这家公司做的——因为广告声称“唯一拥有 VASP 商业版权”并可为清华北大等百余家高校院所提供 1000+ 计算方案。</p><p>仔细看论文：其中确实包含 DFT 计算——能带结构（Fig.3/Fig.4，PBE 泛函计算 WSi2N4、MoSi2As4 和铁磁态 VSi2N4 的能带）、几何结构、各种材料的能带与电荷密度图，Abstract 也明确说 DFT 计算预测了包括半导体、金属和磁性半金属在内的单层二维层状材料大家族。</p><p>但计算根本不是广告公司做的：论文作者列表中就有做理论计算的作者（L.W. 和 X.-Q.C 完成理论计算），且通篇没有提到该公司。这个例子说明：会用软件不等于会判断结果的可靠性；不懂原理，拿到别人的数据也无法判断对错。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那这里我举一个例子，就是我刚上论文课的时候，看到正好看到这样一篇文章的一个推送，就是亲楚所得的人才老师，他的一个三写文章。……中间加了一条这个做计算找什么，那这意思好像就是说，这篇文章是不是给他们做的计算？</p><p>那我们再来看这篇文章里头，它确实涉及到我们算法这个能量结构，然后，还有这个几何结构，能量结构都有。……貌似都有计算。</p><p>那还是很大的一部分，重在一个三文章里面，那是是不是他做的呢？其实根本就不是他做的。因为这一作者里头就有做计算的这个这些我也都认识。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s14">
+  <div class="slides"><figure class="slide" id="slide-045">
+<img src="slides/slide_045.png" alt="课件第45页 毕业、失业、？">
+<figcaption><span class="sno">045</span><span class="stitle">毕业、失业、？</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">14</span>
+      <div class="sec-tt">
+        <h2>就业、代算与数据可靠性</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 45</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>“毕业、失业、？”——老师讲了一个真实案例：一位考博士差 0.2 分没上的学生，宁可去类似的计算公司工作也不愿再考一年；老师在听他讲 PPT 时意识到他对很多基本问题的理解有问题。现在很多做实验的学生会花钱找公司代算，挂自己第一作者——但这样得到的数据是否经得起推敲很成问题。</p><p>另一个案例：一位合作者找了别的单位的老师算形成能，审稿人发现算出来 36 个 eV 的形成能显然不合理（量级完全不对）；这种错误不是会操作计算机、会跑软件就能发现的，只有真正理解理论和方法才能判断。找代算时对方“有时间还要挣钱”，水平大概率不会太高——老师建议做实验的同学可以找合作者，但数据一定要经得起推敲。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>是有一个学生。当时是要来考我的博士……那他当时考了就可能就差了0.2分没有上，没有上呢。我那你其实人很聪明，那我说你要不要在我课题组待一年，然后第二年再考？……他说不用了他找到工作了，他就是在这样一个计算，类似这样的一个计算公司工作。</p><p>文章投放，小说PS成长，返回来一轮意见，就是说他算了一个形成能的计算是30多个亿位，这个显然是不合理的。……那为什么我们说36个人一零的访一是是不对，那这不是说你知道会计算机操作会软件就能知道的事情。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s15">
+  <div class="slides"><figure class="slide" id="slide-046">
+<img src="slides/slide_046.png" alt="课件第46页 软件黑箱？">
+<figcaption><span class="sno">046</span><span class="stitle">软件黑箱？</span></figcaption>
+</figure>
+<figure class="slide" id="slide-047">
+<img src="slides/slide_047.png" alt="课件第47页 大数据中程序包黑箱的问题（gigaom）">
+<figcaption><span class="sno">047</span><span class="stitle">大数据中程序包黑箱的问题（gigaom）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-048">
+<img src="slides/slide_048.png" alt="课件第48页 程序包黑箱问题（JSCS 论文）">
+<figcaption><span class="sno">048</span><span class="stitle">程序包黑箱问题（JSCS 论文）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-049">
+<img src="slides/slide_049.png" alt="课件第49页 程序包黑箱问题（Science 2013）">
+<figcaption><span class="sno">049</span><span class="stitle">程序包黑箱问题（Science 2013）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-050">
+<img src="slides/slide_050.png" alt="课件第50页 程序包作为黑箱的危险（二茂铁 Fe-C 键长）">
+<figcaption><span class="sno">050</span><span class="stitle">程序包作为黑箱的危险（二茂铁 Fe-C 键长）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-051">
+<img src="slides/slide_051.png" alt="课件第51页 科研论文中的学术风气（博客）">
+<figcaption><span class="sno">051</span><span class="stitle">科研论文中的学术风气（博客）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-052">
+<img src="slides/slide_052.png" alt="课件第52页 JSCS 结论：洞察程序结构">
+<figcaption><span class="sno">052</span><span class="stitle">JSCS 结论：洞察程序结构</span></figcaption>
+</figure>
+<figure class="slide" id="slide-053">
+<img src="slides/slide_053.png" alt="课件第53页 DFT 是标准工具，但…（Sholl 车与修车比喻）">
+<figcaption><span class="sno">053</span><span class="stitle">DFT 是标准工具，但…（Sholl 车与修车比喻）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">15</span>
+      <div class="sec-tt">
+        <h2>软件黑箱：科学计算软件能作为黑箱吗？</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 46</span><span class="chip">课件 47</span><span class="chip">课件 48</span><span class="chip">课件 49</span><span class="chip">课件 50</span><span class="chip">课件 51</span><span class="chip">课件 52</span><span class="chip">课件 53</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>排除人为因素，软件本身都可信吗？科学计算软件能作为黑箱（black box）使用吗？这是科研中讨论很热门的问题：gigaom 的报道、Journal of the Serbian Chemical Society 的文章都在揭示把程序包当黑箱用的风险。Science 2013 年的一篇文章（L.N. Joppa et al., Science 340, 814）也指出“click-and-run”软件带来的盲目信任（blind trust）问题，对科研而言非常关键。</p><p>以二茂铁（Fe-C 键长）为例：实验值 Fe-C 键长 2.063 Å，但不同基组算出的结果差异很大——有些基组算出 2.249、2.267 Å，明显偏长；原因是弥散 p 轨道参数选取导致初猜基组有问题，计算收敛到了激发态。这说明不是基组加得越多越准确，要针对具体体系，并对收敛结果做基本判断。</p><p>JSCS 2007 年文章的结论是：为了获得可靠结果并理解结果，用户必须洞察程序结构、理解所依赖的量子化学方法，这些是仅靠研究程序指南学不来的。DFT 是标准工具（Sholl 书）：就像会开车不需要了解发动机原理，但想穿越撒哈拉、加入 F1 车队就必须懂汽车构件和原理——对应写 DFT 软件、发展新算法、构造波函数的科研人员；如果你想只用 DFT，学 Sholl 的书即可，想造车则需要更专业的书籍。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那排除人为因素，软件是不都是可信的，那科学计算软件能不能作为推销，那这个问题呢，也是讨论的非常一个热门的一个问题。</p><p>二要其实非常有单的一个分子，中间是个铁，两边是两头是两个五条环。……实验值，它对于这个铁碳的线程呢，是2063，但是我们可以看到不同的这个就是基础的话，得到了不同的结果。……由于弥散p轨道参数选取导致初猜时的基组有问题，从而使得计算收敛到了激发态。</p><p>总结起来就是为了获得可靠的结果及理解的结果。那用户必须洞察程序结构和理解所依赖的量，1化1方法，这些都是仅靠研究程序指南你学不到的。</p><p>DMP呢，实际上一就是它是一个标准工具……电就像一辆车。你学会开车，其实不需要对车的各部的功能了不起原理了解释掌……但你开车穿越沙哈大沙漠，加入F1赛车团队，那你对这个期要知道吗？</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s16">
+  <div class="slides"><figure class="slide" id="slide-054">
+<img src="slides/slide_054.png" alt="课件第54页 计算机模拟结果可信吗？（柴静-丁仲礼）">
+<figcaption><span class="sno">054</span><span class="stitle">计算机模拟结果可信吗？（柴静-丁仲礼）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">16</span>
+      <div class="sec-tt">
+        <h2>计算机模拟结果可信吗？（柴静-丁仲礼）</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 54</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>老师引用 2010 年柴静在央视《面对面》专访中科院副院长丁仲礼时关于气候模拟的一段对话：IPCC 预测全球平均升温 2 度被很多人当作科学结论，但丁仲礼反问“这 2 度是计算机模拟出来的，相当于算命先生的水晶球，你怎么知道它可信？”——实验室的数据我们几乎信仰，但计算机算出来的呢？</p><p>这段对话的启示是：对我们自己计算得到的结果，要永远保持怀疑的态度。不是说结论一定不对，而是不能不加判断地接受。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>丁仲礼：许多人都把它理解为是一个科学的结论，这个二度是怎么来呢?二度是计算机模拟出来的，计算机算相当于算命先生的水晶球。</p><p>那就是说，我们对我们自己的计算得到的结果，就要永远保持一个怀疑的态度。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s17">
+  <div class="slides"><figure class="slide" id="slide-055">
+<img src="slides/slide_055.png" alt="课件第55页 物理近似曾是一个笑话（球形奶牛）">
+<figcaption><span class="sno">055</span><span class="stitle">物理近似曾是一个笑话（球形奶牛）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-056">
+<img src="slides/slide_056.png" alt="课件第56页 “First, we assume a spherical cow”">
+<figcaption><span class="sno">056</span><span class="stitle">“First, we assume a spherical cow”</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">17</span>
+      <div class="sec-tt">
+        <h2>球形奶牛：合理近似是物理学的精髓</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 55</span><span class="chip">课件 56</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>“物理近似曾是一个笑话”：球形奶牛（spherical cow）的经典笑话——农场奶牛产奶量下降，农场主请大学一个由理论物理学家领导的团队去考察，两周收集数据后，物理学家给出的解决方案是“假设一头真空中的球形奶牛”。这个笑话调侃理论物理学家常把问题简化到最简单的形式以便计算，即便简化可能脱离实际。</p><p>笑话有各种版本（球形马、真空中的赛马），但点出的是：假设对理论物理学家太重要，而合理的假设才是解决问题的关键——合理近似是物理学的精髓。建模本身就是一个近似：我们不可能建立真实体系去算，把体系假设成完美晶体才能计算，但完美晶体的结果能不能解释实验现象，还要看与实验的差距有多大。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>有一个农场的农场主呢，他的这个产奶牛的产奶量逐年下降……这个组长呢，是一个理论物理学家……那我现在有个解决方案，这解决方案是什么呢？我先假设这个奶牛是个球形奶牛。</p><p>那这里就是说这个相块，其实就是说说明这个假设对于这个理论物理学家太重要了，但是合理的假设才是能解决问题的一个关键，那这这个呢，就是说合理的进行。才是物理学的精髓。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s18">
+  <div class="slides"><figure class="slide" id="slide-057">
+<img src="slides/slide_057.png" alt="课件第57页 如何增强计算机模拟的可靠性？（四类误差）">
+<figcaption><span class="sno">057</span><span class="stitle">如何增强计算机模拟的可靠性？（四类误差）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-058">
+<img src="slides/slide_058.png" alt="课件第58页 Why did I trust another scientist's software?">
+<figcaption><span class="sno">058</span><span class="stitle">Why did I trust another scientist's software?</span></figcaption>
+</figure>
+<figure class="slide" id="slide-059">
+<img src="slides/slide_059.png" alt="课件第59页 DFT 计算的可重复性（主流软件）">
+<figcaption><span class="sno">059</span><span class="stitle">DFT 计算的可重复性（主流软件）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-060">
+<img src="slides/slide_060.png" alt="课件第60页 DFT 计算的可重复性（新旧方法）">
+<figcaption><span class="sno">060</span><span class="stitle">DFT 计算的可重复性（新旧方法）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-061">
+<img src="slides/slide_061.png" alt="课件第61页 计算软件相当于“实验仪器”">
+<figcaption><span class="sno">061</span><span class="stitle">计算软件相当于“实验仪器”</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">18</span>
+      <div class="sec-tt">
+        <h2>可靠性：四类误差与可重复性</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 57</span><span class="chip">课件 58</span><span class="chip">课件 59</span><span class="chip">课件 60</span><span class="chip">课件 61</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>如何增强计算机模拟的可靠性？误差来源有四类：物理模型误差、测量参数误差、算法误差、计算机程序误差。物理模型建立之初就存在模型误差和测量误差，需要理解物理/化学基本原理才能构建好的模型；数学分析部分可通过算法改进来调节；程序部分主要是舍入误差，可以用更长位数避免。要知道计算结果的误差到底出在哪个环节。</p><p>大部分人没学过 Windows/安卓/iOS 的底层逻辑但照样使用，对科学软件是否也能这样？Physics Today 上有人统计“为什么我信任别人的软件”，57% 使用“click-and-run”建模软件的人盲目信任；DFT 计算的可重复性研究则表明：主流 DFT 软件（不同泛函、平面波/线性组合等方法）对同一体系给出的结果误差不大（最大约 0.4 meV/原子量级），对绝大多数问题精度已经够用；新发表的方法通常更准确，老方法误差会大一些。</p><p>计算软件相当于实验仪器：不懂仪器原理就不能有效使用仪器；不懂原理也就不能合理解释已有实验结果。现有的仪器也不是万能的，不能拿几十年前的实验范式算现在的体系；不懂原理靠程序“闭眼跑”不会一直有好结果——常在河边走，总有一天会失脚，算错了才发现就晚了。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那如何增强这个计算机模拟的可靠性呢？及实误差、模型误差、测量产水用误差。……所以我们要知道我们计算结构的误差是出自于哪里，到底是计算机程序还是数据分析，或是物理模型的建立之初，我们就把它方向跑偏了。</p><p>这个范式呢，他在这个万社计里面是发表了一篇文章，就是说PST计算它的一个可重复性。……这个误差其实还是不大的，很小就是说都在0.2，最大一是0.4的毫一杯美美元子。</p><p>那计算软件呢，相当于我们的实验软仪器，那你不懂仪器原理呢，就是不能有效的使用该仪器。……不懂原理，靠程算法人一般不会有正确的结果，就常在河边走，总会总有一天会失脚。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s19">
+  <div class="slides"><figure class="slide" id="slide-062">
+<img src="slides/slide_062.png" alt="课件第62页 希望达到的目的">
+<figcaption><span class="sno">062</span><span class="stitle">希望达到的目的</span></figcaption>
+</figure>
+<figure class="slide" id="slide-063">
+<img src="slides/slide_063.png" alt="课件第63页 课程概要（五部分）">
+<figcaption><span class="sno">063</span><span class="stitle">课程概要（五部分）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-064">
+<img src="slides/slide_064.png" alt="课件第64页 《密度泛函理论与应用讨论班》">
+<figcaption><span class="sno">064</span><span class="stitle">《密度泛函理论与应用讨论班》</span></figcaption>
+</figure>
+<figure class="slide" id="slide-065">
+<img src="slides/slide_065.png" alt="课件第65页 讨论班如何进行？">
+<figcaption><span class="sno">065</span><span class="stitle">讨论班如何进行？</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">19</span>
+      <div class="sec-tt">
+        <h2>课程目标与讨论班</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（开头）</span><span class="chip">课件 62</span><span class="chip">课件 63</span><span class="chip">课件 64</span><span class="chip">课件 65</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>学完这门课，希望达到的目的：只要你有需求，就可以自己编写出基本的程序来了解 DFT 的思想；讨论班上完以后，要么熟悉一个主流 DFT 程序的使用，要么熟悉 DFT 理论的最新进展——至少知道自己的师兄师姐在做什么。学习不是为了考试分数，考试不用太纠结，重在运用；科研能力不在书本之内，要尽快获得科学研究的能力。</p><p>课程分五部分：①导论（今天所讲）；②DFT 的建立（下周开始，潘老师讲）；③DFT 的计算方法（原子结构、原子赝势、通信方程、原子轨道基组等）；④DFT 之外的方法（半经验方法、经验势函数、分子动力学等）；⑤DFT 的应用（固体、分子体系、一维材料等）。</p><p>《密度泛函理论与应用讨论班》主要介绍 DFT 的各种理论发展及实际使用，为从事计算材料物理或相关材料实验的学生提供必要的理论基础与动手能力，特别强调已有 DFT 程序的实际运用，要求给定程序和说明书后能结合研究项目计算，通过自学和阅读文献尽早进入研究状态。</p><p>讨论班如何进行：一般分 7 次课，每人做 30~35 分钟报告（PPT），并回答同学和老师的提问。可选方案：①软件实战，演示方法、过程、结果及结果分析；②自学并讲解 DFT 相关专题，如强关联、拓扑电子学、自旋电子学、拓扑磁子学、机器学习势、机器学习哈密顿量、科研智能体等；③自选与自己的研究相关的内容。报告里也可以加一小段介绍自己课题组主要做什么。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>达到只要有需求，就可以自己编写出基本的程序来了解密度尔理论的思思想。……我们这个学习不是为了考试分数。……重在实际运用。</p><p>这个课程呢，其实就分这样五个部分，一分导论……第二部分呢，下周开始就是那个法人理论的建立……第三部分呢，是硬盘。理论的计算方法……第四部分呢，是利一范围论语之外的一些方法……最后一部分呢，就是介绍一下利一化展理论的应用。</p><p>那我现在先说一下讨论班如何进行……我们一般是分7次课，每个人做30~35分钟的报告，并回答同学和老师的提问。……利用软件实战演示方法过程的结果以及结果分析，然后，或者是自学并讲解编译相关的专题，比如强关联拓扑电子学、自学电子学、拓扑磁子学、机器学习室、机器学习、哈密能量科学、智能体等等。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s20">
+  <div class="slides"><figure class="slide" id="slide-066">
+<img src="slides/slide_066.png" alt="课件第66页 课程性质与考核方式">
+<figcaption><span class="sno">066</span><span class="stitle">课程性质与考核方式</span></figcaption>
+</figure>
+<figure class="slide" id="slide-067">
+<img src="slides/slide_067.png" alt="课件第67页 考试安排（2027-01-15 开卷）">
+<figcaption><span class="sno">067</span><span class="stitle">考试安排（2027-01-15 开卷）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-068">
+<img src="slides/slide_068.png" alt="课件第68页 习题：书面习题＋计算机实验">
+<figcaption><span class="sno">068</span><span class="stitle">习题：书面习题＋计算机实验</span></figcaption>
+</figure>
+<figure class="slide" id="slide-069">
+<img src="slides/slide_069.png" alt="课件第69页 DFT-2026@UCAS 课程群">
+<figcaption><span class="sno">069</span><span class="stitle">DFT-2026@UCAS 课程群</span></figcaption>
+</figure>
+<figure class="slide" id="slide-070">
+<img src="slides/slide_070.png" alt="课件第70页 本课程有什么特点？">
+<figcaption><span class="sno">070</span><span class="stitle">本课程有什么特点？</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">20</span>
+      <div class="sec-tt">
+        <h2>考核、习题与课程特点</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（开头）</span><span class="chip">课件 66</span><span class="chip">课件 67</span><span class="chip">课件 68</span><span class="chip">课件 69</span><span class="chip">课件 70</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>课程性质：专业普及/基础课，要求预先选修过量子力学、固体物理或量子化学、结构化学；授课方式以讲授为主；考核为平时习题占 30%＋开卷考试占 70%。偏重理论基础，特别适合结合计算机模拟工作的学生；没修过上述课程的想过考试概率不大，要自己掂量。</p><p>考试时间初步定在 2027 年 1 月 15 日上午 8:30-10:30，地点待定；每人可携带一本纸质资料，不可以现场上网查资料、不能交头接耳（两本书装订成一本也算一本）；争取当天出分。</p><p>习题：书面习题（共 20 题）＋计算机实验。计算机实验用 DFT 原理软件，程序可以是 VASP 也可以是其他；研究对象要简单（自己本机跑得动，如二元体系、二维材料、单胞几个原子，或 10 个原子左右的分子），主要分析其几何结构、能量、电子结构等；要求体系说明、输入输出文件、结构图示、结果分析全部以电子版交给助教或老师。老师提醒：作业千奇百怪，有的连名字都不写，交上来不知道是谁的——注意写名字。</p><p>课程群二维码（DFT-2026@UCAS）在首页发过，没进群的互相拉一下。课程特点：使用自编教材（本学期争取出来），辅以参考文献和论著；只讲最基础的内容和相关最新进展，内容面较广、方便大家将来查询；不是计算程序培训课，只介绍一款主流程序的简单使用，进一步的使用方法需要自己学，特别是结合自己课题组的体系与老师的喜好。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那课程的性质呢，其实就是，专业补习课，它是基础课，你必须要预先选修过量子力学的固体物理，或者是量子化学结构化学。……考核方式是平时的习题占30%，开卷考试占70%。</p><p>时间呢，初步定在1月15号上午8点半到10点半。地点呢，到时候再通知大家。每人可以携带一本纸资料，不可以现场上网查阅资料，也不能交头结耳。</p><p>习题呢，主要是书面习题加上计算机实验，共20道题题……要求呢，体系说明、输入输出文件、结构图示、结果分析全部都要电子版交到助教或者是老师的手里。</p><p>本课程的特点，我们提供我们现在学实在做自编教材……我们只讲最基础的内容，以及相关的最新进展。……我们也不是计算程序的培训课，只介绍简单介绍一款主流的程序。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s21">
+  <div class="slides"><figure class="slide" id="slide-071">
+<img src="slides/slide_071.png" alt="课件第71页 本课程关心的问题（1）">
+<figcaption><span class="sno">071</span><span class="stitle">本课程关心的问题（1）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-072">
+<img src="slides/slide_072.png" alt="课件第72页 本课程关心的问题（2）：How the world is shaped?">
+<figcaption><span class="sno">072</span><span class="stitle">本课程关心的问题（2）：How the world is shaped?</span></figcaption>
+</figure>
+<figure class="slide" id="slide-073">
+<img src="slides/slide_073.png" alt="课件第73页 碳同素异形体（金刚石/石墨）">
+<figcaption><span class="sno">073</span><span class="stitle">碳同素异形体（金刚石/石墨）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">21</span>
+      <div class="sec-tt">
+        <h2>本课程关心的问题</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（中）</span><span class="chip">课件 71</span><span class="chip">课件 72</span><span class="chip">课件 73</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>我们关心的问题是：给定一个系统结构，有哪些物理化学特性？在经典物理领域很多问题已得到圆满解决，但在纳米尺度存在非常多新奇特性。这些新奇特性归根结底与材料的几何结构、电子状态直接相关——这也是我们用 DFT 做计算的原因：不详细解释新奇现象，而是致力于学习研究材料的几何结构、电子结构和计算机模拟方法。</p><p>更进一步的问题是“How the world is shaped?”（世界是如何从原子一个一个堆积起来的？），以及我们能不能用原子来堆砌这个世界。同一个元素，原子排布不同性质完全不同：以碳材料为例，金刚石是最硬的材料，石墨是软材料（sp² 杂化、层状结构），卷成碳纳米管性质又不同（有的金属、有的半导体、有的有磁性），卷成球（富勒烯/巴基球）性质又不一样——元素怎么排布是材料研究的关键问题。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那我们关心的问题呢，就是给定一系统结构有哪些物理化学特性。在经典的物理领域，很多问题都已经得到了圆满的解决。那在纳米尺度，其实存在非常多的新奇特性，这一就是我们关心的一个体系。</p><p>那我们就是说关心的问题就是，How the world shape.怎么这个世界是怎么从原原子一个一个原子堆积起来的。……对于新钢石体材料，它是最硬的材料。那对于它变成这个石木，它就是一个很软的材料。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s22">
+  <div class="slides"><figure class="slide" id="slide-074">
+<img src="slides/slide_074.png" alt="课件第74页 还原论（重建论）—突现论（呈展论）">
+<figcaption><span class="sno">074</span><span class="stitle">还原论（重建论）—突现论（呈展论）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-075">
+<img src="slides/slide_075.png" alt="课件第75页 Philip W. Anderson（More is Different）">
+<figcaption><span class="sno">075</span><span class="stitle">Philip W. Anderson（More is Different）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">22</span>
+      <div class="sec-tt">
+        <h2>还原论与突现论</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（中）</span><span class="chip">课件 74</span><span class="chip">课件 75</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>这就涉及还原论（重建论）与突现论（呈展论）之争：笛卡尔认为所有分割的问题都解决以后，系统就可以恢复原状或重新组合起来，各部分解答的总和就是最终答案——这对简单体系可能可行，对复杂体系不一定可行。</p><p>P.W. Anderson 提出：整体的特征不可能由构成整体的部分来推断，即使每一部分或局部组合的特性完全研究清楚也不行；整体中新特性的显露称为突现（emergence）。最典型的例子是魔角石墨烯：石墨烯从石墨剥离而来，石墨是再普通不过的材料，但单层以后出现许多石墨没有的性质；两层石墨烯旋转到魔角，还可能表现出超导。</p><p>Anderson 1972 年的名言：“将万事万物还原成简单的基本规律的能力，并不蕴含着从这些规律出发可以重建宇宙的能力”——理解了世界如何由原子堆砌起来，并不意味着能用原子堆出同样的世界。面对尺度与复杂性的双重困难，重建论的假定崩溃；在复杂性的每个层次都有全新的性质出现，研究这些新行为的基础性与任何研究相比都毫不逊色。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那其实这个就涉及到就是到底是还原呢，还是出现呢……笛卡尔呢，他就认为所有分割的问题都被解决了以后呢，系统就可以恢复原状或者重新组合起来。</p><p>那PW安德森呢，他就提出了整体的特征，不可能有构成整体的部分来推断……整体当中新特性的显露呢，就称之为凸现。那这个凸现其实最典型的一个例子就是近年来发现的这个磨脚石墨烯。</p><p>那这个PW安S呢，他其实在他20年才过世，然后他在72年的时候，他就提出了一个论点……将万事外物反映和简单的基本规律的能力，并不蕴含着从这些规律出发可以重建宇宙的能力。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s23">
+  <div class="slides"><figure class="slide" id="slide-076">
+<img src="slides/slide_076.png" alt="课件第76页 The Scale of Things（尺度图）">
+<figcaption><span class="sno">076</span><span class="stitle">The Scale of Things（尺度图）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-077">
+<img src="slides/slide_077.png" alt="课件第77页 各种方法适合的时间与空间尺度">
+<figcaption><span class="sno">077</span><span class="stitle">各种方法适合的时间与空间尺度</span></figcaption>
+</figure>
+<figure class="slide" id="slide-078">
+<img src="slides/slide_078.png" alt="课件第78页 多尺度模拟的分层结构">
+<figcaption><span class="sno">078</span><span class="stitle">多尺度模拟的分层结构</span></figcaption>
+</figure>
+<figure class="slide" id="slide-079">
+<img src="slides/slide_079.png" alt="课件第79页 本课程涉及的空间与时间尺度">
+<figcaption><span class="sno">079</span><span class="stitle">本课程涉及的空间与时间尺度</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">23</span>
+      <div class="sec-tt">
+        <h2>DFT 涉及的时空尺度</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（中）</span><span class="chip">课件 76</span><span class="chip">课件 77</span><span class="chip">课件 78</span><span class="chip">课件 79</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>本课程涉及体系的时间与空间尺度：The Scale of Things 图展示了从普朗克长度到宇宙的尺度全貌，每个时间/空间尺度都对应不同的研究仪器设备；我们关心的粉色圈区域（从原子尺度到纳米尺度、时间从飞秒到毫秒量级），空间尺度约 10⁻¹⁰–10⁻⁸ m。</p><p>从时空尺度对应方法：第一性原理（DFT 等）用于原子尺度，分子动力学（MD）、蒙特卡罗（MC）用于稍大尺度，再大尺度用一些半经验方法和有限元等方法——本课程主要覆盖第一性原理和部分 MD 的方法区间。</p><p>多尺度模拟的分层结构：Electrons → Atoms → Segments → Grids，对应量子力学 → 分子动力学 → 介观动力学 → 有限元分析/过程模拟 → 工程设计，时间尺度从飞秒到年、空间尺度从埃到米逐级跨越。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那实在每一个时间尺度，每一个空间尺度其实都对应有不同研究它的不同的仪器设备。……对于中间值域，我们关心的其实是粉色圈的这一块。</p><p>从时间空间尺度对应我们所要用到的方法呢，其实我们主要用到的是机一性原理方法。在这个时，这个时间空间尺度的话，我们用到的是我们的卡罗方法。最终一使用方法一些半经验的方法。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s24">
+  <div class="slides"><figure class="slide" id="slide-080">
+<img src="slides/slide_080.png" alt="课件第80页 向初学者推介 D.S. Sholl 的书">
+<figcaption><span class="sno">080</span><span class="stitle">向初学者推介 D.S. Sholl 的书</span></figcaption>
+</figure>
+<figure class="slide" id="slide-081">
+<img src="slides/slide_081.png" alt="课件第81页 Richard M. Martin《Electronic Structure》">
+<figcaption><span class="sno">081</span><span class="stitle">Richard M. Martin《Electronic Structure》</span></figcaption>
+</figure>
+<figure class="slide" id="slide-082">
+<img src="slides/slide_082.png" alt="课件第82页 如何学习本课程最有效？">
+<figcaption><span class="sno">082</span><span class="stitle">如何学习本课程最有效？</span></figcaption>
+</figure>
+<figure class="slide" id="slide-083">
+<img src="slides/slide_083.png" alt="课件第83页 研究能力是啥？（质疑能力）">
+<figcaption><span class="sno">083</span><span class="stitle">研究能力是啥？（质疑能力）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">24</span>
+      <div class="sec-tt">
+        <h2>参考书与学习方法</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（中）</span><span class="chip">课件 80</span><span class="chip">课件 81</span><span class="chip">课件 82</span><span class="chip">课件 83</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>给初学者的参考书：D.S. Sholl《Density Functional Theory: A Practical Introduction》（有中译本，李健、周勇译），只是平面波方法、大多以 VASP 计算为例，除第一章和最后一章外每章有 2-7 个习题；英文版网上有电子版，喜欢纸质书的可以买中译本。</p><p>Richard M. Martin《Electronic Structure: Basic Theory and Practical Methods》被称为“电子结构的圣经”，老师读书时是拿影印版学习的，电子版也可以看。</p><p>如何学习本课程最有效？上大学以后主要培养自学能力（老师自己基本靠自学）；研究生主要培养研究能力，老师给提纲，要学会自己挖掘。吴奇院士的话：我讲对了你做错了我批评你，我讲错了你做错了我也会批评你——因为人都会错，我说错了你自己不动脑子就接受，那和机器有什么区别？</p><p>研究能力是什么？本质是质疑能力：大胆猜想、小心求证——检查条件是否满足、问题能否改进、能做什么；然后动手，自己寻找方法解决问题，能解析分析就解析分析，配合数值计算和实验验证，能数据处理、会写报告，这就是一个人的研究能力。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这个刚才也说了，我们对个初学者推荐了概率上这本书，然后但他呢，只是平面波的方法，大多以last为例，除了第一章到最后一章以外呢，有大概每章都有两到七个习题涉及到用平面波方法计算各种物理量。</p><p>当然，这个呢，是就是说是本体论的一个圣经，就是我从我读书的时候，我们是这本书是一影印版来学习，就是它是一拉丁的这个电阻结构。</p><p>那吴锡院士一句话我觉得讲的挺好的，我讲对了，你做你做错了，我是要说你的……我说错了，你自己不动脑子就接受？那你和机器有什么两样是吧？</p><p>那一说能力是啥？它实际上就是一个质疑能力。你需要大大胆猜想，小心求证……要懂学会自己寻找方法解决问题。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s25">
+  <div class="slides"><figure class="slide" id="slide-084">
+<img src="slides/slide_084.png" alt="课件第84页 课程概要">
+<figcaption><span class="sno">084</span><span class="stitle">课程概要</span></figcaption>
+</figure>
+<figure class="slide" id="slide-085">
+<img src="slides/slide_085.png" alt="课件第85页 选课必要性：把课程当成好玩的游戏">
+<figcaption><span class="sno">085</span><span class="stitle">选课必要性：把课程当成好玩的游戏</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">25</span>
+      <div class="sec-tt">
+        <h2>课程概要、选课必要性与学习态度</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（中）</span><span class="chip">课件 84</span><span class="chip">课件 85</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>课程概要：全面介绍 DFT 的基本原理（绝热近似、哈特里近似和 HK 定理、KS 方程、交换关联泛函）、常用的计算方法（赝势平面波、原子轨道、原子中心近似等）和常用应用（解析方法、半经验方法、动能系统等）；学完应掌握基于 DFT 的计算程序的基本工作原理，能正确使用计算程序做科学研究，并能正确分析计算结果。</p><p>选课必要性：确实需要选这门课吗？真的有用吗？基础知识够吗、能不能跟上、有没有足够的时间和精力？没学过量子力学/量子化学/固体物理/结构化学的、只冲着开卷考试和学分来的，都建议不要选。老师希望大家先认识游戏地图、熟悉规则、收集攻略、掌握独门秘籍——做研究和选课都要凭兴趣；但人生很多不如意，不得已选了就先把本职工作干好，先学好、拿到学分，就像打游戏碰到难过的关也要死磕过去。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>课程概要就是这里刚才能列了一个提纲。……通过这个课程的学习呢，掌握基于密度范围理论的计算程序的基本工作原理，能够正确使用计算程序进行科学研究工作。</p><p>没有学过下面这几门课的都不要选，看中科业考试的东西也也绝对不要选。……那既然你是不得已选择，而且必须要选，那我们就还先干好本职工作，就是先把这门课学好。拿到学分再说。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s26">
+  <div class="slides"><figure class="slide" id="slide-086">
+<img src="slides/slide_086.png" alt="课件第86页 本课程所需的基础知识（目录）">
+<figcaption><span class="sno">086</span><span class="stitle">本课程所需的基础知识（目录）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-087">
+<img src="slides/slide_087.png" alt="课件第87页 波函数">
+<figcaption><span class="sno">087</span><span class="stitle">波函数</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">26</span>
+      <div class="sec-tt">
+        <h2>基础知识：波函数与量子态</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（中）</span><span class="chip">课件 86</span><span class="chip">课件 87</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>接下来讲所需的基础知识，第一个是薛定谔方程和它的定态问题。首先要接触量子力学中波函数的概念：自由粒子的德布罗意波函数要会写（面试时导师常问），它的模平方就是 t 时刻在空间某点找到粒子的概率密度。</p><p>什么是量子态？什么是态叠加原理？体系的一系列可能状态中，对波函数做线性叠加得到的也是体系的一个可能状态，这叫态叠加原理。课件的图给出了态叠加原理的一个实验演示（单光子干涉）。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那首先呢，量子先量谔方程首先必须要接触的，这是一能量子力学当中这个波函数的概念，那大家都要知道这个自由粒子的德波一波函数它应该写成什么样子。</p><p>那量子态是什么？什么量子的系统状态太叠加原理是什么？……对于一系列的光元数，那这一派的线性叠加呢，它也是体系的一个可能状态，这个叫派叠加人工。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s27">
+  <div class="slides"><figure class="slide" id="slide-088">
+<img src="slides/slide_088.png" alt="课件第88页 薛定谔（Erwin Schrödinger）">
+<figcaption><span class="sno">088</span><span class="stitle">薛定谔（Erwin Schrödinger）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-089">
+<img src="slides/slide_089.png" alt="课件第89页 狄拉克（P.A.M. Dirac）">
+<figcaption><span class="sno">089</span><span class="stitle">狄拉克（P.A.M. Dirac）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-090">
+<img src="slides/slide_090.png" alt="课件第90页 海森堡（W. Heisenberg）">
+<figcaption><span class="sno">090</span><span class="stitle">海森堡（W. Heisenberg）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">27</span>
+      <div class="sec-tt">
+        <h2>量子力学奠基人：薛定谔、狄拉克、海森堡</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（中）</span><span class="chip">课件 88</span><span class="chip">课件 89</span><span class="chip">课件 90</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>薛定谔（Erwin Schrödinger）：奥地利物理学家、量子力学奠基人之一，维也纳大学哲学博士，先后在苏黎世、柏林、格拉茨等大学任教；1926 年提出薛定谔方程，因“发现原子理论中很有用的新形式”与狄拉克共同获得 1933 年诺贝尔物理学奖。</p><p>狄拉克（P.A.M. Dirac）非常看重数学，把非相对论的量子力学推广到相对论情形，1928 年建立了著名的相对论性电子方程（狄拉克方程）。本课程以薛定谔方程（非相对论）为起点。</p><p>海森堡（W. Heisenberg）是量子力学创始人之一、哥本哈根学派代表人物，因创立量子力学（矩阵力学形式）及其导致氢的同素异形体发现获得 1932 年诺贝尔物理学奖；提出了不确定性原理、S 矩阵理论等，《量子论的物理原理》是经典著作。薛定谔的波动力学和海森堡的矩阵力学是量子力学的“双胞胎”，是研究原子、分子、微观粒子的有力工具，奠定了基本粒子相互作用的理论基础。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那薛定谔呢，他是奥地利的一个物理学家，量子力学的奠基人之一……1926年呢，他提出了这个，他他提出了这个薛定谔方程。他呢，就是因为发现了在原子理论里面很有用的新型式……获得了1933年的诺贝尔物理学奖。</p><p>那么狄拉克呢，他是非常看重数学的。他呢，其实他把非相对论的一确定的方式呢，推广到了相对论的情况……他2028年呢，建行了著著名的关于有关电子理论这个伊拉克方程。</p><p>那海三堡呢，他因为创立药理力学以及由此导致的氢的同素异形体的发现获奖。……给出了量子力学的矩阵形式，也就是矩阵力学提出了不确定性原理。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s28">
+  <div class="slides"><figure class="slide" id="slide-091">
+<img src="slides/slide_091.png" alt="课件第91页 薛定谔方程（含时/不含时）">
+<figcaption><span class="sno">091</span><span class="stitle">薛定谔方程（含时/不含时）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-092">
+<img src="slides/slide_092.png" alt="课件第92页 波函数的统计诠释">
+<figcaption><span class="sno">092</span><span class="stitle">波函数的统计诠释</span></figcaption>
+</figure>
+<figure class="slide" id="slide-093">
+<img src="slides/slide_093.png" alt="课件第93页 定态薛定谔方程">
+<figcaption><span class="sno">093</span><span class="stitle">定态薛定谔方程</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">28</span>
+      <div class="sec-tt">
+        <h2>薛定谔方程与定态方程</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（中）</span><span class="chip">课件 91</span><span class="chip">课件 92</span><span class="chip">课件 93</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>薛定谔方程的作用相当于经典力学中的牛顿方程：牛顿方程知道初始位置和速度就能知道每个时刻的位置；量子力学考虑物质的波粒二象性，微观粒子没有运动轨道的概念，薛定谔方程在给定条件下可以求解出微观粒子的运动状态（波函数随时间的演化）。课件上方绿色框是含时的薛定谔方程，下面是不含时的（定态）薛定谔方程——本课程的起点是不含时的定态方程。</p><p>定态薛定谔方程怎么来的？如果势场不显含时间，就可以做分离变量得到定态方程。波函数取这样的乘积形式时，方程并不是对任意能量都有解，而只对一系列特定的分立能量值有解——这些能量值可以用整数 n 编号，也就是能量量子化。可见能量量子化自然蕴含在薛定谔方程之中。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那本门课的起点是学工的方程，它的作用呢，其实就相当于。经典力学中的牛顿方程。……那量子力学呢，就是它是考虑了物质的波粒二象性。那微观粒子呢，没有运动轨道的概念。</p><p>那定态薛定谔方程是怎么来的呢？就是说，如果市场不显然时间，那就是那就可以做分离变量化定态的区间方程。……它只对一系列特定的分命值有行，所以这些特定的一值呢，能量值呢，其实是可以用整数N来编序号的，也就是能量是量子化。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s29">
+  <div class="slides"><figure class="slide" id="slide-094">
+<img src="slides/slide_094.png" alt="课件第94页 求解定态问题（四步法）">
+<figcaption><span class="sno">094</span><span class="stitle">求解定态问题（四步法）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">29</span>
+      <div class="sec-tt">
+        <h2>求解定态问题：四步法</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（中）</span><span class="chip">课件 94</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>怎么求解定态薛定谔方程？一般分四步：①列出定态薛定谔方程，根据波函数的三个标准条件（单值、连续、可导——面试常问）求解；②写出第 n 个本征值的定态波函数；③通过归一化条件确定归一化系数 C_n；④得到体系的状态描述。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>一般来说分四步走。第一步呢，先列出这个定态薛定谔方程，根据光函数的三个标准条件来求解。这三个标准函数我们不知道大家还记不记得……他其实就是。单值连续可导。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s30">
+  <div class="slides"><figure class="slide" id="slide-095">
+<img src="slides/slide_095.png" alt="课件第95页 一维无限深方势阱">
+<figcaption><span class="sno">095</span><span class="stitle">一维无限深方势阱</span></figcaption>
+</figure>
+<figure class="slide" id="slide-096">
+<img src="slides/slide_096.png" alt="课件第96页 能量量子化与零点能">
+<figcaption><span class="sno">096</span><span class="stitle">能量量子化与零点能</span></figcaption>
+</figure>
+<figure class="slide" id="slide-097">
+<img src="slides/slide_097.png" alt="课件第97页 波函数与几率密度">
+<figcaption><span class="sno">097</span><span class="stitle">波函数与几率密度</span></figcaption>
+</figure>
+<figure class="slide" id="slide-098">
+<img src="slides/slide_098.png" alt="课件第98页 箱中粒子的轨迹（经典 vs 量子）">
+<figcaption><span class="sno">098</span><span class="stitle">箱中粒子的轨迹（经典 vs 量子）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">30</span>
+      <div class="sec-tt">
+        <h2>一维无限深方势阱</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（中）</span><span class="chip">课件 95</span><span class="chip">课件 96</span><span class="chip">课件 97</span><span class="chip">课件 98</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>最重要的例子：一维无限深方势阱。它非常重要，因为它是金属中自由电子的简化模型，同时数学运算非常简单。粒子只在宽为 a 的两个无限高势垒之间运动（这种势阱称为一维势箱），自由电子在金属内的运动就相当于这样的运动——它是量子力学基本概念和原理在其中表达的简单形式。</p><p>求解得到能量量子化 E=ℏ²π²n²/2ma²；零点能：即使势能为 0，动能并不为 0（由不确定性关系决定）；当 n→∞ 时能级差减小，能量谱逐渐变为连续。任何态可以按正交归一的完备态分解。</p><p>波函数与波函数模平方的可视化图：波函数可正可负，模平方（几率密度）总是正的；量子数为 n 时存在 n-1 个节点。经典力学中没有节点的概念，只有一个几率分布（从维基百科引用的图）：A 是牛顿经典力学的情形，B-F 是量子力学薛定谔方程的结果（红色为实部、蓝色为虚部），B/C/D 是能量本征态，E/F 是几个态的叠加（不是本征态）。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那这个例子呢，其实是非常重要的，因为它是金属当中自由电子的简化模型，同时呢，它的数学运算也非常简单。……它自由性电子在一块儿金属类的运动呢，就相当于这样的一个运动。</p><p>那这里头自然得到了的能量是量子化的那零点能量势，也就是势能为0，这时候势能为0，其实它的动能并不为零。……那当N趋于无穷的时候呢，0近能积分1电路能量差减少，能量谱逐渐变为一个连续。</p><p>那这里这是从维一基百科上发现的一个构图……A是一个经典的牛顿的经典力学定义域。BCD呢，是量的力学的C12方程……BCD呢，它都是能量的本中态ETF呢，是。他这几个态的对一加。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s31">
+  <div class="slides"><figure class="slide" id="slide-099">
+<img src="slides/slide_099.png" alt="课件第99页 一维有限深势阱">
+<figcaption><span class="sno">099</span><span class="stitle">一维有限深势阱</span></figcaption>
+</figure>
+<figure class="slide" id="slide-100">
+<img src="slides/slide_100.png" alt="课件第100页 有限深势阱（经典与量子）">
+<figcaption><span class="sno">100</span><span class="stitle">有限深势阱（经典与量子）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-101">
+<img src="slides/slide_101.png" alt="课件第101页 有限深势阱数值例（450 eV/0.1 nm）">
+<figcaption><span class="sno">101</span><span class="stitle">有限深势阱数值例（450 eV/0.1 nm）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-102">
+<img src="slides/slide_102.png" alt="课件第102页 电子逃离势阱的最长波长">
+<figcaption><span class="sno">102</span><span class="stitle">电子逃离势阱的最长波长</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">31</span>
+      <div class="sec-tt">
+        <h2>一维有限深势阱</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（中）</span><span class="chip">课件 99</span><span class="chip">课件 100</span><span class="chip">课件 101</span><span class="chip">课件 102</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>除了无限深势阱，还有有限深势阱：势阱是有高度的。经典与量子情形不同：在量子世界里，即使粒子能量低于势垒高度，也有一定概率穿过势垒——就像中国传说中的崂山道士，有一定概率可以穿过墙（虽然可能是某个细胞或过程过去了）。</p><p>数值计算例子（以后的考题可能有类似题）：阱高 450 eV、阱宽 0.1 nm 的有限深势阱中一个电子的几率分布统计图，可得到能级图与几率密度图等。如果电子逃离势阱所需要吸收的光的最长波长是多长？电子要从阱内逃逸进入阱外，需要吸收的能量是 450 eV 减去 n=1 的能级（423 eV 量级），算得最长波长约 2.94 nm；如果所需光的波长比这更短，还需要额外多大的动能也可以计算——数字或问法可能不同，这是考试内容之一。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那前面讲了无限深方式几，这里还有一个就是说有现身方式行……哪怕粒子的能量小于这个势氢点的你这个粒子的能量小于四子。它是穿不过去。但是在量子世界里头呢……它也有一定的概率穿过这个四内。那这个就像中国的传说里头的排山道士。</p><p>我说这个在井高为450米的井宽估制0.1nm的有限视品中，一个电子的体积分布统计图……如果电子陶艺式剂所需要吸收的光的最长波长是多长……首先减去这个能级呢，你才需要这个423个一倍。那这里呢，我们在算长波长是2.94纳纳米。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s32">
+  <div class="slides"><figure class="slide" id="slide-103">
+<img src="slides/slide_103.png" alt="课件第103页 有限高势垒：隧道效应">
+<figcaption><span class="sno">103</span><span class="stitle">有限高势垒：隧道效应</span></figcaption>
+</figure>
+<figure class="slide" id="slide-104">
+<img src="slides/slide_104.png" alt="课件第104页 透射系数">
+<figcaption><span class="sno">104</span><span class="stitle">透射系数</span></figcaption>
+</figure>
+<figure class="slide" id="slide-105">
+<img src="slides/slide_105.png" alt="课件第105页 透射的物理图像">
+<figcaption><span class="sno">105</span><span class="stitle">透射的物理图像</span></figcaption>
+</figure>
+<figure class="slide" id="slide-106">
+<img src="slides/slide_106.png" alt="课件第106页 电子 vs 质子透射率">
+<figcaption><span class="sno">106</span><span class="stitle">电子 vs 质子透射率</span></figcaption>
+</figure>
+<figure class="slide" id="slide-107">
+<img src="slides/slide_107.png" alt="课件第107页 透射系数数值表">
+<figcaption><span class="sno">107</span><span class="stitle">透射系数数值表</span></figcaption>
+</figure>
+<figure class="slide" id="slide-108">
+<img src="slides/slide_108.png" alt="课件第108页 数值例：5.1 eV 电子与质子">
+<figcaption><span class="sno">108</span><span class="stitle">数值例：5.1 eV 电子与质子</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">32</span>
+      <div class="sec-tt">
+        <h2>有限高势垒：隧道效应</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（中）</span><span class="chip">课件 103</span><span class="chip">课件 104</span><span class="chip">课件 105</span><span class="chip">课件 106</span><span class="chip">课件 107</span><span class="chip">课件 108</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>另一个场景：有限高势垒（常说的势垒隧道效应）。势垒在 0 到 a 区域有一定高度，粒子能量低于势垒高度能否穿过？经典力学必须爬过山，量子力学里入射粒子可以穿过比自己能量还高的势垒——这叫隧道效应，是粒子波动性的表现。</p><p>透射系数 T 是透射几率，随势垒宽度、粒子质量和能量差（与势垒高度的关系）变化，可用公式表示；随势垒加宽加高，透射系数逐渐变小。物理图像：波穿过势垒后以平面波形式继续前进；能量大于势垒高度时，入射粒子也并非全部透射，仍有概率被反射回 1 区（反射系数 R），这也是量子效应的一部分。</p><p>数值计算例子：电子和质子在相同势阱（高度 1 eV、宽度 1 nm）中，势垒宽度减小使透射系数增强；对相同势垒宽度，电子与质子质量差 1000 多倍，质子透射概率非常小（10⁻³⁸ 量级），量子效应过渡到经典物理范畴。另一个例子：能量 5.1 eV 的电子遇到高度 6.8 eV、厚度 750 pm 的势垒，求透射率——换成质子结果如何？100 万个电子只有 45 个通过，质子则是 10⁻¹⁸⁶ 量级，几乎为 0。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那有限高的方式呢，它也一是我们常说的一个四差效应……对于量子。四川上门来说，就是说这个崂山道士，他是穿过这个这个石垒了……可以穿过去的那对于这样一个，他入射粒子可以穿过比他能量还高的这样一个射频现象呢，一叫隧道项目，然它是粒子波动性的一个表现。</p><p>那如果能量大于110，那那就是说粒子总能量大于4的高度呢，注射粒子呢，也并非全部透射进入三区域。仍有一定的概率呢，被这个反反射回这个一号区域。</p><p>那对于相同视内宽度呢，那电子和质子由于它的质量有1000多倍的差距，所以质子透射过去的概率是非常非常的小气活利，是个-38次方。……如果是电解，100万个电子，只有45个通过那换成质子。那什么-186次方，这个几乎是0了。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s33">
+  <div class="slides"><figure class="slide" id="slide-109">
+<img src="slides/slide_109.png" alt="课件第109页 扫描隧道显微镜（STM）原理">
+<figcaption><span class="sno">109</span><span class="stitle">扫描隧道显微镜（STM）原理</span></figcaption>
+</figure>
+<figure class="slide" id="slide-110">
+<img src="slides/slide_110.png" alt="课件第110页 STM 结构示意图">
+<figcaption><span class="sno">110</span><span class="stitle">STM 结构示意图</span></figcaption>
+</figure>
+<figure class="slide" id="slide-111">
+<img src="slides/slide_111.png" alt="课件第111页 1986 年诺贝尔物理学奖（Binnig/Rohrer）">
+<figcaption><span class="sno">111</span><span class="stitle">1986 年诺贝尔物理学奖（Binnig/Rohrer）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-112">
+<img src="slides/slide_112.png" alt="课件第112页 STM 仪器实景">
+<figcaption><span class="sno">112</span><span class="stitle">STM 仪器实景</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">33</span>
+      <div class="sec-tt">
+        <h2>扫描隧道显微镜（STM）与 1986 年诺奖</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（中）</span><span class="chip">课件 109</span><span class="chip">课件 110</span><span class="chip">课件 111</span><span class="chip">课件 112</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>隧道效应的应用：扫描隧道显微镜（STM）利用电子的隧道效应。金属中的电子运动到表面时受表面势垒阻挡，一般情况下电子动能远小于势垒高度，但由于隧道效应有一定几率穿过势垒到达金属外表；电子云的分布与金属晶体结构及表面性质密切相关。两个金属表面距离很近、表面电子云发生重叠时，两金属间加以微弱电压就有微弱电流（隧道电流 It ∝ Vt·exp(...)），这就是 STM 的成像原理。</p><p>结构示意图：针尖是金属、样品也是金属，针尖尖端与样品表面离得非常近时存在势垒间隙，隧穿几率大大增加产生隧道电流；通过控制电压、压电陶瓷管与反馈系统实现原子分辨成像。</p><p>基于隧道效应设计的这台设备，Binnig 和 Rohrer 两位科学家在 1986 年获得诺贝尔物理学奖；他们用 STM 看到了硅(111)表面的原子像（比较粗糙），2006-2007 年左右物理所高鸿钧老师课题组看到了硅表面的所有原子像。</p><p>实际仪器：STM 的超高真空针尖必须在超高真空腔体里；尖端虽是原子尺度，整个腔体很大，包括制样枪、处理枪（可做电子衍射等分析），还有极低温强磁场设备——地面上最多工作在液氦 4 K 温度，要更低（几十毫 K）需要在地下挖大坑、用超导磁体冷却。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那用应用到这个，因为有限高方射频这样一个设备呢，其实就是扫描隧道显微技术，它运用的原理呢，就是电子的隧道效应。……如果两个金属表面距离很近，导致表面的电子云发生重叠的，这个时候呢，两个金属间加以微弱电压，就是有微弱的电流，从一个金属一向另外一个金属。</p><p>那由于这个细三效应设计的这台设备呢，这个这两位科学家呢，在19865获得了诺贝尔物理学奖，这是他们用这个技术呢，看到了这个硅11表面的一个原子像。</p><p>当然就说这个实际的仪器其实是长这个样子的……它的超高真空的针尖是必须要在超高真空的真空腔里。这是腔体。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s34">
+  <div class="slides"><figure class="slide" id="slide-113">
+<img src="slides/slide_113.png" alt="课件第113页 原子操纵：IBM 字样、CO 分子电影">
+<figcaption><span class="sno">113</span><span class="stitle">原子操纵：IBM 字样、CO 分子电影</span></figcaption>
+</figure>
+<figure class="slide" id="slide-114">
+<img src="slides/slide_114.png" alt="课件第114页 石墨烯折纸术（Science 2019）">
+<figcaption><span class="sno">114</span><span class="stitle">石墨烯折纸术（Science 2019）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">34</span>
+      <div class="sec-tt">
+        <h2>原子操纵与石墨烯折纸术</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（中）</span><span class="chip">课件 113</span><span class="chip">课件 114</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>STM 还能做什么：最早可以摆原子——把原子摆成 IBM 的字样，或在一个铜原子圈里（量子围栏）看到驻波的幻影（其实没有原子，但用扫描探针能看到类似一个原子，由量子幻影造成）。美国还用一氧化碳分子拍了一部小电影《A Boy and His Atom》（2013 年，65 个 CO 分子在铜表面）。</p><p>2019 年，老师有幸参与物理所高鸿钧院士团队的工作：用扫描探针针尖（STM/原子力针尖）对石墨烯纳米片进行可控折叠和解折叠——这就是“石墨烯折纸术”（Science 365, 1036 (2019)），不光利用隧穿效应，还利用了针尖的操纵性质。国家正在大力推动原子制造方向，美欧也都在做；如果 STM 操纵能实现大规模操作，就真的可以“用原子人手塑造世界”。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>就可以最早就可以用它来摆一些原形，摆成这样的IBM的字样，或者是摆成这样一个一个圈……你用扫描化探针呢，能看到这儿类似有一个原子，这是由于它的幻影所造成的那他们呢。</p><p>他们还用这个。柏原子呢，拍了一个电影，就是叫boy1……一共65个一氧化碳分子，在铜一幺表面所在2013年能达到这个程度，那在2019年呢，我有幸参与到这个工作。一所的高一院士团队呢，实现了用SSPM针尖对石墨烯纳米片呢，可以进行这样一个可控的折叠和解折叠。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s35">
+  <div class="slides"><figure class="slide" id="slide-115">
+<img src="slides/slide_115.png" alt="课件第115页 1973 年隧道效应诺贝尔奖">
+<figcaption><span class="sno">115</span><span class="stitle">1973 年隧道效应诺贝尔奖</span></figcaption>
+</figure>
+<figure class="slide" id="slide-116">
+<img src="slides/slide_116.png" alt="课件第116页 隧穿时间（1.8 as 上限）">
+<figcaption><span class="sno">116</span><span class="stitle">隧穿时间（1.8 as 上限）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">35</span>
+      <div class="sec-tt">
+        <h2>1973 年诺奖与隧穿时间</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（中）</span><span class="chip">课件 115</span><span class="chip">课件 116</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>隧道效应的另一个原型应用：1973 年，江崎玲于奈（Esaki）和 Giaever 因实验发现半导体和超导体中的隧穿现象、约瑟夫森（Josephson）因理论上预言超导电流能通过薄势垒（约瑟夫森效应）共同获得诺贝尔物理学奖。</p><p>隧穿需要时间吗？以前设备根本测不出隧穿时间，大家以为似乎不需要时间就过去了。澳大利亚（格里菲斯大学）科学家测到了隧穿时间的上限：1.8 as（阿秒）；武汉大学/武汉物数所的研究因仪器设备差异测到上限 10⁻²（应为 10 的负若干次方秒量级）。这说明隧穿时间确实是需要的，只是现在的仪器设备无法探测这么短时间尺度的过程，所以无法判断精确时间。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那730呢，这三位物理学家呢，他们也他们获得了物理学奖呢，是因为这个原理那这个这两位呢，就是一个日本人和这个。……实验上发现了，在半导体和超导体组织一子中发现了这个税传现象，那这个那约瑟夫森呢，他是理论寓言……超导的电流呢，通过这个一个小他单它的一个性质。</p><p>那澳大利亚的这个归大学呢，他们测到了这个上限。……他们测到11.8个阿里……武化物术所呢，他们也有相关的研究……他们测到了上限。是10段2点，那其实这里呢，就是说明这个四餐时尚是需要时间的。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s36">
+  <div class="slides"><figure class="slide" id="slide-117">
+<img src="slides/slide_117.png" alt="课件第117页 平均值概念">
+<figcaption><span class="sno">117</span><span class="stitle">平均值概念</span></figcaption>
+</figure>
+<figure class="slide" id="slide-118">
+<img src="slides/slide_118.png" alt="课件第118页 坐标平均值与狄拉克符号">
+<figcaption><span class="sno">118</span><span class="stitle">坐标平均值与狄拉克符号</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">36</span>
+      <div class="sec-tt">
+        <h2>平均值与狄拉克符号</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（中）</span><span class="chip">课件 117</span><span class="chip">课件 118</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>量子力学另一个重要概念是平均值：统计物理中，可能值取离散值时，平均值等于物理量各可能值乘以相应几率再求和；可能值连续时，平均值等于各可能值乘以几率密度再积分。基于波函数的几率解释，可以得到坐标和动量的平均值。</p><p>坐标平均值（先不考虑时间变量）：<x>=∫ψ*(x)xψ(x)dx 是归一化关系式，|ψ|² 是粒子在 x 处出现的几率密度。这里还介绍狄拉克符号（bra-ket）：任意可观测量（坐标、动量等）的测量结果其实就是求平均值；如果波函数没有归一化，最后测量量还要做归一化处理。后面潘老师会讲这些平均值如何在 DFT 理论框架中写出来。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那量能力学，它另外一个重要的概念其实就是它的平均值概念。……当可能值是连续值的时候，那这个优一要出现的各种可能值乘上相应的几率密度再求积分。</p><p>这里呢，介绍几个符号的，这是第二克符号……任意客观量的测量呢，其实就是求平均值得到的那如果花数没有规范呢，最后我们这个测量量呢，也要做一个规划的处理。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s37">
+  <div class="slides"><figure class="slide" id="slide-119">
+<img src="slides/slide_119.png" alt="课件第119页 氢原子：球坐标下的定态方程">
+<figcaption><span class="sno">119</span><span class="stitle">氢原子：球坐标下的定态方程</span></figcaption>
+</figure>
+<figure class="slide" id="slide-120">
+<img src="slides/slide_120.png" alt="课件第120页 氢原子：分离变量法">
+<figcaption><span class="sno">120</span><span class="stitle">氢原子：分离变量法</span></figcaption>
+</figure>
+<figure class="slide" id="slide-121">
+<img src="slides/slide_121.png" alt="课件第121页 氢原子：连带勒让德方程（角向）">
+<figcaption><span class="sno">121</span><span class="stitle">氢原子：连带勒让德方程（角向）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-122">
+<img src="slides/slide_122.png" alt="课件第122页 氢原子：拉盖尔方程（径向）">
+<figcaption><span class="sno">122</span><span class="stitle">氢原子：拉盖尔方程（径向）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-123">
+<img src="slides/slide_123.png" alt="课件第123页 主量子数 n：能量量子化">
+<figcaption><span class="sno">123</span><span class="stitle">主量子数 n：能量量子化</span></figcaption>
+</figure>
+<figure class="slide" id="slide-124">
+<img src="slides/slide_124.png" alt="课件第124页 轨道角动量量子数 l">
+<figcaption><span class="sno">124</span><span class="stitle">轨道角动量量子数 l</span></figcaption>
+</figure>
+<figure class="slide" id="slide-125">
+<img src="slides/slide_125.png" alt="课件第125页 磁量子数 m">
+<figcaption><span class="sno">125</span><span class="stitle">磁量子数 m</span></figcaption>
+</figure>
+<figure class="slide" id="slide-126">
+<img src="slides/slide_126.png" alt="课件第126页 三量子数（n, l, m）">
+<figcaption><span class="sno">126</span><span class="stitle">三量子数（n, l, m）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-127">
+<img src="slides/slide_127.png" alt="课件第127页 电子云概念">
+<figcaption><span class="sno">127</span><span class="stitle">电子云概念</span></figcaption>
+</figure>
+<figure class="slide" id="slide-128">
+<img src="slides/slide_128.png" alt="课件第128页 s/p/d 轨道形状">
+<figcaption><span class="sno">128</span><span class="stitle">s/p/d 轨道形状</span></figcaption>
+</figure>
+<figure class="slide" id="slide-129">
+<img src="slides/slide_129.png" alt="课件第129页 p/d 轨道形状">
+<figcaption><span class="sno">129</span><span class="stitle">p/d 轨道形状</span></figcaption>
+</figure>
+<figure class="slide" id="slide-130">
+<img src="slides/slide_130.png" alt="课件第130页 电子云分布">
+<figcaption><span class="sno">130</span><span class="stitle">电子云分布</span></figcaption>
+</figure>
+<figure class="slide" id="slide-131">
+<img src="slides/slide_131.png" alt="课件第131页 径向分布函数">
+<figcaption><span class="sno">131</span><span class="stitle">径向分布函数</span></figcaption>
+</figure>
+<figure class="slide" id="slide-132">
+<img src="slides/slide_132.png" alt="课件第132页 原子能级与量子数图谱">
+<figcaption><span class="sno">132</span><span class="stitle">原子能级与量子数图谱</span></figcaption>
+</figure>
+<figure class="slide" id="slide-133">
+<img src="slides/slide_133.png" alt="课件第133页 元素周期表与马德隆规则">
+<figcaption><span class="sno">133</span><span class="stitle">元素周期表与马德隆规则</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">37</span>
+      <div class="sec-tt">
+        <h2>氢原子：分离变量与量子数</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（中）</span><span class="chip">课件 119</span><span class="chip">课件 120</span><span class="chip">课件 121</span><span class="chip">课件 122</span><span class="chip">课件 123</span><span class="chip">课件 124</span><span class="chip">课件 125</span><span class="chip">课件 126</span><span class="chip">课件 127</span><span class="chip">课件 128</span><span class="chip">课件 129</span><span class="chip">课件 130</span><span class="chip">课件 131</span><span class="chip">课件 132</span><span class="chip">课件 133</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>量子力学可以精确求解氢原子：把氢原子在球坐标下的定态薛定谔方程（-½∇²-1/r 的形式）变换成球坐标形式，用分离变量法分成径向部分和角向部分（A 是分离常数）；角向部分再分离为方位角部分和极角部分。</p><p>方位角部分的求解比较简单，得到磁量子数 m；极角部分求解连带勒让德方程，得到角动量量子数 l 和磁量子数 m；角向部分的解就是球谐函数 Y_l^m——通常所说的 s、p、d 轨道就是这些函数。径向部分求解连带拉盖尔方程，得到主量子数 n。</p><p>各量子数的物理意义：主量子数 n 意味着能量量子化（对应原子的能量层级）；轨道角动量量子数 l 决定原子中电子轨道角动量的大小与轨道形状；磁量子数 m 决定轨道角动量在某一方向上的投影，对应轨道在空间的伸展方向数（同一 l 有 2l+1 个不同 m 值）。</p><p>电子云：按量子力学计算结果，原子中的电子并不是沿一定轨道运动，而是按一定几率分布在原子核周围——这个分布形象地称为电子云；也把电子电荷在原子内的几率分布称为电子云。给出氢原子定态波函数的具体形式，就可以计算该状态下的几率密度。s 轨道、p 轨道、d 轨道的形状（径向分布函数 |χ_n0|² 等）以及 1s/2s/2p/3d 等轨道图都展示在课件里。</p><p>轨道填充顺序与元素周期表：并不是简单地按 1s、2s、2p、3s……的数字顺序排，到 4s 和 3d 时先填 4s 再填 3d（因为 3d 能量低于 4s？课件按马德隆规则：先填 4s 再填 3d，但由于半满/全满能量更低，铜银金等出现例外：3d⁹4s¹ 而不是 3d¹⁰4s⁰ 前的顺序）。元素周期表本身也是量子力学求解的结果：2019 年是周期表 150 周年；排布依据马德隆规则，还有洪特规则等。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那量子力学其实是可以求解。这个氢原子那就是说，我们将这个氢原子的做在一块2坐标下的这个静态区间的方程呢，是可以转换成所做的现象的定态区间的方程……我们这里可以用分离变量法，把它分别成镜像想象镜像部分和想象部分。</p><p>那方位角部分的求解呢，就比较简单，这时候呢，就可以得到它的这个。各种量子数那极小部分呢？求解呢，就是写的连带了万德方程。……那这一我们就可以谈这个这个求形函数，就是我们通常所说的S轨上基轨上一轨上就是这些东西。</p><p>那这一说主要的数意味着什么？它就意味着能量的量子化……轨道量，轨道向量子的数呢，那一是原子中的电子轨道角动量的大小……那磁量的数呢，M不能决定轨道小动量在这一方向上的同一。</p><p>按量子力学计算的结果呢，原子中的电子呢，并不是沿着一定轨道运动的，而是按一定几率分布在原子核周围，被发现的那大家其实就形象的叫这个分布呢，叫其域。</p><p>并不是124，不是不是我们所理解的1S2S2713.前面顺序都没做，但是到4S开始。4S和3D，它有一个就是先填3D轨道再填4S轨道了……你看这个就是同银金……由于半码和全满能量更低，所以这16它不是3D，不是第9，它是第10，然后S1。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s38">
+  <div class="slides"><figure class="slide" id="slide-134">
+<img src="slides/slide_134.png" alt="课件第134页 晶体结构与七大晶系、14 种布拉菲格子">
+<figcaption><span class="sno">134</span><span class="stitle">晶体结构与七大晶系、14 种布拉菲格子</span></figcaption>
+</figure>
+<figure class="slide" id="slide-135">
+<img src="slides/slide_135.png" alt="课件第135页 二维晶格：5 种布拉菲格子">
+<figcaption><span class="sno">135</span><span class="stitle">二维晶格：5 种布拉菲格子</span></figcaption>
+</figure>
+<figure class="slide" id="slide-136">
+<img src="slides/slide_136.png" alt="课件第136页 Wigner-Seitz 原胞">
+<figcaption><span class="sno">136</span><span class="stitle">Wigner-Seitz 原胞</span></figcaption>
+</figure>
+<figure class="slide" id="slide-137">
+<img src="slides/slide_137.png" alt="课件第137页 密勒指数">
+<figcaption><span class="sno">137</span><span class="stitle">密勒指数</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">38</span>
+      <div class="sec-tt">
+        <h2>晶体结构与布拉菲格子</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（中）</span><span class="chip">课件 134</span><span class="chip">课件 135</span><span class="chip">课件 136</span><span class="chip">课件 137</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>接下来简单介绍晶体结构和固体能带理论（不休息了）。晶体结构表征固体中原子的排列：三维晶体有 7 大晶系、14 种布拉菲格子——物理研究生面试多半会被问到；每种格子的名称、所属点群、长什么样，课件表格里都有，网上也能查到。</p><p>二维体系由于一个方向被压缩，只有 5 种布拉菲格子：斜方（oblique）、正方、六方、正交（含面心和体心正交）等——中文翻译老师自己也有点搞不清楚，大家记住几种即可。</p><p>原胞的选取有多种办法，常用的是 Wigner-Seitz 原胞：以一个格点为原点，连接其他格点作中垂线（面），由这些中垂线（面）围成的最小体积（面积）就是 W-S 原胞。</p><p>还有密勒指数（Miller indices）：用来确定晶体方向的指数，以晶胞矢量 a、b、c 为单位，一般用 (hkl) 表示，不同晶面如 (100)、(200)、(001) 等都由此标出，考试可能会让大家做这类习题。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那晶体结构呢，它其实就是表征的是固体当中原子的排列结构。而对于三种晶体来说呢，它有7大晶体，14种波拉多格子。这个应该是对于物理的研究生呢，面试的时候多半都被问过。</p><p>但对一二维体系呢，由于它的这一方向的压缩呢，它只有5种拉拉菲格式。……那常用的办办法呢，叫微格纳size1包。……以一个格点为原点，连接其他格点的中垂线。然后或中垂面，尤其是这些中垂线或中垂面围成的最小体积或者面积。</p><p>那这里还涉及到一个经验指数，也叫利勒指数，它是用来确定晶体方向的指数，以晶包矢量ADC为单位。……一般用HK，然后来表示一有不同，这个精细，它的什么12000120001这一都海外的出来。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s39">
+  <div class="slides"><figure class="slide" id="slide-138">
+<img src="slides/slide_138.png" alt="课件第138页 倒格子基矢与第一布里渊区">
+<figcaption><span class="sno">138</span><span class="stitle">倒格子基矢与第一布里渊区</span></figcaption>
+</figure>
+<figure class="slide" id="slide-139">
+<img src="slides/slide_139.png" alt="课件第139页 体心立方（bcc）的第一布里渊区">
+<figcaption><span class="sno">139</span><span class="stitle">体心立方（bcc）的第一布里渊区</span></figcaption>
+</figure>
+<figure class="slide" id="slide-140">
+<img src="slides/slide_140.png" alt="课件第140页 面心立方（fcc）的第一布里渊区">
+<figcaption><span class="sno">140</span><span class="stitle">面心立方（fcc）的第一布里渊区</span></figcaption>
+</figure>
+<figure class="slide" id="slide-141">
+<img src="slides/slide_141.png" alt="课件第141页 六方晶格的第一布里渊区（查询网站）">
+<figcaption><span class="sno">141</span><span class="stitle">六方晶格的第一布里渊区（查询网站）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-142">
+<img src="slides/slide_142.png" alt="课件第142页 2018 年考题示例（石墨烯）">
+<figcaption><span class="sno">142</span><span class="stitle">2018 年考题示例（石墨烯）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">39</span>
+      <div class="sec-tt">
+        <h2>倒格子与布里渊区</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（中）</span><span class="chip">课件 138</span><span class="chip">课件 139</span><span class="chip">课件 140</span><span class="chip">课件 141</span><span class="chip">课件 142</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>在计算布洛赫波函数的过程中需要用到波矢，所以在波矢（倒空间）中引入倒格子：倒格子基矢由正格子基矢定义（b1=2π(a2×a3)/Ω 等），在倒格子空间中选取 Wigner-Seitz 原胞作为第一布里渊区，这是波矢空间中的对称化原胞。</p><p>体心立方（bcc）的晶格基矢和第一布里渊区、面心立方（fcc）的晶格基矢和第一布里渊区——这些简单结构要能记住。对于复杂结构记不住也没关系，可以通过查询网站查看这些高对称点在哪里（课件演示了六方晶格第一布里渊区、Γ/A/K/H/M/L 等高对称点与对称线的查询页面）——这对能带结构计算非常关键。</p><p>这是 2018 年的考试题示例：以石墨烯为例，画出惯用原胞对应的倒空间，标注第一布里渊区；如果采用 Monkhorst-Pack 取样方法，写出倒格矢单位的 3×3×1 和 4×4×1 所取样的 k 点坐标与权重，讨论两种取样的区别。老师提示：这题讲了考试就不考了，但相似内容还会考到。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>在计算布洛克光函数的过程当中呢，我们需要用到波始来描述。所以呢，在光函数空间中引入道格体系时，倒格中呢，在倒格子空间中选取微分尔三热元包为第一步理论区。</p><p>那体心立，这是体心立方的金格基始和第一护理渊区。在这里，这个是面心立方的那它的金格基始和一一护一边区长一样……记不住怎么办呢？我们就通过查询网站查询来看看这些这头高倍应性点在哪里。</p><p>这是我们18年的一个考试题，以石墨烯为例，画出惯用圆包1对应的道立空间。注1第一步连区，如果采用MT取样方法，写出这个倒格时，单位的331和441所取样的K点坐标系权重，来一讨论一下一个然后取样的区别。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s40">
+  <div class="slides"><figure class="slide" id="slide-143">
+<img src="slides/slide_143.png" alt="课件第143页 固体能带理论">
+<figcaption><span class="sno">143</span><span class="stitle">固体能带理论</span></figcaption>
+</figure>
+<figure class="slide" id="slide-144">
+<img src="slides/slide_144.png" alt="课件第144页 Kronig-Penney 模型">
+<figcaption><span class="sno">144</span><span class="stitle">Kronig-Penney 模型</span></figcaption>
+</figure>
+<figure class="slide" id="slide-145">
+<img src="slides/slide_145.png" alt="课件第145页 能带与导电性（金属/半导体/绝缘体）">
+<figcaption><span class="sno">145</span><span class="stitle">能带与导电性（金属/半导体/绝缘体）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">40</span>
+      <div class="sec-tt">
+        <h2>固体能带理论</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（中）</span><span class="chip">课件 143</span><span class="chip">课件 144</span><span class="chip">课件 145</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>固体能带理论是研究固体中电子运动状态的主要理论基础，从最初的普适性规律发展到现在针对具体材料的能带计算。能带理论的出发点是：物体中的电子不再受个别原子的束缚，而是在整个固体中运动。理想晶体中原子规则排列、晶格具有平移对称性；布洛赫定理指出，当势场具有周期性时，波动方程的解具有布洛赫函数的形式。</p><p>自由电子受周期性晶格势的扰动后，能谱从抛物线（绿色线）变成黑线（能隙出现）——课件给出了数值求解 Kronig-Penney 模型（周期方势阱）得到的能量结构图。</p><p>材料能带决定了很多物性：物理所面试常问用能带理论解释材料的导电性——金属、半导体、绝缘体怎么定义？红色表示电子填充到哪里，与物性直接相关。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那什么是那能量理论，是研究固体当中电子运动状状态的主要理论基础。……对于理想的晶体来说呢，原子是规则排列，晶格具有平移对称性。霍洛特定理指出呢，当市场具有周期性的时候，它的波动方程应该是有这样的限制。</p><p>那材料的能量呢，它决定了很多那材料的物性。那比如说，我们物理所的面试题经常会问，就是说你用熔代理论来解释一下这个材料的导电性。金属，怎么定义的？半导体怎么定义的？绝缘体怎么定义的？</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s41">
+  <div class="slides"><figure class="slide" id="slide-146">
+<img src="slides/slide_146.png" alt="课件第146页 并行计算：基本概念">
+<figcaption><span class="sno">146</span><span class="stitle">并行计算：基本概念</span></figcaption>
+</figure>
+<figure class="slide" id="slide-147">
+<img src="slides/slide_147.png" alt="课件第147页 并行计算的存储方式">
+<figcaption><span class="sno">147</span><span class="stitle">并行计算的存储方式</span></figcaption>
+</figure>
+<figure class="slide" id="slide-148">
+<img src="slides/slide_148.png" alt="课件第148页 共享内存与分布式内存">
+<figcaption><span class="sno">148</span><span class="stitle">共享内存与分布式内存</span></figcaption>
+</figure>
+<figure class="slide" id="slide-149">
+<img src="slides/slide_149.png" alt="课件第149页 消息传递模型">
+<figcaption><span class="sno">149</span><span class="stitle">消息传递模型</span></figcaption>
+</figure>
+<figure class="slide" id="slide-150">
+<img src="slides/slide_150.png" alt="课件第150页 MPI：消息传递接口">
+<figcaption><span class="sno">150</span><span class="stitle">MPI：消息传递接口</span></figcaption>
+</figure>
+<figure class="slide" id="slide-151">
+<img src="slides/slide_151.png" alt="课件第151页 MPI 实现（OpenMPI/MPICH）">
+<figcaption><span class="sno">151</span><span class="stitle">MPI 实现（OpenMPI/MPICH）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-152">
+<img src="slides/slide_152.png" alt="课件第152页 MPI 例子">
+<figcaption><span class="sno">152</span><span class="stitle">MPI 例子</span></figcaption>
+</figure>
+<figure class="slide" id="slide-153">
+<img src="slides/slide_153.png" alt="课件第153页 并行算法例：积分">
+<figcaption><span class="sno">153</span><span class="stitle">并行算法例：积分</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">41</span>
+      <div class="sec-tt">
+        <h2>并行计算与 MPI</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（中）</span><span class="chip">课件 146</span><span class="chip">课件 147</span><span class="chip">课件 148</span><span class="chip">课件 149</span><span class="chip">课件 150</span><span class="chip">课件 151</span><span class="chip">课件 152</span><span class="chip">课件 153</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>最后花点时间讲并行计算与超级计算机——后续做计算都会用到，比如避免不小心删掉别人的数据、知道怎么算得快。什么是并行计算？同时使用多种计算资源解决计算问题，是提高计算机系统计算速度和处理能力的有效手段；基本思想是用多个处理器协同求解同一个问题——把问题分成若干部分，每部分由一个处理器独立完成，最后合并通信得到结果。</p><p>计算系统可以专门设计含有多个处理器的超级计算机，也可以用某种方式互联的若干台独立计算机构成集群（老师最初到物理所时没有超算，自己搭的就是独立计算机构成的集群；现在用所里和超算中心的机器）。</p><p>基本概念：SIMD（单指令多数据）、MIMD（多指令多数据）；存储方式有共享内存、分布式内存和分布式共享内存：共享内存通信容易实现但无法大规模扩展；分布式内存可实现大规模计算（每处理器自带内存），但大量数据传输耗时；分布式共享内存结合两者优点。</p><p>并行计算的核心是消息传递：仅由本地内存进程集合通过发送和接收消息进行通信；每次发送操作必须对应接收操作。MPI（Message Passing Interface）是在分布式内存上实现消息通信的规范/协议，是一个库而不是一门语言，可被 Fortran/C 等调用；OpenMP 是共享内存编程接口。MPI 实现简单分为 OpenMPI 和 MPICH 两大类。课件给出了一个 MPI 例子（rank 发送/接收数据并校验），可以自己上网搜着实现。</p><p>并行算法举例：积分——用 4 个核心分别做积分（P1-P4 各算一段），最后合在一起。现在这些工作大多有现成算法，不需要自己写。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>什么叫物，什么叫并行计算？它就是说用同时使用多种计算资源解释计算的问题的过程。……它的基本思想呢，是用多个处理器来协同求解同一个问题，也就是把求解的问题分成若干个部分，每一部分呢，都有一个独立的处理器来完成。</p><p>那这里头涉及到的基本概念其实就是就是指令数据31的同时，用相同的指令对不同的数据进行操作。MD有多条指令对不同的数据进行操作。那存储方式呢，有共享内存，分布式内存和分布式共享内存。</p><p>那这里还有一个一名计算的核心就是消息的传递。……Message开就是消息传递，就是叫人缩写，就是MT在分布式内存一些实现信息通信的一种规范标准，或者是一个协议，它是一个库，不是一门语言。</p><p>那这是一个实现1pir的简单例子，大家也可以网络搜一下自己实现一下。……这个例子就是4个核心来做，分别做积分，然后最后合在一起。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s42">
+  <div class="slides"><figure class="slide" id="slide-154">
+<img src="slides/slide_154.png" alt="课件第154页 VASP 并行（PWPP 平面波程序）">
+<figcaption><span class="sno">154</span><span class="stitle">VASP 并行（PWPP 平面波程序）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-155">
+<img src="slides/slide_155.png" alt="课件第155页 VASP 并行（并行策略）">
+<figcaption><span class="sno">155</span><span class="stitle">VASP 并行（并行策略）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-156">
+<img src="slides/slide_156.png" alt="课件第156页 并行计算不是万能的">
+<figcaption><span class="sno">156</span><span class="stitle">并行计算不是万能的</span></figcaption>
+</figure>
+<figure class="slide" id="slide-157">
+<img src="slides/slide_157.png" alt="课件第157页 VASP 并行：耗时表">
+<figcaption><span class="sno">157</span><span class="stitle">VASP 并行：耗时表</span></figcaption>
+</figure>
+<figure class="slide" id="slide-158">
+<img src="slides/slide_158.png" alt="课件第158页 VASP 并行：加速比">
+<figcaption><span class="sno">158</span><span class="stitle">VASP 并行：加速比</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">42</span>
+      <div class="sec-tt">
+        <h2>VASP 并行</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（中）</span><span class="chip">课件 154</span><span class="chip">课件 155</span><span class="chip">课件 156</span><span class="chip">课件 157</span><span class="chip">课件 158</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>VASP（平面波赝势代码 PWPP）是我们常用的程序，也需要并行。它的并行分为 K 点并行和内存/并行策略：K 点并行容易实现、通信量少，但在合并电荷密度和势能时需要通信，比较复杂；不同能量（能带）的计算很大程度上相互独立，每个节点都必须保存完整的电荷密度网格。</p><p>不同方法占用的时间量级不同：对内存的使用，有些方法用得多；平面波数量更多，而某些量相对少。快速傅里叶变换（FFT）和 Gram-Schmidt 正交化（30%）、Force（30%）等部分并行化效果不同。</p><p>并行不是万能的，方法的改进更重要，要核算计算成本：算一个石墨烯体系，并不是核数越多越好——课件给出实例：从作业运行时间和存储使用量看，64 个核并行就差不多了；核数越多，作业运行时间虽减少，但占用的机时/资源反而增加。加速比图显示：随着 CPU 核心数增加，耗时逐步减少，但并不是线性提升（与理想缩放有差距）——这就是为什么要核算成本。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那马斯克呢，它也有是我们常用的一个程序呢，它也也会需要一行，那我们后面也会它的并行其实有两种，一种是时先标准，一个是内存的定……基于K点的并行呢，是比较容易实现的，通信量少。你在合并电路和太一度的时候呢，需要通信。</p><p>那这个但是对于快速复印变换这一块，M标批这一块呢，是没有实现并行化，并行也不是万能的，方法的改进是最重要的，所大家还是要核算成本。</p><p>其实64个合并行就可以了，并不是核数越多越好。你核数越多的时候，作一运行时间是少了，但是你用到的基石反而是增加了。……随着CPU个数的增加，使用时间是一步减少……它并不是线性。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s43">
+  <div class="slides"><figure class="slide" id="slide-159">
+<img src="slides/slide_159.png" alt="课件第159页 Supercomputer 超级计算机">
+<figcaption><span class="sno">159</span><span class="stitle">Supercomputer 超级计算机</span></figcaption>
+</figure>
+<figure class="slide" id="slide-160">
+<img src="slides/slide_160.png" alt="课件第160页 世界超算桂冠（1993-2004）">
+<figcaption><span class="sno">160</span><span class="stitle">世界超算桂冠（1993-2004）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-161">
+<img src="slides/slide_161.png" alt="课件第161页 世界超算桂冠（2004-2017）">
+<figcaption><span class="sno">161</span><span class="stitle">世界超算桂冠（2004-2017）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-162">
+<img src="slides/slide_162.png" alt="课件第162页 世界超算桂冠（2018-2026）">
+<figcaption><span class="sno">162</span><span class="stitle">世界超算桂冠（2018-2026）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-163">
+<img src="slides/slide_163.png" alt="课件第163页 世界超算桂冠（EFLOPS 与趋势）">
+<figcaption><span class="sno">163</span><span class="stitle">世界超算桂冠（EFLOPS 与趋势）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">43</span>
+      <div class="sec-tt">
+        <h2>超级计算机与超算桂冠</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（中）</span><span class="chip">课件 159</span><span class="chip">课件 160</span><span class="chip">课件 161</span><span class="chip">课件 162</span><span class="chip">课件 163</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>超级计算机：与通用计算机相比具有极高性能，以每秒浮点运算次数（FLOPS，不是每秒百万条指令 MIPS）衡量。2025 年已有超算能实现每秒百亿亿次（10¹⁸ 次方）浮点运算，中美欧日都在研究；2025 年世界排名第一的是美国 El Capitan（1.742×10¹⁸ FLOPS），2026 年排名第一的是中国的灵晟（LineShine，2.198×10¹⁸，国家超算深圳中心）——不过美国后来不公布数据了。</p><p>1993 年之后的世界超算桂冠：1993-2004 年主要是美国、日本（TMC CM-5、Fujitsu NWT、ASCI Red/White、NEC Earth Simulator 等）；2004-2017 年美国 Blue Gene、Roadrunner、Jaguar，中国天河-1A（2010）、天河-2A（2013）、神威太湖之光（2016）相继登顶；2018-2026 年美国 Summit、日本 Fugaku、美国 Frontier、El Capitan，2026 年中国灵晟（LineShine）登顶。从 EFLOPS 表看，2023 年 Frontier 达 1.2 EFLOPS、2025 年 El Capitan 1.7、2026 年灵晟 2.2。</p><p>2026 年全球超算排名（TOP500）：中国的最快机器灵晟是榜首，但美国的总算力 77.37 EFLOPS（或按课件数据），中国总算力 2.31 EFLOPS——虽然单台第一，但算力总量最强的是美国。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那超级算机呢，大家都会用到它是一种和通用计算机相比具有提高性能的计算机，它以每每秒浮点运算次数来衡量，而且不是一每秒百万条，而百万条指令数。它是属于浮点运算数。</p><p>2025年呢，世业排名第一的是位国的这个E，它的是1.7274×10的18次方福，那2026年排名第一的是。其实是中国的零售2.198提高了一点点。</p><p>93年以后的世界超报，我们可以看到分布在哪……那中国呢国家超向深圳中心呢，他这个次数已经达到最高了。……那美国的总算率是77.37.01PS,那中国的总算力也行，虽然它占据了第一，但是它总算力只有2.31PS。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s44">
+  <div class="slides"><figure class="slide" id="slide-164">
+<img src="slides/slide_164.png" alt="课件第164页 神威·太湖之光：千万核心第一性原理模拟">
+<figcaption><span class="sno">164</span><span class="stitle">神威·太湖之光：千万核心第一性原理模拟</span></figcaption>
+</figure>
+<figure class="slide" id="slide-165">
+<img src="slides/slide_165.png" alt="课件第165页 2025 中国高性能计算机 TOP100">
+<figcaption><span class="sno">165</span><span class="stitle">2025 中国高性能计算机 TOP100</span></figcaption>
+</figure>
+<figure class="slide" id="slide-166">
+<img src="slides/slide_166.png" alt="课件第166页 2019 中国高性能计算机 TOP100">
+<figcaption><span class="sno">166</span><span class="stitle">2019 中国高性能计算机 TOP100</span></figcaption>
+</figure>
+<figure class="slide" id="slide-167">
+<img src="slides/slide_167.png" alt="课件第167页 2021 中国高性能计算机 TOP100">
+<figcaption><span class="sno">167</span><span class="stitle">2021 中国高性能计算机 TOP100</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">44</span>
+      <div class="sec-tt">
+        <h2>神威·太湖之光与中国 TOP100</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（末）</span><span class="chip">课件 164</span><span class="chip">课件 165</span><span class="chip">课件 166</span><span class="chip">课件 167</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>中科大的杨金龙院士团队针对大尺度数万原子分子固体体系，在“神威·太湖之光”上首次实现千万核心并行的第一性原理计算模拟（DGDFT 方法，Science Bulletin 论文）——这是数万原子量级的第一性原理模拟。</p><p>中国高性能计算机的情况：比较出名的有神威·太湖之光、天河二号 A 等。从数量上看，联想、浪潮、曙光分别有 43、23、8 套系统，三家合计占榜单总数的 74%；从应用性能看，算力服务占 71.30%、超算中心占 12.13%、科学计算只占 4.81%。</p><p>课件展示了 2019 年、2021 年中国高性能计算机性能 TOP100 排行榜（2021 年排行榜第六的主机系统效率第一，搭载 992 块申威 SW26010Pro 处理器、用申威最新网络架构 Sunway Network 高速互联，效率 90.3%，是新一代神威计算机中的杰出代表）。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那中科大呢，其实针对大尺度数二原子分离物体体系，在神威太湖之光上实现首次实现了千万核心定型一性原理计算模理，就是数数万原子的这个机械能理计算模理呢，就是科大的杨金龙院士团。</p><p>大概呢，就是说这一这一头比较出名的可能就神一看煤是光天河二号A百。然后从数量上来看，联想浪潮曙光分别有43238套系统，三家合占表单数74%。从应用性能上来看，算力服务占71%，超算中心占1%。科学计算前只占4.855%。</p><p>219年就是19年的中国高性能1的top100排行榜，二一年的top100排行榜……排行榜第六的主机系统效率第一，它具有强劲的双精度浮点计算性能。搭载了992块申威新一代处理器SW26010Pro。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（密度泛函理论与应用）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>

@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>显微共焦拉曼光谱学（2026 秋） · 第二章 拉曼光谱学介绍（中）：吸收/荧光/反射/超快光谱与拉曼散射原理 ＋ 第三章 拉曼光谱测试：光谱仪与信噪比 ＋ 第四章 晶格振动的其他探测方法｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>显微共焦拉曼光谱学（2026 秋） · 第二章 拉曼光谱学介绍（中）：吸收/荧光/反射/超快光谱与拉曼散射原理 ＋ 第三章 拉曼光谱测试：光谱仪与信噪比 ＋ 第四章 晶格振动的其他探测方法</h1>
+    <div class="sub">第二章 拉曼光谱学介绍（中）：吸收/荧光/反射/超快光谱与拉曼散射原理 ＋ 第三章 拉曼光谱测试：光谱仪与信噪比 ＋ 第四章 晶格振动的其他探测方法 ｜ 2026-09-17 ｜ 授课：林妙玲（第二、三、四章）</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 238 页 · 整理 39 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-s01">01 吸收光谱：氢原子与半导体的带隙</option>
+<option value="sec-s02">02 半导体能带与激子吸收</option>
+<option value="sec-s03">03 光致发光光谱（PL）</option>
+<option value="sec-s04">04 反射光谱</option>
+<option value="sec-s05">05 光调制反射光谱</option>
+<option value="sec-s06">06 超快激光的产生：粒子数反转、锁模与 CPA</option>
+<option value="sec-s07">07 超快光谱：瞬态吸收与瞬态荧光</option>
+<option value="sec-s08">08 进入第二章第二节：拉曼光谱简介（目录）</option>
+<option value="sec-s09">09 拉曼散射的缘起：海水为什么是蓝的</option>
+<option value="sec-s10">10 拉曼的发现史：从太阳光、棱镜到摄影板</option>
+<option value="sec-s11">11 经典电偶极辐射模型：三部分散射光</option>
+<option value="sec-s12">12 微观量子力学模型：虚态与能级跃迁</option>
+<option value="sec-s13">13 拉曼光谱特征：频率、强度与温度</option>
+<option value="sec-s14">14 拉曼光谱研究的五个参数</option>
+<option value="sec-s15">15 为什么拉曼测到的是布里渊区中心声子</option>
+<option value="sec-s16">16 波长坐标与波数坐标（石墨烯实例）</option>
+<option value="sec-s17">17 超晶格：声子折叠与拉曼峰</option>
+<option value="sec-s18">18 如何鉴别拉曼峰</option>
+<option value="sec-s19">19 第三章：拉曼光谱测试（目录）</option>
+<option value="sec-s20">20 拉曼光谱仪的结构与原理</option>
+<option value="sec-s21">21 激发光波长设定与测试参数</option>
+<option value="sec-s22">22 单位换算：eV、nm 与 cm⁻¹</option>
+<option value="sec-s23">23 拉曼光谱的信噪比：为什么重要</option>
+<option value="sec-s24">24 信噪比的科学定义与测量</option>
+<option value="sec-s25">25 增加积分时间可显著提高信噪比</option>
+<option value="sec-s26">26 背景噪声与暗噪声的抑制</option>
+<option value="sec-s27">27 噪声分类：白噪声、1/f 噪声与读出噪声</option>
+<option value="sec-s28">28 信噪比计算示例</option>
+<option value="sec-s29">29 第四章：晶格振动的其他探测方法（目录）</option>
+<option value="sec-s30">30 实验观测对象与探测方法总览</option>
+<option value="sec-s31">31 中子散射：德布罗意波长与散裂中子源</option>
+<option value="sec-s32">32 中子散射装置：飞行时间与三轴谱仪</option>
+<option value="sec-s33">33 中子非弹性散射测声子色散</option>
+<option value="sec-s34">34 X 射线：从衍射到非弹性散射</option>
+<option value="sec-s35">35 X 射线非弹性散射测声子</option>
+<option value="sec-s36">36 红外波段划分</option>
+<option value="sec-s37">37 红外光谱：化学键吸收峰</option>
+<option value="sec-s38">38 红外探测器与测量方式</option>
+<option value="sec-s39">39 FTIR：傅里叶变换红外光谱</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 ch2-拉曼光谱学介绍-2026秋.pdf（p20–125 中讲述部分） 逐页渲染，转写原文见 record_20260917.txt。</div>
+<section class="sec" id="sec-s01">
+  <div class="slides"><figure class="slide" id="slide-156">
+<img src="slides/slide_156.png" alt="课件第156页 1) 光散射及光谱简介：吸收光谱——氢原子与 GaAs 吸收光谱（玻尔模型、带隙）">
+<figcaption><span class="sno">156</span><span class="stitle">1) 光散射及光谱简介：吸收光谱——氢原子与 GaAs 吸收光谱（玻尔模型、带隙）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>吸收光谱：氢原子与半导体的带隙</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 1 段（前）</span><span class="chip">课件 156</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>吸收光谱最早来自对太阳光谱暗线的研究：太阳光是平滑的连续谱，但在特定位置强度变弱——那部分能量被吸收，对应氢原子两个能级之间电子跃迁的能量差。氢原子能级可由玻尔模型精确求解，不同整数 n 对应不同能级，跃迁能量一一对应谱线位置（里德伯公式 1/λ=R(1/n′²-1/n²)）。</p><p>如今吸收光谱更多用于半导体材料：固体能带结构为价带（电子填满）与导带（空），中间是带隙。光子能量大于带隙即可被吸收，把电子从价带激发到导带（留下空穴）。GaAs 带隙约 1.43 eV，常温下带隙附近开始吸收，更低能量几乎不吸收，所以由吸收边位置可直接确定带隙。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>吸收光谱最早呢，就是在研究氢原子。我们再看这个可就是太阳光的这样的一个它，我们会发现它有存在着一系列的这样的一个吸收的弧线……它代表的这个能量，对应的其实就是通过研究发现，就是氢原子它的这样的一个能级，就是相邻量就是就是两个能级之间这个电子的跃迁。</p><p>我们通过一就是通过这样的一个吸收光谱，就可以去研究它的一个氮系所在的这样的一个位置。……比如说对于加深，那它的这个代系，大概是在这里一直43.9V左右这个位置。……大概在这个位置它就开始吸收，前面的话，它几乎它的吸收是为0的。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s02">
+  <div class="slides"><figure class="slide" id="slide-157">
+<img src="slides/slide_157.png" alt="课件第157页 1) 光散射及光谱简介：固体材料的电子能带结构（价带、导带、费米能级）">
+<figcaption><span class="sno">157</span><span class="stitle">1) 光散射及光谱简介：固体材料的电子能带结构（价带、导带、费米能级）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-158">
+<img src="slides/slide_158.png" alt="课件第158页 1) 光散射及光谱简介：二维半导体带隙与激子结合能之间的标度普适性">
+<figcaption><span class="sno">158</span><span class="stitle">1) 光散射及光谱简介：二维半导体带隙与激子结合能之间的标度普适性</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>半导体能带与激子吸收</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 1 段（前）</span><span class="chip">课件 157</span><span class="chip">课件 158</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>降温时 GaAs 带隙变大（吸收边蓝移），且原来平滑的吸收边在低温下出现尖锐的峰——那是激子吸收。激发后的电子与留在价带的空穴之间有库仑吸引，低温下热激发弱、束缚能明显，二者束缚成激子（类似氢原子模型），在带隙下方形成分立的激子能级，产生尖锐的吸收峰，可用于研究激子及其束缚能。</p><p>维度降低时屏蔽效应减弱，激子束缚能更大，能看到更多激子吸收峰。p22 展示二维半导体带隙与激子结合能之间的标度普适性（PRL 118, 266401），激子研究是半导体光谱的重要工具。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我们当把这个温度降温的时候，我们会发现它这个会发生这样一个蓝泥，就是它的这个代性会变大……而且，我们会发现在这里是一个平滑的吸收。但是一旦降到低温的话，我们会发现一个比较尖锐的这样的一个风，那么其实这样的一个风，其实对应它的机子的风。……这个机子的这个所谓的束缚能，就是他们之间的这个相互作用能量会比较高，那么这个时候，他们能绑定到一起。</p><p>尤其是在你的维度下降的时候，它的这个频蔽效应减弱的情况下呢，这个机子束缚能就会更大。那么这个时候我们就能看到更多的这样一些机子的吸收风。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s03">
+  <div class="slides"><figure class="slide" id="slide-159">
+<img src="slides/slide_159.png" alt="课件第159页 1) 光散射及光谱简介：光致发光光谱（Photoluminescence, PL）">
+<figcaption><span class="sno">159</span><span class="stitle">1) 光散射及光谱简介：光致发光光谱（Photoluminescence, PL）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>光致发光光谱（PL）</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 1 段（前）</span><span class="chip">课件 159</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>吸收之后电子弛豫到带边，与空穴复合发光——光致发光（PL）；激子复合则给出激子发光峰。PL 仪器简单：激光打到样品、物镜收集信号、单色仪分光、探测器记录，发光越强探测强度越高。</p><p>碳纳米管实例：一维体系态密度有一系列极大值（范霍夫奇点），对应分立的电子能级，不同能级间跃迁产生吸收峰；改变激发光能量，荧光强度随之变化——把激发与发射结合起来得到荧光激发光谱（PLE/QE），不仅能研究带隙，还能研究更高能级和联合态密度高的位置。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>所以，我们就有对应的这个PL，就是光是荧光光谱，就是我一个光被吸收了之后，我是一这个电子又11个带边，然后我往下就是两个电子的空学组合，我就会变成这个光发射出来。……它的这个仪器设备也是比较简单，就是你只要有一个激光打到样品，然后你用这个透镜或者是物镜，然后把这个光的信号收集起来。</p><p>我们改变不同的激发光的能量，我们会发现这个荧光光谱它的这个强度是不同的……所以这样的一个所谓它这里就是把激发相当于就是吸收和发射，四我们把它叫做，就是QE就是荧光激发光谱。……不仅仅研究的是代气，……我们还可以得到更高的等级。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s04">
+  <div class="slides"><figure class="slide" id="slide-160">
+<img src="slides/slide_160.png" alt="课件第160页 1) 光散射及光谱简介：反射光谱（复折射率、复介电常数）">
+<figcaption><span class="sno">160</span><span class="stitle">1) 光散射及光谱简介：反射光谱（复折射率、复介电常数）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>反射光谱</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 1 段（前）</span><span class="chip">课件 160</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>反射光谱用宽带（广谱）光源而非激光，测不同波长光被样品反射的比例，得到反射率随波长的曲线。半导体带隙以下与以上的反射不同，由吸收与透射共同决定：T=(1-R)exp(-αd)，吸收系数 α(ℏω)=ωε₂(ω)/cn，ε₂ 与联合态密度相关。</p><p>反射光谱也能研究能带结构，但带隙以上所有能级的吸收混在一起，只得到一个大的平滑包络，难以分辨单个临界点（高态密度能级位置）。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那么其实我们这个对于不同的材料，它都具有这个反射的这个光谱，如果是你是一个半导体材料的话，那么你相应的就是你在带系以下和带系以上，那么你的这个反射那么也是不一样的。……就是一个广谱的，就是可能是涵盖了一说400~800nm这样的一个范围。</p><p>但是一旦到了就是更高的能带，那么，由于它这个吸收所有的能量它都混杂在一起，所以它也是一个比较高级，就是比较平滑，然后一个很大的这样一个吸收的包容。所以这个时候，你再去分析它里面一些能级的特点，其实是比较是一个高看一度的这个能级是比较困难的。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s05">
+  <div class="slides"><figure class="slide" id="slide-161">
+<img src="slides/slide_161.png" alt="课件第161页 1) 光散射及光谱简介：光调制反射光谱（临界点）">
+<figcaption><span class="sno">161</span><span class="stitle">1) 光散射及光谱简介：光调制反射光谱（临界点）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>光调制反射光谱</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 1 段（前）</span><span class="chip">课件 161</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>为分辨叠加在一起的高能级信号，用另一束泵浦激光先把电子激发到特定位置，再用宽带光探测；泵浦光经斩波器做周期性调制（如 100/300 Hz），探测信号与斩波器参考信号同时送入解调器，只提取泵浦引起的微弱变化。</p><p>这样能把高态密度能级对应的临界点（光调制反射峰）从大的包络里分辨出来——电子分布改变后，光谱取决于泵浦光波长与能量，调制-解调把这一微小变化选出来。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>调制光谱就是说我用另外一个激光，用一个计算器，这个激光器，然后我先把它混补到某个位置，就是把这样的一些电子把它泵补到这样的一个某个位置上，然后再我再造一个另外一的一个就是黄埔的光源。……你要把把这个激光器，它的这个频率或者是它的强度进行一个周期性的变化，这个就是所谓的调制，就一个转过性，其实就是类似于风扇。</p><p>那么你再把这个你所谓的就是测到的这个信号，把它跟这个转握器的这个信号把它同时插到这样的一个……解调器里面，那么这个时候，你就能分析我的这个泵子的光源所带来的这样一个对他的一个干扰。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s06">
+  <div class="slides"><figure class="slide" id="slide-162">
+<img src="slides/slide_162.png" alt="课件第162页 1) 光散射及光谱简介：超快激光——粒子数反转、光源与谐振腔">
+<figcaption><span class="sno">162</span><span class="stitle">1) 光散射及光谱简介：超快激光——粒子数反转、光源与谐振腔</span></figcaption>
+</figure>
+<figure class="slide" id="slide-163">
+<img src="slides/slide_163.png" alt="课件第163页 1) 光散射及光谱简介：锁模与啁啾放大（CPA）压缩到飞秒">
+<figcaption><span class="sno">163</span><span class="stitle">1) 光散射及光谱简介：锁模与啁啾放大（CPA）压缩到飞秒</span></figcaption>
+</figure>
+<figure class="slide" id="slide-164">
+<img src="slides/slide_164.png" alt="课件第164页 1) 光散射及光谱简介：超快激光光谱">
+<figcaption><span class="sno">164</span><span class="stitle">1) 光散射及光谱简介：超快激光光谱</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>超快激光的产生：粒子数反转、锁模与 CPA</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 1 段（前）</span><span class="chip">课件 162</span><span class="chip">课件 163</span><span class="chip">课件 164</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>激光三要素：能实现粒子数反转的增益介质（二能级系统无法持续反转，需三能级及以上，常含亚稳态能级）、泵浦源（光或电）、谐振腔（选择特定波长与横向模式）。</p><p>超快激光额外需要锁模：让不同纵模相位锁定，把能量压缩到飞秒/皮秒尺度的脉冲；再经啁啾脉冲放大（CPA）等技术实现时间压缩，得到高峰值功率的超短脉冲。这部分在激光原理课讲得更细，这里只作了解。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那么，我们知道激光激光的话，我们通常是需要有一个，就是我们要先把粒子束形成反转……但是其实二能级它并没有办法形成这样的一个稳定的这样一个动机的这样的一个辐射，所以稳定的话，状态还是要二二能三能级以上，就三能级，它也包括一个亚五态的这个能级，才能实实现持续的这样的一个粒子数的反转。</p><p>然后我还要把这个就是把介质，把增所谓的增益戒指，把它放到一个枪里面。这个枪，我是可以选择出特定波长和特定这个横向膜的这样的一个，就一这样的一个枪……但是对于超快激光的话，它还有另外一个。一个步骤就是我要进行一个，就是把这个不同的时间内出来的这个光进行一个压缩……所以这个时候它是需要一些比如说锁模的技术。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s07">
+  <div class="slides"><figure class="slide" id="slide-165">
+<img src="slides/slide_165.png" alt="课件第165页 1) 光散射及光谱简介：瞬态吸收光谱（Transient Absorption Spectroscopy）">
+<figcaption><span class="sno">165</span><span class="stitle">1) 光散射及光谱简介：瞬态吸收光谱（Transient Absorption Spectroscopy）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-166">
+<img src="slides/slide_166.png" alt="课件第166页 1) 光散射及光谱简介：瞬态荧光光谱（Fluorescence）">
+<figcaption><span class="sno">166</span><span class="stitle">1) 光散射及光谱简介：瞬态荧光光谱（Fluorescence）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div class="sec-tt">
+        <h2>超快光谱：瞬态吸收与瞬态荧光</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 1 段（前）</span><span class="chip">课件 165</span><span class="chip">课件 166</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>泵浦-探测原理：同一束激光分两束以保证时间相干——一束泵浦激发样品，另一束经可变光程差延迟后作为宽带（白光）探测光；控制泵浦与探测的时间差，就能观察电子被激发后在能级间的弛豫过程。</p><p>瞬态吸收光谱给出 ΔA（泵浦前后吸收的变化）：不同延迟时间下粒子弛豫到不同位置，对探测光的吸收随之改变，从而判断粒子与什么相互作用、弛豫快慢；瞬态荧光光谱则观测荧光强度随时间的变化。超快光谱主要用于研究材料中电子（载流子）的弛豫动力学。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我我要让它在时间上保证相干，所以我是肯定是同一束激光出来，然后我分成两束。有一一束是这个激发就是动物源，另外一束我可以再去经过一个蓝宝石或者其他的一些晶体，把它把它展出来，变成一个框光谱的光源。……让他们之间的这个时间差是固定的。</p><p>所以这个时候，我们就能够去判断这里面这个粒子在里面是怎么持续的，它它它会跟什么样的粒子发生相互作用，导致了他食欲的这个快慢。所以这个就是我们这个超快光谱，它主要的一个用处就是去研究这个粒子，或者是大部分时候是电子，那么在这样的一个材料里面，它的这个磁力的动能力学。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s08">
+  <div class="slides"><figure class="slide" id="slide-167">
+<img src="slides/slide_167.png" alt="课件第167页 第二章主要内容（2 拉曼光谱简介）">
+<figcaption><span class="sno">167</span><span class="stitle">第二章主要内容（2 拉曼光谱简介）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">08</span>
+      <div class="sec-tt">
+        <h2>进入第二章第二节：拉曼光谱简介（目录）</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 1 段（中）</span><span class="chip">课件 167</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>讲完第二章第一节「光散射及光谱简介」，进入第二节「拉曼光谱简介」。本节核心问题：拉曼散射是如何被发现的、为什么重要、如何理解其物理过程（频率与强度的来源）。</p><p>先留一个思考题：海水为什么是蓝色的？它只是天空的倒影吗？——这正是拉曼散射研究的起点。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那么我们下面来看一下，就是光的反射，主要讲拉拉反射。那么拉拉反射它其实我们第一，我们我们上节课讲这个光的反射的时候，我们介绍了我们蓝天为什么是蓝色的，我的我的这个白云为什么是白色的。那么还有一个就是我们的海水为什么是蓝色的，它是只是天空的这个倒影吗？</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s09">
+  <div class="slides"><figure class="slide" id="slide-168">
+<img src="slides/slide_168.png" alt="课件第168页 2) 拉曼光谱简介：光的散射——拉曼散射（天之蓝、海水之蓝）">
+<figcaption><span class="sno">168</span><span class="stitle">2) 拉曼光谱简介：光的散射——拉曼散射（天之蓝、海水之蓝）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">09</span>
+      <div class="sec-tt">
+        <h2>拉曼散射的缘起：海水为什么是蓝的</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 1 段（中）</span><span class="chip">课件 168</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>拉曼（C. V. Raman）正是从「海水为什么是蓝色」这个问题出发，回到印度后购买仪器观察光与海水相互作用时会发生什么，最终发现了拉曼散射。先思考，再继续往下学，之后回头验证。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>大家可以可以想一下，是因为我天空是蓝色的，所以我看到的海水也是蓝色的吗？……那么最开始，其实它是它也它它其实是源于一个机缘巧合的这么一个过程，就是这个印度，科学家拉曼，我们这个拉曼光谱就是用他的名字来命名的。……他回到了这样的一个，就是他就是开始就回到应度的时候，他开始买一些仪器，那么来进行看这个里面，我的这个材料就是我的海水里面能发生什么样的一个性质。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s10">
+  <div class="slides"><figure class="slide" id="slide-169">
+<img src="slides/slide_169.png" alt="课件第169页 2) 拉曼光谱简介：C. V. Raman（1888-1970）">
+<figcaption><span class="sno">169</span><span class="stitle">2) 拉曼光谱简介：C. V. Raman（1888-1970）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-170">
+<img src="slides/slide_170.png" alt="课件第170页 2) 拉曼光谱简介：拉曼生平（封为爵士、印度科学研究所所长）">
+<figcaption><span class="sno">170</span><span class="stitle">2) 拉曼光谱简介：拉曼生平（封为爵士、印度科学研究所所长）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-171">
+<img src="slides/slide_171.png" alt="课件第171页 2) 拉曼光谱简介：摄影板记录（Hg 435.8nm 线、Stokes 线）">
+<figcaption><span class="sno">171</span><span class="stitle">2) 拉曼光谱简介：摄影板记录（Hg 435.8nm 线、Stokes 线）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">10</span>
+      <div class="sec-tt">
+        <h2>拉曼的发现史：从太阳光、棱镜到摄影板</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 1 段（中）</span><span class="chip">课件 169</span><span class="chip">课件 170</span><span class="chip">课件 171</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>拉曼（1888-1970）最初用太阳光+棱镜观察光与海水的相互作用（装置很简陋），后来用汞灯分离出的单色光与摄影板记录：除与入射光同波长的强线外，两侧还出现一系列暗线。对 60 多种液体都观察到类似现象，说明这是普遍效应，他把这命名为「二次辐射」（当时还不叫散射）。文章发表在 Nature 上，两年后的 1930 年即获诺贝尔物理学奖——据传他 6 月就买好船票从印度乘船去瑞典领奖，足见其自知工作的重要性。</p><p>四氯化碳等液体/化学药品的拉曼信号远比固体强（俄罗斯学者做石英几乎观测不到，进展慢），所以拉曼用太阳光或汞灯就能得到很好的观测。图中是摄影板记录：中间是汞灯 435.8 nm 分离出的线，两侧可见对称的暗线——右侧较强（斯托克斯）、左侧较弱（反斯托克斯），两侧距中心线距离相等，这是拉曼光谱的普遍特征，也是今天判断拉曼谱的标准方法。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>他最开始是用一个太阳光，然后用棱镜，然后就去观察我这样一个，就是我的这个光跟这个海水发生相互作用会发生什么？……后来他就开始用这个，用那个干板，就是我能够去记录这样的一个五线。……就是我的水分子跟我的光发生相互作用的时候，其实除了我的中间……我在它的两侧其实还是可以观察到一系列的这个弧线。</p><p>观察了很多很多种，应该是有几十种液体，那么都会发生这个类似的现象……他只是得到了这个谱线，那么对于不同的液体，它都会表现出不同的，就是跟我的中间的那条布线，它的距离是不同的。</p><p>在很快在1930年，大家可以看他那个文章才发表了两年，那么这个时候他就已经获得了诺贝尔的物理学奖。……他好像是在六月份，就1930年的六六月份，他就买好了一个，就是买好了船票就开始往瑞典走了。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s11">
+  <div class="slides"><figure class="slide" id="slide-172">
+<img src="slides/slide_172.png" alt="课件第172页 2) 拉曼光谱简介：拉曼光谱原理——经典电偶极辐射模型（P=αE）">
+<figcaption><span class="sno">172</span><span class="stitle">2) 拉曼光谱简介：拉曼光谱原理——经典电偶极辐射模型（P=αE）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-173">
+<img src="slides/slide_173.png" alt="课件第173页 2) 拉曼光谱简介：经典模型：调频与调幅（ω₀±ω_Q 三部分光）">
+<figcaption><span class="sno">173</span><span class="stitle">2) 拉曼光谱简介：经典模型：调频与调幅（ω₀±ω_Q 三部分光）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">11</span>
+      <div class="sec-tt">
+        <h2>经典电偶极辐射模型：三部分散射光</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 1 段（中）</span><span class="chip">课件 172</span><span class="chip">课件 173</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>经典模型：入射光电场 E=E₀cos(ω₀t) 使材料产生感生电偶极矩 P=αE。把极化率写成 α=α₀+α'Q·cos(ω_Q t)——α₀ 为不变部分，本征振动（频率 ω_Q，即声子）对极化率产生调制，相当于对平衡位置做泰勒展开取一阶项。代入 P=αE 并用积化和差公式，得到三个频率分量：ω₀（瑞利，弹性散射）、ω₀-ω_Q（斯托克斯）、ω₀+ω_Q（反斯托克斯）。</p><p>这就是为什么拉曼光谱用「波数位移」作横坐标：散射光频率相对入射光减去激发光能量，得到的就是 ω_Q，直接反映材料内部本征振动信息；不管用什么激发波长测，拉曼位移 ω_Q 不变，斯托克斯与反斯托克斯相对零波数对称。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那么最开始是用这个经典的电偶级辐射模型来进行理解，也就是说，我的入射我们是一个光嘛，光是一个电磁波或电场磁场，那我在个电场，它会产生……让这个材料产生这个感生电路极聚。……所以这个时候我就把这个界面常数，把它写成为它阿尔法0就是不变的那一部分，以及我受到这样的一个本身振动所影响的这一部分。</p><p>然后这一部分相当于就是两个Co3函数的一个乘积……化解出来呢，就是我后面有一部分是加有一部分是减，……所以我得到的，就是一个欧米伽零减去欧米伽Q和欧米伽零加欧米伽Q的这个关系。……会出来三部分的光，就是首先是频率保持不变的一个光，那么还有一部分是欧米伽0减去欧米伽Q的，还有一部分是欧米伽0加上欧米伽Q。</p><p>这里我们为什么要中间，我们这里要得到，我们中间要把它设为激光显示里波数的这个原因，就是你不管用什么激光波长测出来，我这里得到的，我在我的拉网法里面得到的永远都是欧米伽Q。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s12">
+  <div class="slides"><figure class="slide" id="slide-174">
+<img src="slides/slide_174.png" alt="课件第174页 2) 拉曼光谱简介：拉曼光谱原理——微观量子力学模型">
+<figcaption><span class="sno">174</span><span class="stitle">2) 拉曼光谱简介：拉曼光谱原理——微观量子力学模型</span></figcaption>
+</figure>
+<figure class="slide" id="slide-175">
+<img src="slides/slide_175.png" alt="课件第175页 2) 拉曼光谱简介：粒子统计（经典全同/玻尔兹曼/全同费米）">
+<figcaption><span class="sno">175</span><span class="stitle">2) 拉曼光谱简介：粒子统计（经典全同/玻尔兹曼/全同费米）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-176">
+<img src="slides/slide_176.png" alt="课件第176页 2) 拉曼光谱简介：量子模型与第三章：拉曼散射理论基础">
+<figcaption><span class="sno">176</span><span class="stitle">2) 拉曼光谱简介：量子模型与第三章：拉曼散射理论基础</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">12</span>
+      <div class="sec-tt">
+        <h2>微观量子力学模型：虚态与能级跃迁</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 2 段（前）</span><span class="chip">课件 174</span><span class="chip">课件 175</span><span class="chip">课件 176</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>经典模型无法解释斯托克斯与反斯托克斯的强度差异（推导中两者系数相同、强度应相等）。量子模型：声子能级图上，基态声子吸收光子跃迁到虚态再回落到第一激发态（斯托克斯）；原本在第一激发态的声子吸收光子回到基态（反斯托克斯）。能量差恒为 ℏω_Q、与入射光能量无关，完美解释频率特征（入射光只是激发手段，本征能量由材料结构决定）。</p><p>强度差异来自粒子数分布：激发态粒子数由玻尔兹曼分布 N∝e^(-E/kT) 决定（声子/分子为玻色子，严格用玻色-爱因斯坦分布；费米子用费米-狄拉克分布）。斯托克斯强度∝基态粒子数、反斯托克斯∝第一激发态粒子数，故 I_S/I_AS≈exp(ℏω_Q/kT)>1。由强度比即可反推晶格温度——这就是拉曼测温的原理。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>所以在经典的这样的一个电偶级辐射的模型里面，其实他没办法去解释我的强度，我为什么我希洛克斯跟马斯克斯之间的强度会有差异……后来大家就有了量子力学之后，就开始提出所谓的量子力学的模型来解释。</p><p>那么这个时候呢，我的这个激发就是发射出来的这个能量，就比我入射光的这个能量要大。那个这个时候我们就把它称之为反斯多克斯。……我得到的这个结果，就直接反映的是我材料内部本身振动的信息。</p><p>那么这个时候我的两个的强度那么就不是一样的了。……这个斯托克斯比这个法斯多克斯，它是1H8÷1。K,X2欧米伽除以KDD……它一般情况下是大于1的。……如果大家分析清楚了，那么你对于后面如何去进行利用这个温度效应，等等去得到一些这样的一些材料的性质，那么也是有所帮助的。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s13">
+  <div class="slides"><figure class="slide" id="slide-177">
+<img src="slides/slide_177.png" alt="课件第177页 2) 拉曼光谱简介：拉曼光谱特征（I_S/I_AS）">
+<figcaption><span class="sno">177</span><span class="stitle">2) 拉曼光谱简介：拉曼光谱特征（I_S/I_AS）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-178">
+<img src="slides/slide_178.png" alt="课件第178页 2) 拉曼光谱简介：斯托克斯/反斯托克斯强度比 ~exp(ℏω_Q/kT)">
+<figcaption><span class="sno">178</span><span class="stitle">2) 拉曼光谱简介：斯托克斯/反斯托克斯强度比 ~exp(ℏω_Q/kT)</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">13</span>
+      <div class="sec-tt">
+        <h2>拉曼光谱特征：频率、强度与温度</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 2 段（前）</span><span class="chip">课件 177</span><span class="chip">课件 178</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>小结拉曼光谱的两大特征：频率——每个材料有本征振动频率，不随入射激发光能量改变，且斯托克斯与反斯托克斯相对入射光的频差相等（不是散射光子频率相等，而是频差相等）。</p><p>强度——拉曼散射是三级（三阶）过程，非常弱，约为入射光的 10⁻⁹~10⁻¹² 倍（入射 10⁹~10¹² 个光子才出一个散射光子），这正是需要发展各种拉曼光谱技术才能测到它的原因；斯托克斯远强于反斯托克斯，测两者强度比可定出材料晶格温度。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>不管是这个辐射，就是经典的这样的一个量级辐射的模型，还是我们量子力学的这种模型，那么它都能解决我们频率的问题。……这个频率它是不随我入射器发光的能量的能量发生改变的。</p><p>而且非常的弱，通常是这个入射光子的10的-9~10的-12次方倍……然后它的斯托克斯比反斯托克斯的强度要强很多，所以依据这个，那么我们如果假设知道的话，我们要Q。那么我们去测斯托克斯跟反斯多克斯的之间的强度的比值。其实我们是可以定出这样的一个材料，它的晶格温度的。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s14">
+  <div class="slides"><figure class="slide" id="slide-179">
+<img src="slides/slide_179.png" alt="课件第179页 2) 拉曼光谱简介：拉曼光谱参数（峰位、半宽、峰高）">
+<figcaption><span class="sno">179</span><span class="stitle">2) 拉曼光谱简介：拉曼光谱参数（峰位、半宽、峰高）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">14</span>
+      <div class="sec-tt">
+        <h2>拉曼光谱研究的五个参数</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 2 段（前）</span><span class="chip">课件 179</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>峰位：对应材料特征振动频率（由原子质量、构型、间距决定），加压/拉伸/相变/变温改变原子排布都会使频率移动，所以拉曼对相、应变、温度敏感。强度：绝对强度依赖样品条件，常用外标/内标定标，或研究材料内部两峰间相对强度。</p><p>半高宽：关联晶体质量、声子寿命、电子-声子相互作用与非线性效应。线型：一般呈洛伦兹型，特殊体系可多峰叠加或出现不对称的 Fano 线型（量子干涉）。退偏比：不同偏振构型下强度之比，反映对称性；角分辨偏振拉曼（转 360°）研究晶体对称性与取向。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我们还可以研究它的半高宽，半高宽就是我强度一半儿的位置。它的峰的宽度，这个通常就是和我们晶体的质量和我1和我的这个这里面，它电子就是生子的寿命，还有电子生子相互作用，或者生子非景急效应等等这样的一些物理效应，那么跟它都是相互关系的。</p><p>然后可以研究它的线型，通常来说，我们一个拉玛峰就是一个洛伦兹线型……还有可能它变成一个把诺，把诺线型就是一个不对称的，那么它会有一些特殊的这样一些相互作用在里面，就是会有一些量子干涉等等。还可以研究它的退偏比例，退偏比偏这里指的是偏振的偏，是不同的偏振构型，我所测来的测出来的这个拉杆强度，会有什么样的一个差异，这个时候我们可以去研究它的对称性等等。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s15">
+  <div class="slides"><figure class="slide" id="slide-180">
+<img src="slides/slide_180.png" alt="课件第180页 2) 拉曼光谱简介：布里渊区大小（q_B=π/a≈9.4 nm⁻¹）">
+<figcaption><span class="sno">180</span><span class="stitle">2) 拉曼光谱简介：布里渊区大小（q_B=π/a≈9.4 nm⁻¹）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-181">
+<img src="slides/slide_181.png" alt="课件第181页 2) 拉曼光谱简介：动量守恒（q=k_S-k_L、入射/散射波矢）">
+<figcaption><span class="sno">181</span><span class="stitle">2) 拉曼光谱简介：动量守恒（q=k_S-k_L、入射/散射波矢）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-182">
+<img src="slides/slide_182.png" alt="课件第182页 2) 拉曼光谱简介：拉曼散射选择定则（q=2k_L、q≪q_B）">
+<figcaption><span class="sno">182</span><span class="stitle">2) 拉曼光谱简介：拉曼散射选择定则（q=2k_L、q≪q_B）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">15</span>
+      <div class="sec-tt">
+        <h2>为什么拉曼测到的是布里渊区中心声子</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 2 段（前）</span><span class="chip">课件 180</span><span class="chip">课件 181</span><span class="chip">课件 182</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>布里渊区大小约 π/a：a 为埃量级（1 Å），故 q_B=π/a≈9.4 nm⁻¹。散射过程满足能量与动量守恒：入射光子（k_L、ω_L）与散射光子（k_S、ω_S）及声子（q、ω_Q）之间，能量守恒 ω_S=ω_L∓ω_Q；动量守恒 q=k_S-k_L（矢量三角形关系）。</p><p>可见光波长约 500 nm，波矢 k=2π/λ≈1.3×10⁻² nm⁻¹，比 q_B 小 2-3 个数量级；且声子能量远小于光子能量（633 nm 激发约 15000 cm⁻¹，声子仅几百到一千 cm⁻¹），所以 |k_S|≈|k_L|：前向散射 q≈0，背散射 q=2k_L≈0.026 nm⁻¹，仍只有 q_B 的约千分之一。</p><p>结论：拉曼只能测到布里渊区中心（q≈0）附近的声子，这是拉曼与中子/X 射线散射的根本区别（后者可测整个布里渊区）。拉曼对 q 的选择定则 q=2k_L 决定了对可见光来说 q≪q_B。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>首先，我的布理圆区的大小，物理圆区的大小，大家都知道，我是等于不可以用这个金的常数判判除一金的常数这么一个大小……所以我的算出来的话，那么我的这个风圆区的边界大概就是9.4nm，负一的这么一个大小。</p><p>那么，只有我的入射光跟我的散射光之间是共线的，对不对？……如果他们俩是相同向量，就相等。……所以我的这个Q就是我的身子的动量就会等于KS等于减去K2。……那么这个时候等于多少？约等于两倍的派。</p><p>所以这个时候我们就说，为什么我们说这个，我们拉拉光谱所测出来的一个身子，通常是在物理面区的中心，因为它非常的接近于0，就是我测出来这个Q……都相对来说这个物理圆区都非常的小。所以Q相对于物理面区，可能是它的1/1000的这样的一个数量级。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s16">
+  <div class="slides"><figure class="slide" id="slide-183">
+<img src="slides/slide_183.png" alt="课件第183页 2) 拉曼光谱简介：波长坐标与波数坐标（石墨烯拉曼光谱）">
+<figcaption><span class="sno">183</span><span class="stitle">2) 拉曼光谱简介：波长坐标与波数坐标（石墨烯拉曼光谱）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">16</span>
+      <div class="sec-tt">
+        <h2>波长坐标与波数坐标（石墨烯实例）</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 2 段（前）</span><span class="chip">课件 183</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>拉曼光谱标准画法：横坐标为波数位移（激发光设为零波数），而非绝对波长/波数。图中有两张谱对比（同一材料），正确形式是右边——以激发光为零波数。</p><p>石墨烯是反例：其拉曼光谱极其复杂，不仅能观察布里渊区中心声子，还能观察到大量非布里渊区中心声子（双共振、二阶/三阶散射贡献）。谭老师 2011 年测到 8000 cm⁻¹ 的石墨烯拉曼光谱，指认了大量峰。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那么大家看一下哪一个拉拉光谱是它显示的是对的。……对右边，因为我们这里通常来说，我们这个激发光，那么应该是一波数好吧，大家这个要记住。……这个是我们这个石墨烯里面石墨金区里面的这样的一个例子。</p><p>我们不仅仅能观察到这样的一个物理园区中心的生存，还能观察到很多非物理院区中心的生存，当然，它是由控制到化散射二阶的三阶的等等这样的一些所贡献的。那么这是我们这个唐老师在2011年，就是由石墨金区那么测出来这个光谱，我们是测到了8000的波数。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s17">
+  <div class="slides"><figure class="slide" id="slide-184">
+<img src="slides/slide_184.png" alt="课件第184页 2) 拉曼光谱简介：超晶格中的电子和声子">
+<figcaption><span class="sno">184</span><span class="stitle">2) 拉曼光谱简介：超晶格中的电子和声子</span></figcaption>
+</figure>
+<figure class="slide" id="slide-185">
+<img src="slides/slide_185.png" alt="课件第185页 2) 拉曼光谱简介：超晶格（一维折叠）">
+<figcaption><span class="sno">185</span><span class="stitle">2) 拉曼光谱简介：超晶格（一维折叠）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-186">
+<img src="slides/slide_186.png" alt="课件第186页 2) 拉曼光谱简介：二维超晶格（转角）">
+<figcaption><span class="sno">186</span><span class="stitle">2) 拉曼光谱简介：二维超晶格（转角）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">17</span>
+      <div class="sec-tt">
+        <h2>超晶格：声子折叠与拉曼峰</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 2 段（前）</span><span class="chip">课件 184</span><span class="chip">课件 185</span><span class="chip">课件 186</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>一维超晶格：A/B 两种材料按周期（A+B）交替生长 N 层，产生大的调制周期 → 人为的小布里渊区 → 声子色散折叠进小 BZ，一次激发能探测到很多折叠声子支，拉曼峰多且色散明显。改变激发光能量时频率改变，不是因为同一声子频率变化，而是探测到了不同的折叠声子（选择定则 q=2k_L 与折叠有关）。</p><p>二维超晶格：两层二维材料相对转一个小角度（类似两层蚊帐叠合产生的明暗条纹，即莫尔条纹）；转角改变 → 超晶格周期与折叠情况改变 → 同一激发光选中的声子不同，拉曼峰随角度移动。反过来可由折叠声子反推无超晶格时原材料的声子色散——从而测量微米尺寸材料的色散（中子/X 射线需大块样品，微米样品无法测量）。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那么当我的这个在某个维度上增加了一个周期，那么这个时候我就会人为的产生一个小的这么一个物理园区。……把我的这个生子缩算一系列都给它折到这个小的物理园区里面。那么这个时候我的激发光上来我就能一下子能探测到，很多不同的枝。</p><p>那么二维的话，那么是借助了现在比较火的一个二维材料，那么你就将两个二维材料，它本来是对叠好的，你给它相应的转一个角度……它就会出现一系列明暗。暗条纹相明亮明亮相间的这样一些条纹，就是大家就是可以去模拟这样一个亮暗相间的这个条纹，这个其实你用了一个文帐，两个叠在一起，其实就是一个超晶格。</p><p>所以我们反过来，我们就能够得到这个材料。它本身单纯的材料在一维在这个没有物理原区域的时候，它的这个深子扩散曲线是什么样子的，这个是我们就是通过这样的一个很巧妙的一个方法，那么我们可以去得到微米尺寸材料，它的一个深子色拉曲线。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s18">
+  <div class="slides"><figure class="slide" id="slide-187">
+<img src="slides/slide_187.png" alt="课件第187页 2) 拉曼光谱简介：如何鉴别拉曼峰（1. 改变激发光波长）">
+<figcaption><span class="sno">187</span><span class="stitle">2) 拉曼光谱简介：如何鉴别拉曼峰（1. 改变激发光波长）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">18</span>
+      <div class="sec-tt">
+        <h2>如何鉴别拉曼峰</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 2 段（后）</span><span class="chip">课件 187</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>方法一：改变激发光波长，看峰位变不变——拉曼峰位（波数位移）不变；荧光峰绝对能量固定，在位移坐标上会移动（绝对波数下荧光峰重合、拉曼峰分开）。方法二：斯托克斯与反斯托克斯相对激光线对称（|ν_S|=|ν_AS|）。</p><p>注意：光谱本身不带标签，荧光与拉曼可能同时出现在同一张谱里（如叠加在 PL 大包上的拉曼峰），需要人为鉴别区分后再分析。测量拉曼时要尽量避免荧光干扰——这是下节「拉曼光谱测试」的内容。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我们要鉴定这个拉拉弓，我们可以先改变直发钩有波长，我们去看这个峰位变不变。另外一种方法呢，我们就去知道，二斯托克斯跟反斯多克斯之间，相对于我们中心的这样的一个激光线的这个距离是相等的。</p><p>我们所测的光谱里面，这个光谱它本身不带有任何的限定，就是不带有任何的分类或者区分……通常来说，既包含有辟谣，也包含有拉曼的，这等等的这样的一些风。所以我们在测拉曼的时候，我们会尽量的去避免荧光的这个干扰。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s19">
+  <div class="slides"><figure class="slide" id="slide-188">
+<img src="slides/slide_188.png" alt="课件第188页 第三章主要内容（3 拉曼光谱测试）">
+<figcaption><span class="sno">188</span><span class="stitle">第三章主要内容（3 拉曼光谱测试）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">19</span>
+      <div class="sec-tt">
+        <h2>第三章：拉曼光谱测试（目录）</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 2 段（后）</span><span class="chip">课件 188</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第二章第二节结束，进入第三章「拉曼光谱测试」。核心：拉曼信号极弱（10⁻⁹~10⁻¹²），如何把弱信号从噪声中测出来、如何提高信噪比。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这个时候我的PL跟拉曼峰一交叠，那么这个时候我会看到这样的一个票拉满，你可能去分析起来是比较困难的。所以我们其实在测拉曼的时候，我们会尽量的去避免荧光的这个干扰，这就是我们拉曼测试里面要注意的，一些内容也是我们下节课要讲的拉玛光谱测试的一个部分。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s20">
+  <div class="slides"><figure class="slide" id="slide-189">
+<img src="slides/slide_189.png" alt="课件第189页 3) 拉曼光谱测试：拉曼光谱仪和原理图">
+<figcaption><span class="sno">189</span><span class="stitle">3) 拉曼光谱测试：拉曼光谱仪和原理图</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">20</span>
+      <div class="sec-tt">
+        <h2>拉曼光谱仪的结构与原理</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 2 段（后）</span><span class="chip">课件 189</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>结构：激光器 → 光学元件把光引入并聚焦到样品 → 显微物镜收集散射光 → 拉曼滤光片滤除极强的激光线（否则会烧毁探测器、淹没拉曼信号）→ 共焦针孔（提高效率与空间分辨率）→ 光谱仪（光栅分光，不同波长在空间上分离）→ 探测器（不同像素接收不同波长，光信号转电信号）→ 电脑。通常还有白光光源用于显微观察样品。</p><p>原理懂了就能自制：有学生（大二）自购元件搭出简易拉曼光谱仪并测到目标光谱；实验室自制仪器已售给多所科研院所与大学（如广西大学），良好照明条件下可测到高信噪比光谱。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>因为这个激光线非常强，刚才也介绍了，所以我要把我的激光线滤除掉，不然有一两个风险。第一个，我的磁光线打到我的探探测器上，我的探测器直接就烧掉了……另外一个呢，你就是你，你这个激光你很强，那么你同样你也看不到拉曼萨的信号，所以这个时候，我们先要用一个拉曼滤波片给他把这个激光滤除掉。</p><p>然后我们再通过一个这里有个拼号。这是一个共交……是一个能够提高你这样的一个效率，和提高你的这个分辨率等等这样的一个很重要的一个技术，交共交拉面光孔技术。然后进来之后，就是通过凹P镜再聚焦我的光栅。光栅的话，就是一个分光的原件……在空间上分离了之后，我们就成像到这个探测器上。</p><p>那么原理懂了……有一个学生，大二，他自己做出了一个二毛笔，而且所有的原件。这东西自己买的……然后他就自己买了各种各样的原件，然后自己把这个就测到了他想要的这个光谱。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s21">
+  <div class="slides"><figure class="slide" id="slide-190">
+<img src="slides/slide_190.png" alt="课件第190页 3) 拉曼光谱测试：光谱参数（R1/R2、波长单位）">
+<figcaption><span class="sno">190</span><span class="stitle">3) 拉曼光谱测试：光谱参数（R1/R2、波长单位）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-191">
+<img src="slides/slide_191.png" alt="课件第191页 3) 拉曼光谱测试：激光线与波数零位">
+<figcaption><span class="sno">191</span><span class="stitle">3) 拉曼光谱测试：激光线与波数零位</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">21</span>
+      <div class="sec-tt">
+        <h2>激发光波长设定与测试参数</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 3 段（前）</span><span class="chip">课件 190</span><span class="chip">课件 191</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>软件把设定的激发光波长自动设为 0 波数（拉曼位移原点），所以激发光波长必须填对：用 633 测却写 532，零波数定位错误、整个谱就错了。</p><p>测试参数还包括：光栅选择（决定分辨率——荧光用低刻线光栅、拉曼需高分辨率高刻线；放好光栅后荧光与拉曼可同时测）、积分时间、循环次数、探测器中心（SY）位置等。同一台仪器不同条件下测出的谱差别很大，关键在背景高低与信噪比。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>因为呢，我们知道我们要让它的细胞波长的这个绝对的波数都是让它等于0，所以这个时候你的这个波长的设定就非常重要了……比如说你是用633去测了，但是你写的是532这个波长的话，那它可能就会出错。</p><p>还有这个光圈的选择。这个光栅的光栅的这个选择就决定了你测的这个分辨率。……荧光通常是用一个低刻线的这样一个光纤来测，而你的拉曼一般是分辨率要求比较高，因为我们的拉曼光非常的窄。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s22">
+  <div class="slides"><figure class="slide" id="slide-192">
+<img src="slides/slide_192.png" alt="课件第192页 3) 拉曼光谱测试：单位换算（1 cm⁻¹≈30 GHz、ω cm⁻¹~10⁷/λ nm）">
+<figcaption><span class="sno">192</span><span class="stitle">3) 拉曼光谱测试：单位换算（1 cm⁻¹≈30 GHz、ω cm⁻¹~10⁷/λ nm）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-193">
+<img src="slides/slide_193.png" alt="课件第193页 3) 拉曼光谱测试：拉曼峰位波数计算（拉曼信号波长/能量）">
+<figcaption><span class="sno">193</span><span class="stitle">3) 拉曼光谱测试：拉曼峰位波数计算（拉曼信号波长/能量）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">22</span>
+      <div class="sec-tt">
+        <h2>单位换算：eV、nm 与 cm⁻¹</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 3 段（前）</span><span class="chip">课件 192</span><span class="chip">课件 193</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>常用换算：1 eV=1240/λ(nm)（hc=1240 eV·nm）；1 eV=8065 cm⁻¹；ω(cm⁻¹)=10⁷/λ(nm)；1 cm⁻¹≈30 GHz。记住「激发光在零波数」：拉曼位移=入射光子与散射光子能量之差。</p><p>用电子伏特算：ε_拉曼(eV)=ε_入射(eV)-ω̃/8065（先把波数位移换算成 eV 再减）；再换波长 λ=1240/ε_拉曼(nm)。课堂上老师演示了一个换算，强调只要记住换算关系，其余就是来回变换。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>电子伏特跟这个纳米单位的换算，就是我比如说我是为什么我刚才说这个633，它就跟1.96电阻一合……就是633nm，就是1240÷633nm，那就等于1.96个电阻路。</p><p>还有一个就是波束的电阻伏特，那么一个电子伏特就等于8065个波束，这些大家要知道，还有一个波束等于30的G赫兹。……我所有的计划包都是在灵活数据，这两个点你都可以去进行一系列的这个换算。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s23">
+  <div class="slides"><figure class="slide" id="slide-194">
+<img src="slides/slide_194.png" alt="课件第194页 3) 拉曼光谱测试：拉曼光谱信噪比（影响测试/仪器因素）">
+<figcaption><span class="sno">194</span><span class="stitle">3) 拉曼光谱测试：拉曼光谱信噪比（影响测试/仪器因素）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-195">
+<img src="slides/slide_195.png" alt="课件第195页 3) 拉曼光谱测试：如何看待拉曼信号强度与信噪比？">
+<figcaption><span class="sno">195</span><span class="stitle">3) 拉曼光谱测试：如何看待拉曼信号强度与信噪比？</span></figcaption>
+</figure>
+<figure class="slide" id="slide-196">
+<img src="slides/slide_196.png" alt="课件第196页 3) 拉曼光谱测试：拉曼信号信噪比的重要性">
+<figcaption><span class="sno">196</span><span class="stitle">3) 拉曼光谱测试：拉曼信号信噪比的重要性</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">23</span>
+      <div class="sec-tt">
+        <h2>拉曼光谱的信噪比：为什么重要</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 3 段（前）</span><span class="chip">课件 194</span><span class="chip">课件 195</span><span class="chip">课件 196</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>同一台仪器、不同测试条件得到的拉曼谱可能差别很大（背景高低不同），这决定了如何测试才能得到最好的信噪比。信噪比差时弱峰被噪声淹没，如何拟合都出不来，所以测试前分析并抑制噪声源至关重要。</p><p>影响因素分两类：测试因素（光谱测试时间、测试次数）与仪器因素（激光器杂线、光栅、光学系统避光性能、共焦性能、光学元件、拉曼滤光片、探测器性能与噪声、单道/多道探测器）。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>大家可以看到这两个光谱呢，哪一个的信号比会好一点。……有的同学说好像看起来更平滑一些，然后看起来那个那个灶的那个那个那个背景好像要低一些。</p><p>我们还要学习怎么去提高，怎么去尽可能去提高，我们所测试拉拉光谱的这样的一个新道比一的问题。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s24">
+  <div class="slides"><figure class="slide" id="slide-197">
+<img src="slides/slide_197.png" alt="课件第197页 3) 拉曼光谱测试：信噪比的定义和测量（SNR=S/ΔB）">
+<figcaption><span class="sno">197</span><span class="stitle">3) 拉曼光谱测试：信噪比的定义和测量（SNR=S/ΔB）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-198">
+<img src="slides/slide_198.png" alt="课件第198页 3) 拉曼光谱测试：信噪比的定义和测量（σ_Y=σ_S）">
+<figcaption><span class="sno">198</span><span class="stitle">3) 拉曼光谱测试：信噪比的定义和测量（σ_Y=σ_S）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-199">
+<img src="slides/slide_199.png" alt="课件第199页 3) 拉曼光谱测试：两次连续测量光谱的差谱分析">
+<figcaption><span class="sno">199</span><span class="stitle">3) 拉曼光谱测试：两次连续测量光谱的差谱分析</span></figcaption>
+</figure>
+<figure class="slide" id="slide-200">
+<img src="slides/slide_200.png" alt="课件第200页 3) 拉曼光谱测试：差谱统计（2σ²、像素等价近似）">
+<figcaption><span class="sno">200</span><span class="stitle">3) 拉曼光谱测试：差谱统计（2σ²、像素等价近似）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-201">
+<img src="slides/slide_201.png" alt="课件第201页 3) 拉曼光谱测试：标准偏差与噪声来源">
+<figcaption><span class="sno">201</span><span class="stitle">3) 拉曼光谱测试：标准偏差与噪声来源</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">24</span>
+      <div class="sec-tt">
+        <h2>信噪比的科学定义与测量</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 3 段（前）</span><span class="chip">课件 197</span><span class="chip">课件 198</span><span class="chip">课件 199</span><span class="chip">课件 200</span><span class="chip">课件 201</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>厂商常用的定义（信号强度/噪声起伏幅度）是错的：噪声起伏取决于总的信号强度，不同拉曼峰强度差异很大，不能用峰强定义信噪比。科学定义：SNR=信号/信号带来的标准偏差。</p><p>标准偏差的测量：连续两次测量光谱，做差谱，取差谱的标准偏差再除以 √2。原则上要对探测器每个像素统计多次实验（两次测量只能得一个差值），近似认为所有像素等价，用不同像素的差谱分布做高斯统计得到 σ。</p><p>纯散粒噪声极限：信号 S 的泊松涨落给出 σ=√S，所以 SNR 上限为 √S。可见 SNR 只与探测到的总光子数有关：增加积分时间（光子数）即提高信噪比。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那么有大家经常通过的是仪器厂商在经常用的这种定义，就是下面的这种普遍犯错误的定义……我的心脏比是由我信号的强度去除，以我噪声起伏的这个大小。……大家觉得对不对？当然，我给大家已经说了错了。</p><p>那么还有一个更为科学的定义，就是我通过这个噪声，然后去，就是它的信号去除以我这个信号所带来的这样一个标准偏差。……我连续两次测量光谱的差补，位于拉上光谱处的一个标准偏差，再去除以一√2。</p><p>那么，原则上你要去求出每一个像素，它的一个偏差的话，你是需要进行很多很多次实验才能知道……我们在进行统计，为了方便不这么去做，我们就认为我的这个所有的像素都是等同的。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s25">
+  <div class="slides"><figure class="slide" id="slide-202">
+<img src="slides/slide_202.png" alt="课件第202页 3) 拉曼光谱测试：增加积分时间可显著提高信噪比">
+<figcaption><span class="sno">202</span><span class="stitle">3) 拉曼光谱测试：增加积分时间可显著提高信噪比</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">25</span>
+      <div class="sec-tt">
+        <h2>增加积分时间可显著提高信噪比</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 3 段（中）</span><span class="chip">课件 202</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>光子数少时相对标准偏差大；增加积分时间（1s→10s→100s），光子数增加，信噪比提高。定量关系：S=平均光子率×时间，SNR=S/√S=√(Ḃt)——与积分时间的平方根成正比，这是提高信噪比的第一种方法。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>比如说，我们这个光谱是测了1秒，那么这个是测了10秒，这是测了100秒。那么大家显而易见可以看到，随着我光子数的一个增加，是不是我的信噪比就提高了？……所以我的时间的增长就会可以带来我心道比的一个提高。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s26">
+  <div class="slides"><figure class="slide" id="slide-203">
+<img src="slides/slide_203.png" alt="课件第203页 3) 拉曼光谱测试：存在环境背景信号">
+<figcaption><span class="sno">203</span><span class="stitle">3) 拉曼光谱测试：存在环境背景信号</span></figcaption>
+</figure>
+<figure class="slide" id="slide-204">
+<img src="slides/slide_204.png" alt="课件第204页 3) 拉曼光谱测试：荧光背景（MoS₂ 的 A 激子）">
+<figcaption><span class="sno">204</span><span class="stitle">3) 拉曼光谱测试：荧光背景（MoS₂ 的 A 激子）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-205">
+<img src="slides/slide_205.png" alt="课件第205页 3) 拉曼光谱测试：减去探测器暗信号后校正的拉曼光谱">
+<figcaption><span class="sno">205</span><span class="stitle">3) 拉曼光谱测试：减去探测器暗信号后校正的拉曼光谱</span></figcaption>
+</figure>
+<figure class="slide" id="slide-206">
+<img src="slides/slide_206.png" alt="课件第206页 3) 拉曼光谱测试：原始光谱与暗信号校正光谱对比">
+<figcaption><span class="sno">206</span><span class="stitle">3) 拉曼光谱测试：原始光谱与暗信号校正光谱对比</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">26</span>
+      <div class="sec-tt">
+        <h2>背景噪声与暗噪声的抑制</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 3 段（中）</span><span class="chip">课件 203</span><span class="chip">课件 204</span><span class="chip">课件 205</span><span class="chip">课件 206</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>背景噪声：一切非拉曼信号（荧光、环境杂散光、热辐射）。有背景时差谱在整个范围内噪声都大。抑制手段：关闭环境光源（避光）、选激发光波长避开荧光（如 785 nm 激发不激发荧光，而 633 nm 与带隙 ~640 nm 的样品重叠、信号落在荧光上）、增加积分时间（背景散粒噪声同样随 √t 增长，SNR 仍 ∝√t）。</p><p>暗噪声：探测器热激发产生的电子噪声（室温 26 meV 能量足够激发电子），所有探测器都有。InGaAs 等红外探测器暗噪声高（1064 激发时需先测暗谱再相减；通常测 100 s 实际是样品谱+关激光暗谱相减），硅探测器较好；电制冷/水冷/液氮制冷，温度越低暗噪声越低。购买探测器要关注暗电流参数。</p><p>重要误区：减去空白背景并不能提高信噪比（相减会使噪声增加 √2 倍）；只有背景/暗噪声占主导时才应减去，否则单纯两谱相减反而降低信噪比。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>通常情况下，可通过这个关闭这个我们的激光源……你可以改变你的激发光的这样的一个选择，比如说，你用633，它的代替是在六六百六十四，那你选择633的这个激发光，你的信号就会重叠在这个荧光信号上面。……但是，你如果用785的这个激发光去激发这个样品，那么你就会没有办法激发这个荧光。</p><p>暗噪声就是说我的探测器它具有一热气发电的……我们的这个环境的温度，它是一个26毫1V1的毫电子特的这么一个背景的噪声，对不对，所以这样的一个能量，它就足够去激发一些电子。……应加深，我们通常的测测试，其实比如说你设置了100秒，但其实他通常是测了200秒，为什么？因为他测了一个拉曼光谱……还要关掉你激发光，再测一个光谱，然后两组相减。</p><p>关于背景剪除的一个误解就是说，其实我们减去这个空白的背景并不能够是提高我们拉曼光谱的信噪比……而且会使你的信噪比再增加√2倍。……如果其他的噪声，如果你的背景或者是你的按噪声不是一个主流的因素的话，你单纯通过两个光谱的相减，这个你的信噪比会降低。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s27">
+  <div class="slides"><figure class="slide" id="slide-207">
+<img src="slides/slide_207.png" alt="课件第207页 3) 拉曼光谱测试：噪声功率谱——白噪声（时间上无关联）">
+<figcaption><span class="sno">207</span><span class="stitle">3) 拉曼光谱测试：噪声功率谱——白噪声（时间上无关联）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-208">
+<img src="slides/slide_208.png" alt="课件第208页 3) 拉曼光谱测试：暗信号与读出噪声">
+<figcaption><span class="sno">208</span><span class="stitle">3) 拉曼光谱测试：暗信号与读出噪声</span></figcaption>
+</figure>
+<figure class="slide" id="slide-209">
+<img src="slides/slide_209.png" alt="课件第209页 3) 拉曼光谱测试：散粒噪声（(Ḃt)^1/2）">
+<figcaption><span class="sno">209</span><span class="stitle">3) 拉曼光谱测试：散粒噪声（(Ḃt)^1/2）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-210">
+<img src="slides/slide_210.png" alt="课件第210页 3) 拉曼光谱测试：信噪比与积分时间的关系">
+<figcaption><span class="sno">210</span><span class="stitle">3) 拉曼光谱测试：信噪比与积分时间的关系</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">27</span>
+      <div class="sec-tt">
+        <h2>噪声分类：白噪声、1/f 噪声与读出噪声</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 3 段（中）</span><span class="chip">课件 207</span><span class="chip">课件 208</span><span class="chip">课件 209</span><span class="chip">课件 210</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>白噪声：时间上无关联的随机噪声（散粒噪声即此类，功率谱平坦）。暗信号与时间成正比，散粒噪声给 σ=√S；读出噪声与拉曼信号大小和积分时间无关（每次读出叠加固定噪声）。</p><p>1/f 噪声（粉红噪声）：主要在低频电路、探测器模拟电路的光信号转电信号过程中明显。读出噪声来自信号转换的模拟电路，每读一次叠加一次：1s×100 次循环读出噪声叠加 100 次，信噪比反而不如 100s×1 次。积分时间与循环次数如何取舍取决于探测器与光路中主导噪声源。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>还有一个就是读出噪声，这个读出噪声为什么我们要放在这里说呢？因为我们有一个除了测试时间，还有我们有一个循环测试，就是次数……就是我的读一次，我就会有一个噪声。所以这个时候你就要衡量，你是通过增加积分时间，还是你通过增加这个循环次数来提高我们的信号比。</p><p>那如果我是一秒，然后我循环的去测100次，大家可以看到他也测了100次，但是我每一次读出都会有一个噪声叠加在上面，所以这个时候我的这个谱的信噪比就明显没有，我只读出一次。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s28">
+  <div class="slides"><figure class="slide" id="slide-211">
+<img src="slides/slide_211.png" alt="课件第211页 3) 拉曼光谱测试：SNR≈I_Raman/√(I_BG+I_Raman)">
+<figcaption><span class="sno">211</span><span class="stitle">3) 拉曼光谱测试：SNR≈I_Raman/√(I_BG+I_Raman)</span></figcaption>
+</figure>
+<figure class="slide" id="slide-212">
+<img src="slides/slide_212.png" alt="课件第212页 3) 拉曼光谱测试：信噪比计算示例">
+<figcaption><span class="sno">212</span><span class="stitle">3) 拉曼光谱测试：信噪比计算示例</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">28</span>
+      <div class="sec-tt">
+        <h2>信噪比计算示例</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 3 段（中）</span><span class="chip">课件 211</span><span class="chip">课件 212</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>荧光背景上的拉曼峰：SNR=I_Raman/√(I_BG+I_Raman)——分子为拉曼信号强度，分母为背景+信号总强度的散粒噪声（背景噪声、信号噪声、探测器与读出噪声都叠加在背景上）。</p><p>用科学定义算出的 SNR 远小于厂商定义（如 14.2），因为波动幅度依赖总信号强度、不能反映仪器真实性能。计算时先测背景，用背景上的信号比上总信号开根号。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我的信号比的定义其实根据这样的一个分析，我们很简单，就是我在我的背景上面的这个信号去比上我这个总的信号去开根号，那么我就得到了它的一个信噪比。这就是我们这个真实用科学的定义计算出来的一个信噪比。</p><p>如果我们用到前面，就是说它的信号的强度去除以这样的一个震荡的幅度那么得到了这样的就是14.2，就明显就是高出了我们这样的一个光谱的信号比……这个定义它就会带来很多不确定因素，也不能去反映我的这样的一个谱仪，它本身的这个测试的结果或者效果。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s29">
+  <div class="slides"><figure class="slide" id="slide-213">
+<img src="slides/slide_213.png" alt="课件第213页 第四章主要内容（4 晶格振动的其他探测方法）">
+<figcaption><span class="sno">213</span><span class="stitle">第四章主要内容（4 晶格振动的其他探测方法）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">29</span>
+      <div class="sec-tt">
+        <h2>第四章：晶格振动的其他探测方法（目录）</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 3 段（后）</span><span class="chip">课件 213</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>拉曼只能测布里渊区中心（q≈0）的声子，要测完整的声子色散曲线与态密度需要其他方法。本章介绍：红外光谱、布里渊散射、拉曼散射（电磁波方法），以及中子散射、X 射线散射，另提及超声、非弹性电子隧道谱等。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那么，后面就是再大概的讲一下我们晶格振动还有其他的实验探测方法。那么，我们探测通常就是探测什么呢？探测深子色，探曲线，探测探一度……那么，我们对于这个分子，它晶隔振动，它测试的方法就主要有这个红外光谱、蓝网光谱、物理电感射。这个都是属于电磁波的测试方法。那么还有X射线应该非弹性反射中中非弹性中子反射，还有这个超声，还有非弹性电子隧道。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s30">
+  <div class="slides"><figure class="slide" id="slide-214">
+<img src="slides/slide_214.png" alt="课件第214页 4) 晶格振动的其他探测方法：实验观测对象——声子色散 ω(q) 与态密度 g(ω)">
+<figcaption><span class="sno">214</span><span class="stitle">4) 晶格振动的其他探测方法：实验观测对象——声子色散 ω(q) 与态密度 g(ω)</span></figcaption>
+</figure>
+<figure class="slide" id="slide-215">
+<img src="slides/slide_215.png" alt="课件第215页 4) 晶格振动的其他探测方法：各种探测方法比较（电磁波/中子/X射线/超声/IETS）">
+<figcaption><span class="sno">215</span><span class="stitle">4) 晶格振动的其他探测方法：各种探测方法比较（电磁波/中子/X射线/超声/IETS）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-216">
+<img src="slides/slide_216.png" alt="课件第216页 4) 晶格振动的其他探测方法：散射光谱与吸收光谱">
+<figcaption><span class="sno">216</span><span class="stitle">4) 晶格振动的其他探测方法：散射光谱与吸收光谱</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">30</span>
+      <div class="sec-tt">
+        <h2>实验观测对象与探测方法总览</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 3 段（后）</span><span class="chip">课件 214</span><span class="chip">课件 215</span><span class="chip">课件 216</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>实验观测对象只有两类：声子色散 ω(q) 与态密度 g(ω)（上一课强调过：态密度高的位置声子更容易与光、电子相互作用，从而被光谱探测到）。</p><p>方法对比：远红外/红外光谱（透射或反射光强度随频率，测绝缘体和半导体的红外介电性质、q≈0 光学声子）；拉曼光谱（散射光强度随频率，q≈0 光学声子、极化子）；布里渊散射（与拉曼相同，小波矢 q 的声学模式）；X 射线漫散射（散射强度随动量转移，色散的有限信息）；非弹性中子散射（散射强度随能量和动量转移，可测声子色散与态密度）；超声（声速、声子-声子相互作用）；非弹性电子隧道谱（薄膜和吸附物的振动性质）。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>实验观测对象就是探测深子色散曲线、探测态密度，这个是我们在上一节课也一直在给大家强调的一个，关于身子或者关于其他的一些准例子等等，我们需要关注的点。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s31">
+  <div class="slides"><figure class="slide" id="slide-217">
+<img src="slides/slide_217.png" alt="课件第217页 4) 晶格振动的其他探测方法：中子的德布罗意波长（λ=h/√(2mE)）">
+<figcaption><span class="sno">217</span><span class="stitle">4) 晶格振动的其他探测方法：中子的德布罗意波长（λ=h/√(2mE)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-218">
+<img src="slides/slide_218.png" alt="课件第218页 4) 晶格振动的其他探测方法：中国散裂中子源（东莞）">
+<figcaption><span class="sno">218</span><span class="stitle">4) 晶格振动的其他探测方法：中国散裂中子源（东莞）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">31</span>
+      <div class="sec-tt">
+        <h2>中子散射：德布罗意波长与散裂中子源</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 3 段（后）</span><span class="chip">课件 217</span><span class="chip">课件 218</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>粒子都有波动性，中子的德布罗意波长 λ=h/√(2mE)（由能量算出）从几埃到几纳米，与晶体内原子间距相当，适合探测晶格振动。</p><p>中国有东莞大朗的中国散裂中子源（大科学装置），英国卢瑟福-阿普尔顿实验室等也有装置。中子发现历史（1932 年查德威克发现中子）老师提示大家自学，本课直接讲如何用中子非弹性散射测晶格振动。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那么，我们大量产生中子，就是我们现在国家自己也有自己的中子的反射源，闪电中子源，那么就是大科学装置，这是在东莞的。一个那个大科学装置，那么，啊，我们这里就讲，我们我也不给大家讲这个，大家可以去看一下一中子的发现的这个历史。</p><p>那么，我们主要是讲，我们怎么通过中子的非弹性散射来测试我们的这个金额振动。那么这里主要是利用就是我的这个它就是一个非弹性反射，就跟我的拉马反射其实是类似的，只是这个时候，我的能量还有我的动量是可以选择的。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s32">
+  <div class="slides"><figure class="slide" id="slide-219">
+<img src="slides/slide_219.png" alt="课件第219页 4) 晶格振动的其他探测方法：一些中子历史（1932 查德威克发现中子）">
+<figcaption><span class="sno">219</span><span class="stitle">4) 晶格振动的其他探测方法：一些中子历史（1932 查德威克发现中子）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-220">
+<img src="slides/slide_220.png" alt="课件第220页 4) 晶格振动的其他探测方法：中子三轴谱仪">
+<figcaption><span class="sno">220</span><span class="stitle">4) 晶格振动的其他探测方法：中子三轴谱仪</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">32</span>
+      <div class="sec-tt">
+        <h2>中子散射装置：飞行时间与三轴谱仪</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 3 段（后）</span><span class="chip">课件 219</span><span class="chip">课件 220</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>中子源出来一束中子，用斩波器（时钟）按飞行速度/飞行时间选择不同能量的中子（飞行时间谱仪）；探测器放在不同散射角/空间位置，对应不同的动量转移。中子三轴谱仪则固定入射与出射能量，扫描动量或能量。</p><p>散射总满足动量与能量守恒，入射/散射中子与声子构成矢量三角形：在特定方向放置探测器即选择特定动量 Q。测法两种：固定能量扫描动量（探测器放不同位置）、固定波矢扫描能量（调选择能量）。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那么，它是通过这样的一个，就是我的这个中子源出来了一束这个中指。那么，我通过，一个滤波器，这个时候我是通过一个时钟，就是我不同的这个频率，去选择不同的飞行速度的这样的一些中子，那么我们相应选择了不同的能量的中子。</p><p>那么，我根据这个已经反生出来的选择了特定的能量，不同的空间，其实它对应的是不同的这个动量选择……所以我在不同的空间上，我就可以选择出不同的Q。那我能量又知道我的Q又知道，那么我就可以得到我的身子扩散。</p><p>那么我也可以去固定这个波式。就是我把一个探测机放在一个特定的位置，我去通过调整前面时钟，然后去调整它这个选择出来的探测器，选择出来的这个钟子，它的一个能量。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s33">
+  <div class="slides"><figure class="slide" id="slide-221">
+<img src="slides/slide_221.png" alt="课件第221页 4) 晶格振动的其他探测方法：中子波长与原子间距相当">
+<figcaption><span class="sno">221</span><span class="stitle">4) 晶格振动的其他探测方法：中子波长与原子间距相当</span></figcaption>
+</figure>
+<figure class="slide" id="slide-222">
+<img src="slides/slide_222.png" alt="课件第222页 4) 晶格振动的其他探测方法：动量守恒（Q=2ksinθ）与能量守恒">
+<figcaption><span class="sno">222</span><span class="stitle">4) 晶格振动的其他探测方法：动量守恒（Q=2ksinθ）与能量守恒</span></figcaption>
+</figure>
+<figure class="slide" id="slide-223">
+<img src="slides/slide_223.png" alt="课件第223页 4) 晶格振动的其他探测方法：中子振动谱（Mitchell et al.）">
+<figcaption><span class="sno">223</span><span class="stitle">4) 晶格振动的其他探测方法：中子振动谱（Mitchell et al.）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-224">
+<img src="slides/slide_224.png" alt="课件第224页 4) 晶格振动的其他探测方法：固定波矢 Q、对能量扫描">
+<figcaption><span class="sno">224</span><span class="stitle">4) 晶格振动的其他探测方法：固定波矢 Q、对能量扫描</span></figcaption>
+</figure>
+<figure class="slide" id="slide-225">
+<img src="slides/slide_225.png" alt="课件第225页 4) 晶格振动的其他探测方法：中子散射的局限（昂贵、大块样品、通量低）">
+<figcaption><span class="sno">225</span><span class="stitle">4) 晶格振动的其他探测方法：中子散射的局限（昂贵、大块样品、通量低）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">33</span>
+      <div class="sec-tt">
+        <h2>中子非弹性散射测声子色散</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 3 段（后）</span><span class="chip">课件 221</span><span class="chip">课件 222</span><span class="chip">课件 223</span><span class="chip">课件 224</span><span class="chip">课件 225</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>非弹性散射满足能量动量守恒，散射几何 Q=2ksinθ。固定能量扫描动量 → 扫出色散曲线上各点；固定波矢扫描能量 → 测某一 q 的所有声子支。中子几乎能测整个布里渊区，同时给出能量与动量，是中子方法的核心优势（对比拉曼只能测 q≈0）。</p><p>局限：需要大科学装置（全中国一两个）、申请排期长（一年一两次，今年 9 月申请可能明年 1 月才做上，失败再等半年）、需要大块样品、通量相对低、信号弱难测。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那么，根据这个已经反生出来的选择了特定的能量，不同的空间，其实它对应的是不同的这个动量选择……就是扫描它的这个动量的空间，那么我也可以去固定这个波式。……所以这里有两种办法可以去测量，就是可以便秘。我所有的Q跟欧米伽，那么通过中子反射的话，那么它一个是波长动量问题控制，所以它几乎是可以测到我整个物理原区里面的这样的一些身子。</p><p>但是它的一个是我们需要大科学装置，那么建立一个这么一个大的科学装置其实是非常昂贵的。一有中全中国可能也就也就一两个，对不对？……而且还需要大块的一个样品，那么它的这个相对来说也是信号比较弱，比较难测。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s34">
+  <div class="slides"><figure class="slide" id="slide-226">
+<img src="slides/slide_226.png" alt="课件第226页 4) 晶格振动的其他探测方法：X 射线名片（性质、产生方法、分类）">
+<figcaption><span class="sno">226</span><span class="stitle">4) 晶格振动的其他探测方法：X 射线名片（性质、产生方法、分类）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-227">
+<img src="slides/slide_227.png" alt="课件第227页 4) 晶格振动的其他探测方法：布拉格父子与劳厄（1914/1915 诺贝尔奖）">
+<figcaption><span class="sno">227</span><span class="stitle">4) 晶格振动的其他探测方法：布拉格父子与劳厄（1914/1915 诺贝尔奖）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-228">
+<img src="slides/slide_228.png" alt="课件第228页 4) 晶格振动的其他探测方法：布拉格方程 nλ=2dsinθ（X 射线衍射）">
+<figcaption><span class="sno">228</span><span class="stitle">4) 晶格振动的其他探测方法：布拉格方程 nλ=2dsinθ（X 射线衍射）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">34</span>
+      <div class="sec-tt">
+        <h2>X 射线：从衍射到非弹性散射</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 3 段（后）</span><span class="chip">课件 226</span><span class="chip">课件 227</span><span class="chip">课件 228</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>X 射线波长 0.001-10 nm，由加速电子撞击金属靶产生（轫致辐射的连续部分+内层电子跃迁的特征辐射），按波长分为软/硬/极硬 X 射线等。</p><p>布拉格父子与劳厄因用 X 射线研究晶体结构获 1914/1915 年诺贝尔奖：劳厄认为 X 射线是电磁波（爱因斯坦称该实验为「物理学最美的实验」）；布拉格方程 nλ=2dsinθ，通过衍射峰确定晶体结构。本课补充 X 射线衍射原理后，直接讲 X 射线非弹性散射。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那么X射线呢，就是利用这个比较短的波长，那么它其实也是一种非弹性散射的这么一个过程，然后它利用这样的一个，就是跟我们这个分子散射其实也是类似的这么一个方法。当然我们这里，就是也给大家补充了一点，就是X射线衍射的这样的一些原理。</p><p>那么这个就是我们X射线非弹性反射，就是它也是能量动量守恒，所有的反射都是这样子的，都是满足能量动量守恒。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s35">
+  <div class="slides"><figure class="slide" id="slide-229">
+<img src="slides/slide_229.png" alt="课件第229页 4) 晶格振动的其他探测方法：X 射线的非弹性散射（动量能量守恒）">
+<figcaption><span class="sno">229</span><span class="stitle">4) 晶格振动的其他探测方法：X 射线的非弹性散射（动量能量守恒）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-230">
+<img src="slides/slide_230.png" alt="课件第230页 4) 晶格振动的其他探测方法：Al 晶体的色散曲线">
+<figcaption><span class="sno">230</span><span class="stitle">4) 晶格振动的其他探测方法：Al 晶体的色散曲线</span></figcaption>
+</figure>
+<figure class="slide" id="slide-231">
+<img src="slides/slide_231.png" alt="课件第231页 4) 晶格振动的其他探测方法：graphite 的声子色散曲线（I）">
+<figcaption><span class="sno">231</span><span class="stitle">4) 晶格振动的其他探测方法：graphite 的声子色散曲线（I）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-232">
+<img src="slides/slide_232.png" alt="课件第232页 4) 晶格振动的其他探测方法：graphite 的声子色散曲线（II）">
+<figcaption><span class="sno">232</span><span class="stitle">4) 晶格振动的其他探测方法：graphite 的声子色散曲线（II）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">35</span>
+      <div class="sec-tt">
+        <h2>X 射线非弹性散射测声子</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 3 段（后）</span><span class="chip">课件 229</span><span class="chip">课件 230</span><span class="chip">课件 231</span><span class="chip">课件 232</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>X 射线能量（ℏΩ₀~10⁴ eV）远大于声子能量（ℏω~0.03 eV），散射满足动量与能量守恒：k=k₀+q、Ω=Ω₀±ω_q；由于 |k|≈|k₀|，q≈2k₀sinθ——与中子类似，可测声子色散。</p><p>实例：Al 晶体的色散曲线、graphite 声子色散曲线（ESRF ID28 线站、17794 eV 入射、Si(111) 预单色器、Si(999) 背散射给出 3.1 meV 能量分辨率）。这些结果建议简单了解即可。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>由于X射线能量远大于声子的能量……散射满足动量和能量守恒。由于晶格在振动，除了衍射现象，X射线也会被散射。那么这是测出来的一些结果，我建议大家简单的了解一下。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s36">
+  <div class="slides"><figure class="slide" id="slide-233">
+<img src="slides/slide_233.png" alt="课件第233页 4) 晶格振动的其他探测方法：红外波段划分表（远红外到近红外）">
+<figcaption><span class="sno">233</span><span class="stitle">4) 晶格振动的其他探测方法：红外波段划分表（远红外到近红外）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">36</span>
+      <div class="sec-tt">
+        <h2>红外波段划分</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 3 段（后）</span><span class="chip">课件 233</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>红外覆盖约 1-1000 μm，分为：远红外（15-1000 μm、约 10-669 cm⁻¹）、长波红外（8-15 μm）、中波红外（3-8 μm）、短波红外（1.4-3 μm）、近红外（0.75-1.4 μm、约 6984-13331 cm⁻¹）。</p><p>一般测十几个到二十微米以内（约 7000 cm⁻¹ 以下），7 μm 对应约 1400 cm⁻¹；更长的波段取决于探测器。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>红外光谱的话，通常红外就是大概是从一个微米到几十个微米都有，但是我们一般是进红外，就是大概我们的这个几十个几百个波数，7μm大概是两一千三百多个波数，就是7个微米。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s37">
+  <div class="slides"><figure class="slide" id="slide-234">
+<img src="slides/slide_234.png" alt="课件第234页 4) 晶格振动的其他探测方法：红外光谱与官能团吸收峰">
+<figcaption><span class="sno">234</span><span class="stitle">4) 晶格振动的其他探测方法：红外光谱与官能团吸收峰</span></figcaption>
+</figure>
+<figure class="slide" id="slide-235">
+<img src="slides/slide_235.png" alt="课件第235页 4) 晶格振动的其他探测方法：化学键振动波数图（C-H、C=C、C≡C 等）">
+<figcaption><span class="sno">235</span><span class="stitle">4) 晶格振动的其他探测方法：化学键振动波数图（C-H、C=C、C≡C 等）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">37</span>
+      <div class="sec-tt">
+        <h2>红外光谱：化学键吸收峰</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 3 段（后）</span><span class="chip">课件 234</span><span class="chip">课件 235</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>红外光谱直接吸收红外光，在特定频率产生吸收峰，广泛用于有机物分子识别其中的化学键/官能团（化学课常用）；分子可分解为基本振动方式（简正振动）的叠加。</p><p>不同化学键分布在特定波数区：C-H、O-H、N-H 等伸缩振动在 3000 cm⁻¹ 附近（碳、氢较轻，频率高），C=C、C≡C、C=O 等依次降低，1500-500 cm⁻¹ 为指纹区。键波数位置可用前面学过的振动频率公式推断（ω∝√(β/M)，M 越小频率越高）。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那么这个是我们不同的这样的一些，可能学化学的同学应该是比较熟悉，就不同的键。它所分布的不同的波数的范围，化学键这个就是碳碳键，碳氢键碳氧等等，那么它通常都是在3000多个步数，因为它这个碳元素和氢元素来说都比较轻。我们刚我们学过氢的振动嘛，就是它是贝塔除以M，你M越小，你的频率就会越高。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s38">
+  <div class="slides"><figure class="slide" id="slide-236">
+<img src="slides/slide_236.png" alt="课件第236页 4) 晶格振动的其他探测方法：红外探测器（UV-可见-红外材料体系）">
+<figcaption><span class="sno">236</span><span class="stitle">4) 晶格振动的其他探测方法：红外探测器（UV-可见-红外材料体系）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">38</span>
+      <div class="sec-tt">
+        <h2>红外探测器与测量方式</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 3 段（后）</span><span class="chip">课件 236</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>常用商用红外探测器：碲镉汞（HgCdTe）、InGaAs 等，覆盖紫外-可见-红外的不同材料体系；不同探测器暗噪声差异大（红外探测器暗噪声高、带隙越小暗噪声越高）。</p><p>红外测量通常不用色散型光谱仪，而用傅里叶变换红外光谱仪（FTIR）——实验室里也有一台。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那么目前红外的探测器就有那个第一个汞。还有加声器这样的一些探测器比较成熟的，商用的就是这些。那么它通常也要搭配不同的这个光，就是谱仪来测。这个时候它就不是用我们前面所说的色散型的这样一个图，而是要用傅里叶变化红外光谱一来测。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s39">
+  <div class="slides"><figure class="slide" id="slide-237">
+<img src="slides/slide_237.png" alt="课件第237页 4) 晶格振动的其他探测方法：FTIR：傅里叶变换红外光谱（原理）">
+<figcaption><span class="sno">237</span><span class="stitle">4) 晶格振动的其他探测方法：FTIR：傅里叶变换红外光谱（原理）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-238">
+<img src="slides/slide_238.png" alt="课件第238页 4) 晶格振动的其他探测方法：FTIR：傅里叶变换（光谱恢复与优势）">
+<figcaption><span class="sno">238</span><span class="stitle">4) 晶格振动的其他探测方法：FTIR：傅里叶变换（光谱恢复与优势）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">39</span>
+      <div class="sec-tt">
+        <h2>FTIR：傅里叶变换红外光谱</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 3 段（后）</span><span class="chip">课件 237</span><span class="chip">课件 238</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>FTIR 基于迈克耳孙干涉仪：宽带红外光源 → 分束 → 一面固定镜、一面移动镜扫描光程差 x → 探测器记录干涉图 I(x)（两束光干涉强度随光程差变化）；对 I(x) 做傅里叶变换得到光谱 G(k)，即作为频率函数的强度谱。样品吸收使干涉图改变，差值对应吸收峰位置。</p><p>FTIR 优势：所有频率同时测量、几秒完成（Felgett 优势）；探测器灵敏、光学吞吐量高、噪声低（Jacquinot 优势）；用 HeNe 参考激光做内部波长校准（Connes 优势）；机械简单（只有移动镜在动）。第二章第 5、6 节（拉曼光谱应用概述、晶格振动理论及常用计算方法）老师安排自学，本课到此结束。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>它是一个通过这样的一个麦克逊干干涉仪的这样的一个原理来进行测试，它是有一个红外的光源。那么也是一个流通光谱的光源，经过这样一个麦克尔逊干测仪，它是通过一个静静就是不动的这个镜子，不动镜还有另外一个镜就是不断的在这个扫描。……就是通过傅里叶变化，就是你不同的这个位置就对应的不同的这个频率。</p><p>那么这个时候，你就可以把不同波长的这个光都给它扫描进去……你的样品要316之后，它这个膀光骨就会发生相应的改变，这个时候，这些改变就是你的样品所带来的。……好，那我们就大概上到这里，下面的56，我们就是大家组织看一下就行了。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（显微共焦拉曼光谱学）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>

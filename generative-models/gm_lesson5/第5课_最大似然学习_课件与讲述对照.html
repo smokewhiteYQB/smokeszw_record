@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>生成式模型与科学智能应用 · 第5节 最大似然学习（Maximum Likelihood）｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>生成式模型与科学智能应用 · 第5节 最大似然学习（Maximum Likelihood）</h1>
+    <div class="sub">第5节 最大似然学习（Maximum Likelihood） ｜ 2026-09-20 ｜ 刘云帆</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 34 页 · 整理 18 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-open">01 课程事务与本课主题</option>
+<option value="sec-recap">02 复习：AR 模型的性质</option>
+<option value="sec-data">03 数据设置</option>
+<option value="sec-model">04 模型设置</option>
+<option value="sec-goal">05 学习目标与密度估计</option>
+<option value="sec-kl-def">06 KL 散度：定义与三种直觉</option>
+<option value="sec-kl-prop">07 KL 的性质：非负性与非对称性</option>
+<option value="sec-kl-mle">08 最小化 KL = 最大化似然</option>
+<option value="sec-mc">09 蒙特卡洛估计</option>
+<option value="sec-mc-mle">10 MC 用于最大化似然</option>
+<option value="sec-coin">11 抛硬币例子</option>
+<option value="sec-gaussian">12 高斯体重例子</option>
+<option value="sec-bayes-ar">13 MLE 用于概率图模型与 AR 模型</option>
+<option value="sec-minibatch">14 mini-batch 与 MC 的联系</option>
+<option value="sec-risk">15 经验风险与期望风险</option>
+<option value="sec-overfit">16 过拟合与欠拟合</option>
+<option value="sec-bias-var">17 偏差-方差权衡</option>
+<option value="sec-summary">18 总结</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 Lecture4_Maximum_Likelihood.pdf 逐页渲染，转写原文见 record_20260920.txt。</div>
+<section class="sec" id="sec-open">
+  <div class="slides"><figure class="slide" id="slide-01">
+<img src="slides/slide_01.png" alt="课件第1页 封面：Lecture 4 Maximum Likelihood">
+<figcaption><span class="sno">01</span><span class="stitle">封面：Lecture 4 Maximum Likelihood</span></figcaption>
+</figure>
+<figure class="slide" id="slide-02">
+<img src="slides/slide_02.png" alt="课件第2页 Announcements：作业 1 发布与晚交政策">
+<figcaption><span class="sno">02</span><span class="stitle">Announcements：作业 1 发布与晚交政策</span></figcaption>
+</figure>
+<figure class="slide" id="slide-03">
+<img src="slides/slide_03.png" alt="课件第3页 Roadmap：课程路线图">
+<figcaption><span class="sno">03</span><span class="stitle">Roadmap：课程路线图</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>课程事务与本课主题</h2>
+        <div class="sec-meta"><span class="time">00:00:00 – 00:04:00</span><span class="chip">课件 1</span><span class="chip">课件 2</span><span class="chip">课件 3</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>咱们开始正常上课。先说一下出勤：虽然说出勤占 10%，但其实扣分是来一次就 1 分。这个大家知道就好。</p><p>正式讲之前先说一个事务性的事：作业一已经在网络发布了，是昨天发布的，10 月 18 号截止，给大家留了充足的时间。考虑到大家第一年在这边培训，可能研究生课还挺多的，上学期的学习压力比较大，所以给大家留的时间多一点。这次作业有两道题：一个是论述题，第二个是写一个小程序。</p><p>我们有一个晚交政策：有一周的晚交时间。截止当天是给满分；如果在晚交时间内交，最多 85 分；超过这个时间的话就没有分了。如果晚交的话，你跟我联系或者直接发邮件，我教你怎么交。还有一点：作业你交了才有分，空着不交肯定是没分。</p><p>那如果大家没有问题的话，咱们就正式开始今天的课。这节课是「最大似然学习」——在我们课程第一大部分的最后一块。前面先讲了生成模型的整体概况，然后是建模，接着讲了 AR 模型，因为它跟联合分布的链式分解完全对应，是非常简单直接的一个系统。而且今天我们还会看到 AR 模型有个非常好的性质：它可以直接用极大似然方法训练，还可以完全精确地计算它的似然。这就是为什么我们要用 AR 模型。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>咱们虽然说出勤是10%，但是实这扣分是是就是来一次就1分。</p><p>然后在正试一开始之前，先说一个咱们的数务性的事，就是咱们的作业1114作业已经在网络发布了，是昨天发布的，在11月18号截止。这次作一用了两道题，一个是一个一个论述和推荐的题，最后是第二个就是写一个小程序。</p><p>然后，第二个就是，如果你晚交的话，在这个时间内晚交的最多是85%。稍限额性稍微后，但是如果你超过这个时间的话，没有大家还尽量还交1。</p><p>那我们今天讲的这节课，这个ma这个学习方法在我们这个课程的第一大部分最后一页刚才说了，先第一大部分先讲了这个生存模型的一个整体的概况。先是建模，第二是针对这个建模方法，有一个讲一个AR模型。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-recap">
+  <div class="slides"><figure class="slide" id="slide-04">
+<img src="slides/slide_04.png" alt="课件第4页 Principles of Statistical Machine Learning：三要素">
+<figcaption><span class="sno">04</span><span class="stitle">Principles of Statistical Machine Learning：三要素</span></figcaption>
+</figure>
+<figure class="slide" id="slide-05">
+<img src="slides/slide_05.png" alt="课件第5页 Recap：Introduction to AR（灵活、易采样、精确似然）">
+<figcaption><span class="sno">05</span><span class="stitle">Recap：Introduction to AR（灵活、易采样、精确似然）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-06">
+<img src="slides/slide_06.png" alt="课件第6页 Lecture Outline：本课计划">
+<figcaption><span class="sno">06</span><span class="stitle">Lecture Outline：本课计划</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>复习：AR 模型的性质</h2>
+        <div class="sec-meta"><span class="time">00:04:00 – 00:08:00</span><span class="chip">课件 4</span><span class="chip">课件 5</span><span class="chip">课件 6</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>正式进入新课程之前，照惯例先复习一下。我们这门课主要是从统计学习的三个要素来介绍的——模型、学习准则、算法。之前一直针对模型讲解。</p><p>上节课结束得比较匆忙，所以给大家稍微复习一下 AR 模型。AR 模型最主要的就是它的分解思想：首先它非常灵活，第二是它非常容易采样——按照联合分布的拆解方式，一个一个采条件分布就行。灵活性体现在：它的条件分布的表示对你数据的表征形式没有太多要求——文本、图像或者其他更高维的数据、离散还是连续，都没有太多要求；条件分布具体怎么实现也没太大关系，用逻辑回归、深度模型或者更传统一点的概率图方式都可以。</p><p>它唯一可能对设计者提出的要求就是：你要实现 AR，就要指定怎么分解、指定变量之间的依赖关系。你指定了一个顺序之后，这个顺序本身也是模型的一部分——数据如果有跟这个分解对齐的顺序（比如文本前面词决定后面词），那条件分布会比较好训练；如果两者是冲突的，那你这个设计就会有问题。</p><p>另外标红的一点：AR 模型可以精确计算输出的似然——按照分解一步一步计算，对任意给定的数据都可以计算出一个量化的似然值。这一点之前没深入讲，但之后的课程大家会发现这很重要：不光是整个序列的似然能算，因为可以拆解成一步步，每个单个变量的似然也能算，这在现在的后训练、或者一些相关研究里非常重要。</p><p>另外我们还讲了几个基本的 AR 模型和一些经验方法，以及 teacher forcing——因为 AR 模型是逐步生成、逐步训练的，推理和训练的时候输入结构不一样，所以有一个 exposure bias（暴露偏差）的问题，上节课给大家复习过，请大家记住。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我们这节，我们这门课是从主要就是从这个统计学习的三个三要素来给大家介绍，一是三要素是模型有算法之前一直针对这个模型讲解。</p><p>其实AR模型它是一个就是自一规模型，它一个比较简单的模型，其实最主要的就是它的一个解构的思想，首先它是flexible，非常灵活，第二是它非常容易去采样。</p><p>他唯一可能对设计者提出的要求就是他这个你要实现一个偶尔一，你就是要指定他是怎么分进，指定你的这些变量，它之间的依赖关系是什么。</p><p>然后另外这个这一点标红的一点就离开，就是二摩他刚才说了可以。精确的计算输出的，一个四然对吧，比较比较直观，就是我们可以按照那个分解去一个一个一分计算。</p><p>另外就是给大家说一个teacher for性，就是在AR模型。因为它是。来一个一个机械能生成去训练的生成，所以它的推理和训练的时候，它有一个。一个推训推不一致的问题，训练的时候结构书跟你推理结构书一样，所以它有一个exposure，一叫暴露偏差的一个。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-data">
+  <div class="slides"><figure class="slide" id="slide-07">
+<img src="slides/slide_07.png" alt="课件第7页 Data Settings：数据服从未知底层分布">
+<figcaption><span class="sno">07</span><span class="stitle">Data Settings：数据服从未知底层分布</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>数据设置</h2>
+        <div class="sec-meta"><span class="time">00:08:00 – 00:11:00</span><span class="chip">课件 7</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>今天终于来到学习准则这一部分。在进入具体训练方法之前，还是先从比较大的方面介绍一下背景——数据和模型的设置。</p><p>在学习中，我们都有个假设：数据分布服从一个底层的分布 P_data。我们不知道这个分布到底是什么——比如最开始课程的例子，国科大男生的身高分布，我们不知道它底层是不是高斯。所以训练中比较重要的一点是：P_data 是不知道的，我们只能从 P_data 里采样，得到一个训练数据集 D。</p><p>每个样本都是对随机变量的一个复制：比如一个图像，一次采样就是把图像里的黑色（像素）抽成一个样本。最后最重要的假设是：样本是 i.i.d. 的——独立同分布。每个样本之间独立，都服从同一个分布。独立性有什么用？在概率里，如果样本独立，那么条件分布等于边缘分布；而且如果我们引入了数据集，数据集的联合分布如果是独立的，就等于各自分布的乘积。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我们都假设我们的数据分布都服从一个刚才那一个111个底层的分布一类的。我们不知道这个节点到底是什么，比如说，我们在最一开始的最一开区分的那个例子，我们这个1就这个国科大的这个男生，他的集重的分布，我们不知道他底层到底是不高斯。</p><p>那这个不是，那下面这个就是我们在训练中比较重要一点，就是我们的PD卡是不知道的，我们不能没有这个，所以说只能去从PD里面采样。得到一个训练数据集。</p><p>然后最后最重要的就是我们的样本是你写的是。因为Python里面单是I ID的，经常说这个样本，假设样本是ID这个组织。大应该之前在概率里面学过，它是叫字面意思就是独立同分布。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-model">
+  <div class="slides"><figure class="slide" id="slide-08">
+<img src="slides/slide_08.png" alt="课件第8页 Model Settings：模型族与假设空间">
+<figcaption><span class="sno">08</span><span class="stitle">Model Settings：模型族与假设空间</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>模型设置</h2>
+        <div class="sec-meta"><span class="time">00:11:00 – 00:14:00</span><span class="chip">课件 8</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>关于模型：我们指定一个模型，其实是指定了一个模型（或者模型族）——一个可学习函数的范围，学术上叫假设空间。这个模型族 M 定义了我们整个能够学习得到的范围。</p><p>比如说给了这个图（贝叶斯网络结构）、给定节点和连接关系，那不管你再怎么学习，你只能在这个框架下优化每个节点的参数，比如每个节点用一个查表的形式实现它的条件分布。你再怎么优化参数、用再好的算法，你都没法建立那些不存在的边之间的关系——因为你的实现已经限制在这个结构里面了。这可能是大家会忽略的一点：你选择一个模型的时候，对它进行优化，它真的能到达你想要的效果吗？</p><p>另外一个例子：上一课讲的 AR 模型——如果你选择了用 AR 模型建模，那一定符合链式分解；如果是 FVSBN 这种最简单的模型，用逻辑回归建模条件分布，那它的输出首先只能分两类，而且只能建模不同变量之间的线性关系。这些都是模型引入的先验假设——只是指定一个范围，在这个范围内通过参数优化取得最优的东西。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>关于模型呢，模型其实我们之前说过，我们指定一个模型，其实是指定了一个单模一个模型或者模型。我们是一个可学习的一个函数的范围，其实还有一个学术名词叫做假。这样一个模型的组一M，它定义了我整个能够学习得到的一个模型。</p><p>你再怎么去优化你的你的你的你再怎么去优化你的参数线，再三四个算法，你你都没法建立这个对之间的一个一个关系，因为你实现了这个以后。</p><p>或者说另外一个例子就是我们上一上一课讲的这个AR的模型，你选，如果你选择了是一用AR模型来建模的话，那么一定会符合这个词。如果而且如果是这个最简单的这个PSPS个模的话，那它用PS建模来条件分布，那它的输出首先肯定只能是两类。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-goal">
+  <div class="slides"><figure class="slide" id="slide-09">
+<img src="slides/slide_09.png" alt="课件第9页 Goal of Learning：学习目标与挑战">
+<figcaption><span class="sno">09</span><span class="stitle">Goal of Learning：学习目标与挑战</span></figcaption>
+</figure>
+<figure class="slide" id="slide-10">
+<img src="slides/slide_10.png" alt="课件第10页 Goal of Learning：选择模型方向">
+<figcaption><span class="sno">10</span><span class="stitle">Goal of Learning：选择模型方向</span></figcaption>
+</figure>
+<figure class="slide" id="slide-11">
+<img src="slides/slide_11.png" alt="课件第11页 Learning as Density Estimation：密度估计视角">
+<figcaption><span class="sno">11</span><span class="stitle">Learning as Density Estimation：密度估计视角</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>学习目标与密度估计</h2>
+        <div class="sec-meta"><span class="time">00:14:00 – 00:18:00</span><span class="chip">课件 9</span><span class="chip">课件 10</span><span class="chip">课件 11</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>讲了数据和模型的背景之后，我们来到学习这一步。我们的目标就是：在给定的可学习函数范围内，尽量准确地找到数据分布 P_data。但问题是：真实数据分布是未知的，我们怎么去设计？只能通过样本来代替。</p><p>这样就引入一个问题：样本相对于我们要逼近的 P_data 永远是稀疏的——远远不能给我们提供一个好的学习条件。哪怕是最简单的 MNIST：28×28 的黑白图像，大概是 10^200 平方的一个空间，但 MNIST 给的训练样本我记得是 6 万——哪怕是这么简单的数据，样本和你要分配概率的空间也是极其悬殊的。</p><p>所以很难用参数化模型直接去建模分布，就只能想方设法去学习一个最好的逼近。如果你只是想逼近、得到最终的结果，那就有很多种理解方法。第一种是 GAN 的思路：我们不一定非得建模那个分布，只要关注生成结果是否真实，能采出比较真实的样本就行——这样会走到生成对抗网络。第二种是 VAE 的思路：关注模型中间的一些结果，得到一些编码、做一些表征学习。第三种：我们还是关注 P_data 上每一个变量的条件，还是想得到所有样本的分布——这就是显式密度建模，我们这节课（最大似然）走的就是这条路。</p><p>为什么要反复讲这些概念性的东西？因为这是咱们课程设计的切入方式：不是直接抛出一个方法，而是先建立这样一个概念，之后讲每个部分模型的时候会方便一点，大家以后研究中也知道某类方法有什么新的排列，可以去开发新的工作。</p><p>我们把生成模型的训练看成概率密度估计：在每一个 X 可能的取值上，让我们的 P_θ 尽量逼近 P_data。训练完成以后，对任何给定的输入都可以计算它的似然——这在异常检测等场景里是有用的。所以最大的问题就是：怎么定义 P_θ 和 P_data 之间的距离？</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>分我们的目标就是想要在刚才说了，给定这个能学习到的参数函数范围内。然后去尽量准确的去找到我们的这个数据分布PV的。</p><p>但是这样就引入一个问题，就是我们的样本永远是相对于我们PV，它的样本的容量或者它的这个规模，它的它的图相对我们要求的这个PV，它永远是稀疏的1，远没法人比给我们提供一个比较好的一个学习的条件。</p><p>我们想比如说我们考虑一个生成模型。我们并不一定非得去建模那样的一个一个，我们只是说，如果你能在因为模型建模那样的分布的话，你采一样可以得到相应的比较真实的什么样的这个生成。那其实我们如果只是想得到一个相当的好的一个结果的话，我们并不需要得到这个结构，我们只需要关注我们的结构是否真实的。那如果你按照这个条件出发的话，你会进行到一个什么？等到我们后面会讲一个叫做生成最大干。</p><p>那除了样本以外，我们还可以关注，我们不关注最后输出的这个样本的质量，我关注我们模型中间的一些结果，我们可以得到一些编译的1，最后得到一个va1的一关这个表学习的一些。那最后我们如果还有一种条件，就是我们关注，我们还是去关注这PD上每一个变量，它的这个条件，我们还是想要得到1数据值所有样本的分。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-kl-def">
+  <div class="slides"><figure class="slide" id="slide-12">
+<img src="slides/slide_12.png" alt="课件第12页 How to Define Closeness：KL 散度定义与三种直觉">
+<figcaption><span class="sno">12</span><span class="stitle">How to Define Closeness：KL 散度定义与三种直觉</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>KL 散度：定义与三种直觉</h2>
+        <div class="sec-meta"><span class="time">00:18:00 – 00:24:00</span><span class="chip">课件 12</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>这里也不给大家卖关子了。在我们生成模型的训练里，这类描述分布距离的方法是最常用的、几乎是百分之百会用到的，就是 KL 散度（Kullback-Leibler divergence）。</p><p>两个分布 P 和 Q 之间的 KL 散度表达式是这样的：Σ p(x) log(p(x)/q(x))。看起来稍微有点复杂，但可以分解开来看每一部分是什么意思。最奇怪的一项 log(p(x)/q(x))，把它展开写开就是 log p(x) 减 log q(x)——两个量的差。从信息论的角度看，它描述了每个样本的一个损失：如果真实概率是 p，但我们非要用 q 去描述它，它的损失是多少。</p><p>比如考虑一个真实的样本，它的 p(x) 肯定很大；如果你的模型学习得不够好，你对同样的 x 给了一个很小的（负的）似然，那就有损失。在这个表示里，这个损失再乘以 p(x)，就相当于一个加权——用 p(x) 对每个样本的损失进行加权，也就是用真实样本在不同分布上的权重去加权。</p><p>什么意思呢？就是我们只关注真实样本似然度比较高、概率质量比较集中的那些部分，不去关注编码空间里那些很小的地方。这体现的就是 p(x) 作为加权——也可以理解成 importance weighting，这是重要性采样领域一个很重要的概念。</p><p>第三种理解：从数学上，KL 散度可以写成 H(p) 减 H(p,q)（交叉熵）。直观理解就是：最优的编码长度是 H(p)；但你非要用 q 这种编码方式去编码，会得到一个次优编码。最优编码和次优编码之间的差距就是编码冗余，这就是 KL 散度。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那其实这里也不给大家卖关子了，因为其实在我们的这个生成模型的训练里面，可能这一类的这种描述方法，这种具离描述方法是最常多，几乎是百分之百用一个套，就是我们所谓的这个KKK3K.</p><p>那K两个分布P和Q之间的它的KL散，它的表达式是这样的。它既有这个两个通布，这个比例，也有一个BS加钱，还可以稍微分解开来看一看，每一部分到底是什么意思。</p><p>比如说对一个真实的样本。那他的PS肯定是什么？肯定很大的是吧，一个真实样本真增强自然很大的。如果你的模型学习的不够好，你对同样的一个X，你的给他负的自然损失很小的话，那这样的一个损失。那既然在这个表示中，如果没有了三一个损失的话，那它乘以一个PS就相当于什么？一个类似于加权的这么一个，一个它是用PS来对每个样本的一个损失进行加权。</p><p>或者可理解它是一个important SP,important或者important3这个新。东西一个这个领域里一很重要的一个概念。</p><p>第三个，最后一种概念理解，其实就是刚才跟第一点差不多，就是比如说H，它从数学上来讲，它的B，这个G和Q这两个分布，它的K、L散度完全就可以直接写成。P这个分布，它T这个分布，它的这个这个没解释，他们两个之间的联合一个分化。那最优的编码和自由编码之间的这个差距就是其实是1制了编码3。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-kl-prop">
+  <div class="slides"><figure class="slide" id="slide-13">
+<img src="slides/slide_13.png" alt="课件第13页 KL Divergence：非对称性与 mode-covering / mode-seeking">
+<figcaption><span class="sno">13</span><span class="stitle">KL Divergence：非对称性与 mode-covering / mode-seeking</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div class="sec-tt">
+        <h2>KL 的性质：非负性与非对称性</h2>
+        <div class="sec-meta"><span class="time">00:24:00 – 00:34:00</span><span class="chip">课件 13</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>KL 散度既然是一种距离的描述，那它应该有距离的一些性质。第一点是非负性：对所有的 P 和 Q，KL 散度都大于等于 0，而且当且仅当 P=Q 时取到 0。</p><p>接下来稍微证明一下这个性质，让大家间接了解这种公式在生成模型里怎么推导计算。把公式写在这里，交换分子分母、用期望展开：当 x 从 p 采样时，对 log(p(x)/q(x)) 求期望。得到期望形式后，下一步比较重要：log 在期望符号里面不好处理，我们想把 log 拿到期望外面去。可以用 Jensen 不等式（凸函数），得到它大于等于负的某个期望，也就是一个下界。再把期望按定义展开，就得到最终的结论：KL ≥ 0。</p><p>所谓 Jensen 不等式就是：对于一个凸函数，先求函数值再求期望，大于等于先求期望再取函数值。可以把求期望看成求平均：先求函数值再求平均，大于等于先求平均再求函数值。这个不等式应用很常见，EM 算法、变分推断、之后的均衡里都会用到类似的东西，希望大家记住。</p><p>接下来是 KL 很重要的一条性质：距离除了非负性还有对称性，但 KL 是非对称的——你把 P 和 Q 在计算里的顺序反一下，得到的结果完全不同。大家可以看这个图：P_data 是一个双峰的高斯分布，我们的模型比较有限，只是一个单峰分布。选取不一样顺序的 KL 去最小化，会得到不一样的结果。</p><p>从数学性质看：如果某一点 p(x) 很高而 q(x) 很低，代入式子，这一项会趋近于无穷。要最小化 D(p||q)，就迫使模型把概率质量尽量分配给这些点；而模型是单峰的，没法完美拟合双峰，结果就是去尽量覆盖两个模式——叫 mode-covering。反过来 D(q||p)：如果 p(x) 很小而 q(x) 很大，也会出现无穷；为了避免这种情况，对 p 很小的地方也必须让 q 取很小——真实分布不存在的地方，也尽量不给概率。优化这样的目标，单峰模型会尽量去捕捉一个模式，叫 mode-seeking。</p><p>有同学提问：p 很小、q 很大的那类错误为什么不 care？因为 log(p/q) 里 p 和 q 都趋于 0 时……其实最终解释还是一样的：后面这一项描述的是每个样本的损失，前面还有 p(x) 的加权。这种错误 p(x) 很小，对它的影响非常小，所以基本没有太大影响。换句话说，我们只关注真实数据分布中概率质量比较集中的地方，不太去考虑其他情形。</p><p>KL 方向的选择完全关系到你最后结果的好坏——哪怕在最前沿的工作里也经常看到这个选择。这是一个理论，具体在你实验中还得看实际效果。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>比如说，第一点它就有非负性，对于所有的P和Q，但是这个P三图都是大10的，而且当3都取到1的时候，就是当最简单1P是他的一个。</p><p>然后我们交换它里面一个上下项分子分可到这个值域，可以得到结构化到这1。那这样一个表达式，GX乘以这一项，然后乘以对X+5。就可以写成这样一个期望的形式是吧？大家不要忘了。第二可以写成期望式。</p><p>所谓三测不等式，就是对于一个随机变量。我先对它求函数，先计算它的函数，然后再求期望是大于等于，先求期望，再再给他取函数函数值。</p><p>这是K23°跟距离这个距离的这个整个对同业就是K2，它是非对称。你把G和Q在L这个里面计算的顺序给反一下，他得到的结果是完全不同。</p><p>比如你PS很大，PS越来1或者很小。他如果你带入那个式子，那他的这个两个人，他会趋近一场。无穷趋别于无穷对吧，这样的话，他的这两个，他的K的这个伞这块的这个距离的距离一个不。那如果你最小化这样的一个距离的话，就相当于。就相当于我迫使我要学习这个模型，能够尽量的把它的这些概率，质量概率一公布，给给付予一些这些比较大的。</p><p>对于这样的一个错误，比如说这这个地方的套误的话，你误把他的这个Q分别很大的话。那个P S，P S很小，他对他的影响非小。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-kl-mle">
+  <div class="slides"><figure class="slide" id="slide-14">
+<img src="slides/slide_14.png" alt="课件第14页 KL Divergence as Objective">
+<figcaption><span class="sno">14</span><span class="stitle">KL Divergence as Objective</span></figcaption>
+</figure>
+<figure class="slide" id="slide-15">
+<img src="slides/slide_15.png" alt="课件第15页 KL as Objective：最小化 KL ⇔ 最大化期望对数似然">
+<figcaption><span class="sno">15</span><span class="stitle">KL as Objective：最小化 KL ⇔ 最大化期望对数似然</span></figcaption>
+</figure>
+<figure class="slide" id="slide-16">
+<img src="slides/slide_16.png" alt="课件第16页 Negative log-Likelihood：负对数似然">
+<figcaption><span class="sno">16</span><span class="stitle">Negative log-Likelihood：负对数似然</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">08</span>
+      <div class="sec-tt">
+        <h2>最小化 KL = 最大化似然</h2>
+        <div class="sec-meta"><span class="time">00:34:00 – 00:38:00</span><span class="chip">课件 14</span><span class="chip">课件 15</span><span class="chip">课件 16</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>介绍了半天 KL 散度，但我们这节的标题是 learning via maximum likelihood——最大似然和 KL 到底有什么关系？</p><p>我们想用模型去逼近 P_data，就是最小化 P_data 和 P_θ 之间的 KL 散度。把 P_data 带入，展开 log，目标函数就变成两项相减：第一项是 E_{x~P_data}[log P_data(x)]——真实数据分布的熵，它跟我们的学习目标没有关系（θ 不出现）；第二项是 E_{x~P_data}[log P_θ(x)]。所以最小化 KL 就等价于最大化期望对数似然。</p><p>直观理解就是：我们转化成一个等价的目标，让模型给真实数据分布更多的概率质量。换句话说，对于一个真实的数据样本，如果一个模型学习到了、给它一个很小的（负的）似然，那这个联系就体现出来了。</p><p>最后一点讨论：虽然我们有了这个结果，但注意我们的目标函数里 P_data 是未知的——我们没有办法知道最终的模型和 P_data 之间到底有多大距离，只能退而求其次，用别的方法去优化它。另外，用负对数似然（NLL）作为评价指标的话，需要模型能计算似然——AR 模型恰好是这样的模型，所以它经常被当作指标去比较不同模型的性能高低；以后你会看到除了 AR 模型，其他一些模型（比如概率图模型）是没法计算这个似然的。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我们想用这个PS的去学PS度去学习我们的模型。所以我们模型建模的就是一个PV塔跟PC塔之间的距离，比如说KL性能量目前的距离最小发展。把P贝塔塔带入进来，就是当X属于G贝塔，就是对这样分布和期望比这个系统变是这样1描述一一。</p><p>其实第一项就完全没有必要对吧，我们去想要最小化这个值的话，第一项因为是X5属于G贝塔，然后P贝塔这个贝塔这个他的人。相当于9，你要去其实是最大化后面一个线，只要最大化后面这个最大化后面这个线，然后取突化就相当于最小。这2是建立了调和我们ma克一个一个关系。</p><p>换句话说，就是我们最小化一要打点和我们最大化，我们这个拉的期望，它是完全是等价的。</p><p>另外，需要跟大家说明一点，虽然说我们可以用这个拉度来对来去描述模型的它的这个表现，可以去比较合同模型的这个性能高低，但是实际上我们并没有办法去知道。最终我们的模型和和这个1电塔之间从来到有多大距离。因为我们实际上应该1忽略忽略。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-mc">
+  <div class="slides"><figure class="slide" id="slide-17">
+<img src="slides/slide_17.png" alt="课件第17页 Monte Carlo Estimation：动机与定义">
+<figcaption><span class="sno">17</span><span class="stitle">Monte Carlo Estimation：动机与定义</span></figcaption>
+</figure>
+<figure class="slide" id="slide-18">
+<img src="slides/slide_18.png" alt="课件第18页 Properties of Monte Carlo：无偏、收敛、方差">
+<figcaption><span class="sno">18</span><span class="stitle">Properties of Monte Carlo：无偏、收敛、方差</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">09</span>
+      <div class="sec-tt">
+        <h2>蒙特卡洛估计</h2>
+        <div class="sec-meta"><span class="time">00:38:00 – 00:44:00（休息前）</span><span class="chip">课件 17</span><span class="chip">课件 18</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>刚才说 P_data 不知道，但我们依然要最小化这个目标——那具体怎么在不知道 P_data 的情况下计算、优化？这就是接下来要讲的。</p><p>先下课休息一下。</p><p>（休息后）我们还会说到这种 MC（蒙特卡洛）的形式，其实在做梯度下降时用 MC 来代替整个期望也是一个常见的做法。为什么 MC 能行？因为它有下面这些性质，给大家介绍一下，不再证明了。</p><p>首先它是无偏的：MC 算出来的估计量，在统计意义下，它的期望就等于原始我们关注的量的期望——最终给到我们想要的结果。其次从性质可以看出，我们是通过采样的方法去估计期望，只要采的点足够多，估计就越来越精准、越来越准确。这就是收敛性：随着采样越来越多，算出来的算术平均值收敛到期望，而且方差也越来越小。比如我们的估计量是 g(x)/T 这种形式，方差就是 σ²/T——采的数据越多，方差减得越快。</p><p>有一个小问题：从这一步到下一步怎么算？考试的时候可能会考这种定量计算。其实比较简单：把常数提出来，积分拆开；因为每个样本独立采样，联合分布可以写成乘积，每个样本部分是一样的——一个同样的东西。反正中心极限思想一定得写，你不写肯定没分。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>OK,那既然就刚才我们PPT说PD他不知道了，但是我们依然还要去最小化这样的一个。对最小化这样一个目标，我们一二是服从下一课我们来讲一下具体是怎么去在一为大，不知道去计算，去优化。先下课休息一。</p><p>首先，它是麦无偏的比说我们的对对1。我们这个模卡最后算出来的估计量，就他在统计的情况下，在PD1分期望就等于原始我们关注的这个量化期望。</p><p>另外，从这个一间性，大家我们可以看出来，对吧？我们是通过采样的方法来测试一期望，那么，只要我们采用的这个点足够多，那我相当于我们能量就越来越精，越来越精准，越准确了。所所以说，还有看多收敛一性，随着我采用的这个越来越多，采能量本越来越多，就计算这个算术平均值，估计两三数值做果七线以后。最终像估计一个。期望，而且随着你的这个随着采样的量越来越多，你的这个估计量越来越准确，而且你的方差也会越来越越来越小。</p><p>就是有考试时给大家考一些理解的东西。反正是中心四想，一定得写对吧？你不写的话，肯定就没分。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-mc-mle">
+  <div class="slides"><figure class="slide" id="slide-19">
+<img src="slides/slide_19.png" alt="课件第19页 MC for Maximizing the Likelihood">
+<figcaption><span class="sno">19</span><span class="stitle">MC for Maximizing the Likelihood</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">10</span>
+      <div class="sec-tt">
+        <h2>MC 用于最大化似然</h2>
+        <div class="sec-meta"><span class="time">00:44:00 – 00:47:00</span><span class="chip">课件 19</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>刚才介绍了 MC 的基本性质。现在想用 MC 来解决我们最终要优化的目标：当 x 从真实分布采样时，它对应的期望对数似然。</p><p>因为 x 服从真实的分布，而我们的数据集就是在真实分布上进行的一个采样，所以这个期望可以直接写成对样本的形式——可以写成可计算的形式：最大化对 θ 的 log P_θ(x)，对所有样本求和平均。如果你把这一项（1/m 的缩放）不考虑的话，就是最大化所有样本的联合似然。这个值和去优化整个数据集联合分布的似然是一致的——这个大家应该在学 MLE 的时候都学过。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>刚才说一想用蒙卡的这个方法来解决，我们最终想的最优化的一个就是当X当从这个真实数据通过的时候，它的对应的。散对应的这个自然的那么直接，因为我槛的话，那一用X属于真实的分布，相当于我们数据集就是在真实分布上进行的，相当于一个采样是吧。</p><p>如果你把这个这一项强度上不考虑的话，就是最量化所有的样本按包一个组合。这样一个值，它是和我们去连去最优化这个整个数据集联合的这个分布，它的一个自然一致的比。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-coin">
+  <div class="slides"><figure class="slide" id="slide-20">
+<img src="slides/slide_20.png" alt="课件第20页 Maximizing Likelihood: Coin Flipping Example">
+<figcaption><span class="sno">20</span><span class="stitle">Maximizing Likelihood: Coin Flipping Example</span></figcaption>
+</figure>
+<figure class="slide" id="slide-21">
+<img src="slides/slide_21.png" alt="课件第21页 Maximizing Likelihood：模型参数化">
+<figcaption><span class="sno">21</span><span class="stitle">Maximizing Likelihood：模型参数化</span></figcaption>
+</figure>
+<figure class="slide" id="slide-22">
+<img src="slides/slide_22.png" alt="课件第22页 Maximizing Likelihood: Coin Flipping Likelihood">
+<figcaption><span class="sno">22</span><span class="stitle">Maximizing Likelihood: Coin Flipping Likelihood</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">11</span>
+      <div class="sec-tt">
+        <h2>抛硬币例子</h2>
+        <div class="sec-meta"><span class="time">00:47:00 – 00:52:00</span><span class="chip">课件 20</span><span class="chip">课件 21</span><span class="chip">课件 22</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>接下来开几个轻松一点的例子，给大家看一下最大似然到底是什么意思。</p><p>考虑最简单的情况：抛硬币。随机变量是一个标量，有两个取值——正面和反面。假设采样之后得到的结果是两个正面、一个反面、一个正面、一个反面这样的结果。那伯努利分布的参数就是正面的概率，它肯定比 1/2 大——这是一个直观的理解。如果我们真的想用最大化似然的方法形式化地计算，怎么做？</p><p>首先把它建模成一个概率形式：硬币符合一个真实的分布，我们的模型族就是所有可能的伯努利分布，用抛一次正面的概率来参数化。学习的方法就是：用今天讲的这些内容表达——在一个模型族里选一个参数化的分布，使得这个模型能最好地近似真实分布——什么样的参数对应的模型，从中采样能最可能得到这样的结果。这就是它的直观理解。</p><p>把模型形式化：取正面的概率是 θ，反面的概率是 1-θ。想最大化似然，先写出似然：数据 i.i.d.，所以数据集的联合似然可以写成各个样本自己似然的乘积，每个似然就是概率相乘。可以看到这个似然函数随 θ 变化：当 θ 取得很大或很小的时候，似然都很低——当概率很不均匀的时候，得到这样的结果是不可能的，似然比较低；又因为正面稍微多一点，所以取正面的概率要稍微大一点。</p><p>那我们还需要一个优化的方法，从目标函数中求得最优值。最方便的就是求导：求梯度、令梯度为零，解出最优的 θ。算法就是这样——和我们刚才分析的一样，可以用它的平均数来代替，或者说参数估计量可以算出来。这是最简单的一个分布的情形——抛硬币。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那比如说我们考虑一个最简单的一个情况，就是我们之前说的就是活动力投硬币的这么一个。这样的话，你的随机变量的话，就是每一每个随机变量的一个单个的一个概率，一标量有两个结构是一一个。正面膜反面。</p><p>我们首先把它建模成一个一个这样的一个一个概率的形式，对吧，我们看一下这个，它是这个硬币符合这样一个真实的分布。我们的模型整个model3就是一个所有可能的波动能力的一个动能，可1用抛一次组织功率分，它只多利用这个它的这个相应的和1正的一个概率去参数化这样1。</p><p>因为你是五一同分布，所以你联合这个数据集，联合分布它的假设可以，它的这个自然可以写成各项它自己自然人的数。可以看到一些事，就是可以看到一些特征，就是当你C的取得，比如说很大或者很小的时候。他的自然都很很低。</p><p>那怎么办呢？怎么去得到这样最后的这个结构？最大化一最大化。这个应该会最最简单的就是用求导要七五对不对，要求最低的。九七度，二七度肯定一。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-gaussian">
+  <div class="slides"><figure class="slide" id="slide-23">
+<img src="slides/slide_23.png" alt="课件第23页 Maximizing Likelihood: The Body Weight Example">
+<figcaption><span class="sno">23</span><span class="stitle">Maximizing Likelihood: The Body Weight Example</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">12</span>
+      <div class="sec-tt">
+        <h2>高斯体重例子</h2>
+        <div class="sec-meta"><span class="time">00:52:00 – 00:55:00</span><span class="chip">课件 23</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>我们还可以开一个稍微复杂一点点的例子——上节课讲的一个体重估计的高斯例子。假设我们的数据集是从一个高斯分布中采样得到的。高斯分布有两个参数：均值和方差。咱们先假设方差是已知的，只有均值 μ（变量 θ）未知。</p><p>假设我们有 D=10 个点，大概是这样分布。可以想象，随着 θ（均值）不一样，取得这些样本点的概率不一样。比如右边那个高斯，从它采样得到这样一点的概率非常低，所以这组数据下它的似然很低；相对而言左边这三个点（对应的均值）似然更高，中间这个最高。</p><p>画出似然函数验证：它确实是这样的——对最合适的均值，似然高，两边随着 θ 快速下降。但如果求对数似然的话，会发现它更平滑一点、性能更好、更方便计算。那如果方差也不知道能行吗？可以告诉大家一个结论：对这种高斯分布，方差的估计就是样本方差，均值的估计就是样本均值。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我们还可以开一个稍微稍微复杂一点点的一个创一三，就是我们一老七讲这个一个提供的一个估计的高分上。那假设我们的数据集也是一个标样的数据集，一美，然后里面的样本呢，是从一个高斯分布中采样得到的。</p><p>那不管怎么样，反正最右边也不太可能对吧，右边不太可能，比如说最右边的这个高速公路，它对应的参数，比如这是一个概率。那如果你现在起到大概这样的一个均值的话，从这样的一个高速公路中采样得到这样一点概率也较低，相当1我这个数据它的自然1。</p><p>我只是画出这个这个一自然的话，它确实是这样的，对于这个，对于这样的一个分子非常自然，对于动量对自然高，然后两边呢，随着西的快速下降。但如果我们求对数自然的话，就这个可以发现对数自然它的自然的会稍微的平滑一点。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-bayes-ar">
+  <div class="slides"><figure class="slide" id="slide-24">
+<img src="slides/slide_24.png" alt="课件第24页 Maximizing Likelihood: Applied to Bayesian Models">
+<figcaption><span class="sno">24</span><span class="stitle">Maximizing Likelihood: Applied to Bayesian Models</span></figcaption>
+</figure>
+<figure class="slide" id="slide-25">
+<img src="slides/slide_25.png" alt="课件第25页 Maximizing Likelihood: Applied to Autoregressive Models">
+<figcaption><span class="sno">25</span><span class="stitle">Maximizing Likelihood: Applied to Autoregressive Models</span></figcaption>
+</figure>
+<figure class="slide" id="slide-26">
+<img src="slides/slide_26.png" alt="课件第26页 AR Models via Gradient Descent">
+<figcaption><span class="sno">26</span><span class="stitle">AR Models via Gradient Descent</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">13</span>
+      <div class="sec-tt">
+        <h2>MLE 用于概率图模型与 AR 模型</h2>
+        <div class="sec-meta"><span class="time">00:55:00 – 01:00:00</span><span class="chip">课件 24</span><span class="chip">课件 25</span><span class="chip">课件 26</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>刚才讲了两个比较简单的例子，现在把它真正跟我们学习的模型关联起来。先看概率图模型（贝叶斯网络）：每个点依赖它的父节点。如果我们想用最大似然的方法优化它，虽然模型复杂了，但思想还是一样的——写出似然函数：对数据展开，把条件概率乘起来，组合成这样的式子。</p><p>写出目标函数以后，求解还是求最大似然。而且对这种图模型有个稍微取巧的地方：可以把加法的顺序调换一下——把样本的求和放到里面去、对不同节点求和放到外面来。你会发现每个节点的似然只和当前这个节点的参数有关系。换句话说，你可以对每一个节点单独地去优化。这是一个小技巧：因为你是贝叶斯网络，每个条件分布是独立定义的，可以分开求最优。</p><p>那如果把这个 MLE 用到 AR 模型上呢？还是写出似然函数、展开、求最大化。但这个时候，每个条件分布都是用一个很高维的、高度参数化的神经网络来实现的，所以你没有那种闭式解，只能用梯度下降来进行优化。</p><p>梯度下降：先初始化，求对应的对数似然的梯度，然后通过梯度上升（或下降负对数似然）更新参数，不断迭代。这就是算法部分。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>先布种群概率网络，我们之前讲过图论网络是这样1这样1的，每个每个点它依赖1它的这个负节点的一个。一个节点点用，当前这个节点有。一个抽象，那如果我们还想用一个最大的自然的这种方法，然后用极大化自然的物优化一机。</p><p>加法的这个顺序给他调换一下。把它这个样本加1~1面去，对于不同维度或者不同一个节点加位移到外面来。这样的话，你会发现每一个值它的自然只和当前这个样子爱系数有关系。换一话说，你们可以对于每一个每一个样本，每一个每一个节点单独的去优化，对一个。</p><p>然后求最大化基因可以，但是这个时候，因为它的每个条件分布都是用一个。非常高维性的高度线程化的一个解决网络来实现，所以这时候你没有这种，你只能通过通信通信。一高度高度线程高度非线程化题，那你只能用一个梯度下降来进行优化。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-minibatch">
+  <div class="slides"><figure class="slide" id="slide-27">
+<img src="slides/slide_27.png" alt="课件第27页 What if m=|D| is huge? 用 MC / mini-batch">
+<figcaption><span class="sno">27</span><span class="stitle">What if m=|D| is huge? 用 MC / mini-batch</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">14</span>
+      <div class="sec-tt">
+        <h2>mini-batch 与 MC 的联系</h2>
+        <div class="sec-meta"><span class="time">01:00:00 – 01:03:00</span><span class="chip">课件 27</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>但最大的问题是：当 m=|D| 很大的时候怎么办？我们把梯度写在这里。如果样本量很大，我们需要一个更现实的做法——看看 mini-batch 是怎么跟今天这个学习的准则联系上的。</p><p>把这个梯度做恒等变换：在求和里乘一个 1/m，外面再乘一个 m。然后从这一步到下一步，可以反向利用 MC 的思想：m 分之 1 可以看成数据集上的一个均匀分布的权重——定义在数据集上的均匀分布，1/m 就是它的概率。那这个求和就转换成：样本服从数据分布 D 的一个期望，很容易用我们之前讲的 MC 思想。</p><p>如果能写成这个形式，就可以用 MC 来解决：直接从训练集中采样一个 mini-batch，在这个样本上计算梯度——跟之前「在某个分布上采样」是一个意思。换句话说，从这个角度看，我们新式训练的 mini-batch 和 MC 的联系特别大——大家之前在工程里都用过，可以加深一下思想。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>但是最大的问题就是。当你的M很大的怎么办？证据的这个，把这个记录给这里，1录表写在这里。这是一个AR一本。一。刚才说了，如果你的我们今天曾经刚才提到过一个，如果你的样本量很大的话，我们需要一带规一点相表，一有一一带。</p><p>那比如说，我们刚才把这个梯度，就这个是这个东西加一个公式，把它给稍微变化一下，在这个求和里面乘一个M分之1，然在外面再乘一个M，这个是一恒等变化出来没有问题。</p><p>那如果能写成这个形式的话，那我们还想用用用门槛的方法来解决这个问题。采的话就是每一个样本都是从从第一回从这个训练图中采样，采采用一个样本。我们之前的这个想法一样的，然后在这个样本上计算，这个就有。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-risk">
+  <div class="slides"><figure class="slide" id="slide-28">
+<img src="slides/slide_28.png" alt="课件第28页 Monte Carlo Estimation：经验风险与期望风险">
+<figcaption><span class="sno">28</span><span class="stitle">Monte Carlo Estimation：经验风险与期望风险</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">15</span>
+      <div class="sec-tt">
+        <h2>经验风险与期望风险</h2>
+        <div class="sec-meta"><span class="time">01:03:00 – 01:08:00</span><span class="chip">课件 28</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>最后一部分，给大家稍微介绍一下把生成模型跟统计学习、判别模型的学习关联起来的东西。还是从 MC 的估计出发：把一个期望的量函数，转化成一个在样本上求和的形式。然后把负对数似然抽象成一个带 θ 的损失函数 L，就可以写成这个样子。</p><p>学过机器学习的话应该知道这两个词：这个叫经验风险（在样本集上进行计算），这个叫期望风险（在 x 服从 P_data 上求期望）。通过不同的方法定义 L，你可以把线性分类或者回归的模型都套进来——所以说我们的生成模型和之前学的判别模型，在目标函数定义上其实是基本一致的。</p><p>在经验风险和期望风险中间有一个关系：你在训练集上最小化、优化一个模型，那在整个数据分布上肯定会有一个性能的区别。这个区别可以用这样一个公式来表达：经验风险只是整个数据分布性能的一个上限，中间差着一个泛化界——这个界跟模型的复杂度和数据集的大小有关系。</p><p>那问一个问题：随着数据量的增大，这个量应该怎么样？按理说，随着数据量增大，经验风险应该趋近期望风险，两者差距变小、上限变紧。反过来，模型能力越来越大（假设空间变大），在训练集上得到的模型分布也变大，整个期望风险的上限变松，泛化界取值更大。这只是一个组织上的关系，大家只要理解：在训练集上训练的模型，在测试集上性能会不一样。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那我们这个不考和我们这个之前的一些，统计一学习或者判别判别模型的学习有相关联，来从生存模型和判别模型给的连理系统。我们刚才说还是从卡的估计来出发，我们可以把一个期望的一个一量函数，给它转化成一个在样本能量进一生。</p><p>这个叫经验风险，这个叫经验风险，这个叫期望风险。他其实还比较明显的吧，一些所谓经验其实是在一样本样本机上进行进行计算。</p><p>它的性能区别其实可以这用这样一个公式来表达。这看着有点抽象，其实就是说我们的这个经验东西，就在我们训练期间训练这个模型。它的性能，它的准确率只是我们在整个这个数据分布的一个性能的一个上限。</p><p>按理来说，随着数据量的增大，你的这个经验风险应该能趋近一点，期望风险可以从这一块理解。那你相当于是你经验的风险跟期望风险之之间，这个差距应该是变小了，这个上限应该变紧了。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-overfit">
+  <div class="slides"><figure class="slide" id="slide-29">
+<img src="slides/slide_29.png" alt="课件第29页 Bias-Variance Tradeoff：最小化经验风险易过拟合">
+<figcaption><span class="sno">29</span><span class="stitle">Bias-Variance Tradeoff：最小化经验风险易过拟合</span></figcaption>
+</figure>
+<figure class="slide" id="slide-30">
+<img src="slides/slide_30.png" alt="课件第30页 Overfitting：P_θ 超出表征能力">
+<figcaption><span class="sno">30</span><span class="stitle">Overfitting：P_θ 超出表征能力</span></figcaption>
+</figure>
+<figure class="slide" id="slide-31">
+<img src="slides/slide_31.png" alt="课件第31页 Underfitting：P_θ 无法表征">
+<figcaption><span class="sno">31</span><span class="stitle">Underfitting：P_θ 无法表征</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">16</span>
+      <div class="sec-tt">
+        <h2>过拟合与欠拟合</h2>
+        <div class="sec-meta"><span class="time">01:08:00 – 01:12:00</span><span class="chip">课件 29</span><span class="chip">课件 30</span><span class="chip">课件 31</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>那我们真正想说的一个问题是：如果我们只是在训练数据上最小化经验风险，会怎样？最极端的情况，如果模型能力足够强，我们可以记住整个数据集的所有样本。</p><p>比如对于一个生成模型：如果样本量很小、而模型拟合能力很强，那甚至可以拟合一个类似于通信分布的东西——那你采样的时候，多样性肯定会下降：采到的图像跟训练样本差不多。从统计学习的角度看，这个问题叫过拟合：样本只是底层数据分布的一个体现，真正模型想要的可能是那个分布；如果过拟合出现，不同的数据采样结果会严重影响我们的模型。</p><p>那怎么解决过拟合？我们刚才的问题是因为上限太宽了。一方面可以增加数据量——增加数据量的话，训练和测试的泛化系数会更好；另一方面是让模型变得更简单一点。但如果过于简单，就会有一个欠拟合（underfitting）：比如数据本身是一个多峰分布，你非得用高斯去拟合，那从理论上就没法表示——这是模型的假设空间范围太小，是一个系统性的偏差，跟你的数据无关。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>比如说最最极端的情况下，比如说我们的模型能力足够的强，这样的话我们可以记住整个数据中的所有样子。是这样一个情况，比如说对于一个生成模型来说。如果我们样本是这样的，人称这种一样样本数据很小，样本量很小，而我们的这个模型能一合能力很强的话，那可以甚至可以一合这种类似于通信分布。</p><p>那这样的话，你比如说我们这个模型训练成这样，那你采样的话，你多样性肯定会下降是吧？所大会下降。但是从统计系学习的角度来看，这样的一个问题就是我们把它叫very方程。</p><p>我说过你的问题是不是因为我们这个上限上限比这个战位太宽了，我想这个战线这样变低的话。可以增加数据量对吧，增加数据量这样一个界面。另一方面是让你模型变得更更弱一点，更简单一点。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-bias-var">
+  <div class="slides"><figure class="slide" id="slide-32">
+<img src="slides/slide_32.png" alt="课件第32页 Bias-Variance Tradeoff：多项式回归例子">
+<figcaption><span class="sno">32</span><span class="stitle">Bias-Variance Tradeoff：多项式回归例子</span></figcaption>
+</figure>
+<figure class="slide" id="slide-33">
+<img src="slides/slide_33.png" alt="课件第33页 Error = Bias + Variance">
+<figcaption><span class="sno">33</span><span class="stitle">Error = Bias + Variance</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">17</span>
+      <div class="sec-tt">
+        <h2>偏差-方差权衡</h2>
+        <div class="sec-meta"><span class="time">01:12:00 – 01:16:00</span><span class="chip">课件 32</span><span class="chip">课件 33</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>所以最终给大家讲的就是：不管是不光是判别模型，还是生成模型，都有一个偏差（bias）和方差（variance）的权衡。如果你的模型过于复杂，那你的偏差变小、方差变大——能力变强了，但是泛化能力变弱；模型太弱了，偏差偏大，但方差会变小，因为跟你数据产生什么样基本没关系。</p><p>最后给大家看几个例子。如果看生成模型的例子理解比较困难，可以看一个回归模型的例子，这个大家可能都比较熟悉：真实分布是绿色的曲线，我们采样得到 10 个带有噪声的点，想用一个 M 阶多项式去拟合它。</p><p>M=1 的时候是线性模型，明显拟合不了这个非线性数据——系统的偏差大，你再怎么学习也不行。M=3 的时候比较好，能拟合这些数据点，也比较符合真实函数。当 M=9 的时候，一个过于复杂的模型——如果你得到这个红线模型，那采样其他点，跟真实分布差得很远；而且用 9 阶这样的高阶复杂模型去拟合，样本点换一批，结果可能就变了。</p><p>最后还有一个结果：除了改变模型的复杂程度，还可以通过增加数据量来缓解。比如还是 M=9 这么复杂的模型，把样本点增加到 100 个，结果非常好，没有过拟合。</p><p>所以最后给大家这样一个图景：模型的误差由两方面组成——偏差和方差。当模型能力低的时候，偏差大、方差小，总误差大；当模型能力偏高的时候，偏差变小但方差变大。总的来说，模型能力有一个最优的曲线，一般在这个地方取得最好的效果。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>所以说这个最终给大家讲的就是我们在统机器学习模型，不管是不光是这个判断模型，还是生模型，都有一个8中间的一个推道偏长跟方差中间一个推导，如果你的模型过于复杂。那你的B会变小，你的V变大。</p><p>那比如说咱本一的时候是一个线性模型，那这个是。现一个对吧，他这个明显的你一个非线程的数据，我们线性的模式不个系统，系统的偏大，你再怎么去学习，你也许不。那比如说M=3的时候，它就比较好，能够你合这个数据组合。</p><p>那可以看到，当M=9中9阶的一个模型，一个过过于复杂的模型。你的样品点换一批，可能你的结果就会发生变化。</p><p>我们把一样本点给增加到100个，这是他的结构，发现非常好，煤气没有一个过多。</p><p>有两方面来组成，就是但是这个这两方面可能是随着我们模型的能力会发生变化。当模型能力低的时候，它的这个误差可会什么呢？有如偏差的模型能力比较差的，我们的偏差差方差会小一点，这样方差的组合误差比较大。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-summary">
+  <div class="slides"><figure class="slide" id="slide-34">
+<img src="slides/slide_34.png" alt="课件第34页 Summary：本课总结">
+<figcaption><span class="sno">34</span><span class="stitle">Summary：本课总结</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">18</span>
+      <div class="sec-tt">
+        <h2>总结</h2>
+        <div class="sec-meta"><span class="time">01:16:00 – 01:18:00</span><span class="chip">课件 34</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>以上就是今天讲的所有内容，稍微复习一下。我们今天讲了一个比较通用的学习方法，就是最大似然（最大化似然）的学习方法。这个方法必须是对似然可以计算的模型才行。</p><p>我们从 KL 散度出发：最小化 KL 相当于最大化期望对数似然，这是最重要的一条联系；因为 P_data 不知道、没法直接拿到，所以我们可以用蒙特卡洛在数据集上采样、做平均来估计；最后在算法方面，如果用神经网络实现，算法就是梯度下降。</p><p>另外还要强调一点：在这个地方采样的时候，你必须按照 AR 模型的小标（顺序）来采样。这个性质现在看起来比较一般化，但在之后比较复杂结构中、当模型的组织难度表达成这个形式时，需要大家配合。</p><p>然后后面是一些理论性的探讨：把生成模型跟判别模型的学习方式做对比，比如期望风险、经验风险和过拟合的一些关系。以上就是我们今天讲的主要内容。下面把参考的一些资料发给大家，咱们就下课吧，谢谢大家。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>OK,那今天其实这以上就是今天讲的一个所有的所有的内容，我就稍微给大家复一下。我们今天讲了一个比较通感学习方法是吧，就是一要自然最大化自然的一个学习方法。而这个学习方法在跟前，大家强调一下，必须是对于自然可以计算过程。</p><p>我们从我们一开始从这个一个PS推出一四大化，还一些一些比较好的性能和一些比较特殊的性能最小化，最小化200个人就相当于最大化。自然人最重要的一，然后因为我们的这个PD卡不知道是有没有办法拿到，所以我们可以用一蒙卡产PV大成一个平均算。</p><p>然后最后在我们的这个算法方面，就是如果用流量实现一情况，就是一个算法就是。这个这个下降，另外其实还是需要跟大家强调一点，就是在这个地方采样的时，如果你能法采样的时候，你必须按照他1的这个小1的小标的一个。</p><p>然后后面就是一些一些理论性的探讨，就是跟我们这个，把生态模型跟探度模型这个学习的方式来进行一个一对。比如说我们讲的这个。希望同和这个现过敏的一些关系。OK,那以上就是我们今天讲的主要内容。后下面就是我们把这个一些参考一参考的一些资料，还一个一个小说的章点给大家写一个，咱们就下课吧，谢大。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（生成式模型与科学智能应用）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>

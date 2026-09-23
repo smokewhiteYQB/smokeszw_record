@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>矿物物理学（180083070901P2003H） · 第二章 大压机和动高压实验技术｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>矿物物理学（180083070901P2003H） · 第二章 大压机和动高压实验技术</h1>
+    <div class="sub">第二章 大压机和动高压实验技术 ｜ 2026-09-15 ｜ 授课：郭光军</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 46 页 · 整理 22 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-s01">01 课程引入：高压实验技术总览</option>
+<option value="sec-s02">02 高压釜与高压水热釜</option>
+<option value="sec-s03">03 活塞圆筒装置（Piston-Cylinder）</option>
+<option value="sec-s04">04 布里奇曼与大质量支撑原理</option>
+<option value="sec-s05">05 Belt 装置与霍尔博士</option>
+<option value="sec-s06">06 多面顶压机与人造金刚石</option>
+<option value="sec-s07">07 DIA 型与 Kawai 型六面顶</option>
+<option value="sec-s08">08 二级压砧的组装规格与原位探测</option>
+<option value="sec-s09">09 压砧材料：烧结金刚石与纳米多晶金刚石</option>
+<option value="sec-s10">10 多顶砧的压力标定</option>
+<option value="sec-s11">11 三级压砧：把压力做到 125 GPa</option>
+<option value="sec-s12">12 巴黎-爱丁堡（PE）压机</option>
+<option value="sec-s13">13 中国地质大学（武汉）5000 吨大压机</option>
+<option value="sec-s14">14 吉林大学 60000 吨压机</option>
+<option value="sec-s15">15 大压机的能力总结</option>
+<option value="sec-s16">16 动高压实验技术</option>
+<option value="sec-s17">17 动高压装置：轻气炮</option>
+<option value="sec-s18">18 气体炮为什么选择轻气？</option>
+<option value="sec-s19">19 二级轻气炮的结构与原理</option>
+<option value="sec-s20">20 冲击波基本关系式与 Hugoniot 方程</option>
+<option value="sec-s21">21 观测方法与冲击波高压相变</option>
+<option value="sec-s22">22 课程总结：高压实验技术全景</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 矿物物理学-2.2-大压机和动高压实验技术.pdf 逐页渲染，转写原文见 record_20260915.txt。</div>
+<section class="sec" id="sec-s01">
+  <div class="slides"><figure class="slide" id="slide-01">
+<img src="slides/slide_01.png" alt="课件第1页 封面：大压机和动高压实验技术">
+<figcaption><span class="sno">01</span><span class="stitle">封面：大压机和动高压实验技术</span></figcaption>
+</figure>
+<figure class="slide" id="slide-02">
+<img src="slides/slide_02.png" alt="课件第2页 高温高压实验技术分类（静高压/动高压）">
+<figcaption><span class="sno">02</span><span class="stitle">高温高压实验技术分类（静高压/动高压）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>课程引入：高压实验技术总览</h2>
+        <div class="sec-meta"><span class="time">录音 00:00:00 - 00:03:00</span><span class="chip">课件 1</span><span class="chip">课件 2</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>今天讲大压机和动高压实验技术。这张分类表总结得挺好，出自郑海飞团队 2009 年在地学前缘的论文，更早可以追溯到谢鸿森 1997 年的著作。按大类分，高压实验技术分静高压和动高压两类：静高压是指样品放进高温高压状态后，能保持足够长时间达到化学平衡；动高压则只有一瞬间——几十纳秒甚至皮秒，像炮弹砸那么一下，在那一瞬间测出性质变了就变了，能测到波速、密度等性质。</p><p>静高压技术里，金刚石压腔最重要、能达到的压力最大；比它次之的是大压机（大腔体压机，LVP）——上节课说过金刚石压腔的样品量非常小（10⁻⁷ 到 10⁻³ 立方毫米量级），大压机样品腔可以做到几个立方毫米，样品量大很重要；再往下是活塞圆筒、高压釜（水热静压）。动高压则包括二级轻气炮/化爆加载和强激光驱动技术，了解一下就行。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>静高压技术呢，就是说这个样品放到高温高压下那个状态之后，它能够达到化学平衡，一直可以保持着。动高压就不行，动高压的话就是一瞬间，可能只有几十个纳秒或者一皮秒。</p><p>金刚石压腔的样品量很小很小，只有万分之6.18立方毫米……大压机就不一样，体积可以做到几个立方毫米，因为有时候样品的量很重要。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s02">
+  <div class="slides"><figure class="slide" id="slide-03">
+<img src="slides/slide_03.png" alt="课件第3页 高压釜">
+<figcaption><span class="sno">03</span><span class="stitle">高压釜</span></figcaption>
+</figure>
+<figure class="slide" id="slide-04">
+<img src="slides/slide_04.png" alt="课件第4页 高压水热釜（一般小于 1 GPa）">
+<figcaption><span class="sno">04</span><span class="stitle">高压水热釜（一般小于 1 GPa）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-05">
+<img src="slides/slide_05.png" alt="课件第5页 水溶液（T ~ 600 ℃）">
+<figcaption><span class="sno">05</span><span class="stitle">水溶液（T ~ 600 ℃）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-06">
+<img src="slides/slide_06.png" alt="课件第6页 澳大利亚同步辐射实验室 mAESTRO">
+<figcaption><span class="sno">06</span><span class="stitle">澳大利亚同步辐射实验室 mAESTRO</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>高压釜与高压水热釜</h2>
+        <div class="sec-meta"><span class="time">录音 00:03:00 - 00:08:00</span><span class="chip">课件 3</span><span class="chip">课件 4</span><span class="chip">课件 5</span><span class="chip">课件 6</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>先从最常见的说起——高压釜。它就像一个炮筒子：不锈钢加工成一个管，装上活塞，里头可以放衬套，底下上头都有垫片，最后封上盖，插一根不锈钢棍当杠杆拧紧。里头做化学实验，还可以做成透明的便于观察，加热后压力自然就起来了。压力一般不超过 1 GPa，几十到几百 MPa 很常见——比如做水合物合成，一般就是三四十 MPa，温度还低一点，加搅拌水合物就生成了。</p><p>高压釜一定要装压力表。以前别的学校出过事故：高压釜实验做完了，温度还没降下来，学生急着把盖打开，里头还有压力，砰一下把盖崩飞，人被打伤——就像家里高压锅，两个三个大气压崩一下也了不得。</p><p>高压水热釜组装好之后可以放到同步辐射装置上：光路打过来，穿过去测吸收、测荧光谱，能探测里头的液态、气态物质。图上这台仪器是 600 ℃、2000 bar——2000 bar 换算一下就是 0.2 GPa（100 MPa 出头）。澳大利亚也有类似的装置，叫 mAESTRO（Tian et al., GCA 2010），水热釜装好后放进同步辐射光路里做原位探测。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这就一个炮筒子嘛，不锈钢加工成一个管儿，把它一个活塞弄上，里头可以放衬套……最后一个封盖，用杠杆拧紧。</p><p>那个高压釜实验，学生着急把它打开，实际上降温还没降下来呢，里头有压力，嘣一下就爆，把那个盖儿给崩飞了，出了个事故。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s03">
+  <div class="slides"><figure class="slide" id="slide-07">
+<img src="slides/slide_07.png" alt="课件第7页 活塞圆筒装置 Piston-Cylinder">
+<figcaption><span class="sno">07</span><span class="stitle">活塞圆筒装置 Piston-Cylinder</span></figcaption>
+</figure>
+<figure class="slide" id="slide-08">
+<img src="slides/slide_08.png" alt="课件第8页 活塞圆筒：样品组装（~3 GPa）">
+<figcaption><span class="sno">08</span><span class="stitle">活塞圆筒：样品组装（~3 GPa）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>活塞圆筒装置（Piston-Cylinder）</h2>
+        <div class="sec-meta"><span class="time">录音 00:08:00 - 00:11:00</span><span class="chip">课件 7</span><span class="chip">课件 8</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>压力再高一点，就要上机械加压了。典型的是活塞圆筒装置（Piston-Cylinder Apparatus）：一圈厚壁钢筒，里头大概有一厘米、手指头粗的空腔，上下两个活塞顶着。加压原理类似汽车千斤顶——液压油从这边挤上去，把活塞顶上去。它比水热釜压力高得多，但到不了 5 GPa。</p><p>样品组装就像俄罗斯套娃：最外头叶蜡石，套一圈玻璃管，玻璃管里套石墨管，石墨管里套氧化镁堵头和氧化镁样品仓，样品塞进去再拿氧化镁堵住；上头的氧化镁堵头里有个细管，可以把导线从外头导进来测电阻率。装好之后上下顶压。参观时看到黄老师组装这种装置，套准了很不容易，压机本身也死沉死沉的。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>它是咋回事儿呢？就是这一圈儿呢，这个钢筒壁很厚，里头大概有一厘米、像手指头粗的那么一个空腔，上下有两个活塞顶着。</p><p>样品组装的时候呢，就跟那个俄罗斯套娃一样，先是一大圈儿叶蜡石，套一圈儿石英玻璃管儿，里头套一个石墨管儿，石墨管儿里头呢，套一个氧化镁的堵头儿，再套入氧化镁的样品仓，把样品塞进去。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s04">
+  <div class="slides"><figure class="slide" id="slide-09">
+<img src="slides/slide_09.png" alt="课件第9页 布里奇曼对顶砧与大质量支撑原理">
+<figcaption><span class="sno">09</span><span class="stitle">布里奇曼对顶砧与大质量支撑原理</span></figcaption>
+</figure>
+<figure class="slide" id="slide-10">
+<img src="slides/slide_10.png" alt="课件第10页 Bridgman 简介">
+<figcaption><span class="sno">10</span><span class="stitle">Bridgman 简介</span></figcaption>
+</figure>
+<figure class="slide" id="slide-11">
+<img src="slides/slide_11.png" alt="课件第11页 布里奇曼对顶砧（谢鸿森，1997）">
+<figcaption><span class="sno">11</span><span class="stitle">布里奇曼对顶砧（谢鸿森，1997）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>布里奇曼与大质量支撑原理</h2>
+        <div class="sec-meta"><span class="time">录音 00:11:00 - 00:16:00</span><span class="chip">课件 9</span><span class="chip">课件 10</span><span class="chip">课件 11</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>讲到高压，绕不开高压物理的鼻祖布里奇曼（Bridgman，1882-1961）：他 1900 年进哈佛学物理，1910 年博士毕业，1919 年当上教授直到退休。1905 年开始研究高压下物质的性质，有一次设备机械故障，修来修去，自己弄出了一个新装置——上下对顶——就这样产生了 10 GPa 的高压。要知道当时能产生高压的设备最高只有 0.3 GPa（300 MPa），这个成就开创了高压研究的先河。1946 年他获得诺贝尔物理学奖。</p><p>他最大的成就之一，是提出了大质量支撑原理，做出了对顶砧：针面做得很小，后座做得很大。针面上受到的那点压力，应力会在大底座里均匀消散开，整块材料在机械强度范围内保持稳定；要是做得瘦瘦的，一压到半截就断掉或者破裂了。</p><p>对顶砧的玩法：外面套一圈叶蜡石管，上下裹上刚玉，中间封住样品，然后加压——可以加电压测电导率，可以压完了回收样品再看，也可以就在加压状态下把聚焦的 X 光打进去测结构。布里奇曼还用高压研究水，发现了高压冰的好几个冰相——你只要能发现一个别人没见过的物相、一种不同的结构，那就是一篇工作。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>他最大的一个成就就是提出了这个大质量支撑原理，做出了这个对顶砧……针面儿比较小，弄一个截面儿，让它的后座儿很大，针面儿那受到的那点应力就会在整个底座里头均匀地分散开。</p><p>他整到了10个GPa。那在当时来说就不得了，因为当时能够产生高压的那种设备，最高只有0.3个GPa，就300个兆帕。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s05">
+  <div class="slides"><figure class="slide" id="slide-12">
+<img src="slides/slide_12.png" alt="课件第12页 Belt 装置（带压）与凹砧型两面顶">
+<figcaption><span class="sno">12</span><span class="stitle">Belt 装置（带压）与凹砧型两面顶</span></figcaption>
+</figure>
+<figure class="slide" id="slide-13">
+<img src="slides/slide_13.png" alt="课件第13页 Belt 装置：年轮式两面顶与霍尔 1954">
+<figcaption><span class="sno">13</span><span class="stitle">Belt 装置：年轮式两面顶与霍尔 1954</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>Belt 装置与霍尔博士</h2>
+        <div class="sec-meta"><span class="time">录音 00:16:00 - 00:20:00</span><span class="chip">课件 12</span><span class="chip">课件 13</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>对顶砧技术继续发展，到一定程度侧面就封不住了。后来霍尔（H.T. Hall）发明了 Belt（带压）装置：上下活塞往下顶，侧面一圈一圈地套钢圈，最后再用软的钢带套一圈，提供很好的侧向支撑，压力又上去了；还可以把针头做成凹砧型、把样品腔做得更大——这就是凹砧型两面顶、年轮式两面顶。</p><p>霍尔做这个装置，目的是人造金刚石。当时大家已经知道石墨到金刚石存在相变：只要给很高的压力（大约 20 GPa 量级）、2000 多度的高温，石墨就能变成金刚石。金刚石贵、天然产量小，工业上砂轮、钻头、划玻璃的刀都要用，所以好多公司和科研机构扑上去搞。霍尔在通用公司提出做这种装置的思路不受重视，好不容易要到一点钱，1954 年终于在 Belt 装置里首次人工合成金刚石，却遭到公司排挤——专利归公司，最后只给了 50 美元奖金，年轻人一气之下离开了公司。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>霍尔就发明了一个Belt装置，就是带压装置……上下顶顶到中间，旁边就有东西支撑了，叫侧向支撑，提供了很好的侧向支撑，把压力又做上去了。</p><p>到1954年的时候，就在这种带压装置中、双面顶就合成了金刚石……人家就说是公司的专利，不让他申请，最后给了50美元的奖金，年轻人被排挤和打压，一气之下就离开了。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s06">
+  <div class="slides"><figure class="slide" id="slide-14">
+<img src="slides/slide_14.png" alt="课件第14页 多面顶压砧：六面顶压机（H.T. Hall）">
+<figcaption><span class="sno">14</span><span class="stitle">多面顶压砧：六面顶压机（H.T. Hall）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-15">
+<img src="slides/slide_15.png" alt="课件第15页 多面顶压砧：四面顶">
+<figcaption><span class="sno">15</span><span class="stitle">多面顶压砧：四面顶</span></figcaption>
+</figure>
+<figure class="slide" id="slide-16">
+<img src="slides/slide_16.png" alt="课件第16页 中国自主研发的铰链式六面顶压机">
+<figcaption><span class="sno">16</span><span class="stitle">中国自主研发的铰链式六面顶压机</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>多面顶压机与人造金刚石</h2>
+        <div class="sec-meta"><span class="time">录音 00:20:00 - 00:25:00</span><span class="chip">课件 14</span><span class="chip">课件 15</span><span class="chip">课件 16</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>霍尔离开公司后，把对顶（两面顶）的思路继续往前推：四面顶——四个方向，每个针面做成三角形，四个三角形怼到一起围出一个四面体空腔，样品放在里头也能产生高压；还有六面顶压机。因为这套贡献，大家公认霍尔是人造金刚石之父。他后来成立了自己的钻石公司，推动了人造金刚石的发展。</p><p>中国这边，人造金刚石技术突破后，国外对我们封锁——装置不卖、产品不出口，只能买到合成完的碎颗粒。于是国家立项攻关，到 1965 年做成了铰链式六面顶压机（国机精工、贵阳地化所），当年就生产了 1 万克拉金刚石。技术一旦突破就是放量：车间里六面顶压机一排排摆上百台，河南成了人造金刚石大省，目前占全球产量的 95%。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>他把每一个针面儿做成三角形，四个三角形怼到一块儿，就形成了一个四面体的空腔，样品在那个里头也可以达到高压。</p><p>到六五年的时候，就做成了铰链式六面顶压机，当年就生产了1万克拉的金刚石……河南是人造金刚石的大省，现在占全球产量的95%。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s07">
+  <div class="slides"><figure class="slide" id="slide-17">
+<img src="slides/slide_17.png" alt="课件第17页 多面顶压砧：DIA 型六面顶">
+<figcaption><span class="sno">17</span><span class="stitle">多面顶压砧：DIA 型六面顶</span></figcaption>
+</figure>
+<figure class="slide" id="slide-18">
+<img src="slides/slide_18.png" alt="课件第18页 多面顶压砧：Kawai 型六面顶">
+<figcaption><span class="sno">18</span><span class="stitle">多面顶压砧：Kawai 型六面顶</span></figcaption>
+</figure>
+<figure class="slide" id="slide-19">
+<img src="slides/slide_19.png" alt="课件第19页 多面顶压砧：六面顶样品组装">
+<figcaption><span class="sno">19</span><span class="stitle">多面顶压砧：六面顶样品组装</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div class="sec-tt">
+        <h2>DIA 型与 Kawai 型六面顶</h2>
+        <div class="sec-meta"><span class="time">录音 00:25:00 - 00:28:00</span><span class="chip">课件 17</span><span class="chip">课件 18</span><span class="chip">课件 19</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>科学上常用的多面顶压机有两种，都是日本先发展起来的。DIA 型：四个爪上、下各一组，上下挤压时滑块往一块儿凑，把中间立方体空间里的样品使劲压——通过上下的力产生侧向的力。Kawai 型：外头一个大圆筒，一级压砧六个针面围住，里头再放二级压砧——八块立方体碳化钨，每个块削掉一个小角，八个三角面围成一个八面体空腔，样品放在八面体里头，上下活塞式顶压。</p><p>二级压砧外面裹一层叶蜡石，叶蜡石软，作为传压介质让八块往一块儿挤的时候受力均匀；样品放在八面体形的叶蜡石或氧化镁块里，中间钻一个圆柱形的洞，把样品装进去塞好。组装的时候外面用一圈方块围住固定，省得没弄好掉了。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>卡外型呢，就是一级压砧是六面，然后二级压砧有8个立方体的碳化钨小块……每个块儿削掉一个角，8个三角面就围成了一个八面体的空间，在里头可以产生很高的压力。</p><p>组装的时候，外头裹一层叶蜡石，叶蜡石软，可以作为传压介质，这样8块儿往一块儿挤的时候里头受力比较均匀。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s08">
+  <div class="slides"><figure class="slide" id="slide-20">
+<img src="slides/slide_20.png" alt="课件第20页 二级压砧：14/8 与 8/3 组装">
+<figcaption><span class="sno">20</span><span class="stitle">二级压砧：14/8 与 8/3 组装</span></figcaption>
+</figure>
+<figure class="slide" id="slide-21">
+<img src="slides/slide_21.png" alt="课件第21页 原位探测多顶砧中的高压样品">
+<figcaption><span class="sno">21</span><span class="stitle">原位探测多顶砧中的高压样品</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">08</span>
+      <div class="sec-tt">
+        <h2>二级压砧的组装规格与原位探测</h2>
+        <div class="sec-meta"><span class="time">录音 00:28:00 - 00:31:00</span><span class="chip">课件 20</span><span class="chip">课件 21</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>大压机实验里常听到"14/8 组装""8/3 组装"这种说法：前一个数指二级压砧的边长，后一个数指截角（小三角面）的边长。比如 14/8 就是二级压砧边长 14 毫米、截角边长 8 毫米；8/3 就是边长 8 毫米、小三角形边长 3 毫米。截角越小、接触面越小，能产生的压力越高。量一下组装件——大的边长约 20 毫米、小的 5 毫米，这就叫 20/5 组合之类的叫法。这些压砧块都是做实验时坏了或者没用上的，黄晓葛老师送给我们的；只要压砧头上有裂纹都不能用，必须完整才能保证压力准确。</p><p>多顶砧里怎么原位探测？外头六个压砧顶着、里头八个二级块，就算顶得再严实中间也有缝儿——叶蜡石一挤旁边总有点缝隙。利用那条缝就可以把 X 光打进去，探测里头物质的结构。这是多顶砧很重要的一个探测方式。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>14/8组装呢，就是二级压砧边长14毫米，截角的边长8毫米；8/3组装就是这个边长8毫米，小三角形的边长3毫米。小的那个才能产生更高的压力，因为接触面小。</p><p>它顶的再严实，中间还有缝儿，那利用那条缝儿就可以打X光过去，就可以进行原位的探测。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s09">
+  <div class="slides"><figure class="slide" id="slide-22">
+<img src="slides/slide_22.png" alt="课件第22页 多顶砧的压砧材料：烧结金刚石与纳米多晶金刚石">
+<figcaption><span class="sno">22</span><span class="stitle">多顶砧的压砧材料：烧结金刚石与纳米多晶金刚石</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">09</span>
+      <div class="sec-tt">
+        <h2>压砧材料：烧结金刚石与纳米多晶金刚石</h2>
+        <div class="sec-meta"><span class="time">录音 00:31:00 - 00:33:00</span><span class="chip">课件 22</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>为了进一步提高压力极限，压砧材料也不断升级。最初二级压砧用碳化钨（硬质合金），后来做出烧结金刚石——把金刚石粉想办法烧结成块，看着黑乎乎的，里头其实都是金刚石粉，比碳化钨更硬更结实，能产生更高压力。再往后用纳米多晶金刚石（NPD），做出来有点透明，光线的透射更好，强度更大、承压能力更强。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>他们后来还做了一种叫做烧结金刚石，就是把那个金刚石粉想办法烧结到一块儿，形成这种看着黑乎乎的、实际上里头都是金刚石粉……比碳化钨还硬，能够产生更高的压力。</p><p>纳米多晶金刚石做出来之后，就有点透明了，透光透射更好，承压更大、强度更大，也可以产生更高压力。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s10">
+  <div class="slides"><figure class="slide" id="slide-23">
+<img src="slides/slide_23.png" alt="课件第23页 多顶砧的压力标定曲线">
+<figcaption><span class="sno">23</span><span class="stitle">多顶砧的压力标定曲线</span></figcaption>
+</figure>
+<figure class="slide" id="slide-24">
+<img src="slides/slide_24.png" alt="课件第24页 王海阔等，2013，高压物理学报">
+<figcaption><span class="sno">24</span><span class="stitle">王海阔等，2013，高压物理学报</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">10</span>
+      <div class="sec-tt">
+        <h2>多顶砧的压力标定</h2>
+        <div class="sec-meta"><span class="time">录音 00:33:00 - 00:36:00</span><span class="chip">课件 23</span><span class="chip">课件 24</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>多顶砧的压力标定比金刚石压腔麻烦。金刚石压腔放金属箔或者红宝石压标就行，原理清晰；大压机则每个实验室都不同——设备、电机材料、组装方式不一样，标定曲线都不一样。所以每个实验室要拿已知相变点的标准物质，在自己这套设备上做一条"压力-吨位"工作曲线：装多少吨压出多少压力。</p><p>用的标准物质一般是金属钡、金属铊、金属铋等，它们的相变点压力都研究得很详细了。标定方法主要是测电导率：压着压着，电导率在某处突然跳跃——那是发生相变了——相变点的压力是已知的，标上一个点，再标一个点，就把工作曲线画出来了。比如 18/11 多顶砧标定曲线和 10/5 标定曲线，不同实验室的数据确实不太一样；从曲线也能看出，18/11 这种针面小的组装能到的压力更高，针面 11 毫米的那种压力就上不去。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>大压机的压力标定就比较麻烦，一个实验室跟一个实验室做的都不一样。他只能说拿一些已知相变点的标准物质去做一条工作曲线，装多少吨、压力是多少，就这么算的。</p><p>用金属钡、金属铊或者金属铋，测它的电导率，电导率在哪儿突变了，就标一个点——它发生相变了，再标一个点，就把工作曲线画出来了。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s11">
+  <div class="slides"><figure class="slide" id="slide-25">
+<img src="slides/slide_25.png" alt="课件第25页 三级压砧（Kawai Multiple Anvil）">
+<figcaption><span class="sno">25</span><span class="stitle">三级压砧（Kawai Multiple Anvil）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">11</span>
+      <div class="sec-tt">
+        <h2>三级压砧：把压力做到 125 GPa</h2>
+        <div class="sec-meta"><span class="time">录音 00:36:00 - 00:38:00</span><span class="chip">课件 25</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>有了纳米多晶金刚石之后，又进了一步，做出了三级压砧（Kawai Multiple Anvil 的进一步发展）：氧化镁传压介质块中间挖个眼装样品，里面再放一对纳米多晶金刚石对顶着——这就是最后一级压砧。外头六个压砧压到八个二级块上，再压到里头两个三级对顶砧上。样品是小了一点，但以更小的样品体积换来了更高的压力——把压力做到了 125 GPa。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>组装样品的时候，还往里头放了一个纳米多晶金刚石对顶着，就成了最后一级压砧——第三级压砧。外头6个压砧压到8个块儿上，压到这里头呢，还有两个对顶着压……就这样把压力做到了125个GPa。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s12">
+  <div class="slides"><figure class="slide" id="slide-27">
+<img src="slides/slide_27.png" alt="课件第27页 巴黎-爱丁堡（PE）压机">
+<figcaption><span class="sno">27</span><span class="stitle">巴黎-爱丁堡（PE）压机</span></figcaption>
+</figure>
+<figure class="slide" id="slide-28">
+<img src="slides/slide_28.png" alt="课件第28页 原位探测 PE 压机中的高压样品">
+<figcaption><span class="sno">28</span><span class="stitle">原位探测 PE 压机中的高压样品</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">12</span>
+      <div class="sec-tt">
+        <h2>巴黎-爱丁堡（PE）压机</h2>
+        <div class="sec-meta"><span class="time">录音 00:38:00 - 00:41:00</span><span class="chip">课件 27</span><span class="chip">课件 28</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>大压机最大的麻烦是不能移动——好几吨、几十吨的设备，探测仪器只能搬到它跟前。为了弥补这个缺陷，出现了做得小巧一些的巴黎-爱丁堡（PE）压机：上下对顶，靠螺丝旋紧，比较好携带——小的大概 16 公斤，一个人搬着费点劲，两个人出差就能扛到同步辐射光源去；再大点的 100 公斤，车拉人抬也能运过去。它的目的就是做好之后运到同步辐射那儿探测（比如 APS 的 16-BM-B 线站）。</p><p>PE 压机达到的压力大约 20 GPa，往高也就奔着 30 GPa 去。它的针面不是平的，设计成带拐弯的结构，把样品顶在中间，旁边有叶蜡石之类围住——这种变圈设计能把压力弄上去，但结构限制决定了它不会太高。看照片里它被放在同步辐射光源底下，照射探测就完了。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>大压机的最大麻烦就是不能移动……为了弥补这个缺陷，又做了一种小巧的压机，就相当于这个东西小一点，16公斤，两个人出差也把它扛到同步辐射那个光源那儿去了；再大点的100公斤，车拉人抬也能扛过去。</p><p>它达到的压力呢，大概是20个GPa，往高的话可能也就奔着30GPa去，不会再高了。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s13">
+  <div class="slides"><figure class="slide" id="slide-29">
+<img src="slides/slide_29.png" alt="课件第29页 中国地质大学@武汉 5000 吨大压机">
+<figcaption><span class="sno">29</span><span class="stitle">中国地质大学@武汉 5000 吨大压机</span></figcaption>
+</figure>
+<figure class="slide" id="slide-30">
+<img src="slides/slide_30.png" alt="课件第30页 中国地质大学@武汉 5000 吨大压机（实验室实景）">
+<figcaption><span class="sno">30</span><span class="stitle">中国地质大学@武汉 5000 吨大压机（实验室实景）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">13</span>
+      <div class="sec-tt">
+        <h2>中国地质大学（武汉）5000 吨大压机</h2>
+        <div class="sec-meta"><span class="time">录音 00:41:00 - 00:45:00</span><span class="chip">课件 29</span><span class="chip">课件 30</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>这是中国地质大学（武汉）地质过程与矿产资源国家重点实验室（金振民院士团队）的一台 5000 吨大压机。它设计成上下两个缸对顶着，但静压模块做了两套：一套 Kawai 型、一套带型（Belt）。传输带把模块送进来，这边加压的同时，另一拨人在那边组装做准备工作；这波实验做完移出去，下一波又送进来——利用效率高、实用面广。尤其带型模块适合做高温高压下的变形控制实验，测蠕变什么的很方便。</p><p>它的压力能做到 10~50 GPa，温度到 3000 ℃，高压下样品腔体积能做到 10 立方毫米，相当不错了。参观时看到压砧模块一个人根本抱不动，得用龙门吊吊起来往旁边搁。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这是一个5000吨的大压机……它把这个静压模块儿做了俩，一个是Kawai型静压模块，一个是带型的压模块。传输带呼一进来，移到这儿开始加压，这边就可以由另外一拨人开始组装做准备工作。</p><p>它的压力呢，能做到10到50个GPa，3000度，样品腔的体积在高压下能达到10个立方毫米。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s14">
+  <div class="slides"><figure class="slide" id="slide-31">
+<img src="slides/slide_31.png" alt="课件第31页 吉林大学 60000 吨压机">
+<figcaption><span class="sno">31</span><span class="stitle">吉林大学 60000 吨压机</span></figcaption>
+</figure>
+<figure class="slide" id="slide-32">
+<img src="slides/slide_32.png" alt="课件第32页 吉林大学 60000 吨压机（2021 年验收）">
+<figcaption><span class="sno">32</span><span class="stitle">吉林大学 60000 吨压机（2021 年验收）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">14</span>
+      <div class="sec-tt">
+        <h2>吉林大学 60000 吨压机</h2>
+        <div class="sec-meta"><span class="time">录音 00:45:00 - 00:47:00</span><span class="chip">课件 31</span><span class="chip">课件 32</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>再大一点的就是吉林大学超硬材料国家重点实验室做的 6 万吨压机：提供的压力能达到 6 万吨。样品配得特别大的时候，能达到 10 万立方毫米，能获得 5 GPa 的压力；把样品腔缩减到 3 万立方毫米，能获得 20 GPa；再缩减到 30 立方毫米，能获得 50 GPa。这是目前世界上样品体积与压力相比最大的压机，比国际上同类设备高一个数量级。</p><p>当然，6 万吨是科研用的。工业上中国二重、中国重机那些重型企业有 8 万吨、设计中甚至 12 万吨的大压机——那不是做科研的，是造航母、造战斗机大型结构件用的，往上一塞、哐嚓一压成型。这套吉大设备 2021 年 4 月验收，基金项目 8700 万——典型的大国重器；但相对而言，大压机在科研大装置里算便宜的（500 米口径大望远镜几十亿，下节课要讲的同步辐射光源也是几十亿）。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>吉林大学超硬材料实验室做了一个6万吨的压机……样品配得特别大时能达到10万立方毫米，能获得5GPa的压力；样品腔缩减到30个立方毫米，能获得50个GPa。这是目前世界上样品体积和压力相比最大的。</p><p>6万吨这个是科研用的。工业上那些重型企业有8万吨、设计中的12万吨大压机，那是造航母、造战斗机结构件的，不是做科研的。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s15">
+  <div class="slides"><figure class="slide" id="slide-33">
+<img src="slides/slide_33.png" alt="课件第33页 大压机的能力">
+<figcaption><span class="sno">33</span><span class="stitle">大压机的能力</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">15</span>
+      <div class="sec-tt">
+        <h2>大压机的能力总结</h2>
+        <div class="sec-meta"><span class="time">录音 00:47:00 - 00:50:00</span><span class="chip">课件 33</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>总结大压机的能力：活塞圆筒、水热釜这类小压机，样品体积很大但压力比较小；多面顶压机（大型压机、Kawai 型）压力高、样品体积小一些。总的原则是：要获得更高的压力，就只能用更小的样品腔体积。各设备的样品体积范围：金刚石压腔 10⁻⁷ 到 10⁻³ 立方毫米；大压机 1 到 10² 立方毫米；小压机 10² 到 10³ 立方毫米。小压机经常还起到辅助作用——给后面做探测的样品先压一压、制备样品。</p><p>追求的目标就是更大尺寸的样品、更高的温度和压力。所有这些设备攒到一块儿，都是为了研究地球的内部——从我们这门课的角度说，这是研究地球内部矿物非常重要的实验技术。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>总结一下，小压机样品体积很大但压力比较小；多面顶压机压力高、样品体积小。反正掌握一点，你要达到更高的压力，就必然只能用更小的样品腔体积。</p><p>金刚石压腔10的负7次方到10的负3次方立方毫米；大压机能达到1到10的2次方；小压机10的2次方到10的3次方立方毫米。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s16">
+  <div class="slides"><figure class="slide" id="slide-34">
+<img src="slides/slide_34.png" alt="课件第34页 动高压实验技术">
+<figcaption><span class="sno">34</span><span class="stitle">动高压实验技术</span></figcaption>
+</figure>
+<figure class="slide" id="slide-35">
+<img src="slides/slide_35.png" alt="课件第35页 杜建国等，2010">
+<figcaption><span class="sno">35</span><span class="stitle">杜建国等，2010</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">16</span>
+      <div class="sec-tt">
+        <h2>动高压实验技术</h2>
+        <div class="sec-meta"><span class="time">录音 00:50:00 - 00:52:00</span><span class="chip">课件 34</span><span class="chip">课件 35</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>静高压设备的能力是有限的——金刚石压腔做到 1000 GPa（1 TPa）了不得，再要更高的压力，就得靠动高压实验。高能量密度态广泛存在于宇宙天体及其演化过程中，动高压的应用背景主要有未来新能源（核聚变）、合成新材料、军事科技等。做法很简单：放一炮，用冲击波压缩的原理实现动态高压——虽然持续时间短，但压力可以非常大。</p><p>做动高压实验，要求驱动能源的能量密度大：简单点用化学炸药，高能点用强激光，再高甚至用核爆（核试验现在不让做了，这条路走不通）。主要方法就是发射一个弹丸，让弹丸速度尽可能快——速度越快动能越大，砸到样品上传递的能量才多，产生强的冲击波。火炮能达到每秒两三公里；轨道炮、电炮更高；激光驱动的弹丸速度能到很高。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>静高压设备是有限的，金刚石压腔做到一个TPa了不得，再要获得更高的压力，就得上动高压实验了。</p><p>做法呢，就是放一炮，拿那个东西冲击它，用冲击波压缩的原理实现动态的高压，虽然持续的时间短，但是那个压力可以达到很大。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s17">
+  <div class="slides"><figure class="slide" id="slide-36">
+<img src="slides/slide_36.png" alt="课件第36页 动高压装置：轻气炮（西南交大）">
+<figcaption><span class="sno">36</span><span class="stitle">动高压装置：轻气炮（西南交大）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">17</span>
+      <div class="sec-tt">
+        <h2>动高压装置：轻气炮</h2>
+        <div class="sec-meta"><span class="time">录音 00:52:00 - 00:54:00</span><span class="chip">课件 36</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>这是一台动高压装置——轻气炮，照片来自西南交通大学高压实验室。弹丸从那边打过来，这边是样品仓；装靶时把样品（靶子）装在靶心位置，让飞片打过来。飞片是平的小片，不像弹头那样尖——平面才好测量。飞片撞击速度能达到每秒 8 公里，瞬间压力达到 1000 GPa，温度 10000 K。激光驱动的极端情况能拿到 10 TPa 量级，了解一下就行。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这是西南交通大学的高压实验室。飞片打过来呢，速度能达到每秒8公里，瞬时压力就能达到1000GPa，温度10000K。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s18">
+  <div class="slides"><figure class="slide" id="slide-38">
+<img src="slides/slide_38.png" alt="课件第38页 气体炮为什么选择轻气？">
+<figcaption><span class="sno">38</span><span class="stitle">气体炮为什么选择轻气？</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">18</span>
+      <div class="sec-tt">
+        <h2>气体炮为什么选择轻气？</h2>
+        <div class="sec-meta"><span class="time">录音 00:54:00 - 00:57:00</span><span class="chip">课件 38</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>轻气炮为什么要用轻气？看公式 dp = -ρc·du：压强降低时，气体的声阻抗 ρc 越小，气体增速 u 就越大。目的就是把弹丸速度提上去，所以选最轻的气体——氢气和氦气最常用，其他空气、火药气都稍重一点。</p><p>这两种气也不都好使：氦气安全，不燃烧不爆炸，但资源紧俏——高科技科研仪器都要用，当载气、吹扫气，没它不行；氢气便宜，但不安全，容易爆炸。当然用空气最方便，就是重了些。所谓"二级轻气炮"，指的就是用氢气或氦气这种轻气。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>dp等于负的ρc乘du，ρ是气体的密度，c是声速，ρ乘c就称之为声阻抗。这个东西如果小，压强降低一点，速度是不是增加很大？目的就是要增加那个速度，所以选氢气和氦气。</p><p>氦气嘛，安全，不燃烧不爆炸，但是氦气资源现在都热起来了，高科技的地方都要用。氢气呢，比较便宜，但是又不安全，容易爆炸。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s19">
+  <div class="slides"><figure class="slide" id="slide-39">
+<img src="slides/slide_39.png" alt="课件第39页 冲击波动高压实验原理：二级轻气炮结构">
+<figcaption><span class="sno">39</span><span class="stitle">冲击波动高压实验原理：二级轻气炮结构</span></figcaption>
+</figure>
+<figure class="slide" id="slide-40">
+<img src="slides/slide_40.png" alt="课件第40页 碰撞在靶室中发生">
+<figcaption><span class="sno">40</span><span class="stitle">碰撞在靶室中发生</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">19</span>
+      <div class="sec-tt">
+        <h2>二级轻气炮的结构与原理</h2>
+        <div class="sec-meta"><span class="time">录音 00:57:00 - 01:00:00</span><span class="chip">课件 39</span><span class="chip">课件 40</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>二级轻气炮的结构叫"三室两管"：火药室（或高压气室）+ 压缩管 + 发射管。一级炮是高压气直接推动飞片打出来；二级炮是火药或高压气推动一个活塞在泵管里往前走，把前面的轻气使劲压缩，压到极限膜片绷不住破了，把飞片打出来——先压缩气体、再打出飞片。参数上：口径 19、25、37 毫米，弹速 1~7 公里/秒，碰撞角小于 0.5°，弹重 10~20 克。</p><p>碰撞在靶室里发生：样品包在铜块里（用活塞圆筒把铜压成坨把样品裹进去），立在靶架上，飞片打过来把它砸扁，砸完拿回去剥掉铜，分析里头样品发生了什么变化。发射管用真空室，气体要排放，电源引出来测量，后头还有一个吸能的框——就像高楼里的摆锤，用很大质量的东西把飞片挡下来吸收能量。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>二级轻气炮是火药或高压气推动活塞在泵管里往前走，把气体使劲压缩，压缩到极限了，这头这个膜片就绷不住了，破了，把这个飞片打出来。</p><p>他们把那个样品裹到铜里头，把这个东西立到靶架上，一个飞片打过来，啪，砸进窝里，砸得扁扁的，拿回去把铜剥掉了，就分析里头样品发生了什么变化。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s20">
+  <div class="slides"><figure class="slide" id="slide-41">
+<img src="slides/slide_41.png" alt="课件第41页 冲击波基本关系式">
+<figcaption><span class="sno">41</span><span class="stitle">冲击波基本关系式</span></figcaption>
+</figure>
+<figure class="slide" id="slide-42">
+<img src="slides/slide_42.png" alt="课件第42页 冲击波导出关系式：雨贡纽 Hugoniot 方程">
+<figcaption><span class="sno">42</span><span class="stitle">冲击波导出关系式：雨贡纽 Hugoniot 方程</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">20</span>
+      <div class="sec-tt">
+        <h2>冲击波基本关系式与 Hugoniot 方程</h2>
+        <div class="sec-meta"><span class="time">录音 01:00:00 - 01:03:00</span><span class="chip">课件 41</span><span class="chip">课件 42</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>动高压实验的基本原理是冲击波压缩：飞片打过来，物质先被压缩，在物质里形成压缩波一直往前走，后头是稀疏波弹开。冲击波阵面前后要满足质量守恒、动量守恒、能量守恒三个关系式。已知的是初始密度 ρ₀、初始粒子速度 u₀、初始应力 σ₀；未知量有冲击波阵面后的密度 ρ、应力 σ、冲击波速度 D、粒子速度 u、比内能 E——五个未知量，三个方程，所以只要测出两个未知量，其他都能解出来。</p><p>大家关心的就是动高压能产生多大的压力，靠这个公式算：σ = ρ₀·D·u，也就是冲击波压力等于初始密度乘冲击波速度乘粒子速度。把基本关系式变换，就得到冲击波高压实验必须要掌握的雨贡纽（Hugoniot）方程。所以整套实验最后归结为：只要测出冲击波速度 D 和粒子速度 u 这两个值就行。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>冲击波阵面前后对应于质量守恒、动量守恒和能量守恒有三个关系式……有五个未知量，三个方程，所以只要测出两个未知量，其他的都能解。</p><p>大家关心的不就是动高压能够产生多大的压力？靠这个公式，西格玛等于ρ0乘D乘u，冲击波的压力等于初始密度乘冲击波速度乘粒子速度。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s21">
+  <div class="slides"><figure class="slide" id="slide-43">
+<img src="slides/slide_43.png" alt="课件第43页 动高压实验装置">
+<figcaption><span class="sno">43</span><span class="stitle">动高压实验装置</span></figcaption>
+</figure>
+<figure class="slide" id="slide-44">
+<img src="slides/slide_44.png" alt="课件第44页 观测方法与技术">
+<figcaption><span class="sno">44</span><span class="stitle">观测方法与技术</span></figcaption>
+</figure>
+<figure class="slide" id="slide-45">
+<img src="slides/slide_45.png" alt="课件第45页 冲击波高压相变">
+<figcaption><span class="sno">45</span><span class="stitle">冲击波高压相变</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">21</span>
+      <div class="sec-tt">
+        <h2>观测方法与冲击波高压相变</h2>
+        <div class="sec-meta"><span class="time">录音 01:03:00 - 01:06:00</span><span class="chip">课件 43</span><span class="chip">课件 44</span><span class="chip">课件 45</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>两个关键值怎么测？粒子速度 u 好测：飞片从远方飞来，经过两个有一定距离的线圈，示波器上先后跳两下——距离精确已知，算出时间差就是速度，跟开车过两个卡口测车速一个道理。冲击波速度 D 的测量很巧妙：飞片砸过来时，放三节长度不同的同材质样品，后面封了溴仿（三溴甲烷）——溴仿感受到冲击波时会发光，光通过光纤导出被记录下来。样品短的，冲击波传过去快、先亮，依次亮起来，靠这几个信号的时间差就把冲击波速度测出来了。</p><p>观测方法与技术还有：光学窗口、辐射温度测量、时间分辨光谱、碰撞倾角测量、测量声速等。冲击波施压下原矿物发生相变：压缩波过来这边就变了，后方产生稀疏波；还要利用冲击波的回波去追测相变之后物质里波传播的速度。做冲击波高压相变实验，最重要的就是测量物质在几十皮秒到几百纳秒里发生相变时的波速。经常用来研究的就是橄榄石之类的矿物。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>飞片经过第一个线圈的时候示波器跳一下，经过第二个又跳一下，距离精确测定，两个跳跃的时间差就把速度测出来了，跟开车过卡口测车速一个道理。</p><p>放三节长度不一样的样品，后头封上三溴甲烷，它感受到冲击波那一下时会发光，样品短的先亮，靠这几个信号就把冲击波的速度测出来了。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s22">
+  <div class="slides"><figure class="slide" id="slide-46">
+<img src="slides/slide_46.png" alt="课件第46页 高温高压实验技术总结">
+<figcaption><span class="sno">46</span><span class="stitle">高温高压实验技术总结</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">22</span>
+      <div class="sec-tt">
+        <h2>课程总结：高压实验技术全景</h2>
+        <div class="sec-meta"><span class="time">录音 01:06:00 - 01:08:00</span><span class="chip">课件 46</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>今天的内容就这些，最后再串一遍框架。静高压：金刚石压腔（550 GPa 以下，实际已达 1000 GPa，低温到室温-6000 K），多顶砧装置（碳化钨压砧可达 28 GPa，烧结金刚石可达 75 GPa，三级压砧 125 GPa，室温-3500 K），活塞圆筒（5 GPa 以下），高压釜（1 GPa 以下，室温-1600 K，研究地壳范围的成岩成矿作用）。动高压：二级轻气炮或化爆加载（0.5~1.0 TPa，可达 10⁵ K，模拟行星形成早期的冲击碰撞、陨石坑和玻璃陨石形成、核幔边界物质状态方程），强激光驱动（10 TPa 以下）。</p><p>各设备的样品体积：金刚石压腔 10⁻⁷~10⁻³ 立方毫米；大压机 1~10² 立方毫米；小压机 10²~10³ 立方毫米。我国的 6 万吨压机样品体积世界最大：5 GPa 时可达 10⁵ 立方毫米，20 GPa 时 3×10⁴ 立方毫米，50 GPa 时 30 立方毫米。记住核心一点：要更高的压力，就只能用更小的样品体积——所有这些技术最终都是为了研究地球内部的矿物。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>静高压里头三种东西，高压釜、大压机、金刚石压腔，各自能达到的压力极限就是这样……动高压是二级轻气炮、化爆加载、强激光驱动。</p><p>这些不同的高压设备之间掌握一点，你达到更高的压力，就必然只能用更小的样品腔的体积。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（180083070901P2003H）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>

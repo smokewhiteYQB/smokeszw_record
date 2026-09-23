@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>矿物物理学（180083070901P2003H） · 第二章 原位测试表征方法｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>矿物物理学（180083070901P2003H） · 第二章 原位测试表征方法</h1>
+    <div class="sub">第二章 原位测试表征方法 ｜ 2026-09-17 ｜ 授课：郭光军</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 40 页 · 整理 25 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-s01">01 课程引入：金刚石压腔（DAC）装置回顾</option>
+<option value="sec-s02">02 同步辐射的定义与发现</option>
+<option value="sec-s03">03 同步辐射的优良特性</option>
+<option value="sec-s04">04 同步辐射装置的结构：100X</option>
+<option value="sec-s05">05 同步辐射光源的发展历程</option>
+<option value="sec-s06">06 上海光源（SSRF）</option>
+<option value="sec-s07">07 国际上的同步辐射光源</option>
+<option value="sec-s08">08 四代光源与升级趋势</option>
+<option value="sec-s09">09 中国高能同步辐射光源（HEPS）</option>
+<option value="sec-s10">10 HEPS 内部：加速器与线站</option>
+<option value="sec-s11">11 散裂中子源</option>
+<option value="sec-s12">12 同步辐射的波谱范围</option>
+<option value="sec-s13">13 光与物质的相互作用</option>
+<option value="sec-s14">14 X 射线衍射（XRD）与布拉格方程</option>
+<option value="sec-s15">15 角度色散 X 射线衍射（ADXRD）</option>
+<option value="sec-s16">16 能量色散 X 射线衍射（EDXRD）</option>
+<option value="sec-s17">17 X 射线吸收谱（XAS）</option>
+<option value="sec-s18">18 穆斯堡尔谱（Mössbauer spectroscopy）</option>
+<option value="sec-s19">19 拉曼光谱（Raman spectroscopy）</option>
+<option value="sec-s20">20 红外光谱（Infrared spectroscopy）</option>
+<option value="sec-s21">21 布里渊散射（Brillouin scattering）</option>
+<option value="sec-s22">22 电导率与电阻率测量</option>
+<option value="sec-s23">23 原位光学观察</option>
+<option value="sec-s24">24 总结：地球深部物质的几个重要参量</option>
+<option value="sec-s25">25 作业 MP2.2 与答疑</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 矿物物理学-2.3-原位测试表征方法.pdf 逐页渲染，转写原文见 record_20260917.txt。</div>
+<section class="sec" id="sec-s01">
+  <div class="slides"><figure class="slide" id="slide-01">
+<img src="slides/slide_01.png" alt="课件第1页 封面：原位测试表征方法">
+<figcaption><span class="sno">01</span><span class="stitle">封面：原位测试表征方法</span></figcaption>
+</figure>
+<figure class="slide" id="slide-02">
+<img src="slides/slide_02.png" alt="课件第2页 金刚石压腔 DAC 结构与光路">
+<figcaption><span class="sno">02</span><span class="stitle">金刚石压腔 DAC 结构与光路</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>课程引入：金刚石压腔（DAC）装置回顾</h2>
+        <div class="sec-meta"><span class="time">录音 00:00:00 - 00:03:00</span><span class="chip">课件 1</span><span class="chip">课件 2</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>这节课讲高温高压实验的原位测试表征方法，主角还是最重要的金刚石压腔（DAC）。它的东西真不多：上下两块金刚石，围着密封垫片，把样品腔封住，里头放三样东西——传压介质把样品包住，旁边放一颗红宝石作压标。手挤着上下两个底座（碳化钨做的，沉甸甸的），外头加上枪体材料，拿螺栓一使劲，力就加上去了。</p><p>装好之后用光去照。最常做的就是 X 射线检测——拿 X 光打一下。今天这节课就是讲：拿什么光去打它、我们测些什么东西、怎么测。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>金刚石压枪就那么几件东西：金刚石一块儿两块儿，围着个密封垫片，样品腔里头放啥东西呢？三件儿东西，传压介质把样品包住，旁边放一个红宝石压标。</p><p>上下弄个底座，底座是碳化钨做的，硬、沉甸甸的，外头再加上枪体材料，拿螺栓一使劲，力就加上去了。最常做的样子就是X射线检测，拿着X光打一下。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s02">
+  <div class="slides"><figure class="slide" id="slide-03">
+<img src="slides/slide_03.png" alt="课件第3页 同步辐射（synchrotron radiation）的定义与发现">
+<figcaption><span class="sno">03</span><span class="stitle">同步辐射（synchrotron radiation）的定义与发现</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>同步辐射的定义与发现</h2>
+        <div class="sec-meta"><span class="time">录音 00:03:00 - 00:06:00</span><span class="chip">课件 3</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>照金刚石的光源一定要够亮，最好的就是同步辐射。同步辐射是怎么回事：速度接近光速的带电粒子（电子）在磁场中沿弧形轨道运动时，会沿切线方向放出电磁辐射。电磁辐射的概念很宽，波长范围很广，包括红外、可见光、紫外，一直到 X 射线和伽马射线。因为是在同步加速器上发现的，所以叫同步辐射。</p><p>同步加速器要把粒子加速到高能：直线加速器就那么一段，加不上去了；回旋加速器要让粒子转得快，就得把磁场调强才能把粒子弯回来；转得越快，每圈时间越短，还得让交变电流的频率跟它同步变化——只有这种同步变化，才能不断把速度加上去，所以叫同步加速器。1947 年，美国的一台同步加速器上，拍照时发现旁边有光出来了——搞明白就是带电粒子沿切线运动时放出的电磁波，当时正好落在可见光波段，就拍下来了。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>电子或粒子接近光速运转的时候，带电粒子在磁场中要沿着弧形的轨道运动，它沿弧形轨道运动的时候，就会在切线的方向上发出电磁辐射。</p><p>只有这种同步的变化，才能不停地把这个速度加上去，获得很高的能量，所以叫同步加速器。1947年，美国的一台同步加速器上拍照片，就发现旁边有光出来了。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s03">
+  <div class="slides"><figure class="slide" id="slide-03">
+<img src="slides/slide_03.png" alt="课件第3页 同步辐射（synchrotron radiation）的定义与发现">
+<figcaption><span class="sno">03</span><span class="stitle">同步辐射（synchrotron radiation）的定义与发现</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>同步辐射的优良特性</h2>
+        <div class="sec-meta"><span class="time">录音 00:06:00 - 00:08:00</span><span class="chip">课件 3</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>同步辐射是好东西，有非常多优良的属性，考试能答上五条就行。第一，高亮度——就像激光笔，光斑小、亮度大；第二，高准直；第三，宽波段——能发出很多波段的电磁波；第四，高纯净；第五，高偏振；第六，窄脉冲。而且它什么时候出光、出什么波段、多强，都可以用理论精确计算出来——非常可控、质量高。其他的还有高稳定、高通量等，了解即可。</p><p>有了它之后，同步辐射就成了科技的灯塔——什么小东西拿它一照就清楚了。我们要照的是微米级、纳米级的东西，要把里头结构照清楚。考古、材料、工业、生物、能源、物理，用途太广泛，所以对研究生来说，不能不知道什么叫同步辐射。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>高亮度、高准直、宽波段、高纯净、高偏振、窄脉冲，而且这个波什么时候出来、什么波段的光多强，都可以拿理论计算精确地预测，所以这个光非常可控、质量非常高。</p><p>如果考试提到同步辐射的优点，你能答上5条就可以了，不用都统计。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s04">
+  <div class="slides"><figure class="slide" id="slide-04">
+<img src="slides/slide_04.png" alt="课件第4页 同步辐射装置的结构">
+<figcaption><span class="sno">04</span><span class="stitle">同步辐射装置的结构</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>同步辐射装置的结构：100X</h2>
+        <div class="sec-meta"><span class="time">录音 00:08:00 - 00:11:00</span><span class="chip">课件 4</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>同步辐射装置的结构很好记，记住 100X 就行：一是直的——直线加速器，发出电子；0 是圆圈——增强器，电子在小圈里增强到一定程度；另一个 0 是大圈——存储环，把电子存起来，光量够了就长期储存；X 就是 X 个光束线站——在存储环的切线方向上开出很多线站，打出一束光。</p><p>光沿切线方向出来是直的，所以线站设计成直的，分成一个个小房间（实验站）：在里头组装样品，把样品摆在光路上；人在另外一个有防护的小屋里记录和观察。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这个装置的特点呢，就是这样的结构：一个直线加速器发出电子，电子在一个小圈里头进行增强，叫增强器，增强到一定程度之后把它引入到大环里头存起来，然后按需求在切线方向上开出来很多个线站。</p><p>很好记，记住100X就行了：一是直线加速器，0是增强器，再一个0是大圈存储环，最后X就是X个光束线站。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s05">
+  <div class="slides"><figure class="slide" id="slide-05">
+<img src="slides/slide_05.png" alt="课件第5页 同步辐射光源的发展历程：北京光源">
+<figcaption><span class="sno">05</span><span class="stitle">同步辐射光源的发展历程：北京光源</span></figcaption>
+</figure>
+<figure class="slide" id="slide-06">
+<img src="slides/slide_06.png" alt="课件第6页 我国的同步辐射光源：合肥、台湾、上海">
+<figcaption><span class="sno">06</span><span class="stitle">我国的同步辐射光源：合肥、台湾、上海</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>同步辐射光源的发展历程</h2>
+        <div class="sec-meta"><span class="time">录音 00:11:00 - 00:14:00</span><span class="chip">课件 5</span><span class="chip">课件 6</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>同步辐射光源的历史并不长，1965 年才开始有这个东西。第一代是寄生的：中国的北京光源（第一代，1989 年前后）寄生于北京正负电子对撞机——这本来是搞高能物理的装置，高能物理的人不喜欢同步辐射（发出去就损耗能量），但对用 X 光做探测的用户来说是好东西，得求着人家下班后借光用。</p><p>第二代（如合肥光源，1992）广大用户干脆专门造一台，不做对撞，专门出光给用户用，用了很多磁铁聚焦结构来增加亮度。第三代（如台湾光源，1994；上海光源）用了很多插入件（波荡器、扭摆器）进一步提高亮度。台湾 90 年代半导体产业发达，同步辐射光源绝对用得上——照芯片里的东西、刻画得好不好，甚至直接拿光束做测试。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>最开始的时候，这个装置实际上是寄生于北京正负电子对撞机的，高能物理的人不喜欢它——发出去就损耗能量，还浪费。但是对需要X光做探测的用户来说是个好东西，有时候就得求人家：您下班之后还用吗？晚上让我用用。</p><p>到了第二代，广大用户干脆专门造一台，不做对撞，全都给我们用、专门出光。用了好多磁铁聚焦方式增加亮度。到了第三代就用了好多插入件，波荡器、扭摆器，把亮度又提高了。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s06">
+  <div class="slides"><figure class="slide" id="slide-07">
+<img src="slides/slide_07.png" alt="课件第7页 上海光源（SSRF）">
+<figcaption><span class="sno">07</span><span class="stitle">上海光源（SSRF）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>上海光源（SSRF）</h2>
+        <div class="sec-meta"><span class="time">录音 00:14:00 - 00:16:00</span><span class="chip">课件 7</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>大陆这边，2007 年前后建成了上海同步辐射光源（SSRF），名字里的 Synchrotron 就是同步辐射的意思。拆开来看：直线加速器，增强器把电子引到存储环，最后引出线站。一束光从切线方向打出来，经过光路校准、引导到第二个格子，格子里放高压装置（压机、金刚石压腔），样品塞到窗口上调好，啪一照，人在里头操作记录数据，照完回去分析。</p><p>上海光源建成后用得挺满：共有 34 条光束线、46 个实验站，每年提供 4000 到 5000 小时机时（一年总共 8760 小时），服务了全国高校、研究机构、医院和企业等 700 多家单位。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>上海同步辐射装置，一束光从切线方向打出来，经过光路校准引导到第二个格子，格子里头放一台压机或者金刚石压腔，往上一塞、调好，啪一照，人在里头操作记录数据，照完回去分析。</p><p>上海光源每年都得用四五千个小时，一年是8760个小时。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s07">
+  <div class="slides"><figure class="slide" id="slide-08">
+<img src="slides/slide_08.png" alt="课件第8页 国际上的同步辐射光源：APS、ESRF、日本">
+<figcaption><span class="sno">08</span><span class="stitle">国际上的同步辐射光源：APS、ESRF、日本</span></figcaption>
+</figure>
+<figure class="slide" id="slide-09">
+<img src="slides/slide_09.png" alt="课件第9页 日本超级光子环同步辐射线站图">
+<figcaption><span class="sno">09</span><span class="stitle">日本超级光子环同步辐射线站图</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div class="sec-tt">
+        <h2>国际上的同步辐射光源</h2>
+        <div class="sec-meta"><span class="time">录音 00:16:00 - 00:19:00</span><span class="chip">课件 8</span><span class="chip">课件 9</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>国际上最著名的几个光源要有印象：美国 APS（阿贡国家实验室的先进光子源）、欧洲 ESRF（欧洲同步辐射装置，在法国）、日本 SPring-8。SPring-8 不要读成“春天”，SP 是 Super Photon 的缩写，就是超级光子环；它做到的能量是 8 GeV 电子伏，是当时最高的。上海光源是 3.5 GeV。同步辐射光源能量分档：约 2 GeV 相当于是低能端，2~5 GeV 是中能端，5 GeV 以上叫高能。</p><p>日本超级光子环把一个小山作为中间地，围着山挖隧道建厂房，引出来的线站多达 57 条。红色的是公共线站，对外开放、交点机时费就行；绿色的是合同线站，跟单位签合同、投资建一条分支专用。从 1997 年到 2010 年，超 10 万人次使用——用同步辐射光源的人比搞高能物理的人多得多，应用非常广泛。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>最著名的几个：一个是美国的APS，在阿贡国家实验室；再一个是欧洲的ESRF，在法国；然后日本有一个SPring-8，SP指的是超级光子，8指的是它做到的能量达到8GeV电子伏。</p><p>它围着一个小山，把山作为中间地，挖一个隧道建的厂房，引出来的线站多达57条。红色的是公共线站，让大家交点机时费就行；绿色的是合同线站，跟哪个单位签了合同、投资建一条分支，你们专用。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s08">
+  <div class="slides"><figure class="slide" id="slide-10">
+<img src="slides/slide_10.png" alt="课件第10页 同步辐射光源的发展历程：四代光源">
+<figcaption><span class="sno">10</span><span class="stitle">同步辐射光源的发展历程：四代光源</span></figcaption>
+</figure>
+<figure class="slide" id="slide-11">
+<img src="slides/slide_11.png" alt="课件第11页 未来的同步辐射光源：HEPS">
+<figcaption><span class="sno">11</span><span class="stitle">未来的同步辐射光源：HEPS</span></figcaption>
+</figure>
+<figure class="slide" id="slide-12">
+<img src="slides/slide_12.png" alt="课件第12页 我国 HEPS 的国际地位">
+<figcaption><span class="sno">12</span><span class="stitle">我国 HEPS 的国际地位</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">08</span>
+      <div class="sec-tt">
+        <h2>四代光源与升级趋势</h2>
+        <div class="sec-meta"><span class="time">录音 00:19:00 - 00:23:00</span><span class="chip">课件 10</span><span class="chip">课件 11</span><span class="chip">课件 12</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>总结四代光源的发展历程：第一代（1965-1975）寄生于高能加速器，只是兼用装置，性能和时间受限；第二代（1975-1990）专门设计，用磁铁聚焦结构的专用光源；第三代（1990 前后）用插入件（波荡器、扭摆器）进一步降低发射度、提高亮度；第四代用衍射极限技术，把存储环的发射度进一步降低。从最早 X 射线管（伦琴发现 X 射线时）的亮度大约 10¹⁰ 到 10¹¹，到现在最亮的已经到 10²² 量级——亮度提高了上万亿倍，但搞科研还是追求极致，还想更高。</p><p>国际上这些三代光源随着衍射极限技术出现纷纷升级：欧洲的 ESRF 升级完叫 ESRF-EBS（已完成）；美国 APS 升级为 APS-U（把原来存储环里的东西全拆了重新组装）；德国 PETRA 升级为四代；日本的 SPring-8 计划升级成 SP8-II（计划 2032 左右）。升级后大家不约而同都采用约 6 GeV 的能量；另一个关键指标是发射度——发射度越大光越不亮、越小越亮，美国做到 33 pm·rad，中国的验收标准是 60 pm·rad。看环的周长：1.36 km 除以 π，直径约 400 米。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>第一代寄生于高能加速器，仅为兼用装置；第二代专门设计，使用磁铁聚焦结构的专用光源；第三代用插入件降低发射度；第四代用到一种叫衍射极限的技术，把发射度进一步降低。</p><p>欧洲ESRF升级完了叫ESRF-EBS，美国的APS升级完叫APS-U，都拆了重新组装。升级之后大家不约而同都采用6.5GeV左右的能量。发射度越小越亮，美国做到了33pm·rad，中国的验收标准是60pm·rad。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s09">
+  <div class="slides"><figure class="slide" id="slide-11">
+<img src="slides/slide_11.png" alt="课件第11页 未来的同步辐射光源：HEPS">
+<figcaption><span class="sno">11</span><span class="stitle">未来的同步辐射光源：HEPS</span></figcaption>
+</figure>
+<figure class="slide" id="slide-12">
+<img src="slides/slide_12.png" alt="课件第12页 我国 HEPS 的国际地位">
+<figcaption><span class="sno">12</span><span class="stitle">我国 HEPS 的国际地位</span></figcaption>
+</figure>
+<figure class="slide" id="slide-13">
+<img src="slides/slide_13.png" alt="课件第13页 HEPS 竣工与亮度指标">
+<figcaption><span class="sno">13</span><span class="stitle">HEPS 竣工与亮度指标</span></figcaption>
+</figure>
+<figure class="slide" id="slide-14">
+<img src="slides/slide_14.png" alt="课件第14页 中国高能同步辐射光源（HEPS）">
+<figcaption><span class="sno">14</span><span class="stitle">中国高能同步辐射光源（HEPS）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">09</span>
+      <div class="sec-tt">
+        <h2>中国高能同步辐射光源（HEPS）</h2>
+        <div class="sec-meta"><span class="time">录音 00:23:00 - 00:29:00</span><span class="chip">课件 11</span><span class="chip">课件 12</span><span class="chip">课件 13</span><span class="chip">课件 14</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>咱们国家的高能同步辐射光源（HEPS）已经建成了，就在北京怀柔科学城，设计成一个放大镜的形状。光路：直线加速器，转一圈增强器，存到大圈（存储环）里头，再引出很多线站——短的线站盖在建筑物里，长的线站能看见一两条。它的能量是 6 GeV。将来合肥还要再建一个第四代的低能光源（约 2.2 GeV），国家规划把能量分散开：北京高能、合肥低能，用不同波段探测。</p><p>HEPS 的国际地位：2025 年底竣工，建成 14 条光束线站，正在试运行；2026 年 7 月 5 日，储存环束流发射度达到 56.8 pm·rad（验收指标 60），实测亮度达 1.04±0.02×10²² 光子数/(s·mm²·mrad²·0.1%BW)——目前世界上测得最亮的同步辐射，是太阳光的一万亿倍（太阳光亮度约 10¹⁴ 量级）。光源就在雁栖湖边，离咱们校区三四公里，建议学生骑个单车过去溜达看看——这是咱们国家最大的大科学装置之一。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这已经建成了，就在怀柔科学城，叫高能同步辐射光源HEPS。它设计成一个放大镜的形状，直线加速器，转一圈增强器，存到大圈里头来，引出了好多线站。它的能量是6GeV。</p><p>2026年7月5号，储存环的束流发射度达到了56.8pm·rad，验收指标是60；实测亮度达到1.04×10的22次方光子数，是目前世界上测得最亮的同步辐射，是太阳光的一万亿倍。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s10">
+  <div class="slides"><figure class="slide" id="slide-15">
+<img src="slides/slide_15.png" alt="课件第15页 HEPS：直线加速器与增强器">
+<figcaption><span class="sno">15</span><span class="stitle">HEPS：直线加速器与增强器</span></figcaption>
+</figure>
+<figure class="slide" id="slide-16">
+<img src="slides/slide_16.png" alt="课件第16页 储存环隧道与线站（ID21、BM44）">
+<figcaption><span class="sno">16</span><span class="stitle">储存环隧道与线站（ID21、BM44）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">10</span>
+      <div class="sec-tt">
+        <h2>HEPS 内部：加速器与线站</h2>
+        <div class="sec-meta"><span class="time">录音 00:29:00 - 00:31:00</span><span class="chip">课件 15</span><span class="chip">课件 16</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>进 HEPS 参观：直线加速器就长那样，把电子产生出来，放进增强器转圈（注意增强器区域很大，说明这个圈小）；再看存储环，曲率不大，说明这个圈大——电子被引入存储环轨道，在管道里转，速度接近光速，又被聚焦得很小，所以亮度非常高。有了这些，沿着切线就引出光线，这就是光束线站。</p><p>里头有一条叫 144 线站（通用环境谱学组合线站）的，光线从那边打过来打到一个房间，人在外头操作；打开门进来，里头全是科研仪器。ID21 是硬 X 射线成像线站（最长的线之一），BM44 是通用环境谱学线站，高压实验要用到的是专门的高压线站。现在先紧着大家急需的线站建设，人排得都挺满，今年年底通过国家验收后就正式建成投产。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>直线加速器完了之后，把电子弄出来放到增强器里转圈，注意看这个区域挺大的，说明这个圈儿小；再看存储环，曲率不大，说明这个圈儿大。</p><p>ID21是硬X射线成像线站，这一条最长的线；BM44是通用环境谱学线站。高压要用到的是高压线站。今年年底通过国家验收，就正式宣布建成投产。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s11">
+  <div class="slides"><figure class="slide" id="slide-17">
+<img src="slides/slide_17.png" alt="课件第17页 散裂中子源（Spallation Neutron Source）">
+<figcaption><span class="sno">17</span><span class="stitle">散裂中子源（Spallation Neutron Source）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-18">
+<img src="slides/slide_18.png" alt="课件第18页 探测器（欧洲同步辐射实验室）">
+<figcaption><span class="sno">18</span><span class="stitle">探测器（欧洲同步辐射实验室）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">11</span>
+      <div class="sec-tt">
+        <h2>散裂中子源</h2>
+        <div class="sec-meta"><span class="time">录音 00:31:00 - 00:34:00</span><span class="chip">课件 17</span><span class="chip">课件 18</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>除了这个大装置，还要简单提一下散裂中子源。它加速的不是电子而是质子：把质子加速到接近光速，去轰击重金属靶（如钨、铀；铀带放射性，一般用钨），原子核被撞击发生散裂反应，产生好多中子。中子射向样品，通过中子谱仪获得物质结构的信息。</p><p>为什么要用中子？中子不带电、穿透性强，尤其适合探测含氢的样品——水、溶液、甲烷、酒精这类含氢物质，拿中子散射去照是最好的，搁在同步辐射上照不出什么。中国的散裂中子源（CSNS）在广东东莞：质子直线加速，经过回旋增强器增强，引出打到一大块金属钨上，质子流打上去，向四面八方散出中子（不是切线方向，而是垂直于靶面的方向），围着靶布了好多探测器接收。可以探出含氢物质的轻元素结构。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>散裂中子源加速的是质子，把质子加速到接近光速之后去轰击重金属板，用的是钨。质子树打到钨板上之后，原子核被撞击发生散裂反应，产生好多中子，用中子去射向样品，通过中子谱仪获得物质结构的信息。</p><p>中子不带电，穿透性比较强，主要强调对氢的原子核那种物质，比方说水、溶液、甲烷、酒精，拿中子散射去照是最好的，搁到同步辐射上照不出啥。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s12">
+  <div class="slides"><figure class="slide" id="slide-19">
+<img src="slides/slide_19.png" alt="课件第19页 同步辐射光源的波谱范围">
+<figcaption><span class="sno">19</span><span class="stitle">同步辐射光源的波谱范围</span></figcaption>
+</figure>
+<figure class="slide" id="slide-20">
+<img src="slides/slide_20.png" alt="课件第20页 特定波段电磁波对物质的作用">
+<figcaption><span class="sno">20</span><span class="stitle">特定波段电磁波对物质的作用</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">12</span>
+      <div class="sec-tt">
+        <h2>同步辐射的波谱范围</h2>
+        <div class="sec-meta"><span class="time">录音 00:34:00 - 00:36:00</span><span class="chip">课件 19</span><span class="chip">课件 20</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>同步辐射光源的波段非常宽：从红外、可见光、紫外，到软 X 射线、硬 X 射线，一直到伽马射线。因为宽，用时可以通过技术手段把需要的波段引出来——硬 X 射线、软 X 射线、紫外，按需求取用。</p><p>为什么要分不同波段？因为特定波段的电磁波对物质作用的敏感对象不一样：太赫兹对分子的旋转特别敏感，红外线对分子振动敏感，可见光对应物质外层电子的跃迁，紫外光对电子跃迁也敏感，X 射线专门做 X 射线衍射，伽马射线对应原子核的跃迁。取不同波段，就是探测不同方面。光的能量与波长有换算关系：E(keV) = 12.4 / λ(Å)。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>同步辐射的波段非常宽，从红外线、可见光、紫外线、软X射线、硬X射线一直到伽马射线。因为宽了之后，可以通过技术手段把需要的波段引出来。</p><p>太赫兹对分子的旋转特别敏感，红外线对分子的振动敏感，可见光对物质外层电子的跃迁，X射线就专门做X射线衍射，伽马射线对应原子核的跃迁。取不同波段就是为了探测不同的方面。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s13">
+  <div class="slides"><figure class="slide" id="slide-21">
+<img src="slides/slide_21.png" alt="课件第21页 电磁波对物质的作用方式">
+<figcaption><span class="sno">21</span><span class="stitle">电磁波对物质的作用方式</span></figcaption>
+</figure>
+<figure class="slide" id="slide-22">
+<img src="slides/slide_22.png" alt="课件第22页 高压研究的探测手段和物质性质（David Mao）">
+<figcaption><span class="sno">22</span><span class="stitle">高压研究的探测手段和物质性质（David Mao）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">13</span>
+      <div class="sec-tt">
+        <h2>光与物质的相互作用</h2>
+        <div class="sec-meta"><span class="time">录音 00:36:00 - 00:40:00</span><span class="chip">课件 21</span><span class="chip">课件 22</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>一束光打到样品上，接收时要分清几种光：反射回去的叫反射光，穿过去的叫透射光；强度越变越小、厚度够大穿不过去、全部被吸收的叫吸收光。反射、透射、吸收的波长不变——入射光是啥颜色出来还是啥颜色。还有一种，光打在样品上向四面八方散开，叫散射光。散射光分两种：弹性散射——光的颜色没有改变（蓝光进蓝光出）；非弹性散射——波长发生变化（有红移或蓝移）。看论文时经常看到“透射光、吸收光、散射光”“弹性散射、非弹性散射”，这个概念要弄清楚。</p><p>毛河光（David Mao）总结过高压研究的探测手段和要探测的物质性质：左边是原位探测手段（光学观察、UV-VIS-IR 吸收、发光、拉曼、布里渊、X 射线衍射、X 射线吸收谱、穆斯堡尔谱、中子衍射、电导率、磁化率等），右边是高压下要探测的性质（晶体学、无定形结构、相变、反应动力学、氧化态、状态方程、弹性、塑性、声子色散、电子能带结构、金属化、自旋态、超导电性、磁性等）。这张图就是今天这节课的课外作业，回去自学。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>打到样品上来，反射回去的叫反射光，穿过去的叫透射光，强度变小、穿不过去全部吸收掉的叫吸收光。还有打在样品上向四面八方散开的，叫散射光，分弹性散射和非弹性散射：颜色没变就是弹性散射，波长变了就是非弹性散射。</p><p>这个是毛先生总结的高压研究的探测手段和要探测的物质性质，放到最后，是大家的课外作业，到时候自学一下。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s14">
+  <div class="slides"><figure class="slide" id="slide-23">
+<img src="slides/slide_23.png" alt="课件第23页 X 射线衍射 XRD 与布拉格方程">
+<figcaption><span class="sno">23</span><span class="stitle">X 射线衍射 XRD 与布拉格方程</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">14</span>
+      <div class="sec-tt">
+        <h2>X 射线衍射（XRD）与布拉格方程</h2>
+        <div class="sec-meta"><span class="time">录音 00:40:00 - 00:46:00</span><span class="chip">课件 23</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>金刚石压腔最重要的探测手段就是 X 射线衍射——探测物质结构最有效的方法。讲 X 射线就绕不开它的历史：1895 年，德国的伦琴发现了 X 射线——当时著名的事是让他夫人把手伸进去拍照片，骨头和戒指都显示出来，非常震撼。1901 年伦琴获诺贝尔奖，这是第一个诺贝尔物理学奖。后来劳厄拿 X 光去照晶体，在背景板上接收到很多大大小小的点，叫劳厄斑——他认为这是晶体对 X 射线的衍射，证明了 X 射线是电磁波、有波动性（否则直线传播怎么会偏离直线出现光点）。</p><p>劳厄发表后，布拉格父子（转写中说的“父女”为口误）仅过一年就解释了这个现象，提出了著名的布拉格方程：2d·sinθ = nλ。两束光打到规则排列的晶面上，光程差 2d·sinθ 等于波长的整数倍时发生干涉，形成亮点或条纹。这里 d 就是晶格间距——我们测半天石盐、石英，要的就是晶格参数（a、b、c、α、β、γ），布拉格方程把 d 直接给了我们：入射角 θ 可以测量，波长 λ 已知，衍射级数 n 知道，d 就算出来了。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>X射线是人类真正很伟大的一个发现，1895年伦琴发现的，1901年就获得了诺贝尔奖，这是第一个诺贝尔奖。</p><p>劳厄拿X光去照晶体，背景板上接收到很多点，有小的有大的，这些点叫劳厄斑，他证明了X射线是电磁波、有波动性。布拉格父子研究这个现象，提出了布拉格方程：2d·sinθ等于nλ，只有在这种情况下才能发生干涉，形成一个亮点或者条纹。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s15">
+  <div class="slides"><figure class="slide" id="slide-24">
+<img src="slides/slide_24.png" alt="课件第24页 角度色散 X 射线衍射（ADXRD）">
+<figcaption><span class="sno">24</span><span class="stitle">角度色散 X 射线衍射（ADXRD）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-25">
+<img src="slides/slide_25.png" alt="课件第25页 ADXRD：绿帘石高压衍射">
+<figcaption><span class="sno">25</span><span class="stitle">ADXRD：绿帘石高压衍射</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">15</span>
+      <div class="sec-tt">
+        <h2>角度色散 X 射线衍射（ADXRD）</h2>
+        <div class="sec-meta"><span class="time">录音 00:46:00 - 00:50:00</span><span class="chip">课件 24</span><span class="chip">课件 25</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>角度色散 X 射线衍射（ADXRD）用单色光：入射的时候变换入射光的角度。单晶出来是一个个星星点点的衍射点，比如对绿帘石（300 μm 大小）和红宝石照完，2.5 GPa 时单晶衍射点上都标着 211 面、311 面、121 面等晶面指数；加压后衍射点位置都变了。把这些图谱让计算机一分析，就能获得体积——随着压强升高（拧螺丝加压），把体积随压强的变化画出来，就是状态方程：我们要知道这种矿物在多大压强下体积是多少，再进一步分析地球内部的事情。</p><p>如果把晶体研成粉末压成片再照，就是 X 射线粉晶衍射：粉末晶粒方向各向都有，衍射斑点连成一个个同心圆环。测量每一条衍射环从中心到它的距离，加上已知的入射角和波长，就能算出 2θ、算出 d。亮斑曝光深的地方光强高、光弱的地方浅。现在的鉴定软件（比如 Jade）把图谱导进去，会自动跟数据库中的标准卡片比对——这个 PDF 不是便携式文档的 PDF，而是 Powder Diffraction File（粉晶衍射卡片库，ICDD 国际衍射数据中心），以前都做成纸质卡片放在抽屉里，哗啦抽出来一张对一对，对上了就鉴定出是哪种物质、化学式、名称、晶格参数。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>单晶的话，出来是一个个星星点点的点；粉晶就是把晶体研成粉末压成一个片儿再照，各个方向都有，斑点就变成了一个个圈儿。</p><p>PDF卡号不是咱们的PDF文件，PDF指的是Powder Diffraction File，粉晶衍射卡片。以前计算机没那么发达，都做成纸质卡片放抽屉里，抽出来跟你的对一对，对上了就鉴定出是哪种物质。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s16">
+  <div class="slides"><figure class="slide" id="slide-26">
+<img src="slides/slide_26.png" alt="课件第26页 能量色散 X 射线衍射（EDXRD）">
+<figcaption><span class="sno">26</span><span class="stitle">能量色散 X 射线衍射（EDXRD）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">16</span>
+      <div class="sec-tt">
+        <h2>能量色散 X 射线衍射（EDXRD）</h2>
+        <div class="sec-meta"><span class="time">录音 00:50:00 - 00:52:00</span><span class="chip">课件 26</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>另一种是能量色散 X 射线衍射（EDXRD），用连续谱：有时候金刚石压腔或别的装置在同步辐射上不好调角度，就用连续光（比如从 500 到 1100 都有）直接照一下，不变换角度，得到衍射信号随能量的变化曲线。利用 λ = 12.4/E(keV) 把能量轴转换成 2θ 轴或直接算 d，再用布拉格方程处理。角度色散最常用，能量色散快捷一点，但精度差一些。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>能量色散X射线衍射呢，就是说有时候金刚石压腔放那儿之后不好调那个角度，就用连续的谱直接照一下，不变换角度，也能得到五线随能量的变化曲线。利用λ等于12.4除以能量，把能量轴转化成2θ的轴，或者直接算d。角度色散最常用，能量色散快捷一点，但精度差一点。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s17">
+  <div class="slides"><figure class="slide" id="slide-27">
+<img src="slides/slide_27.png" alt="课件第27页 X 射线吸收谱（XAS）">
+<figcaption><span class="sno">27</span><span class="stitle">X 射线吸收谱（XAS）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-28">
+<img src="slides/slide_28.png" alt="课件第28页 X 射线吸收谱的应用：菱铁矿">
+<figcaption><span class="sno">28</span><span class="stitle">X 射线吸收谱的应用：菱铁矿</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">17</span>
+      <div class="sec-tt">
+        <h2>X 射线吸收谱（XAS）</h2>
+        <div class="sec-meta"><span class="time">录音 00:52:00 - 00:57:00</span><span class="chip">课件 27</span><span class="chip">课件 28</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>X 射线穿过样品时强度会衰减，这就是吸收。当能量等于内层电子的电离能时，吸收系数会突变、蹦出一个峰，再走到下一个合适的能量又蹦出一个峰——这种精细结构叫 XAFS（X 射线吸收精细结构谱，也叫 XAS）。它分两部分：离吸收边近的叫 XANES（近边吸收），离得远的叫 EXAFS（扩展边吸收）。近边吸收对元素的价态和原子周围局部的结构敏感，扩展边吸收对配位数和无序度敏感。</p><p>XAS 正好和 X 射线衍射互补：XRD 最好用于晶体——整体在空间上周期性有序；XAS 适合非晶态的东西——玻璃、沥青这类没有长程晶体结构的，测近程结构就拿 X 射线吸收去测。提到 K 边吸收、L 边吸收，就知道用的是 X 射线吸收：1s 电子跃迁叫 K 边，2s、2p 的叫 L 边。应用例子：白金 L3 边随电压增加看出价态氧化还原反应；菱铁矿不同压力下 Fe 的 K 边 XANES 谱，低压时几个峰看得很清楚，到 37.3 GPa 左右峰就消失了，还出现一个小峰——说明菱铁矿的电子结构开始发生变化（高自旋向低自旋转变），能清晰地看到高压下的变化。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>X射线穿过样品的时候，它的强度会衰减，这就是吸收。当能量等于内层电子电离能的时候，吸收系数就会突变、蹦出一个峰来，走一走又蹦出一个峰，这种结构就叫X射线吸收的精细结构XAFS。</p><p>X射线衍射最好用于晶体，它适合那种非晶态的东西，像玻璃、沥青，没有远程的晶体结构，那就拿X射线吸收去测，正好是互补的关系。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s18">
+  <div class="slides"><figure class="slide" id="slide-29">
+<img src="slides/slide_29.png" alt="课件第29页 穆斯堡尔谱（Mössbauer spectroscopy）">
+<figcaption><span class="sno">29</span><span class="stitle">穆斯堡尔谱（Mössbauer spectroscopy）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-30">
+<img src="slides/slide_30.png" alt="课件第30页 穆斯堡尔谱装置">
+<figcaption><span class="sno">30</span><span class="stitle">穆斯堡尔谱装置</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">18</span>
+      <div class="sec-tt">
+        <h2>穆斯堡尔谱（Mössbauer spectroscopy）</h2>
+        <div class="sec-meta"><span class="time">录音 00:57:00 - 01:02:00</span><span class="chip">课件 29</span><span class="chip">课件 30</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>穆斯堡尔谱：1957 年穆斯堡尔做博士期间发现，物质原子核对伽马射线能产生无反冲的共振吸收。理解：如果伽马射线直接打到自由原子核上，核会反弹（反冲），这种情况下不产生共振吸收；但如果核被束缚在晶格里，打上去想反弹也没处反弹，就发生无反冲的共振吸收——原子核对伽马射线有吸收。1961 年他就获得诺贝尔奖，博士期间发现的东西四年后就拿诺奖，非常厉害。</p><p>穆斯堡尔谱对共振原子周围化学环境的变化极为敏感，对价态、配位、自旋态、磁性这类超精细相互作用非常敏感。但并不是每种元素都适用——最常用的是铁，能测出是二价铁还是三价铁；还有锡等，总共大概三四十种元素敏感，其他不敏感。装置：一边放探测伽马射线强度的探测器，一边是伽马射线源（放射性元素衰变产生），中间塞一个金刚石压腔，让源带着速度平移过来、尽量贴近观察孔（出来的量少，贴近才能测到）。单个光子不同能量的获得，靠多普勒效应——移动源以不同速度穿过，记下不同的多普勒频移，所以穆斯堡尔谱横轴是速度，代表伽马光不同的能量。谱图有双峰、四峰、六峰，随压力温度变化，可以用来区分矿物里二价、三价铁的位置，比如含铝的 NAL 矿物。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>穆斯堡尔1957年做博士期间发现物质的原子核对伽马射线能够产生无反冲的共振吸收……如果这个核是在晶体里头，被箍在晶格上，那打上去之后想反弹也没地儿反弹，这个时候就会发生无反冲的共振吸收。</p><p>最常用的就是铁，它能够探测是二价铁还是三价铁。总共大概有三四十种元素对穆斯堡尔谱敏感。装置横轴是速度，意味着是给伽马光不同的能量带。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s19">
+  <div class="slides"><figure class="slide" id="slide-31">
+<img src="slides/slide_31.png" alt="课件第31页 拉曼光谱（Raman spectroscopy）">
+<figcaption><span class="sno">31</span><span class="stitle">拉曼光谱（Raman spectroscopy）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-32">
+<img src="slides/slide_32.png" alt="课件第32页 拉曼光谱：FeP2 与激光显微共聚焦拉曼">
+<figcaption><span class="sno">32</span><span class="stitle">拉曼光谱：FeP2 与激光显微共聚焦拉曼</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">19</span>
+      <div class="sec-tt">
+        <h2>拉曼光谱（Raman spectroscopy）</h2>
+        <div class="sec-meta"><span class="time">录音 01:02:00 - 01:07:00</span><span class="chip">课件 31</span><span class="chip">课件 32</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>拉曼光谱在高压实验里用得非常多。拉曼是印度人，1928 年发现拉曼散射，1931 年获得诺贝尔奖——这是亚洲的第一个诺贝尔奖。它属于非弹性散射：入射光打到物质上，散射光频率不变的叫瑞利散射（弹性散射）；频率变小的形成斯托克斯线，频率变大的形成反斯托克斯线，两者峰位对称，但斯托克斯线强度大，所以通常研究斯托克斯线。机理：一束光打到基态，激发到一个虚态，回跃迁时频率发生一点变化——减一个小量就是斯托克斯，加一个小量就是反斯托克斯。</p><p>拉曼光谱的优势：具有指纹特征，是物质鉴定和声子结构的指纹；跟入射光波长没关系，不管用黄光、绿光、蓝光照，得到的频移都一样。现在拉曼光谱仪很普及，配一个显微镜就是激光显微共聚焦拉曼光谱仪——在薄片底下找包裹体、找矿物，打一个拉曼光，就能探出这东西含碳还是含硫。优点：简单、快、无损、定量定性都很好；对水和玻璃不敏感，测溶液样品很方便（测的是溶质，水和玻璃透明没有干扰）。最大的劣势是受荧光散射干扰——所以金刚石压腔测拉曼时一定要选干净的地方，选 IIa 型金刚石（不含氮、不含硼），不会发荧光、干扰小。例子：FeP2（磷化铁）常压几个峰，到 4 GPa 长这样、10 GPa 长这样，到 15 GPa 几个峰都没了只剩两个峰，到 28 GPa 变化更大——10 到 15 GPa 之间肯定发生了相变。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>拉曼是一个印度人，1928年发现的，1931年获得诺贝尔奖，这是亚洲的第一个诺贝尔奖。</p><p>频率变小形成斯托克斯线，频率变大形成反斯托克斯线，峰位是对称的，但斯托克斯线强度大一点，所以大家选好识别的来研究。</p><p>最大劣势是受荧光散射的干扰，所以测拉曼的时候一定要选干净的地方，选IIa型、不含氮不含硼的那种金刚石，不会发荧光，测出来就准。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s20">
+  <div class="slides"><figure class="slide" id="slide-33">
+<img src="slides/slide_33.png" alt="课件第33页 红外光谱（Infrared spectroscopy）">
+<figcaption><span class="sno">33</span><span class="stitle">红外光谱（Infrared spectroscopy）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">20</span>
+      <div class="sec-tt">
+        <h2>红外光谱（Infrared spectroscopy）</h2>
+        <div class="sec-meta"><span class="time">录音 01:07:00 - 01:09:00</span><span class="chip">课件 33</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>红外光谱更普通了，桌上摆一个盒子就能测。鉴定矿物的经常说“这翡翠拿去做一下红外”——打开盖放进去，发红外光谱一记录，回去对着标准图谱对比，鉴定矿物非常有效。它是一种“分子指纹光谱”，峰位、峰数、强度等特征对具有红外活性的化合物（振动耦合致偶极矩变化的分子）鉴定非常有效。</p><p>拉曼对水、玻璃不敏感，红外光谱对水特别敏感——两者正好配合着用：要测矿物里的含水量、包裹体的水含量，用红外光谱一测就完了。水分子（一个氧两个氢）在红外光谱上有不同的吸收峰：对称伸缩振动、反对称伸缩振动、弯曲振动。以前磨包裹体薄片，磨得比普通薄片厚一点，找包裹体，找着了拿红外一测水含量就报出来了。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>翡翠拿去做一下红外，把盖儿打开搁进去，一开店门，发那个红外光谱一记录，回去对着图谱对比，鉴定矿物非常有效。</p><p>拉曼光谱对水、玻璃不敏感，红外光谱对水特别敏感，这两个正好配合着用。要测矿物里头的含水量，拿红外光谱一测就完了。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s21">
+  <div class="slides"><figure class="slide" id="slide-34">
+<img src="slides/slide_34.png" alt="课件第34页 布里渊散射（Brillouin scattering）">
+<figcaption><span class="sno">34</span><span class="stitle">布里渊散射（Brillouin scattering）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">21</span>
+      <div class="sec-tt">
+        <h2>布里渊散射（Brillouin scattering）</h2>
+        <div class="sec-meta"><span class="time">录音 01:09:00 - 01:12:00</span><span class="chip">课件 34</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>布里渊散射涉及一个稍微难理解的概念——声子。声子指晶格集体振动运动的量子态，是抽象出来的概念，没有像电子、原子那样的实物，是准粒子：晶格沿某个方向振动快，是某种特征；另一块晶体振动慢，是另一种集体振动。布里渊散射的本质是入射光与物质的声学声子相互作用的一种非弹性散射，与拉曼散射类似，只是频移很小、能量很低——声子分两种，声学声子和光学声子：拉曼散射反映入射光与光学声子的作用，布里渊散射反映与声学声子的作用。</p><p>布里渊散射最有用的是测定样品声速（纵波和横波），进一步计算弹性模量。公式：V = Δω·λ / (2·sin(θ/2))——λ 是入射光波长，θ 是入射角，Δω 是频移量。测量时打一束激光（如氩离子激光 514.5 nm），以一定角度入射（比如 φ=50°），散射光经六通串联法布里-珀罗干涉仪分析，测出频移，代入角度和波长就算出速度。金刚石压腔有的前头张角做得特别大，就是为了配合做布里渊散射——转一个角度测一个速度，转一圈，纵波速度、横波速度都得到了。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>声子指的是晶格集体振动运动的量子态，是抽象出来的一个概念，是准粒子，不像电子、原子那种粒子有实物。</p><p>布里渊散射最有用的是测定样品声速，包含纵波和横波，进一步计算弹性模量。V等于Δωλ除以2sin(θ/2)，λ是入射光波长，θ是入射角，Δω是频移。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s22">
+  <div class="slides"><figure class="slide" id="slide-35">
+<img src="slides/slide_35.png" alt="课件第35页 电导率（Electrical conductivity）">
+<figcaption><span class="sno">35</span><span class="stitle">电导率（Electrical conductivity）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-36">
+<img src="slides/slide_36.png" alt="课件第36页 电阻率（Resistance）">
+<figcaption><span class="sno">36</span><span class="stitle">电阻率（Resistance）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">22</span>
+      <div class="sec-tt">
+        <h2>电导率与电阻率测量</h2>
+        <div class="sec-meta"><span class="time">录音 01:12:00 - 01:14:00</span><span class="chip">课件 35</span><span class="chip">课件 36</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>电导率测量在大压机实验里常用，金刚石压腔里也可以测。金刚石压腔要在压砧面上布电极——通过镀膜、刻蚀做出电极（金刚石压腔那一节讲过）。测得好的话，可以看到电导率随温度的变化、随压力的变化。讲大压机时讲过压标物质（金属铋等），它们随压力变化时电导率发生突变——每一个突变对应一个相变点，用来标定压力区间。课件里这张图（Han et al., 2005, PRL）测的就是铁镁硅酸盐的电导率随压力的变化。电阻率方面，含铝的 Phase D（FeAl-bearing）测出的电阻率在 11.4、11.1、10.8 欧姆量级。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>电导率的话，金刚石压腔要在针面上布电极，经过镀膜、刻蚀做出电极。随着温度的变化、随着压力的变化，电导率都有变化。</p><p>讲大压机的时候讲过压标物质，金属铋，测它随压力变化的电导率突变，每一个突变对应一个相变点，用来标定压力区间。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s23">
+  <div class="slides"><figure class="slide" id="slide-37">
+<img src="slides/slide_37.png" alt="课件第37页 原位光学观察：锂辉石与菱铁矿相变">
+<figcaption><span class="sno">37</span><span class="stitle">原位光学观察：锂辉石与菱铁矿相变</span></figcaption>
+</figure>
+<figure class="slide" id="slide-38">
+<img src="slides/slide_38.png" alt="课件第38页 原位光学观察：HDAC 观测冰的融化">
+<figcaption><span class="sno">38</span><span class="stitle">原位光学观察：HDAC 观测冰的融化</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">23</span>
+      <div class="sec-tt">
+        <h2>原位光学观察</h2>
+        <div class="sec-meta"><span class="time">录音 01:14:00 - 01:17:00</span><span class="chip">课件 37</span><span class="chip">课件 38</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>最后是最通常、最直接的原位光学观察。光学观察能看到相变：比如锂辉石（LiAlSi₂O₆）的高压相变（Seifert, 2004）——照片里有的地方是黄的、有的是红的，因为压下去时应力没那么均匀，靠近中心压力更大，把螺丝轻轻调一调就能清晰地看见高压相变区；菱铁矿的高压相变（Lavina et al.）也是光学观察的经典例子。</p><p>另一个例子是用水热金刚石压腔（HDAC）原位观测冰的融化过程：腔里放水，加压降温到 -22.5 ℃ 以下已经结冰，打过 X 光识别出是冰 I 型、III 型、V 型；然后升温，拿显微镜盯着，看到冰 I、III、V 号冰的融化过程，测定 V 号冰最终融化温度为 -11.9 ℃，此时水的密度为 1.15 g/cm³。光学观察最直接。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>光学观察是最直接的。锂辉石的照片，这边是黄的，这边是红的，因为压下去的时候应力没那么均匀，靠近中心压力更大，把螺丝轻轻调一调就能清晰地看见高压相变区。</p><p>用HDAC观测冰的融化过程，加压之后降到-22.5度已经结冰，打过X光识别出来是冰I型、III型、V型，然后升温过程中拿显微镜盯着看融化。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s24">
+  <div class="slides"><figure class="slide" id="slide-39">
+<img src="slides/slide_39.png" alt="课件第39页 地球深部物质的几个重要参量">
+<figcaption><span class="sno">39</span><span class="stitle">地球深部物质的几个重要参量</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">24</span>
+      <div class="sec-tt">
+        <h2>总结：地球深部物质的几个重要参量</h2>
+        <div class="sec-meta"><span class="time">录音 01:17:00 - 01:19:00</span><span class="chip">课件 39</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>总结一下：探测地球深部物质，需要了解这些重要参量。第一是 P-T-V 状态方程，需要晶格参数（a、b、c、α、β、γ），得到晶格参数就能测体积、算密度，还要体弹模量 K、剪切模量 G。第二是波速——纵波速度 V_P、剪切波速度 V_S、单晶弹性（c_ij 或 s_ij），这些涉及压缩波、剪切波、体弹模量、剪切模量。第三是输运性质（声子态密度、声子色散、单晶 V_P、V_S 随晶体取向的变化）。第四是各向异性及形变——应力下的择优取向、蠕变规律和变形机制。</p><p>流变性涉及布里渊散射的测量，各向异性变化涉及单晶 V_P/V_S 随取向的变化。这些都是矿物物理学研究地球深部物理的重要参数。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>最重要最重要的就是这个矿物的PVT状态方程，需要晶格参数，得到晶格参数就能测体积、算密度。然后是波速，压缩波、剪切波，体弹模量、剪切模量。</p><p>输运性质涉及到声子色散、单晶VP/VS随晶体取向的变化，各向异性及形变涉及应力下的择优取向、蠕变规律和变形机制。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s25">
+  <div class="slides"><figure class="slide" id="slide-40">
+<img src="slides/slide_40.png" alt="课件第40页 作业 MP2.2：自学探测手段与物质性质">
+<figcaption><span class="sno">40</span><span class="stitle">作业 MP2.2：自学探测手段与物质性质</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">25</span>
+      <div class="sec-tt">
+        <h2>作业 MP2.2 与答疑</h2>
+        <div class="sec-meta"><span class="time">录音 01:19:00 - 01:23:00</span><span class="chip">课件 40</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>这节课的作业是 MP2.2：自学此页“高压研究的探测手段和物质性质”（David Mao 总结），4 人一组、合作过的不能同组，利用 AI 自学，写明过程和分工。这节课挑了 X 射线衍射、X 射线吸收谱、穆斯堡尔谱、拉曼、红外、布里渊散射、电导率、光学观察等几种讲，其他的（如 X 射线发射谱、非弹性 X 射线散射、中子散射、核磁共振等）留给大家自学。</p><p>答疑部分：第一个问题，DAC 压力“550 GPa 还是 1000 GPa”的口径差异——谢鸿森老先生总结的表格里写的是 550 GPa，来源是毛河光当年用金刚石压腔做出的 550 GPa；后来两位俄罗斯科学家在金刚石压腔里套二级压砧，顶到了 1000 GPa 以上，所以现在应该是 1000 GPa，讲义还没改，回头改过来。第二个问题，矿物物理学学科历史“40 年还是 70 年”——安德森 1965 年在实验室门口贴了“矿物物理学实验室”的门牌，1977 年才开了第一届国际矿物物理学大会；70 年一说参考的是伯奇（Birch）1952 年发表的著名论文（地球内部的组成、构造和结构），从 1952 年算到现在六七十年，学科历史是个发展过程，没法给一个明确起点。</p><p>第三个问题：金刚石压腔烧那么高的温度，金刚石（碳）不会氧化吗？外加温到六七百度以下没问题；六七百度以上必须通氩气、氮气——把金刚石压腔放进玻璃管里一直充氮气，没有氧气就不会氧化。内加温（激光加热）能达到四五千度，但激光光点直扑样品腔，就那一点是四五千度；到金刚石那个位置温度已经降下来了，低于六七百度的安全线，所以激光加热压腔也没问题。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>作业MP2.2：自学此页高压研究的探测手段和物质性质，4人一组，合作过的不同组，利用AI，写明过程和分工。</p><p>550GPa的来源应该是毛河光当年拿金刚石压腔做出来的；后来两个俄罗斯人在金刚石压腔里头套了个二级压砧，顶到了1046GPa，所以现在应该说是1000GPa。</p><p>外加温到六七百度之下没问题；之上必须通氩气、通氮气，放到玻璃管里一直充着氮气，没有氧气就不会氧化。内加温激光光点直扑样品腔，就那一点是四五千度，到金刚石那个位置温度已经可以接受了，低于六七百度的安全线。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（180083070901P2003H）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>

@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>矿物物理学（180083070901P2003H） · 第二章 金刚石压腔实验技术｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>矿物物理学（180083070901P2003H） · 第二章 金刚石压腔实验技术</h1>
+    <div class="sub">第二章 金刚石压腔实验技术 ｜ 2026-09-10 ｜ 授课：郭光军</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 46 页 · 整理 24 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-s01">01 课程引入：DAC 是什么</option>
+<option value="sec-s02">02 DAC 工作原理</option>
+<option value="sec-s03">03 压砧为什么选金刚石</option>
+<option value="sec-s04">04 用 DAC 观测到的高压相变</option>
+<option value="sec-s05">05 DAC 的发展史</option>
+<option value="sec-s06">06 DAC 的类型</option>
+<option value="sec-s07">07 DAC 装置与附件</option>
+<option value="sec-s08">08 DAC 的压腔（cell）与加载方式</option>
+<option value="sec-s09">09 DAC 的底座（seat）</option>
+<option value="sec-s10">10 DAC 的压砧：材料要求与金刚石分级</option>
+<option value="sec-s11">11 DAC 压砧的倒角（bevel）</option>
+<option value="sec-s12">12 DAC 封垫（gasket）</option>
+<option value="sec-s13">13 加温方式：外加热与激光加热</option>
+<option value="sec-s14">14 观察实物</option>
+<option value="sec-s15">15 实验准备和步骤：预压、打孔与调平</option>
+<option value="sec-s16">16 样品腔：尺寸与体积计算</option>
+<option value="sec-s17">17 传压介质（pressure medium）</option>
+<option value="sec-s18">18 装样：两难之一</option>
+<option value="sec-s19">19 在样品腔中接电</option>
+<option value="sec-s20">20 压力标定的三种方法</option>
+<option value="sec-s21">21 DAC 获得的压力：从几百 GPa 到 TPa</option>
+<option value="sec-s22">22 DAC 获得的压力-温度范围</option>
+<option value="sec-s23">23 双面激光加热与实验室装置</option>
+<option value="sec-s24">24 作业与课程总结</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 矿物物理学-2.1-金刚石压腔实验技术.pdf 逐页渲染，转写原文见 record_20260910.txt。</div>
+<section class="sec" id="sec-s01">
+  <div class="slides"><figure class="slide" id="slide-01">
+<img src="slides/slide_01.png" alt="课件第1页 封面：金刚石压腔实验技术">
+<figcaption><span class="sno">01</span><span class="stitle">封面：金刚石压腔实验技术</span></figcaption>
+</figure>
+<figure class="slide" id="slide-02">
+<img src="slides/slide_02.png" alt="课件第2页 金刚石压腔 DAC（Diamond Anvil Cell）">
+<figcaption><span class="sno">02</span><span class="stitle">金刚石压腔 DAC（Diamond Anvil Cell）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-03">
+<img src="slides/slide_03.png" alt="课件第3页 DAC 装置实物（直径 5 cm，高 2.5 cm）">
+<figcaption><span class="sno">03</span><span class="stitle">DAC 装置实物（直径 5 cm，高 2.5 cm）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>课程引入：DAC 是什么</h2>
+        <div class="sec-meta"><span class="time">录音 00:00:00 - 00:02:00</span><span class="chip">课件 1</span><span class="chip">课件 2</span><span class="chip">课件 3</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>今天我们讲金刚石压腔的实验技术。金刚石压腔简称 DAC（Diamond Anvil Cell）——"金刚石"就是 Diamond，"压腔"对应的就是那个顶着东西受力的"砧"（Anvil）。单用一个面去压，底下那个面不够硬可不行，干脆两头都用金刚石对着顶，这就叫金刚石对顶砧。</p><p>整个装置非常小：实物直径大约 5 厘米，高度 2.5 到 5 厘米不等，揣在口袋里就能出差——带到同步辐射线站上，拿 X 光一照，数据采回来就可以分析写论文了。装置里头，两个底座上各放一颗金刚石，相对而立，围出来一个极小的样品腔；腔的体积很小，后面会让大家动手算一算。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这个金刚石压枪呢，简称就是DAC，DIA就是金刚石……安就是这个针的意思，就是有个东西顶着它受力的这种东西。</p><p>这个东西就长这样，直径就是这么大，5cm，高度不一定，薄点的2.5cm，高点的5cm或者再有更高的10。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s02">
+  <div class="slides"><figure class="slide" id="slide-04">
+<img src="slides/slide_04.png" alt="课件第4页 DAC 工作原理">
+<figcaption><span class="sno">04</span><span class="stitle">DAC 工作原理</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>DAC 工作原理</h2>
+        <div class="sec-meta"><span class="time">录音 00:02:00 - 00:03:00</span><span class="chip">课件 4</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>工作原理其实很简单：让电磁辐射——你可以就当它是光，可见光、红外、紫外都算——从上方照下来，打到样品上；不管是发生 X 射线衍射、吸收还是拉曼散射，出来的谱学信号赶紧接收下来就可以了。</p><p>这时候研究的是谁？是样品。样品就待在样品腔里，承受着几百 GPa 的压力。在那样的压力下，它的结构、性质都会发生变化，你拿电磁波一探测，变化就探测出来了，实验就算做成了。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>它的原理是什么呢。就是让电磁辐射，说起来电磁辐射你就当是光……从这上面照下来，打到样品，不管是发生的X射线衍射啦，吸收啦，拉曼，反正出来的那个谱学性质就赶紧把它接收了。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s03">
+  <div class="slides"><figure class="slide" id="slide-05">
+<img src="slides/slide_05.png" alt="课件第5页 压砧为什么选金刚石">
+<figcaption><span class="sno">05</span><span class="stitle">压砧为什么选金刚石</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>压砧为什么选金刚石</h2>
+        <div class="sec-meta"><span class="time">录音 00:03:00 - 00:06:00</span><span class="chip">课件 5</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>问题来了：压砧为什么选金刚石？因为它有六个特别好的性质，好记不难：第一，硬度高——莫氏硬度计里排第 10，是最硬的物质；第二，透明，光能从它身上穿过去看样品；第三，是绝缘体；第四，化学性质惰性，不容易跟样品反应；第五，导热率高，所以珠宝鉴定常拿热导率仪测是不是真钻；第六，晶体结构简单——每个碳原子周围连着 4 个碳，在空间里无限延伸。</p><p>也有人拿刚玉之类做砧面，但跟金刚石比还是差一些。市面上能买到的一小盒莫氏硬度计标准矿物，里头放的是金刚石砂，谁也不可能往那儿放一大块真钻——那一颗可就价值连城了。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这个金刚石，它有这么6个特别好的性质……第1个呢，特别硬……第2个呢，它透明……第3个呢，它是绝缘体。再一个呢，化学成分它比较惰性。第5个呢，是热导率特别高……这最后一个呢，是晶体结构特别简单。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s04">
+  <div class="slides"><figure class="slide" id="slide-06">
+<img src="slides/slide_06.png" alt="课件第6页 用 DAC 观测到菱铁矿的高压相变">
+<figcaption><span class="sno">06</span><span class="stitle">用 DAC 观测到菱铁矿的高压相变</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>用 DAC 观测到的高压相变</h2>
+        <div class="sec-meta"><span class="time">录音 00:06:00 - 00:08:00</span><span class="chip">课件 6</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>在金刚石压腔里确实能直接观察到高压相变。比如菱铁矿（碳酸铁），10 GPa 的时候样品发白，压到 50 GPa 就发绿了，再往上到 70 GPa 变成红色——成分不可能变，还是铁、碳、氧，变的只能是结构。颜色一变，说明结构变了，这对矿物物理学来说是很重要的事。</p><p>这让人想起上节课说过的几个重要界面：大约 660 公里处的地幔过渡带，α 相橄榄石要转变成 β 相瓦兹利石，再往下变 γ 相尖晶石，到核幔边界附近变成方镁石和钙钛矿；还有一个非常重要的界面是核幔边界，那里钙钛矿要转变成后钙钛矿。这些相变界面，很多就是在 DAC 这类高压装置里一步步做出来的。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>一个菱铁矿放在那儿，10GPa的时候发白，到了50GPa就发绿了……成分不可能变，反正在那压着呢，那个碳酸铁，结构发生变化之后，你看颜色都变了。</p><p>有几个重要的界面，像地幔过渡带……阿尔法橄榄石在那儿要变成贝塔相橄榄石，瓦特利石，再往下变尖晶石，再下面到方镁石和钙钛矿……核幔边界，钙钛矿变成后钙钛矿，结构变了，非常重要。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s05">
+  <div class="slides"><figure class="slide" id="slide-07">
+<img src="slides/slide_07.png" alt="课件第7页 DAC 的发展史（Bassett 50 周年文献）">
+<figcaption><span class="sno">07</span><span class="stitle">DAC 的发展史（Bassett 50 周年文献）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-08">
+<img src="slides/slide_08.png" alt="课件第8页 DAC 的发展史（Bridgman 与对顶砧）">
+<figcaption><span class="sno">08</span><span class="stitle">DAC 的发展史（Bridgman 与对顶砧）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-09">
+<img src="slides/slide_09.png" alt="课件第9页 DAC 的发展史（Jamieson）">
+<figcaption><span class="sno">09</span><span class="stitle">DAC 的发展史（Jamieson）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-10">
+<img src="slides/slide_10.png" alt="课件第10页 DAC 的发展史（1958 年第一个 DAC）">
+<figcaption><span class="sno">10</span><span class="stitle">DAC 的发展史（1958 年第一个 DAC）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>DAC 的发展史</h2>
+        <div class="sec-meta"><span class="time">录音 00:08:00 - 00:14:00</span><span class="chip">课件 7</span><span class="chip">课件 8</span><span class="chip">课件 9</span><span class="chip">课件 10</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>DAC 的发展史，更多的内容留给大家课后去读那篇文献——就是今天的作业：W.A. Bassett 的《Diamond Anvil Cell, 50th Birthday》。注意看文献要仔细：文章 2009 年发表，但作者写的时候是 1958 年，讲的是 DAC 诞生那一年的事。</p><p>讲到高压技术，绕不开高压物理学的鼻祖布里奇曼（P.W. Bridgman，1882-1961），他因为高压物理的成就获得了 1946 年诺贝尔物理学奖。他最重要的贡献之一是对顶砧（opposed anvil）装置——拿碳化钨两头对顶，就能产生当时其他手段达不到的高压。沿着这个思路，大家想：只要找到更硬的材料、使更大的劲，就能获得更高的压力，于是想到了金刚石。</p><p>1958 年，美国标准局的团队做出了第一个 DAC：Charles Weir 做成了装置，Alvin Van Valkenburg 第一次在显微镜下用肉眼观察到了 DAC 里的高压相变——眼见为实，所以这个发明被归到他们名下。第一个 DAC 实物现在保存在 Gaithersburg 的 NIST 博物馆里。</p><p>还有个流传的小故事：当时美国海关经常截获走私的金刚石，不能上市流通，就提供给公益事业使用，科学家跑去申请，免费拿到金刚石材料来做实验——所以有人说，金刚石压腔的发展还得感谢海关。技术后来传到 Bassett 手里用得很好；他的学生毛河光（Ho-Kwang Mao）又把这项技术往前推进了一大步，不断刷新压力纪录，从 50 GPa、70 GPa、100 GPa，一路做到 500 多 GPa，已经覆盖了地心的压力温度条件。他后来回国创建了北京高压科学研究中心。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这篇文章呢，是2009年发表的……作者写的时候呢，是1958年写的。</p><p>这个对顶砧技术出来之后，大家就想，只要搞出更硬的材料，使更大的劲儿，不就逐渐弄出更高的压力了吗？想着想着就想到金刚石了，1958年的时候，他就做出了这个东西。</p><p>毛河光他们把这东西又往前使劲儿推进了一大步，不断刷新金刚石压腔能够达到的压力极限，开始50GPa、70GPa、100GPa，最后奔着500多GPa去了。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s06">
+  <div class="slides"><figure class="slide" id="slide-11">
+<img src="slides/slide_11.png" alt="课件第11页 DAC 的类型（一）">
+<figcaption><span class="sno">11</span><span class="stitle">DAC 的类型（一）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-12">
+<img src="slides/slide_12.png" alt="课件第12页 DAC 的类型（二）">
+<figcaption><span class="sno">12</span><span class="stitle">DAC 的类型（二）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>DAC 的类型</h2>
+        <div class="sec-meta"><span class="time">录音 00:14:00 - 00:16:00</span><span class="chip">课件 11</span><span class="chip">课件 12</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>DAC 的工艺可以根据需要设计成不同类型，各有各的优点：有四柱型、BGI 型、BX90 型、对称型、三柱型，还有全景型——全景型的两个金刚石对顶砧周围全部透光，四周都能看得清清楚楚，方便采集各个方向的光信号，放在同步辐射的 X 光里照特别合适。</p><p>今天教室里带来了一个四柱型和一个对称型，一会儿大家分组观察实物。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这个工艺嘛，你可以根据自己的需要设计成不同的类型，各有各的优点，你像这个就叫四柱型，这个叫BGI型，这个叫BX95型，这个叫对称型……还有个全景型，四周全能看得清清楚楚，方便采集那个光。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s07">
+  <div class="slides"><figure class="slide" id="slide-13">
+<img src="slides/slide_13.png" alt="课件第13页 DAC 装置总览">
+<figcaption><span class="sno">13</span><span class="stitle">DAC 装置总览</span></figcaption>
+</figure>
+<figure class="slide" id="slide-14">
+<img src="slides/slide_14.png" alt="课件第14页 DAC 装置的附件">
+<figcaption><span class="sno">14</span><span class="stitle">DAC 装置的附件</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div class="sec-tt">
+        <h2>DAC 装置与附件</h2>
+        <div class="sec-meta"><span class="time">录音 00:16:00 - 00:18:00</span><span class="chip">课件 13</span><span class="chip">课件 14</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>仔细看 DAC 装置：外面是金属枪体（压腔），里面放碳化钨底座，底座上粘金刚石压砧，两个砧对顶着，插进去后用螺栓拧紧——越拧越紧，力就越大。压砧尖端很小，算一下压力就能预估能达到多少。就这么一个小小的空间，不用这个办法，目前真产生不了上百 GPa 的压力。</p><p>旁边那些是 DAC 装置的配件，属于附属作用：有压砧安装夹具、气膜加压套件（后面讲加载方式时会提到气膜）、封垫压痕工具，还有精密组装的调平工具——比如上几扣螺丝时想精确控制位置，就用它旋转，每个角度都能记录，第一次拧到 45° 产生了多大压力，记下来，第二次照着重现就行。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>里头呢，放了一个底座，就是碳化钨……在那个底座上部粘一颗金刚石，把它对顶着……给他拿几个螺丝，4个螺栓一上，越上越紧，劲儿就大……就在这个小小的空间里面，你不用这个办法，目前产生不了上百GPa的压力。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s08">
+  <div class="slides"><figure class="slide" id="slide-15">
+<img src="slides/slide_15.png" alt="课件第15页 DAC 的压腔（cell）与压腔材料">
+<figcaption><span class="sno">15</span><span class="stitle">DAC 的压腔（cell）与压腔材料</span></figcaption>
+</figure>
+<figure class="slide" id="slide-16">
+<img src="slides/slide_16.png" alt="课件第16页 DAC 的设计思路与压力加载模式">
+<figcaption><span class="sno">16</span><span class="stitle">DAC 的设计思路与压力加载模式</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">08</span>
+      <div class="sec-tt">
+        <h2>DAC 的压腔（cell）与加载方式</h2>
+        <div class="sec-meta"><span class="time">录音 00:18:00 - 00:20:00</span><span class="chip">课件 15</span><span class="chip">课件 16</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>从外到里讲。首先是压腔（cell）——枪体材料，是金属的。对它的要求是：硬度高一点，膨胀系数低，最好不要带磁性，比较容易加工。常用的有铁、铍铜合金、Inconel 718（镍铬铁合金）、Nimonic（镍基合金）等。</p><p>设计思路上，压腔分活塞式和导柱式：导柱式有 4 根柱子，压砧组件按着柱子插进去，再上螺丝；活塞式则做成圆弧状的活塞直接套进来。给装置加载力的方式也很多：杠杆式（旋转杠杆把底下的东西顶起来）、螺旋式（螺丝对顶拧紧）、泵加载，还有气动加载——把气膜塞在底下充气，气压一上来就把顶头顶上去了。最常见的就是螺旋加载，非常简单。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>首先一个呢，就是金刚石压腔的这个腔体材料，是金属的。要求呢，要硬一点，膨胀系数低一点，最好不要带磁性，比较容易加工。像常用的铁、铍铜合金，什么镍铬合金、镍铬铁合金，就这些东西。</p><p>设计思路呢，这个压腔就分为活塞式和导柱式……加载力的时候呢，一种就是杠杆式的……再一个就是螺丝对顶……还有一种呢，底下放了一个气垫，往里头充气，就把这头顶上来了。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s09">
+  <div class="slides"><figure class="slide" id="slide-17">
+<img src="slides/slide_17.png" alt="课件第17页 DAC 的底座（seat）">
+<figcaption><span class="sno">17</span><span class="stitle">DAC 的底座（seat）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-18">
+<img src="slides/slide_18.png" alt="课件第18页 DAC 的底座：硬度匹配与可调设计">
+<figcaption><span class="sno">18</span><span class="stitle">DAC 的底座：硬度匹配与可调设计</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">09</span>
+      <div class="sec-tt">
+        <h2>DAC 的底座（seat）</h2>
+        <div class="sec-meta"><span class="time">录音 00:20:00 - 00:22:00</span><span class="chip">课件 17</span><span class="chip">课件 18</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>底座是干嘛的？金刚石不能直接和金属接在一起——金属的强度还差一点意思。两者之间要用一个硬度介于金属和金刚石之间的材料，碳化钨就很好，比金属硬得多。设计的原则是：腔体材料的硬度 < 底座的硬度 < 金刚石的硬度，满足这个链条，压腔工作起来才稳定、不容易坏。</p><p>底座的材料通常采用碳化钨，还有刚玉（Al₂O₃）和立方氮化硼（cBN）。底座设计上要留灵活性：两个金刚石台面很难保证绝对平行，所以底座底部做成半球状或半圆柱状，歪了就拿顶丝轻轻顶一下——不用顶很多，一两毫米甚至零点几毫米就够了——这就是调平用的。上下两个底座，一个可平移（对齐），一个可旋转/摆动（调平），后面讲实验步骤时会再提到。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>底座材料呢，通常采用碳化钨，还有刚玉和立方碳化硼……要求的就是它介于这个腔体材料和金刚石之间。</p><p>他们就把这个底座底下搞了一个弧形的球，半球状的……如果它歪到哪儿了，你把这个底座轻轻顶一顶，不用顶很多，一两毫米就够了。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s10">
+  <div class="slides"><figure class="slide" id="slide-19">
+<img src="slides/slide_19.png" alt="课件第19页 DAC 的压砧：材料要求">
+<figcaption><span class="sno">19</span><span class="stitle">DAC 的压砧：材料要求</span></figcaption>
+</figure>
+<figure class="slide" id="slide-20">
+<img src="slides/slide_20.png" alt="课件第20页 DAC 的压砧：金刚石类型与分级">
+<figcaption><span class="sno">20</span><span class="stitle">DAC 的压砧：金刚石类型与分级</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">10</span>
+      <div class="sec-tt">
+        <h2>DAC 的压砧：材料要求与金刚石分级</h2>
+        <div class="sec-meta"><span class="time">录音 00:22:00 - 00:30:00</span><span class="chip">课件 19</span><span class="chip">课件 20</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>底座上粘的就是压砧——金刚石。压砧一般设计成这样的形状：一个比较大的底面叫台面（culet），一个小的面叫针面（culet 的顶面），针面也都磨平了。市面上卖的裸钻（装饰用钻石）不能直接拿来当压砧：一是磨得太尖没有平面，压不了；二是裸钻按克拉卖钱，把尖磨掉分量就轻了不值钱；三是装饰钻里有裂纹、包裹体、杂质，不纯净。做科研要的是最干净的金刚石，奔着宝石级去——那当然也贵。</p><p>金刚石在宝石界按净度分 VS、VVS 之类，那是鉴定师用肉眼观察分的；科学上按杂质分成四类：Ia 型含氮、点缺陷聚集；Ib 型含氮、点缺陷孤立；IIa 型无氮无硼——最纯净，是最好的压砧材料；IIb 型无氮但含硼。对应到实验：光学观察、X 射线衍射、拉曼、红外光谱这些探测手段，对金刚石的净度要求不同，只有 IIa 型这种特别干净的，光学、X 射线、红外光谱全能做。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>通常的这个裸钻是不能用于做压砧的。为啥呢？它磨得很尖嘛，没有那个面儿了，压不了……第二个呢，这上面有裂纹啦、包裹体啦、杂质啦，不纯净。我要最干净的金刚石。</p><p>科学上的分级呢，又把它分成1a、1b、2a、2b这么几种。含氮的属于一类，不含氮的属于2类。不含氮又不含硼的2A是最好的，做压砧台面最好。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s11">
+  <div class="slides"><figure class="slide" id="slide-21">
+<img src="slides/slide_21.png" alt="课件第21页 DAC 压砧的倒角">
+<figcaption><span class="sno">21</span><span class="stitle">DAC 压砧的倒角</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">11</span>
+      <div class="sec-tt">
+        <h2>DAC 压砧的倒角（bevel）</h2>
+        <div class="sec-meta"><span class="time">录音 00:30:00 - 00:33:00</span><span class="chip">课件 21</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>压砧的针面还要做倒角。没倒角时针面直径一般是 300 微米左右——1/3 个毫米；倒一次角之后只有 100 微米，也就是 1/10 个毫米。倒角有两个好处：一是接触面积小了，能产生更高的压力；二是把应力集中的位置削掉了，两头对顶时不容易崩裂。</p><p>标准的倒角参数：内圈底面直径 100 微米、外圈底面直径 300 微米、倒角 8 度，这样的压砧可以达到 100 GPa 以上。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这针面儿是不是更窄了？有可能会产生更大的压力。然后这还不够，他再倒一次角……一是接触面积减小了，容易产生高压；二是这些应力集中区都被它削掉了，两头一顶的时候，就不容易破。</p><p>一般来说呢，就是300个微米……再倒一次角之后呢，只有1/10个毫米，就100个微米。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s12">
+  <div class="slides"><figure class="slide" id="slide-22">
+<img src="slides/slide_22.png" alt="课件第22页 DAC 封垫（gasket）">
+<figcaption><span class="sno">22</span><span class="stitle">DAC 封垫（gasket）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">12</span>
+      <div class="sec-tt">
+        <h2>DAC 封垫（gasket）</h2>
+        <div class="sec-meta"><span class="time">录音 00:33:00 - 00:37:00</span><span class="chip">课件 22</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>压砧之间有一个重要的材料——封垫（gasket）。它就是一个很薄的金属片，材料可以是铼、301 不锈钢、铍、钨、硼、立方氮化硼、金刚石/石墨，乃至非晶态合金等。</p><p>封垫的作用记住两点就行：第一，保护针面——两个砧压下来，在垫片上压出一个窝，这个窝正好托住、保护金刚石针面；第二，密封样品——在窝的正中打一个眼，样品就封在这个眼里，上下被两个压砧封住，周围被垫片挡住，一加压压力就上去了，再加温就是高温高压。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这个封垫呢，实际上就是一个很薄很薄的那个金属片儿……材料可能是铼，或者是不锈钢，或者是铍、钨、铜这些东西。</p><p>提到封垫的时候，你就记两点就行了：一个它可以保护我们的针面儿，第二个它能密封那个样品。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s13">
+  <div class="slides"><figure class="slide" id="slide-23">
+<img src="slides/slide_23.png" alt="课件第23页 DAC 外加温（电阻加热）">
+<figcaption><span class="sno">23</span><span class="stitle">DAC 外加温（电阻加热）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-24">
+<img src="slides/slide_24.png" alt="课件第24页 DAC 内加温（激光/电阻）与温度测量">
+<figcaption><span class="sno">24</span><span class="stitle">DAC 内加温（激光/电阻）与温度测量</span></figcaption>
+</figure>
+<figure class="slide" id="slide-25">
+<img src="slides/slide_25.png" alt="课件第25页 DAC 内加温实例（Dubrovinsky 2009）">
+<figcaption><span class="sno">25</span><span class="stitle">DAC 内加温实例（Dubrovinsky 2009）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">13</span>
+      <div class="sec-tt">
+        <h2>加温方式：外加热与激光加热</h2>
+        <div class="sec-meta"><span class="time">录音 00:37:00 - 00:44:00</span><span class="chip">课件 23</span><span class="chip">课件 24</span><span class="chip">课件 25</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>样品希望工作在什么温度、什么压力下，可以自己设计。最简单的加温是外加温：拿电阻丝围一个电炉子，把 DAC 整个塞进炉子里，这种加到七八百度就差不多了。另一种是内加热：把电阻丝直接缠在底座位置，加热更直接、更集中，可以加到 1000 多度，甚至 1650°C，配热电偶测温。</p><p>外加温温度到不了一千度以上，不够怎么办？用激光加温。正因为金刚石透明，激光才能从上孔穿进去，把焦点准确聚焦到垫片中心——也就是样品的位置，温度可以达到五六千度（K）。理想的做法是双面激光加热：上下各一束激光同时打过来，避免单面加热不均匀。</p><p>激光加温时没法用热电偶直接测温度，一般根据样品发出的热辐射，套普朗克黑体辐射函数拟合，算出温度是多少。总的来说，这套技术里加热是好弄的——不管是外加温还是内加温，把温度烧上去容易；难的是把压力弄上去。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>最简单的就是拿电阻丝围一个电炉子，把金刚石压腔塞到炉子里头，这就外加温，加到个七八百度差不多。</p><p>他可以把电阻丝缠到这个底座这个位置缠了一圈儿，加热是不是更直接、更集中？就可以加到1000多度，一千六五。</p><p>激光……温度就可以达到五六千度。比较好的做法是双面加热……温度测量呢，都是用这个黑体辐射函数，根据辐射量套到普朗克辐射函数里头计算。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s14">
+  <div class="slides"><figure class="slide" id="slide-26">
+<img src="slides/slide_26.png" alt="课件第26页 观察实物">
+<figcaption><span class="sno">26</span><span class="stitle">观察实物</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">14</span>
+      <div class="sec-tt">
+        <h2>观察实物</h2>
+        <div class="sec-meta"><span class="time">录音 00:44:00 - 00:49:00</span><span class="chip">课件 26</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>现在花十来分钟观察实物。拿来了三个：一个是老师（黄老师）组装好的样品，一个是已经打开的（一面粘了金刚石、另一面还没粘），可以拿起来四周看看，透过眼儿观察；另外两个是对称型和四柱型。分成三组互相传看。</p><p>注意：观察时要拿稳，掉地上就算实验失败——实验室里什么东西都不能往地上掉。同学们问得也很好：金刚石本身是碳，高温高压下会不会反应？它好在化学惰性；真要在高温下做实验，周围一般会吹惰性气体（比如氩气）形成保护氛围，把氧气隔开，不然钻石搁炉子里烧最后也就烧没了。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我现在拿过来了三个，分成三组，你们互相看看……尽量别动它，你只观察，拿的时候要拿稳，掉地上都属于实验失败。</p><p>金刚石它本身是碳，如果高温高压情况下……它是化学惰性。要是真的在高温底下做实验的话，周围会吹惰性气体，形成保护氛围，把氧气隔开。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s15">
+  <div class="slides"><figure class="slide" id="slide-27">
+<img src="slides/slide_27.png" alt="课件第27页 实验准备和步骤">
+<figcaption><span class="sno">27</span><span class="stitle">实验准备和步骤</span></figcaption>
+</figure>
+<figure class="slide" id="slide-28">
+<img src="slides/slide_28.png" alt="课件第28页 粘接压砧到底座">
+<figcaption><span class="sno">28</span><span class="stitle">粘接压砧到底座</span></figcaption>
+</figure>
+<figure class="slide" id="slide-29">
+<img src="slides/slide_29.png" alt="课件第29页 砧面调平">
+<figcaption><span class="sno">29</span><span class="stitle">砧面调平</span></figcaption>
+</figure>
+<figure class="slide" id="slide-30">
+<img src="slides/slide_30.png" alt="课件第30页 在体式显微镜下操作">
+<figcaption><span class="sno">30</span><span class="stitle">在体式显微镜下操作</span></figcaption>
+</figure>
+<figure class="slide" id="slide-31">
+<img src="slides/slide_31.png" alt="课件第31页 DAC 封垫 gasket（再次出现）">
+<figcaption><span class="sno">31</span><span class="stitle">DAC 封垫 gasket（再次出现）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-32">
+<img src="slides/slide_32.png" alt="课件第32页 预压">
+<figcaption><span class="sno">32</span><span class="stitle">预压</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">15</span>
+      <div class="sec-tt">
+        <h2>实验准备和步骤：预压、打孔与调平</h2>
+        <div class="sec-meta"><span class="time">录音 00:49:00 - 00:58:00</span><span class="chip">课件 27</span><span class="chip">课件 28</span><span class="chip">课件 29</span><span class="chip">课件 30</span><span class="chip">课件 31</span><span class="chip">课件 32</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>DAC 实验的基本步骤：先封垫预压，再打样品孔，装样品（放传压介质和压标），组装，最后做压力标定——压力一搞定，知道是多少压力，后面就上光探测了。</p><p>第一步，把垫片拿回来，用两个金刚石砧先对顶压一下，压出一个凹痕；然后在凹痕正中打一个眼——电火花打孔或激光打孔都可以，在薄金属片上打一个很小的眼就够了。压得浅压力低，压得深压力高。</p><p>粘接压砧：把金刚石压砧粘到碳化钨底座上，粘齐了涂上耐高压的胶固定住。接下来非常关键的一步是砧面调平：两个对顶砧如果不平，一头先接触、另一头还没接触，使劲一压砧就裂了，实验直接失败——一颗压砧大约 1/3 克拉，价格不菲。调平的办法：先看两个圆是否对齐，不对就用平移顶丝顶一顶；再看是否倾斜——斜了会在两砧之间出现牛顿环（楔形液体膜的光干涉），用顶丝调底座上的半球，让牛顿环变宽直到消失；最后抹一点碘化银，在 400–500 MPa 的范围内加压观察，中间先变色、四周后变色，就证明砧面是平的。这些操作都要在体式显微镜下进行。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>先是弄封垫进行预压，然后做样品腔，里头弄上传压介质放样品，放一压标材料，最后进行压力标定。</p><p>调平这一步特别重要。先粘好对住，显微镜底下一看，两个圆错开了，那就是没对齐，调那个平移的顶丝把它顶齐；一看是斜的，出现牛顿环……调平之后牛顿环就变宽，越来越宽，最后看不见了是最好。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s16">
+  <div class="slides"><figure class="slide" id="slide-33">
+<img src="slides/slide_33.png" alt="课件第33页 在封垫凹陷中打孔（样品腔）">
+<figcaption><span class="sno">33</span><span class="stitle">在封垫凹陷中打孔（样品腔）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-34">
+<img src="slides/slide_34.png" alt="课件第34页 样品腔的尺寸与体积">
+<figcaption><span class="sno">34</span><span class="stitle">样品腔的尺寸与体积</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">16</span>
+      <div class="sec-tt">
+        <h2>样品腔：尺寸与体积计算</h2>
+        <div class="sec-meta"><span class="time">录音 00:58:00 - 01:01:00</span><span class="chip">课件 33</span><span class="chip">课件 34</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>打完眼就是这个样子：金刚石压砧、垫片压出的窝、中间打的眼——这就是样品腔。样品腔的直径大约是金刚石压砧底面（台面）直径的 1/3~1/2：台面 300 微米，样品孔直径 100~150 微米，孔的深度（垫片厚度）大约 35 微米。</p><p>算一算样品腔的体积：V = πr² × H，取直径 150 微米，算出来约 6.18×10⁻⁴ 立方毫米——万分之 6.18 立方毫米。大家把这个数记住，很好记：6.18。要在这么小的体积里装样品、装压标、装传压介质，还要封好，你就知道这活儿有多细了。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>样品腔的直径大约只有金刚石压砧这个底面直径的1/3到1/2……就是100~150微米的直径，孔深度35微米左右。</p><p>V等于πr²乘以深度H……最后等于6.18×10的负四次方毫米的立方，很好记，618嘛。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s17">
+  <div class="slides"><figure class="slide" id="slide-35">
+<img src="slides/slide_35.png" alt="课件第35页 传压介质（pressure medium）">
+<figcaption><span class="sno">35</span><span class="stitle">传压介质（pressure medium）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">17</span>
+      <div class="sec-tt">
+        <h2>传压介质（pressure medium）</h2>
+        <div class="sec-meta"><span class="time">录音 01:01:00 - 01:03:00</span><span class="chip">课件 35</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>样品装进去之后，还要放一点传压介质。传压介质的意思很好理解：你跳到游泳池里游泳，周围的水对你就是介质，你浑身受到的压力是均匀的；如果样品被两个砧直接顶着，压力集中在一处，样品就碎了。所以样品最好泡在一堆传压介质里，四周均匀受压。</p><p>对传压介质的要求：化学惰性、低压缩性、绝缘性好、热稳定性好、低热导率、无荧光不发光、凝固压力高、粘滞性低——一句话，越容易变形越好。不同介质能达到的静水压极限不同：液氦最好，23 GPa；氖 15 GPa；甲醇-乙醇（4:1）和甲醇-乙醇-水（16:3:1）10.5 GPa；氮 10 GPa；硅油 3 GPa；溴化钾 2 GPa；氩 1.4 GPa；氯化钠 1 GPa。这些数据不用死记，当资料参考就行。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>你就是最最最简单的，你跳到这个泳池里头游泳，周围的水对你就是介质，你浑身受到的压力是均匀的，很舒服。</p><p>好的传压介质一般就是放那个液氦，能达到23个GPa；甲醇乙醇水能到10.5个GPa……不用使劲记，供大家参考。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s18">
+  <div class="slides"><figure class="slide" id="slide-36">
+<img src="slides/slide_36.png" alt="课件第36页 装样">
+<figcaption><span class="sno">36</span><span class="stitle">装样</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">18</span>
+      <div class="sec-tt">
+        <h2>装样：两难之一</h2>
+        <div class="sec-meta"><span class="time">录音 01:03:00 - 01:05:00</span><span class="chip">课件 36</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>做 DAC 实验有两难：第一难是前面说的调平，要仔细认真地调平对齐、把样品腔弄好；第二难就是装样。装液态样品时，先把 DAC 拆开放进一个铜容器里，容器泡在液氮池中，然后往容器里充氩气——周围温度很低，氩气进来就液化了，液态氩覆盖住整个压腔，总有一点点能流进样品腔，这时候把螺丝先轻轻拧上封住，拿出来在显微镜下检查是否封好。</p><p>样品一定要分散摆放、彼此不接触，更不能顶着腔壁——那样压力集中、不均匀；用传压介质把样品泡在中间最好。拧螺丝加压也很有讲究：千万不能逮着一个螺丝使劲拧，要对称地、一圈一圈地均匀拧紧，让活塞平稳下去。看着不难，实际挺细心的活。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>做金刚石压腔的实验，有两难，第一个难呢，就是要调平；第二个就是装样，装样很困难。</p><p>拧螺丝的时候都很有讲究，千万不能说逮着一个螺丝使劲儿拧，那不行……要对称地，让它均匀地让那个活塞顶下去。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s19">
+  <div class="slides"><figure class="slide" id="slide-37">
+<img src="slides/slide_37.png" alt="课件第37页 在 DAC 的样品腔中接电">
+<figcaption><span class="sno">37</span><span class="stitle">在 DAC 的样品腔中接电</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">19</span>
+      <div class="sec-tt">
+        <h2>在样品腔中接电</h2>
+        <div class="sec-meta"><span class="time">录音 01:05:00 - 01:07:00</span><span class="chip">课件 37</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>在这么小的样品腔里，有时候还要设计电路——比如要测样品的电导率，没有电源回路可不行。引角要预先镀一层膜，然后用类似光刻的办法刻蚀出导线来，直接拿一根引线怼进去是不行的。能做到这么细致，实验做成了就是一篇好工作。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>在这么小的样品腔里头，人家还要设计电路……弄个引角，有时候这些引角都是要镀一层膜，然后就跟光刻机一样刻蚀出来一条线。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s20">
+  <div class="slides"><figure class="slide" id="slide-38">
+<img src="slides/slide_38.png" alt="课件第38页 压力标定：状态方程法">
+<figcaption><span class="sno">38</span><span class="stitle">压力标定：状态方程法</span></figcaption>
+</figure>
+<figure class="slide" id="slide-39">
+<img src="slides/slide_39.png" alt="课件第39页 压力标定：红宝石荧光法">
+<figcaption><span class="sno">39</span><span class="stitle">压力标定：红宝石荧光法</span></figcaption>
+</figure>
+<figure class="slide" id="slide-40">
+<img src="slides/slide_40.png" alt="课件第40页 压力标定：金刚石的拉曼峰">
+<figcaption><span class="sno">40</span><span class="stitle">压力标定：金刚石的拉曼峰</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">20</span>
+      <div class="sec-tt">
+        <h2>压力标定的三种方法</h2>
+        <div class="sec-meta"><span class="time">录音 01:07:00 - 01:13:00</span><span class="chip">课件 38</span><span class="chip">课件 39</span><span class="chip">课件 40</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>样品封好了，你最想知道的是：现在到底多大的压力？温度好办，压力不好弄。方法一（状态方程法）：在样品腔里放一小颗金或铂箔——它们化学惰性、不反应，状态方程研究得又很清楚。打一束 X 光，测出金或铂的晶格参数，算出体积（密度），再投到状态方程曲线上，就知道对应的压力了。这种作为压力标准的物质就叫压标。</p><p>方法二（红宝石荧光法），最常用：红宝石是 Al₂O₃ 里替代 Al 的 Cr 离子，它的 d 电子跃迁会发出荧光，谱峰波长随压力升高而增大（红移）。荧光谱里一般有两个峰，R1 峰比 R2 峰高，通常选 R1 峰来标定。压好的装置不用再打 X 光，测一下荧光波长，代进现成的公式 P = 2.482[(λ/694.2)^7.665 − 1]×100（GPa）就能算出压力；波长随压力的变化率约 dλ/dp = 0.36 nm/GPa。几个实验室互相核对过，大家都认可，所以红宝石压标非常好用。</p><p>方法三（金刚石拉曼峰），用得少一点：金刚石压砧本身的拉曼峰也随压力升高发生正偏移，测它也能定压力，这样连压标都可以不放。但它的毛病是压砧不同位置压力不一定均匀，准确度不如红宝石，所以没普及开——红宝石荧光法相当于标准方法，大家都在用。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>往里放了一颗小金子或者是一小颗白金箔……对他们的状态方程已经研究得比较清楚了……打一束X光，测得金或铂的晶格参数，有了晶格参数，算出体积来，在图上一投，就知道是多少压力了。这种物质就叫压标。</p><p>红宝石呢，它能够发出荧光……一般出来两个峰，一个R1峰一个R2峰，R1峰比R2峰高，一般选这个峰……波长一算就得到了压力。</p><p>还有第三种办法，金刚石压砧本身会产生一个拉曼峰，随着压力的升高发生正偏移……但没那么准，不像红宝石压标那么普及。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s21">
+  <div class="slides"><figure class="slide" id="slide-42">
+<img src="slides/slide_42.png" alt="课件第42页 DAC 获得的压力：二级压砧技术">
+<figcaption><span class="sno">42</span><span class="stitle">DAC 获得的压力：二级压砧技术</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">21</span>
+      <div class="sec-tt">
+        <h2>DAC 获得的压力：从几百 GPa 到 TPa</h2>
+        <div class="sec-meta"><span class="time">录音 01:13:00 - 01:16:00</span><span class="chip">课件 42</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>压力怎么算？P = F/A，力除以面积。大象很重，但蹄子很大，踩在地上大概只有 4 个大气压；穿高跟鞋踩一脚能到 50 个大气压；一个人站在钉子上，钉尖够小，能产生 7200 个大气压。而地球内部需要的是几十、上百 GPa——所以金刚石压腔在那么小的空间里能做到其他任何设备都做不到的压力，是研究地球内部非常有力的手段。</p><p>毛河光他们八九十年的时候已经把 DAC 做到 550 GPa，很长时间没有突破——因为已经覆盖地心了（地心约 360 GPa），突破的迫切性不大了。后来俄罗斯的 Dubrovinsky 夫妇在金刚石压砧上又加了一级二级压砧：用聚焦离子束（FIB）把烧结金刚石加工成纳米金刚石半球，切开后上下各粘一个，样品只有约 3 微米——2012 年做到约 460 GPa（Nature Comm.），2016 年改进的 ds-DAC 做到约 1065 GPa，也就是超过 1 TPa。这就是目前 DAC 能达到的压力极限。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>大象很重，但是它的蹄子挺大个儿的，最后大概是4个大气压；高跟鞋……50个大气压；你打钉子，一个人站在钉子上，6kg的一个人站在钉子上，能够产生7200个大气压。</p><p>杜波斯基他们夫妇俩……用聚焦离子束做了一个球，切开上下各粘一个，样品空间只有三个微米……2012年做到460GPa，2016年做到了1000多个GPa，这就是目前金刚石压腔能够达到的最高压力。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s22">
+  <div class="slides"><figure class="slide" id="slide-43">
+<img src="slides/slide_43.png" alt="课件第43页 DAC 获得的压力-温度范围（一）">
+<figcaption><span class="sno">43</span><span class="stitle">DAC 获得的压力-温度范围（一）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-44">
+<img src="slides/slide_44.png" alt="课件第44页 DAC 获得的压力-温度范围（二）">
+<figcaption><span class="sno">44</span><span class="stitle">DAC 获得的压力-温度范围（二）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">22</span>
+      <div class="sec-tt">
+        <h2>DAC 获得的压力-温度范围</h2>
+        <div class="sec-meta"><span class="time">录音 01:16:00 - 01:19:00</span><span class="chip">课件 43</span><span class="chip">课件 44</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>这张图展示 DAC 能覆盖的压力-温度范围随年份的扩展：从 1974 年、1976 年、1990 年、1993 年、2005 年、2008 年、2010 年到 2012 年，覆盖范围越来越大；红色区域是地球内部的温度压力梯度——上地幔、下地幔、外核、内核，随着深度增加压力温度一起增大。做实验就得做在地球真实存在的温压条件范围内，脱离地球条件的实验意义不大。</p><p>激光加热可以做到约 6000 K，电阻加热（外加温）做到 1300°C 左右——整个地球内部的温压范围 DAC 都能覆盖了。再往高走，大家可能想奔着天王星、冥王星甚至木星去；木星压力不高但温度更高，因为它是气体巨行星，那里主要靠大压机——大腔体压机样品腔大、截面积大，所以压力上不去（现在也能做到 100 GPa 量级），但温度可以达到两三千度，这个下节课讲大压机时会细说。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>红色的部位呢，就是地球内部的温度压力的一个梯度范围，随着深度的增加，压力的增大，温度也增大。</p><p>金刚石压腔激光加温可以做到6000K，电阻外加热也就做到1300度左右，整个地球的温度压力范围就能覆盖了。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s23">
+  <div class="slides"><figure class="slide" id="slide-45">
+<img src="slides/slide_45.png" alt="课件第45页 双面激光加热">
+<figcaption><span class="sno">45</span><span class="stitle">双面激光加热</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">23</span>
+      <div class="sec-tt">
+        <h2>双面激光加热与实验室装置</h2>
+        <div class="sec-meta"><span class="time">录音 01:19:00 - 01:20:30</span><span class="chip">课件 45</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>这是咱们实验室的双面激光加热装置：光路从两边引过来，上下同时聚焦到样品上。金刚石台面还可以用聚焦离子束加工成特殊形状（比如 15 微米量级的平台），这些是张驰老师提供的压腔实物，借自黄老师，就在中科院地球与行星物理重点实验室的高温高压实验室里。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这是张驰老师给我的压腔，从黄老师那儿借过来的……把光路一路引过来，双面激光加热，也可以把金刚石台面做成这样，拿聚焦离子束加工出来的。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s24">
+  <div class="slides"><figure class="slide" id="slide-46">
+<img src="slides/slide_46.png" alt="课件第46页 作业 MP2.1">
+<figcaption><span class="sno">46</span><span class="stitle">作业 MP2.1</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">24</span>
+      <div class="sec-tt">
+        <h2>作业与课程总结</h2>
+        <div class="sec-meta"><span class="time">录音 01:20:30 - 01:36:37</span><span class="chip">课件 46</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>今天的作业（MP2.1）：用 AI 工具阅读论文《Diamond Anvil Cell, 50th Birthday》（Bassett, 2009），任选一个专题进行总结——DAC 发展史、技术、人物、故事、展望都可以，鼓励查阅更多资料，最后提交约 500 字的总结。这次是三人合作，报告里要写明完成过程和分工，周日之前交。文献全文 25 页，用 AI 读很快；但建议分专题去总结，不要大家都只做一个摘要。</p><p>最后回顾一下这节课的内容：DAC 的主要组件就几样——压腔（枪体）、底座、压砧、封垫，外加螺丝把它们拧起来；加温有外加温（电阻）和激光内加热两种；封垫的作用是保护针面、密封样品；压力标定有三种方法（金属压标+状态方程、红宝石荧光法、金刚石拉曼峰），其中红宝石荧光法最方便；样品腔体积典型值 6.18×10⁻⁴ 立方毫米；调平用牛顿环，装样要用传压介质。</p><p>课后问答里还提到：既想要高温又想要 1000 GPa 那样的高压，目前很难同时做到——那些冲高压纪录的工作往往在室温下进行；大压机的温压范围这张图稍老，现在大腔体压机也能接近 100 GPa，感兴趣的可以查最新的资料，但要注意 AI 给的答案要保持将信将疑的态度，重要数据最好找到权威出处验证。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>作业就是这篇文献，已经放到资料里了……你们可以分专题去总结，比方说我就总结发展史，这个人总结技术方面……最后提交一个一页纸的东西，500多字，这回你们三个人合作，写清楚完成的过程和分工，周日完成。</p><p>这个压腔主要的几个组件：枪体材料、底座、底座上的金刚石压砧，压砧之间的封垫，就这4种，再有几个螺丝把它拧住。</p><p>如果我们想要在能够得到高温的同时还要得到这么高的压力，其实我们的上限目前也就只有200多个GPa吧？——有可能，那些冲高压的工作好像就是为了把极限弄上去，不在乎温度是多少。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（180083070901P2003H）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>

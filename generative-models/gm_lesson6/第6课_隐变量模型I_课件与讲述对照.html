@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>生成式模型与科学智能应用 · 第6节 隐变量模型 I（Latent Variable Models）｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>生成式模型与科学智能应用 · 第6节 隐变量模型 I（Latent Variable Models）</h1>
+    <div class="sub">第6节 隐变量模型 I（Latent Variable Models） ｜ 2026-09-22 ｜ 刘云帆</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 35 页 · 整理 13 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-feedback">01 开场：课程反馈与事务安排</option>
+<option value="sec-roadmap">02 框架回顾：第一大部分与 AR 的优缺点</option>
+<option value="sec-part2">03 第二部分引言与本课计划</option>
+<option value="sec-latent-intro">04 隐变量的直观理解：人脸共同特征</option>
+<option value="sec-challenge">05 挑战与动机：从任意数据集提取特征</option>
+<option value="sec-lvm-def">06 隐变量模型的定义与参数化建模</option>
+<option value="sec-structured">07 结构化特征空间（MNIST 例子）</option>
+<option value="sec-gmm">08 GMM：身高例子与组成部分</option>
+<option value="sec-gmm-mix">09 GMM：混合、聚类与无穷积分</option>
+<option value="sec-likelihood">10 训练隐变量模型：似然与边际化</option>
+<option value="sec-naive-mc">11 朴素蒙特卡洛及其问题</option>
+<option value="sec-importance">12 重要性采样：引入 q(z)</option>
+<option value="sec-elbo">13 对数似然、Jensen 不等式与 ELBO</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 Lecture5_Latent_Variable_Models_I.pdf 逐页渲染，转写原文见 record_20260922.txt。</div>
+<section class="sec" id="sec-feedback">
+  <div class="slides"><figure class="slide" id="slide-01">
+<img src="slides/slide_01.png" alt="课件第1页 封面：Lecture 5 Latent Variable Models I">
+<figcaption><span class="sno">01</span><span class="stitle">封面：Lecture 5 Latent Variable Models I</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>开场：课程反馈与事务安排</h2>
+        <div class="sec-meta"><span class="time">00:00:00 – 00:08:00</span><span class="chip">课件 1</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>开始上课之前先回应一下大家的反馈。我本来想把投票结果公布一下，但担心引起部分同学的心理压力——你们的投票结果会成为下届课程反映难度水平的指标。结论是：相当比例的同学整体能跟上、知识也能掌握，但节奏稍快，主要体现在来不及理解公式、概念和英文 PPT。</p><p>所以之后的课，在关键概念或公式推导出现的时候，我会稍作停顿，给大家阅读反应时间并解释，降低认知负担。机器学习基础这块，我起初可能高估了大家水平；其实课程对传统机器学习要求不高，主要侧重概率方面，这方面问题不大。</p><p>英文 PPT 和专业术语是被反馈较多的问题。使用英文 PPT 是因为术语都源自英文文献，设计是基于英文表达的；如果全译成中文反而会更晦涩，中英夹杂更清晰。大家做研究大概率也是英文项目，稍微理解一下——主要还是给大家放慢一点、多解释解释。</p><p>有同学说需要框架、想提前发 PPT 预习。框架其实每节课进正式内容之前都会从课程整体方向讲，大家可能觉得那时没讲具体内容就没听，不要放弃。预习方面，说实话老师也是现做的，每节课得根据大家情况调整备课，只能尽量提前发——咱们的课件都不是 AI 做的，都是自己手搓的。</p><p>不过也有极少数同学说觉得偏慢了、希望覆盖更多内容。那没办法，众口难调；你觉得想学更进阶的内容，可以自己安排一下时间。关于期末考试，大家可以不用担心：最后会有一个复习课讲解重点，不考繁琐的数学推导、没有计算，主要是考理解性知识。</p><p>事务性安排：作业已发布，10 月 18 号截止，每节课都会提醒，没交会有影响；因为调整知识点力度，后续可能有更新，更新会发在光大在线，可以下载最新 PPT。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我本来想把投票结果公布一下，但是担心引起部分同学的这个心理压力，然后你们的投票结果将会成为下届系统课反映课程难度水平的指标。然后结论是，相当比例的同学整体能跟上，知识也能掌握，但是节奏稍快，主要体现在来不及理解公式、概念及英文PPT，理解压力较大。</p><p>其实，大家可以不用担心。首先，最后会有一个复习课，给大家讲解一下重点内容。把不太重要的内容说一下，不考繁琐的数学推导，没有计算。主要是考理解性知识。</p><p>然后咱们这个课，课件都不是AI做的，都是自己手搓的。然后课程都会自己再调整，给备课人看一下。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-roadmap">
+  <div class="slides"><figure class="slide" id="slide-02">
+<img src="slides/slide_02.png" alt="课件第2页 Roadmap：课程路线图（回到框架）">
+<figcaption><span class="sno">02</span><span class="stitle">Roadmap：课程路线图（回到框架）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-03">
+<img src="slides/slide_03.png" alt="课件第3页 Recap：Lecture 2 概率建模回顾">
+<figcaption><span class="sno">03</span><span class="stitle">Recap：Lecture 2 概率建模回顾</span></figcaption>
+</figure>
+<figure class="slide" id="slide-04">
+<img src="slides/slide_04.png" alt="课件第4页 Recap：机器学习三要素与生成模型功能">
+<figcaption><span class="sno">04</span><span class="stitle">Recap：机器学习三要素与生成模型功能</span></figcaption>
+</figure>
+<figure class="slide" id="slide-05">
+<img src="slides/slide_05.png" alt="课件第5页 Recap：AR 模型的优点">
+<figcaption><span class="sno">05</span><span class="stitle">Recap：AR 模型的优点</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>框架回顾：第一大部分与 AR 的优缺点</h2>
+        <div class="sec-meta"><span class="time">00:08:00 – 00:14:00</span><span class="chip">课件 2</span><span class="chip">课件 3</span><span class="chip">课件 4</span><span class="chip">课件 5</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>进入正式内容前先说明框架：前 5 次课、10 个课时已经讲完第一大部分。第一部分主要讲怎么表达 Pθ：首先把它表示成概率分布形式；如果用联合分布，所需参数量比较大；通过链式分解表示成条件分布连乘的形式，但参数量依然大。</p><p>有两种改进方式：一是加入经验约束，改成贝叶斯网络或者图网络；二是用参数化形式表达条件分布，建模成神经网络。之后介绍了最直观、与链式分解直接对应的模型——AR 自回归模型，它是 Pθ 的一类。我们还讲了需要指定数据顺序，以及多数据不一致等具体问题，比如某些情况无法翻译或更困难。</p><p>上节课讲了有了模型和实现之后如何训练，介绍了一种最通用的训练准则——最大似然方法。我们讲了一种描述分布之间距离的方式，就是 KL 散度；因为 KL 散度在不知道 Pdata 时没法直接计算，所以又讲了蒙特卡洛近似的方法；最后讲了在蒙特卡洛条件下如何具体实现最大似然的算法。今天我们还会用这个算法。</p><p>如果从课程整体框架来看，我们有两个设计维度。一方面是从机器学习的三要素——模型、训练准则、优化方法，最后写成最优化的形式，在准则下对模型求解最优参数；另一方面从生成模型的角度，主要关注三个功能：生成、估计，还有今天要关注的表示学习（representation learning）。</p><p>之前的 AR 模型，我们是从模型方面去考察生成模型，关注的主要是密度估计。上节课说过，AR 模型一个非常重要的优势就是对于给定样本，它的似然可以准确计算。但今天我们还没有讲到它的优缺点——因为要讲一个新模型，必须从优缺点出发，看为什么要引入新模型。</p><p>AR 的优点：可以准确计算似然；能准确计算似然，就可以用最大似然算法训练模型，咱们的作业也是这么做的。缺点前两点比较明显：第一，要指定一个分解的顺序；第二，它的生成是序列化的——你必须一个一个点、一个一个数据去采样，没法并行。但在大的课程框架上，AR 模型最大的问题，或者说跟今天要讲的模型相比最严重的问题：它没有办法通过无监督的方式挖掘数据中的一些特征和结构。今天讲的模型可以做，AR 做不了。虽然现在大多数大语言模型都用 AR 模型，但它依然很难做这种事情。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>前5次课10个课时已讲完第一大部分。第一部分内容主要介绍怎么表达PC。首先把它表示成概率分布形式。若用联合分布，所需参数量较大。通过链式分解，表示成条件分布连乘形式，但参数量依然大。</p><p>两种改进方式：一是加入经验约束，改成贝叶斯网络或图网络；二是用参数化形式表达条件分布，建模成神经网络。之后介绍一种最直观、与链式分解直接对应的模型，即AR自回归模型，它是PC的一类。</p><p>因为在大的课程框架上来讲呢，AR模型最大的一个问题，或者说跟今天我们要讲的一个模型比较严重的问题，就是它没有办法通过无监督的情况去挖掘数据中的一些特征和结构。这个是我们今天讲的这个模型可以做，但是AR模型做不了。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-part2">
+  <div class="slides"><figure class="slide" id="slide-06">
+<img src="slides/slide_06.png" alt="课件第6页 Roadmap：第二部分——Latent Variable / Normalizing Flow / GAN">
+<figcaption><span class="sno">06</span><span class="stitle">Roadmap：第二部分——Latent Variable / Normalizing Flow / GAN</span></figcaption>
+</figure>
+<figure class="slide" id="slide-07">
+<img src="slides/slide_07.png" alt="课件第7页 Recap：生成模型的功能">
+<figcaption><span class="sno">07</span><span class="stitle">Recap：生成模型的功能</span></figcaption>
+</figure>
+<figure class="slide" id="slide-08">
+<img src="slides/slide_08.png" alt="课件第8页 Lecture Outline：本课计划（LVM / GMM / 变分推断）">
+<figcaption><span class="sno">08</span><span class="stitle">Lecture Outline：本课计划（LVM / GMM / 变分推断）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>第二部分引言与本课计划</h2>
+        <div class="sec-meta"><span class="time">00:14:00 – 00:17:00</span><span class="chip">课件 6</span><span class="chip">课件 7</span><span class="chip">课件 8</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>正是因为 AR 模型有它的缺点和优点，第二部分课程今天就开始了。第二部分我们需要针对现有模型的问题、或关注的不同功能，引入不同的新模型：第二个是今天讲的隐变量模型——“隐”表示隐藏或不可观测的意思，就是 Latent models；之后还会讲 Normalizing Flow（归一化流模型）；再往后是 GAN，大概是最典型的网络。这三块关注不同的方面，有不同的一些特性。</p><p>我们还是从模型的工作原理出发，或者说后面所有的课都是从模型出发；介绍每一种模型时，会去讲解相应的学习准则和优化的方法。之前 AR 模型关注的是密度估计，那我们今天来关注它做不到的一点——表示学习是怎么做的：我们怎么去从数据中发掘一些有意义的数据表示。接下来就看什么叫做有意义的数据表示。</p><p>今天的课主要分三节、两大部分。前面先给大家引入一下什么叫做隐变量模型，稍微有点抽象；然后给第一个最简单的隐变量模型的实现——GMM 高斯混合模型，不管大家有没有在机器学习课里学过，今天都在这个隐变量模型的框架下讲一下。下半节课就讲一讲我们怎么用上节课的最大似然的方法去训练今天介绍的隐变量模型，看它会遇到一些问题，以及我们怎么去解决。我们今天就看到哪算哪，稍微注意一下节奏。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>第二部分，我们需要针对现有模型的问题或关注的不同功能，引入不同的新模型。第二个是今天讲的隐变量模型，“隐”表示隐藏或不可观测的意思，即Latent models隐变量模型。之后还会讲Normal Flow，一个归一化流模型。功能结构包括GAN模型，大概是最典型的网络。</p><p>那我们今天的课主要是分为三节，主要是两大部分。前面先给大家引入一下什么叫做隐变量模型，还有点稍微有点抽象。然后给第一个最简单的隐变量模型的实现，就是GMM高斯混合模型。</p><p>下半节课就给大家讲一讲我们怎么用上节课的最大似然的方法训练今天介绍的隐变量模型。看它会遇到一些问题，以及我们怎么去解决。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-latent-intro">
+  <div class="slides"><figure class="slide" id="slide-09">
+<img src="slides/slide_09.png" alt="课件第9页 Latent Variables：人脸的共同特征（年龄、性别、发色…）">
+<figcaption><span class="sno">09</span><span class="stitle">Latent Variables：人脸的共同特征（年龄、性别、发色…）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-10">
+<img src="slides/slide_10.png" alt="课件第10页 Latent Variables：这些因素是隐式的（implicit）">
+<figcaption><span class="sno">10</span><span class="stitle">Latent Variables：这些因素是隐式的（implicit）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>隐变量的直观理解：人脸共同特征</h2>
+        <div class="sec-meta"><span class="time">00:17:00 – 00:21:00</span><span class="chip">课件 9</span><span class="chip">课件 10</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第一点，我们先去介绍一下到底什么叫做隐变量模型、到底什么叫做隐变量。这里展示的是一些人脸图像，是从公开人脸数据集采样的样本。我们之前看的都是手写数字，是最简单的情况，现在把样本复杂度上升一点，看人脸图像。</p><p>给你一个人脸图像数据集，可以训练一个 AR 模型去建模并生成人脸图像——肯定可以，因为 AI 模型是万能的，能解构各种结构分布。但人脸图像有很强的样本多样性：第一个样本可有不同光照、姿态，每个人长相也不一样，虽然都是人脸图像，在像素层面体现为很高维度的多样性。</p><p>之所以从人脸图像说起，是因为大家对此比较熟悉。虽然样本在像素层面有很高多样性，但如果你把数据集展示出来，会发现这种多样性是沿着某些固定维度的——这些维度反映了共同特征或人脸属性。比如年龄方面，虽然图像大不相同，但在年龄这一单独维度上存在偏老、偏年轻等变化；性别也是代表性变量，男生和女生的图像表现完全不一样；还有头发颜色、是否戴眼镜等属性。</p><p>这些属性反映了数据集或数据分布底层的共同特性——如果你熟悉这个术语，可以叫它 principal variations，主要变化。学过 PCA 的话就知道，这反映了数据集上的主要变化；每种变化对应数据的一种隐藏结构、属性或特征信息。</p><p>那为什么关注这一点？直观来说，比如用 GAN 生成人脸时需要给定属性——年龄、性别、发色、是否戴眼镜等，给定这些条件后，生成的图像就符合属性要求。虽然像素层面仍有变化，但语义层面的特征维度已经确定了——给定属性后，样本生成过程在某种程度上被决定，这让生成过程更简单。</p><p>但存在一个问题：这些变量是隐式的，无法直接读取。因为原始数据（比如图像像素）本身不包含这些变量信息——你获得这些变量，都是靠后验知识或人工观察得到的。所以隐变量的意思就是：它没有从数据中直接给到你，我们需要从数据中去推断，或者利用无法直观观察到的数据点。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>比如给你一个人脸图像数据集，可以训练一个AR模型去建模并生成人脸图像。肯定是可以的，因为AI模型是万能的，能解构各种结构分布。但人脸图像有很强的样本多样性。</p><p>这些维度反映了共同特征或人脸属性。比如年龄方面，虽然图像大不相同，但在年龄这一单独维度上存在偏老、偏年轻等变化。</p><p>所以隐变量的意思就是它没有从数据中直接给到你。我们需要从数据中去推断，或利用无法直观观察到的数据点。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-challenge">
+  <div class="slides"><figure class="slide" id="slide-11">
+<img src="slides/slide_11.png" alt="课件第11页 Latent Variables：LSUN Bedroom 与 LAION 数据集">
+<figcaption><span class="sno">11</span><span class="stitle">Latent Variables：LSUN Bedroom 与 LAION 数据集</span></figcaption>
+</figure>
+<figure class="slide" id="slide-12">
+<img src="slides/slide_12.png" alt="课件第12页 Latent Variables：挑战与动机">
+<figcaption><span class="sno">12</span><span class="stitle">Latent Variables：挑战与动机</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>挑战与动机：从任意数据集提取特征</h2>
+        <div class="sec-meta"><span class="time">00:21:00 – 00:25:00</span><span class="chip">课件 11</span><span class="chip">课件 12</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>那怎么从数据中得到这些变量？比如人脸图像，我们可以直接看，或者训练一个分类器得到质量指标。如果人脸图像能直观列出隐变量，那对于 Waymo 这种常用的驾驶数据集，它的隐变量是什么？这里提醒大家，要看数据集的共同特征、属性及主要变化维度——比如有没有窗户、墙的颜色、床的颜色或朝向、尺寸等，这是 LSUN Bedroom 的例子。</p><p>再看 LAION-5B，这是前几年比较火的开源图文大模型训练数据，用几十亿图文对训练而成。对于这样一个数据集，怎么挖掘它的结构化特征？似乎无法直接观察得到。所以问题就是：如何从任意数据集（arbitrary）中提取抽象维度的变量——我们都想用一套系统的方法去挖掘里边主要的变化、属性和特征，这就是我们要面临的问题。</p><p>从直观例子引入挑战和动机：挑战是想用自动化算法，从任意数据集中自动学到有意义的隐藏表示。这种隐藏表示决定数据的生成、影响分布，与分布很相关，但在数据中无法直接得到。最直接的动机是：既然无法直接使用变量，就显式地定义一个潜变量来表现隐藏因素——这种做法在生成模型里很常见：想建模一个对象却不知如何建模时，就先把它写入分布，再从数学上计算。</p><p>有同学可能会问：网络的参数是潜变量吗？有人说不是——为什么？它不也看不见吗？没给你数据，对吧。因为从量化角度来说，网络参数并没有参与数据的生成过程，跟数据生成的结构没什么太大关系；它也不是一个随机变量，而是一个确定的值，我们需要去求这种参数。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>对于人脸图像能直观列出隐变量，那对于像Waymo这样常用的驾驶数据集，它的隐变量是什么？这里提醒大家，要看数据集的共同特征、属性及主要变化维度。</p><p>这是前几年较火的开源扩散大模型，用几十亿图文对数据训练而成。对于这样一个数据集，如何挖掘其结构化特征？似乎无法直接观察得到。</p><p>我先问一个问题：网络的参数是潜变量吗？有人说不是，为什么？它不也看不见吗？没给你数据，对吧。为什么？因为从量化角度来说，网络参数并没有参与数据的生成过程，跟数据生成的结构没什么太大关系。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-lvm-def">
+  <div class="slides"><figure class="slide" id="slide-13">
+<img src="slides/slide_13.png" alt="课件第13页 Latent Variable Models：定义 p(x,z)=p(x|z)p(z)">
+<figcaption><span class="sno">13</span><span class="stitle">Latent Variable Models：定义 p(x,z)=p(x|z)p(z)</span></figcaption>
+</figure>
+<figure class="slide" id="slide-14">
+<img src="slides/slide_14.png" alt="课件第14页 Latent Variable Models：人脸图像例子">
+<figcaption><span class="sno">14</span><span class="stitle">Latent Variable Models：人脸图像例子</span></figcaption>
+</figure>
+<figure class="slide" id="slide-15">
+<img src="slides/slide_15.png" alt="课件第15页 Latent Variable Models：p(x|z) 更简单，p(z|x) 特征提取">
+<figcaption><span class="sno">15</span><span class="stitle">Latent Variable Models：p(x|z) 更简单，p(z|x) 特征提取</span></figcaption>
+</figure>
+<figure class="slide" id="slide-16">
+<img src="slides/slide_16.png" alt="课件第16页 Latent Variable Models：z→x 神经网络参数化">
+<figcaption><span class="sno">16</span><span class="stitle">Latent Variable Models：z→x 神经网络参数化</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>隐变量模型的定义与参数化建模</h2>
+        <div class="sec-meta"><span class="time">00:25:00 – 00:30:00</span><span class="chip">课件 13</span><span class="chip">课件 14</span><span class="chip">课件 15</span><span class="chip">课件 16</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>刚才是一些对潜变量的直观理解。引入潜变量后，数据或模型该怎么建模？方法其实很简单，就是显式地加入这个潜变量：把 X 数据和潜变量之间的联合分布体现出来，两种情况都要包含，而且要能拆成这样的依赖形式——X 是可观测数据，Z 是观测不到但会影响 X 生成过程的潜变量，显然 X 依赖于 Z。</p><p>先明确一下符号：在文中 X 表示可观测到的变量，对应的 Z（转写里的 G）就是无法直接观测的隐变量。X 通常是训练集中可以收集到的高维对象，比如图像、文本、音频；而 Z 没有在数据中直接显示，但可以从数据中推导、挖掘得到，它在支撑数据分布时是很有作用的一些变量和因素。</p><p>以人脸图像为例，把这种抽象表示展开，看看 X 跟 Z 之间的联系：X 就是指人脸图像本身；隐变量则是图中一些高层特征，比如性别、头发颜色、拍摄角度等。还可以再复杂一点，比如种族可以决定眼睛和头发的颜色——在自然界中，通过基因表达等结果，再经相机成像参数，最终得到一张图像，背后有很多因素支撑你得到这张图像，我们想推导背后的隐藏变量。</p><p>为何关注此模型，可以从两个维度讲。第一，如果统计中隐变量是合适的选择，那么 X 数据的边缘分布比直接建模数据更简单——请记下这个观点，这就是拆解生成式建模的原因。第二，如果 p(x,z) 联合分布模型已训练好，可以通过变换得到 p(z|x)，即从数据推断隐变量程度，这叫推断——这对 tokenization 很重要，因为需要将数据转为 token 表示；实际是将数据变为隐变量后送入网络处理，但建模时仍用生成方式。</p><p>虽然模型表达看似美好，但最大问题是 Z 难直接获取。什么叫难得到？首先，难穷尽所有相关的 Z——对人脸图像，无法列出所有属性；其次，不知道哪些属性有用、哪些无用，不适合你的模型去学习。所以我们要想通过自然的、自动的方法，从学习过程中得到一个知识，这是我们的初衷。</p><p>用图来表达肯定很难学习，那如果我们要学习，还有一种方法就是把它参数化：不用图的表达，把拆解的每一部分参数化成一个网络，通过学习训练样本得到最优参数。比如把分布从离散的点、离散的属性，改成一种连续的高斯分布的形式，然后强行建模它——在给定 Z 的情况下，让数据成为一个简单的高斯分布，高斯分布的均值和方差依赖一个 Z，这样一个分布就比较好表示，比直接建模整个 P(x) 要简单一些。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>现在要把X数据和潜变量之间的联合分布体现出来，两种情况都要包含。而且还要能拆成这样的依赖形式。X是可观测数据，Z是观测不到但会影响X生成过程的潜变量。</p><p>人脸的隐变量就是图中一些高层特征，比如性别、头发颜色、拍摄角度等。在自然界中，通过基因表达等结果，再经相机成像参数，最终得到一张图像。</p><p>比如说，你可以把分布从一些离散的点、离散的属性，改成一种连续的高斯分布的形式。然后我们可以强行建模它。比如在给定自身材料的情况下，让数据成为一个简单的高斯分布。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-structured">
+  <div class="slides"><figure class="slide" id="slide-17">
+<img src="slides/slide_17.png" alt="课件第17页 Structured Latent Space：MNIST 无监督聚类">
+<figcaption><span class="sno">17</span><span class="stitle">Structured Latent Space：MNIST 无监督聚类</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div class="sec-tt">
+        <h2>结构化特征空间（MNIST 例子）</h2>
+        <div class="sec-meta"><span class="time">00:30:00 – 00:33:00</span><span class="chip">课件 17</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>如果我们把模型表达成参数化的可学习模型，最终希望得到什么？就是通过学习特征、属性和主要变化来关联——换句话说，我们想到一种结构化的表达。机器学习里有个黑话，叫结构化的特征空间：我们希望特征空间不是一团任意、难以解释的编码，而是希望模型学习到一种有组织的空间。</p><p>给大家一个例子，就是下面这个图：用深度隐变量模型在 MNIST 数据集上训练，得到模型后，对每个手写数字推断它的隐变量表示，然后降维成二维画在这个空间里。不同颜色代表不同类别——同一种颜色的图像更相近，不同类别的图像和对应的隐变量在空间中更远，有一种聚类效应。</p><p>而且可以看到，比如这一类可以学习到数据的子结构：左边大家可发现它在 5 中间分成两块——右边这个点对应的图像是一种写法，左边这个点是另一种写法，因为写法不一样。所以所谓结构化，就是捕捉数据的一些特征：让具有同样特征的相近，不同特征的远离。</p><p>大家看不同的结构化表现：这个聚类是 6，那个聚类是 1。我在中间插值，插值中间这些点对应的图像有意义吗？如果图像有意义，特征空间就是结构化的；如果无意义，结构化程度就很低——这就是黑盒表达，后续学习中会明白它的含义。非结构化的图像，点散乱得跟马赛克一样。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>机器学习里有个黑话，叫结构化的特征空间。我们希望特征空间不是一团任意、难以解释的编码。我们希望模型学习到一种有组织的空间。</p><p>不同类别的图像和对应的隐变量在空间中更远，有一种聚类效应。而且我们可以看到，比如上面这种类别，可以学习到数据的子结构。</p><p>如果图像有意义，特征空间就是结构化的。若无意义，结构化程度则很低。这是黑盒表达，后续学习中会明白其含义。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-gmm">
+  <div class="slides"><figure class="slide" id="slide-18">
+<img src="slides/slide_18.png" alt="课件第18页 Lecture Outline：GMM 小节">
+<figcaption><span class="sno">18</span><span class="stitle">Lecture Outline：GMM 小节</span></figcaption>
+</figure>
+<figure class="slide" id="slide-19">
+<img src="slides/slide_19.png" alt="课件第19页 GMM：身高估计的小例子（性别是隐变量）">
+<figcaption><span class="sno">19</span><span class="stitle">GMM：身高估计的小例子（性别是隐变量）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-20">
+<img src="slides/slide_20.png" alt="课件第20页 GMM：组成部分（先验 / 条件分布 / 生成过程）">
+<figcaption><span class="sno">20</span><span class="stitle">GMM：组成部分（先验 / 条件分布 / 生成过程）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">08</span>
+      <div class="sec-tt">
+        <h2>GMM：身高例子与组成部分</h2>
+        <div class="sec-meta"><span class="time">00:33:00 – 00:38:00</span><span class="chip">课件 18</span><span class="chip">课件 19</span><span class="chip">课件 20</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第一小节介绍了隐变量模型，课中讲第二小节，即最简单的隐变量模型——高斯混合模型（GMM）。大家学过吗？没关系，我了解大家的掌握程度。高斯混合模型直观看，就是高斯分布的混合。什么是混合呢？看具体例子。</p><p>类似系统课中的例子：考虑男女生身高分布。自然界中，性别对应的身高呈正态分布。如果统计国科大男女生身高，问卷设计疏忽没填性别，只收集身高数据，画出数据得一条曲线，没有类别信息。但需要认识到，数据底层有隐变量——性别作为隐变量，从机制上决定了数据的构成与生成过程。</p><p>现在我们可以回答之前的一个问题：为什么说给定隐变量以后，你的分布反而好做？比如对这样一条黑线的分布，其实不太好拟合——你怎么用一个分布去拟合它呢？但是一旦给定隐变量、把它拆解成依赖于性别这个隐变量的分解，那每一个条件分布就是正态分布，我们就可以用一个非常高度参数化的模型去表达它——这就是我们为什么需要考虑这样一个模型，这是一个非常简单的例子。</p><p>如果把它考虑成一个通用的、抽象的、参数化的表达，就是高斯混合模型：它有一个隐变量（不一定是性别），隐变量的先验分布 P(Z) 表达了你每一个高斯成分出现的概率是多少。为什么叫先验？因为它不依赖于任何其他变量，只衡量 P(Z) 自己的分布。比如在身高例子里，如果你对国科大男女生分布没有任何先验知识，那就是 1/2 跟 1/2；当然你也可以从花名册统计男生女生大概是多少，去定义你的 P(Z) 大概是多少，这个没有问题——这是先验的依据，不依赖你的数据，只依赖你经验的认识。</p><p>除了 P(Z)，另外一个变量就是高斯成分：所谓高斯成分，就是对于每一类，给定某一类数据的分布其实是高斯分布，高斯的均值和方差是依赖于类别的——每一类的高斯均值方差不一样，都是高斯，你把它加在一起，得到最终的一个分布。这个应该比较直观。</p><p>那决定这样一个模型的采样过程是什么呢？因为有一个先验概率 P(Z)，数据依赖于 Z、以 Z 为条件，所以采样的时候先选择一个 Z（或者说选择一个 Z 的 component、高斯的成分），先从 P(Z) 中采样，再从对应的那个高斯条件分布采样，就得到我们的数据。非常直观地体现出数据是依赖于 Z 的——虽然你收集数据时看不到 Z，但它的生成过程依赖于它，只不过你看不到而已。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>高斯混合模型直观看是高斯分布的混合。什么是混合呢？看具体例子。类似系统课中的例子。考虑男女生身高分布。自然界中，性别对应的身高呈正态分布。</p><p>那比如说，对于这样一个一于黑线的这样一个分布，其实是不太好接受。你怎么去运用一个分布去一合它的呢？但是一旦比如说给定了一变量，把它拆解成两个隐变量的，把它拆解成依赖于这个性别这个隐变量的一个分解的话，那每一个条件分布就是正态分布。</p><p>采样过程就是因为你有一个先验概率P(C)，然后你的这个数据是依赖于Z，以Z为条件。所以你采样的时候就是先选择一个Z，或者先选择一个Z的component高斯的成分。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-gmm-mix">
+  <div class="slides"><figure class="slide" id="slide-21">
+<img src="slides/slide_21.png" alt="课件第21页 GMM：高斯混合——聚类与表征">
+<figcaption><span class="sno">21</span><span class="stitle">GMM：高斯混合——聚类与表征</span></figcaption>
+</figure>
+<figure class="slide" id="slide-22">
+<img src="slides/slide_22.png" alt="课件第22页 GMM：混合模型——组合简单模型">
+<figcaption><span class="sno">22</span><span class="stitle">GMM：混合模型——组合简单模型</span></figcaption>
+</figure>
+<figure class="slide" id="slide-23">
+<img src="slides/slide_23.png" alt="课件第23页 GMM：推广到无穷多个高斯的积分">
+<figcaption><span class="sno">23</span><span class="stitle">GMM：推广到无穷多个高斯的积分</span></figcaption>
+</figure>
+<figure class="slide" id="slide-24">
+<img src="slides/slide_24.png" alt="课件第24页 Summary：表示学习与分布分解">
+<figcaption><span class="sno">24</span><span class="stitle">Summary：表示学习与分布分解</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">09</span>
+      <div class="sec-tt">
+        <h2>GMM：混合、聚类与无穷积分</h2>
+        <div class="sec-meta"><span class="time">00:38:00 – 00:45:00（休息）</span><span class="chip">课件 21</span><span class="chip">课件 22</span><span class="chip">课件 23</span><span class="chip">课件 24</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>我们说在这种隐变量模型、这种表征学习的情况下是非常有效的——或者说我们其实就是为了做这个表征学习来设计这样一个模型。这里给大家一个例子：有一堆样本，设计三个类别的样本，比如红的绿的蓝的，画在特征空间或者存储空间是这样。跟刚才男女生身高的例子一样：隐去类别标签后，收集到的数据结果呈现这样的分布。</p><p>我们更关心每个样本属于哪种类别，而不是如何采样——这是表征或结构化信息的体现。可以用 K-means 等聚类算法确定类别，但也可以从高斯混合模型或生成模型的角度处理：拟合高斯混合模型后，计算 P(X)，得到每个样本的分布——比如某位置属红色类，中间位置则是红绿渐变的过渡类别。这体现了模型的后验推断功能。</p><p>除了推断，模型还具备生成功能。从生成角度看，模型旨在表示数据分布：我们把 Z 加入分布中，形成联合分布。联合分布和边际分布的关系，就是对不必要变量进行积分或求和——这是概率论中的知识。我们可以把 P(X) 拆分成隐变量的先验分布和依赖于隐变量的数据条件分布，在高斯混合模型里 P(Z) 是每一个高斯成分对应的概率，P(X|Z) 是对应的高斯分布。</p><p>我们的初衷是用简单模型按比例混合，表示复杂的分布——比如 3 个独立高斯混合，得到复杂的外部曲线。从推断角度，基于采集的数据，可以反向推断每个成分的样子，或者计算某个点对应某成分的概率，进行分类操作。</p><p>下课之前最重要的是：刚才的高斯分布是离散求和。我们可以提升模型表达能力，把离散求和推广到无穷多个高斯的混合形式——变成积分的形式。用积分形式可以把简单条件分布推广成无数高斯的求和，最终得到 P(X)。它非常灵活，可以组合任意复杂的数据分布——这就是变分模型、隐变量模型的初衷、功能和特点。大家可以稍作休息，一刻钟左右，有问题的可以来问。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>其实跟刚才男女生身高的例子一样。隐去微观信息标签后，收集到的数据结果呈现这样的分布。我们更关心每个样本属于哪种类别，而非如何采样。</p><p>拟合高斯混合模型后，计算P(X)，得到每个样本的分布。例如某位置属红色类，中间位置则是红绿渐变的过渡类别。这体现了模型的后验推断功能。</p><p>我们可以提升模型表达能力，将离散求和推广到无穷多个高斯的混合形式。即变成积分的形式。用积分形式可将简单条件分布推广成无数高斯的求和，最终得到P(X)。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-likelihood">
+  <div class="slides"><figure class="slide" id="slide-25">
+<img src="slides/slide_25.png" alt="课件第25页 Content：似然最大化与变分推断">
+<figcaption><span class="sno">25</span><span class="stitle">Content：似然最大化与变分推断</span></figcaption>
+</figure>
+<figure class="slide" id="slide-26">
+<img src="slides/slide_26.png" alt="课件第26页 Marginal Likelihood：离散例子">
+<figcaption><span class="sno">26</span><span class="stitle">Marginal Likelihood：离散例子</span></figcaption>
+</figure>
+<figure class="slide" id="slide-27">
+<img src="slides/slide_27.png" alt="课件第27页 Marginal Likelihood：连续例子">
+<figcaption><span class="sno">27</span><span class="stitle">Marginal Likelihood：连续例子</span></figcaption>
+</figure>
+<figure class="slide" id="slide-28">
+<img src="slides/slide_28.png" alt="课件第28页 Difficulty：边际似然不可计算（intractable）">
+<figcaption><span class="sno">28</span><span class="stitle">Difficulty：边际似然不可计算（intractable）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">10</span>
+      <div class="sec-tt">
+        <h2>训练隐变量模型：似然与边际化</h2>
+        <div class="sec-meta"><span class="time">00:00:00 – 00:11:00（休息后）</span><span class="chip">课件 25</span><span class="chip">课件 26</span><span class="chip">课件 27</span><span class="chip">课件 28</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>（休息后）我们想用最大似然的方法去训练。在深入之前，先简要总结前两节内容：通过人脸图像例子引入隐变量 Z，它是隐式的、反映数据背后隐藏的结构，虽无法直观看出，但它参与了数据生成的底层过程；引入 Z 后，自然想到能否从数据中推导它——这属于自编码器结构，比如对数据聚类，虽无标签但能获取类别信息，这是反向推断过程，体现了表示学习的思想；另一个重点是，通过定义隐变量分解复杂模型——把复杂的概率分布 P(X) 分解为简单组合，在 GMM 中每个分量是高斯分布，用隐变量分布加权求和，混合成更复杂的结构。</p><p>每次做一个改进之后，我都会问大家这个代价是什么。隐变量模型的代价就是：它的后验似然很难去表示或优化。这跟 AR 模型对应起来了——之前说 AR 模型的优点就是后验很好计算和优化，当时大家可能觉得这个性质没什么特殊，但跟今天学的模型对比起来就知道了：能够计算后验是一个非常优异的性质。现在来看为什么隐变量训练这么难，我们还想通过最大似然的方法去训练，看怎么训。</p><p>既然想用最大似然训练，首先得写出似然。给定一个训练数据 x_i，它的似然就是 P(X=x_i)——这个点的概率。那这个形式怎么用我们模型的参数化表达写出来？先把所有可能的 Z 取值加起来求和，就得到 X 的边际分布——这完全是概率论的性质，即从联合分布推导边际分布，需对除目标变量外的其他变量积分或求和。</p><p>在隐变量模型中这有物理意义：将所有可能生成样本的潜在因素都计算并考虑进来。如果不理解物理意义，也可以理解为数学意义——比如给定样本点 X（如 1.6 米），它的边际分布是对应男生和女生联合分布之和，由两部分组成：男生的身高概率加上女生的身高概率，不同途径的概率相加，得到 X 总体的边际分布。接下来从离散情况推广到连续情况，直接进行积分即可：将与目标变量无关的变量积分掉，保留目标变量。</p><p>写出整个数据集 D 的似然表达式，再对参数求导，找到使似然最大化的最优解。由于样本独立同分布，数据集的似然是各样本似然的乘积；对乘积取对数后，转化为每个样本对数似然的求和。将似然表达式代入，得到离散或连续情况下的数据集似然表达式，最终对其进行优化。</p><p>但是有个问题：每个样本的似然，无论是离散还是连续情况，都是 intractable——不可计算。这是我们之后会经常遇到的词，意思是不可计算。什么叫不可计算？虽然可以写成抽象的数学表达，甚至在取值较少时能手动算，但在实际高维数据或大数据量情况下无法实际计算：离散情况下需对所有潜在变量求和，若情况多求和成本很高；积分更困难，你都不知道分布是什么，直接对它进行积分，它没有显式的闭式表达式，所以无从进行最大化，也没法求梯度。既然直接算不了，接下来要想一种方法进行逼近。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那这个就和我们之前AI模型给对应起来了吧。我们之前说AI模型它的一个优点就是它的后验很好去计算和优化。但是在讲这个隐变量模型之前，大家可能觉得AI模型刚才说的这个性质，计算后验的这个性质好像没有什么特殊的。</p><p>我们把所有可能的G取值加起来求和，就得到X的边际分布。这完全是概率论的性质，即从联合分布推导边际分布，需对除目标变量外的其他变量积分或求和。</p><p>但是有个问题，就是每个样本的似然，无论是离散还是连续情况，都是intractable，即不可计算的。Intractable是我们之后会经常遇到的词，意思是不可计算。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-naive-mc">
+  <div class="slides"><figure class="slide" id="slide-29">
+<img src="slides/slide_29.png" alt="课件第29页 Approximation ①：朴素蒙特卡洛">
+<figcaption><span class="sno">29</span><span class="stitle">Approximation ①：朴素蒙特卡洛</span></figcaption>
+</figure>
+<figure class="slide" id="slide-30">
+<img src="slides/slide_30.png" alt="课件第30页 Approximation ①：均匀采样理论上可行、实际不可行">
+<figcaption><span class="sno">30</span><span class="stitle">Approximation ①：均匀采样理论上可行、实际不可行</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">11</span>
+      <div class="sec-tt">
+        <h2>朴素蒙特卡洛及其问题</h2>
+        <div class="sec-meta"><span class="time">00:11:00 – 00:19:00</span><span class="chip">课件 29</span><span class="chip">课件 30</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>这种近似就是我们之前学过的，通过一些方法对其进行近似。第一种是上节课讲过的 Monte Carlo 方法——大家还记得蒙特卡洛是干嘛的吗？蒙特卡洛方法就是计算 X 属于 Pdata 的期望：因为 Pdata 未知，无法直接计算，只能通过采样，用样本均值估计目标期望。现在就用蒙特卡洛方法计算这件事。</p><p>把结论写下来：数据的边缘分布是这样的。如果从联合分布表达，需对所有隐变量可能值求和。这里用到上节课讲的蒙特卡洛方法：无论表达式多复杂，可以同乘或同除 |Z|（Z 的绝对值、所有可能取值范围的大小），提出后乘 1/|Z| 即可——这是纯数学表达。这样 1/|Z| 可以视为 Z 上的均匀分布，与 p(x,z) 联合分布相乘再求和，就可以写成期望形式。</p><p>我们就是想计算联合分布的期望，经数学变换得到集合大小的系数。这应用了上节课讲的蒙特卡洛性质：把想计算的量表达为期望形式，再利用蒙特卡洛性质——对哪个分布求期望，就对这个分布进行采样。上次课是 X 属于 Pdata 进行采样，得到真实训练样本；这里期望对 Z 求，Z 是在取值范围内的均匀分布，那我们就对 Z 的取值范围进行均匀采样。</p><p>采样得到这些点以后，用算术平均的方法来代替期望、去逼近期望：采生得到了 K 个 Z，对联合分布（期望里算期望的那个对象）求值，然后算数平均，再乘以外面这个 1/|Z| 系数，就得到了我们想求的 P(X)。其实很大程度上，生成模型不是告诉你怎么算，而是你就这么表达——写成数学的形式，然后按数学的方法进行推导。</p><p>那这样方法到底行不行、有什么问题没有？其实不是很严谨——刚才这个做法在理论上是可以 work 的，因为你是完全从数学推导过来的，可以对 Z 进行一个均匀采样。但实际上这样训练并不会 work，为什么？因为你样本的生成是取决于 Z 的，Z 正好控制了样本的生成过程，但你每一个样本和它有关系的 Z 只是 Z 的一部分——对于很多可能采到的 Z，它并不能得到相应的 X，或者跟你的观测样本是没有关系的。</p><p>这个确实比较抽象。比如看这样一个隐变量模型：先通过不可观测的隐变量得到一些底层信息，从而得到可观测的表层信息。但我们想建模的隐藏信息可能很多、可能是无穷的，而真正能够影响观测样本的特征可能很少，它不是均匀分布在我们所有可能取到的地方。如果你在 Z 可能的取值范围内均匀采样，跟想求的样本相关的、决定样本生成的 Z 可能有很多是采不到的。换句话说，这个联合分布是低维的，很多 Z 不支持 X 的生成——均匀采样很可能采不到那些影响大、决定 X 是什么样子的 Z，估计就不准。所以我们需要一个更聪明的方法来采样，得到影响当前样本的那些 Z，不能再取均匀采样，必须比较聪明地采，带有一些先验知识去采样。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>就是X在真实分布上对某值的期望。因PD未知无法直接计算，只能通过采样，用样本均值估计目标期望。现在用蒙特卡洛方法计算此事。</p><p>实际上呢，这样训面它并不会work，为什么呢？因为你的一一个样本，刚才我们说你的样本的生成是取决于你自己的，对吧？你的这个一变量，它正好控制了你的样本的生成过程。</p><p>但是我们去均匀采样，随意去采样呢，很可能就采不到这一点，得不到这些具体的P(X|Z)的值。你得不到这样的一个值的话，你上面这个估计就很不准。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-importance">
+  <div class="slides"><figure class="slide" id="slide-31">
+<img src="slides/slide_31.png" alt="课件第31页 Approximation ②：重要性采样（引入 q(z)）">
+<figcaption><span class="sno">31</span><span class="stitle">Approximation ②：重要性采样（引入 q(z)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-32">
+<img src="slides/slide_32.png" alt="课件第32页 Approximation ②：按任意 q(z) 采样">
+<figcaption><span class="sno">32</span><span class="stitle">Approximation ②：按任意 q(z) 采样</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">12</span>
+      <div class="sec-tt">
+        <h2>重要性采样：引入 q(z)</h2>
+        <div class="sec-meta"><span class="time">00:19:00 – 00:27:00</span><span class="chip">课件 31</span><span class="chip">课件 32</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>刚才这种是比较朴素的 uniform 采样方法。现在我们说需要有一些比较聪明的方法，就是 importance sampling——基于重要性的采样方法，这个比较直观。把刚才推导过的公式写一下：G 是 uniform sampling、均匀采样，这是我们刚才推导过、理论上可行但实际上不可行、训练效果不好的方法。</p><p>我们可以采用另外一种变化的方法：前面这两项还不变，不再通过乘以 1/|Z| 和均匀分布采样的方法去变换，而是引入一个新的分布 q(z)——乘以 q(z) 除以 q(z)，还是一个全等的式子，把 q(z) 这个分母移到右边，就得到 z 属于 q 的分布、对这一项求期望的形式。跟刚才一样，只不过这里边 q(z) 是均匀的分布，这里边 q(z) 是一个任意的分布——我们就用 q(z) 来表示，不知道是谁。</p><p>把这两个相互比较一下，就发现：刚才是对均匀分布采样一个期望，这里是对任意分布 q(z) 采样期望。我们通过引入一个新的分布，来操控我们采样的方法——先不管 q(z) 是什么样子，要想计算这个期望，还是通过蒙特卡洛去逼近：期望对哪个分布计算，就按哪个分布采样。假设按 q(z) 采得了 K 个 Z，那似然就可以用这些采样样本点的结果进行算术平均，得到近似值——把期望换成了算术平均。</p><p>为什么用 q(z) 呢？因为不想均匀采样隐变量，后来发现 q(z) 应该与 X 有关：得到训练样本后，推断哪些隐变量与其有关，采样与 X 有关的 Z，这样计算就更精准。现在有个直接的问题：q(z) 是任意分布，那到底怎么设计这个 q(z)？</p><p>直观来看，为了解决均匀采样的问题，q(z) 应该把更多的概率质量放在给定 X 的情况下 P(Z|X) 比较大的一些地方——什么意思？就是我们去采样那些能够更好解释当前给定样本的 Z。我们刚才说一个样本可能有不同的隐变量对它进行影响，有的影响大、有的影响小、有的完全没有影响；那你应该采样那些对当前这个样本影响比较大的 Z，换句话说，就是能够解释当前样本的程度比较大的那些 Z。</p><p>所以说，我们引入 q(z) 的一个具体原因，就是想要把 P(X) 变得可以计算——刚才不能计算，现在变得可以计算了，可以通过这个方法来进行计算。虽然里面有一项不知道怎么算，但总之我们可以通过采样的方法去解决这个期望的问题；之后我们再去看怎么最优化这个问题。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那现在咱们刚才说我们需要有一些比较聪明的方法，就是叫这种importance sampling不是uniform sampling是importance sampling，基于重要性的一个采样的方法，这个比较直观的一个理解。</p><p>引入一个新的分布，QC×QC÷QC，这样还是一个全等的式子，对吗？你乘以QC÷QC以后，可以把QC这个分母移到右边来。</p><p>所以说，我们引入QC的一个具体原因，就是想要把PPC的X变得可以计算。因为刚才不能计算，现在变得可以计算了，可以通过这个方法来进行计算。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-elbo">
+  <div class="slides"><figure class="slide" id="slide-33">
+<img src="slides/slide_33.png" alt="课件第33页 ELBO：对数边际似然与证据下界">
+<figcaption><span class="sno">33</span><span class="stitle">ELBO：对数边际似然与证据下界</span></figcaption>
+</figure>
+<figure class="slide" id="slide-34">
+<img src="slides/slide_34.png" alt="课件第34页 ELBO：用 Jensen 不等式推导">
+<figcaption><span class="sno">34</span><span class="stitle">ELBO：用 Jensen 不等式推导</span></figcaption>
+</figure>
+<figure class="slide" id="slide-35">
+<img src="slides/slide_35.png" alt="课件第35页 Variational Inference：ELBO 对任意 q(z) 成立">
+<figcaption><span class="sno">35</span><span class="stitle">Variational Inference：ELBO 对任意 q(z) 成立</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">13</span>
+      <div class="sec-tt">
+        <h2>对数似然、Jensen 不等式与 ELBO</h2>
+        <div class="sec-meta"><span class="time">00:27:00 – 00:33:00（下课）</span><span class="chip">课件 33</span><span class="chip">课件 34</span><span class="chip">课件 35</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>刚才算的是似然，但在数据集上，我们想用对数似然来解释——因为数据集的似然是乘积形式，取对数后可化解为求和形式。先来考察对数似然怎么计算：把似然写出来求对数即可，这是纯数学变换；在求和里乘以 q(x) 除以 q(x)，再写成期望形式，这就是对数似然。</p><p>但引入 q(x) 后，我们还想用蒙特卡洛采样处理这个期望——现在处理不了。为什么？因为期望在 log 里面，没法直接采样求导。之前说蒙特卡洛能解决期望计算，是因为采样后能进行算术平均；但现在这个 log 里面没法去计算它。既然这样，我们想把 log 和期望翻转——交换一般是不等的，但我们依然想把期望拿出来，因为如果把期望拿出来，我们就可以用蒙特卡洛、用算术平均的方法去解决这个问题。我们的目标是这样的，但现在只能得到这样的一个结果，我们需要一个办法来解决这个问题。</p><p>这个问题在上节课已经讲过一次了，就是用 Jensen 不等式。我们用这个不等式去解决，想办法把 log 从一个函数里边给它拿出来、暴露在外面，从而可以用蒙特卡洛去估计它。大家可能忘了 Jensen 不等式，没关系，我再给大家复习一下：上节课用的是这个形式——对某一个变量求期望以后再取函数，小于等于先取函数值以后再求期望（f 是一个凸函数）。</p><p>比如说，我们现在这个 f 就是 log。把 Jensen 不等式跟要处理的项对应起来：log 就是这里的 f，期望就是这里的期望，X 就是里边这个分式。用这个不等式去翻转 f 和它的期望——但不能是等式的翻转，而是不等式的翻转：这一项计算完以后是一个大于等于的关系。</p><p>我们想最大化这一项，但没法处理，就必须用 Jensen 不等式做这样一个变化，从而去最大化这样一个下界；你最大化这个下界以后，对数似然就可以间接地被最大化了。这个下界其实就是我们生成模型里面非常重要的一个东西，英文叫 Evidence Lower Bound，中文叫做证据下界——不知道什么叫证据下界是吧？翻译过来，这就是隐变量模型最后想优化的目标。</p><p>到这儿已经得到一个比较重要的结果，我们可以先不再往下讲——今天能到这个地方应该还不错了，已经把 ELBO 的形式引出来了。有问题的话可以坐下来跟我说，没有问题咱们就下课，下节课继续。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>先来考察对数似然怎么计算。把似然写出来求对数即可，这是纯数学变换。在求和里乘以q(x)除以q(x)，再写成期望形式，这就是对数似然。</p><p>其实这个问题在上节课已经讲过一次了，就是用Jensen不等式。我们用这个不等式的情况去解决，想办法把1从一个函数里边给它拿出来，暴露在外面，从而可以用蒙特卡洛去估计它。</p><p>这个下界其实就是我们的生成模型里面非常重要一个东西，然后我，Evidence lower bound.中文叫做证据下界。翻译过来这就是我们最后想的这个变量模型，他想优化这个目标。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（生成式模型与科学智能应用）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>

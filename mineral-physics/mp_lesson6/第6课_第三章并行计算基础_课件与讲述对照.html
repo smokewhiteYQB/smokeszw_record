@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>矿物物理学（180083070901P2003H） · 第三章 并行计算基础（高性能计算）｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>矿物物理学（180083070901P2003H） · 第三章 并行计算基础（高性能计算）</h1>
+    <div class="sub">第三章 并行计算基础（高性能计算） ｜ 2026-09-22 ｜ 授课：郭光军</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 41 页 · 整理 16 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-potential">01 开场：势能函数与三种计算路线</option>
+<option value="sec-plan">02 课程安排与本课目标</option>
+<option value="sec-concepts">03 并行计算三概念与攒机</option>
+<option value="sec-linux">04 安装与学习 Linux</option>
+<option value="sec-cluster">05 组网搭建机群</option>
+<option value="sec-eniac">06 超算发展史：ENIAC 与冯·诺依曼</option>
+<option value="sec-tianhe-sunway">07 天河二号与神威·太湖之光</option>
+<option value="sec-million-core">08 千万核的乘法与 TOP500 榜单</option>
+<option value="sec-exascale">09 E 级机与近年榜单</option>
+<option value="sec-centers">10 国家超算中心与超算互联网</option>
+<option value="sec-quantum">11 量子计算机展望</option>
+<option value="sec-parallel-basic">12 回到并行计算：统筹问题</option>
+<option value="sec-mpi">13 串行编程与 MPI 并行编程</option>
+<option value="sec-speedup">14 评价并行计算：加速比与并行效率</option>
+<option value="sec-hw">15 作业 3.2 说明</option>
+<option value="sec-account">16 账号开通与登录演示</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 矿物物理学-3.2-并行计算基础.pdf 逐页渲染，转写原文见 record_20260922.txt。</div>
+<section class="sec" id="sec-potential">
+  <div class="slides"><figure class="slide" id="slide-01">
+<img src="slides/slide_01.png" alt="课件第1页 封面：并行计算基础">
+<figcaption><span class="sno">01</span><span class="stitle">封面：并行计算基础</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>开场：势能函数与三种计算路线</h2>
+        <div class="sec-meta"><span class="time">00:02 – 05:23</span><span class="chip">课件 1</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>那个势能对咱们分子模拟来说太重要了——它就是定了一个物质世界的规则：你把这个世界原子分子之间的相互作用搞清楚，这个世界就可以存在，就可以变成现在这个样子。我们前面说的经典分子动力学模拟，用的就是势能函数。</p><p>势能函数怎么得到的？也没法直接得到，就是把几个参数调一调，调完之后让它跟实验去拟合；你拟合完之后，说用这几个参数做了三个模拟，能够重现实验的数据，好了，就达标了。这样的势能就依赖于实验，术语叫经验势。</p><p>后来为了做得更好，就提出了基于量子力学的第一性原理计算：直接从原子核和电子的相互作用去算，连实验都不要——直接从量子力学基本原理去解薛定谔方程，还有密度泛函那些东西。这是张老师后半节课主要讲的内容。它的优点是很厉害、很准，但缺点是：经典分子动力学模拟可以做得很大、上百万原子，速度很快；第一性原理只能做几百到一千个原子，因为从电子角度算起计算量非常大、速度慢很多。</p><p>现在机器学习出来之后，又开发了机器学习势：利用机器学习方法对量子力学算出来的数据反复学习，学它的轨迹，获得势能面；这个势能面不是根据实验、而是根据量子力学算出来的，然后把这个势能面套到经典分子动力学里算，速度很快。它的特点就是：速度非常快、精度高、可转移性中等——它依赖对数据的训练，泛化能力还差一点，参数很多但物理解释性弱一些。</p><p>常见的分子动力学软件包有 LAMMPS、Amber、GROMACS、NAMD 这些。咱们后面就开始学 LAMMPS，学完之后让你尽可能入个门——上完课马上精通掌握不太可能，但一定要让你手摸一摸、玩一玩 LAMMPS，做出一个动画来，看看它的功能和效果。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那个势能对咱们那个分子模拟来说太重要了他就是定了一个这个物质世界的规则你比方说把这个世界的原子分子之间的那个相互作用给搞清楚这个世界就可以存在就可以像这样变成现在这个样所以势能很重要。</p><p>然后后来这个就将来为了说弄得更好哎就提出了这个基于量子力学的第一性原理计算这个东西就人家直接从电子核和电子里和那个电子的相互作用去去去去讲那个呃那个相互作用那那就是说这都不要实验连实验都不要我直接从量子力学理性原理去算解这个薛定谔方程啊然后弄那个密度泛函那些东西。</p><p>然后现在呢又这呃机器学习这些东西出来了之后呢又开发了这个机器学习时这个东西呢就是说利用机器学习的方法对量子力学算出来的数据呢进行反复的学习学习学习学学完了之后就学他的轨迹学他那个轨迹弄完了之后获得那个势能面。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-plan">
+  <div class="slides"><figure class="slide" id="slide-01">
+<img src="slides/slide_01.png" alt="课件第1页 封面：并行计算基础">
+<figcaption><span class="sno">01</span><span class="stitle">封面：并行计算基础</span></figcaption>
+</figure>
+<figure class="slide" id="slide-02">
+<img src="slides/slide_02.png" alt="课件第2页 从零开始，实现并行计算：并行 / 超级 / 高性能计算">
+<figcaption><span class="sno">02</span><span class="stitle">从零开始，实现并行计算：并行 / 超级 / 高性能计算</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>课程安排与本课目标</h2>
+        <div class="sec-meta"><span class="time">05:23 – 11:44</span><span class="chip">课件 1</span><span class="chip">课件 2</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第一性原理这边，会教大家用编译软件、可视化 MD——到时候肯定都得用 VMD。上完课之后你可能都能算一下，但精通不容易；研究生过来之后，掌握快的两三个月就可以顺利开展模拟，慢一点的四五个月足够，一个学期肯定能上手。</p><p>这是以前我做的一些工作：过冷水的黏度，测压力、测黏度，用统计力学公式算扩散系数；模拟水结冰，是日本一个组做的，把水用计算机实现结冰，发到了 Nature 上——可以看到水先出现长寿命氢键，然后连成环，最后结晶。</p><p>这是我们以前老的计算机实验室，这是现在新的超级计算实验室。以前让大家算东西是在超级计算实验室里的一套集群；今年课程改了一下，让大家用一套今年三月份刚买的新的集群，到时候给大家找找资源。学习方法就是自学、多实践、查资料、用 AI 读书——根据需要读，不可能把书都读完。</p><p>上节课的作业是分组做的，最后分四组，做完给我发邮箱就行；愿意单人做就单人做，愿意和合作者做也可以，每个人总得露一面。</p><p>然后咱们开始讲今天的课，今天讲得快一点，留一点时间演示。上一节讲了分子动力学模拟的原理，有三句话：拿计算机算轨迹，把轨迹微观状态存到硬盘上，直接可视化观测——微观世界那些分子怎么跳动、怎么扩散、怎么吸附都能看见；第二，把轨迹数据用统计力学公式按计算机统计，就能测宏观性质——扩散系数、黏度、密度函数啥的都能算。</p><p>分子动力学模拟最大的特点就是它要用计算机，所以我们必须要讲计算机，讲一些高性能计算的基础——这就是这节课的主要目的。我们应该做什么？科学计算。今天这节课我们从零开始讲，因为根据往年经验，大多数同学是选地学的，觉得计算机太难了搞不定；其实算法都不难，我们从零基础开始，一步一步实现并行计算、实现 MPI 分子模拟。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>但是一定要让你手摸一摸那个玩一玩LAMMPS然后呢做出一个动画来让你看看就是它的那个功能和那个效果然后第一性原理这个呢这是主要是呃会将你这个Bash会将你这个编译箱啊可视化的MD呢到时候肯定都得用啊就用VMD。</p><p>这是以前我做了一些过冷水的黏度就是测了测那个压力然后测就是粘制度用的这个呃低性能跟人家那个统计力学的公式这个后头还会讲怎么讲扩散系数扩散系数你像模拟冰的这个呃这是一个日本人做的当时呢就把这块把水用计算机让它实现结冰这样的工作呢就发到了nasa杂志上啊。</p><p>我们上一节讲了分子动力学模拟的原理那个原理有三句话大家还有印象啊就是拿这个计算机去算轨迹算完轨迹之后把那些轨迹带到他微观状态上提取出来存到硬盘上然后用那些东西就是这个一直接可视化可视化就观测就跟播电影一样。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-concepts">
+  <div class="slides"><figure class="slide" id="slide-02">
+<img src="slides/slide_02.png" alt="课件第2页 从零开始，实现并行计算：并行 / 超级 / 高性能计算">
+<figcaption><span class="sno">02</span><span class="stitle">从零开始，实现并行计算：并行 / 超级 / 高性能计算</span></figcaption>
+</figure>
+<figure class="slide" id="slide-03">
+<img src="slides/slide_03.png" alt="课件第3页 攒机：AMD 皓龙 CPU 峰值计算（0.016 Tflops）">
+<figcaption><span class="sno">03</span><span class="stitle">攒机：AMD 皓龙 CPU 峰值计算（0.016 Tflops）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>并行计算三概念与攒机</h2>
+        <div class="sec-meta"><span class="time">11:44 – 17:59</span><span class="chip">课件 2</span><span class="chip">课件 3</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>做分子空间模拟首先就三个概念：并行计算（parallel computing）、超级计算（supercomputing）、高性能计算（HPC）。这三个是一个意思——一说并行计算、超算，就是咱们平常说的超算，要用计算机干大活，不是个人电脑，就是把成百上千台电脑垒在一块怎么算。</p><p>咱们从零开始。原来从攒机开始，现在不需要大家攒机了，直接登陆超算平台、登陆大集群就可以开始计算模拟了；但底层的东西还是提一下，让你有个总体的印象。最开始那些机器都是自己攒的：到市场买 CPU、主板、显卡、内存条，插上电源、装系统、配显示器，就攒出一台电脑。</p><p>这里头最重要的部件就是 CPU。一提到 CPU，就看它的哪些东西？不外乎说“我这电脑好，2.0 主频，你那是 1.8，你比我慢”——主频快了确实就快，但现在型号多了不一定，有的主频低但每个时钟周期计算的次数多，也可能快。我们要理解一个概念：峰值。</p><p>这颗 AMD 皓龙 CPU，里面藏了两个核（原来只藏一个核），主频 2.0 G 赫兹——20 亿次时钟周期每秒，每个时钟周期可以完成 4 次浮点运算，2×20 亿×4 = 160 亿次浮点运算，这就是 FLOPS——每秒的浮点运算次数。160 亿次换算下来就是 0.016 Tflops（1 T = 1000 G）。所以你看到一个 CPU，想计算峰值：几个核 × 主频 × 每个时钟周期的浮点运算次数，乘起来就是它的计算峰值（peak）。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这三个概念一个就是病型计算叫并行计算并行的计算第二个呢叫超级计算Supercomputing第三个叫高性能计算High Performance high high performance computing所简称是HPC这三个呢是一个意思是一个例子哎一说并行计算超计算就是咱平常那个超算要用计算机干大活了不是个人电脑对吧咋这也跟弄成一百个电脑垒在一块怎么算。</p><p>原来的时候呢我就说那我们从船机开始船机呢现在呢不需要大家船机不需要大家船机了我们直接上登陆这个大型大型计算机那个超算平台啊登陆那个大集群就可以干就可以开始大家的计算模拟了。</p><p>这个CPU是一颗CPU这里头呢藏了两原来呢里头只藏一个核现在藏两个核然后呢这个呢二点零g赫兹二点零g十的九次方面是二十个亿它就有二十亿次那个每秒有二十亿次那个时钟周期每个时钟周期呢就是每赫兹啊它可以完成四次浮点运算然后你我这二乘二十乘四这么乘法取一百六十亿次浮点运算。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-linux">
+  <div class="slides"><figure class="slide" id="slide-04">
+<img src="slides/slide_04.png" alt="课件第4页 安装 Linux：林纳斯·托瓦兹与开放内核">
+<figcaption><span class="sno">04</span><span class="stitle">安装 Linux：林纳斯·托瓦兹与开放内核</span></figcaption>
+</figure>
+<figure class="slide" id="slide-05">
+<img src="slides/slide_05.png" alt="课件第5页 学习 Linux：最好的方法就是多装几遍">
+<figcaption><span class="sno">05</span><span class="stitle">学习 Linux：最好的方法就是多装几遍</span></figcaption>
+</figure>
+<figure class="slide" id="slide-06">
+<img src="slides/slide_06.png" alt="课件第6页 Linux 基础操作：10 个必须掌握的命令">
+<figcaption><span class="sno">06</span><span class="stitle">Linux 基础操作：10 个必须掌握的命令</span></figcaption>
+</figure>
+<figure class="slide" id="slide-07">
+<img src="slides/slide_07.png" alt="课件第7页 vi（vim）编辑器基础操作">
+<figcaption><span class="sno">07</span><span class="stitle">vi（vim）编辑器基础操作</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>安装与学习 Linux</h2>
+        <div class="sec-meta"><span class="time">17:59 – 29:51</span><span class="chip">课件 4</span><span class="chip">课件 5</span><span class="chip">课件 6</span><span class="chip">课件 7</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>攒完机器、装完系统——装什么系统？现在高性能计算、超级计算 99% 装的是 Linux。原来还有 Unix、Windows，那些逐渐被淘汰了，因为商业的要花钱买，做超算还是不方便。Linux 是免费的、公开的，就这点好。</p><p>Linux 是 1991 年一个芬兰大学生——大三开始弄、大四毕业的时候开发出来的一套操作系统，他叫林纳斯·托瓦兹，给操作系统定名叫 Linux。它最大的好处就是完全开放、完全免费，而且可靠、安全、稳定、高效，支持多用户、多任务、多 CPU、多线程，适应多硬件平台，所以所有的超算中心几乎都是 Linux。林纳斯因为成功开发了 Linux 内核，荣获 2014 年计算机先驱奖。</p><p>大家一说 Linux：我用的 Red Hat，你用 CentOS，他用 Ubuntu，都很好用；包括国内开发的麒麟，都是用人家的内核做了包装和外部环境配置，内核全是那个。</p><p>大家学过 Linux 吗？举一下手，有谁玩过？一个都没有？没关系。你们上研究生了，要去学新的东西、接触新的东西；将来做实验可能摸不到计算，但学的这些东西不知道啥时候会用，最起码将来看到计算类文献不会茫然不知所云。</p><p>Linux 学习的最好方法是多装几遍。现在可能没这个条件，除非特别感兴趣可以在自己电脑上装双系统，启动的时候有个选项，进 Windows 还是进 Linux。提醒一句：在自己电脑上装的话提前备份好原有数据，别没装好旧的进不去、新的也用不成。</p><p>你们现在比往届学生多了一个有利工具：查 AI。那些命令怎么弄，一查就会了。Linux 有三百多个命令，不需要都记得，我也记不住，大概记住十个多个就够了。常用的这十个必须掌握：ls 列表、cd 改变目录、mkdir 新建目录、cp 复制、mv 重命名或移动、rm 删除、man 查帮助、pwd 显示位置、tar 压缩、exit 退出终端——这些都对应 Windows 里的操作，Windows 里鼠标搓过去，这里用指令。</p><p>一些小技巧：波浪号代表家目录，一个点代表当前目录，两个点代表上一级目录；tab 键可以提示文件名，上箭头可以翻出以前执行过的命令行。这一页有些东西回头可以去查，只是很小的一部分，拿 AI 查去，主动学习的过程就是锻炼学习能力。</p><p>还有一个重要的命令叫 vi（vim），就是一个编辑器的基本操作，相当于 Windows 里头的记事本——简单、最简的文本描述，所有东西都是字符。插入模式用 i，esc 退回正常模式，: 进入命令模式；dd 删除整行、yy 复制整行、p 粘贴、:w 保存、:wq 保存退出、:q! 不保存退出。你们一开始感觉到的困难就是“不习惯”，但学完这门课之后人家问你们“高性能计算学过没有”，你们一定得说学过、练过。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>现在呢这个高性能计算或者是超级计算全百分之九十九应该装的是Linux超级原来的时候呢还装一些unix还有装那个Windows的也都有但是那些呢逐渐就被淘汰了啊因为是他商业的但要花钱买Windows的呢做做做超算还是还是比这个要要要不方便啊。</p><p>然后这个呢是一九九一年的时候呢一个芬兰大学生大三的时候就开始弄大四毕业的时候人家开发出来的一套操作系统叫叫叫Linux aurus所以呢他的这个把这个操作系统给我定名了叫Linux啊Linux这个呢最大的好处就是完全的开放完全的免费而且呢这个操作系统呢又可靠安全稳定高效做任务做任何商场反正是啥好处都有。</p><p>大家学过Linux举一下有有有谁那个玩过没一个都没有哈哈没关系也没关系去年的时候好像有啊我记得有有有两个同学举手就他们还摸过Linux我们就从今天起就开始学这种啊学这种不熟悉的东西。</p><p>大概能记住的哎呀反正有十个多个就够了十个多个我相信还是能记住啊这个使一使就能记住这个基础的操作呢你比方说这十个就必须得掌握对吧s s列线表c d呢改变性目录mkdir呢就创建性的目录cp是复制mv是移动这rm悬浮这个就这些。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-cluster">
+  <div class="slides"><figure class="slide" id="slide-08">
+<img src="slides/slide_08.png" alt="课件第8页 组网搭建机群（cluster）：集群 = 机群 + 高速网 + 存储 + 管理">
+<figcaption><span class="sno">08</span><span class="stitle">组网搭建机群（cluster）：集群 = 机群 + 高速网 + 存储 + 管理</span></figcaption>
+</figure>
+<figure class="slide" id="slide-09">
+<img src="slides/slide_09.png" alt="课件第9页 机群发展：台式机→机架式→刀片式；CPU 单核→双核→四核→…">
+<figcaption><span class="sno">09</span><span class="stitle">机群发展：台式机→机架式→刀片式；CPU 单核→双核→四核→…</span></figcaption>
+</figure>
+<figure class="slide" id="slide-10">
+<img src="slides/slide_10.png" alt="课件第10页 机柜正面与背面">
+<figcaption><span class="sno">10</span><span class="stitle">机柜正面与背面</span></figcaption>
+</figure>
+<figure class="slide" id="slide-11">
+<img src="slides/slide_11.png" alt="课件第11页 年度排名第一的超级计算机（历年 TOP1）">
+<figcaption><span class="sno">11</span><span class="stitle">年度排名第一的超级计算机（历年 TOP1）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>组网搭建机群</h2>
+        <div class="sec-meta"><span class="time">29:51 – 36:03</span><span class="chip">课件 8</span><span class="chip">课件 9</span><span class="chip">课件 10</span><span class="chip">课件 11</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>你攒出一台机器，那我干脆一口气攒十台：把 CPU 往上一插、一组装，硬盘装好系统，懒得一台台装就克隆硬盘复制十份，装进去都能用。然后用一个交换机、带上网线——机器背后有网卡，网卡插网线，网线插交换机，十台机器都插在交换机上，就组成了一个网络。</p><p>起好主机名，网络能通就用一个命令叫 ping——能 ping 通地址的话就互相能认识，这就叫组成了一个集群（cluster）。一个集群已经可以开展高性能计算了：两台机器能连一块的时候已经可以叫集群，两台机器同时计算同一个任务就得到了加速，一百台算同一个任务是不是更快？目的就达到了。</p><p>为了让集群算得更好、用得更方便，再给它配一套千兆网：背后再插一块网卡，接到千兆交换机上，就有两套网络——百兆网络叫通讯网，千兆网络叫计算网（高速网）。现在的集群通讯网络都是千兆，计算网络达到一万、二十万、一百万，非常非常快。再配个大的存储（磁盘阵列）、装管理软件——集群 = 机群 + 高速网 + 存储 + 管理。一套集群管理好了可以服务很多用户，你们将来就是国科大超算平台的用户。</p><p>这是我以前弄的这些机器，从这边一个大屋子转了一圈：台式机攒了一套，后来弄成机架式，一格一格插在机柜里头；再后来发展到刀片式——一个机柜里插几个刀箱，每个刀箱里有十片，薄薄的一片叫一个刀片，目的就是把计算密度做高一点。CPU 的发展从单核到双核、四核、八核、十六核，一直到现在一个 CPU 可以放 96 个核甚至 128 个。</p><p>这是这台机器的背面：黑色的线是 InfiniBand 高速网，蓝色的线是千兆通讯网，两套网络就这点事。一台集群可以叫超级计算机——超级计算机看规模，十多个机柜放一块肯定比一个机柜快。</p><p>大家就开始比谁家做的规模大、算得快，于是有了排名。最开始是 1946 年美国的第一台计算机，只有那么一点点；两千年的时候发明了 7.26 Tflops（万亿次）；美国日本交替第一，2009 年之前几乎都是美国第一。数字越来越大，到一千 T 记着麻烦，除以一千就叫 P（PFLOPS）。2010 年中国做了天河一号，落户天津国家超算中心，登顶一次；2013 年天河二号放广州，33.86 PFLOPS；2016 年神威·太湖之光放无锡，93 PFLOPS 又登顶；2022 年美国 Frontier（前沿）1102 PFLOPS，跨了一个层次，到了一 E 级。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>然后我装了十台之后呢那些硬盘呢我还我还懒得一台一台装我干脆把硬盘复制十份啊那克隆一下克隆完了之后都装进去都能用上用好之后呢然后呢用一个交换机带上网线这个东西的背后呢有一个网卡网卡插插一条网线那那那端这端插插在交换机上ok这样一来呢这十台机器都插在这个交换机上它就组成了一个网络。</p><p>这这就叫组成了一个集群一个一个集群叫集群叫集群一个集群一个集群呢这已经可以开展开展高性能计算你说刚才不是这一百个左右落一块吗那那就是一个说法实际上你两台能够能够练连一块的时候呢你已经可以叫他集群了。</p><p>那么这套集群是不是就会有两套网络两套网络呢一般那个百兆的网络呢我们称之为就是通讯网然后千兆的网络呢称之为计算网啊或者叫高速网。</p><p>CPU的发展呢从单核的CPU而起啊那个时候啥时候啊那个年代的话应该是我做国后的时候刚才我传机器那张图就是我国后期间干的活啊那个那是九八年的九八年两千年那个左右看着看着那个CPU从单核的变成双核双核变成四核发核十六核一直到现在买到的一个CPU呢顶多可以放九十六个核甚至一百二十八个。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-eniac">
+  <div class="slides"><figure class="slide" id="slide-11">
+<img src="slides/slide_11.png" alt="课件第11页 年度排名第一的超级计算机（历年 TOP1）">
+<figcaption><span class="sno">11</span><span class="stitle">年度排名第一的超级计算机（历年 TOP1）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-12">
+<img src="slides/slide_12.png" alt="课件第12页 第一台通用计算机——ENIAC 与冯·诺依曼体系">
+<figcaption><span class="sno">12</span><span class="stitle">第一台通用计算机——ENIAC 与冯·诺依曼体系</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>超算发展史：ENIAC 与冯·诺依曼</h2>
+        <div class="sec-meta"><span class="time">36:03 – 40:28</span><span class="chip">课件 11</span><span class="chip">课件 12</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>这些特别著名的、特别牛的东西大家一定要留下印象，要不然上完一年课回去，别人问点啥都记不住。当然现在有 AI，一搜就全记住了——你搜“高压的鼻祖是谁”，一定搜出来布里奇曼；那么第一台计算机的发明人是谁？冯·诺依曼。他称为计算机之父。</p><p>冯·诺依曼提出的东西有多厉害？第一，采取二进制——0 和 1 在计算机里头好实现：逻辑开关关了就是 0，开了就是 1；第二，要存储一些程序在计算机里头；第三，用程序去控制这台计算机运转——这个体系叫冯·诺依曼体系。</p><p>这套体系搁在这就是：你的手机、电脑、平板，只要是计算机类的设备，无一例外都有这些东西——输入设备（键盘）、输出设备（屏幕）、存储（硬盘、内存）、控制器（操作系统）、运算器（CPU）。程序调入内存，控制器发指令交给 CPU 运算，运算完回传存储器，再输出到屏幕，就这点事。1946 年冯·诺依曼设计了计算机的这个体系，从手机到电脑所有的运行到现在无一例外围绕着它转。</p><p>设计出来之后，在美国宾夕法尼亚大学就做出来了第一台计算机——叫 ENIAC（电子数字积分计算机），三十多吨、150 千瓦、每秒只能算 5000 次，少得可怜；但一旦算出来马上就投入弹道计算——军事上的需求实在太重要。包括现在 AI 大模型出来之后马上就被用于战场智能决断，没办法，各种新技术一出来就往军事上使。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>像这些呢就是就是一些这个特别特别牛的特别特别呃著名的那韩信一定要留下印象要不然以后回去说就是上完一年课回去了这东西说说说点啥东西总监记不住当然现在是有的ai技能全记住你搜一下高压的鼻祖是谁那一定搜出来的布里奇曼为什么啊对吧那么同样第一台计算机的发明人是谁呢冯·诺依曼冯·诺依曼那那你得记住。</p><p>就说采取二进制采取二进制一零零一一一零零一这个时候呢去计数在计算机里头呢就好实现哎他好实现到哪呢哎就是那个逻辑开关关了就是零嘛开开了就是一嘛一零零一这么反复弄的他他好处第二个呢就是说你要要存储一些程序在这个计算机里头要存储一些程序第三一个呢你要用程序去控制这台计算机运转就是这样的一个体系称之为冯·诺依曼体系。</p><p>这个东西呢三十多吨一百五千瓦每秒只能算五千次少得可怜啊少得可怜但是一旦算出来呢马上就投入这个弹道计算就是这个军事上的需求实在是太太重要没办法。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-tianhe-sunway">
+  <div class="slides"><figure class="slide" id="slide-13">
+<img src="slides/slide_13.png" alt="课件第13页 天河二号——中国造（33.86 千万亿次）">
+<figcaption><span class="sno">13</span><span class="stitle">天河二号——中国造（33.86 千万亿次）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-14">
+<img src="slides/slide_14.png" alt="课件第14页 神威·太湖之光——全国产（申威 26010 众核处理器）">
+<figcaption><span class="sno">14</span><span class="stitle">神威·太湖之光——全国产（申威 26010 众核处理器）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-15">
+<img src="slides/slide_15.png" alt="课件第15页 太湖之光配置：40960 个申威 26010（40×4×32×4×2）">
+<figcaption><span class="sno">15</span><span class="stitle">太湖之光配置：40960 个申威 26010（40×4×32×4×2）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div class="sec-tt">
+        <h2>天河二号与神威·太湖之光</h2>
+        <div class="sec-meta"><span class="time">40:28 – 43:13</span><span class="chip">课件 13</span><span class="chip">课件 14</span><span class="chip">课件 15</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>2014 年中国做了天河二号，1.6 万个计算节点、8 万多个 CPU（都是英特尔的）、312 万个核，运行麒麟 Linux 操作系统，开展了好多计算——C919 外流场气动计算、中科院上海药物所 75 万个小分子的结合亲和力评估，就是这些应用。</p><p>到了 2017 年，神威·太湖之光，它可是全国产。在那之前天河二号登顶之后，美国人心里不舒服，就开始搞禁运——天河二号想升级、再去买英特尔的 CPU 人家不卖了，升级计划就没弄成。为了打破这种垄断，中国造了一个芯片叫“申威 26010”，里头集成了 260 个核，这一套东西全是国产。</p><p>神威·太湖之光在 TOP500 榜单上蝉联了三年的世界第一（“三连冠”），速度 93 PFLOPS。当年就获得了高性能计算应用最高奖——戈登·贝尔奖：中科院软件所杨超他们，用千万核可扩展的全球大气动力学全隐式模拟这个应用拿的奖。这个任务用了一千万个核——核是啥意思？原来 CPU 里头是一个核，你把核就当 CPU 看：两个核就相当于放进去两个 CPU，一个顶俩；放 260 个就相当于一块上头有 260 个 CPU。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>然后到了这个两千一四年中国做了天河二号这个呢现在现在也不说也不说也罢广州中心放那个呃反正就是一送出一点六个一万个一点六万个计算节点八万多个CPU都是用的英特尔然后就开展了好多这个计算。</p><p>然后呢为了打破这种这种呃垄断呢中国造了一个这个芯片叫叫叫做众核的有知的这个叫啊申威芯片二六零幺零这个型号它有里头集成了二百六十个核然后呢这一套东西可都是全国产然后在那个TOP500榜单上播了三年了。</p><p>弄完了之后呢马上当当年呢就获得了这个高性能计算应用的一个最高奖项戈登·贝尔奖就是软件锁的他们这个因为做了这样一个应用就千万核集的和扩展的全球大气动力学全影这个东西。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-million-core">
+  <div class="slides"><figure class="slide" id="slide-15">
+<img src="slides/slide_15.png" alt="课件第15页 太湖之光配置：40960 个申威 26010（40×4×32×4×2）">
+<figcaption><span class="sno">15</span><span class="stitle">太湖之光配置：40960 个申威 26010（40×4×32×4×2）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-16">
+<img src="slides/slide_16.png" alt="课件第16页 TOP500 榜单：Rmax 与 Rpeak、LINPACK 实测">
+<figcaption><span class="sno">16</span><span class="stitle">TOP500 榜单：Rmax 与 Rpeak、LINPACK 实测</span></figcaption>
+</figure>
+<figure class="slide" id="slide-17">
+<img src="slides/slide_17.png" alt="课件第17页 当代超级计算机——E 级机（词头与换算）">
+<figcaption><span class="sno">17</span><span class="stitle">当代超级计算机——E 级机（词头与换算）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">08</span>
+      <div class="sec-tt">
+        <h2>千万核的乘法与 TOP500 榜单</h2>
+        <div class="sec-meta"><span class="time">43:13 – 51:52</span><span class="chip">课件 15</span><span class="chip">课件 16</span><span class="chip">课件 17</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>当时神威能获得这个奖，就是因为世界上没有一台计算机在那个时候拥有一千万个核。怎么算？神威·太湖之光在大机房里放了 40 个柜子，每个柜子里 4 个超节点，每个超节点里 32 个计算板卡，每个插件上集成 4 块节点板，每个节点板上插 2 个 CPU，每个 CPU 里头集成 260 个核——40×4×32×4×2×260 是多少？1064 万，达到一千万了！当时世界上的计算机没有超过一千万个核的。</p><p>所以这些东西复杂吗？也不复杂，就是放一块、密密堆 CPU；但简单也不简单，堆完之后你得让它能跑起来，怎么通电、怎么连网络、怎么考虑拓扑连接关系，确实还是有讲究的。</p><p>TOP500 这个组织不干啥事，就是每年大家把各自机器的测试报告送过去，它把报告排个序，排出来的就叫 TOP500 榜单，每年更新。榜单主要看几个数：Processor——多少个核；Rmax——最大实测速度；Rpeak——峰值速度；还有 Power——耗电。</p><p>峰值速度 Rpeak 是理论峰值：这台机器做出来之后，那么多核集成到一块，理论上能达到多少。比如神威·太湖之光一共 40960 个 CPU，每个 260 个核，乘出来 1064 万多个核；再乘以主频 1.45 G 赫兹，再乘以 8——一个时钟周期能运算 8 次，最开始大概 4 次，后来 8 次、16 次、32 次，现在甚至一个时钟周期能算 128 次。乘完之后除以 1000 是多少 T，这就是 Rpeak。</p><p>Rmax 是实测出来的：用 LINPACK 测试——解一个很大的线性方程组。解 n 阶矩阵用高斯消元法要运算 2/3 n³ − 2 n² 次，这是理论可算的；跑一下看花多长时间，用理论计算的浮点次数除以实测时间，就得出 LINPACK 实测的最大并行速度。这个数一定比理论峰值小。</p><p>两个一除就有效率：93014.6 除以 125435.9，等于 74.15%。74% 不算特别好也不算慢，特别好的人家能到 80% 多，特别差的 60% 多也有。一看这个表就大概明白了。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>就是你拿四十乘以四乘以三十二再乘以四再乘以二再乘以两百六是多少。一千零六十四万多吧达到一千万了吧ok当时呢世界上的计算机没有超过一千万个格了。</p><p>然后呢这个Rmax是指它的最大速度最大速度Rpeak指的是它的峰值速度然后还有一个Power就是它的耗电啊就这四个数。</p><p>然后呢再乘以八这个八呢指的是这一个时钟周期能够运算八次这个呢不同的CPU不一样最开始呢大概也就是四次然后后来呢八次十六次三十二次一直到到到现在到现在的话可能能能能达到一个时钟周期之内能能能算一百二十八次都有啊。</p><p>九三零幺四点六除以幺二五四三五点九。多少百分之七十四点一五百分之七十四点一五好百分之七十四点一五那就是它的效率也就这样这这不不算特别好但是也不慢啊特别好的人家可以达到百分之八十多的效率特别差的百分之一再差点的百分之六十多的也都有。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-exascale">
+  <div class="slides"><figure class="slide" id="slide-17">
+<img src="slides/slide_17.png" alt="课件第17页 当代超级计算机——E 级机（词头与换算）">
+<figcaption><span class="sno">17</span><span class="stitle">当代超级计算机——E 级机（词头与换算）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-18">
+<img src="slides/slide_18.png" alt="课件第18页 2023 年 6 月 TOP500：前沿 1.2 EFlops">
+<figcaption><span class="sno">18</span><span class="stitle">2023 年 6 月 TOP500：前沿 1.2 EFlops</span></figcaption>
+</figure>
+<figure class="slide" id="slide-19">
+<img src="slides/slide_19.png" alt="课件第19页 2024 年 6 月 TOP500：奥罗拉">
+<figcaption><span class="sno">19</span><span class="stitle">2024 年 6 月 TOP500：奥罗拉</span></figcaption>
+</figure>
+<figure class="slide" id="slide-20">
+<img src="slides/slide_20.png" alt="课件第20页 2025 年 6 月 TOP500：酋长岩 1.7 EFlops">
+<figcaption><span class="sno">20</span><span class="stitle">2025 年 6 月 TOP500：酋长岩 1.7 EFlops</span></figcaption>
+</figure>
+<figure class="slide" id="slide-21">
+<img src="slides/slide_21.png" alt="课件第21页 2026 年 6 月 TOP500：灵晟 2.198 EFlops">
+<figcaption><span class="sno">21</span><span class="stitle">2026 年 6 月 TOP500：灵晟 2.198 EFlops</span></figcaption>
+</figure>
+<figure class="slide" id="slide-22">
+<img src="slides/slide_22.png" alt="课件第22页 自 2021 年以来中国不再参加 TOP500 排名（战略忍耐）">
+<figcaption><span class="sno">22</span><span class="stitle">自 2021 年以来中国不再参加 TOP500 排名（战略忍耐）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-23">
+<img src="slides/slide_23.png" alt="课件第23页 浸没式相变液冷系统：单体 10 万卡集群">
+<figcaption><span class="sno">23</span><span class="stitle">浸没式相变液冷系统：单体 10 万卡集群</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">09</span>
+      <div class="sec-tt">
+        <h2>E 级机与近年榜单</h2>
+        <div class="sec-meta"><span class="time">51:52 – 58:43</span><span class="chip">课件 17</span><span class="chip">课件 18</span><span class="chip">课件 19</span><span class="chip">课件 20</span><span class="chip">课件 21</span><span class="chip">课件 22</span><span class="chip">课件 23</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>词头：k 是千、M 是兆、G、T、P、E——到 1000 P 的时候就叫 E 级（每秒百亿亿次浮点运算），1 EFlops = 1000 PFlops。以前上课的时候 E 级还没有出来，现在 E 级已经做出来了，就是当代的超级计算机。</p><p>2023 年 6 月，美国的前沿（Frontier）1.2 EFlops 成为第一个上榜的 E 级机——实际上中国三条技术路线（神威、天河、曙光）都做出来了，比它早，但没再往上列——因为不送测试报告的话就排不上，为什么后头再讲。2024 年 6 月奥罗拉上来，2025 年酋长岩 1.7 EFlops。</p><p>2026 年 6 月，中国做到了 2.198 EFlops——灵晟，相当于前沿升级后的两倍，放到了深圳超算中心，用的麒麟操作系统。大家感兴趣的话可以浏览 TOP500 榜单。</p><p>为什么 2021 年之后中国不再参加了？咱们做得快，美国人忌妒、小心眼，卡 CPU、搞禁运、制裁。实际上在他们做出 1.2 E 机器的时候，神威·海洋之光估计 1.3 E、可能有 1920 万核，天河三号也得 1.3 E，曙光 419 专项也得大于 1 E——为什么不参加排名？叫战略忍耐：排得多了人家给你小鞋穿，公司业务发展起来也麻烦，所以就选择不参加。实际上那些年中国的大机器在 TOP500 里是最多的。</p><p>今年 7 月曙光也做出来一个八千 A 超级计算机，集成了十万张卡——它不叫 GPU 卡，是相当于 GPU 的 DCU 卡，单体十万卡集群，中文名字叫登峰。它采用了浸没式相变液冷：里头全是液体——不是水，是特殊配方的液体，水一打电全短路了；液体散热、变成蒸汽把热量从热管带走，冷的液体再补充回来。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>十对吧b就明白是这个千是k赵是赵g g t p e再往上能不能做到江南发展到z一万z一这个不知道嗯哎呀这个发展确确确实太快。</p><p>然后呢这个呢到了二零二三年的时候美国的前沿做出来呢成为第一个etg就是一点二的一floss实际上呢他不是第一个做出来第一个中国三条进步线都做出来都比他早但是呢就没再放没再往上没没没再往上列文了因为你不送这个不给他提交次数报告的话那那那排排不上为啥呢后头再讲。</p><p>今年的时候六月份中国做到了二点一九八个亿相当于原来的那个谁的那个相当于前沿前沿他后来又升级相当于他两倍然后呢比这些都快中国做了又做了啊这个放到了深圳潮牌中心我们用的是麒麟操作系统。</p><p>哎咱们做的快了吧美国人就忌妒然后那个这个小心眼子然后就卡卡你呃CPU也不供了这个经营了那个制裁呢拿你拿搬弄实际上在当时的时候在他们做出那个一点二亿那个呃那个EFLOPS机器时候咱们都有。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-centers">
+  <div class="slides"><figure class="slide" id="slide-23">
+<img src="slides/slide_23.png" alt="课件第23页 浸没式相变液冷系统：单体 10 万卡集群">
+<figcaption><span class="sno">23</span><span class="stitle">浸没式相变液冷系统：单体 10 万卡集群</span></figcaption>
+</figure>
+<figure class="slide" id="slide-24">
+<img src="slides/slide_24.png" alt="课件第24页 国家超级计算中心与国家超算互联网">
+<figcaption><span class="sno">24</span><span class="stitle">国家超级计算中心与国家超算互联网</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">10</span>
+      <div class="sec-tt">
+        <h2>国家超算中心与超算互联网</h2>
+        <div class="sec-meta"><span class="time">58:43 – 61:36</span><span class="chip">课件 23</span><span class="chip">课件 24</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>中国的计算机这几年普及得很快。原来搞科学计算都叫“计算平移”：有想法、有项目，但没那么多算力，算得太慢——天气预报算半年，那早都过时了。后来科技部有计划在全国建超级计算中心，名字叫“国家超级计算 XX 中心”：天津、广州、深圳、长沙、济南、无锡、郑州、昆山、成都、西安、太原、文昌、重庆、乌镇，一共 14 个。</p><p>以前阻止科学应用、航天应用的问题现在已经有了：现在你想算啥不可能找不到地方算。包括现在训练大模型，一上都是十万卡才能算得动——你弄几千张卡说弄大模型根本玩不了，就是拼大装置。好多集群中心都放在国家超算互联网平台上，感兴趣可以上去看。</p><p>总的意思就是：中国现在不缺算力，缺脑子、缺软件、缺应用——你只要有好的想法就拿计算机赶紧算。所以咱们现在已经有很好的科研条件，给你们很多条件去实习，原来那时候没有、或者很少。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>后来呢中国就呃科技部有有计划在全国范围内建这种超级中超级计算中心它这个名字呢叫做国家超级计算某某中心这个某某等都有谁啊天津中心广州中心深圳中心长沙中心济南中心无锡中心这样这样排下来一共有十四个。</p><p>总的意思呢就说中国现在不缺算命不缺算命缺脑子缺软件缺应用啊你只要有好的想法就拿算计算机赶紧算所以咱们现在已经有很好的实习条件啊给你们很多的条件去去实习原来那时候没有原来那时候或者很少了。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-quantum">
+  <div class="slides"><figure class="slide" id="slide-25">
+<img src="slides/slide_25.png" alt="课件第25页 未来发展——量子计算机：潘建伟 10 比特光量子（qubit 与量子纠缠）">
+<figcaption><span class="sno">25</span><span class="stitle">未来发展——量子计算机：潘建伟 10 比特光量子（qubit 与量子纠缠）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-26">
+<img src="slides/slide_26.png" alt="课件第26页 谷歌 Sycamore：量子霸权 / 量子优越性">
+<figcaption><span class="sno">26</span><span class="stitle">谷歌 Sycamore：量子霸权 / 量子优越性</span></figcaption>
+</figure>
+<figure class="slide" id="slide-27">
+<img src="slides/slide_27.png" alt="课件第27页 潘建伟团队：九章与祖冲之号">
+<figcaption><span class="sno">27</span><span class="stitle">潘建伟团队：九章与祖冲之号</span></figcaption>
+</figure>
+<figure class="slide" id="slide-28">
+<img src="slides/slide_28.png" alt="课件第28页 谷歌升级 Sycamore 到 70 个量子比特">
+<figcaption><span class="sno">28</span><span class="stitle">谷歌升级 Sycamore 到 70 个量子比特</span></figcaption>
+</figure>
+<figure class="slide" id="slide-29">
+<img src="slides/slide_29.png" alt="课件第29页 量子计算机技术竞争激烈：IBM vs 中科大">
+<figcaption><span class="sno">29</span><span class="stitle">量子计算机技术竞争激烈：IBM vs 中科大</span></figcaption>
+</figure>
+<figure class="slide" id="slide-30">
+<img src="slides/slide_30.png" alt="课件第30页 本源悟空：超导量子计算机云端上线">
+<figcaption><span class="sno">30</span><span class="stitle">本源悟空：超导量子计算机云端上线</span></figcaption>
+</figure>
+<figure class="slide" id="slide-31">
+<img src="slides/slide_31.png" alt="课件第31页 量子计算的发展态势：算盘→经典计算机→量子计算机">
+<figcaption><span class="sno">31</span><span class="stitle">量子计算的发展态势：算盘→经典计算机→量子计算机</span></figcaption>
+</figure>
+<figure class="slide" id="slide-32">
+<img src="slides/slide_32.png" alt="课件第32页 并行计算不神秘，属于统筹问题">
+<figcaption><span class="sno">32</span><span class="stitle">并行计算不神秘，属于统筹问题</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">11</span>
+      <div class="sec-tt">
+        <h2>量子计算机展望</h2>
+        <div class="sec-meta"><span class="time">61:36 – 74:01</span><span class="chip">课件 25</span><span class="chip">课件 26</span><span class="chip">课件 27</span><span class="chip">课件 28</span><span class="chip">课件 29</span><span class="chip">课件 30</span><span class="chip">课件 31</span><span class="chip">课件 32</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>快速说一下量子。这一级一级算上去，从多少 P 到多少 E，往后还有一条路线就是量子计算机，这几年发展太快了。2017 年潘建伟（中科大）在合肥那边做出了世界上第一台超越早期经典计算机的 10 比特光量子计算机。</p><p>量子在计算机上有两个好处。一个叫量子纠缠：两个量子如果处于纠缠态，你这边测它的状态是向上，那边正好相反向下——有这个纠缠之后就可以做量子通讯，卫星发信息：你这边测完，那边保持纠缠状态的话就能收到一串信息。第二种叫量子比特（qubit）：普通计算机一个位只能存一个数，要么 0 要么 1；量子比特既可以是 0 又可以是 1，那么四位能存多少？2×2×2×2 = 16 个数——信息量翻倍翻倍地涨，特别厉害。</p><p>所以当时只有 10 个比特的光量子计算机，它的能力就跟 ENIAC 差不多（ENIAC 每秒才 5000 次）。2019 年谷歌宣布做出 53 个量子的处理器，起名叫 Sycamore（悬铃木）——就是外头那种梧桐树掉的小球球。我当时每年都揪一个小球给同学看：第一年摘下来一个，第二年跳着摘一个，第三年拿了根棍才够下来，现在长太高了够不着了。学名叫二球悬铃木，回头大家来寻找，看像不像。</p><p>谷歌说实现了量子优越性（quantum supremacy，翻译成“量子霸权”比较霸气）：新生的量子计算原型机在某个问题上的计算能力已经超过了最强的传统计算机。2020 年有 76 个光子的九章算出来，62 个量子的祖冲之号算出来——中国同时发展超导量子（祖冲之号一号二号三号四号）和光量子（九章一号二号三号四号），主要是潘建伟团队，竞争激烈得很。</p><p>2023 年谷歌把悬铃木升级到 70 个量子比特，说算某个东西让最快的 TOP500 计算机（Frontier）算也得 47.2 年——就是量子计算在某个问题的求解上可以碾压经典计算机，当然现在还没有达到完全通用。IBM 那边 2021 年 Eagle 127 qbit、2022 年 Osprey 433 qbit、2023 年 Condor 1121 qbit；中科大九章四号今年弄出了 3050 个光子。</p><p>潘建伟团队还有一个院——郭光灿院士，做了一家公司叫本源量子，弄了一套超导量子计算机云端上线，起名叫“本源悟空”。2024 年 1 月 72 比特上线，2026 年 5 月第四代升级到 180 比特。为什么让它上线？叫建立生态：赶紧让用户来用，形成稳定的用户，用户用的时候提出改进方向、改进需求，你才知道量子产品应该怎么发展。</p><p>发展态势：中国同时发展超导量子和光量子两条路线，并在量子通信方面领先；美国在超导量子计算方面领先。算盘→经典计算机→量子计算机——量子计算机做成了就是秒杀经典计算机。2022 年量子纠缠方面的研究拿了诺贝尔奖（蔡林格，就是潘建伟的导师），2025 年宏观量子力学的什幺效应又获奖了，量子力学发展到现在技术好像逐渐要落地。2017 年我第一次讲潘建伟那个 10 比特的时候说：“这东西将来太厉害，我们只要活得久就会看见”，我在黑板上写了三个字——活久见。今年 2026 年，我看着讲着讲着，这个东西就要来了。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>一个就是量子纠缠就一个量子纠缠我的理解呢可能也不比你们深多少啊反正就是说那个两个量子如果是处于纠缠态的话你这边测他的一个状态那边呢正好跟他相反这边你看向向上那边那个就向下。</p><p>既可以是零又可以是一那么这样一来呢你这四位是多少呢二乘二乘二乘二对吧这二二得四四四一十这就这就能存十六位数。</p><p>他把这个名字呢取名为SycamoreSycamore哎Sycamore是啥呢就是那个悬铃木就是外头这棵树这棵树不是梧桐树吗梧桐树掉的那个小球形就叫Sycamore反正叫悬铃木然后往年的时候呢我每次都拿一个小球球踢了过来让同学看。</p><p>我我一七年的时候我那个最开始我把那个潘建伟那个东西呃就是最开始说做出来那个亮晶那个十十比特的亮晶晶晶当时我给同学们讲的时候我说哎这东西将来就是太厉害啊这个嗯我们只要活得久就会看得见我我在黑板上写了三个字活久见。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-parallel-basic">
+  <div class="slides"><figure class="slide" id="slide-32">
+<img src="slides/slide_32.png" alt="课件第32页 并行计算不神秘，属于统筹问题">
+<figcaption><span class="sno">32</span><span class="stitle">并行计算不神秘，属于统筹问题</span></figcaption>
+</figure>
+<figure class="slide" id="slide-33">
+<img src="slides/slide_33.png" alt="课件第33页 并行计算示例：1+2+…+100 串行 vs 并行">
+<figcaption><span class="sno">33</span><span class="stitle">并行计算示例：1+2+…+100 串行 vs 并行</span></figcaption>
+</figure>
+<figure class="slide" id="slide-34">
+<img src="slides/slide_34.png" alt="课件第34页 串行编程：sum100s.c 从 1 加到 100">
+<figcaption><span class="sno">34</span><span class="stitle">串行编程：sum100s.c 从 1 加到 100</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">12</span>
+      <div class="sec-tt">
+        <h2>回到并行计算：统筹问题</h2>
+        <div class="sec-meta"><span class="time">74:01 – 78:41</span><span class="chip">课件 32</span><span class="chip">课件 33</span><span class="chip">课件 34</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>再回到咱们的并行计算主题。刚才说了这么多计算机硬件的发展，它们最大的特点就是并行计算、超级计算、高性能计算。并行计算到底是啥？后面两篇一说一点都不神秘——它就是一个统筹问题。</p><p>你看这么一个任务，串行去做的话，得做任务一、做完任务二、再做任务三；任务一里又有 a、b、c，做完 a 做 b 做 c。现在你有三台计算机，那把任务分解一下：一台计算机专门做第一个任务，一台做第二个，一台做第三个；做这些任务的时候再让它们同时做 a、b、c。只要任务能够分解开，分解到能够并行的程度，效率就最好——这样你就可以把很多计算机应用起来。</p><p>最简单的例子：从 1 加到 100，串行算硬加，花了 10 秒。现在给你 10 个 CPU，每人分 10 个数加：CPU1 加 1-10、CPU2 加 11-20……CPU10 加 91-100，每个 CPU 算了 10 个数、1 秒就都结束了；然后把结果传给 CPU0，CPU0 再把 10 个数加一遍，55+155+255+…+955 = 5050。整套计算就是 1 秒加上最后这 1 秒，一共两秒多——多的这点时间消耗到哪儿了？消耗在网络通讯上：CPU0 发话分任务的时候停了一点，收集数据的时候又停了一点。并行计算的实质就是：人多干活快，就这么点事。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>并行计算超级计算或者叫高性能计算这个运营阶段到底是啥呢其实后面两篇一说一点都不神秘一点都不神秘他就是一个统筹问题统筹问题。</p><p>现在给你十个CPU给你十个CPU呢这个CPU容易发话他说呀这人家一加了一百数太多了我给咱们有十个CPU咱们核计核计每人分十个数的加行不行。</p><p>然后呢它收集数据的时候哎又停留了一点点多费了点时间所以呢叫两秒多这多的这点时间就消耗到哪了呢就消耗到网络通讯上网络通讯上人网络通讯上呢他需要通过消息传递建议和这个网络这个负责人通讯多这点总的实质这个并行计算的实质就是人多干活快就这么点事。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-mpi">
+  <div class="slides"><figure class="slide" id="slide-34">
+<img src="slides/slide_34.png" alt="课件第34页 串行编程：sum100s.c 从 1 加到 100">
+<figcaption><span class="sno">34</span><span class="stitle">串行编程：sum100s.c 从 1 加到 100</span></figcaption>
+</figure>
+<figure class="slide" id="slide-35">
+<img src="slides/slide_35.png" alt="课件第35页 MPI：消息传递界面">
+<figcaption><span class="sno">35</span><span class="stitle">MPI：消息传递界面</span></figcaption>
+</figure>
+<figure class="slide" id="slide-36">
+<img src="slides/slide_36.png" alt="课件第36页 并行编程：MPI 初始化与分工">
+<figcaption><span class="sno">36</span><span class="stitle">并行编程：MPI 初始化与分工</span></figcaption>
+</figure>
+<figure class="slide" id="slide-37">
+<img src="slides/slide_37.png" alt="课件第37页 编译和运行：gcc / mpicc / mpirun">
+<figcaption><span class="sno">37</span><span class="stitle">编译和运行：gcc / mpicc / mpirun</span></figcaption>
+</figure>
+<figure class="slide" id="slide-38">
+<img src="slides/slide_38.png" alt="课件第38页 评价并行计算的效果：加速比与并行效率">
+<figcaption><span class="sno">38</span><span class="stitle">评价并行计算的效果：加速比与并行效率</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">13</span>
+      <div class="sec-tt">
+        <h2>串行编程与 MPI 并行编程</h2>
+        <div class="sec-meta"><span class="time">78:41 – 82:49</span><span class="chip">课件 34</span><span class="chip">课件 35</span><span class="chip">课件 36</span><span class="chip">课件 37</span><span class="chip">课件 38</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>这是一个串行的编程，不细讲——会 C 语言的一看就明白，不太熟的拿 AI 问问，它都给你讲得清清楚楚。总体就是一个串行的编程：从 1 加到 100 求和。</p><p>要把一到一百并行化，就必须用一个叫 MPI 的东西：Message Passing Interface，消息传递界面。它是 1991 年酝酿的一个并行编程通讯标准（协议），包含欧美 80 多人、40 多个组织的共同努力，主要含点对点通信（send、receive）、集合通信（broadcast、scatter、gather、reduce、barrier）这些类型。MPI 有很多版本：MPICH、OpenMPI 这些，咱们到时候实践一下 OpenMPI。</p><p>有了 MPI 就可以做并行编程。它的过程：MPI 初始化，获得并行进程的总数和自身编号；0 号进程获知加到 100 后发布此任务；每个进程根据编号算自己那一份——比如我加 1-10，你加 11-20；大家都算完之后设置一个同步的屏障（barrier），问大家算完了没有，没算完再等等；算完了，0 号进程开始接收各进程的结果，一收、再加一次，完事。大家可以对着每一段代码慢慢看。</p><p>编译运行：串行用 gcc 编译 sum100s.c，并行用 mpicc 编译 sum100p.c；串行直接运行，并行用 mpirun -np 10 用 10 个核跑。跑的结果就是：CPU0 算了 55，CPU1 算了 155，CPU2 算了 255……CPU9 算了 955，最后加出来 5050——这就是并行和串行。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>你要进行并行的把这一到一一百并行化的话你就必须要用一个叫MPI的东西就是Message Passing Interface有消息传递的界面这个界面呢是一九九一年的时候呢就是一个组织嗯就是好多人然后定了一个方案。</p><p>然后呢开始让它让它变成这个这点呢也不细讲大家可以对着这个每一段所所对应的东西可以慢慢去看它的总的意思呢就是我刚才说的加一百的那个就是那个过程就是十个CPU你首先给这十个CPU编个号这个号呢就称之为自身的进程编号我是零号你们呢是分别是一二三四五六七八九号。</p><p>然后呢我如果用m p i c c串行呢是用g c c编译这个呢是用m p i c c呃c呃m p i c c编译编译完了之后呢你让他用十个格跑一下跑的结果就是说让平的算了55让平的算了一百55让平的算了九百55然后最后加了结果就是这个过程啊这就是这个变变形和串行。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-speedup">
+  <div class="slides"><figure class="slide" id="slide-38">
+<img src="slides/slide_38.png" alt="课件第38页 评价并行计算的效果：加速比与并行效率">
+<figcaption><span class="sno">38</span><span class="stitle">评价并行计算的效果：加速比与并行效率</span></figcaption>
+</figure>
+<figure class="slide" id="slide-39">
+<img src="slides/slide_39.png" alt="课件第39页 作业 3.2：安装客户端、登录超算、学 vi、修改 sum100s.c">
+<figcaption><span class="sno">39</span><span class="stitle">作业 3.2：安装客户端、登录超算、学 vi、修改 sum100s.c</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">14</span>
+      <div class="sec-tt">
+        <h2>评价并行计算：加速比与并行效率</h2>
+        <div class="sec-meta"><span class="time">82:49 – 88:00</span><span class="chip">课件 38</span><span class="chip">课件 39</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>最后这张片子特别重要，这几个概念无论如何都要掌握：有了并行和串行的办法之后，怎样去表达你并行得好还是不好？很简单，用 CPU 核数实际跑一跑——这是两种不同的两台计算机跑的结果。</p><p>加速比等于串行时间除以并行时间：你想嘛，你都并行了你总得快吧——串行花 10 秒，并行花 2.3 秒，10 除以 2.3，加速了 4 倍多。比如用 32 个核去算的时候，红色的机器只加速了 12.5 倍不到，蓝色的加速了 18 倍，那谁的性能好？肯定蓝色。加速比就是一个非常好的概念去评价谁的并行性能好。</p><p>另外一个概念叫并行效率：加速比除以并行核数。18 除以 32 是 0.56——蓝色这台机群的并行效率做到了 56%：拿 32 个核去算的时候有一半多的 CPU 全用满了，达到了接近 18 倍；红色的效率肯定只有 40% 多，效率低的肯定不好。</p><p>并行效率还有一个等价的说法，就是刚才 TOP500 那儿提到的：Linpack 实测最大速度除以理论峰值。太湖之光 93.0 PFLOPS 是实算的，理论峰值 125 多，一除 74%——它的并行效率就是 74%，说得很清楚。这个并行加速每年都会考：学完这门课如果不知道啥叫加速比、并行效率，就这么几个公式，那真的白学了。</p><p>还有一个了解一下就可以：速度除以功耗——现在讲究每瓦电力能跑多少个 FLOPS，现在每瓦可能都能跑到 T 的量级，非常小的电力就能跑万一次。大计算机一千多万个核、上万千瓦功率，开机之后就一个小镇的电力，甚至要专门弄个电厂给那东西通电。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>最后最后这张片子特别重要这个概念无论如何都要掌握就是有了这个病情和串行的这种办法之后那么我们怎样去表达你病情的好还是不好那怎么弄呢就很简单就用CPU核数就实际的跑一跑。</p><p>加速比等于什么呢等于串行时间除以并行时间你想嘛你都并行了你总得快吧我串行我花了十秒你并行花了二点二点三秒那那你十除以二点三就是这个加速。</p><p>另外一个概念呢叫并行效率并行效率是什么呢就是加速的除以并行核数那你看这效率你你十八倍十八倍除以三十二那谁拿十八除以三十二来咱就除以十八除以三十二。零点五六是吧那行咱们就说这两位就行零点五六那就说这个蓝色的人家的并行效率做到了百分之五十六。</p><p>再一个呢并行效率又等于刚才讲那个套图版我们提到一下就是最大速度除以峰值的速度哎刚才不是说了吗那个那那个天和那个太湖之光那个是九十三个币是他实算的他真正的那个峰值呢是一百二十三多然后一除百分之七十四。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-hw">
+  <div class="slides"><figure class="slide" id="slide-39">
+<img src="slides/slide_39.png" alt="课件第39页 作业 3.2：安装客户端、登录超算、学 vi、修改 sum100s.c">
+<figcaption><span class="sno">39</span><span class="stitle">作业 3.2：安装客户端、登录超算、学 vi、修改 sum100s.c</span></figcaption>
+</figure>
+<figure class="slide" id="slide-40">
+<img src="slides/slide_40.png" alt="课件第40页 作业 3.2：小明 40 个 CPU 核的加速比曲线">
+<figcaption><span class="sno">40</span><span class="stitle">作业 3.2：小明 40 个 CPU 核的加速比曲线</span></figcaption>
+</figure>
+<figure class="slide" id="slide-41">
+<img src="slides/slide_41.png" alt="课件第41页 演示：登录超算平台与运行">
+<figcaption><span class="sno">41</span><span class="stitle">演示：登录超算平台与运行</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">15</span>
+      <div class="sec-tt">
+        <h2>作业 3.2 说明</h2>
+        <div class="sec-meta"><span class="time">88:00 – 92:28</span><span class="chip">课件 39</span><span class="chip">课件 40</span><span class="chip">课件 41</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>咱们前面讲到这儿，回去之后任务就是作业 3.2。第一个：给自己的笔记本安装一个能够访问 Linux 的客户端——PuTTY、WinSCP、Xshell、MobaXterm 这些，网上一搜都行，只要装一个能登陆上国科智算超算平台就行。</p><p>第二个：登上去之后熟悉 Linux 命令——创建一个目录、拷贝一个文件、列一下文件列表，去尝试、去观察、去学习，你只要动动手就会，不动手就不会。然后学习 Linux 底下很重要的 vi 编辑器，用这个编辑器插入几个字符、编写一段话，编辑一个文档。</p><p>然后你把 sum100s.c 这个程序调出来，里头写的是 1 加到 100，你给它改成从 101 加到 200——随便怎么加、随便怎么改都可以，你不是已经会 vi 了嘛。成功了把关键代码和输出结果截图为证，编程好的同学可以自由发挥，改编得更灵活。</p><p>最后一个作业是最典型的场景：老师给小明分了 40 个 CPU 核的计算资源，让他完成若干个规模等同的模拟任务。小明先做了一系列并行测试，记录单一任务的完成时间：1 核 10 小时、2 核 6.2 小时、4 核 4.1 小时……问你：a、获得此表数据的最短时间？b、用 Excel 做出加速比和并行效率随核数变化的曲线图。</p><p>第三步问：分别完成一个任务、五个任务、十个任务、五十二个任务和一百个同等任务，最快需要多长时间？一个任务花 10 小时没错；五个任务用 3.5 小时可能也对；五十二个、一百个就要动动脑子了——这就是考验你对加速比、并行效率的概念清不清楚。你要觉得麻烦也可以问问 AI，把它做出来、能看懂、理解透彻就行。我们的目的就是这张表让你加深一下什么叫加速、什么叫并行效率。有不明白的可以在群里问。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>然后我们回去之后呢任务任务就是作业3.2就第一个给自己的笔记本安装一个能够访问Linux的客户端这个客户端呢像PuTTYWinSCP dXshell / MobaXterm这个呢网上一搜都行这这你只要随便装一个只要能实就能够登陆上那个国科智算超算平台就行。</p><p>然后你再呢去学习Linux底下一个很重要的编辑器叫vi编辑器利用这个编辑器去查怎么用它哎无外乎就是在这个编辑器里头插入几个字符啊编写一段话啊什么的反正要编辑一个文档啊就是练这个。</p><p>那你说这容易一个任务那那那那那花十小时对不对一查一下没错没错五个任务呢那那个我用三点五小时嗯可能也对啊可能也对五十二呢快一百呢就动动脑子哎这时候呢就是就是考验一下你这个你对这个加速比加速效率并行效率的概念清不清楚。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-account">
+  <div class="slides"><figure class="slide" id="slide-41">
+<img src="slides/slide_41.png" alt="课件第41页 演示：登录超算平台与运行">
+<figcaption><span class="sno">41</span><span class="stitle">演示：登录超算平台与运行</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">16</span>
+      <div class="sec-tt">
+        <h2>账号开通与登录演示</h2>
+        <div class="sec-meta"><span class="time">92:28 – 96:31</span><span class="chip">课件 41</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>我先赶紧把这个事办了：最后每个人给你们开一个账号，我叫名字，你们上来按顺序领。拿到之后赶紧改一下：第一个变化就是把用户名里的大写 MP 改成小写——平台开户的时候不允许用户名里有大写字母，比如你的是 MP202601，就改成小写 mp202601。</p><p>第二个：在超算平台和集群账号中间那个空位写上一个端口冒号——端口是 10022。这是为啥？因为平常默认的 SSH 端口是 22，但这边改成了 10022，所以你们得输这个端口，端口号不对也登录不上去。</p><p>密码怎么登录？第一次登录的时候要在校园网上那个网页里头：在网址里面输入 172.17.1.6，第一次进到这儿来，按照网页提示操作就行。下面演示：登录校园网国科大超算平台、操作 Linux 获得参考资料、演示用 vi 修改 sum100s.c 编译串行运行、演示 mpirun -np 10 并行运行，看谁学得快。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>因为我做这个这这这这个你们你们拿笔在这个条上改第一个变化呢就是把那个大写的m p改成小写因为这个平台开户的时候呢他不让那个用户名啊里头有大写字母所以呢像我比如说你的是什么mp二零二六零一那你就改成小写的mp二零二六零一ok那就行好这第一个第二个呢你在超算平台和集群账号中间那个空空位那写上一个端口冒号。</p><p>端口是多少呢是幺零零二二。幺零零二二这是为啥呢因为因为默认的端口啊平常默认那些客户在默认的端口是二十二但是呢这边呢改成了幺零零二二那么你们就得输这个端口啊端口号不对那也输不上那也登录不上去。</p><p>首先输入在这个网址里面输入一个幺七二点幺七点一点五第一次输入这个一点五进到这来。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（180083070901P2003H）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>

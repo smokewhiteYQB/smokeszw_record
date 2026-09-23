@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>显微共焦拉曼光谱学（2026 秋） · 第三章 拉曼散射理论基础（上）：声子简正模 ＋ 光散射理论（散射起源、散射概率与散射截面）｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>显微共焦拉曼光谱学（2026 秋） · 第三章 拉曼散射理论基础（上）：声子简正模 ＋ 光散射理论（散射起源、散射概率与散射截面）</h1>
+    <div class="sub">第三章 拉曼散射理论基础（上）：声子简正模 ＋ 光散射理论（散射起源、散射概率与散射截面） ｜ 2026-09-20 ｜ 授课：林妙玲（第三章）</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 269 页 · 整理 27 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-s01">01 绪论与第三章导览</option>
+<option value="sec-s02">02 声子简正模：三弹簧模型与受力分析</option>
+<option value="sec-s03">03 对称振动与反对称振动</option>
+<option value="sec-s04">04 运动方程的求解</option>
+<option value="sec-s05">05 简谐近似：3N 自由度与势能展开</option>
+<option value="sec-s06">06 非简谐效应：三声子与四声子过程</option>
+<option value="sec-s07">07 正则变换与简正坐标</option>
+<option value="sec-s08">08 简正坐标下的哈密顿量与波动方程</option>
+<option value="sec-s09">09 晶格振动的量子描述：从哈密顿量到谐振子</option>
+<option value="sec-s10">10 分立的谐振子能量</option>
+<option value="sec-s11">11 升降算符与量子涨落耗散</option>
+<option value="sec-s12">12 元激发：声子</option>
+<option value="sec-s13">13 一维单原子链的简正坐标</option>
+<option value="sec-s14">14 简正坐标的验证：动能与势能的对角化</option>
+<option value="sec-s15">15 3.2 光散射理论：内容导览</option>
+<option value="sec-s16">16 光散射的物理起因</option>
+<option value="sec-s17">17 光散射的分类：瑞利、布里渊与拉曼</option>
+<option value="sec-s18">18 散射的理论体系：经典、半经典与全量子</option>
+<option value="sec-s19">19 研究散射的方法：散射实验</option>
+<option value="sec-s20">20 散射实验：粒子与波的对应</option>
+<option value="sec-s21">21 散射概率和散射截面</option>
+<option value="sec-s22">22 散射截面的计算：硬球薄膜靶模型</option>
+<option value="sec-s23">23 微分散射概率与微分散射截面</option>
+<option value="sec-s24">24 微分散射截面的计算</option>
+<option value="sec-s25">25 散射截面的经典电磁波描述</option>
+<option value="sec-s26">26 散射截面的量子化粒子描述：量子跃迁概率</option>
+<option value="sec-s27">27 量子化粒子描述下的微分散射截面</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 Ch3-拉曼散射理论基础-2026秋.pdf（p4–36 中讲述部分） 逐页渲染，转写原文见 record_20260920.txt。</div>
+<section class="sec" id="sec-s01">
+  <div class="slides"><figure class="slide" id="slide-239">
+<img src="slides/slide_239.png" alt="课件第239页 第三章 拉曼散射理论基础（林妙玲）">
+<figcaption><span class="sno">239</span><span class="stitle">第三章 拉曼散射理论基础（林妙玲）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-240">
+<img src="slides/slide_240.png" alt="课件第240页 第三章主要内容（1 声子简正模 … 8 非线性拉曼散射*）">
+<figcaption><span class="sno">240</span><span class="stitle">第三章主要内容（1 声子简正模 … 8 非线性拉曼散射*）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>绪论与第三章导览</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 1 段（前）</span><span class="chip">课件 239</span><span class="chip">课件 240</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>为什么先学前两章：拉曼光谱的特性（峰位、强度等）直接由晶体中原子之间的排列状态决定，所以要先讲清楚如何用学术化、规范的语言描述原子排列（晶体结构、对称性），再讲晶格振动（声子色散与原子振动的关系、态密度），才能进入拉曼光谱。</p><p>第三章内容导览：共八部分——1 声子简正模、2 光散射理论、3 拉曼散射选择定则、4 一阶拉曼散射、5 二阶拉曼散射、6 共振拉曼散射；7/8（表面增强、非线性拉曼散射）老师的研究涉及不多，只简单介绍。本课重点讲 1-6 的共性基础知识。</p><p>带着三个问题学这一章：晶格振动与声子是什么关系？声子与拉曼光谱的对应关系是什么？拉曼光谱的峰位、强度、半高宽、线型、偏振等物理量分别受什么影响？其中散射强度的推导是重点（第一章晶格振动对应拉曼峰位，第二章讲过信噪比等测试问题）。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我们要学的这个内容是关于拉光谱。那么，为什么我们要还要学习前面的这些内容？主要是因为拉客户里面的这样一些特性，都是直接由这个，我们这个金额或者是材料里面这一些原子之间的排列状态，然后来决定的。</p><p>所以我们第三章的内容，大家可以看到我们包含了八个部分的内容，但是7跟8其实是很简单的，因为我们自己的这个研究不涉及到太多这方面的内容……我们主要讲的是基础的共性的知识的这一部分，就一到第6节。</p><p>带着这样的一个问题和疑问。首先就是我们经的震动到底跟我的身子，我们所说的身子有什么样的关系？第2个，我的身子跟我的拉玛光谱的对应关系是什么？第3个……我想要分析的这样的一个拉玛光谱的这个就是四个性质，我直接去分析了这些物理量到底受到什么样的影响。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s02">
+  <div class="slides"><figure class="slide" id="slide-241">
+<img src="slides/slide_241.png" alt="课件第241页 1) 声子简正模：三根弹簧连两个小球模型">
+<figcaption><span class="sno">241</span><span class="stitle">1) 声子简正模：三根弹簧连两个小球模型</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>声子简正模：三弹簧模型与受力分析</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 1 段（前）</span><span class="chip">课件 241</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>什么是简正模？先看一个例子：两个质量相同的小球由三根弹簧相连，两边的弹簧力常数都是 K，中间的力常数是 κ（与 K 不同）。与晶格振动一章的思路一样——先分析小模型（每个小球的受力），再推广到无限长的周期结构。</p><p>记两个小球的位移分别为 S1、S2：第一个小球受左边弹簧与中间弹簧的力，第二个小球受中间弹簧与右边弹簧的力；对每个小球写牛顿第二定律（ma=合力），得到两个耦合的运动方程。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那么在这里也是类似的，我们先给大家两就是一个，当然这里是一个更为复杂的一个情况，但它其实也是一个弹簧的振动，就是它是由三根弹簧连起来这中间的两个小球质量是相同的……两边的这两根一弹簧，它的力常数就是这个立场数都是K。中间的这一个是卡卡……</p><p>那么对于对于第一个比如说对于这个第一个小说，我们把它这个叫做1，这个叫做2，然后去分析它的受力情况……那么左边不管是1或者是2，那么它都是ma，对不对？S1的这个就是它的一个位移情况，我们把它记1为S1。第二个小求的位移行表函系就X2。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s03">
+  <div class="slides"><figure class="slide" id="slide-242">
+<img src="slides/slide_242.png" alt="课件第242页 1) 声子简正模：对称振动与反对称振动">
+<figcaption><span class="sno">242</span><span class="stitle">1) 声子简正模：对称振动与反对称振动</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>对称振动与反对称振动</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 1 段（前）</span><span class="chip">课件 242</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>两个耦合方程形式上相近，用加减法解耦：S1+S2 与 S1-S2 分别对应一种运动。S1=S2（两球同向同幅）时：中间弹簧既不拉伸也不压缩，两边一拉一压——这是反对称（中心反对称）的振动；S1=-S2（两球反向）时：两边弹簧同时收缩或同时舒张——这是对称的振动。</p><p>任何 S1、S2 的振动都可分解为这两组独立模式（就像把矢量用两组正交基分解），两组模式互不干扰、各自以固定频率振动。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>如果是S1=S2，那么这个时候就相当于我的这个我的左边的这个小球，它是这个弹簧是拉的。然后我右边这个小球它是受到一个压的这个应力……所以这个时候它是一种反对称的一个震动的情况。</p><p>那么假设S1等于负S2的情况下……这个时候它们就总是同时收缩，同同时舒张。所以这个时候，我们把它称之为对称的振动。……它总是关于中间的这样的一个中间是完全是对称的。</p><p>所以，这个是相当于我的所有的S1跟S2这样的一个振动的情况，都可以用我的这样的两组，就是111个反对称的振动和一个对称的振动来进行，就是进行分解。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s04">
+  <div class="slides"><figure class="slide" id="slide-243">
+<img src="slides/slide_243.png" alt="课件第243页 1) 声子简正模：运动方程求解">
+<figcaption><span class="sno">243</span><span class="stitle">1) 声子简正模：运动方程求解</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>运动方程的求解</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 1 段（前）</span><span class="chip">课件 243</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>两式相加/相减后各得到一个波动方程形式的方程，解为平面波或余弦函数（频率 ω、初始相位 φ）。联立 S1+S2 与 S1-S2：两式相加除以 2、相减除以 2，即可解出 S1、S2——每个小球的位移都由这两个独立频率的振动合成。</p><p>写成矩阵/向量形式：这相当于把时空坐标（S1、S2）变换到一组新基（两个独立振动）上，两组基之间差一个变换矩阵——这就是正则变换。求简正坐标本质上是一个求本征值（对角化）的过程。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>如果我们对于这两个方程进行求和的话，那就是得到下面的这个方程……那么这样的一个求解，其实就是一个波动方程的这么一个求解，那么它的求解的形式就是一个平面波，或者是这里用一个干的函数来表示就是欧米伽4或者欧米伽1再加上一个S……</p><p>我们进行一个求解，就是两式相加，然后除以2，两式相减除以2。那么我们就得到这样的一个对S1跟S2……原则上它是可以通过两个频率的一个相加化。或者是相减得到。</p><p>把它看成一个矢量，把它看成一个矢量，那么这一两组矢量之间就差了这么一个中间的一个矩阵。这个就这个变换矩阵，那么这个矩阵这样的一种变化的关系，就是在两组G之间的一个变换的关系，我们就把它称之为正则变化。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s05">
+  <div class="slides"><figure class="slide" id="slide-244">
+<img src="slides/slide_244.png" alt="课件第244页 1) 声子简正模：自由度 3N">
+<figcaption><span class="sno">244</span><span class="stitle">1) 声子简正模：自由度 3N</span></figcaption>
+</figure>
+<figure class="slide" id="slide-245">
+<img src="slides/slide_245.png" alt="课件第245页 1) 声子简正模：势能展开与简谐近似（μiμj 高阶项）">
+<figcaption><span class="sno">245</span><span class="stitle">1) 声子简正模：势能展开与简谐近似（μiμj 高阶项）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>简谐近似：3N 自由度与势能展开</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 1 段（中）</span><span class="chip">课件 244</span><span class="chip">课件 245</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>晶格振动描述的是小振动：原子在平衡位置附近做微小振动，原子间距基本保持常数。研究方法基于简谐近似：每个原子的位置 = 平衡位置坐标 + 位移矢量；N 个原子、三维体系，位移矢量共 3N 个分量（自由度）——这与此前声子色散中「分支数对应体系自由度」一致。</p><p>势能函数 V 在平衡位置做泰勒展开：V₀（常数）＋一阶项（平衡位置处所有原子受力的总和为零）＋二阶项（决定势能如何随位移变化）＋高阶项（小量，通常省略）。只保留到二阶项（两个位移矢量之间的相互作用项）的近似就是简谐近似，对应简谐振子模型。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>首先，它描述的是一个小振动的一个问题，就是我的原子是在我的平衡位点进行这么一个振动。它不是大幅度的震动，它每个原子之间的这个距离，基本上还是维持一个常数的这么一个就是距离，只是说我在这样一个平衡位置近，我会进行这个微小的这个震动。</p><p>那么，我的这里面我的位移矢量应该是三一个分量，对不对？N是代表我们总共晶体里面有N个原子，然后呢，我3就是我的是一个三维的一个体系，所以它的4个5就是这么一个3N的分量。</p><p>那么V的话，它是V0，就是平衡位置下的一个势能……第二项……由于它是处于平衡位置，所以是所有原子对于我分析的这个原子，它的受力的求和应该是等于0……一般情况下是省略后面的高阶项的部分，就是只取到它的，它的只有两个位移矢量之间的这样的一个相互作用关系的时候，我们就把这样的一种近似的条件称之为紧斜近似。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s06">
+  <div class="slides"><figure class="slide" id="slide-246">
+<img src="slides/slide_246.png" alt="课件第246页 1) 声子简正模：简谐近似小结">
+<figcaption><span class="sno">246</span><span class="stitle">1) 声子简正模：简谐近似小结</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>非简谐效应：三声子与四声子过程</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 1 段（中）</span><span class="chip">课件 246</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>简谐近似的局限：高阶项并不总是可以忽略。研究材料温度效应时，非简谐效应会影响拉曼峰的展宽——所谓非简谐（非谐）效应就是高阶项的作用：不再只有一个声子，而是两个声子发生相互作用（可用碰撞来理解）。</p><p>三声子过程：两个低频声子合并成一个高频声子（ω₁+ω₂=ω），或一个高频声子分裂成两个低频声子；还有倍频形式（ω₁=ω₂，可用简单解析函数描述温度依赖）。四声子过程一般比三声子弱（比例系数小），但个别体系四声子过程更易发生。科技组近期也在研究多声子相互作用过程。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>尤其是我们在研究材料体系的温度效应的时候，我们通常都会说有非剪斜效应，会影响我这个拉慢弓的这个展宽，这个时候我们所说的非斜效应或者是非剪斜效应等等，都是指的一样的一个事情。</p><p>那我两个身子的碰撞了之后，我分别就是，就是我可以合并成一个高高频率的一个分子，或者是我一个身子，然后分解出两个身子，这个时候就是通常我们所说的三参子过程……那么除了三三身子过程，那么还有四生子过程。但是一般情况下，三生子过程是比四生子的过程要剧烈的多。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s07">
+  <div class="slides"><figure class="slide" id="slide-247">
+<img src="slides/slide_247.png" alt="课件第247页 1) 声子简正模：正则变换（Q3N）">
+<figcaption><span class="sno">247</span><span class="stitle">1) 声子简正模：正则变换（Q3N）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-248">
+<img src="slides/slide_248.png" alt="课件第248页 1) 声子简正模：3N 个独立谐振子">
+<figcaption><span class="sno">248</span><span class="stitle">1) 声子简正模：3N 个独立谐振子</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div class="sec-tt">
+        <h2>正则变换与简正坐标</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 1 段（中）</span><span class="chip">课件 247</span><span class="chip">课件 248</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>对 3N 个原子的一般体系，同样希望找到一组互不干扰的独立振动（简正模式）：通过正则变换把耦合在一起的位移变换到简正坐标 Q1-Q3N 上，3N 个简正坐标对应 3N 个独立谐振子，与体系自由度匹配。</p><p>为什么要这样做：不变换时所有位移总是耦合在一起（S1 影响 S2、S2 又影响 S1），难以用单独的量描述；变换后每个简正坐标满足独立的方程，每个谐振子只以自己的频率振动——这组互不干扰的独立振动就是「声子的简正模式」。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>如果说不进行这样的一个变化，就是这两组的一个震动总是耦合在一起。就是S1总是会去影响S2，S2又会来影响S1。那么这个时候，你很难去把它们俩就是比如说，我们后面会讲到你的间个振动，这个时候你所有的这个位移的矢量都是就是所有的东西搅在一起。</p><p>那么这个时候我们所谓引入所谓的减震坐标，我们就希望找到……它们之间是想互相互干扰的这样的一个减震。所谓减震坐标就是Q一到Q3N，这个时候，我们还是就可以用3N个自由度的这样一个形式，来描述我的这个哈密多达。</p><p>其实我们就是在找这么一个欧一伽S……所以这个其实这样的一个找它变化的过程，也是一个对种对角化去求它本真值的一过程。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s08">
+  <div class="slides"><figure class="slide" id="slide-249">
+<img src="slides/slide_249.png" alt="课件第249页 1) 声子简正模：波动方程（ω=2πν）">
+<figcaption><span class="sno">249</span><span class="stitle">1) 声子简正模：波动方程（ω=2πν）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">08</span>
+      <div class="sec-tt">
+        <h2>简正坐标下的哈密顿量与波动方程</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 2 段（前）</span><span class="chip">课件 249</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>哈密顿量 H=动能+势能：动能 T=Σ½Mμ̇²（对 N 个原子三个方向的位移求和），势能 V 在简谐近似下是二阶交叉项——μi 与 μj 纠缠在一起，计算非常复杂。找到简正坐标 Q1-Q3N 后，希望势能化为不含交叉项的 ΣQi² 形式。</p><p>用拉格朗日函数 L=T-V 与欧拉-拉格朗日方程：定义正则动量 P=∂L/∂Q̇ᵢ，代入后每个简正坐标满足独立的波动方程 Q̈ᵢ+ωᵢ²Qᵢ=0（i=1..3N）——3N 个相互独立的波动方程，每个解是余弦（或平面波）形式，只是频率 ωᵢ 不同。这就是振动可分解为一系列独立谐振子的由来。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我这个体系总的能量来自于哪里呢？就是我原子的就是首先是动能，对不对？第二个是势能，所以它一个量，它的表达式就是动能加势能。……所以我是所有的就是应该是N个原子，然后三个维度上的这个振动的时，我都要进行求进行求和。</p><p>那么，但是对于这样的一个简简洁定四项的这个势能，它6I和music之间那么它是会相互作用，就是他们俩是纠缠在一起的……所以这个时候我们说它是有交叉项，那么这个时候计计算起来就是非常复杂。</p><p>它最后得到的就是我的Qi的的求1的偏导加上欧米伽2的平方Q，会等于0。……它是一个三个独立的波动方程，每一个每个波动方程就是都是唯一的，而且都是确定的，都不跟其他的是相互干扰的。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s09">
+  <div class="slides"><figure class="slide" id="slide-250">
+<img src="slides/slide_250.png" alt="课件第250页 1) 声子简正模：晶格振动的量子描述（正则共轭算符）">
+<figcaption><span class="sno">250</span><span class="stitle">1) 声子简正模：晶格振动的量子描述（正则共轭算符）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">09</span>
+      <div class="sec-tt">
+        <h2>晶格振动的量子描述：从哈密顿量到谐振子</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 2 段（前）</span><span class="chip">课件 250</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>经典力学写出的哈密顿量可直接作为量子力学分析的出发点：把 pᵢ、Qᵢ 看作量子力学中的正则共轭算符，按一般方法把 pᵢ 写成 -iℏ∂/∂Qᵢ，得到波动方程——该方程表示一系列相互独立的简谐振子。</p><p>于是晶格振动问题化为求解 3N 个独立的谐振子方程，每个谐振子的本征能量与本征函数由量子力学严格给出——「简谐近似」的名字正来自这里：做简正坐标变换后分离出的哈密顿量就是简谐振子的形式。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>根据经典力学写出的哈密顿量，可以直接用来作为量子力学分析的出发点，只要把pi和Qi看作量子力学中的正则共轭算符，按照一般的方法，把pi写成负的……就得到波动方程。该方程表示一系列相互独立的简谐振子。</p><p>那么，这一部分就是简谐正子的哈密顿量。所以，为什么我们说是，简谐就是我们是简谐近似。因为我们进行一个指导它的简单坐标之后，分离出来的这个哈密顿量的形式，就是我们简谐式体的这样的一个形式，这个就是谐振子。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s10">
+  <div class="slides"><figure class="slide" id="slide-251">
+<img src="slides/slide_251.png" alt="课件第251页 1) 声子简正模：分立的谐振子能量（(n+½)ℏω）">
+<figcaption><span class="sno">251</span><span class="stitle">1) 声子简正模：分立的谐振子能量（(n+½)ℏω）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">10</span>
+      <div class="sec-tt">
+        <h2>分立的谐振子能量</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 2 段（前）</span><span class="chip">课件 251</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>谐振子方程的解：能量 εᵢ=(nᵢ+½)ℏωᵢ（n=0,1,2,…），波函数 φ_ni(Qᵢ)=√(ω/ℏ)·exp(-ξ²/2)·H_ni(ξ)，其中 ξ=√(ω/ℏ)Qᵢ，H_n 为厄米多项式。能量是分立的，相邻能级差 ℏωᵢ。</p><p>零点能：n=0 时能量为 ½ℏωᵢ，即没有声子时体系仍有零点能——上一课画拉曼能级时最低点不是 0 而是 ½ℏω：每增加一个声子（n 增 1），能量增加 ℏω。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那么它求解出来的本真能量，本真能量那么就是n ni+1/2H2欧米伽I，它的本身能力，它的本身的波函数，那么就是这样的一个形式。……它会有一个基态的能量是1/2H8欧米伽，就是我的没有分子的情况下，我这个体系它有存在1的零点能。</p><p>我们当时给大家画了一个震动的能级，对不对？画了一系列震动的等级……我们这里写的是不是A1/2H2不应感？我们并不是这里低碳，并不是零。就是每一两个能量之间的能量是H8欧米伽，然后就是增加一个粒子数。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s11">
+  <div class="slides"><figure class="slide" id="slide-252">
+<img src="slides/slide_252.png" alt="课件第252页 1) 声子简正模：升降算符与量子涨落耗散">
+<figcaption><span class="sno">252</span><span class="stitle">1) 声子简正模：升降算符与量子涨落耗散</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">11</span>
+      <div class="sec-tt">
+        <h2>升降算符与量子涨落耗散</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 2 段（中）</span><span class="chip">课件 252</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>谐振子能级像楼梯：声子只能在相邻能级间跃迁（往上或往下跳一格），不可能停在中间位置。对应有湮灭算符 a（向下走 1 格）与产生算符 a†（向上走 1 格）：a|n⟩=√n|n-1⟩、a†|n⟩=√(n+1)|n+1⟩——比例系数 √n 与 √(n+1) 不同，这是后面解释斯托克斯与反斯托克斯强度差别的关键（上一课用粒子数分布解释，其来源就是这里的比例系数）。</p><p>附带介绍：量子版涨落耗散理论（《量子光力学》译著，另一位老师翻译）——振子与环境持续交换能量并存在耗散，耗散与产生/湮灭算符比例系数不同有关。另外一维谐振子势阱中，量子波函数在势阱外仍有渗透（概率密度），与经典完全不同。此部分了解即可。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我只能在每一个格就是楼梯上，我要么往上爬一个，要么往下爬一个。就是我不可能停在中间的某个位置……对应的就有所谓的湮面算符和产生算幅。就是我往下走1，那么还有我的产生的算符。</p><p>一个是一个是根号N一个是根号N+1，这个是我们量子力学里面得到的这样的一个结论……来解释我们的这个强度，斯诺克4的反。洛克四的强度之间的这个关系，我们上节课是从这个不同的能级之间，它的这样的一个叫什么粒子数的分布。</p><p>那么我这样的一个粒子在振动，跟我环境之间是持始终持续的在进行能量交换……它们之间的这样的一个能量交换，它这个能量不是平衡的，而是存在着一定耗散。这个耗散也是跟我产生和烟灭它前面所导致的这个比例系数不同，所导致的。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s12">
+  <div class="slides"><figure class="slide" id="slide-253">
+<img src="slides/slide_253.png" alt="课件第253页 1) 声子简正模：元激发——声子">
+<figcaption><span class="sno">253</span><span class="stitle">1) 声子简正模：元激发——声子</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">12</span>
+      <div class="sec-tt">
+        <h2>元激发：声子</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 2 段（中）</span><span class="chip">课件 253</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>简谐近似下格波相互独立、简正振动能级量子化，能量单元为 ℏω_q——引入「声子」描述格波的量子：一个格波即一个振动模，也称为一个声子。声子是一种准粒子（集体运动的激发单元，即元激发），并非真实存在的粒子，只是抽象概念；用它描述光子-声子、电子-声子相互作用非常简单（满足能量与动量守恒，可理解为粒子碰撞）。</p><p>振动模处于 (n_q+½)ℏω_q 本征态时，n_q 就是声子数；光子（电子）与晶格相互作用时，传递的能量单元只能是 ℏω_q（吸收或发射一个声子），不能是 ⅓ℏω_q——能量一份一份地传递，就像爬楼梯只能一级一级走。</p><p>模式数：q 在第一布里渊区取 N 个取值（等间距，由周期性边界条件决定），一支有 N 个 q；三维体系共有 3 支（声学+光学），总谐振子数 3N（N 个原胞×每原胞小 n 个原子×3 维），与体系自由度匹配。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>每一个频率就是每一个振动的频率，就是我们得到的这一组奇函数不会相互交叉的这一组奇函数，它每一个震动的情况都代表着我们每一个身子……我们引入了所谓的这个身子，这样的一个整例子的概念来描述我体系里面的一个晶格震动的情况。</p><p>我的这个粒子，我在进行吸收或者是进行这个就是发射的时候……我只能跳，我只能跳1或者是往下跳1对不对？……我绝对不可能在1/2处，出现这个就像一个小猫在爬楼梯的时候。</p><p>我总共是有多少个组织？N个组织对不对？就跟我晶体里面这个原子的晶体里面这个原原胞的数目是相关系的……那么我每一个对应的每一个Q，我有几何频率呢？……三维的情况……那么这个声学波应该就是声学声子应该有三支……总共应该是有3N个这个振动口模式。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s13">
+  <div class="slides"><figure class="slide" id="slide-254">
+<img src="slides/slide_254.png" alt="课件第254页 1) 声子简正模：一维单原子链">
+<figcaption><span class="sno">254</span><span class="stitle">1) 声子简正模：一维单原子链</span></figcaption>
+</figure>
+<figure class="slide" id="slide-255">
+<img src="slides/slide_255.png" alt="课件第255页 1) 声子简正模：格波解与简正坐标">
+<figcaption><span class="sno">255</span><span class="stitle">1) 声子简正模：格波解与简正坐标</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">13</span>
+      <div class="sec-tt">
+        <h2>一维单原子链的简正坐标</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 2 段（中）</span><span class="chip">课件 254</span><span class="chip">课件 255</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>用一维单原子链示范如何具体找到简正坐标。牛顿力学求解时引入格波解：μn=A_q·e^{i(qna-ωt)}（振幅 A_q、波矢 q、晶格常数 a），代入运动方程得到 ω(q) 关系——即声子色散曲线，与前面晶格振动一章的结果一致。</p><p>第 n 个原子的总位移是所有 ω_q 振动（q 取 N 个值）的求和：μn=Σ_q Q_q·e^{iqna}。定义简正坐标 Q_q=√(M/N)·Σ_n μn·e^{-iqna}，μn 与 Q_q 互为傅里叶变换。把位移写成简正坐标展开后，哈密顿量有望化为不含交叉项的对角形式。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我们在利用牛顿力学方程来进行分析这个原子的受力情况……我们引入了一个所谓的隔波节……这个谬，然后前面是这个是振幅，然后E就是一个波动的这样的一个方程……它是欧米伽Q，然后这里是AQ。</p><p>我第N个原子的一个总的位移，应该是我所有的欧米伽Q的一个振动的形式的一个求和……Q是有N个取值……所以我们这N个Q的一个不同的取值到就是求和，就得到了我们某个原子的振动的情况。</p><p>他们是相当于这个66N，就是等于这个跟这个Q它们之间是一个傅里叶变化的关系。因为后面是这样的一个比例的系数，所以我的Q也可以用这个进行傅里叶变化。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s14">
+  <div class="slides"><figure class="slide" id="slide-256">
+<img src="slides/slide_256.png" alt="课件第256页 1) 声子简正模：简正坐标的验证（δqq' 与 1-cosqa）">
+<figcaption><span class="sno">256</span><span class="stitle">1) 声子简正模：简正坐标的验证（δqq' 与 1-cosqa）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">14</span>
+      <div class="sec-tt">
+        <h2>简正坐标的验证：动能与势能的对角化</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 3 段（前）</span><span class="chip">课件 256</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>验证所设简正坐标是否合理：把它代入哈密顿量，看能否化为不含交叉项的形式。动能项：μ̇² 展开为 Q_q、Q_q' 的双重求和，利用正交性关系 Σ_n e^{i(q+q')na}=δ_{qq'}，交叉项全部为零，只剩 Σ½Q̇_q²。</p><p>势能项类似：展开后得到 1-cos(qa) 因子，同样由 δ 函数消去交叉项，化成 Σ½ω_q²Q_q²。于是 H=Σ(½Q̇²+½ω_q²Q_q²)，每个简正坐标独立——证明所定义的坐标正是简正坐标；由此导出的色散 ω_q 与前面一维单原子链的结果一致。双原子链可同理自行推导。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我要去验证，我把这个检称坐标带入到我原来的这个哈一顿量里面去。我能不能把这样的一个哈密顿量化简，成为一个不包含交叉项的这样一个形式，对不对，这个是我们的目标。</p><p>根据我们这个处理方法里面应该是有严格的证明这一部分，进行求和，那么它等于德尔塔QQ一撇……当Q1撇跟Q不相等的时候，它进行求和的过程中，那么所有的就是它会都么等于0。</p><p>这一部分也是加尔法QQ1撇2的这样的一个关系……最后得到了前面的这部分都是一以简化的，它等于这个等于1-cos n q这个也是一样的……所以这个时候我们就确定我们所找，我们所找的这样一个数据，或者是说我们上面所假定的定义出来的这么一个减震坐，这这一个坐标就是我们所要找的这样一个减震坐标的这样一个形式。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s15">
+  <div class="slides"><figure class="slide" id="slide-257">
+<img src="slides/slide_257.png" alt="课件第257页 2) 光散射理论：内容导览（散射起源/概率与截面/宏观/微观理论）">
+<figcaption><span class="sno">257</span><span class="stitle">2) 光散射理论：内容导览（散射起源/概率与截面/宏观/微观理论）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">15</span>
+      <div class="sec-tt">
+        <h2>3.2 光散射理论：内容导览</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 3 段（中）</span><span class="chip">课件 257</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>3.1 声子简正模小结：通过正则变换（找简正坐标）把晶格振动的复杂耦合分解为独立简正模，引入准粒子——声子；知道声子的能量（n+½)ℏω、振动能级与波函数。</p><p>3.2 光散射理论：包含散射起源及散射实验、散射概率与散射截面（与散射强度相关）、光散射的宏观理论（经典理论：电偶极辐射和感生偶极矩、分子的光散射）、光散射的微观理论（量子理论：微分散射截面与量子跃迁概率、含时间微扰论、分子光散射的量子力学理论）。本节先建立基本概念，不区分具体散射类型，讨论如何计算散射强度；后面才讲拉曼散射选择定则、一阶/二阶拉曼散射与共振拉曼。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那么接下来我们就来讲第二部分，那么也是我们很重要的一部分，就是光反射理论。我们没有我们我们还没有讲拉曼反射理论，对不对？这一整章的内容都是拉曼反射理论基础。我们这里先讲光反射理论。</p><p>我们先不区分我们是哪一种反射，但是我们告诉大家，对于散射的这么一个事件，或者是对这样一个物理的过程现象，我们如何去考虑它的反射概率以及散射截面的问题……然后再来讲光反射的宏观理论……还会讲这个光反射的微观量子理论。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s16">
+  <div class="slides"><figure class="slide" id="slide-258">
+<img src="slides/slide_258.png" alt="课件第258页 2) 光散射理论：光散射的物理起因">
+<figcaption><span class="sno">258</span><span class="stitle">2) 光散射理论：光散射的物理起因</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">16</span>
+      <div class="sec-tt">
+        <h2>光散射的物理起因</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 3 段（中）</span><span class="chip">课件 258</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>光散射是除吸收和反射以外固体的又一类重要光学现象：理想的完全均匀的固体介质并不散射光；固体中的光散射起因于介质的不均匀性或某种性质的涨落。</p><p>入射平面波照射两个微元体积 dV₁、dV₂：除 θ=0 方向外，其它方向的散射场发生相消干涉而没有散射；θ=0 方向的散射称为相干前向散射，是折射率的起因（参考 Feynman 物理讲义）。一旦存在光学性质涨落（如介质密度不均匀），相消干涉不再成立，必然产生散射——这就是观察到散射光的物理原因。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我这个光经过一个不均匀的介质的情况下，我光子会偏离光线，会偏离原来传播的这个方向，我们就把它叫做反射。它是由这样的一个不均匀性所导致的，所以他说，理想的完全均匀的固体介质并不会反射光。</p><p>如果我在这一些地方发生了一个不均匀的，就是这个介质是不均匀的，这两个例子去掉了一个，或者是这中间有某种不均匀的特性的情况下，那么我所谓的相干相交的一有条件，那么就会不满足，这个时候就会出现所谓的掌落。……这个时候，我就会在其他方向上观察到所谓的反射的光束。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s17">
+  <div class="slides"><figure class="slide" id="slide-259">
+<img src="slides/slide_259.png" alt="课件第259页 2) 光散射理论：光散射的分类（瑞利/瑞利翼/布里渊/拉曼）">
+<figcaption><span class="sno">259</span><span class="stitle">2) 光散射理论：光散射的分类（瑞利/瑞利翼/布里渊/拉曼）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">17</span>
+      <div class="sec-tt">
+        <h2>光散射的分类：瑞利、布里渊与拉曼</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 3 段（中）</span><span class="chip">课件 259</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>瑞利散射：熵涨落引起，频率不变（弹性散射）；瑞利翼散射：各向异性分子取向的涨落（具有各向同性极化率的分子没有瑞利翼散射）；布里渊散射：密度涨落（声波、声学声子）；拉曼散射：各种激元激发对应的极化涨落产生的非弹性散射。</p><p>表格给出各过程典型参数：拉曼频移 ~1000 cm⁻¹、线宽 ~5 cm⁻¹、弛豫时间 ~10⁻¹² s；布里渊频移 ~0.1 cm⁻¹（小得多）、弛豫 ~10⁻⁹ s；瑞利频移 0。布里渊散射频率低，通常研究声学声子与自旋波（magnon），但测试非常费时（一条谱两小时起步）。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那么还有所谓的锐利1的反射，就是很靠近锐利锐一线的这一部分，那么通常它的频率很低，是由各项异性分子取向的长落……那么还有所谓的这个弗里渊的反射，还有拉曼的反射，那么这里就是所谓的波里渊反射，一般频率比较低，通常研究的就是的是声学生子的这个信……情况还有一研究什么呢？研究自旋波。</p><p>物理杆一般情况下，一条光谱基本上两个小时起步，然后或者是剩有的很多的信号，可能要测一天两天连续的在那里积分。所以这是不里面反射它非常好，但是它测试挺费时间挺费人的。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s18">
+  <div class="slides"><figure class="slide" id="slide-260">
+<img src="slides/slide_260.png" alt="课件第260页 2) 光散射理论：散射的理论体系（经典/半经典/全量子）">
+<figcaption><span class="sno">260</span><span class="stitle">2) 光散射理论：散射的理论体系（经典/半经典/全量子）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">18</span>
+      <div class="sec-tt">
+        <h2>散射的理论体系：经典、半经典与全量子</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 3 段（中）</span><span class="chip">课件 260</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>Rayleigh 散射是光子的弹性散射，中心频率与入射光相同；Brillouin 散射是光子的非弹性散射，物理根源是光子和声学声子的耦合，频移 Δω 很小（~0.1 cm⁻¹），要把它与通常 Raman 散射（频移最少 ~10 cm⁻¹ 量级）分开研究。</p><p>散射的理论体系：经典理论（分子的光散射）；量子理论分为半经典理论（原子能级量子化、辐射场采用经典形式，如 P=αE）与全量子理论（原子能级与辐射场均量子化）。对 Raman 散射的具体问题，哪种方便就用哪种。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那么，有一个经典的这个理论，那么量子的理论包含了这个半经典的理论，还有全量子的理论。半经典呢，就是原子能级进行一个量子化，但是辐射场就是还是采用经典的形式，比如说P还是等于阿尔法1的这样的一个形式。然后呢，全量子那么它的这个辐射场就是我的光场还要也要进行一个量化。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s19">
+  <div class="slides"><figure class="slide" id="slide-261">
+<img src="slides/slide_261.png" alt="课件第261页 2) 光散射理论：研究散射的方法——散射实验">
+<figcaption><span class="sno">261</span><span class="stitle">2) 光散射理论：研究散射的方法——散射实验</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">19</span>
+      <div class="sec-tt">
+        <h2>研究散射的方法：散射实验</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 3 段（中）</span><span class="chip">课件 261</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>散射实验配置：入射束和散射束是激光或 X 射线等电磁波时，入射波用平面波 E₀e^{i(k₀·r-ω₀t)} 描述、散射波用球面波 (E_S/r)e^{i(k_S·r-ω_S t)} 描述；入射束和散射束是中子或电子等粒子束时，用粒子碰撞模型描述。散射实验主要测定能量和动量的变化（转移了多少能量与动量、散射强度多大）。</p><p>光散射可以理解为两个粒子的碰撞：波粒二象性——光既是电磁波（波动方程），又是光子（能量由波长决定），粒子与波相辅相成，因此电磁波散射常可用粒子碰撞理论理解。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>反射通常可以理解成两个粒子之间的一个碰撞，对不对？所以，两个粒子碰撞了之后，那么它们沿不同的方向走，然后它的能量是多少？那么，我们通过这个反射实验，就可以来测定它的能量。</p><p>这个的物理根源也是由于我们这个所谓的波粒二象性，对不对？就是我的这样的一个光，我可以认为它是电磁波，那么就是一个波动的方程，那么，我也可以认为它是一个光子，就带有特定能量，它的波长就决定它的能量。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s20">
+  <div class="slides"><figure class="slide" id="slide-262">
+<img src="slides/slide_262.png" alt="课件第262页 2) 光散射理论：散射实验——粒子与波的对应">
+<figcaption><span class="sno">262</span><span class="stitle">2) 光散射理论：散射实验——粒子与波的对应</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">20</span>
+      <div class="sec-tt">
+        <h2>散射实验：粒子与波的对应</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 3 段（中）</span><span class="chip">课件 262</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>描述粒子和电磁波的物理量相互对应：粒子能量 E=ℏω ↔ 波频率 ω=kc=2πc/λ；粒子动量 P=ℏk ↔ 波矢 |k|=2π/λ（λ 为波长）。因此波的散射过程也可以用粒子碰撞过程描述，散射问题常称为碰撞问题。</p><p>碰撞过程中，散射粒子能量相对入射粒子能量发生改变称为非弹性碰撞，否则为弹性碰撞；相应地，散射波能量不同于入射波能量的散射称为非弹性散射，否则为弹性散射。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>就是我的这个负粒子跟波之间，它们其实是相辅相成的。所以，这个时候我们对于这样的一个电磁波反射的现象，通常也可以理解成粒体碰撞的这样的一个过程。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s21">
+  <div class="slides"><figure class="slide" id="slide-263">
+<img src="slides/slide_263.png" alt="课件第263页 2) 光散射理论：散射概率和散射截面">
+<figcaption><span class="sno">263</span><span class="stitle">2) 光散射理论：散射概率和散射截面</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">21</span>
+      <div class="sec-tt">
+        <h2>散射概率和散射截面</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 3 段（中）</span><span class="chip">课件 263</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>散射概率：单位时间内被散射的入射粒子数占总入射粒子数之比。散射截面 σ：只有当入射粒子 A 进入到以靶粒子 B 为中心的面积 σ 内时才出现碰撞；σ 的大小反映体系发生碰撞概率的大小，由体系本身性质决定。</p><p>散射概率与散射截面相关但不同：前者是散射事件数占总粒子数的比值，后者是表征碰撞概率的面积量。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>散射的概率是什么呢？在单位时间内被散射的入射粒子数占总粒子数之比，这个很定好理解，对不对？……那么这一部分相比于我原来总的粒子数的这个比值，那么就是我的反射概率。</p><p>反射前面……我只有在他的这个粒子B粒子，它的这样的一个可能跟它发生碰撞的这一个面积的范围内……把粒子B为中心的面积系统马内还会发生这个碰撞。……所以这个时候就是所谓的反射截面，他也能够去衡量我这个利益四碰撞的这样的一个概率的大小。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s22">
+  <div class="slides"><figure class="slide" id="slide-264">
+<img src="slides/slide_264.png" alt="课件第264页 2) 光散射理论：散射截面的计算（硬球薄膜靶模型）">
+<figcaption><span class="sno">264</span><span class="stitle">2) 光散射理论：散射截面的计算（硬球薄膜靶模型）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">22</span>
+      <div class="sec-tt">
+        <h2>散射截面的计算：硬球薄膜靶模型</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 3 段（中）</span><span class="chip">课件 264</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>硬球薄膜靶模型：入射粒子 A，靶是含有 N 个靶粒子 B、面积为 F 的薄膜（只含一层，散射过程中不发生次级碰撞）。入射粒子 A 进入面积 F 并与靶粒子 B 碰撞后被散射的概率 ρ=总散射面积/靶面积=N×σ/F。</p><p>设每秒入射至面积 F 的 A 粒子数为 N₀、被散射数为 N₀ₛ，则散射概率 ρ=N₀ₛ/N₀；以 j₀ 记入射粒子每秒通过单位面积的总数（流密度），沿 z 方向入射的流密度为 j₀z，则 N₀=j₀z×F。联立得散射截面 σ=(1/N)·N₀ₛ/j₀z。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我的把就是我的B粒子是一个把粒子，它是具有N个把粒子B的一个面积F的一个薄膜。然后我们这里就是这个钯粒子是均匀的分布在这个薄膜上，它不会发生其他的响应，就是我只会发生一次的这个碰撞。</p><p>G10标记注射粒子A每秒通过单位面积的总数及流密度，就是它是通过单位面积，而且是每秒。所以这个时候呢，我的N0就可以用我的这个油密度乘以我的面积来表示……所以这个时候我们把两个式子一联立，我就可以得到它的反射截面是这么多。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s23">
+  <div class="slides"><figure class="slide" id="slide-265">
+<img src="slides/slide_265.png" alt="课件第265页 2) 光散射理论：微分散射概率和微分散射截面">
+<figcaption><span class="sno">265</span><span class="stitle">2) 光散射理论：微分散射概率和微分散射截面</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">23</span>
+      <div class="sec-tt">
+        <h2>微分散射概率与微分散射截面</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 3 段（后）</span><span class="chip">课件 265</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>微分散射概率：单位时间内被散射到单位立体角的散射粒子数占总入射粒子数的比值——粒子碰撞后可能沿任意方向运动，我们只取 360° 空间中的某一立体角（如 dΩ）部分。</p><p>微分散射截面：散射到立体角 dΩ 且能量在 E₁→E₁+dE₁ 范围内的粒子数与入射粒子数的比值；它的大小与测量条件有关（在哪测、立体角多大）。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>微分就是说，它最主要的是单位一体角。……我只取某一部分，这个就是我们所谓的反射到3。3倍一体角里面的反生粒子数占总粒子数的一个比值，这个我们称之为微分反是平面。</p><p>还有一个微分反射截面，那么它也是反射到一体叫D欧米伽。然后这个时候要注意，它是能量在11到DD+DD范围内，这部分的粒子数占到总粒子数的一个比值。……它的大小是跟我们测量条件是息息相关的。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s24">
+  <div class="slides"><figure class="slide" id="slide-266">
+<img src="slides/slide_266.png" alt="课件第266页 2) 光散射理论：微分散射截面的计算（r²dΩ、流密度）">
+<figcaption><span class="sno">266</span><span class="stitle">2) 光散射理论：微分散射截面的计算（r²dΩ、流密度）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">24</span>
+      <div class="sec-tt">
+        <h2>微分散射截面的计算</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 3 段（后）</span><span class="chip">课件 266</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>令位置 r 处、能量 E₁ 的散射粒子流密度为 j₁(r)，r 处立体角 dΩ 所张的面积是 r²dΩ，则散射到立体角 dΩ=sinθdθdφ 内、能量在 E₁→E₁+dE₁ 的粒子数为 n·j₁(r)·r²dΩdE₁（n 为散射束方向）。</p><p>当粒子沿 z 方向入射、流密度为 j₀z 时，微分散射截面 d²σ/(dΩdE₁)=r²/(N×j₀z)·n·j₁(r)。该推导没有涉及入射粒子和靶粒子的具体性质，表达式具有普遍意义，适用于各类散射，只是不同散射中流密度 j 对应的具体物理量不同。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>在位置R处对吧？然后E1的反射的粒子有密度是G1，这个还是跟我们之前是一样的。那么在R处立体角所张的这样一个面积，就是这一部分黑色的这部分面积是答2平方D欧米伽。</p><p>反射到这一部分，这一部分的这个它的粒子数就等于……G1去乘以这样的一个N，就是垂直于这样的一个反射截面……投影到我的这样的一个反向量的方向上，它的反射粒子有多少？然后它的面积是这么多。</p><p>微分散射截面就是我的截面，要去对于我的单位的这个立体角还有单位的能量，那么原则上就是把我这一部分，就是把我那个前面那个反射截面的那一部分，去做一个就是把它这两部分除过去就行了。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s25">
+  <div class="slides"><figure class="slide" id="slide-267">
+<img src="slides/slide_267.png" alt="课件第267页 2) 光散射理论：散射截面的经典电磁波描述（坡印廷矢量）">
+<figcaption><span class="sno">267</span><span class="stitle">2) 光散射理论：散射截面的经典电磁波描述（坡印廷矢量）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">25</span>
+      <div class="sec-tt">
+        <h2>散射截面的经典电磁波描述</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 3 段（后）</span><span class="chip">课件 267</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>经典电磁波描述：基于经典电磁场理论，光散射被看作是靶粒子在受入射光波作用后感生散射光波的事件。入射光场 E(r,t)=Ee^{i(k·r-ωt)}；单位时间内通过单位面积的电磁场能量以坡印廷矢量 S=(c/8π)E×B 表示。</p><p>记 n 为电磁波能量传播方向的单位矢量，不考虑磁场作用时，n 方向能流密度对时间的平均为 (c/8π)n⟨|E|²⟩。因 S 等价于流密度 j，可得 r 处光散射微分散射截面的经典电磁波表述：d²σ/(dΩdE₁)=r²/(N⟨E₀z²⟩)·n⟨|E₁(r)|²⟩（S₀z、E₀z 为入射波沿 z 方向的能流密度与电场强度，S₁(r)、E₁(r) 为散射波在 r 处的相应量）。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>单位时间内，我通过单位面积的电磁场的能量是以波音平矢量来计算，这个大家就是知道就行。然后，它的这样的一个总的能量就是能流密度，在方向N的能流密度对时间的平均就会等于波11矢量的……最后我就得到了它是一个电场的这样的一个平方，然后对时间求平均的这样的一个形式。</p><p>当我把这样的一个形式带入到前面的这个，就是说我的能量密度，我用这样的一个温度矢量来表述的时候，这个时候我就可以得到我的这个微分反射截面跟我的能流密度，就是跟我的电场分量有什么样的一个关系。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s26">
+  <div class="slides"><figure class="slide" id="slide-268">
+<img src="slides/slide_268.png" alt="课件第268页 2) 光散射理论：散射截面的量子化粒子描述（量子跃迁概率）">
+<figcaption><span class="sno">268</span><span class="stitle">2) 光散射理论：散射截面的量子化粒子描述（量子跃迁概率）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">26</span>
+      <div class="sec-tt">
+        <h2>散射截面的量子化粒子描述：量子跃迁概率</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 3 段（后）</span><span class="chip">课件 268</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>量子物理描述：粒子散射被看作入射粒子和靶粒子相互作用、引起粒子和靶粒子在量子化能级间跃迁的事件。散射前初始状态（粒子 |n₀,k₀⟩、靶 Eₙ₀），散射后跃迁过程及末态（粒子 |n₁,k₁⟩、靶 Eₙ₁）。</p><p>在时间 t 内，粒子从量子态 |n₀,k₀⟩ 跃迁到 |n₁,k₁⟩ 的概率写成 P(n₀,k₀;n₁,k₁;t)，单位时间的跃迁概率 R(n₀,k₀;n₁,k₁;t)≡d/dt P(n₀,k₀;n₁,k₁;t)。具体表达式需通过微扰理论得到（后面量子理论部分给出完整推导），这里先建立概念。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>如果用量子理论来进行描述的话，这个时候就是所谓的跃迁，这是粒子的跃迁，在不同能量级以上的这么一个跃迁到这个事情……我从这个量子态从1这个10跃迁到这个NN1K1,就是N0K0跃迁到N1K1的这个概率。</p><p>把它写成这个形式，那么我单位时间内的一个变限概率就可以用这样一个形式来表示。就是，这个也是一个定义吧，就是我讲的是这个，如果两个能局之间在微绕的情况下，它进行变迁，但是这一部分它的具体的这个表达式就要通过微绕理论来进行描述。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s27">
+  <div class="slides"><figure class="slide" id="slide-269">
+<img src="slides/slide_269.png" alt="课件第269页 2) 光散射理论：量子化粒子描述下的微分散射截面">
+<figcaption><span class="sno">269</span><span class="stitle">2) 光散射理论：量子化粒子描述下的微分散射截面</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">27</span>
+      <div class="sec-tt">
+        <h2>量子化粒子描述下的微分散射截面</h2>
+        <div class="sec-meta"><span class="time">录音 录音：第 3 段（后）</span><span class="chip">课件 269</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>考虑入射粒子和靶粒子的相互作用主要发生在靶粒子能量与入射粒子能量相等的情况：碰撞开始前靶粒子处在入射粒子能量 E₀ 本征态的概率为 Pₙ₀，假设粒子散射概率与 Pₙ₀ 成比例。粒子每秒被散射到 k₁ 附近 (k₁,d³k₁) 状态内的总数为 N₀ΣPₙ₀R(n₀,k₀;n₁,k₁;t)N(k₁)dk₁（N₀ 为平面波态 |k₀⟩ 中的入射粒子总数）。</p><p>质量为 m 的粒子能量 E₁=ℏ²k₁²/(2m)，则 dk₁=m/(ℏ²k₁)dE₁；极坐标下动量空间体积元 d³k₁=sinθdθdφk₁²dk₁=mk₁/ℏ²·dE₁dΩ。结合微分散射截面定义，得到量子化粒子描述下的微分散射截面 d²σ/(dE₁dΩ)=mk₁/(ℏ²j₀z)·N(k₁)ΣPₙ₀R(n₀,k₀;n₁,k₁;t)。</p><p>本课到此结束：以上是散射的基本概念（概率、截面、经典与量子描述），是后续计算光散射强度（宏观理论、微观理论）的基础。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>它还是考虑入射粒子和法粒子的相互作用，发生在法离子能量和入射粒子能量相等的情况……粒子开始前把粒子处于入射粒子10本身态的概率，我们把它记为PN0。然后呢，这个粒子每秒被散射到K1这样的一个状态内的一个系数……</p><p>对于质量为M的例子，就是这是一个例，就是动能就是它的能量动能的这样一个方程……因为它是三维的空间，所以是第3K……在三维空间内在极坐标下进行一个改写的话，那么就最后就变成了这样的一个形式。</p><p>我们就今天也就先讲到这里吧。这里主要就是讲一些基本的概念，但是其实没有一些具体的细则的计算的过程中，只是给大家介绍。可能跟我们后面……那么是相关系的，所以就是，打个基础好吧。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（显微共焦拉曼光谱学）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>
