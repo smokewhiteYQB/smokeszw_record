@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>显微共焦拉曼光谱学（2026 秋） · 第三章 拉曼散射理论基础（下）收尾：特征标表与偏振选择定则、一阶/二阶/共振拉曼散射 ＋ 第四章 拉曼散射测量仪器与技术：拉曼光谱仪发展史｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>显微共焦拉曼光谱学（2026 秋） · 第三章 拉曼散射理论基础（下）收尾：特征标表与偏振选择定则、一阶/二阶/共振拉曼散射 ＋ 第四章 拉曼散射测量仪器与技术：拉曼光谱仪发展史</h1>
+    <div class="sub">第三章 拉曼散射理论基础（下）收尾：特征标表与偏振选择定则、一阶/二阶/共振拉曼散射 ＋ 第四章 拉曼散射测量仪器与技术：拉曼光谱仪发展史 ｜ 2026-09-24 ｜ 授课：林妙玲（第三章）＋ 谭平恒（第四章）</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 368 页 · 整理 20 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-s01">01 特征标表：数字从哪来</option>
+<option value="sec-s02">02 拉曼/红外活性判定法则与互斥规则</option>
+<option value="sec-s03">03 偏振配置标记与拉曼张量</option>
+<option value="sec-s04">04 拉曼强度计算：Ag 与 E2g 的偏振选择</option>
+<option value="sec-s05">05 一阶拉曼散射：定义与量子跃迁模型</option>
+<option value="sec-s06">06 一阶散射的动量守恒与布里渊区中心声子</option>
+<option value="sec-s07">07 斯托克斯/反斯托克斯强度比与温度</option>
+<option value="sec-s08">08 二阶拉曼散射：定义与动量守恒</option>
+<option value="sec-s09">09 二阶散射：能量关系与强度规律</option>
+<option value="sec-s10">10 共振拉曼散射：单共振/双共振/三共振</option>
+<option value="sec-s11">11 受激拉曼散射：非线性过程（介绍）</option>
+<option value="sec-s12">12 第四章开篇：回顾与课程结构</option>
+<option value="sec-s13">13 拉曼光谱仪的特点与光谱仪类型</option>
+<option value="sec-s14">14 发展史概述与重大事件</option>
+<option value="sec-s15">15 早期系统：摄谱仪与光电探测器</option>
+<option value="sec-s16">16 Cary 81：首台 easy-to-use 分析仪器</option>
+<option value="sec-s17">17 激光器与光栅革命</option>
+<option value="sec-s18">18 桌面型与三光栅时代</option>
+<option value="sec-s19">19 单光栅、便携式与现代拉曼光谱仪</option>
+<option value="sec-s20">20 各代技术对比与第 V 代水平</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 Ch3-拉曼散射理论基础-2026秋.pdf（p82–124 中讲述部分）＋ Ch4-拉曼散射测量仪器与技术-2026秋.pdf（p1–26 中讲述部分） 逐页渲染，转写原文见 record_20260924.txt。</div>
+<section class="sec" id="sec-s01">
+  <div class="slides"><figure class="slide" id="slide-313">
+<img src="slides/slide_313.png" alt="课件第313页 特征标表怎么读：偶表示与奇表示的选择定则（反演矩阵 0 0 −1）">
+<figcaption><span class="sno">313</span><span class="stitle">特征标表怎么读：偶表示与奇表示的选择定则（反演矩阵 0 0 −1）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-314">
+<img src="slides/slide_314.png" alt="课件第314页 只有奇表示的声子才对应红外活性（偶极矢量为矢量）">
+<figcaption><span class="sno">314</span><span class="stitle">只有奇表示的声子才对应红外活性（偶极矢量为矢量）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>特征标表：数字从哪来</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 313</span><span class="chip">课件 314</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>这一节回答上节课留的问题：特征标表怎么读。首先回到对称性操作的表示，即它的变换矩阵。操作是对体系坐标的变换，选择不同坐标系可以写出相应的变换矩阵；不同基函数对应不同坐标，矩阵表示的特性（可约或不可约）也随之不同。核心是要找出满足条件的基函数，基函数的个数由对称性操作的个数决定：不可约表示维度的平方和等于对称性操作个数，因此基函数是完备的。比如 A、B 为一维，E 为二维，1²+1²+2²=6，正好与 6 个对称操作数相等。有了完备基函数就能做约化，得到一个二维和两个一维的不可约表示。</p><p>这张表与上一张类似，但只显示了特征值。特征值就是不可约表示的斜对角线求和：1+1=2，就在特征标表里写 2；−1/2 与 −1/2 相加得 −1。一般情况下 C3₁ 与 C3₂ 会写在一起，即 2×C3₁ 的记号，−1×2=−2，所以它的特征标依然满足与维度相等的关系；写 0 的地方就是 0。对于一维的情况，特征标只有 1 或 −1 两种。</p><p>以 D6h 为例，比如单层石墨烯满足 D6h 点群，对称性操作元素总共 24 个。再求纵轴维度平方和：A、B 都是一维，E 是二维（这里 F 也是二维），平方和同样等于 24。这张表的主要用途是看不可约表示对应特定振子的对称性：假设某个模式属于 A1g，在对称操作下特征标都是 1，表示振动经对称操作后与原来完全一样；若出现 −1，则需要加反演操作才能回到本身。所以不可约表示由对称性决定，对简单振子模型可以用特定对称操作（转动、反映）直接判断归属；对复杂体系如富勒烯，这种方法很费劲，一般通过 DFT 计算得出，实际使用时主要靠查阅文献确认点群和不可约表示。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>核心是找出满足条件的基函数，其个数由对称性操作个数决定。不可约表示维度平方和等于操作数。如A、B为一维，E为二维，T为三维。1²+1²+2²=6，与6个对称操作数相等。</p><p>特征值其实就是不可约表示的斜对角线求和。比如这里1+1是2，在特征标表里面就应该写2。</p><p>对于D6H，比如单层石墨烯，它满足D6H的点群。大家可以数一下它的对称性操作元素总共有几个。是24个吗？</p><p>对于复杂体系如富勒烯，这种方法较费劲。通常通过DFT原理计算得出不同模式的归属。最后，大家主要是查阅文献，确认其属于哪一种点群。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s02">
+  <div class="slides"><figure class="slide" id="slide-315">
+<img src="slides/slide_315.png" alt="课件第315页 拉曼活性与红外活性判定法则：互排/互允/互禁">
+<figcaption><span class="sno">315</span><span class="stitle">拉曼活性与红外活性判定法则：互排/互允/互禁</span></figcaption>
+</figure>
+<figure class="slide" id="slide-316">
+<img src="slides/slide_316.png" alt="课件第316页 判定法则举例：乙烯分子的扭曲振动">
+<figcaption><span class="sno">316</span><span class="stitle">判定法则举例：乙烯分子的扭曲振动</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>拉曼/红外活性判定法则与互斥规则</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 315</span><span class="chip">课件 316</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>这张特征标表后面还有两列，分别对应红外活性和拉曼活性。对极化率变化而言，都是二次函数形式的坐标（X²+Y²、Z² 或 XY 等，两个坐标相乘），对应拉曼活性的模式；而一阶函数由 X、Y、Z 组合而成，对应红外活性。这两列其实就是前面选择出来的一组基函数。为什么能定出这些基函数？原则是：选择基函数，让对称操作变换的矩阵是可约的，约化到越简单越好；约化出的维度与两列基函数一一对应。也有直观判断：比如 Z，围绕 Z 轴转动时数值完全不变，特征标就是 1；Syz 镜面操作会把 Z 变成 −Z，特征标就是 −1，于是就知道 Z 应放在哪一行、属于红外活性。</p><p>这张表还决定了拉曼张量的形式。例如 Ag 对应 X²+Y² 和 Z²，写出的拉曼张量是 3×3 形式，Syz 对应 α_yz、XY 对应 α_xy。X²+Y² 有数值、α_yy 也有数值且二者等价，所以 A 对称的拉曼张量一般是对角形式；Z² 与它们不一致，一般定为 B。大家可以回头查我给的网站，对照点群查拉曼张量的形式：Ag 的拉曼张量就是这样对角的形式，Bg 对应 Syz/YZ 方向非对角。这里讲了很多这张表怎么来的，最后要掌握的是怎么用：判断模式是否拉曼活性、怎么查拉曼张量，这决定后面所有要算的东西。</p><p>关于不可约表示的记号：一维不可约表示用 A 或 B 表示，在主转动轴（最高对称性的转动轴）下特征标为 1 用 A，为 −1 用 B；二维通常用 E 或 F，三维用 T。若还有其他轴，第一个标成 1、第二个标成 2，依次标注；转动之后对称的用 g 表示，反对称的用 u 表示。这些记号规则不用太在意，查表时知道典型规则即可。</p><p>还要重申互斥规则：对有反演中心（对称中心）的材料体系，红外活性与拉曼活性互斥。D6h 有反演中心，拉曼活性与红外活性在不同行，不可能在同一行；D3h 没有反演中心，奇函数 Z 与二次函数 X²−Y² 可以在同一行，即既可是红外活性也可是拉曼活性。为什么？从偶表示和奇表示的变换规律讲：拉曼散射需要极化率变化，极化率是 3×3 张量形式，由两个矢量的外积得到，两个 u 表示相乘变换后必为 g 表示，所以拉曼张量的表示必定是 g 表示；而红外吸收涉及偶极矩跃迁，偶极矢量是矢量、反演下变号，是 u 表示。有反演中心时二者互斥，无反演中心时则可能二者兼有。能谱中能否看到还取决于电偶极近似是否成立，不满足时需回归费米黄金定则、完整写出哈密顿量才能看清选择定则；电偶极近似已能解释大部分实验结果，是最常用的形式。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>对于极化率的变化，都是二次函数形式的坐标，比如X的平方加Y的平方、Z的平方或者XY。就是有两个坐标乘起来的形式，对应的就是拉曼活性的模式。而对应于一阶的，是由XYZ这三个函数组合而成的。这些函数对应的就是红外活性的。</p><p>比如说，我们围绕着Z轴转动的时候，那么我的Z的数值是完全不变的。那么这个时候，我的特征值就是1。如果我是一个镜面，Syz的这样的一个镜面，那么这样的一个操作，你对Z进行一个变化的话，那么你Z就会变成负Z。所以你这个特征值就变成-1。</p><p>大家可以看到16H有反演中心。拉曼活性与红外活性在不同行，不可能在同一行。……看下面第6H的例子，它没有反演中心。SY的奇函数与X平方减Y平方的二次函数可在同一行。</p><p>两个矢量做直积可得到张量矩阵。……若原矢量均为u表示，相乘变成张量后变换时，必定是g表示。而偶极矩是矢量表示，必然是u表示。在有反演中心时，二者互斥。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s03">
+  <div class="slides"><figure class="slide" id="slide-317">
+<img src="slides/slide_317.png" alt="课件第317页 拉曼测量配置的限制：回到感应偶极矩表达式 m_α=Σχ_αβE_β">
+<figcaption><span class="sno">317</span><span class="stitle">拉曼测量配置的限制：回到感应偶极矩表达式 m_α=Σχ_αβE_β</span></figcaption>
+</figure>
+<figure class="slide" id="slide-318">
+<img src="slides/slide_318.png" alt="课件第318页 散射光方向与散射光偏振方向">
+<figcaption><span class="sno">318</span><span class="stitle">散射光方向与散射光偏振方向</span></figcaption>
+</figure>
+<figure class="slide" id="slide-319">
+<img src="slides/slide_319.png" alt="课件第319页 拉曼张量 3×3 矩阵形式与偏振矢量（a d e / d b f / e f c）">
+<figcaption><span class="sno">319</span><span class="stitle">拉曼张量 3×3 矩阵形式与偏振矢量（a d e / d b f / e f c）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>偏振配置标记与拉曼张量</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 317</span><span class="chip">课件 318</span><span class="chip">课件 319</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>对称性决定拉曼散射的选择定则，接下来学习如何根据对称性查张量表、如何计算不同偏振配置下的拉曼强度。要在拉曼光谱中观察到信号，需满足两个条件：第一，模式具有拉曼活性，决定其是否可见；第二，选择合适的天线（偏振）配置，入射光与散射光需满足特定条件才可能观察到特定模式。将入射偏振矢量与拉曼张量一一配对，得到的就是散射强度；如果观测光在某个偏振方向上没有分量，就必然观察不到该拉曼模式。</p><p>从电偶极辐射模型出发可以得到瑞利散射、斯托克斯与反斯托克斯部分，其中微分散射截面（即拉曼强度）正比于中间部分，对应拉曼张量——这是查表得到的 3×3 矩阵。一般情况下前面是入射光的偏振矢量、后面是散射光的偏振矢量，与拉曼张量做点积就能确定拉曼强度。通常用四字母标记表示偏振配置：前后两个字母表示入射光和散射光的传播方向，括号内前一个字母表示入射光偏振方向、后一个表示散射光偏振方向。例如 Z(XX)Z 表示沿 Z 轴入射、沿 −Z 轴收集的背散射配置，括号内 XX 即入射偏振沿 X、散射偏振沿 X；入射偏振沿 X、散射偏振沿 Y 则属于交叉偏振配置。</p><p>不同配置影响入射和散射偏振矢量的表示：矢量一般用三维数值表示，沿 X 方向为 100、沿 Y 方向为 010、沿 Z 方向为 001。拉曼张量对不同对称性和不可约表示，部分元素为零，比如 G 模式只有对角线上的非零值、非对角元素全为零。将前后矢量与中间张量做乘积（前面换成转置），每个元素由行列内积得到，最终解释为两个矢量的内积，再求平方即得散射强度——矩阵乘法在线性代数里都学过。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>要在拉曼光谱中观察到信号，需满足两个条件。第一，模式需具有拉曼活性，这决定其是否可见。第二，需选择合适的偏振配置。入射光与散射光需满足特定条件，才可能观察到特定模式。</p><p>通常采用一种标记表示偏振配置。共有4个字母，均为XYZ的组合。前后两个字母表示入射光和散射光的传播方向。例如Z(XX)Z，表示沿Z轴入射，沿负Z轴收集。这是一种背散射的偏振配置。括号内前一个字母表示入射光偏振方向，后一个表示散射光偏振方向。</p><p>若沿X方向，则为100；若沿Y方向，则为010。若沿Z方向，则是001。……拉曼张量一般是3×3形式。对于不同对称性和不可约表示，部分值为0。如G模式只有对角线上有非零值。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s04">
+  <div class="slides"><figure class="slide" id="slide-320">
+<img src="slides/slide_320.png" alt="课件第320页 各对称类的拉曼张量形式（对角线/非对角线元素）">
+<figcaption><span class="sno">320</span><span class="stitle">各对称类的拉曼张量形式（对角线/非对角线元素）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-321">
+<img src="slides/slide_321.png" alt="课件第321页 A 类拉曼张量：a 00 / 0 b 0 / 00 c 对角形式">
+<figcaption><span class="sno">321</span><span class="stitle">A 类拉曼张量：a 00 / 0 b 0 / 00 c 对角形式</span></figcaption>
+</figure>
+<figure class="slide" id="slide-322">
+<img src="slides/slide_322.png" alt="课件第322页 强度计算：|eᵢᵀ·α·eₛ|² 与 d²">
+<figcaption><span class="sno">322</span><span class="stitle">强度计算：|eᵢᵀ·α·eₛ|² 与 d²</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>拉曼强度计算：Ag 与 E2g 的偏振选择</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 320</span><span class="chip">课件 321</span><span class="chip">课件 322</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>以 D6h 为例，A 模的拉曼张量形式为对角（a、b、c），与前文一致。E2g 模式位于下一行且具拉曼活性，因为是二维的，它包含两个基向量：一是 Syz 对应的非对角部分，二是 X²−Y² 对应的拉曼张量形式。一维表示计算较简单：若入射光与散射光均沿 Z 方向（平行配置），乘积等于 a²；若是交叉偏振（入射沿 X、散射沿 Y），计算结果为 0；改变方向但仍属交叉配置情况类似，结果依旧是 0；若做 YY（平行），算出来还是 a²。</p><p>所以除了模式本身具有拉曼活性，还要选择合适的偏振配置才能测得想要的模式，而这种配置由它的对称性决定。Ag 模式就给了很好的例子：只有在平行的配置下才能看到 Ag 模式。对于具有一个以上不可约表示的二维体系，拉曼散射强度要做平方和运算：先算一个张量、再算另一个，把两个平方加起来。比如 E2g 有两个拉曼张量，计算时分别代入再求和，所以不管在平行配置还是交叉配置下都能看到 E2g 模式。</p><p>还可以算更复杂的情形：入射光在平面内任意偏振方向（cosβ、sinβ 形式，β 为平面内偏振角），β 从 0° 旋转到 360°，可验证 E2g 模式的强度是否随 β 变化——答案是基本不变，大家回去算一下；同理可算散射光在平面内旋转、以及入射与散射同时旋转的情况，对比 Ag 与 E2g 的区别。</p><p>不同的声子模式属于不同的不可约表示、具有不同的对称性，通过不同偏振配置即可探测特定模式，所以偏振拉曼光谱可以用于区分声子模式。比如 Ag 与 E2g 频率重叠在一起时，Ag 只在平行偏振配置下出现信号，E2g 在平行和交叉配置下都能看到；做一组平行、一组交叉的实验，交叉配置下 Ag 消失，消失的峰属于 Ag，不消失的属于 E2g。根据偏振选择特性就能把不同的峰区分开来。要掌握的是：怎么查表得到拉曼张量、在什么偏振配置下能测到这样的峰，以及不同峰重叠时设计什么实验把它们分开——这些都基于计算结果。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>若是交叉偏振，即入射光沿X方向、反射光沿Y方向，计算结果为0。……那如果是YY，那么我算出来就是还是A平方。……我只有在平行的配置下，才能看到Ag模式。</p><p>比如这里的Eg模式，它有两个拉曼张量，所以计算时要分别代入算出平方，再将两个平方和加起来。……不管是在平行配置角还是交叉配置角，我们都能够看到这样的Eg模式。</p><p>AG只会在平行的偏振配置下看得到，而在交叉的偏振配置下看不到。12G在平行和交叉的偏振配置下都能看得到。……消失的那个峰属于AG模式，不消失的属于12G模式。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s05">
+  <div class="slides"><figure class="slide" id="slide-323">
+<img src="slides/slide_323.png" alt="课件第323页 一阶拉曼散射：定义与量子跃迁模型（单声子 Stokes）">
+<figcaption><span class="sno">323</span><span class="stitle">一阶拉曼散射：定义与量子跃迁模型（单声子 Stokes）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-324">
+<img src="slides/slide_324.png" alt="课件第324页 量子跃迁模型示意图（电子-声子相互作用）">
+<figcaption><span class="sno">324</span><span class="stitle">量子跃迁模型示意图（电子-声子相互作用）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>一阶拉曼散射：定义与量子跃迁模型</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）</span><span class="chip">课件 323</span><span class="chip">课件 324</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>进入第四节一阶拉曼散射（第五节是二阶，后面还有高阶），要掌握如何区分它们。这里先给定义：一阶拉曼散射表示仅单个声子参与拉曼散射过程。但这个定义不是特别严谨——比如有声子缺陷参与的过程虽然只有单个声子，却属于二阶拉曼散射。准确说，只有一个散射过程的才称为一阶拉曼散射，即只散射了一次。这与前面讲的经典电偶极辐射模型一致：当时只取到一阶部分，对极化率做泰勒展开，α₀ 是零阶项，α′（∂α/∂Q）乘 Q 是一阶项，QK0、QG0 属于高阶形式；只取一阶声子时，偶极矩计算出的散射光只包含 ω₀±ω_K 的部分，ω_K 代表声子能量，光子与声子发生一次散射及能量传递。</p><p>量子跃迁模型中，光子先激发电子，电子从基态跃迁到激发态（或虚能级），随后电子与声子相互作用，最后电子与空穴复合发射出光子。该过程只发生一次散射（电子与声子的相互作用部分伴随能量传递）。无论从哪个模型推导，都能得到相应的规律。</p><p>频率特征：斯托克斯与反斯托克斯距中心瑞利线的频率差相等，不随入射光频率 ω_L 改变，这需从能量和动量守恒角度理解。动量部分存在显著区别：入射动量为 k_L−q，散射动量为 k_L+q；由于波矢一个为正一个为负，在背散射条件下通常只考虑背散射。目前多为显微配置，入射光与散射光同向收集，此时 q=2k_L。虽然使用高数值孔径物镜，但样品折射率远高于空气（若折射率 5.x、NA=1，外部入射角可达 60°~70°），由斯涅尔定律 n₁sinβ₁=n₂sinβ₂，材料内部的收集角仍很小，所以仍可近似按垂直入射情况考虑。先休息 5 分钟，再讲后面内容。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>一阶拉曼散射表示仅仅只有单个声子参与了拉曼散射过程。但这个定义也不是特别严谨。比如对于有声子缺陷这样的过程，虽然也只有单个声子，但它属于二阶的拉曼散射过程。所以准确来说，只有一个散射过程的才称为一阶拉曼散射过程，即只散射了一次。</p><p>量子跃迁模型中，光子先激发电子，电子从基态跃迁到激发态。随后电子与声子相互作用，最后电子与空穴复合发射出光子。该过程仅发生一次反射。</p><p>此时Q等于2倍KL。……虽使用高数值孔径物镜，但物体折射率远高于空气。若折射率为5.x，NA为1，入射角达60°~70°。……这涉及斯涅尔定律。即n1·sinβ1=n2·sinβ2。……材料内收集角仍很小。因此，仍可近似按垂直入射情况考虑。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s06">
+  <div class="slides"><figure class="slide" id="slide-325">
+<img src="slides/slide_325.png" alt="课件第325页 一阶散射动量守恒：q=2k_L 与显微配置（斯涅尔近似）">
+<figcaption><span class="sno">325</span><span class="stitle">一阶散射动量守恒：q=2k_L 与显微配置（斯涅尔近似）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-326">
+<img src="slides/slide_326.png" alt="课件第326页 一阶拉曼散射：布里渊区中心的声子选择">
+<figcaption><span class="sno">326</span><span class="stitle">一阶拉曼散射：布里渊区中心的声子选择</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>一阶散射的动量守恒与布里渊区中心声子</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）</span><span class="chip">课件 325</span><span class="chip">课件 326</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>从第二章讲拉曼散射基本介绍到第三章，目前讲的一般情况都是一个模式对应一个声子，即一阶拉曼散射过程：能量和动量都要守恒，由此选择出的声子通常靠近布里渊区中心。关键是光子不管是 k_L 还是 k_S，频率相差很小——只差一个 ω_q 的数值，而 ω_q（声子能量）远小于 ω₀（光子能量），所以入射光和散射光的波矢相差不大，都可做偶极近似处理。</p><p>光波长通常在 400 多到 1000 多纳米，而第一布里渊区的尺度是 2π/a，a 约 10⁻¹⁰ m（0.1 nm）：声子的布里渊区这么大，光子的波长大概是它的千分之一数量级。一阶拉曼散射只有一个声子参与、发生一次散射，动量守恒只涉及入射光子、散射光子和声子三者，所以选择的是布里渊区中心的声子。二阶散射就不一样：可选的声子不限于布里渊区内部，所有声子都有可能参与，只是特定点的概率更大。</p><p>还是硅的声子色散曲线和拉曼光谱这张图：上面是 521 波数的光学声子，下面是几个波矢附近被选出的声学声子，它们对应的都是布里渊区中心的声子；还有一个没有指认的 2 倍 LA 模式，属于后面的二阶拉曼散射范围。从 log 强度坐标看，一般二阶散射的强度远远小于一阶散射强度——后面在石墨烯里会看到一些反常现象。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>后面推导了一阶拉曼散射过程选择出的声子，通常靠近布里渊区中心。……最主要的是，光子不管是KL还是KS，频率相差很小。因为频率只相差一个ω_q的数值。ω_q远小于ω_0。</p><p>通常来说，对于一阶的拉曼散射，因为只有一个声子参与，发生了一次反射过程。此时动量守恒，只有入射光子、反射光子和声子，这三者之间发生了动量和能量的传递。所以对于一阶拉曼散射，我们选择的是布里渊区中心的一些声子。</p><p>上面这个对应着521波数的分类，还有就是下面我们选择出来的5个波矢附近的声学声子。……这里还有一个没有指认的2倍LA的模式，就属于后面的二阶拉曼散射的范围。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s07">
+  <div class="slides"><figure class="slide" id="slide-327">
+<img src="slides/slide_327.png" alt="课件第327页 斯托克斯/反斯托克斯强度比：n+1 与 n（玻色-爱因斯坦分布）">
+<figcaption><span class="sno">327</span><span class="stitle">斯托克斯/反斯托克斯强度比：n+1 与 n（玻色-爱因斯坦分布）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-328">
+<img src="slides/slide_328.png" alt="课件第328页 非共振条件与玻尔兹曼常数 k_B">
+<figcaption><span class="sno">328</span><span class="stitle">非共振条件与玻尔兹曼常数 k_B</span></figcaption>
+</figure>
+<figure class="slide" id="slide-329">
+<img src="slides/slide_329.png" alt="课件第329页 强度比与温度：e^{1.439ω₀/T}（反推晶格温度）">
+<figcaption><span class="sno">329</span><span class="stitle">强度比与温度：e^{1.439ω₀/T}（反推晶格温度）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div class="sec-tt">
+        <h2>斯托克斯/反斯托克斯强度比与温度</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（前）</span><span class="chip">课件 327</span><span class="chip">课件 328</span><span class="chip">课件 329</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>一阶拉曼散射还有一个重要特征就是强度的特征：斯托克斯与反斯托克斯的强度比值。一般情况下斯托克斯比反斯托克斯强，但经典理论无法解释这些强度规律，需要用量子理论。两个算符交换时对光场作用的比例系数不同：斯托克斯部分是 N+1，反斯托克斯部分是 N，N 是玻色-爱因斯坦分布函数。之前推导的规律其实都只对一阶拉曼散射成立，这里相当于对前面的知识做归纳总结。强度除 N+1 外，还包含辐射理论导出的系数，与散射光子频率的四次方成正比。</p><p>一般情况下 ω_L 远大于 ω₀，(ω_L−ω₀)/(ω_L+ω₀) 约等于 1；但声子频率很高时例外，比如石墨约 1500 多波数，换算后达 200 量级，此时比值不再接近 1。计算中会多出 exp(ħω₀/k_BT) 项：若 ω₀ 用波数、T 用 K，比例系数为 1.439，需要注意单位会影响最终结果。若已知拉曼频移，通过斯托克斯与反斯托克斯的比值原则上可推算晶格温度——比值和 ω₀ 已知，只剩参数 T，故可反推温度。前提是满足非共振条件；在共振条件下，入射与散射光子与电子能级的接近程度会显著影响斯托克斯和反斯托克斯的强度，进而影响比值。</p><p>看例子：斯托克斯和反斯托克斯强度随温度的变化，前两个以 ω₀/T 归一化，后面是二者比值随温度的变化规律。两条激发光波长一样但声子频率不同：高温下比值都趋近于 1；低温下低波数与高波数有显著差异，高波数时斯托克斯比反斯托克斯强得多，低波数相对没那么强但斯托克斯仍比反斯托克斯强。所以如果要测反斯托克斯信号测得比较好，应该选高温还是低温？高温——低温下反斯托克斯基本趋近于 0。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>所以我对于斯托克斯的这一部分，我是N+1的这样的一个强度。而对于反斯托克斯，它是一个N，这个N就是我的爱因斯坦分布函数。</p><p>若Ω0用波数、T用K，比例系数为1.439。需注意单位会影响最终结果。若已知拉曼频移，通过斯托克斯与反斯托克斯的比值，原则上可推算晶格温度。前提是满足非共振条件。</p><p>在高温情况下，其实它们都趋近于1。但在低温情况下，低波数跟高波数会有显著差异。……如果要测反斯托克斯，就是把反斯托克斯信号测得比较好。那我选择高温还是低温？……高温对你如果在低温的情况下。那你的这个反斯托克斯，基本上就是趋近于0了。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s08">
+  <div class="slides"><figure class="slide" id="slide-330">
+<img src="slides/slide_330.png" alt="课件第330页 二阶拉曼散射：倍频模与 n₂+1 强度">
+<figcaption><span class="sno">330</span><span class="stitle">二阶拉曼散射：倍频模与 n₂+1 强度</span></figcaption>
+</figure>
+<figure class="slide" id="slide-331">
+<img src="slides/slide_331.png" alt="课件第331页 二阶拉曼散射：两个散射过程的定义">
+<figcaption><span class="sno">331</span><span class="stitle">二阶拉曼散射：两个散射过程的定义</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">08</span>
+      <div class="sec-tt">
+        <h2>二阶拉曼散射：定义与动量守恒</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（前）</span><span class="chip">课件 330</span><span class="chip">课件 331</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>对一阶拉曼散射的规律回顾之后，看二阶拉曼散射。二阶散射指发生了两个散射过程——不以参与散射的声子数量来衡量，而是看入射光子激发电子后、在回到基态的过程中经历了多少个散射过程，经历了两个就称二阶。以一量子的模型为例：光子激发电子到虚能级（M），电子第一次散射后在 M1 位置，若再发生一次散射回到初态就只发生了一次散射，是一阶；若电子在这里再发生一次散射，涉及 ω_Q1、ω_Q2 两次散射后再回到基态，就是二阶。还有一种过程：散射了一个声子后被空穴（很局域的态，动量任意）散射，电子经多次散射再回到基态，虽然只有一个声子参与，也属于二阶。</p><p>不管被声子、缺陷还是其他粒子散射，只要发生了多个散射过程就是高阶散射。对两个声子的二阶散射过程：从入射光子到散射光子加上两个声子共四个粒子，动量与能量都要守恒。因为 k_L 与 k_S 相对 q 仍近似为零，所以两个声子的动量满足 Q1+Q2≈0（矢量求和）即可——不再要求声子严格在布里渊区中心，可以是布里渊区内部的任何位置。能量守恒方面，ω_L 与 ω_S 之间相差两个 ω_K：倍频时两个声子频率相等，2ω_K=ω_L−ω_S；和频模则 ω_K1+ω_K2 等于入射与散射光子的频率之差。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>二阶拉曼反射是指发生了两个散射过程。它不以参与散射的分子数量来衡量，而是看入射光子激发电子后，在回到基态的过程中经历了多少个散射过程。我们就称之为多少阶的拉曼散射。</p><p>不管是被什么反射，被声子或者被缺陷，或者被其他的粒子反射，只要发生了多个反射过程，就是高阶的一个反射。</p><p>由于KL跟KS还是约等于0，相对于Q来说，所以这个时候我的两个声子就是Q1+Q2=0。……我就不要求我的声子是严格的，是在布里渊区中心了。我就可以是在布里渊区内部的任何的一些位置。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s09">
+  <div class="slides"><figure class="slide" id="slide-332">
+<img src="slides/slide_332.png" alt="课件第332页 思考：二阶差频峰强度与温度的关系">
+<figcaption><span class="sno">332</span><span class="stitle">思考：二阶差频峰强度与温度的关系</span></figcaption>
+</figure>
+<figure class="slide" id="slide-333">
+<img src="slides/slide_333.png" alt="课件第333页 二阶散射能量关系：2ω_ph 与倍频/和频/差频">
+<figcaption><span class="sno">333</span><span class="stitle">二阶散射能量关系：2ω_ph 与倍频/和频/差频</span></figcaption>
+</figure>
+<figure class="slide" id="slide-334">
+<img src="slides/slide_334.png" alt="课件第334页 二阶强度：斯托克斯 (n₁+1)(n₂+1) 与反斯托克斯 n₁n₂">
+<figcaption><span class="sno">334</span><span class="stitle">二阶强度：斯托克斯 (n₁+1)(n₂+1) 与反斯托克斯 n₁n₂</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">09</span>
+      <div class="sec-tt">
+        <h2>二阶散射：能量关系与强度规律</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（中）</span><span class="chip">课件 332</span><span class="chip">课件 333</span><span class="chip">课件 334</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>看二阶散射的能量关系：倍频模是两个声子频率相等，2ω_K 等于入射与散射光子频率之差；和频模是 ω_K1+ω_K2 相加；还有差频模，电子要先向上走一点，变为 ħ(ω₁−ω₂) 的形式，再往下走，最终 ω=ω₀+ω₁，相当于发生了一个级联过程——先发生斯托克斯往下走的过程，又发生反斯托克斯的过程。这里要思考一下：二阶差频拉曼峰强度与温度的关系——差频模的强度第一项是 N+1（斯托克斯），比例系数后面是 N₁′（或 N₂），因为是反斯托克斯过程比例系数只有 N。差频模和合频模随温度的比例关系不同，这为鉴定合频模和差频模提供了方案。</p><p>再看强度规律。一阶散射斯托克斯强度是 N+1，二阶是两个散射过程概率相乘：第一个声子 ω_Q1 的布居数对应 N₁+1，第二次散射对应 N₂+1，所以斯托克斯强度是 (N₁+1)(N₂+1)，反斯托克斯则是 N₁N₂，比值即 (N₁+1)(N₂+1)/(N₁N₂)。若两声子相同（非简并模），就是 (N+1)²。由于发生两次散射、概率相乘，二阶散射强度通常比一阶弱很多。</p><p>选出的声子可以不同，只要满足 Q1+Q2=0：一个正 K、一个负 K，不要求频率相等，可以分布在两个声学支，或一个声学支一个光学支。最终哪个能被看到取决于态密度——第一章讲过晶格振动态密度计算，色散曲线平缓时态密度较高，这些点更容易发生高阶散射，在拉曼光谱里能被看到。一阶与二阶散射的峰强随温度变化显著不同：一阶只有一个玻色因子，二阶是两个相乘，衰减速度加快。原则上可以通过变温测量（强度随温度的变化，或斯托克斯/反斯托克斯比值）来确定散射过程是一阶还是二阶。例如硫化镉在 300K 与 10K，对同一模式一阶与二阶的强度比差距较大，一个是 3 倍、一个是 9 倍，因为是平方关系。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>若是差频模，就是欧米伽Q1减去欧米伽Q2。……也就是说，打点然后再下。这时我的这一分，最后欧米伽等于欧米伽0加上欧米伽1。相当于发生了一个级联过程。先发生了斯托克斯往下走的过程。又发生了反斯托克斯的过程。</p><p>那么这个时候，我的拉曼散射的强度，那么就是我第一个声子欧米伽配1它的布居数……N1+1对吧？然后我还要再发生第二次反射。那么这个时候它的斯托克斯，那么就有N2+1的这样的一个强度的关系。两个相乘就是它发生了两次反射。</p><p>对于硫化铬，在300K跟10K时，如果是一阶声子还有二阶声子，对于同一个模式，300K与10K的强度比值差距比较大，一个是3倍，一个是9倍，因为它是一个平方的关系。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s10">
+  <div class="slides"><figure class="slide" id="slide-335">
+<img src="slides/slide_335.png" alt="课件第335页 共振拉曼散射：量子图像">
+<figcaption><span class="sno">335</span><span class="stitle">共振拉曼散射：量子图像</span></figcaption>
+</figure>
+<figure class="slide" id="slide-336">
+<img src="slides/slide_336.png" alt="课件第336页 双共振：费米黄金定则与分母趋零">
+<figcaption><span class="sno">336</span><span class="stitle">双共振：费米黄金定则与分母趋零</span></figcaption>
+</figure>
+<figure class="slide" id="slide-337">
+<img src="slides/slide_337.png" alt="课件第337页 共振条件：入射共振与出射共振">
+<figcaption><span class="sno">337</span><span class="stitle">共振条件：入射共振与出射共振</span></figcaption>
+</figure>
+<figure class="slide" id="slide-338">
+<img src="slides/slide_338.png" alt="课件第338页 声子态密度 ρ_ph(k) 与高阶声子模式">
+<figcaption><span class="sno">338</span><span class="stitle">声子态密度 ρ_ph(k) 与高阶声子模式</span></figcaption>
+</figure>
+<figure class="slide" id="slide-339">
+<img src="slides/slide_339.png" alt="课件第339页 单共振/双共振/三共振过程">
+<figcaption><span class="sno">339</span><span class="stitle">单共振/双共振/三共振过程</span></figcaption>
+</figure>
+<figure class="slide" id="slide-340">
+<img src="slides/slide_340.png" alt="课件第340页 束缚激子与共振拉曼">
+<figcaption><span class="sno">340</span><span class="stitle">束缚激子与共振拉曼</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">10</span>
+      <div class="sec-tt">
+        <h2>共振拉曼散射：单共振/双共振/三共振</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（中）</span><span class="chip">课件 335</span><span class="chip">课件 336</span><span class="chip">课件 337</span><span class="chip">课件 338</span><span class="chip">课件 339</span><span class="chip">课件 340</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>最后看共振拉曼散射。从微观量子理论出发：注入光子后激发电子从基态到达虚能级或激发态，电子与声子相互作用，再与空穴复合放出散射光子。若电子激发到材料体系的实能级且能量相匹配，就发生共振拉曼散射。第一种情况是入射光子能量与两能级能量差相等，称为入射共振；第二种是先到达虚能级、放出声子后能量匹配另一实能级，称为出射共振。根据费米黄金定则，入射光能量与能级匹配时分母趋近于 0，强度极大增强；出射共振（E_L 减 ω_ph 散射一个声子后与能级匹配）同样使分母趋零、强度极大增强。</p><p>共振拉曼在半导体材料研究中应用广泛，能大幅增强拉曼强度、获得更好的光谱，很多弱信号能被共振激发。共振过程中还会看到许多非同寻常的现象，比如高阶声子模式：电偶极近似下拉曼允许的模式，还可能包含电四极矩、磁偶极矩等分量，共振时可能被激发出来，所以可以看到高阶声子模式。</p><p>还有双共振：入射共振和出射共振同时满足——入射光与两个能级匹配、散射出的光子能量也与两个能级匹配，称为双共振；多个共振同时发生还可出现三共振等，拉曼强度得到更大增强。以砷化镓为例，改变激发光能量，靠近能级跃迁位置时拉曼强度显著增强，所以可以通过激发光谱确定特定能级；继续改变入射光子能量，可看到一阶 LO 模、2LO 二阶过程，甚至 5 阶 LO 的拉曼散射过程——高阶散射光子的能量与能级匹配时，能看到很好的高阶信号。</p><p>单共振是入射光子与能级相匹配产生一个声子；双共振虽然只有一个声子参与（仍是一阶散射过程）但满足双重共振——两个能级之差与声子频率相等；若两个声子参与也可以实现双共振：入射光子使电子从基态跃迁到激发态，散射一个声子后到达某个中间能级，两过程都与能级匹配，再散射一个声子的过程就不满足匹配。三共振则是在二阶散射中，无论电子被哪个声子散射都处于中间能级上。注意入射光子需与特定波矢的能级跃迁能量相匹配。</p><p>以石墨烯为例：G 模通常发生单共振；D 模和 2D 模涉及 LO 和 TO 在 K 点附近的声子，电子从 K 到 K′ 谷、被缺陷补偿动量回到本身，是双共振过程（入射时两能级差等于入射光子能量、散射一个声子后到达另一个虚能级，两过程均满足共振条件；若先经缺陷散射再经声子散射、两过程能量均匹配，也是双重共振）。2D 模则是把缺陷换成另一个频率相等的声子，同样实现双共振。关于动量、频率等具体分析，第 6 章还会详细讲解。</p><p>共振还能激活晶界的量化模式。以氧化亚铜为例，它有一系列激子峰，在激子位置处可以看到晶界模式的一系列高阶拉曼散射 Ω₀、2Ω₀、3Ω₀——该模式本身是拉曼晶界模式，但含有四极矩分量，共振下被极大增强。还有加林的体系：用不同入射激发光扫描样品，得到拉曼强度随入射激发光能量的变化关系（共振激发光谱），可以看到不同的激子类型；电子自旋轨道耦合会形成能级分裂，可看到两个共振能级；对于束缚激子（如缺陷），能级非常窄，在很窄的范围内拉曼强度得到极大增强。所以不管哪种能级，只要入射光能量能与材料体系光学允许的跃迁能级之差匹配上，就能得到共振拉曼散射。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>第一种情况是入射光子能量与两能级能量差相等，称为入射共振。第二种是先到达虚能级，放出声子后能量匹配另一实能级，称为出射共振。……根据费米黄金定则，入射光能量与M和I能级匹配时，分母趋近于0，强度提高。</p><p>有了双共振，还可能存在三共振等现象。可想而知，在多个共振同时发生时，拉曼散射的强度会得到更大的增强。</p><p>以砷化镓这样的材料为例，我们可以通过改变激发光的能量来观察。当靠近能级跃迁位置时，拉曼强度会显著增强。……2LO就是二阶的拉曼散射过程，我甚至可以看到5阶的拉曼散射过程。</p><p>以石墨烯为例，G模通常发生单共振过程。而石墨烯中存在D模和2D模等声子。D模涉及的是LO和TO在K点附近的声子。电子从K到K'谷，被反射到相邻谷，再通过缺陷补偿动量回到本身。这是一个双共振过程。</p><p>这里以氧化亚铜为例，它有一系列激子峰。在激子位置处，我们可以看到原来晶界的生存模式。……对于束缚激子，比如像一些缺陷等，它的能级就非常窄。在这里也可以看到，在一个非常窄的范围内，拉曼长度得到极大的增强。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s11">
+  <div class="slides"><figure class="slide" id="slide-341">
+<img src="slides/slide_341.png" alt="课件第341页 非线性拉曼散射：受激拉曼散射（2ω_p、雪崩过程）">
+<figcaption><span class="sno">341</span><span class="stitle">非线性拉曼散射：受激拉曼散射（2ω_p、雪崩过程）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-342">
+<img src="slides/slide_342.png" alt="课件第342页 受激 Raman Scattering 示意图（ω_as 级联）">
+<figcaption><span class="sno">342</span><span class="stitle">受激 Raman Scattering 示意图（ω_as 级联）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-343">
+<img src="slides/slide_343.png" alt="课件第343页 受激拉曼能量关系：ω_s = ω_L − ω_ph">
+<figcaption><span class="sno">343</span><span class="stitle">受激拉曼能量关系：ω_s = ω_L − ω_ph</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">11</span>
+      <div class="sec-tt">
+        <h2>受激拉曼散射：非线性过程（介绍）</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（后）</span><span class="chip">课件 341</span><span class="chip">课件 342</span><span class="chip">课件 343</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>关于表面增强拉曼散射（SERS）和非线性拉曼散射，这里只做介绍性讲解，非课程重点。SERS 目前应该发展了 50 年，在化学领域应用更多，感兴趣的同学可以回去自己看。</p><p>非线性拉曼散射的核心是：我们一直讲 P=αE，只考虑了电场的一阶部分；如果有两束光、或光强非常强，极化与电场的平方成正比，就不再是线性关系，这时会出现非线性过程——比如荧光过程、三光子、四光子等过程。拉曼散射也类似，即受激拉曼散射过程：自发辐射只发出一个斯托克斯和一个反斯托克斯光子；若再加一束光满足某两个能级频率，可人为调控组分强度，实现能量激射。这是介绍性内容，这节课讲到第三章结束；第 3 章作业已发布，下下周五开始讲作业。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>关于表面增强拉曼散射，还有非线性拉曼散射，就是一个介绍性的表面增强，目前来说应该是发展了50年。在化学领域，可能表面增强拉曼散射应用得更多。大家可以回去大概自己再看一下了解一下。</p><p>这个非线性过程就是说我有两个电场，或者我有两束光，或者说我这个光强非常强的话，我跟它的平方是成正比的，我不再是跟电场的线性关系。……拉曼散射也类似，即受激拉曼散射过程。</p><p>若自发辐射，只发出一个斯托克斯和反斯托克斯反射光子。若再加一束光满足某两个能级频率，可人为调控组分强度，实现能量激光。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s12">
+  <div class="slides"><figure class="slide" id="slide-344">
+<img src="slides/slide_344.png" alt="课件第344页 回顾：第三章拉曼散射理论基础（声子简正模、光散射理论、选择定则）">
+<figcaption><span class="sno">344</span><span class="stitle">回顾：第三章拉曼散射理论基础（声子简正模、光散射理论、选择定则）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-345">
+<img src="slides/slide_345.png" alt="课件第345页 第四章封面：拉曼散射测量仪器与技术（谭平恒）">
+<figcaption><span class="sno">345</span><span class="stitle">第四章封面：拉曼散射测量仪器与技术（谭平恒）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-346">
+<img src="slides/slide_346.png" alt="课件第346页 第四章主要内容：发展史/结构组成/显微模块/常见问题/常用技术">
+<figcaption><span class="sno">346</span><span class="stitle">第四章主要内容：发展史/结构组成/显微模块/常见问题/常用技术</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">12</span>
+      <div class="sec-tt">
+        <h2>第四章开篇：回顾与课程结构</h2>
+        <div class="sec-meta"><span class="time">录音：第 3 段（前）</span><span class="chip">课件 344</span><span class="chip">课件 345</span><span class="chip">课件 346</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>进入第四章之前先回顾：第三章讲的是拉曼散射理论基础——双原子分子像弹簧一样振动，一旦形成晶体所有原子一起振动，振动模式原则上无穷多、均匀分布在倒易空间；一个频率可能对应很多 K 空间的态，所以要引入声子态密度。后面讲光谱理论包括拉曼光谱、选择定则、一阶/二阶/受激拉曼散射。最重要的是掌握本质：比如「1+2 过程」有人说那是单个分子参与，这就见文生义了——后面讲石墨烯双共振时，是一个声子和一个缺陷参与了能量的散射，因为缺陷参与时光子能量会发生改变，它是弹性散射。不要简单地记概念，这门课（第四章起）会比较轻松实用一些。</p><p>课程理念：学这门课的人少数真做研究，绝大部分是实际应用，所以要把基础打好。原课程叫拉曼光学，专门加了「显微」二字，把技术放在这里——既讲仪器又讲技术。第四章首先讲拉曼光谱发展史，然后是拉曼光谱的结构和组织，还要讲显微拉曼模块的搭建、拉曼光谱测试常见问题和常用技术；讲技术时会讲到共振，共振是很有用的技术，除非特殊情况下会涉及非共振。</p><p>课件说明：前面林老师的第一到第三章都是满屏的 4:3 比例，从第四章到第六章由我（唐老师）讲，每一章都是一百多页、一百五十页，全部做成了宽屏 16:9，内容丰富了很多。做研究就要追求完美、追求极致，但有时候追求极致也有问题——耽误论文发表，可能被别人抢发。第六章 160 页目前做到三十几页，希望国庆节能用上。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>但一旦形成晶体，所有原子就会一起振动。这时就不是简单的两个原子振动，只有一个频率。原子越多，形成的晶体振动模式原则上就无穷多。它是均匀分布在倒易空间。……所以我们后面就可引入声子态密度。</p><p>原来我们那个课叫拉曼光学。后来我专门加了显微两个字，就是相应把技术放在这里。在我们这里面，既讲仪器又讲技术。首先会讲拉曼光谱的发展史，然后是拉曼光谱的结构和组织。……还有拉曼光谱测试常见的问题和常用技术。</p><p>我一下子从第四章到第六章都是我讲，每一章都是100多页、150页。所以我把它全部弄成宽屏的好吧。……做研究就得讲完美，就得追求极致。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s13">
+  <div class="slides"><figure class="slide" id="slide-347">
+<img src="slides/slide_347.png" alt="课件第347页 拉曼光谱仪的特点（信号很弱、低波数信噪比差）">
+<figcaption><span class="sno">347</span><span class="stitle">拉曼光谱仪的特点（信号很弱、低波数信噪比差）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-348">
+<img src="slides/slide_348.png" alt="课件第348页 光栅光谱仪和傅里叶变换光谱仪的特点">
+<figcaption><span class="sno">348</span><span class="stitle">光栅光谱仪和傅里叶变换光谱仪的特点</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">13</span>
+      <div class="sec-tt">
+        <h2>拉曼光谱仪的特点与光谱仪类型</h2>
+        <div class="sec-meta"><span class="time">录音：第 3 段（前）</span><span class="chip">课件 347</span><span class="chip">课件 348</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>拉曼光谱仪其实特别简单：激光打到样品上，后面是一个光谱仪，要真正测很简单。这里举一个例子：一位德国科学家从中国买了一个很便宜的激光二极管，在家里面自己搭了一套设备，就测出了拉曼光谱——这个图按波长来显示，发射线波长的峰形与标准的很相似，只是强度略有差别，性价比非常高。这就是拉曼技术的一个进步。</p><p>拉曼光谱的特点：约 10⁹ 个光子才能激发一个拉曼光子，信号非常非常弱；低波数测试效果很好，但普通样品数据性价比差，这就是为什么常讲共振。为提高信号强度需要强光源，但强光源可能加热甚至烧毁样品——有人测多样品结果不一，就是因为功率太大烧出了洞。要提高信噪比，需要结合技术：改善仪器结构、使用长曝光时间以增加信号比。后面会讲信噪比概念，目前市场认知有误。</p><p>光谱仪主要有光栅光谱仪和傅里叶变换光谱仪两种：光栅光谱仪原理简单，光源经反射镜到光栅色散，再由探测器测量；傅里叶变换光谱仪是非色散的，通过调制信号提取光谱。拉曼光谱仪的技术进步对研究非常重要，推动了纳米材料的研究，越来越多的人购买大孔径设备，这原则上是一环扣一环的。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>你看这个呢，实际上就是在一个实验里，这个原创是德国的一个科学家。……他就自个在家里面，从中国买了一个激光二极管，说特别便宜，拿到家里面就开始做，结果就是这个。</p><p>但是拉曼光谱仪呢，我们前面曾经说过，10的9次方的光子才能激发一个拉曼的光子，它的强度非常非常弱。低波数测试效果很好，但普通样品数据性价比差。这就是为什么常讲共振。</p><p>光谱仪主要有光栅和傅里叶变换两种。光栅光谱仪原理简单：光源经反射镜到光栅色散，再由探测器测量。傅里叶变换光谱仪是非色散的，通过调制信号提取光谱。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s14">
+  <div class="slides"><figure class="slide" id="slide-349">
+<img src="slides/slide_349.png" alt="课件第349页 发展史概述：棱镜→双光栅→三级/单级→桌面型">
+<figcaption><span class="sno">349</span><span class="stitle">发展史概述：棱镜→双光栅→三级/单级→桌面型</span></figcaption>
+</figure>
+<figure class="slide" id="slide-350">
+<img src="slides/slide_350.png" alt="课件第350页 拉曼散射发展的重大事件（1922 预言、1928 拉曼效应、1930 合并散射）">
+<figcaption><span class="sno">350</span><span class="stitle">拉曼散射发展的重大事件（1922 预言、1928 拉曼效应、1930 合并散射）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-351">
+<img src="slides/slide_351.png" alt="课件第351页 时间轴：1920–1960–现在（汞灯→激光器）">
+<figcaption><span class="sno">351</span><span class="stitle">时间轴：1920–1960–现在（汞灯→激光器）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">14</span>
+      <div class="sec-tt">
+        <h2>发展史概述与重大事件</h2>
+        <div class="sec-meta"><span class="time">录音：第 3 段（前）</span><span class="chip">课件 349</span><span class="chip">课件 350</span><span class="chip">课件 351</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>发展史：早期用棱镜摄谱仪，测四氯化碳可能要几十个小时；后来光栅出现了，显微镜也应用上了；再往后是三级光栅光谱仪。单级光栅就能把信号测得非常好；双光栅或三光栅能把激光滤得更干净，若单独用单光栅，靠近激光线附近测得不好。从 2000 年至今，多面形且易于使用的设备成为主流。下一节课会把教学系的拉曼设备搬过来：它相对就是一个玻璃片，是显微的，但不够智能，无法改变焦距或移动样品，高度固定，从侧面放下去时位置不能太高，否则激光打不过去，尽量往下面贴一点。还可以用来鉴别你们戴的钻石是不是真的。</p><p>拉曼光的应用非常广泛：集成电路、药物、生物领域、碳材料、二维材料及污染物检测；现在甚至可以远程监测爆炸物分子——只要衣服或表面有残留，用特殊激光穿透包装物就能测出来。它也能用于灵敏探测。但典型的桌面型拉曼光谱仪不是掌上的，焦长 800mm（80cm），这在光谱仪里算很长了，商业化拉曼光谱仪我没见过更长的。</p><p>拉曼散射历史上的重大事件：1922—1927 年分子光散射被预言（Raman、Smekal、Kramers、Heisenberg、Cabannes、Schrödinger、Dirac 等）；1928 年 Raman 报道了甲苯等液体的拉曼效应，1930 年俄国的 Landsberg 和 Mandelstam 在石英晶体中发现了类似现象，称为合并散射。这些获奖成果都是最早被知晓并发表论文的，及时发表很重要。</p><p>早期拉曼系统通过滤除太阳光、取出其中辐射较强的信号：汞灯虽非单色，但 546.07nm 等谱线特别强（还有 430 多纳米的线），用探头滤出这些线作为单色光源，经单色仪和感光检测，就能测出散射信号，可用于液体、气体、有机物及无机固体等。相对于红外光谱，拉曼光谱更容易观测，早期应用广泛；但随着简单物质被测完，后续测量遇到瓶颈，发展曾停滞一段时间。时间轴列出了从 1922 年至今的技术发明及重要研究环节，课后会把 PPT 发给大家。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>早先使用的是棱镜光谱仪，拉曼也曾使用过。测试四氯化碳可能要几十个小时。后来光栅出现了，显微镜也应用上了。再往后是三级光栅光谱仪。……从2000年至今，多面形且易于使用的设备成为主流。</p><p>拉曼光的应用非常广泛，涵盖集成电路、药物、生物领域、碳材料、二维材料及污染物检测。现在甚至可以远程监测，比如监测爆炸物分子。……典型的桌面型拉曼光谱仪不是掌上的，胶长800mm即80cm。</p><p>拉曼散射历史上有一系列重大事件，包括分子光散射预言，拉曼报道甲苯溶液的拉曼效应。俄罗斯科学家在实验晶体中发现类似现象，称为合并散射。</p><p>早期的拉曼系统通过滤除太阳光，取出其中辐射较强的信号。例如汞灯虽非单色，但546.07等谱线特别强。用探头滤出这些线作为单色光源，经单色仪和感光检测，就能测出散射信号。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s15">
+  <div class="slides"><figure class="slide" id="slide-352">
+<img src="slides/slide_352.png" alt="课件第352页 1920s 拉曼使用的摄谱仪（感光板）">
+<figcaption><span class="sno">352</span><span class="stitle">1920s 拉曼使用的摄谱仪（感光板）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-353">
+<img src="slides/slide_353.png" alt="课件第353页 1930s and 1940s 棱镜摄谱仪（商业化与探测器）">
+<figcaption><span class="sno">353</span><span class="stitle">1930s and 1940s 棱镜摄谱仪（商业化与探测器）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-354">
+<img src="slides/slide_354.png" alt="课件第354页 1950s 光电探测器：光电倍增管集成（PMT-中微子-诺奖）">
+<figcaption><span class="sno">354</span><span class="stitle">1950s 光电探测器：光电倍增管集成（PMT-中微子-诺奖）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">15</span>
+      <div class="sec-tt">
+        <h2>早期系统：摄谱仪与光电探测器</h2>
+        <div class="sec-meta"><span class="time">录音：第 3 段（中）</span><span class="chip">课件 352</span><span class="chip">课件 353</span><span class="chip">课件 354</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>这个谱图是早先拉曼光谱仪的结果：用感光板成像，谈不上分辨率，只能说能不能看得到；工位能确定，但精确确定比较难。再往后，商业化设计一出来就有电子驱动，涉及怎么转动、怎么计数，需要相应的驱动设备和电子设备；探测器是后期才有的——早先是感光板，后来才是光电倍增管。1930—40 年代的结构实际上使用了双光栅，能增加分辨率。</p><p>事实上最早做拉曼光谱用的就是光电探测器，从感光板到光电倍增管是一大进步。光电倍增管往往是单道探测器，靠狭缝检测光谱分辨率，所以在大型三光栅光谱仪里光栅对数表是标配；一般不用来测，更多是用来测拉曼光谱分辨率究竟是多少。2:1 的分辨率很常见，300mm 或 800mm 焦长分辨率肯定都一样，厂商一直列分辨率指标。后来碰到一个很认真的人买仪器，说「你说了分辨率是 1.0 个波数，就得给我测出来 1.0 个波数」，厂家只好借来一个光电倍增管放在出口上把分辨率测出来。</p><p>光电倍增管的历史：最早爱因斯坦提出光电效应（1925 诺贝尔奖），1950s 把光电倍增管集成到拉曼系统。光电倍增管显示用处其实是在探测中微子——中微子探测中它起了很重要的作用，高能所王贻芳院士发现了新的中微子振荡模式；为了探测微弱的发光，用特殊材料把光电倍增管全部围起来，所以成本高。后来 CCD 一出来，就花五万多块钱，这是一台比较容易用的分析仪器，标志性的进展。</p><p>看这套系统：用汞灯作为光源，光路中有一个光栅（实际是两个），还有一个狭缝。因为激光太强需要处理散光，这套系统在当时很先进。以前用单道时一般用狭缝记录，比如做 10 个波数的狭缝通常以 1 个波数记录；后来用 CCD 就不用狭缝了，CCD 是全部打开的。另外还用了计算机记录仪，同时光栅在转动：因为扫描速度要求，原来每秒扫描 10 个波数；现在也会转动光栅，但一般将光纤固定，可以从 100 个波数测到 1000 个波数，再转一下从 1000 测到 2000。以前测 10 个波数也得转光栅，转动速度更慢，转动精度 0.5 个波数。当时测的高功率光谱谱线结构看起来挺好，但从现代角度看很耗时。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>你看这个就是用感光板成像出来的，所以说谈不上分辨率，只能说能不能看得到。但是工位在哪能确定，精确确定比较难。</p><p>事实上最早做拉曼光谱，用的是光电探测器。从感光板到光电倍增管是一大进步。以前光电倍增管用得特别多。它往往是单道探测器，靠狭缝来检测光谱分辨率。</p><p>就是说最早先的爱因斯坦提出来一个光电效应，把光电倍增管集成到拉曼系统，在1955年，上世纪50年代。但是光电倍增管的话，它实际上显示出它的用处是在哪儿呢？是显示它在探测中微子。……也包括高能所的王贻芳院士，反正他也发现了新的中微子振荡模式。</p><p>以前用单道时一般用狭缝记录，比如做10个波数的狭缝，通常以1个波数来记录。后来用CCD就不用狭缝了，CCD是全部打开的。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s16">
+  <div class="slides"><figure class="slide" id="slide-355">
+<img src="slides/slide_355.png" alt="课件第355页 Cary 81 拉曼光谱仪：首台 easy-to-use 分析仪器">
+<figcaption><span class="sno">355</span><span class="stitle">Cary 81 拉曼光谱仪：首台 easy-to-use 分析仪器</span></figcaption>
+</figure>
+<figure class="slide" id="slide-356">
+<img src="slides/slide_356.png" alt="课件第356页 苯的拉曼光谱：Cary 81 与汞灯光源">
+<figcaption><span class="sno">356</span><span class="stitle">苯的拉曼光谱：Cary 81 与汞灯光源</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">16</span>
+      <div class="sec-tt">
+        <h2>Cary 81：首台 easy-to-use 分析仪器</h2>
+        <div class="sec-meta"><span class="time">录音：第 3 段（中）</span><span class="chip">课件 355</span><span class="chip">课件 356</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>这就是 Cary 81，首台 easy-to-use（易于使用）的分析仪器，一个标志性的进展。可以看到它用汞灯作为系统光源，光路中有一个光栅（实际是两个），还有狭缝。这套系统在当时是先进的设备，测试结果如这张苯的拉曼光谱：约 1.5 分钟扫描和高分辨率扫描对比，能看出多峰结构。</p><p>这台仪器后来遇到前面说的认真买家的事：厂商标了分辨率指标，买家较真要求实测 1.0 波数分辨率，厂家借光电倍增管来测。这类事情提醒我们，很多时候需要注意仪器参数的真实性。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这个实际上是一台比较容易用的分析仪器，这是一个标志性的进展。可以看到它用了汞灯作为系统光源。光路中有一个光栅，实际上是两个光栅，还有一个狭缝。</p><p>后来我碰到了一个狠人，买了他的仪器。他说你说了你的分辨率是1.0个波数，你就得给我测出来是1.0的波数，那就麻烦了。……后来这个厂家就去借来一个光电倍增管，放在他那个出口上，然后把分辨率给他测出来。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s17">
+  <div class="slides"><figure class="slide" id="slide-357">
+<img src="slides/slide_357.png" alt="课件第357页 1960s-70s 光栅：刻划光栅与全息光栅">
+<figcaption><span class="sno">357</span><span class="stitle">1960s-70s 光栅：刻划光栅与全息光栅</span></figcaption>
+</figure>
+<figure class="slide" id="slide-358">
+<img src="slides/slide_358.png" alt="课件第358页 1960s-70s 激光器成为激发光源（HeNe、Ar/Kr）">
+<figcaption><span class="sno">358</span><span class="stitle">1960s-70s 激光器成为激发光源（HeNe、Ar/Kr）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-359">
+<img src="slides/slide_359.png" alt="课件第359页 Dealing with the Excitation Source – Lasers（Townes 1961）">
+<figcaption><span class="sno">359</span><span class="stitle">Dealing with the Excitation Source – Lasers（Townes 1961）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">17</span>
+      <div class="sec-tt">
+        <h2>激光器与光栅革命</h2>
+        <div class="sec-meta"><span class="time">录音：第 3 段（中）</span><span class="chip">课件 357</span><span class="chip">课件 358</span><span class="chip">课件 359</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>上世纪六七十年代，激光器和氩离子激光器出来了：先是红宝石激光器，再往后是氦氖激光器，然后是氩离子激光器（主动主系统）。我国在集成电路和激光器方面比国外并没有落后多少，大家感觉技术落后其实是经济实力问题。光栅方面涉及刻划光栅和全息光栅：刻划光栅衍射效率高、角色散大、面积大、可做少刻线（长波波段性能高），缺点是鬼线和杂散光强；全息光栅对杂散光的滤除效率极高。有了这些，光路就变得简单：光纤接过来，光打到反射镜，再经聚焦透镜，构成光纤光谱系统；若加上拉曼光纤，就是拉曼光谱，非常简单。</p><p>激光器一旦被发现，很快成为激发光源。最早用 632.8nm 氦氖激光和氩离子激光：氦氖激光器功率有限，最大三十几毫瓦、普遍仅十几毫瓦，优点是极其稳定——我读博时用的氦氖激光器二十多年后还在用。功率不足时氩离子激光器应运而生：它能输出多个波长，甚至可倍频成紫外激光（488nm 倍频为 244nm）。历史上 1961 年 Townes 最早提出用激光激发拉曼光谱，1962 年首次应用，1964 年 Leite 和 Porto 用于气相研究。</p><p>但氩离子激光器现在国际上很多厂家都不做了，因为有固态激光器：固态激光器非常耐用、便宜且好用。氩离子激光器 300mW 输出含有五条或多条线（457、465、470、476、488、491、501nm 等），但往往只用 514 和 488nm 两条。现在固态激光系统比如 532nm 的激光器可能只卖两万人民币，而氩离子激光器要花十几万，大型的更贵；再倍频成紫外激光器接近 100 万。固态激光器因为用掺杂离子、能级很多，一般产生 1064nm 或其他基频波长，通过倍频能产生很多波长，完全可以替代，甚至 488nm 也能做得出来。所以氩离子激光器基本很少用了；氦氖激光器还在用，但也有固态或半导体激光器替代，波长做到 638nm，跟 632 有所差别但效果差不多，只是能量没有氦氖好。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>上世纪六七十年代，激光器和氩离子激光器就出来了。先是红宝石激光器，再往后是氦氖激光器，然后是氩离子激光器，它是主动主系统。</p><p>氦氖激光器功率有限，最大三十几毫瓦，普遍仅十几毫瓦。优点是极其稳定，我读博时用的氦氖激光器，二十多年后还在用。</p><p>现在固态激光系统，比如532nm的激光器，可能只卖两万人民币。而氩离子激光器可能要花十几万。……而且现在固态激光器可以用很多个波长。因为它里面用的是掺杂离子，实际上还有很多能级。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s18">
+  <div class="slides"><figure class="slide" id="slide-360">
+<img src="slides/slide_360.png" alt="课件第360页 1966 Perkin Elmer 拉曼谱仪：首台桌面系统">
+<figcaption><span class="sno">360</span><span class="stitle">1966 Perkin Elmer 拉曼谱仪：首台桌面系统</span></figcaption>
+</figure>
+<figure class="slide" id="slide-361">
+<img src="slides/slide_361.png" alt="课件第361页 苯与四氯化碳：Perkin Elmer 扫描拉曼系统">
+<figcaption><span class="sno">361</span><span class="stitle">苯与四氯化碳：Perkin Elmer 扫描拉曼系统</span></figcaption>
+</figure>
+<figure class="slide" id="slide-362">
+<img src="slides/slide_362.png" alt="课件第362页 现代拉曼光谱仪：双光栅 + PMT/CCD（SPEX-1403、DilorXY 800）">
+<figcaption><span class="sno">362</span><span class="stitle">现代拉曼光谱仪：双光栅 + PMT/CCD（SPEX-1403、DilorXY 800）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-363">
+<img src="slides/slide_363.png" alt="课件第363页 现代拉曼光谱仪：三光栅 + CCD（T64000、TriVista）">
+<figcaption><span class="sno">363</span><span class="stitle">现代拉曼光谱仪：三光栅 + CCD（T64000、TriVista）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-364">
+<img src="slides/slide_364.png" alt="课件第364页 T64000：三减模式低波数 / 三加模式高分辨率">
+<figcaption><span class="sno">364</span><span class="stitle">T64000：三减模式低波数 / 三加模式高分辨率</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">18</span>
+      <div class="sec-tt">
+        <h2>桌面型与三光栅时代</h2>
+        <div class="sec-meta"><span class="time">录音：第 3 段（后）</span><span class="chip">课件 360</span><span class="chip">课件 361</span><span class="chip">课件 362</span><span class="chip">课件 363</span><span class="chip">课件 364</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>这是 1966 年 Perkin Elmer 的多面形拉曼光谱仪：早先电子元件那么大，谈不上多面性，而这个可以放在桌子上，里面用的是氦氖激光（4mW@633nm）和光纤耦合管，是一个多通道的光纤光谱仪。测四氯化碳效果很好：它有多峰结构，之前分辨率不够测不出来，现在能测出来；但到 100 个波数就测不下去了，中间线很强，苯测得比较差——本想让学生测苯的拉曼光谱对比感受一下拉曼技术的进程。</p><p>现代的拉曼光谱仪：最早是 SPEX-1403（配 PMT），后来是 DilorXY 800（配 CCD），这一看用的是光电倍增管（PD），这边用的是 CCD。后面有了双单色仪，用三光栅单色仪：T64000 和 TriVista 都是三光栅+CCD，优势是高光谱分辨率或低波数。</p><p>T64000 的设计非常巧妙，这套设备原来是做拉曼散射经典式测量的，买一套很贵；后来其他公司没有这个设计能力，就把三个单色仪给它接起来，但接起来之后要实现相加模式、相减模式操作起来很不方便。实验室里面有两套，有一套专门用于紫外波段：优势是光谱分辨率高、定波数准确，以前测到 5 个波数是非常大的本事。</p><p>它的工作模式：相减模式可以做低波数测定，相加模式操控分辨率。每个单色仪的焦长是 650mm，三个加起来 650×3=1950mm，接近两米；但如果用相减模式，分辨率就没有 800mm 焦长的高——相减模式分辨率更高，因为这是高分辨焦长 800 的定义，很多名字都带有特殊的意义。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这就是一个多面形的拉曼光谱仪，是1966年的。早先你可以看一下，电子元件那么大，谈不上多面性。而这个可以放在桌子上，这里面有5根。……里面用的是氦激光，还有光纤耦合管。所以这里用的是一个多通道的光纤光谱仪来测算结果。</p><p>我本来希望花点时间测四氯化碳，原来效果很好。但它有多峰结构，之前分辨率不够测不出来，现在能测出来。但到100个波数就测不下去了，中间线很强，苯的测得比较差。</p><p>这是一个相减的一个模式，可以做测定度数。然后这个呢，那是相加的一个模式是吧？它一个操控分辨率。……它的每一个光纤的焦长就是650mm。所以它三个加起来。那么6个是650乘3嘛，那么就是1950mm。是吧，就接近两米。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s19">
+  <div class="slides"><figure class="slide" id="slide-365">
+<img src="slides/slide_365.png" alt="课件第365页 现代拉曼光谱仪：单光栅 + CCD（HR800、Renishaw）">
+<figcaption><span class="sno">365</span><span class="stitle">现代拉曼光谱仪：单光栅 + CCD（HR800、Renishaw）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-366">
+<img src="slides/slide_366.png" alt="课件第366页 小型拉曼光谱仪与便携式拉曼光谱仪">
+<figcaption><span class="sno">366</span><span class="stitle">小型拉曼光谱仪与便携式拉曼光谱仪</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">19</span>
+      <div class="sec-tt">
+        <h2>单光栅、便携式与现代拉曼光谱仪</h2>
+        <div class="sec-meta"><span class="time">录音：第 3 段（后）</span><span class="chip">课件 365</span><span class="chip">课件 366</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>显微光谱仪示意图中，为什么能做成单光路的拉曼系统？就是一个光谱仪就能测得很好，原因是拉曼滤光片的进步：以前要用两个光谱仪去把激光过滤掉，现在只要一片拉曼滤光片，纽扣大小，可以把激光衰减到 OD6（挡到 10⁶），用两片就能挡到 OD12。这样测到的光谱里，本来中间很强的激发光现在看不到或者跟拉曼信号一样强。以前用双光栅光谱仪过滤激光要花几十万，而现在一片拉曼滤光片也就一万多人民币——这是技术的进步。拉曼滤光片放在显微光路里，效率更高的位置透过率高、结构稳定、操作方便。</p><p>两种光路设计完全不同，与使用习惯有关：一种光路是水平的，大的光学元件都在一个平面上；另一种是一块板放在这儿、其他元件这样放置。若以前用过某款谱仪，后续可能继续购买。我最早 1996 年使用光谱仪，读博期间一直沿用那套设备；实验室现在有 3 套高分辨率设备，后期也引入了小型台式拉曼光谱仪。还有便携式拉曼光谱仪，虽方便但分辨率不高，探测器性能一般，分辨率能达到 5 个波数已很不错。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那是证明什么原因呢？就在拉曼滤光片的进步。就是说以前我要用两个光谱仪去把激光过滤掉。现在我只要一个拉曼滤光片，只要一片滤膜片。……它的激光挡住可以到4个6次方。OD6能够挡到，如果用两片的话就能够挡到OD12。</p><p>以前我们要用两套光谱，用双光栅光谱仪，我们要去过滤激光。那双光纤的话，你可能要花几十万，而现在一个拉曼滤光片可能就也就是1万多人民币。</p><p>我们实验室现有3套高分辨率设备，后期也引入了小型台式拉曼光谱仪。还有便携式拉曼光谱仪，虽方便但分辨率不高，探测器性能一般，分辨率能达到5个波数已很不错。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s20">
+  <div class="slides"><figure class="slide" id="slide-367">
+<img src="slides/slide_367.png" alt="课件第367页 各代拉曼光谱仪新技术使用及探测水平">
+<figcaption><span class="sno">367</span><span class="stitle">各代拉曼光谱仪新技术使用及探测水平</span></figcaption>
+</figure>
+<figure class="slide" id="slide-368">
+<img src="slides/slide_368.png" alt="课件第368页 第 V 代拉曼光谱仪的技术水平（低波数与针尖增强）">
+<figcaption><span class="sno">368</span><span class="stitle">第 V 代拉曼光谱仪的技术水平（低波数与针尖增强）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">20</span>
+      <div class="sec-tt">
+        <h2>各代技术对比与第 V 代水平</h2>
+        <div class="sec-meta"><span class="time">录音：第 3 段（后）</span><span class="chip">课件 367</span><span class="chip">课件 368</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>各代拉曼光谱仪新技术使用及探测水平：光源从汞灯发展到激光器，外光路从透镜升级为显微镜，色散光路从棱镜摄谱仪到光栅，探测器从干版（感光板）到光电倍增管再到 CCD，数据处理从手工到计算机记录仪；第一代（1930—40）探测水平是数十小时，如今探测时间缩短至毫秒级。</p><p>第 V 代拉曼光谱仪的技术水平：光谱分辨率高（约 1 个波数）；信息量大，如偏振谱、变温谱、共振谱和紫外谱；样品用量少（μg 级）；空间和时间分辨率高（约 μm/ps）；光谱选择性摄像和成像；一般无需制样、操作方便。现代拉曼基本不涉及任何极限：虽然空间分辨率理论上限于亚微米级别，但实际现在能够达到分子水平——不是所有都能达到，如果用针尖增强（TERS），空间分辨率能达到 1 亚纳米，能够判断出分子的振动。低波数的问题也可以攻克：现在实验室能测到 2 个波数，后面会举一些基于该技术的例子。</p><p>下一节课我们就讲拉曼光谱的结构和组合。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>现代拉曼光谱探测从汞灯发展到激光器，光路从外光路升级为显微镜，并用超滤光片滤波。色散元件多用光栅，探测器采用CCD。脉冲激光较少用，多为连续激光。探测时间从数十小时缩短至毫秒级。</p><p>现在拉曼基本上不涉及到任何极限。虽然空间分辨率理论上限于亚微米级别，但实际上现在能够达到分子水平。……如果用针尖增强，空间分辨率能够达到1亚纳米，能够判断出分子的振动。低波数的问题也可以攻克。现在我们实验室能测到两个波数。</p><p>下一节课我们就讲拉曼光谱的结构和组合。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（显微共焦拉曼光谱学）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>

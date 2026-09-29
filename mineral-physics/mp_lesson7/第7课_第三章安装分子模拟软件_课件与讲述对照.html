@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>矿物物理学（180083070901P2003H） · 第三章 安装分子模拟软件（Gromacs 与 VMD）｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>矿物物理学（180083070901P2003H） · 第三章 安装分子模拟软件（Gromacs 与 VMD）</h1>
+    <div class="sub">第三章 安装分子模拟软件（Gromacs 与 VMD） ｜ 2026-09-24 ｜ 授课：郭光军</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 12 页 · 整理 10 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-open">01 开场：登录超算平台与课程挑战</option>
+<option value="sec-packages">02 分子模拟软件：常用包与国产软件</option>
+<option value="sec-gromacs">03 从零学习：Gromacs 简介与安装总体思路</option>
+<option value="sec-fftw">04 安装 fftw：配置命令与 PATH 概念</option>
+<option value="sec-openmpi">05 安装 OpenMPI：环境变量与 which 检查</option>
+<option value="sec-cmake">06 安装 CMake：跨平台构建工具</option>
+<option value="sec-gmxinstall">07 安装 Gromacs：CMake 配置与并行编译</option>
+<option value="sec-run">08 试运行 Gromacs：串行与 MPI 并行</option>
+<option value="sec-notes">09 安装注意事项：版本选择与纠错心态</option>
+<option value="sec-homework">10 作业 3.3 与现场演示</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 矿物物理学-3.3-安装分子模拟软件.pdf 逐页渲染，转写原文见 record_20260924.txt。</div>
+<section class="sec" id="sec-open">
+  <div class="slides"><figure class="slide" id="slide-01">
+<img src="slides/slide_01.png" alt="课件第1页 封面：安装分子模拟软件">
+<figcaption><span class="sno">01</span><span class="stitle">封面：安装分子模拟软件</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>开场：登录超算平台与课程挑战</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 1</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>今天咱们讲安装分子模拟软件，先把登录这事儿捋一捋。登录上这个就好办，你们确实比往届掌握得好一些，有两个原因：一是登录国科大网站比以前登录所里网站少一个登录 VPN 的环节，省点事；但它也有不好的地方，就是只能在校园网里头用——我回了所之后就用不了了，只要离开国科大校园，就没法访问校园网，只能在校园网里弄。这对我来说也有一点点麻烦，没办法远程备课，有时候备课就专门跑到这儿来住一晚上。</p><p>这回对你们来说是个挑战，要去学一个以前完全没接触过的陌生东西；对我来说也是个挑战，整个系统从我们那儿换到这儿，有一系列不适应和不兼容的地方，中间可能会有一些说不到的地方，但我会争取把这事儿搞得顺利一点。另外你们能够顺利登录上这些，确实是 AI 能起作用——你们现在查资料的方法比往届水平高得多、快得多，捕获信息的效率确实提高了。</p><p>登录上之后，咱们有这个低环境，可以安装分子模拟软件。常用的分子模拟软件上一回片子里放过，大概就这几种。张老师到时候会让你们练习这个大，我给你们练习一个 Gromacs 和一个 VMD——Gromacs 主要跑出轨迹，VMD 就是把轨迹播放过来，各种视图、分布图就可以看得很清楚，这样就比较好。这个掌握起来不算难。</p><p>精通武艺这事儿就跟下围棋一样：围棋就是格子，规则很简单，只要能把白棋没气了，就可以把那子切掉，就这么一个规则。说起来挺简单，但精通起来难。咱们上完这门课要达到什么程度？要让我们基本能入门。你那个东西将来不用按那个知识储备了，就存在自己手头了，将来要用就拿起来。可能要不了两个月，你们就可以弄得挺好，就可以拿着东西干活了，做一些计算机实验，甚至拿下去就是搞一项研究、发表论文或者再去创新，什么都有。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>登录上这个就好办，确实你们掌握的比软页要好一些。有两个原因，一是登录国科大网站比以前登录所里网站少一个登录VPN环节，所以省点事。</p><p>那对我来说也是个挑战，因为整个系统从我们那儿换到那儿，有一系列不适应和不兼容的地方。我在改课件、改那些乱七八糟的东西，中间可能会有一些说不到的地方。但是没关系，我会争取把这事搞得顺利一点。</p><p>精通武艺这也提到了，就跟下围棋一样。围棋就是格子，规则很简单，只要能把白棋没气了，就可以把那子切掉，就这么一个规则。这说起来也挺简单的，但精通起来难。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-packages">
+  <div class="slides"><figure class="slide" id="slide-02">
+<img src="slides/slide_02.png" alt="课件第2页 常见的分子动力学软件包（经典MD / 第一原理MD / 可视化MD）">
+<figcaption><span class="sno">02</span><span class="stitle">常见的分子动力学软件包（经典MD / 第一原理MD / 可视化MD）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-03">
+<img src="slides/slide_03.png" alt="课件第3页 国产分子动力学软件包（SPONGE、MindSponge、eMD、galamost 等）">
+<figcaption><span class="sno">03</span><span class="stitle">国产分子动力学软件包（SPONGE、MindSponge、eMD、galamost 等）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>分子模拟软件：常用包与国产软件</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 2</span><span class="chip">课件 3</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>这个软件包，前面提到过很多经典的自动同学软件包。我在讲义里头有一节提到了分子动能学软件包，列了十多个，都是国际上比较著名的，那是当时我拿百度查的，做了一个简单的介绍。这一两年过去了，现在又有 AI 工具了，你们再查查对哪个软件感兴趣，随便一搜就给你介绍得很详细。</p><p>除了国际上的，咱们国产的也有。最著名的一个，就是 2021 年的时候北大深圳湾实验室的高毅勤，他们合作开发的那个软件，叫做 SPONGE（海绵）——这个东西是基于 CUDA 的 MD 软件，后来和华为昇思（MindSpore）团队合作进行了移植，从而诞生了新一代人工智能分子动力学模拟程序 MindSponge。据说也挺好的，但是没去用。</p><p>为啥呢？就是你用软件挺顺手的时候，大概率不会尝试其他的，除非有特殊要求或好处才想换。我因为当时一直用那个软件没换下来，所以虽然别的挺好，但没机会用。这相当于软件生态——一旦建好就维护一大帮用户群，反复反馈开发。像 3ds Max 就是这样，二三十年弄得很好。国内也有一些学科组织有自编的 MD 软件，但知名度小，用户范围少。</p><p>其实 3ds Max 也不是我一开始学的。我以前在北大矿床学毕业，正经做金矿，后来到地质所地球物理研究所做博后。做博后开始接触分子模拟，实际上我基础跟你们一样，没接触过，不知道啥叫分子动力学。后来我开始用一个软件叫 Castep，写得很简单，是英国人写的，我跟他还有合作，那软件大概也就两三兆吧，用起来挺顺当。后来听说有个朋友说 VASP 也不错，灵活免费，特色是 VASP。最后我就带学生一块儿去试，试了之后果然跑得比 Castep 快——那时候算力很金贵，做任务得赶紧跑出来。那是 15 年左右的事，我用 Castep 用了大概六七年。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这个软件包，前面提到过很多经典的自动同学软件包。我在讲义里头有一节提到了分子动能学软件包，列了10多个，都是国际上比较著名的。</p><p>最著名的一个，就是2021年的时候，北大深圳工实验室的高一琴，他们合同开发那个软件，叫做海绵网络。这个东西是基于GPU的ID软件，是合同华为深思团队这种合同开发。</p><p>我因为当时一直用那个软件没换下来，所以虽然别的挺好，但没机会用。这相当于软件生态，一旦建好就维护一大帮用户群，反复反馈开发。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-gromacs">
+  <div class="slides"><figure class="slide" id="slide-04">
+<img src="slides/slide_04.png" alt="课件第4页 从零学习：Gromacs 简介与安装总体思路（fftw + mpi + cmake）">
+<figcaption><span class="sno">04</span><span class="stitle">从零学习：Gromacs 简介与安装总体思路（fftw + mpi + cmake）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>从零学习：Gromacs 简介与安装总体思路</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 4</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>它的名字叫 Gromacs，是 GROningen MAchine for Chemical Simulation 的缩写，由荷兰格罗宁根大学用 C 语言编写，上世纪 90 年代研发的。它可以模拟很多原子，主要做蛋白质、核酸等生化方面，因为功能强大，我们跑一些地质上的应用也很合适。它的特色是 3F——Fast 快速、Flexible 灵活、Free 免费。</p><p>为什么要学安装？实际上是从 0 开始学，把最低的台阶当做起点。如果要做科研，从最低处弄起是最好的——把底层的东西全搞明白，搭起科学框架，那是最安全的。你啥都能改，内在联系全清楚，否则根本不知道底层的坏处。直白一点，今天讲一下 Gromacs 安装，讲完后你就可能会安装。将来涉及安装或改动原文件后，重新编译一遍就 OK 了。</p><p>现在系统里已安装好 Gromacs 2025.4，加载模块后就可以用了，那样相当于只能那样用那个版本，你们啥都不会看。盘就是底层，关键代码在那。虽然费点事，但从底层搞起来就很厉害，包括这个底层，实际上让你们从这里开始干——底下还有更底层，相当于全结一起。那套机器都是你做的？那才厉害。你说再低点儿行不行？行，还可以。如果芯片都是你开发的，你就已经是大牛了，整个框架起来那就不得了，所以我也不会开发芯片，也不会给你讲这个。</p><p>所以安装起来呢，也没多难：就是到官网上，下载一个版本，然后把说明书也下载来，里头都有讲怎么安装。现在方便了，你再搜一个中文的安装教程，跟着学一学，很快。它的主要过程呢，就是需要几个依赖包：先弄一个 FFTW（快速傅里叶变换），再装一个 MPI 的包（并行的），再有一个 CMake（负责编译之前的配置）。之后把这三类都弄一下，然后 make 编译一下，然后 make install 就编译完了、安装一下就装上了。</p><p>说起来这么简单，但是对于新手来说，我昨天才刚登录到系统里头，刚摸了一下低端，这啥还不知道呢，就开始安装行吗？行，没问题，你就按照给你们的提示一步一步做，一步你就能搞定。这种困难一般出现在路径设置和编译那些选项里头。这些东西现在你们有 AI 了，你们的层次已经陡然提高了一个档次，你们都可以去查，然后都可以去问群里、问 AI，不管咋弄，这是一个完全自主的学习过程。你把这个东西弄会了，你就知道没有啥太难的东西能难得住你。而且即使将来你们搞科研的时候遇见什么问题，你就学习这个学习的能力，这种能力都能搞定，肯定能。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>它的名字叫Gromacs，是Machine chemical simulation的缩写，由荷兰格罗宁根大学用C语言编写。它可以模拟很多原子，主要做蛋白质、核酸等生化方面。</p><p>如果要做科研，从最低处弄起是最好的。把底层的东西全搞明白，搭起科学框架，那是最安全的。你啥都能改，内在联系全清楚。否则根本不知道底层的坏处。</p><p>主要过程呢，就是说它需要几个依赖包，就是先弄一个数列变换，再装一个mpi的包，是并行的。再有一个C妹子，负责编译之前的配置。之后呢。把这三类也不一下。然后make编译一下，然后make install就是make就编译完了，安装一下就装了。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-fftw">
+  <div class="slides"><figure class="slide" id="slide-05">
+<img src="slides/slide_05.png" alt="课件第5页 安装 fftw：配置命令与编译">
+<figcaption><span class="sno">05</span><span class="stitle">安装 fftw：配置命令与编译</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>安装 fftw：配置命令与 PATH 概念</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 5</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>那么第一步呢，就是安装那个快速数据变换。这个包是啥呢？就是 fast Fourier transform，快速傅里叶变换，是一个标准的 C 程序的程序集，是那个老牌的保理人（MIT 的 M. Frigo 和 S. Johnson）开发的。很多软件几乎是通用的，都会用这个包。这个在时间域和频率域相互转换的细节我们不去管，这是数学上的。</p><p>那么要把这个包装上怎么弄呢？在你的目录里建一个目录，比方说建一个 xxx 目录，名字随便取，这里放安装包——下载完什么包就往这儿一塞；然后再建一个 zzz 目录，这个框专门安放软件，安装完了之后安装到哪去。类似于网上下载东西安装到 Program Files (x86) 里，或者你高兴也可以直接用。然后下载这个版本的包，放到目录底下解压编译。我这儿快快地讲，留一个资料放在那儿，一会儿最后演示安装一两个。</p><p>最后是配置，实际上很简单，就是 ./configure 命令。你要进行配置的话，底下放一个参数 prefix，指的是安装时想把它放到哪个路径或目录下面去——从根目录开始，一点一点放到这对里头，再起个名字，就相当于这个包安装到这个目录里面去，仅此而已。然后后面的 --enable-float，就是说我要把它编译成单精度浮点的；这个东西含有内部 double 变换，就是说给它安装成双精度，就是这个意思。</p><p>刚刚那个 --with-shared，指的是安装完之后这个包会被并行使用。因为只是串行使用没意思，给一个 CPU 弄还跑什么超算？意思是让这个包被共享，被 10 个 CPU 或 100 个 CPU 共享，就能实现并行。然后进入目录编译，执行 make install 安装。安装完后，回到目录下查看是否生成了新的文件和目录。实际上过程很简单，照做就能成功。</p><p>PATH 是什么呢？它就是一个路径。Linux 底下，它运行的东西就是特傻、也特安全：你说我要用一个文件，它说好吧，那你请告诉我这个文件在哪儿，我不会自己去找——这里头文件太多了，我不知道自己去找它在哪。那你就告诉它在地球上、在中国、在哪个地点、什么门牌号码。地址可以一个个补全，它只有一个根目录，从根目录开始，底下某个目录，再下层某个目录，一直走到末尾目录。算一下每个目录，比如 MP、202226、121，再下面的两个目录，就像刚才那个位置在这儿呢，对应这个路径所在，再下面我们一直到 openmpi 3.31.2。算一下你的 PATH，它说我终于把你这个文件找到了，OK，这就叫一条路径。</p><p>这个 PATH 里头呢，它可以放很多条。这是一条，用冒号分隔，之后再写第二条、第三条，就这样一条一条排列。给了这个之后，这就是整个 PATH，有一二三四好多条路径。机器说好，你让我用哪个命令，我就去这里头找，找得到就执行，找不到就报错，就是这个意思。现在要追加一条是什么意思呢？原来是一堆路径，你让 PATH 等于这样一条新的 PATH 在它的前头，那就是把一个路径写到这些的前头；又弄一条，加冒号，然后看电压，这就叫电压。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那么第一步呢，就是安装那个快速数据变换，这个呢，这个包是啥呢，就是fast Fourier transform就是一个快速数1变换，这个呢，就是在这个这个是一个标准的从C程序的这个程序集。这个这个老的这个保理人就开发这个东西，就是说很多软件这几乎是通用的，都会用这个包。</p><p>目录里建一个目录，比方说建一个SS目录，名字随便取。这里放安装包，下载完什么包就往这头一塞。然后再建一个ZVC目录，这个框专门安放软件，安装完了之后安装到哪去。</p><p>它就是一个路径。Linux底下，它运行的东西就是特傻，也特安全。就是说你说我要用一个文件，他说好吧，那你请告诉我这个文件在哪儿。我不会自己去找，这里头文件太多了，我不知道自己去找它在哪。那你就告诉我在地球上，在中国，在哪个地点，什么门牌号码。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-openmpi">
+  <div class="slides"><figure class="slide" id="slide-06">
+<img src="slides/slide_06.png" alt="课件第6页 安装 OpenMPI：消息传递库与环境变量">
+<figcaption><span class="sno">06</span><span class="stitle">安装 OpenMPI：消息传递库与环境变量</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>安装 OpenMPI：环境变量与 which 检查</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 6</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>下面再安装 OpenMPI，因为它稳定好用，现在大家都喜欢用。OpenMPI 即开放源码的消息传递接口（Message Passing Interface），负责 CPU 间的通讯——比如发送和接收任务，都通过 MPI 进行。操作类似：去官网下载，放入目录，cd 进入并解压，接着 cd 到目录中进行配置，指定安装路径，路径设在用户目录下的 bin 中。操作不难，只是重复步骤，但不同于普通软件。</p><p>这个包安装后需配置环境变量使其生效，目的是让系统能找到 OpenMPI 中的 mpicc 并行编译器。只有安装完成后，mpicc 才会出现。如何让系统找到 mpicc 的路径？打开家目录下的 .bashrc 文件，在末尾追加一行 PATH 和一个环境变量库路径。注意不要多打等号，修改后执行 source 命令使环境变量生效。接着用 which mpicc 检查是否设置成功——若找不到则说明未生效。资料中的目录名如 xxx、zzz 可自定义，但需记住 FFTW 和 OpenMPI 的位置。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>OpenMPI即消息传递接口，负责CPU间的通讯。比如发送和接收任务，都通过MPI进行。</p><p>这个包安装后需配置环境变量使其生效。目的是让系统能找到OpenMPI中的mpicc并行编译器。只有安装完成后，mpicc才会出现。</p><p>打开家目录下的.bashrc文件，在末尾追加一行PATH和一个环境变量库路径。注意不要多打等号，修改后执行source命令使环境变量生效。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-cmake">
+  <div class="slides"><figure class="slide" id="slide-07">
+<img src="slides/slide_07.png" alt="课件第7页 安装 CMake：跨平台构建工具">
+<figcaption><span class="sno">07</span><span class="stitle">安装 CMake：跨平台构建工具</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>安装 CMake：跨平台构建工具</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 7</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>先安装 OpenMPI 包，再安装 CMake 包。以前不装 CMake 会导致后续配置库路径很麻烦：包含文件在哪儿？这个文件在哪儿？那个文件在哪儿？一来多了好多这样细碎的事。有了 CMake 之后，CMake 是一个跨平台的构建工具，它就会自动检查系统环境是什么、依赖的库是什么、设置的编译选项是什么，去管理代码的整个结构。最后它的目的就是生成一个脚本叫 Makefile，里头含有各种信息，告诉机器在编译的时候要用 GCC 或者 MPICC 那种编译器进行编译。</p><p>它既然是自动化的，那好了，就是说平常同学们要指定这个、指定那个那些啰嗦的事，它都能自动完成。那这样一来，把它装上就好了。把这个 CMake 包解压缩进到里头去，前面那几个用的是 configure 命令，它这个特征叫做 prefix，这个命令同样指定了一个路径前缀名，就是把它安装到某个软件的目录底下去，这种 software 就相当于就是一个目录。放到这儿去，然后加一个编译的参数，把什么都关掉，就这意思。弄完之后，编辑进去，然后追加一个 PATH，把那个 PATH 追加一下——这里已经提到过两次了，这个追加 PATH。</p><p>找到后可以继续安装 CMake。解压后 CD 进去，这里有个 build 目录，按说明书建议进入其中。设置环境变量，指定 FFTW 的路径，将 GMS 2025 目录加入路径，这是 gmax 启动用的。启用 MPI 支持，检查 MPICC 是否安装。使用 make -j4，利用 4 个 CPU 并行编译提速——原本需 10 分钟，现在约 3 分钟完成。根据情况调整，稍后讲解平台注意事项。</p><p>安装完成后，将 gmax 路径追加到 PATH 并生效，检查确认无误即可。这解决了前几个依赖包问题。需用 MPI 编译成并行版本，CMake 已生成 Makefile，无需手动修改，直接使用即可。如果你去年没用 CMake，就要写三四条指令，需指定包含文件、库及选项，写不清楚编译会报错。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>CMake是一个跨平台的构建工具，它就会自动检查系统环境是什么，依赖的库是什么，设置的编译选项是什么，去管理代码的整个结构。最后呢，它的目的就是生成一个脚本叫Makefile。</p><p>它既然是自动化的，那好了，就是说像平常同学们要指定这个、指定那个那些啰嗦的事，它都能自动完成。那这样一来，把它装上就好了。</p><p>使用make -j4，利用4个CPU并行编译提速。原本需10分钟，现在约3分钟完成。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-gmxinstall">
+  <div class="slides"><figure class="slide" id="slide-08">
+<img src="slides/slide_08.png" alt="课件第8页 安装 Gromacs：CMake 配置与并行编译">
+<figcaption><span class="sno">08</span><span class="stitle">安装 Gromacs：CMake 配置与并行编译</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div class="sec-tt">
+        <h2>安装 Gromacs：CMake 配置与并行编译</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 8</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>安装完依赖包之后，就装 Gromacs 本体：下载 gromacs-2025.4 的包，解压，cd 进去，新建一个 build 目录并进入——按说明书建议进入其中。设置环境变量，用 export CMAKE_PREFIX_PATH 指定 FFTW 的路径（用波浪号简写 home 路径）。然后 cmake 配置：-DCMAKE_INSTALL_PREFIX 指定安装路径，-DGMX_MPI=ON 启用 MPI 支持。然后 which mpicc，检查这个 mpicc 是不是你想用的 openmpi311 的。最后 make -j 4，用 4 个 CPU 并行编译提速。</p><p>安装完成后，将 gmx 路径追加到 PATH 并生效，which gmx_mpi 能找到 ~/zzz/gromacs2025/bin 下的这个文件，就表示成功了。这解决了前几个依赖包问题。需用 MPI 编译成并行版本——CMake 已生成 Makefile，无需手动修改，直接使用即可。如果你去年没用 CMake，就要写三四条指令，需指定包含文件、库及选项，写不清楚编译会报错。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>设置环境变量，指定Alpha7W338路径。将GMS2025目录加入路径，这是gmax启动用的。启用MPI支持，检查MPICC是否安装。使用make -j4，利用4个CPU并行编译提速。</p><p>安装完成后，将gmax路径追加到PATH并生效。检查确认无误即可。这解决了前几个依赖包问题。需用MPI编译成并行版本。CMake已生成Makefile，无需手动修改，直接使用即可。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-run">
+  <div class="slides"><figure class="slide" id="slide-09">
+<img src="slides/slide_09.png" alt="课件第9页 试运行 Gromacs：串行与 MPI 并行">
+<figcaption><span class="sno">09</span><span class="stitle">试运行 Gromacs：串行与 MPI 并行</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">08</span>
+      <div class="sec-tt">
+        <h2>试运行 Gromacs：串行与 MPI 并行</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 9</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>装好后别闲置，运行测试看结果。首先用 GMS 打通环境——MD 命令用于跑分子动力学模拟，这是自带指令。还有很多其他指令，下节课细讲输入输出。当前仅测试能否正常运行，细节后续再讲。这是串行单 CPU 运行。编译并行版后，用 4 个 CPU 会更快——试试 mpirun -np 4，指定 MPI 并行运行。速度很快，试运行只需确认有输出，暂不管内容。这就是安装的这个问题。</p><p>这个也都是备查。就是安装的时候呢，我们呢，就相当于说给你们一个练习的时间。我看这节课弄完了过中秋，然后下一节课的话呢，讲完输入不多，就这一周的时间，你们有一周的时间可以自行练习一下怎么安装，不管你安装得成还是不成都没关系。过了十一之后呢，安装成的同学肯定想用自己的那个安装好的，那样跑才有成就感；你要没安装成呢，那时候如果时间来不及，不够用了也没关系，我们就上去把那个超算平台的那个 gmx2025 的那个模块给它调出来，直接一调出来就相当于给你安装好了。</p><p>实际上像 Gromacs 呀、VMD 那些东西，都安装好了，都在那个平台上安装好了，我们只不过用这个机会去完成一下安装。有的同学可能觉得很麻烦或者是有点胆怯，你们通过这个就能达到目的，都能弄成的，放心。没什么神秘，不是流行那个什么「去魅」嘛？我觉得也没啥意思，就是把鬼赶走了，向未来不难。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>首先用GMS打通环境。MD命令用于跑分子动力学模拟，这是自带指令。还有很多其他指令，下节课细讲输入输出。当前仅测试能否正常运行，细节后续再讲。</p><p>这是串行单CPU运行。编译并行版后，用4个CPU会更快。试试“mpirun -np 4”，指定MPI并行运行。</p><p>实际上像ma呀ma那些东西，这个都安装好了，都在那个平台上安装好了，我们只不过用这个机会呢，去去完成一下安装。有的同学呢，可能觉得很麻烦，或者是有点胆怯，就是你们通过这个呢，就达到这个目的。都能弄成的，放心。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-notes">
+  <div class="slides"><figure class="slide" id="slide-10">
+<img src="slides/slide_10.png" alt="课件第10页 安装 Gromacs 注意事项（精度、版本、纠错心态、笔记）">
+<figcaption><span class="sno">10</span><span class="stitle">安装 Gromacs 注意事项（精度、版本、纠错心态、笔记）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">09</span>
+      <div class="sec-tt">
+        <h2>安装注意事项：版本选择与纠错心态</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）</span><span class="chip">课件 10</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>安装这个 mpi 的时候呢，有时候需要检查自己的各种版本。这个指的是什么呢？就是版本有好多种，你怎么知道安装的这个版本就适合你呢？那么到高阶阶段的时候，你比方说我要安装那个 3.11 版的，人家说还有个 4.18 版还更好，还有个 5.2 几版的也一样好，是不是合适呢？你可以安装 3.11 版的跟你这个 Gromacs 结合一下，然后你跑一个数据作为比对流量；你再安装一个 4.18 版的，安装完成后你就可以跑 Gromacs，跟 3.18 版的 mpi 效果一样。你也跑一个数据比对，觉得哪个快就留哪个。到了高阶阶段就这样对包——我用这个包那个包，Mpi 也有多个版本都可以，中间只要把它换了就行。</p><p>那安装 Gromacs 的也有不同的版本和型号。比方说 Gromacs 安装完后需要单独设置：单精度的跑得快，另一个 Gromacs 要安装成双精度的，算得准。这东西就是这样，不太可能既算得准又算得快——那样的话，单精度早被淘汰了。所以大多数跑得快的都是单精度跑就可以了。后面我们会给你们讲案例，有的东西必须要用双精度的去跑，才有可能做出一项科研。那种情况下，你要说不会安装、不知道这一点，你这辈子都在用单精度的跑，那你还怎么创新？就把很多创新的选项都给丧失了。所以这就是我们尽量让你们从更低一层的台阶往上走，就是做一点底层的东西。</p><p>再一个就是不要怕出错，也不要指望安装过程是一帆风顺的。什么错都没有？行，恭喜你，真的太好了，你刚入门就把软件都安装好了，那很好。但是确实是在解决问题的时候、在遇见挫折和失败的过程中，你才能够学到很多，提高得快，理解得多，印象很深。我们遇见的困难太多了：几十年前有网络就不错了，有时为了查资料整宿都过不去，软件老编译不成，很麻烦。出过错，才能更快掌握要领。</p><p>最后一点，及时总结个性化安装步骤：装成功后，趁记得清，把命令写成笔记，这就是科研笔记。下次换平台或修改时，按笔记操作，确保可复现。若装错，查笔记改参数即可；若没笔记，问老师也说不清。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>到高相当于到了高阶阶段的时候，你比方说我安装那个311版，人家说还有个418版还更好，还一个五点二几版一样也好，是不是合适呢？</p><p>单精度的跑得快，另一个gmax要安装成双精度的，算得准。这东西就是这样，不太可能既算得准又算得快。</p><p>再一个就是不要怕出错，也不要指望安装过程是一帆风顺的。但是确实是在解决问题的时候，在遇见挫折和失败的过程中，你才能够学到很多。</p><p>装成功后，趁记得清，把命令写成笔记，这就是科研笔记。下次换平台或修改时，按笔记操作，确保可复现。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-homework">
+  <div class="slides"><figure class="slide" id="slide-11">
+<img src="slides/slide_11.png" alt="课件第11页 MP 作业 3.3：下载、登录、练习安装、试运行、编译 sum100p.c">
+<figcaption><span class="sno">11</span><span class="stitle">MP 作业 3.3：下载、登录、练习安装、试运行、编译 sum100p.c</span></figcaption>
+</figure>
+<figure class="slide" id="slide-12">
+<img src="slides/slide_12.png" alt="课件第12页 演示：登录节点注意事项">
+<figcaption><span class="sno">12</span><span class="stitle">演示：登录节点注意事项</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">10</span>
+      <div class="sec-tt">
+        <h2>作业 3.3 与现场演示</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）</span><span class="chip">课件 11</span><span class="chip">课件 12</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>作业是下载并安装一个软件：若下载太多，不试也没事，传个包上去练习。群里目录已共享——MP 代表 Mineral Physics，MD 代表分子动力学。在 MP-MD 目录下，文件已放好，可供练习安装操作，就是用我前头列的那些步骤开始练习。你说不用那些行不行？可以，没有问题，你到网上去搜安装教程，只要能装上就行。这个版本是 2025.4，国外的，因为平台上已经装好了，所以肯定能装好——这一点我也试着装了一次，都装成了 2025 版。</p><p>说起来 2025 版也够新的，去年的版本已经很新了，原来我装的都是十多年前的老版本。老版本和新版本的辩证关系是这样：如果你原来的很多科研在老版本上弄，而且用得很好，确实没有必要换新——着急忙慌换新干啥？一换新，原来的程序都得统统改一遍，可麻烦了。但是如果它很慢了，你就掂量一下，如果新版本能很快解决慢的问题，你舍不得换也得换。实际上我们测试过，老版本依然是挺快的，因为它跑的附件很少，跟新版本差不多快，所以我们学生现在用的还是那个老版本，就是 4.5.26 版，2025 版我们还没有大动能用。从今年起，趁着这个机会，2015 版也给你们装上了，我们也回头试试看，要好用的话我们就转到 2025 上。</p><p>还有一个就是上次课提到的 sum.c 嘛，那个 C 它能从 1 加到 100，让你们改几个数能够加 101~200，那是一个串联版本。这一块编译上次算的那个，有一个 3 分 100 点 D3 分 110，这是一个并行的，就是我当时讲的那个程序是并行的，也都放在我这个 MP-MD 里头，到时候告诉你。然后尝试并行运算应该是没啥问题的，但是你用 NP=6 的时候就有错误，回头你们查一查可能是啥错误。像这个怎么查？你编程好的就直接看看代码就能看懂，大概能想出来；编程不太好的就问问人家，把它扔给他说这程序都有错，你给我看看是哪错了。</p><p>好，然后我们开始演示。所以我们前头讲的快慢的，就是为了多增加一些演示的时间，这课就到这儿了。你说今年为啥对我来说也是一个挑战？平常原来的时候我们有助教，助教帮我搞定了好多东西，我讲的时候助教在里面操作配合，就挺好的。现在咱们这个课少，学校就不让那么多教、不让弄录像，我自己来的话手忙脚乱的，中间要是有哪个地方没说到位，或者啥东西没搞定，你们就喊老师加油。</p><p>演示的时候注意：安装前，用 who 看看谁已登录，用 top 看看登录节点 CPU 紧张否，避免扎堆儿拥堵；-j N 不要超过 6（等于登录节点 1/4，容易卡死，影响全校）；熟练安装大约需要 1-2 小时，可以边查边学，慢慢来；多问多思考，安装软件目的在于深入理解概念；从 guogj/MP-MD/ 目录中翻查参考用户指南等有用资料；更改 Linux 的背景和字号，保护眼，看得清，不易错。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>作业是下载并安装一个软件。若下载太多，不试也没事。传个包上去练习，群里目录已共享。MP代表Mirrorral physics，MD代表分子动力学。在MPMD目录下，文件已放好，可供练习安装操作。</p><p>老版本和新版本的辩证关系是这样：如果你原来的很多科研在老版本上弄，而且用得很好，确实没有必要换新。着急忙慌换新干啥？一换新，原来的程序都得统统改一遍，可麻烦了。</p><p>平常原来的时候我们有助教，助教帮我搞定了好多东西。我讲的时候助教在里面操作配合，就挺好的。现在咱们这个课少，学校就不让那么多教。不让弄录像，我自己来的话手忙脚乱的。中间要是有哪个地方没说到位，或者啥东西没搞定，你们就喊老师加油。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（180083070901P2003H）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>生成式模型与科学智能应用 · 第7节 变分自编码器 II（Variational Autoencoder II）｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>生成式模型与科学智能应用 · 第7节 变分自编码器 II（Variational Autoencoder II）</h1>
+    <div class="sub">第7节 变分自编码器 II（Variational Autoencoder II） ｜ 2026-09-24 ｜ 刘云帆</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 23 页 · 整理 12 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-recap">01 开场复习：隐变量模型、边缘似然与 ELBO</option>
+<option value="sec-vi-intro">02 变分推断：Q 是我们要优化的对象</option>
+<option value="sec-tightness">03 ELBO 的紧致性：与真实后验的 KL 差距</option>
+<option value="sec-geometry">04 几何直观与隐变量模型小结（休息）</option>
+<option value="sec-joint">05 联合优化：不同 φ 的 ELBO 下界</option>
+<option value="sec-dataset">06 数据集上的 ELBO：每个样本的后验不同</option>
+<option value="sec-amortized">07 摊销推断：共享推断网络</option>
+<option value="sec-training">08 训练流程与 EM 算法的对比</option>
+<option value="sec-vae-perspective">09 VAE：自编码器视角与目标拆解</option>
+<option value="sec-vae-train">10 VAE 训练流程与高斯编码器</option>
+<option value="sec-reparam">11 重参数化技巧：让采样可微</option>
+<option value="sec-latent-space">12 生成隐空间：为什么普通 AE 不能生成</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 Lecture6_Variational_Autoencoder_II.pdf 逐页渲染，转写原文见 record_20260924.txt。</div>
+<section class="sec" id="sec-recap">
+  <div class="slides"><figure class="slide" id="slide-01">
+<img src="slides/slide_01.png" alt="课件第1页 封面：Lecture 6 Variational Autoencoder II（刘云帆）">
+<figcaption><span class="sno">01</span><span class="stitle">封面：Lecture 6 Variational Autoencoder II（刘云帆）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>开场复习：隐变量模型、边缘似然与 ELBO</h2>
+        <div class="sec-meta"><span class="time">00:00:04 – 00:10:28</span><span class="chip">课件 1</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>这节课接着上节课的内容讲。怕大家直接开始跟不上，我做了一份 PPT 总结上节课的内容，先带大家复习一下。上节课讲了隐变量模型 VAE，它和自回归（AR）模型最大的区别在于：VAE 更关心数据的内在结构。我们用 Z 表示隐变量，引入 Z 是为了改进建模效果、从数据中挖掘结构；现在的模型建模的是数据 X 和隐变量 Z 的联合分布 P(X,Z)，它可以拆成 P(Z)（先验分布）和 P(X|Z)（由 Z 引导的条件分布）。</p><p>Z 是隐变量，不可见但解释了生成过程；X 是我们能观察到的数据样本，比如图片就是像素。最直观的例子还是男女身高：隐变量是数据中真实的性别，观察到的是身高信息——已知性别时身高服从高斯分布，不知道性别时整个数据是混合高斯分布。</p><p>训练方法和 AR 模型一样，用最大似然。但我们的模型是 X 和 Z 的联合分布，所以必须对隐变量求和或积分，求出边缘分布。两类 Z 的情况可以直接算；但一般情况 Z 可能维度很高、取值很多，甚至是连续变量，边缘似然虽然能写出来、一般却难以计算。</p><p>上节课讲了两种近似方法：第一种是朴素蒙特卡洛，把似然写成均匀分布下的期望，用均匀采样求平均来逼近——问题是均匀采样很可能采到与当前样本无关的 Z，效率低、估计不准；第二种是重要性采样，人为引入一个采样分布 q，把似然写成对 q 求期望的形式，按 q 采样求平均即可计算。</p><p>训练时我们一般考虑对数似然：数据独立同分布，数据集似然是每个样本似然的乘积，取对数就变成求和。但加了 log 以后，原来能用蒙特卡洛估计的量反而估计不了了——期望在 log 里面，不能随意交换，没法直接采样。</p><p>解决办法就是上节课讲的 Jensen 不等式：把 log 和期望交换，把期望暴露在外，原等号变成下界，这就是变分下界（Evidence Lower Bound，ELBO）。我们原本想优化边际对数似然，通过优化这个下界来间接推进目标——这是上节课推导的完整流程。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这节课接着上节课的内容讲。如果直接开始，基础可能没跟上，所以我做了PPT总结上节课内容，大家可以看一下。上节课讲了隐变量模型VAE，它和AR模型最大的区别在于，VAE更关心数据的内在结构。</p><p>但上节课说过，一般情况Z可能有很高的维度，或者有很多取值，甚至是连续变量，所以边缘似然没办法直接计算。那怎么办呢？上节课讲了两种近似方法：一种是朴素的蒙特卡洛方法，另一种是重要性采样。</p><p>但是有一个问题，就是我们加了log以后，原本能够用蒙特卡洛去估计的这个值是估计不了。因为它在log里面，你不能随意交换期望，用蒙特卡洛去估计的话就会有问题。为了解决这个问题，我们就引入了Jensen不等式的这样一个解法。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-vi-intro">
+  <div class="slides"><figure class="slide" id="slide-02">
+<img src="slides/slide_02.png" alt="课件第2页 Variational Learning：ELBO 与变分推断——联合优化 θ 与 φ 的目标">
+<figcaption><span class="sno">02</span><span class="stitle">Variational Learning：ELBO 与变分推断——联合优化 θ 与 φ 的目标</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>变分推断：Q 是我们要优化的对象</h2>
+        <div class="sec-meta"><span class="time">00:10:28 – 00:20:33</span><span class="chip">课件 2</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>把整个流程再总结一下：上节课介绍了隐变量模型，最后通过最大化进行训练，结论是最终优化 ELBO 下界。现在的问题是我们能直接优化它吗？按 Q 分布采样计算，理论上可行，但最大的问题是你不知道 Q 是什么——我们引入 Q 分布用于重要性采样，但它目前是未知的。</p><p>Variational Inference 中文叫变分推断，这个名字有点抽象。Inference 指推断，在隐变量模型里就是从数据中求潜变量或类别的分布；变分（Variational）让推断过程可变，模型中的学习也是可变的——通过学习求得一个较好的推断。大家再读到类似名词时能认识就行。</p><p>在变分推断里，Q 是我们想优化的对象：一开始把它记成可表示的形式来辅助处理，但它已经不再是理所当然的分布，而是可优化对象。结论可以写成：左边是最终目标，右边是下界，它既取决于参数又取决于 Q。不同 Q 对应不同的下界，下界的紧致程度是我们关注的点——想通过优化 Q 让下界尽量紧，从而间接更好地优化似然函数。</p><p>具体研究怎么优化之前，先看 ELBO 和 Q 到底是什么关系。把期望展开，把 p 除以 q 拆成两项：一项是熵，一项是把概率质量分配到 p 大的地方。最大化这两项的和，熵项让推断分布尽量不那么集中、分散到不同区域；另一项把更多的质量分配到能更好解释数据的 Z 上——两项互相制约，防止 Q 坍缩成一个脉冲分布。</p><p>所以结论是：尽量把数据的概率质量分配到解释力度大的地方，但同时不能让分布太集中；最大化这个下界就是通过改变 Q 来推进目标。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我们引入Q分布用于重要性采样，但目前未知Q。本节需要分析我们提出的Q分布的关系。先建立直观认识，否则直接讲大家会懵。</p><p>在变分推导里，Q是我们想优化的对象。现在没说怎么优化，但它已是可优化对象，不再视为理所当然的分布。</p><p>那一项当中是熵，你肯定想上熵最大化。但不管怎么样，你想要优化这两项的和。另外一项就是把概率质量分配在解释力度大的地方，尽量把数据的概率质量分配在这个大的地方。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-tightness">
+  <div class="slides"><figure class="slide" id="slide-02">
+<img src="slides/slide_02.png" alt="课件第2页 Variational Learning：ELBO 与变分推断——联合优化 θ 与 φ 的目标">
+<figcaption><span class="sno">02</span><span class="stitle">Variational Learning：ELBO 与变分推断——联合优化 θ 与 φ 的目标</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>ELBO 的紧致性：与真实后验的 KL 差距</h2>
+        <div class="sec-meta"><span class="time">00:20:33 – 00:31:05</span><span class="chip">课件 2</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>先问一个问题：什么时候能取等号？直接告诉大家答案——q(z|x) 等于真实后验 p(z|x) 的时候。它的含义是：如果我们给出的变分分布能够取到真实后验，那么优化 ELBO 就完全等于优化真实的对数似然。</p><p>可以做数学验证：把 Q 用真实的后验分布代替，联合分布用乘法公式拆成先验乘条件，分子分母消掉，剩下的求和与 Q 无关、可以提出来，最后得到对所有可能 Z 的后验求和——这个界确实等于目标。所以取等条件是 q(z|x)=p(z|x)，也就是模型下给定 X 之后 Z 的后验分布；遗憾的是这个分布我们拿不到，这是想要求解的真实问题。</p><p>一般情况下我们没法真正拟合后验，只能得到一个下界。那这个下界到底有多紧、跟真实目标差距多大？直观的回答：既然 Q 与真实后验的差距影响了取等，就用 KL 散度来度量两个分布之间的距离——把已知条件带入并按 KL 定义展开，就能得到一个等式：右边是交叉熵，左边是 KL 散度加 ELBO。</p><p>换句话说，ELBO 与对数似然之间的差距，恰恰就是 Q 分布与真实后验的 KL 散度。这不只是定性解释，定量上看它就是一个距离：我们希望让 Q 尽量接近真实后验，让这个距离变小——推断分布 Q 越接近真实后验，ELBO 就越接近真实的对数似然。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我们想这个下界如果取等，那什么时候等于呢？取等的条件是QG等于给定X之后G的后验分布。这个分布我们拿不到，这是我们想要去求的，这是一个真实的问题。</p><p>把Q用真实的后验分布代替，我们会发现这样一个联合分布，可以通过乘法公式把它拆解成先验和条件分布，这样分子和分母可以消掉。</p><p>换句话说，这是一个等号关系。我们的目标明确：ELBO与对数似然之间的差距，就是Q分布与真实后验的KL散度。我们希望让Q尽量接近真实后验，让这个距离变小。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-geometry">
+  <div class="slides"><figure class="slide" id="slide-02">
+<img src="slides/slide_02.png" alt="课件第2页 Variational Learning：ELBO 与变分推断——联合优化 θ 与 φ 的目标">
+<figcaption><span class="sno">02</span><span class="stitle">Variational Learning：ELBO 与变分推断——联合优化 θ 与 φ 的目标</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>几何直观与隐变量模型小结（休息）</h2>
+        <div class="sec-meta"><span class="time">00:31:05 – 00:35:30</span><span class="chip">课件 2</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>给一个几何上的直观：蓝线代表真实的后验，相对比较复杂；我们用参数化的推断分布去拟合它，是这样一个单模态分布。可以看到橙色的分布比绿色更好地贴近真实的蓝色后验，它的代价更小——哪个推断分布离真实后验近，对应的下界就越紧。</p><p>把已经讲过的东西画成图：横轴是生成模型的参数 θ，黑色的实线是样本的对数似然，是我们真正最终的目标；红线和橙线对应不同推断参数的 ELBO 曲线。不同 φ 的下界不一样，曲线之间的差距就是 KL 散度，也就是不等号所在的地方。我们的目标就是让 ELBO 尽量贴近真实目标。</p><p>最后把隐变量模型小结一下：它显式引入隐变量来建模 P(X,Z)。优点是——哪怕真实数据再复杂，也可以用简单分布的组合来建模（比如多个高斯混合）；模型训练好后还能算后验，很适合无监督学习。缺点——训练计算比较难，一般情况下不能直接计算似然，得用最大化训练，这跟 AR 模型正好相反；想尽量逼近真实后验，需要通过变分推断。</p><p>到这里先休息一会儿，有问题可以来问。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>比如说蓝线，我们真实的红眼后验相对来说比较复杂。然后我们用参数化的推断分布是这样一个单模态分布，明显橙色的分布更好地拟合真实后验，它对应的代价更小一些。</p><p>黑色实线是这个样本的对数似然，我们真正最终的目标是想最大化它。还有两条线，一个红线和一个橙色的线对应着不同的参数，那相当于不同的下界是不一样的。</p><p>哪怕你的真实数据再复杂，也可以用这样简单的分布组合，比如说多个高斯混合。缺点就是首先要训练这个模型，它的计算还比较难，一般情况下不能直接计算，你可能用最大化来训练，这跟AR模型是最相反的。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-joint">
+  <div class="slides"><figure class="slide" id="slide-03">
+<img src="slides/slide_03.png" alt="课件第3页 Variational Learning：ℒ(x;θ,φ₁) 与 ℒ(x;θ,φ₂) 都是 ELBO 下界">
+<figcaption><span class="sno">03</span><span class="stitle">Variational Learning：ℒ(x;θ,φ₁) 与 ℒ(x;θ,φ₂) 都是 ELBO 下界</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>联合优化：不同 φ 的 ELBO 下界</h2>
+        <div class="sec-meta"><span class="time">00:00:00 – 00:03:12</span><span class="chip">课件 3</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>接着往下讲。刚才在第一部分我们最后得到一个关键点：想要在数据上最大化对数似然，通过联合优化来最大化下界。现在要讲的是，让参数化的推断分布尽量去拟合真实的后验，这样可以让下界更紧、更接近目标。</p><p>看这张图：横轴是生成模型参数 θ，黑色实线是这个样本的对数似然，是我们真正最终的目标；红线和橙线对应不同推断参数 φ 的 ELBO。同一张图里把另一个 φ 加进来对比——不同 φ 的下界不一样，你得到的优化参数和效果也不一样。</p><p>这里的含义很像交替优化：先用 φ₁ 优化，得到 θ 的极值点；有了 θ₁ 以后，可以用它再优化出更好的 φ₂，得到更贴近目标的 ELBO；然后再优化 θ……这样一轮一轮推进，同时 ELBO 相对变大，逐步逼近真实的对数似然。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>现在是刚才两个三个变量的图，对吧？现在把另一个新的也加进来。横轴是我们生成模型的一个参数。黑色的实线是我们这个样本的对数似然，我们真正最终的目标是想去最大化它。</p><p>还有两条线，一个红线和一个橙色的线对应着不同的参数。那相当于不同的下界，你是不一样的。你得到的一个优化的参数和效果是不一样的。</p><p>你有了一个更好的推断分布以后，你可以得到一个更好的下界。就通过这个推断分布再去优化的话，你可以得到更贴近目标的ELBO，而且同时你这个下界相对变大。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-dataset">
+  <div class="slides"><figure class="slide" id="slide-04">
+<img src="slides/slide_04.png" alt="课件第4页 Variational Learning：训练集 𝒟 上的 ELBO（数据集对数似然）">
+<figcaption><span class="sno">04</span><span class="stitle">Variational Learning：训练集 𝒟 上的 ELBO（数据集对数似然）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>数据集上的 ELBO：每个样本的后验不同</h2>
+        <div class="sec-meta"><span class="time">00:03:12 – 00:06:00</span><span class="chip">课件 4</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>刚才我们一直讨论的是某一个样本点的下界长什么样，但真实训练永远是在一个数据集上进行的。考虑一个训练集 𝒟，它的似然就是把每个样本的对数似然加起来——这个计算我们做过很多遍了。</p><p>问题在于：每个样本的对数似然下界涉及不同的分布。因为后验推断的 q 与 X 相关，每个样本 X 不同，对应的后验 q(z|x) 也不同，所以目标函数需要对每个样本的推断参数分别优化、分别求积分，对应每个样本的真实后验。</p><p>也就是说，对数据集上的联合 ELBO，虽然形式上还是求和，但每个样本项里的变分分布并不相同，不能当成一个统一的分布来处理。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>所以我们现在考虑一个训练集D。训练集的似然就是把每个样本它的对数似然给加起来。但问题是，每个样本对应的分布不同。因为后验推断的Q与X相关，既然每个样本X不同，对应的Q也不同。</p><p>因此目标函数需对每个样本的推断参数单独优化并积分，这对应每个样本的真实后验。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-amortized">
+  <div class="slides"><figure class="slide" id="slide-05">
+<img src="slides/slide_05.png" alt="课件第5页 Variational Learning：摊销推断 Amortized Inference（共享推断网络）">
+<figcaption><span class="sno">05</span><span class="stitle">Variational Learning：摊销推断 Amortized Inference（共享推断网络）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div class="sec-tt">
+        <h2>摊销推断：共享推断网络</h2>
+        <div class="sec-meta"><span class="time">00:06:00 – 00:09:00</span><span class="chip">课件 5</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>但在实际场景中，若有 M 个样本，对每组参数单独优化太慢。历史上有一些代数优化等方法，但现在已不常用；我们关注的是主流方案——摊销推断（Amortized Inference）。</p><p>摊销的直观含义是：通过重复使用某物，把成本分摊到每次使用中。比如训练一个网络——训练成本虽然较高，但推断时成本较低，测试时间成本也低。</p><p>在隐变量模型场景里，我们想用共享的推断模型代替逐样本优化：训练一个模型直接预测每个样本的最优解，而不是对每个样本单独优化。训练完成后成本被摊销，单次开销降低。这个词在很多生成模型文章里很常见，比较抽象，记住这个直观含义就行。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>若有M个样本，对每组参数单独优化太慢。历史上有一些其他的优化方法，但现在已不常用。我们关注主流方案：摊销推断。</p><p>摊销的直观含义是通过重复使用某物，将成本分摊到每次使用中，比如训练网络。虽然训练成本较高，但推断时成本较低，测试时间成本也低。</p><p>我们想用共享推断模型实现逐样本优化问题，即训练一个模型直接预测每个样本的最优解，而非对每个样本单独优化。训练完成后，成本被摊销，单次开销降低。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-training">
+  <div class="slides"><figure class="slide" id="slide-06">
+<img src="slides/slide_06.png" alt="课件第6页 Variational Learning：摊销推断的训练流程（共享参数）">
+<figcaption><span class="sno">06</span><span class="stitle">Variational Learning：摊销推断的训练流程（共享参数）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-07">
+<img src="slides/slide_07.png" alt="课件第7页 Variational Learning：训练步骤 ①初始化 ②采样数据点 ③计算 ELBO ④梯度下降">
+<figcaption><span class="sno">07</span><span class="stitle">Variational Learning：训练步骤 ①初始化 ②采样数据点 ③计算 ELBO ④梯度下降</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">08</span>
+      <div class="sec-tt">
+        <h2>训练流程与 EM 算法的对比</h2>
+        <div class="sec-meta"><span class="time">00:09:00 – 00:15:00</span><span class="chip">课件 6</span><span class="chip">课件 7</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>接下来展示模型最终如何训练，不讲解过程细节，直接给出结论。目标是在数据集上最大化对数似然，需要两个参数：生成模型参数 θ 和推断参数 φ。此时 ELBO 可以写成合并的形式。</p><p>计算方法在机器学习领域已经标准化：①初始化 θ₀、φ₀；②从数据集中随机采样一个数据点 xᵢ；③计算 ELBO；④求梯度并更新参数，通过梯度下降优化。</p><p>有一个问题值得对比：为什么之前讲的 EM 算法是交替优化过程，这里却能直接联合优化？EM 算法是计算每个样本的真实隐变量过程，再更新参数，交替进行；理论上它能保证每次优化目标函数不下降，某些实现下似然还会上升、效果更好。但 EM 的计算代价与梯度下降不同。现在更主流的是直接对 ELBO 做梯度下降联合优化。</p><p>讲 VAE 之前再说一句：从 AR 模型一路推导到隐变量模型，是想让大家理解这些模型不是孤立的，可以统一建模、联合求解；后面介绍 VAE 时就会看到它和自编码器、和前面推导的联系。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>接下来展示模型最终如何训练，不讲解过程细节，直接给出结论。我们的目标是在数据集上最大化对数似然，需要两个参数：生成模型参数和推断参数。</p><p>计算方法在机器学习领域已标准化：先初始化，从数据中随机采样点，计算下界后求梯度并更新参数，通过梯度下降优化。</p><p>EM算法就是计算每个样本的真实隐变量过程，再去更新参数。这样用交替优化方法理论上更好，能保证每次优化目标函数不下降。不过EM算法计算代价跟梯度下降不一样。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-vae-perspective">
+  <div class="slides"><figure class="slide" id="slide-08">
+<img src="slides/slide_08.png" alt="课件第8页 VAE：隐变量模型的自编码器视角">
+<figcaption><span class="sno">08</span><span class="stitle">VAE：隐变量模型的自编码器视角</span></figcaption>
+</figure>
+<figure class="slide" id="slide-09">
+<img src="slides/slide_09.png" alt="课件第9页 VAE：编码器 qφ(z|x)——摊销推断网络">
+<figcaption><span class="sno">09</span><span class="stitle">VAE：编码器 qφ(z|x)——摊销推断网络</span></figcaption>
+</figure>
+<figure class="slide" id="slide-10">
+<img src="slides/slide_10.png" alt="课件第10页 VAE：ELBO(θ,φ) 的目标拆解">
+<figcaption><span class="sno">10</span><span class="stitle">VAE：ELBO(θ,φ) 的目标拆解</span></figcaption>
+</figure>
+<figure class="slide" id="slide-11">
+<img src="slides/slide_11.png" alt="课件第11页 VAE：重构损失 Reconstruction Loss">
+<figcaption><span class="sno">11</span><span class="stitle">VAE：重构损失 Reconstruction Loss</span></figcaption>
+</figure>
+<figure class="slide" id="slide-12">
+<img src="slides/slide_12.png" alt="课件第12页 VAE：正则化损失 Regularization Loss">
+<figcaption><span class="sno">12</span><span class="stitle">VAE：正则化损失 Regularization Loss</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">09</span>
+      <div class="sec-tt">
+        <h2>VAE：自编码器视角与目标拆解</h2>
+        <div class="sec-meta"><span class="time">00:15:00 – 00:20:15</span><span class="chip">课件 8</span><span class="chip">课件 9</span><span class="chip">课件 10</span><span class="chip">课件 11</span><span class="chip">课件 12</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>现在介绍 VAE 与自编码器的联系。之前讲过自编码器（AE）的结构：输入 X 经过编码器、解码器输出重构数据。但直接这样用，目标函数缺一项——需要通过一个简单的数学变换，把 ELBO 与自编码器的目标建立联系。</p><p>把 ELBO 拆成两项，分别对应不同含义。第一项是重构（重建）损失：在推断出来的隐变量分布下，最大化输出样本的对数似然——给定编码器输出的分布，求 X 的似然并最大化。第二项是正则化损失：让推断分布 q 尽量接近先验 p(z)，最小化这个距离。这两项就是从推导步骤来的：一项最大化似然，一项最小化与先验的距离。</p><p>第一项具体怎么实现，跟 p(x|z) 的建模方式有关：如果 p(x|z) 建模成高斯分布，最大化对数似然化简之后就是最小化输出样本与输入的差——即重构误差（MSE）；建模成伯努利等其他分布，实现方式就不同。不是非得沿用 AE 的重构误差，用似然约束只是它最自然的对应。</p><p>第二项的物理意义：正则化推断空间。如果没有这一项，每个样本可以被编码成任意值，隐空间没有约束。更直观的理解是：如果推断结果与先验距离很近，学习到的隐空间分布就是那个先验；采样时可以直接从先验分布开始。生成模型包含编码器和解码器两部分：生成时采样潜在变量送入解码器；训练时编码器把样本映射为隐变量，解码器重构数据并计算损失。这就是 VAE 的基本训练流程，但如何从隐空间采样还有问题，后面专门讲。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>之前讲过AE结构：输入X经编码器、解码器输出重构数据。但目标函数缺项，需通过简单变化建立模型联系。将目标函数拆分为两项，分别对应不同含义。</p><p>第一项是重建损失，即给定隐变量分布最大化输出样本的对数似然。第二项要正则化，直观看，推断分布距先验要接近，我们要最小化该距离。</p><p>若推断结果与先验距离很近，则学习到的隐空间分布即为该先验。采样时可直接从先验分布开始。生成时需采样潜在变量送入解码器，训练时编码器将样本映射为隐变量，通过解码器重构数据并计算损失。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-vae-train">
+  <div class="slides"><figure class="slide" id="slide-13">
+<img src="slides/slide_13.png" alt="课件第13页 VAE：训练步骤 ①取数据点 ②采样 ẑ ③过解码器 ④更新参数">
+<figcaption><span class="sno">13</span><span class="stitle">VAE：训练步骤 ①取数据点 ②采样 ẑ ③过解码器 ④更新参数</span></figcaption>
+</figure>
+<figure class="slide" id="slide-14">
+<img src="slides/slide_14.png" alt="课件第14页 VAE：高斯编码器输出 μ 与 σ（从中采样）">
+<figcaption><span class="sno">14</span><span class="stitle">VAE：高斯编码器输出 μ 与 σ（从中采样）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-15">
+<img src="slides/slide_15.png" alt="课件第15页 VAE：完整训练流程图">
+<figcaption><span class="sno">15</span><span class="stitle">VAE：完整训练流程图</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">10</span>
+      <div class="sec-tt">
+        <h2>VAE 训练流程与高斯编码器</h2>
+        <div class="sec-meta"><span class="time">00:20:15 – 00:26:34</span><span class="chip">课件 13</span><span class="chip">课件 14</span><span class="chip">课件 15</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>VAE 的基本训练流程：①取一个数据点 xᵢ；②把它映射成 ẑ——从编码器 qφ(z|x) 采样得到；③把 ẑ 送入解码器，计算 log pθ(xᵢ|ẑ)；④计算 ELBO，用梯度下降更新 θ 和 φ。</p><p>如果 qφ(z|x) 建模成高斯分布，编码器就直接输出均值 μ 和方差 σ，预测高斯分布的参数；得到高斯分布后，从里面采样得到 ẑ。除了高斯，隐变量也可以建模成伯努利等其他分布，具体由任务决定。</p><p>编码器就是推断网络：训练时把样本映射为隐变量；解码器重构数据并计算损失。刚才写出了 VAE 的训练过程，解释了编码、采样及输出衡量——但采样操作不可导，怎么用梯度下降训练？这是接下来要解决的问题。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>你可以用编码器直接输出均值和方差，去预测高斯分布的参数。得到高斯分布后，可从中采样。除了高斯分布，也可建模为伯努利分布等其他分布，具体任务决定分布选择。</p><p>刚才写出了VAE的训练过程，解释了编码、采样及输出衡量。但采样操作不可导，如何通过梯度下降训练？给定X得到均值和方差，形成分布并采样。为解决不可导问题，下面讲解重参数化技巧。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-reparam">
+  <div class="slides"><figure class="slide" id="slide-16">
+<img src="slides/slide_16.png" alt="课件第16页 Re-parameterization Trick：给定高斯 q(z|x)，采样 z∼q(z|x)">
+<figcaption><span class="sno">16</span><span class="stitle">Re-parameterization Trick：给定高斯 q(z|x)，采样 z∼q(z|x)</span></figcaption>
+</figure>
+<figure class="slide" id="slide-17">
+<img src="slides/slide_17.png" alt="课件第17页 Re-parameterization Trick：重参数化图解（jeremyjordan）">
+<figcaption><span class="sno">17</span><span class="stitle">Re-parameterization Trick：重参数化图解（jeremyjordan）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-18">
+<img src="slides/slide_18.png" alt="课件第18页 Re-parameterization Trick：重参数化图解（续）">
+<figcaption><span class="sno">18</span><span class="stitle">Re-parameterization Trick：重参数化图解（续）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-19">
+<img src="slides/slide_19.png" alt="课件第19页 Re-parameterization Trick：目标函数不显式依赖 φ（重参数化后可求梯度）">
+<figcaption><span class="sno">19</span><span class="stitle">Re-parameterization Trick：目标函数不显式依赖 φ（重参数化后可求梯度）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">11</span>
+      <div class="sec-tt">
+        <h2>重参数化技巧：让采样可微</h2>
+        <div class="sec-meta"><span class="time">00:26:34 – 00:33:44</span><span class="chip">课件 16</span><span class="chip">课件 17</span><span class="chip">课件 18</span><span class="chip">课件 19</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>训练过程解释了编码、采样、输出衡量，但采样这个操作不可导，没法直接做梯度下降。解决办法就是重参数化技巧（Re-parameterization Trick）。</p><p>以高斯分布为例：编码器参数化为均值 μ 和方差 σ，原本的采样 z∼N(μ,σ²) 改成 ε∼N(0,1)、z = μ + σε。这样随机性被移到外部变量 ε 上，反向传播就能顺利更新编码器的参数。</p><p>从图的角度解释：不重参数化时，直接对含随机性的节点求导，梯度无法回传；重参数化之后，随机变量变成确定性变换，梯度可以顺利通过计算图更新。</p><p>从公式的角度也可以理解：如果直接从 qφ(z|x) 采样，目标函数其实跟 φ 没有显式关系——采样点与 φ 无关，φ 进不了目标；重参数化以后，期望变成对固定噪声分布 ε 的期望，φ 通过 μ、σ 进入目标函数，梯度就可以回传了。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>以高斯分布为例，将编码器参数化为均值和方差，通过重参数化实现可微采样。从标准高斯分布采样，乘以标准差再加上均值，这样可将随机性移至外部变量，使反向传播能顺利更新编码器参数。</p><p>若不用重参数化技巧，直接对含随机性的节点求导会导致梯度无法回传。使用重参数化后，随机变量变为确定性变换，梯度可顺利通过计算图更新。</p><p>如果你直接从qφ(z|x)采样，那你的目标函数其实是跟你的参数没有什么关系的。通过重参数化，我们可以把求期望变成对固定噪声分布的期望，梯度就能回传了。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-latent-space">
+  <div class="slides"><figure class="slide" id="slide-20">
+<img src="slides/slide_20.png" alt="课件第20页 生成隐空间：VAE 的推断与生成（先验 p(z)、条件 pθ(x|z)）">
+<figcaption><span class="sno">20</span><span class="stitle">生成隐空间：VAE 的推断与生成（先验 p(z)、条件 pθ(x|z)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-21">
+<img src="slides/slide_21.png" alt="课件第21页 生成隐空间：哪项目标贡献生成能力（重构损失 vs 正则化损失）">
+<figcaption><span class="sno">21</span><span class="stitle">生成隐空间：哪项目标贡献生成能力（重构损失 vs 正则化损失）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-22">
+<img src="slides/slide_22.png" alt="课件第22页 生成隐空间：普通自编码器只做重构（它是生成模型吗？）">
+<figcaption><span class="sno">22</span><span class="stitle">生成隐空间：普通自编码器只做重构（它是生成模型吗？）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-23">
+<img src="slides/slide_23.png" alt="课件第23页 生成隐空间：普通自编码器的隐空间分析（训练编码点 vs 随机采样）">
+<figcaption><span class="sno">23</span><span class="stitle">生成隐空间：普通自编码器的隐空间分析（训练编码点 vs 随机采样）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">12</span>
+      <div class="sec-tt">
+        <h2>生成隐空间：为什么普通 AE 不能生成</h2>
+        <div class="sec-meta"><span class="time">00:33:44 – 00:47:00</span><span class="chip">课件 20</span><span class="chip">课件 21</span><span class="chip">课件 22</span><span class="chip">课件 23</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>最后看生成隐空间。VAE 的推断与生成：生成时从先验 p(z) 采样潜在变量，送入条件分布 pθ(x|z) 的解码器得到样本。那么哪项目标贡献了 VAE 的生成能力？对比重构损失和正则化损失——重构损失只保证重建效果，真正让隐空间变得可生成的，是正则化损失。</p><p>为什么需要正则项？从直观上讲，它会让编码器输出的分布与先验分布一致：比如先验 p(z) 是标准正态分布，最优化之后编码器的输出也近似标准正态。如果完全是标准正态，那就不含 X 的信息；只有编码器分布与先验分布近似时，才能放心采样并使用这个网络。</p><p>那如果没有这一项、只优化重构误差会怎样？这就是普通自编码器（Vanilla AE）。它算生成模型吗？训练时解码器只见过训练样本的编码点；训练完后想用解码器生成新样本，你要给它一个什么样的值？生成时输入的随机噪声，应该接近训练时见过的分布——如果随便从标准正态分布里采一个 z 送进去，解码器没见过这种输入，生成的就是无效样本。</p><p>换句话说，普通 AE 的隐空间是有问题的：训练数据的编码点分布和随机采样的 codes 分布不匹配，解码器只学会重建「见过的点」。怎么把隐空间修好、让普通 AE 变成能生成——比如把编码点延展成区域、加入先验约束——这部分下节课会详细讲。大家有问题下课可以来问。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>为什么会这样？为什么需要这一项？这一项会导致一个效果：最优化时，让编码器输出的分布和某先验分布一致。比如先验是标准正态分布，通过最优化，编码器的输出也应近似标准正态分布。</p><p>若没有这一项，只去优化重构误差会怎样？假设使用普通AE，普通AE能用来生成吗？训练完后，若想用解码器生成新样本，此时应给什么值？</p><p>生成新样本时，输入的随机噪声应接近训练时见过的分布。否则无法从标准正态分布中采样并生成有效样本。这个地方我们下节课会主要详细讲一下隐空间怎么实现，或者它的性质是什么。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（生成式模型与科学智能应用）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>
