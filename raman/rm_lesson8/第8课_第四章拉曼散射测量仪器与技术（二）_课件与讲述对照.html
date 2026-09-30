@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>显微共焦拉曼光谱学 · 第8节 第四章 拉曼散射测量仪器与技术（二）：仪器结构、激光器与滤光片、光栅与探测器｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.videos{margin-top:14px;border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.video + .video{border-top:1px solid #e4e9f0;}
+.videos h4{font-size:12.5px;font-weight:700;color:#0a1f38;background:#f2f5f9;padding:8px 12px;border-bottom:1px solid #e4e9f0;}
+.videos video{display:block;width:100%;max-height:460px;background:#0b0f14;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>显微共焦拉曼光谱学 · 第8节 第四章 拉曼散射测量仪器与技术（二）：仪器结构、激光器与滤光片、光栅与探测器</h1>
+    <div class="sub">第8节 第四章 拉曼散射测量仪器与技术（二）：仪器结构、激光器与滤光片、光栅与探测器 ｜ 2026-09-29 ｜ 谭平恒</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 51 页 · 整理 20 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-structure">01 拉曼光谱仪的结构和组成</option>
+<option value="sec-laser-kinds">02 激光器种类与波段覆盖</option>
+<option value="sec-laser-history">03 激光发展简史</option>
+<option value="sec-laser-principle">04 激光原理：受激辐射与粒子数反转</option>
+<option value="sec-cavity">05 谐振腔与纵模横模</option>
+<option value="sec-laser-output">06 激光输出条件与激光特性</option>
+<option value="sec-laser-species">07 激光器分类与选购参数</option>
+<option value="sec-laser-raman-params">08 用于拉曼的激光器参数</option>
+<option value="sec-mirror-coating">09 反射镜与光学镀膜</option>
+<option value="sec-beamsplitter">10 分束器与中性密度滤光片</option>
+<option value="sec-long-short-pass">11 长通与短通滤光片</option>
+<option value="sec-bandpass">12 带通滤光片</option>
+<option value="sec-edge-filter">13 拉曼边缘滤光片</option>
+<option value="sec-edge-bandpass-combo">14 边缘滤光片与带通滤光片联用</option>
+<option value="sec-notch-angle">15 陷波滤光片与角度依赖性</option>
+<option value="sec-configurations">16 滤光片三种配置与激光滤除元件</option>
+<option value="sec-filter-lifetime">17 滤光片过滤效果及寿命</option>
+<option value="sec-dispersion">18 波长色散系统与光栅</option>
+<option value="sec-resolution">19 光谱仪分辨率与高刻线极限</option>
+<option value="sec-detector">20 光电探测器与收集系统</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 Ch4-拉曼散射测量仪器与技术-2026秋.pdf 逐页渲染，转写原文见 record_20260929.txt。</div>
+<section class="sec" id="sec-structure">
+  <div class="slides"><figure class="slide" id="slide-369">
+<img src="slides/slide_369.png" alt="课件第369页 现代显微拉曼光谱仪">
+<figcaption><span class="sno">369</span><span class="stitle">现代显微拉曼光谱仪</span></figcaption>
+</figure>
+<figure class="slide" id="slide-370">
+<img src="slides/slide_370.png" alt="课件第370页 现代显微拉曼光谱仪示意图（光谱仪+激光+针孔+光栅）">
+<figcaption><span class="sno">370</span><span class="stitle">现代显微拉曼光谱仪示意图（光谱仪+激光+针孔+光栅）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-371">
+<img src="slides/slide_371.png" alt="课件第371页 现代显微拉曼光谱仪结构和功能示意图">
+<figcaption><span class="sno">371</span><span class="stitle">现代显微拉曼光谱仪结构和功能示意图</span></figcaption>
+</figure>
+<figure class="slide" id="slide-372">
+<img src="slides/slide_372.png" alt="课件第372页 现代显微拉曼光谱仪示意图">
+<figcaption><span class="sno">372</span><span class="stitle">现代显微拉曼光谱仪示意图</span></figcaption>
+</figure>
+<figure class="slide" id="slide-373">
+<img src="slides/slide_373.png" alt="课件第373页 拉曼光谱仪元件及相关原理和概念（激光器/光学元件/探测器）">
+<figcaption><span class="sno">373</span><span class="stitle">拉曼光谱仪元件及相关原理和概念（激光器/光学元件/探测器）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>拉曼光谱仪的结构和组成</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 369</span><span class="chip">课件 370</span><span class="chip">课件 371</span><span class="chip">课件 372</span><span class="chip">课件 373</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>上节课讲了拉曼光谱的发展史：以前测量需要数十小时，信号还很微弱；现在只要毫秒就能得到高质量的光谱。大家测硅的时候看到，拉曼信号并不强，一毫秒就能测出来但信噪比差；测一秒信噪比就足够好了。随着显微技术、激光和 CCD 的发现，拉曼光谱仪性能飞速进步，空间分辨率可达到微米级，普通单光栅光谱仪低波数甚至能测到几个波数，这在以前是不可想象的——相关局限性现在已经克服了。</p><p>讲完发展史，下面讲拉曼光谱仪的结构和组成。典型的现代显微拉曼光谱体系由四部分组成：激发系统（激光器加纯化元件）、样品系统（显微镜）、波长色散系统、数据处理系统（探测器加计算机）。既然是显微，显微镜不可避免——显微镜能达到的空间分辨率大约 1 微米，这是衍射极限；要真正达到纳米级，就要用针尖增强。</p><p>显微物镜在这套系统里起到关键作用：它既把激光聚焦到样品上，又把拉曼散射光收集起来，通过拉曼滤光片之后聚焦到探测器。这里有个小插曲：很多时候探测器标准里不含计算机——因为科研机构免税买设备，税检时人家会问：你这里头怎么有台独立的计算机？你得证明它属于拉曼光谱仪，把光谱仪、显微镜、计算机写进报价单。做事要讲理，发论文给结论也要有支撑证据和材料。</p><p>整个光路是：激光器→激光纯化→（经显微物镜）聚焦到样品→收集散射光→拉曼滤光片滤除激光→波长色散（凹面镜光栅把不同波长的光分开）→CCD 不同位置记录→数据处理。CCD 横向位移代表波长位置，每个位置的强度就代表这个波长的光强。多数拉曼系统都是这种光路结构：这里是垂直入射，针对拉曼样品；如果用 45 度分光，结构虽简单但光路难调，而这种结构的光路是特调的。</p><p>接下来讲拉曼光谱仪的元件、原理及概念：激光器（原理、谐振腔、模式、单纵模、气体液体固体激光器、染料激光器）、光学元件（反射镜、透镜、光栅、全息光栅、滤波器、偏振元件，波长与偏振响应）、探测器（光电倍增管、多通道探测器）和显微镜（成像系统、共焦设计、照明系统）。测拉曼光谱时任何环节出错都会影响结果：比如有人没打开挡板测不到信号；光栅切换后位置没归零，用 536nm 激光测肯定测不到；用紫外物镜测可见光，镀膜使可见光透过率只有约 25%，激光穿过物镜损失 75%，拉曼信号再穿一次又只剩 20%，最后信号只剩 0.25×0.25=6.25%，性能下降约 94%，弱信号就测不出了。遇到这类问题，顺着光路一步步检查；脑海里要有架构图，遇事不慌，胸有成竹地慢慢分析。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>拉曼光谱仪由激发系统、样品系统、色散系统和数据处理系统构成。既然是显微，显微镜不可避免。显微镜所能够达到的空间分辨率也就是1微米，这是衍射极限。但如果真正要达到纳米级，就要使用针尖增强。</p><p>显微物镜能够把激光聚焦到样品，同时把拉曼散射光收集起来。然后通过拉曼滤光片之后聚焦到探测器。</p><p>单色光过完光栅后，分成两种不同颜色的光。光纤把不同波长的光分开，分开后打到CCD不同点，记录位置。每个波长的位置带上强度，CCD横向位移代表位置，光信号转换成电信号。</p><p>蓝色是拉曼光，现在的拉曼系统定这4部分：激发、样品、波长色散和数据处理系统。数据处理系统是海量计算系统，需计算机传输。</p><p>若用紫外物镜，其镀膜使紫外光透过率高，但可见光透过率低。假设可见光透过率仅25%，激光穿过物镜到样品损失75%。拉曼信号再穿过物镜只剩20%。最终信号强度为0.25×0.25=0.0625，即6.25%。性能下降约94%，弱信号将无法检测。</p><p>脑海中要有架构图，遇事不慌，胸有成竹地慢慢分析。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-laser-kinds">
+  <div class="slides"><figure class="slide" id="slide-374">
+<img src="slides/slide_374.png" alt="课件第374页 激光器种类（光学混频、拉曼激光器、OPO 等）">
+<figcaption><span class="sno">374</span><span class="stitle">激光器种类（光学混频、拉曼激光器、OPO 等）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-375">
+<img src="slides/slide_375.png" alt="课件第375页 激光器种类：单波长激光器与可调谐激光器">
+<figcaption><span class="sno">375</span><span class="stitle">激光器种类：单波长激光器与可调谐激光器</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>激光器种类与波段覆盖</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 374</span><span class="chip">课件 375</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>激光器种类繁多且应用广泛，比如光纤通信、天文望远镜定位都用激光；波长范围从 100 纳米到 100 微米。激光器分两大类：单频/单波长激光器和可调谐激光器。单波长系统包含气体、半导体、固态激光器等，波段覆盖从 200 多纳米到远红外。</p><p>频谱里存在空白区域：694nm 的红宝石激光器是最早发现的激光器，但 694nm 到 800 多纳米这一段基本没有单波长激光器（785nm 的激光器存在但没画出来）；400nm 左右及后续段落也没有单波长激光器。这些空白由可调谐激光器填补。</p><p>测原子位置或系统能级要用共振拉曼：共振要求激光能量与系统能级匹配，而系统能级未知时无法匹配，因此需要可调谐激光器。可调谐激光器中最多的是染料激光器，但使用麻烦还有毒，染料干了要清洗才能再用。对土豪来说，一个波段配一个激光器可行；对绝大多数人不现实。目前流行的可调谐介质是钛宝石（范围 700~1000nm），有德国公司用超快激光器激发超辐射再选模，能从 400 多纳米覆盖到 1000 纳米，但中间可能缺几条线。一套可调谐激光器超过 160 纳米，价格可能是 150 万人民币。激光器很重要，也很贵。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>激光器种类繁多且应用广泛，如光纤和天文望远镜定位。其波长范围从100纳米到100微米。激光器分为单频、单波长和可调谐两大类。单波长系统包含气体、半导体及固态激光器等。其波段覆盖200多纳米至远红外。</p><p>频谱中存在空白区域。例如694nm的红宝石激光器是最早发现的激光器。从694nm到800多nm这一段基本没有单品激光器。785nm的激光器存在但未画出。400nm左右及后续段落也没有激光器。但存在可调谐激光器。</p><p>目前流行的激光介质多是钛宝石，范围是700~1000nm。一家德国激光器公司在此做了创新，能够用超快激光器激发出超辐射信号，再选模出来。它能够实现从400多纳米一直到1000纳米，但中间可能缺好几条线。一般来说，一套可调谐激光器超过160纳米，价格可能是150万人民币。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-laser-history">
+  <div class="slides"><figure class="slide" id="slide-376">
+<img src="slides/slide_376.png" alt="课件第376页 激光发展简史：物理-技术-物理">
+<figcaption><span class="sno">376</span><span class="stitle">激光发展简史：物理-技术-物理</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>激光发展简史</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 376</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>激光的发展从物理、原理、技术等几个方面看：1860 年麦克斯韦建立光的电磁理论；1900 年普朗克提出能量子假说；1905 年爱因斯坦提出光量子理论（后来还提出黑体辐射理论）；1960 年发明了第一台微波激射器，随后发明了固体激光器、红宝石激光器。</p><p>红宝石激光器是第一个发现的，波长 694nm。我读书的时候觉得它很好做、波长也不错，但现在市场上已经买不到红宝石激光器了——它没有多少优势。后来激光有了一系列应用，包括用于拉曼光的测量。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>讲激光发展的历史，从物理、原理、技术等五个方面，包括麦克斯韦提出了光的电磁理论，普朗克提出了量子假说，爱因斯坦提出了光能量子理论和黑体辐射理论。1960年发明了第一台微波激射器，随后发明了固体激光器、红宝石激光器。</p><p>现在大学有很多人用红宝石激光器做实验。我当时读的时候，觉得红宝石激光器是第一个发现的，很好做，而且波长是690多纳米，挺不错。但是现在去市场上买不到红宝石激光器，它没有多少优势。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-laser-principle">
+  <div class="slides"><figure class="slide" id="slide-377">
+<img src="slides/slide_377.png" alt="课件第377页 激光器的工作原理：受激吸收和自发辐射">
+<figcaption><span class="sno">377</span><span class="stitle">激光器的工作原理：受激吸收和自发辐射</span></figcaption>
+</figure>
+<figure class="slide" id="slide-378">
+<img src="slides/slide_378.png" alt="课件第378页 激光器的工作原理：受激辐射（产生激光的基础）">
+<figcaption><span class="sno">378</span><span class="stitle">激光器的工作原理：受激辐射（产生激光的基础）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-379">
+<img src="slides/slide_379.png" alt="课件第379页 如何使受激辐射占优势：普通光源 vs 激光光源">
+<figcaption><span class="sno">379</span><span class="stitle">如何使受激辐射占优势：普通光源 vs 激光光源</span></figcaption>
+</figure>
+<figure class="slide" id="slide-380">
+<img src="slides/slide_380.png" alt="课件第380页 粒子数反转（玻耳兹曼分布）">
+<figcaption><span class="sno">380</span><span class="stitle">粒子数反转（玻耳兹曼分布）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-381">
+<img src="slides/slide_381.png" alt="课件第381页 如何实现粒子数反转：泵浦源与工作物质">
+<figcaption><span class="sno">381</span><span class="stitle">如何实现粒子数反转：泵浦源与工作物质</span></figcaption>
+</figure>
+<figure class="slide" id="slide-382">
+<img src="slides/slide_382.png" alt="课件第382页 工作物质（激活介质）的特点与选择">
+<figcaption><span class="sno">382</span><span class="stitle">工作物质（激活介质）的特点与选择</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>激光原理：受激辐射与粒子数反转</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 377</span><span class="chip">课件 378</span><span class="chip">课件 379</span><span class="chip">课件 380</span><span class="chip">课件 381</span><span class="chip">课件 382</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>激光器的理论涉及三个基本过程。受激吸收：能态 E1 的原子受到频率 ν 的外来光激发，吸收能量跃迁到高能态 E2。自发辐射：高能态 E2 的原子无外界刺激，自发向低能态 E1 跃迁，发出非相干光子。受激辐射：能态 E2 的原子受到外来光子激励，跃迁到 E1 并同时放射出频率相同的光子——受激辐射是产生激光的基础。</p><p>普通光源发光机制是自发辐射占优势；激光光源要求受激辐射占优势，此时可以实现光放大。要做到这一点，需要粒子数反转：在温度不太低的平衡态，原子数目按能级服从玻耳兹曼分布，上能级粒子数少于下能级；要产生激光，必须让上能级粒子数大于下能级，即实现粒子数反转。</p><p>实现粒子数反转需要足够的外激励能源——泵浦源。电光泵浦效率最高，比如半导体激光器直接把电能转成光能。以 532nm 激光为例：常用 808nm 泵浦 1064nm 固体激光，再经倍频产生 532nm 光。系统至少需要三能级结构，并配备谐振腔。工作物质（激活介质）要求光学透明性好、有亚稳态能级，便于实现粒子数反转。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>激光器的理论，有受激吸收和自发辐射，这些就不用讲了。受激辐射需满足粒子数反转，即上能级粒子数大于下能级。需通过泵浦将粒子激发至上能级。</p><p>以532nm激光为例，常用808nm泵浦1064nm固体激光，再经倍频产生532nm光。系统至少需三能级结构，并配备谐振腔以提供方向性和相干性，逐步增强形成激光。</p><p>电光泵浦效率最高，如半导体激光器可将电能直接转为光能。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-cavity">
+  <div class="slides"><figure class="slide" id="slide-383">
+<img src="slides/slide_383.png" alt="课件第383页 光学谐振腔的作用与组成">
+<figcaption><span class="sno">383</span><span class="stitle">光学谐振腔的作用与组成</span></figcaption>
+</figure>
+<figure class="slide" id="slide-384">
+<img src="slides/slide_384.png" alt="课件第384页 谐振腔的纵模和横模（驻波条件）">
+<figcaption><span class="sno">384</span><span class="stitle">谐振腔的纵模和横模（驻波条件）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-385">
+<img src="slides/slide_385.png" alt="课件第385页 谐振腔的横模（基模与高阶横模）">
+<figcaption><span class="sno">385</span><span class="stitle">谐振腔的横模（基模与高阶横模）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-386">
+<img src="slides/slide_386.png" alt="课件第386页 增益系数：增益与损耗">
+<figcaption><span class="sno">386</span><span class="stitle">增益系数：增益与损耗</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>谐振腔与纵模横模</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 383</span><span class="chip">课件 384</span><span class="chip">课件 385</span><span class="chip">课件 386</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>光学谐振腔的作用：一是对方向进行选择（平行轴线的光放大），使激光具有极好的方向性；二是来回反射多次利用工作物质放大，形成强光；三是腔内形成驻波的光被放大，使激光具有极好的单色性（相干性）。谐振腔一般由两个反射镜组成：一个是全反射镜，另一个部分透过（部分反射），激光从部分反射镜输出。</p><p>谐振腔的纵模：若光子在谐振腔中稳定存在，波长需满足驻波条件，2nl = kλ。只有满足驻波条件的波长才能稳定振荡，形成纵模。激光还有横向驻波模式——横模：基模是轴对称分布，还有高阶横模。目前更关注单纵模及单频激光器，许多产品具备相关特性。</p><p>激光在腔内来回传播，同时存在增益（光放大）和损耗（反射镜的吸收散射衍射透射、工作物质杂质吸收和散射、有限孔径衍射等）。要形成稳定输出，增益必须大于损耗。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>谐振腔由全反射和部分反射镜组成，决定激光模式，包括纵模和横模。目前更关注单纵模及单频激光器。因为有谐振腔，激光在腔内来回传播。它既有增益又有损耗，要形成稳定输出，增益必须大于损耗。</p><p>激光器的基本结构和工作原理：3、谐振腔（续）：a) 若光子在谐振腔中稳定存在，波长需要满足驻波条件：2nl=kλ，k=1,2,3…</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-laser-output">
+  <div class="slides"><figure class="slide" id="slide-387">
+<img src="slides/slide_387.png" alt="课件第387页 总结：如何实现激光的输出">
+<figcaption><span class="sno">387</span><span class="stitle">总结：如何实现激光的输出</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>激光输出条件与激光特性</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 387</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>实现激光输出的基本条件：一是实现粒子数反转；二是满足阈值条件，增益大于损耗。激光具有相干性、单色性、方向性和高亮度。几十瓦的灯向四面八方发光，而几毫瓦的激光聚焦在 1mm 点上，亮度非常高——激光方向性好，能量高度集中。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>实现激光输出，首先要实现粒子数反转，另外要增益大于损耗。这是激光产生的基本条件。激光具有相干性、单色性、方向性和高亮度。几十瓦的灯向四面八方发光，而几毫瓦的激光聚焦在1mm点上，亮度非常高。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-laser-species">
+  <div class="slides"><figure class="slide" id="slide-388">
+<img src="slides/slide_388.png" alt="课件第388页 激光器种类：按工作物质分类（固体/气体/液体/半导体）">
+<figcaption><span class="sno">388</span><span class="stitle">激光器种类：按工作物质分类（固体/气体/液体/半导体）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-389">
+<img src="slides/slide_389.png" alt="课件第389页 激光器参数：方向性好（发散角、高斯光束、M²因子）">
+<figcaption><span class="sno">389</span><span class="stitle">激光器参数：方向性好（发散角、高斯光束、M²因子）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div class="sec-tt">
+        <h2>激光器分类与选购参数</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 388</span><span class="chip">课件 389</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>按工作物质分类：固体激光器在基质（玻璃、晶体）中掺稀土元素，成本较低、功率可以很大，如钕玻璃 1060nm、掺钕钇铝石榴石 1064nm，可通过倍频产生各种波长，也可用可调谐钛宝石激光器。气体激光器分原子气体（氦氖，线宽窄、成本低、稳定性好，实验室的能用近 20 年）、分子气体（CO2 常用于红外波段，功率可以做得很大——我导师实验室有个 CO2 激光器，一不小心把窗帘烧了，激光太强）、离子气体（早期用得特别多，线宽窄、功率大、波长多，氩离子激光器我见过最多 4 个波长；但多波长激光器功率低，632.8nm 可能就 7mW，593nm 只有 0.1~0.2mW，用 0.1~0.2mW 也能测出非常漂亮的谱）。液体激光器（染料）之前说过；还有半导体激光器：体积小、寿命长，但单色性不是特别好、谱线比较宽，对温度要求不高。</p><p>按工作方式分连续式和脉冲式：脉冲激光峰值功率非常强，神光级别的激光出来一次啪一下，强度太高。按波长分类有紫外、可见光、亚毫米激光器，还有可调谐激光器。</p><p>买激光器时关注哪些参数？第一是方向性，用发散角判断。激光一般是高斯光束，有束腰，之后就是发散角。注意半角跟全角：全角是半角的两倍，参数表里写的是全角还好，如果写的是半角，你得把它扩大一倍——方向镜一看角度很小很好，但如果是半角，性能就不一定好。第二是单色性，与相干性相关，可看相干长度（相干长度可以几十千米，但做拉曼相干长度几米就够用）。第三是高亮度，更多指功率，一般 10mW 级别，50mW 已通用。</p><p>样品对激光波长敏感：二维材料用 457nm 零点几毫瓦就烧了；换 785nm，几十毫瓦也烧不了。关键看波长，可见光买大功率意义不大；若是红外光，买 100mW 还可以，不易烧毁。500mW 就要衰减了，衰减方式有吸收式和反射式——吸收式加热平衡失效，反射式杂散光增多信噪比变差。所以一般买 10~50mW 就足够了，太多反而麻烦。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>激光器按工作物质分为固体、气体、液体和半导体激光器。固体激光器成本较低，如1064nm激光，可通过倍频产生各种波长。氦氖激光器线宽窄、成本低、稳定性好，实验室用的钛宝石激光器可用近20年。二氧化碳激光器常用于红外波段，功率可以做得很大。</p><p>半导体激光器体积小、寿命长。但它的单色性不是特别好，谱线比较宽。但是对温度这个要求不高。另外按工作方式，有连续式的、有脉冲式的。脉冲激光的话，它的峰值功率非常强。</p><p>判断方向性好不好，用它的发散角。我们的激光一般都是高斯光束，高斯光束它有个束腰，这后面就是它的发散角。大家注意参数的时候，要注意到半角跟全角。全角是半角的两倍。</p><p>二维材料用457nm，零点几毫瓦就烧；转785nm，几十毫瓦也烧不了。关键看波长，可见光买大功率意义不大。若是红外光，买100mW还可以，不易烧毁。若达到500mW就要衰减，不然会烧毁样品或测不出信号。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-laser-raman-params">
+  <div class="slides"><figure class="slide" id="slide-390">
+<img src="slides/slide_390.png" alt="课件第390页 激光器用于拉曼光谱的重要参数（波长/功率/线宽/光束质量/偏振）">
+<figcaption><span class="sno">390</span><span class="stitle">激光器用于拉曼光谱的重要参数（波长/功率/线宽/光束质量/偏振）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">08</span>
+      <div class="sec-tt">
+        <h2>用于拉曼的激光器参数</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 390</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>用于拉曼的激光器参数：一是波长，与拉曼散射效率有关，呈波长四次方反比。比如 266nm 紫外与 1064nm 相比，信号差 256 倍——但这针对透明样品，不透明样品并非波长越短信号越高。二是输出功率，与样品类型及损伤阈值有关。三是线宽：激光器单色性不好会有一定线宽，影响拉曼谱图。频率单位换算：30GHz≈1 个波数，1THz≈33 个波数；波长换算：532nm 激光线宽 0.1nm 相当于 3.55 个波数，785nm 激光线宽 0.1nm 约为 1.65 个波数。但像大成的 3000 万光谱仪分辨率可能有 5~10 个波数，此时 1nm 线宽的激光器完全不够用。</p><p>四是光束质量 M² 因子，理想值为 1。它有一个全发散角，单位一般为毫弧度：意思是激光传输 1 米，光斑会增加多少。若全角是 1 毫弧度，传播 5 米光斑增大 5 毫米；若是 4 毫弧度，传输 2 米光斑就有 1 厘米——而物镜通常只有 2 毫米口径，很多激光被挡在通光孔径外。另外稳定性不好会导致达不到衍射极限，做显微光谱时也达不到显微极限。</p><p>最后是偏振特性：光学元件对激光偏振态扰动很大。功率一大，即便激光器消光比有 10000:1，经过光纤元件后偏振性能也可能变差；消光比太高用处也不是特别大。测样品用高倍物镜获得较强信号时，激光入射角偏离法线 60° 已达不到完美偏振态——初始偏振很好，但非垂直入射会导致特征损失；固体材料折射率约 1.4，60° 入射角在内部变为 25°，此时接近垂直入射。若追求高质量数据，需专业设备或增加积分时间。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>用于拉曼的激光器参数：一是波长，与拉曼散射效率有关，呈波长四次方反比。比如266nm紫外与1064nm相比，信号差256倍。但这针对透明样品。不透明样品并非波长越短信号越高。</p><p>频率单位若是30个赫兹对应一个波数，7赫兹则是33个波数。以532nm激光为例，线宽0.1nm相当于3.55个波数。若是785nm激光，线宽0.1nm则约为1.65个波数。</p><p>光束质量M因子，理想值为1。它有一个全发射角，单位一般为毫弧度。意思是激光传输1米，光斑会增加多少。若全角是1毫弧度，传播5米，光斑增大5毫米。若是4毫弧度，传输2米，光斑就有1厘米了。但我们物镜通常只有2毫米口径。</p><p>最后是偏振特性。光学元件对激光偏振态扰动很大。功率一大，即便激光器消光比有1万比1，经过光纤元件后，偏振性能也可能变差。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-mirror-coating">
+  <div class="slides"><figure class="slide" id="slide-391">
+<img src="slides/slide_391.png" alt="课件第391页 金属膜反射镜">
+<figcaption><span class="sno">391</span><span class="stitle">金属膜反射镜</span></figcaption>
+</figure>
+<figure class="slide" id="slide-392">
+<img src="slides/slide_392.png" alt="课件第392页 光学镀膜">
+<figcaption><span class="sno">392</span><span class="stitle">光学镀膜</span></figcaption>
+</figure>
+<figure class="slide" id="slide-393">
+<img src="slides/slide_393.png" alt="课件第393页 多层介质膜反射镜（宽带介质膜反射镜）">
+<figcaption><span class="sno">393</span><span class="stitle">多层介质膜反射镜（宽带介质膜反射镜）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">09</span>
+      <div class="sec-tt">
+        <h2>反射镜与光学镀膜</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 391</span><span class="chip">课件 392</span><span class="chip">课件 393</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>先讲滤光片家族里的激光镜/反射镜。现在的反射镜有 1 英寸的、2 英寸的——半英寸才多大？但这样一块半英寸的反射镜售价可能一万左右，相当于一个小激光器，它起的作用相当于以前两台光谱仪的一个头。这体现了技术的进步。</p><p>镀膜体现的是金属膜的反射性：金属膜常用铝、银、金。铝表面会形成一层氧化保护膜，氧化到一定程度不再往下氧化，本身反而保护了；银和金就不一样，得在表面镀其他材料（比如镀保护层）来保护。除了金属基础膜，还有垫层膜等。</p><p>镀膜的作用：在折射率介质上面再镀一层膜，激光打到上下表面会反射出两个光，如果这两个光的光程差相差 1/4 波长（相位差 π/2），反射光就相消了，看不到信号反射。通过设计表面膜层，还可以长多层——多层介质膜会发生相长干涉或相消干涉（多光束干涉），使镀膜在特定范围内高反，反射率达 99%。</p><p>特殊镀膜可以从 400nm 高反到 700nm；部分反射镜能从 325nm 高反到 1100nm。为什么常提 1100nm 而不是 1600nm？因为硅探测器极限约 1120nm，适合 CCD。若系统只做到 900nm，后续波段可用；若达 1200nm，1100~1200nm 区间需要性能较差的传感器。所以反射镜设计常匹配硅探测器。高反射率至关重要：测紫外光谱时，300nm 处铝反射率仅约 85%，多次反射后信号损耗显著——比如 0.85 的 10 次方剩余极少，光学信号的层积效应导致损耗巨大。因此在可见光范围通常使用镀膜反射镜，反射率达 99%，效率很高。</p><p>激光器只需匹配对应波长的高反镜即可；但光谱测量不同，从物镜向上的光谱包含多个波长信号。比如 470nm 激发，荧光信号可能达 1000nm，需在宽范围内保持高反射。激光器前可用窄带高反镜，后续光路则要根据系统选择合适版本——分光模块的工作范围选错了，比如 550nm 附近反射率低，会很麻烦。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>镀膜的话，体现的就是金属膜的反射性。金属膜的反射性，像铝的话，会形成一层保护膜，氧化在外面，它氧化到一定程度不会再往下氧化，本身反而就保护了。但是银金这些就不一样了，那就在表面镀其他材料。</p><p>激光从这里面打到下层表面会反射出一个光，从上部表面也会反射出一个光。如果说这两个光的光程差相差2分之派，那么你就看不到信号反射出来，两个就相消了。一旦生成多层介质膜，它会发生相长干涉或相消干涉，还有多光束干涉。</p><p>若膜层较厚，光程差约为1/4波长。这能使镀膜在特定范围内高反，反射率达99%。为什么常提1100nm而非1600nm？因硅探测器极限约1120nm，适合CCD。</p><p>测紫外光谱时，300nm处铝反射率仅约85%。若用10个反射点，0.85的10次方后剩余极少。因此在可见光范围，通常使用镀膜反射镜，反射率达99%。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-beamsplitter">
+  <div class="slides"><figure class="slide" id="slide-394">
+<img src="slides/slide_394.png" alt="课件第394页 光学滤光片-分束器（平板/立方/薄膜/偏振敏感）">
+<figcaption><span class="sno">394</span><span class="stitle">光学滤光片-分束器（平板/立方/薄膜/偏振敏感）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-395">
+<img src="slides/slide_395.png" alt="课件第395页 二向色镜与中性密度滤光片（OD 值）">
+<figcaption><span class="sno">395</span><span class="stitle">二向色镜与中性密度滤光片（OD 值）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">10</span>
+      <div class="sec-tt">
+        <h2>分束器与中性密度滤光片</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 394</span><span class="chip">课件 395</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>光学分束器将光路一分为二，一个反射一个透射。平板反射分束器不会改变位置，只会产生平移；常用的是立方分束器，中间有一个反射膜，光束一个朝下一个往前透射，空间位置基本不移动；还有超薄金属膜分束器。</p><p>通常大家希望实现 20% 反射、80% 透射，且反射加透射等于 1。但涉及光学滤光片时要注意效率曲线：未覆膜的超薄分束器透过率从 70% 到 100% 变化；拿到 50:50 的分束器务必查看工作范围，超出范围即不准确，范围内也只是平均值。还有偏振敏感分束器：自然光入射，这边变成水平偏振、那边变成竖直偏振，光就分成两束。</p><p>二向色性中性密度滤光片：在某个波长范围内全反、另一个波长范围内全透，有冷镜（长波通）、热镜（短波通）等。常用的是中性密度滤光片（NDF），用来衰减激光。要看效率曲线：图中 OD0.1、OD0.2、OD0.3 等参数，OD 数代表 10 的负指数次方（透过率），OD0.1 和 OD0.2 的透过率差别很大。很多时候标称 OD0.1 或 OD0.5 大家认为是平的，事实上变化非常大，参数可能仅对应中间某波长。使用滤光片时一定要小心效率曲线，否则结果会出问题。</p><p>滤光片分反射式和吸收式：吸收式因热量积聚不适用于大功率，否则会损坏样品/元件；反射式对大功率适应性较好，常制成楔形以消除干涉重影，选购时需确认两面是否平行。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>分束器很简单，它将光路一分为二，一个反射一个透射。平板反射分束器不会改变位置，只会产生平移。但一般常用的立方分束器，中间有一个反射膜。还有一种是超薄金属膜分束器。</p><p>通常大家希望实现20%反射、80%透射，且反射加透射等于1。但涉及光学滤光片时，需注意效率曲线。未覆膜的超薄分束器，透过率从70%到100%变化。拿到50:50的分束器，务必查看工作范围。</p><p>OD数代表10的负指数次方。大家可以算一下OD0.1和OD0.2的大致透过率。很多时候标称OD0.1或OD0.5，大家认为是平的。事实上变化非常大，参数可能仅对应中间某波长。</p><p>滤光片分反射式和吸收式。吸收式因热量积聚，不适用于大功率，否则会导致样品损坏。反射式对大功率适应性较好。其常制成楔形以消除干涉重影，选购时需确认两面是否平行。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-long-short-pass">
+  <div class="slides"><figure class="slide" id="slide-396">
+<img src="slides/slide_396.png" alt="课件第396页 光学滤光片种类-长通/短通滤光片">
+<figcaption><span class="sno">396</span><span class="stitle">光学滤光片种类-长通/短通滤光片</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">11</span>
+      <div class="sec-tt">
+        <h2>长通与短通滤光片</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 396</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>长通与短通是针对波长定义的：右侧波长较大为长通，左侧波长较短为短通。彩色玻璃是廉价的长通滤光片。半导体材料也是良好的长通滤光片——带隙以下的光透过、以上的被吸收，但吸收边不陡峭。以 878nm 为例，半导体可反射 800nm 以上的光、透射 900nm 以后信号光，厚度仅十几微米且无需镀膜；相比镀膜反射镜存在失效范围，半导体无此问题，但需选择合适半导体材料，因为边界不够陡峭——若半导体边界特别陡，就变成荧光片了。</p><p>长通/短通滤光片的关键参数：透过率、截止波长（λ50% 或 λ50%Tpk）、截止过渡宽度（λlaser-λc）、边缘陡率等。过渡宽度指从一处到另一处的宽度，坡度越窄越好，即边缘陡度越高；边缘陡度通过特定百分比波长差计算，数值越小边缘越陡峭。除半导体材料外，其他均为多层膜镀膜制成，一旦镀膜便存在有效范围限制。以 532nm 长通滤光片为例：532nm 以上透过、520nm 左右截止，但 520nm 以下就截止不了了——并非所有波段都能完全截止，仅一小段范围能截止，其余无效。这点需要特别注意。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>长通与短通是针对波长定义的。右侧波长较大为长通，左侧波长较短为短通。彩色玻璃是廉价的长通滤光片。半导体材料也是良好的长通滤光片，带隙以下光透过，以上被吸收，但吸收边不陡峭。</p><p>以878nm为例，半导体可反射800nm以上光，透射900nm后信号光，厚度仅十几微米且无需镀膜。相比镀膜反射镜存在失效范围，半导体无此问题。但需选择合适半导体材料，因其边界不够陡峭。</p><p>以532nm长通滤光片为例。532nm以上透过，520nm左右被截止。但520nm以下则无法截止。并非所有波段都能完全截止。仅一小段范围能截止，其余无效。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-bandpass">
+  <div class="slides"><figure class="slide" id="slide-397">
+<img src="slides/slide_397.png" alt="课件第397页 光学滤光片种类-带通滤光片">
+<figcaption><span class="sno">397</span><span class="stitle">光学滤光片种类-带通滤光片</span></figcaption>
+</figure>
+<figure class="slide" id="slide-398">
+<img src="slides/slide_398.png" alt="课件第398页 带通滤光片（Blocking: X-Ray to FIR）">
+<figcaption><span class="sno">398</span><span class="stitle">带通滤光片（Blocking: X-Ray to FIR）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">12</span>
+      <div class="sec-tt">
+        <h2>带通滤光片</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 397</span><span class="chip">课件 398</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>带通滤光片只让中间一小部分通过，其他波长都不通过。关键参数：中心波长/工作波长 λ0、峰值透过率 Tpk、带通宽度（FWHM，即 50%Tpk 带宽）、截止深度（OD）、边缘陡度（(λ80%-λ10%)/λ10%×100%，一般 3%~6%，优异约 0.2%）、深截止陡度、矩形度（(λ50%-λOD6)/λ50%×100%）。较好的带通滤光片矩形度能小于 0.8%，甚至小于 1.8%。但无论如何，只要镀了膜，都得看效率曲线或透过率曲线。</p><p>这是一个商业化的带通滤光片：中间高透、两边截止，截止大致在 640nm，工作范围约 520nm 到 780nm，两侧透过率不行。大家一定要看工作范围——不测拉曼谱问题不大，但测荧光谱时若超出范围，瑞利散射和拉曼散射会掩盖信号。</p><p>不同类型的带通滤光片：带宽 1.5nm 的带通滤光片范围从 350~500nm；带宽 50nm 的带通滤光片工作截止范围有限。也有一种宽带滤光片：截止波长 18μm、带通 18μm，能从 X 射线到 2 万全部截止，性能非常好，但透过率只有 45%。鱼与熊掌不可兼得：要么左右两边的截止力非常好、非常远，但中间透不过去；要么中间透过率是高透的，但左右两边截止的范围有限。</p><p>举个实测例子：用 632.8nm 的氦氖激光测硅的拉曼谱。不加带通滤光片时有很多杂散光——那不是杂散光，是氦氖激光器的一阶线（极限有无穷多）；一旦用带通滤光片，信噪比非常高。杂散光对大信号影响不大，但对弱信号影响就大了。所以在拉曼系统里使用带通滤光片是非常必要的。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>带通滤光片只让中间一小部分通过，其他波长都不通过。因此它有中心波长位置，以及50%、10%、0.01%带宽的位移等关键参数。一些较好的带通滤光片，矩形度能小于0.8%，甚至小于1.8%。</p><p>这是一个商业化的带通滤光片，中间高透，两边截止。截止大致在640nm，工作范围约520nm到780nm，两侧透过率不行。大家一定要看工作范围。</p><p>也有另外一种宽带滤光片，它的截止波长是18微米，带通是18微米。但它能够从X射线到2万，它全部是截止的。原看它所有的性能非常好，但是它的透过率只有45%。所以鱼与熊掌不可兼得。</p><p>用632.8nm的氦氖激光去测硅的拉曼谱，这个是没有加带通滤光片。你看这里面是不是有很多杂散光？这个不是杂散光，这个是氦氖激光器的一阶线，等一极限有无穷多。但是我一旦用带通滤光片，你这个信噪比值非常高，非常好。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-edge-filter">
+  <div class="slides"><figure class="slide" id="slide-399">
+<img src="slides/slide_399.png" alt="课件第399页 长通拉曼边缘滤光片（参数定义）">
+<figcaption><span class="sno">399</span><span class="stitle">长通拉曼边缘滤光片（参数定义）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-400">
+<img src="slides/slide_400.png" alt="课件第400页 长通边缘滤光片（BLP01-532R-25 与 LP03-532RU-25）">
+<figcaption><span class="sno">400</span><span class="stitle">长通边缘滤光片（BLP01-532R-25 与 LP03-532RU-25）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-401">
+<img src="slides/slide_401.png" alt="课件第401页 长通边缘滤光片（LP03-532RU-25，Transition Width<186cm⁻¹）">
+<figcaption><span class="sno">401</span><span class="stitle">长通边缘滤光片（LP03-532RU-25，Transition Width<186cm⁻¹）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">13</span>
+      <div class="sec-tt">
+        <h2>拉曼边缘滤光片</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 399</span><span class="chip">课件 400</span><span class="chip">课件 401</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>拉曼边缘滤光片（Raman edge filter，A 级）是拉曼光谱里用的关键元件。它的全称是长通拉曼边缘滤光片或短通拉曼边缘滤光片，很陡。典型例子：工作波长针对 785nm，到 790nm 左右就有一定透过率，785~793nm 只有 7 个纳米——之前算过 785nm 下 0.1nm 是多少个波数：1 个纳米约 16 个波数，10 个纳米才 160 个波数。它在 785 左边的部分被截止（当然有截止范围），这一边陡度很高，这一边是长通的。</p><p>看一款产品的关键参数：从功率 6% 到 50% 是它的陡度，还有透射宽度、激光线宽。边缘型拉曼滤光片给出了 4 款对比：第一款过渡宽度 458 个波数，很差的，不适合做半导体——半导体很多信号低于 500 波数；做生物、化学的，很多拉曼信号超过 500 多波数，可以用。有一款（186）是 532 用的，500nm 以下没数据（质量不可信）；另一款能测到 93 个波数；最好的一款能测到 40 个波数，左边截止到 300nm——从 300nm 到 532nm 所有滤光片都可进。若只关心 532nm 以上的荧光信号而不关心拉曼，那 532~300nm 的激光都不管。</p><p>产品给出的曲线是在可信度范围之内的：这边到 1200nm 以上再去测图就会失真。从质量控制来说，范围之外不能保证信噪比。使用时特别重视三个关键点：基线、宽度和陡度。拉曼信号一般 3000 波数已经顶天了：碳氢键在 3000 波数，水在 3500 波数，氢分子的振动在 4300 多波数。532 激光打出的瑞利散射可能就到这了，再往上的荧光信号可是无穷多的。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>因为它的工作波长针对785nm。到790nm左右就有一定透过率，所以到793nm右。785~793只有7个纳米。刚才说的785和0.1个纳米有多少个波数，1个纳米就16个波数。有10个纳米，那才160个波数。</p><p>大家看一下，从功率6到50%，这个是它的一个陡度。然后这里面是它的一个透射的宽度，这里面是一个激光线宽。这里给出了4款我们的边缘型拉曼滤光片。你看4款的话，这个是它的一个过渡宽度。从激光线到这个中间边缘这个地方是458个波数，它这个是很差的。</p><p>你像假如说我们做生物的，做化学的，很多拉曼信号都超过500多波数。但是我们要做半导体，很多信号低于500波数。有一款最好的，能测到40个波数。左边截止到300nm。</p><p>拉曼信号往往3000波数已经顶天了。碳氢键在3000波数，水在3500波数，氢分子的振动在4300多波数。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-edge-bandpass-combo">
+  <div class="slides"><figure class="slide" id="slide-402">
+<img src="slides/slide_402.png" alt="课件第402页 短通拉曼边缘滤光片">
+<figcaption><span class="sno">402</span><span class="stitle">短通拉曼边缘滤光片</span></figcaption>
+</figure>
+<figure class="slide" id="slide-403">
+<img src="slides/slide_403.png" alt="课件第403页 边缘拉曼滤光片和带通滤光片联用（只测 Stokes/anti-Stokes）">
+<figcaption><span class="sno">403</span><span class="stitle">边缘拉曼滤光片和带通滤光片联用（只测 Stokes/anti-Stokes）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">14</span>
+      <div class="sec-tt">
+        <h2>边缘滤光片与带通滤光片联用</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 402</span><span class="chip">课件 403</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>短通边缘滤光片参数与长通相反（长通反过来就是短通）。有 532 的短通能通到 358，原则上更长的波长可以做二次谐波、三次谐波——那要看前面柱子有多长，怎么测量后面可以看。</p><p>要测非常漂亮的拉曼光谱，必须将边缘滤光片和带通滤光片很好地联用。举个例子：绿色的带通滤光片让激光信号按透过率过去，但激光信号有杂散光。如果激光杂散光在 150 波数左右非常强，即使边缘滤光片在这段有足够的截止能力，也能把它压住——只要激光较纯，3 倍光速以上的拉曼信号就是可信的。</p><p>反过来：这款边缘滤光片性能非常好，接近 75 个波数，但激光不纯时，它在 100 个波数处有 1/1000 的透过——激光只要有千分之一的信号透过去，而我的拉曼信号太弱，75 波数的边缘滤光片就接不住了，全部透过去，截止就失效了。所以两个顶级的滤光片，配一个质量不行的激光器，照样测不了 200 波数以下的信号。</p><p>所以说：带通滤光片和拉曼边缘滤光片要配合使用。带通滤光片把激光纯化（滤掉杂散光），边缘滤光片把激光线截止、保留拉曼信号。画个示意图大家就明白了：红色的 785nm 激光有一系列背景杂散信号，蓝色的是带通——在这个范围之外信号全部去掉，杂散光原则上已经去掉了。但如果带通滤光片质量太好、与带边刚好接触，一大块范围内的拉曼信号也被滤掉了，或者杂散光漏过去跟拉曼信号混在一起透过去——拉曼信号非常弱，比激光器低 1/100、1/1000，这种情况下用极好的带通加极好的边缘滤光片，反而测不到拉曼信号。质量稍差一点的带通，反而让这部分拉曼信号完全可信。所以不是什么都买得越好效果就越好。</p><p>很多时候我们使用带阻滤光片来滤除激光，就能获得很好的拉曼信号。还有一个陷波拉曼滤光片用得比较少：边缘滤光片只能测斯托克斯线或只能测反斯托克斯线，要同时测斯托克斯和反斯托克斯，就要用陷波（Notch）——中间激光线被滤掉，左右两边的拉曼信号全部透过。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我在这里面画了一个图。你看我们的激光器往往有很多发线。这个红色的就是785nm的激光，它不是很白的，这里有一系列的背景杂散信号。所以我这里面是带通。你看我这个蓝色的是一个带通。带通意味着在这个范围之外，信号全部给去掉了。</p><p>所以说这些杂散光原则上已经去掉了。但是你看我这个质量非常好的带通滤光片，它与这个带边刚好接触了。这一大块范围内的拉曼信号漏过去，就跟非常好的拉曼信号混合在一块儿透过去了。</p><p>如果我这个带通滤光片质量会差一点。我在这个范围之内，因为我的带通滤光片从这儿已经把右边的这全部滤掉了。这样一来，我这部分拉曼信号过去完全是可信的。所以不是说我们什么东西都是买的越买的质量越好，我们就会取得的效果越好。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-notch-angle">
+  <div class="slides"><figure class="slide" id="slide-404">
+<img src="slides/slide_404.png" alt="课件第404页 陷波拉曼滤光片（同时测量 Stokes 和 anti-Stokes）">
+<figcaption><span class="sno">404</span><span class="stitle">陷波拉曼滤光片（同时测量 Stokes 和 anti-Stokes）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-405">
+<img src="slides/slide_405.png" alt="课件第405页 光学滤光片的角度依赖性">
+<figcaption><span class="sno">405</span><span class="stitle">光学滤光片的角度依赖性</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">15</span>
+      <div class="sec-tt">
+        <h2>陷波滤光片与角度依赖性</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 404</span><span class="chip">课件 405</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>陷波拉曼滤光片（Notch）的用途：边缘滤光片只能测斯托克斯线或反斯托克斯线，要同时测斯托克斯和反斯托克斯，就用陷波——中间的激光线被滤掉，左右两边的拉曼信号全部透过。它有一个比较麻烦的问题：做不了那么陡。以前的陷波滤光片左右都是 350 个波数的半宽，中间截止的地方就是 350 波数，只能测 ±175 波数以外的信号。早先我们也用它测过 100 波数甚至更低——因为镀膜后工作波长跟入射角有关，可以通过调节角度改变测试范围；但调角度后原来 OD6 可能变成 OD5、甚至 OD4。镀膜放在中间是透过去的，到边上效果很好，一旦展开就不行——只在可信工作范围内有效，范围外要谨慎。</p><p>接下来讲光学滤光片的角度依赖性。一般激光垂直入射，但很多时候是斜入射（比如物镜打上去或光路不准）。斜入射时存在有效折射率，原来的位置就改变了：0° 垂直入射时线偏振片中间激光被滤掉、左右透光；10° 时往短波走，变化不大，而且 P 和 S 两种偏振态移动速度不一样——越往这边走，中间凹坑的截止率就越差，S 波的截止率反而变得更好，但它不纯，会有台阶。假如买了 532 的用到 530，可以用但效果可能很差。</p><p>这是边缘滤光片：0° 和 30° 对比，30° 时 H 波跑到这儿、P 波跑到这儿，S 波跟 P 波一平均，就有阶梯形状；角度越大效果越严重。利用这个性能有危险——曾经做得不好，激光器直接打到 CCD 上：中间那么强的激光打到 CCD 发热，发热后探测效率就变差，本来很好看的图就毁了。我有一次真实经历是师妹的：数据被打坏无法分析，我只能分析其中一段，相当于 CCD 变窄了，这边 500、那边 300。后来法国科学家来指导：CCD 前有个透镜，调整透镜角度，激光聚焦处损坏后下移聚焦到新位置，虽未完全恢复但基本可用。现在 CCD 前都用反射镜而非投影。买滤光片时厂家会标注入射角为 1~2°，超过 2° 性能就无法保证。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>陷波拉曼滤光片的英文就是Notch。那其用途是啥呢？中间的激光线被滤掉了，但是左右两边的拉曼信号全部都透过去了。但这个有一个比较麻烦的问题，它这个做的不能那么陡。一般以前的陷波滤光片，左右都是350个波数，它的半宽，中间截止的地方就是350波数。</p><p>我们可以通过调节一定的角度来达到改变它的测试范围。但是调节角度过后，它原来是OD6，可能就变成OD5了，甚至可能变成OD4了。</p><p>0°时，线偏振片在这里。0°垂直入射时，中间的激光被滤掉，左右两边透光。但你看10°的时候，它就往短波走了，变化不大。这里有10°的P和10°的S，状态不同。而且P和S这两种偏振态移动速度不一样。</p><p>我告诉大家，曾经做得不好，激光器可以直接打到CCD。中间那么强的激光直接打到CCD上就会发热，发热后就变差，探测效率就变差。我有过一次真实经历，是我师妹的。私系把数据打败了，导致无法分析图谱。我只能分析其中一段，相当于CPU变窄了。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-configurations">
+  <div class="slides"><figure class="slide" id="slide-406">
+<img src="slides/slide_406.png" alt="课件第406页 拉曼滤光片针对三种配置的使用方法">
+<figcaption><span class="sno">406</span><span class="stitle">拉曼滤光片针对三种配置的使用方法</span></figcaption>
+</figure>
+<figure class="slide" id="slide-407">
+<img src="slides/slide_407.png" alt="课件第407页 激光滤除元件（相减双单色仪/陷波/边缘滤光片）">
+<figcaption><span class="sno">407</span><span class="stitle">激光滤除元件（相减双单色仪/陷波/边缘滤光片）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">16</span>
+      <div class="sec-tt">
+        <h2>滤光片三种配置与激光滤除元件</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 406</span><span class="chip">课件 407</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>拉曼滤光片有三种配置：第一种是普通配置；第二种常用于显微镜与拉曼直连，激光直接注入、光斑更小，这种方案可行；但我们用的是 45° 入射的——0° 入射拉曼滤光片有无穷多可能，45° 配置凤毛麟角，一般只用于常用波长，其他波长效果不佳且调光不便。</p><p>另一种是我博士期间除商业化拉曼光谱仪外常用的配置：激光器打到小反射镜，反射后通过透镜直接接收；激光从此处入射并聚焦于一点，根据光路可逆原理会原路反射回去，此时拉曼信号光从周围进入收集范围。因为收集范围广而小反射镜在立体角中占比极小，小反射镜对系统影响微乎其微。此前结合定位系统，用该配置可以进行较好的测量。</p><p>关于滤光，可用边带或线状激光片，也可用谱仪滤光——谱仪能把光色散开，只需让激光从谱仪出口输出，其余杂散光用挡板挡住，符合一阶衍射原理。我申请过一个基于单光栅的非常小的激光纯化可插拔式滤光片专利，结构特别简单；专利局局长说为了提高专利质量、认为太简单不能授，被驳回后我申诉获得授权。关键还是看你有不同想法，怎么把它实现出来。</p><p>现在用谱仪滤除激光线已经非常少了，但紫外拉曼系统里用得很多——紫外缺少很好的带通滤光片，且紫外光对样品、光学元件损伤非常大，买到的滤光片质量不好、寿命有限，所以一般一定用谱仪，效果是有的。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这是不常见的拉曼光纤，有3种配置。第一种是上课讲的普通配置。第二种常用于显微镜与拉曼直连，激光直接注入，光斑更小。但0°入射拉曼滤光片有无穷多可能，我们用的是45°入射的。这类配置凤毛麟角，一般只用于常用波长，其他波长效果不佳，且调光不便。</p><p>这是博士期间除商业化拉曼光谱仪外的常用配置。用激光器打到小反射镜，反射后通过透镜直接接收。激光从此处入射并聚焦于一点。根据光路可逆原理，激光会原路反射回去。此时拉曼信号光从周围进入收集范围。因收集范围广，而小反射镜在立体角中占比极小。故小反射镜对系统影响微乎其微。</p><p>用谱仪滤光，因其能将光色散开。只需让激光从谱仪出口输出，其余杂散光用挡板挡住即可。这符合一阶衍射原理。</p><p>我曾经申请过一个基于单光栅的非常小的激光滤波滤光片，是激光纯化的可插拔式滤光片。结构特别简单。后来专利局局长说为了提高专利质量，认为这个太简单，拿出来做示例有问题，不能授专利，最后被驳回了。我再申诉后获得授权。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-filter-lifetime">
+  <div class="slides"><figure class="slide" id="slide-408">
+<img src="slides/slide_408.png" alt="课件第408页 拉曼滤光片过滤效果及寿命">
+<figcaption><span class="sno">408</span><span class="stitle">拉曼滤光片过滤效果及寿命</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">17</span>
+      <div class="sec-tt">
+        <h2>滤光片过滤效果及寿命</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 408</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>要测得高信噪比的拉曼光谱，应选择激光滤除达 OD6~OD12 的滤光片，可多个组合使用。全息陷波滤光片（HNF/超陷波 HSNF）用有机材料镀膜，寿命短，3~5 年需更换；它可同时测斯托克斯和反斯托克斯线、很好的瑞利线滤除、平滑的带宽边缘、最低达 100 波数的信号测量。所谓寿命短，是因为有机膜性质随时间改变、工作波长移动，而激光线固定——多层移动后肯定无法使用。针对该问题，我们有多条激光线可切换至另一条光纤上使用，需根据性能选择。人是活的，滤光片是死的，要充分利用。</p><p>边缘滤光片（Edge filter）用介电材料镀膜，寿命长，只能测斯托克斯或反斯托克斯线。目前 A 级产品采用渐变材料薄膜，寿命极长，基本无限次；经高质量设计能达到 OD6 以上。给大家看一张图：左侧硅材料部分，看不到激光吧？因为我使用了两个 OD6 的带阻滤光片——虽然其透过率高，但激光被滤除，拉曼信号不受影响，信噪比非常高。若用反射镜则难保信号，因反射损耗大。这是个很好的例子。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>全息高清六层膜是有机材料做的，寿命短，3～5年就需要更换。所谓寿命短，是因为有机膜性质随时间改变，工作波长移动，而激光线固定。若多层移动，肯定无法使用。</p><p>目前A级产品采用渐变材料薄膜，寿命极长，基本无限次。此外，经高质量设计，其能达到OD6以上。我展示了一张图，请看左侧硅材料部分，能看到激光吗？看不到，因为我使用了两个OD6的带阻滤波片。虽然其透过率高，但激光被滤除，纳米信号不受影响，信噪比非常高。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-dispersion">
+  <div class="slides"><figure class="slide" id="slide-409">
+<img src="slides/slide_409.png" alt="课件第409页 波长色散系统（色散/非色散拉曼光谱仪）">
+<figcaption><span class="sno">409</span><span class="stitle">波长色散系统（色散/非色散拉曼光谱仪）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-410">
+<img src="slides/slide_410.png" alt="课件第410页 光栅种类及工作原理（反射式/透射式、光栅方程）">
+<figcaption><span class="sno">410</span><span class="stitle">光栅种类及工作原理（反射式/透射式、光栅方程）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-411">
+<img src="slides/slide_411.png" alt="课件第411页 几种光谱仪结构（单入口/双入口/双出口）">
+<figcaption><span class="sno">411</span><span class="stitle">几种光谱仪结构（单入口/双入口/双出口）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-412">
+<img src="slides/slide_412.png" alt="课件第412页 全息光栅 vs 刻线光栅">
+<figcaption><span class="sno">412</span><span class="stitle">全息光栅 vs 刻线光栅</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">18</span>
+      <div class="sec-tt">
+        <h2>波长色散系统与光栅</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）</span><span class="chip">课件 409</span><span class="chip">课件 410</span><span class="chip">课件 411</span><span class="chip">课件 412</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>色散系统主要是光栅，也有光谱仪和棱镜。棱镜已过时；傅里叶变换是非色散的，这些暂不细讲。重点看光栅：分反射式和透射式，工作原理可参考光栅方程 mλ = d(sinα + sinβ)，d 是刻线间距、m 是衍射阶数，上面是加号、下面是减号，差别就在这。透过光栅有它的好处，反射光栅也有它的好处。</p><p>把光栅运用到谱仪时，有几种典型结构：最简单的是单入口、单光栅、单出口，出口接 CCD；也有两个入口的——为何需要两个入口？因为可接入光纤信号，上面加个 SMA905 接头，光纤信号可接进来，也可直接通过透镜聚焦到狭缝里。出口原则上也可有两个：安装一个 CCD 探测器和一个 InGaAs 探测器，工作在不同范围。整个光谱仪空间的转轮一般 2 个、3 个或 4 个。我以前买拉曼光谱仪时说只买一块光栅，结果来了两块——我的光栅折返，得这边放一块、那边放一块，它得转动，只放一块不稳定、性能达不到标，所以买一块送一块。设计上它是有道理的。</p><p>常见的是全息光栅跟刻线光栅。全息光栅是两束光照射产生干涉条纹，感光范围不同，腐蚀后形成不规则形状；它非常均匀、质量高、鬼线极少，演示效果非常好，是靠光的衍射和干涉完成的。只要改变激发光的波长或入射角，就可以制作高密度的光栅；原则上 600 线以上的就能做全息光栅，很少见 600 线以下做全息光栅的。刻线光栅一般是划刻线光栅，通常是 600 线每毫米以下；刻好后可作模板压制其他光栅，压制过程可能受温度影响。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>色散系统主要是光栅，也有光谱仪和棱镜。棱镜已过时，傅里叶变换是非色散的，这些暂不细讲。重点看光栅，分为反射式和透射式。工作原理可参考光栅方程公式。上面是加号，下面是减号。</p><p>最简单的是单入口、单光栅、单出口，出口接CCD。这也是典型的，有两个入口。为何需要两个入口？因为可接入光纤信号。我在上面加个SMA905接头。出口原则上也可有两个。我们可以安装两个探测器：一个CCD探测器，一个是InGaAs探测器。</p><p>全息光栅是两束光照射产生干涉条纹。感光范围不同，腐蚀后形成不规则形状。它非常均匀，质量高，鬼线极少。刻线光栅一般是划刻线光栅，通常是600线每毫米以下的。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-resolution">
+  <div class="slides"><figure class="slide" id="slide-413">
+<img src="slides/slide_413.png" alt="课件第413页 光谱仪分辨率（R∝F×N）">
+<figcaption><span class="sno">413</span><span class="stitle">光谱仪分辨率（R∝F×N）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-414">
+<img src="slides/slide_414.png" alt="课件第414页 光谱仪分辨率：刻线数与焦长的关系">
+<figcaption><span class="sno">414</span><span class="stitle">光谱仪分辨率：刻线数与焦长的关系</span></figcaption>
+</figure>
+<figure class="slide" id="slide-415">
+<img src="slides/slide_415.png" alt="课件第415页 高刻线光栅的波长探测极限（λ_max）">
+<figcaption><span class="sno">415</span><span class="stitle">高刻线光栅的波长探测极限（λ_max）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">19</span>
+      <div class="sec-tt">
+        <h2>光谱仪分辨率与高刻线极限</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）</span><span class="chip">课件 413</span><span class="chip">课件 414</span><span class="chip">课件 415</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>光栅直接影响光谱的分辨率。光谱仪分辨率既与光谱仪的焦长有关，也与光栅的刻划线数有关：R∝F×N。焦长怎么确定？聚焦狭缝的光打到凹面镜上，凹面镜把发散光变成平行光，经光栅衍射后聚焦到 CCD 上，两者之间的长度就是焦长。原则上焦长越长分辨率越高；光栅刻划线数越多分辨率也越高；CCD 像素越细、像素数越多也越高。若不考虑 CCD 像素，分辨率只跟焦长和刻划线数有关。</p><p>提高光谱仪分辨率：一是增加焦长（现有高规格焦长达 1 米，1 米以上罕见）；二是使用高刻线光栅；三是选用小像素探测器；四是选择合适的激光波长——并非每种光栅都适用所有波长。波数越多色散越厉害，色散越强张角越大；在 CCD 尺寸不变时，色散越大分辨率越高。因 CCD 长度有限，色散越大接收光谱范围越窄，但单像素接收波段更窄、功率密度更高——相当于把光谱细分，每份更精细，分辨率提升。</p><p>光栅刻线数决定波长探测极限：N1λ1,max = N2λ2,max。例如 1800 线光栅最长接收 1380nm，2400 线光栅最多接收 700nm，3600 线光栅能接收 560nm（所见最长为 3600 线）；用 3600 线光栅时 532nm 激光已不适用，只能用 488nm 波长。我们曾用过 800mm 焦长、1600 刻线的光栅，配合 2048 点阵的 CCD（比普通 CCD 多一倍）和 488nm 激光，每个像素覆盖波数为 0.08。提高分辨率可以，但不能无限制：若激光为 600nm，无法做到 2025 线。要提高分辨率，最好用长焦长光谱仪，这是最基本的概念。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>光谱仪分辨率既与光谱仪的焦长有关系，也与光栅的刻划线数有关系。焦长越长，光谱分辨率越高。同时，光栅的刻划线数量越多，分辨率也越高。CCD像素越细，像素数越高。</p><p>提高光谱仪分辨率，一是增加焦长。现有高规格焦长达1米，但1米以上罕见。二是使用高科技光栅。三是选用小像素探测器。四是选择合适的激光波长。</p><p>例如1800线光栅最长接收1380nm。2400线光栅最多接收700nm。3600线光栅能接收560nm。使用3600线光栅时，532nm激光已不适用，只能用488nm波长。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-detector">
+  <div class="slides"><figure class="slide" id="slide-416">
+<img src="slides/slide_416.png" alt="课件第416页 探测器类型（多通道 CCD/二极管阵列、单通道 APD/PMT）">
+<figcaption><span class="sno">416</span><span class="stitle">探测器类型（多通道 CCD/二极管阵列、单通道 APD/PMT）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-417">
+<img src="slides/slide_417.png" alt="课件第417页 CCD 和阵列探测器（硅基 CCD 200-1100nm）">
+<figcaption><span class="sno">417</span><span class="stitle">CCD 和阵列探测器（硅基 CCD 200-1100nm）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-418">
+<img src="slides/slide_418.png" alt="课件第418页 收集系统-显微光路（光束横向偏移补偿原理）">
+<figcaption><span class="sno">418</span><span class="stitle">收集系统-显微光路（光束横向偏移补偿原理）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-419">
+<img src="slides/slide_419.png" alt="课件第419页 收集系统-宏观光路（直角/背向/前向散射）">
+<figcaption><span class="sno">419</span><span class="stitle">收集系统-宏观光路（直角/背向/前向散射）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">20</span>
+      <div class="sec-tt">
+        <h2>光电探测器与收集系统</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）</span><span class="chip">课件 416</span><span class="chip">课件 417</span><span class="chip">课件 418</span><span class="chip">课件 419</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>计算机部分不讲，重点讲探测器。探测器分多通道和单通道：多通道包括电荷耦合探测器（CCD）面阵和二极管阵列线阵；单通道包括雪崩光电二极管（APD）和光电倍增管（PMT）。硅基 CCD 是面阵，测量范围 200nm 至 1100nm——所以光学系统都要为 1100nm 以下优化，再往上意义不大。除非涉及 1.1μm 以上波段，此时单通道探测器已很少见，多采用线阵。铟镓砷探测器能测 1100nm 至 2300nm，主要有两种对应不同波段。CCD 面积越大，所测光谱范围越宽。</p><p>我们的探测器覆盖 200nm 至 2000nm。通常测拉曼光谱需覆盖宽波段，如从 1100nm 到 1600nm。若用 266nm 激发，覆盖范围太窄——拉曼位移对应的波长跨度小，在纳米坐标下 1000nm 附近仅对应 600nm 长度，短波端的光学系统设计更难。阵列探测器包含 CCD 及多个铟镓砷通道（0.8~1.1μm 和 1.1~2.3μm）。</p><p>收集系统很简单：上方的物镜即为显微物镜，既将激光聚焦到样品上，又收集样品激发的拉曼/荧光信号，全系统通过固件控制。白光系统：若移动反射镜，白光即可照射下方样品，白光信号经分束器反射后进入相机，实现成像。</p><p>为何光路呈八字形且夹角为 90°？这涉及光学补偿原理：激光穿过半透半反镜，若直接放置光路会原路返回；此设计确保激光与拉曼信号共用一条光路——既可观察样品，又可测量拉曼信号。测量时需移开镜片，因半透半反镜会衰减光强：激光往返各穿透两次、拉曼信号也穿透两次，损耗较大；若同时移开两个镜片，透光率可达 100%。</p><p>后面是收集光路，即宏观光路：适用于直角散射、背向散射和前向散射三种配置，可对样品做整体测量。现在红光光路很少用了，自己搭光很麻烦，后面有小维拉模块（显微拉曼模块）的搭建，下节课介绍。前面两节还没讲完。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>包括CCD面阵和二极管阵列线阵。硅基CCD是面阵，测量范围为200nm至1100nm。所以光学系统都要为1100nm以下优化，再往上意义不大。铟镓砷探测器能测1100nm至2300nm。</p><p>我们的探测器覆盖200nm至2000nm。通常测量拉曼光谱需覆盖宽波段，如从1100nm到1600nm。若用266nm激发，覆盖范围太窄。在纳米坐标下，1000nm附近仅对应600nm长度。这意味着短波端的光学系统设计更难。</p><p>该物镜既将激光聚焦到样本上，又收集样品激发的荧光信号。白光信号经分束器反射后进入相机，实现成像。为何光路呈八字形且夹角为90°？这涉及光学补偿原理。激光穿过半透半反镜，若直接放置，光路会原路返回。此设计确保激光与拉曼信号共用一条光路。</p><p>测量时需移开镜片，因半透半反镜会衰减光强。激光往返各穿透两次，拉曼信号也穿透两次，损耗较大。若同时移开两个镜片，透光率可达100%。</p><p>后面一是收集光路，即红光光路。现在红光光路很少用了。但自己打光很麻烦，怎么办？后面有小维拉模块的搭建。前面两课两小节没讲完。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（显微共焦拉曼光谱学）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>

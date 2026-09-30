@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>矿物物理学 · 第8节 第三章 分子模拟的输入输出｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.videos{margin-top:14px;border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.video + .video{border-top:1px solid #e4e9f0;}
+.videos h4{font-size:12.5px;font-weight:700;color:#0a1f38;background:#f2f5f9;padding:8px 12px;border-bottom:1px solid #e4e9f0;}
+.videos video{display:block;width:100%;max-height:460px;background:#0b0f14;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>矿物物理学 · 第8节 第三章 分子模拟的输入输出</h1>
+    <div class="sub">第8节 第三章 分子模拟的输入输出 ｜ 2026-09-29 ｜ 郭光军</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 18 页 · 整理 12 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-gmx-dir">01 开场与 Gromacs 目录结构</option>
+<option value="sec-filetypes">02 Gromacs 文件类型与单位系统</option>
+<option value="sec-topol">03 拓扑文件：体系是什么</option>
+<option value="sec-conf">04 构型文件：坐标与盒子</option>
+<option value="sec-preprocess">05 构型前处理：genbox / genconf / editconf</option>
+<option value="sec-mdp">06 参数文件与输入文件合成</option>
+<option value="sec-output">07 输出文件与检查点</option>
+<option value="sec-vmd">08 VMD 可视化：看轨迹动画</option>
+<option value="sec-hw">09 作业布置：加速比图与盒子制作</option>
+<option value="sec-crash">10 运行崩溃的处理：能量最小化与小步长</option>
+<option value="sec-slurm">11 用 Slurm 提交任务</option>
+<option value="sec-encourage">12 忠告与课堂演示</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 矿物物理学-3.4-分子模拟的输入输出.pdf 逐页渲染，转写原文见 record_20260929.txt。</div>
+<section class="sec" id="sec-gmx-dir">
+  <div class="slides"><figure class="slide" id="slide-01">
+<img src="slides/slide_01.png" alt="课件第1页 封面：分子模拟的输入输出（授课人：郭光军）">
+<figcaption><span class="sno">01</span><span class="stitle">封面：分子模拟的输入输出（授课人：郭光军）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-02">
+<img src="slides/slide_02.png" alt="课件第2页 0、Gromacs 目录及文件：总命令 gmx_mpi 与 100+ 子命令">
+<figcaption><span class="sno">02</span><span class="stitle">0、Gromacs 目录及文件：总命令 gmx_mpi 与 100+ 子命令</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>开场与 Gromacs 目录结构</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 1</span><span class="chip">课件 2</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>今天课前把安装收尾：上一波大家安装完成的情况很好，基本都装成功了——比往届成功率高不少，往届到三五天可能只有 60%～70% 的人能完成，你们基本上都完成了。装成功后面就能用了，这非常好。</p><p>安装完一般就开始运行了。先看一下安装好的目录：你们就看 gmx2025 这个目录，里头 bin/gmx_mpi 是主命令，有它就 OK。以前还放了 100 多个子命令，现在把子命令全打包到这一个总命令里了，调用方法就是 gmx_mpi 加一个子命令。100 多个不用都记住，谁也记不住，自己常用的记住、知道去哪查就行，手册上全都有。</p><p>子命令里一个主程序是 mdrun——跑分子动力学就用它；其余的大致分前处理和后处理两大类：前处理把文件弄好、塞给 mdrun 去跑；后处理分析 mdrun 跑出来的轨迹。试运行相当于一次串行，跑一个 first 就出来了；用四个核并行就在前面加 mpirun -np 4。不懂的可以查手册、上 GROMACS 官网查网页版。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>安装完了之后呢，一般我们就开始运行了。你比方说咱们这节课麻烦在哪呢？就是来回切换的比较多。我先把前头这些PPT给你们快速浏览一遍，然后咱们就演示，边演示边弄。</p><p>你们就看那个gmx2025并这个里头，就这个这是主命令，有它就OK了。原来的时候呢，这时候还放了100多个子命令呢。它现在呢，把那个子命令全部打包到这头了，这显得省事儿。</p><p>然后呢，这东西一个主程序就是mdrun，我们跑分子动力学就用它来跑。然后剩下那些呢，大概分成前处理和后处理两大类。前处理呢，就是把一些文件弄好，然后塞给mdrun让它跑。后处理呢，就是mdrun跑出来的东西，拿后面那些东西去分析那些轨迹。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-filetypes">
+  <div class="slides"><figure class="slide" id="slide-03">
+<img src="slides/slide_03.png" alt="课件第3页 Gromacs 的文件类型：45 种，输入/输出、文本/二进制/xdr">
+<figcaption><span class="sno">03</span><span class="stitle">Gromacs 的文件类型：45 种，输入/输出、文本/二进制/xdr</span></figcaption>
+</figure>
+<figure class="slide" id="slide-04">
+<img src="slides/slide_04.png" alt="课件第4页 Gromacs 数据的单位：基本单位（nm、amu、ps、e、K）与导出单位">
+<figcaption><span class="sno">04</span><span class="stitle">Gromacs 数据的单位：基本单位（nm、amu、ps、e、K）与导出单位</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>Gromacs 文件类型与单位系统</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 3</span><span class="chip">课件 4</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>GROMACS 有很多文件类型，不用全记。主要分输入和输出两类，有些文件既可输入也可输出。从格式上看，一类是文本格式，可以用 vi 打开查看参数；另一类是二进制格式，打不开意味着不让你直接打开，真要打开得用其他软件转换；还有一类 tpr 是特殊的二进制格式，具体可查讲义。</p><p>后面主要讲 PDB、GROMACS 和 MDP 这三种文本文件，它们在可控范围内、可以改参数。tpr 文件相当于合成完之后的一个二进制文件：参数全弄好了，别再改了，就用它的。</p><p>打开这三个文件后会有好多数据，单位都没标——用它的默认单位体系就行。基本单位：长度没标默认是纳米，质量默认是原子质量单位，时间是皮秒，电荷是基本电荷 e，温度是热力学温度 K。导出单位顺藤摸瓜：能量就是千焦每摩尔，还有力、压力、速度。看一眼有个印象：看见一个数没写单位，一拍脑门就是这些。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>GROMACS有很多文件类型。不用全记，主要分为输入和输出两类，有些文件既可输入也可输出。从格式上看，一类是文本格式，可以用vi打开查看参数。另一类是二进制格式，打不开意味着不让你直接打开。</p><p>这个cpt文件呢，就相当于它合成完之后的一个二进制文件。就说OK了，这些参数全弄好了，别再下载了，就用它的，就这点事。</p><p>如果一个数是长度，它没有标单位，那么默认是纳米。如果一个质量没有标单位，它默认是原子质量单位。时间是皮秒，电荷是e，就是基本电荷。然后温度是K，热力学温度，它的默认就是这个。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-topol">
+  <div class="slides"><figure class="slide" id="slide-05">
+<img src="slides/slide_05.png" alt="课件第5页 1、拓扑文件(topol.top)：原子分子名称、类型与相互作用">
+<figcaption><span class="sno">05</span><span class="stitle">1、拓扑文件(topol.top)：原子分子名称、类型与相互作用</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>拓扑文件：体系是什么</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 5</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>GROMACS 构造体系状态时做了仔细分类，把所有参数分成三份，第一份是拓扑文件。拓扑文件描述你所需要知道的原子和分子的名称、类型及其相互作用：你放进去的是水还是二氧化碳，是碳还是氧还是氢，它们怎么相互作用、长什么结构——它决定了你这个体系是啥东西。</p><p>演示时会看：这个体系里有 512 个水分子。水分子结构由文件描述，力场是 Lennard-Jones 势能方程，方程里有西格玛和埃普西隆两个参数。拓扑文件描述了体系有多少东西；回头进一步学习例子时，进去翻翻看，想编译或合成都可以。</p><p>唯一要求：拓扑文件里的力场参数文件（如 spc.itp）千万别改动——里头写的是力场参数，一改坏了这个分子就不是这个分子，变成其他东西了。比如把水的势能参数改了，体系不再是水，啥东西不知道。实在要改，就换个名字，别弄错别人的。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这个拓扑文件里头描述什么呢？就描述你所需要知道的这个原子和分子的名称、类型，它的相互作用。你放进去的是水，还是二氧化碳？这些东西它们是怎么相互作用的？长什么结构的？就是这个，它决定了你这个体系是啥东西。</p><p>演示时会看这头，主要包含我这头有512个水分子。水分子结构在这头描述了，力场是Lennard-Jones势能方程。还有那个势能方程摆在那，让大家研究西格玛和埃普西隆两个参数。</p><p>唯一要求是ID文件千万别改动。因为里头写的是力场参数，一改坏了，这个分子就不是这个分子，变成其他东西了。所以一定要改，就得换个名字。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-conf">
+  <div class="slides"><figure class="slide" id="slide-06">
+<img src="slides/slide_06.png" alt="课件第6页 2、构型文件(conf.gro)：第一象限坐标、速度矢量与盒子大小">
+<figcaption><span class="sno">06</span><span class="stitle">2、构型文件(conf.gro)：第一象限坐标、速度矢量与盒子大小</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>构型文件：坐标与盒子</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 6</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第二个是构型文件，描述 512 个水分子在盒子里的布局和 XYZ 坐标。构型文件最简单：第一行是系统名字，第二行是原子总数。然后罗列分子：第一号分子 SOL 含四个原子——实际是水分子，一个氧两个氢，还有一个作用点叫 M，这是 TIP3P 形式的势能；SPC 水就是一个氧两个氢。</p><p>罗列完分子以后，还有气体分子（比如一个甲烷，取名叫 GAS 当盖子）。注意这边放的是分子数、那边放的是原子数，每个分子对应由几个原子构成写得很清楚。</p><p>三列坐标是第一象限的坐标（X、Y、Z），后面三列是速度矢量（VX、VY、VZ）。弄到最后，把所有分子原子的坐标搞定，最后三个数是盒子的长度 Lx、Ly、Lz——盒子也许是正方体也许是长方体，长方体的长宽高不一样大小，正方体就一样大小。构型文件是最简单的。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>构型文件最简单。第一行是系统名字，第二行是原子总数。然后罗列分子，第一号分子SOL含四个原子，实际是水分子，一个氧两个氢。第二个氢还有一个M点，就是以前我说的那个势能，是一个TIP3P形式就是一个氧，两个氢。</p><p>罗列完了之后，到那儿之后，说水分子弄完了，这儿还有气体分子，是一个甲烷。他就叫GAS，他取了个名字叫盖子。然后这边的三列就是第一象限的坐标，这边是它的速度坐标，那就是VX VY VZ。</p><p>弄到最后，全把这些每一个分子和原子的坐标都搞定了，最后呢？有三个数是代表这个盒子的长度，LX LY LZ。你这个盒子也许是个正方体，也许是个长方体。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-preprocess">
+  <div class="slides"><figure class="slide" id="slide-07">
+<img src="slides/slide_07.png" alt="课件第7页 构型文件的前处理工具：genbox 产生盒子 / genconf 倍增 / editconf 编辑">
+<figcaption><span class="sno">07</span><span class="stitle">构型文件的前处理工具：genbox 产生盒子 / genconf 倍增 / editconf 编辑</span></figcaption>
+</figure>
+<figure class="slide" id="slide-08">
+<img src="slides/slide_08.png" alt="课件第8页 制备模拟盒子，设计研究体系：pdb2gmx、genbox、genconf、editconf">
+<figcaption><span class="sno">08</span><span class="stitle">制备模拟盒子，设计研究体系：pdb2gmx、genbox、genconf、editconf</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>构型前处理：genbox / genconf / editconf</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 7</span><span class="chip">课件 8</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>有了构型之后，有几个常用的子命令对盒子进行编辑。第一个 genbox（g box）产生一个盒子：通过插入蛋白质、氯化钠、水分子，最后输出一个 Lx、Ly、Lz 这么大的盒子。比如输入 512 个水分子的基本模型，你说要更大的体系，算一算盒子该多大，直接合成一个盒子。</p><p>第二个 genconf 倍增构型：222 的意思是把盒子放大成 2×2×2——1 倍变成 8 倍大小。有个 -d 参数是倍增时给盒子之间留一个小空隙，别让它们都挨着，写 0.05 就行；不想留就写 0。为啥能挨着？因为盒子里分子有周期性边界条件，分子滋出来一点，一定会在那一边漏出来，影像会补上，所以中间不留距离也没关系。</p><p>第三个 editconf 编辑构型：对盒子缩放、平移、旋转，编辑成适合需求的样子。比如把盒子变成 10.6×10.6×10.6，或缩成原来的 0.95 倍，或把密度变成 1.005——但注意这三项只能三选一，不能同时缩放又改密度，那就矛盾了。有个小技巧：不明白就输命令带 -H 看帮助信息，现在有 AI 直接问它，它很快就答出来。</p><p>缩放有个讲究：往大了放好办，往小了缩密度变大、分子间距变短，一次缩太狠两个原子靠得很近，力特别大，模拟就崩掉了。要缩到一半，先缩 80% 让它跑一跑、互相之间舒服了（弛豫，摇一摇盒子让原子自己找位置），再缩 80% 就到 0.64 倍了，再跑一跑就接近一半。</p><p>复杂的体系就要手工制备：比如先做中间一块水，做甲烷盒子平移过来，再把三个加到一起，拿脚本合到一块儿；或者中间放石墨、挖一个洞留个通道，一边放甲烷密度大压力大、一边是真空，甲烷就从管子里流过去。以前我筑盐时，做水分子笼子（黄条搭的笼子）泡在水里，先挖空腔再手工做笼子构型移进去，这叫移植。后面讲案例时会涉及这种复杂操作。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>第一个叫genbox，就g box，genbox就产生一个盒子。它通过什么，比方说插入的蛋白质，插入一个什么氯化钠，然后插入这个水分子，最后输出来这个合成完了，说我要一个盒子是LX LY LZ这么大的一个盒子。</p><p>他说我可以把你那个盒子翻倍。这个222的意思呢，就是说我给它放大成2×2×2。你像这个盒子这么大，那你就可以用一个盒子变成8倍的大小。然后这地方有一个杠d，指的是你倍增盒的时候呢，想给那几个盒子之间留一个小匣子，别让他们都挨着。</p><p>往小了缩可不好办，密度会变大，分子间距离会变短。如果一次缩得太狠，两个分子距离就会很近，俩原子靠得很近，之间力度特别大，模拟就跑不起来，崩掉了。你先缩到80%，然后让它跑一跑，互相之间就舒服了。然后再缩个80%，已经变成原来的0.64倍了，再让它跑一跑。就是弛豫，意思是摇一摇盒子，让原子自己找该去的地方。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-mdp">
+  <div class="slides"><figure class="slide" id="slide-09">
+<img src="slides/slide_09.png" alt="课件第9页 3、参数文件(grompp.mdp)：180+ 参数，积分器/起始时间/单步长/总步长">
+<figcaption><span class="sno">09</span><span class="stitle">3、参数文件(grompp.mdp)：180+ 参数，积分器/起始时间/单步长/总步长</span></figcaption>
+</figure>
+<figure class="slide" id="slide-10">
+<img src="slides/slide_10.png" alt="课件第10页 4、输入文件合成(topol.tpr)：grompp 合成与 mdrun 开始模拟">
+<figcaption><span class="sno">10</span><span class="stitle">4、输入文件合成(topol.tpr)：grompp 合成与 mdrun 开始模拟</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>参数文件与输入文件合成</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 9</span><span class="chip">课件 10</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第三个是参数文件，控制 GROMACS 运行所需的所有参数，共 180 多个，谁也记不住。平常用的就一二十个，其他 150 多个浏览一遍知道是否有关即可；无关的不理它，有关的知道哪些是缺省值不用改，只经常改常用的那些。形式全是“变量=数值”。</p><p>比如 mdp 文件里第一个 Integrator 是积分器，写成 md 就是跑分子动力学模拟；还有能量优化参数、起始时间（一般不设）；dt 是单步长——一步到下一步的间距，是 0.002 皮秒，可以改 0.001、0.004。单步长越小轨迹算得越精确；nsteps 是总步数，比如 nsteps 写 25000，0.002×25000=50，这个 run 就跑 50 皮秒真实时间。</p><p>三个文件弄好之后先做预处理，我习惯把它叫合成所有的输入文件，用的是 grompp 子命令，前头带总命令 gmx_mpi。参数对应要记清：-p 是拓扑文件、-c 是构型文件、-f 是参数文件，把三个文件合成，输出一个 topol.tpr。</p><p>跑的时候它有时不报错但输出警告，警告多了就不生成正常的东西。怎么办？后面加 -maxwarn，就是最大警告数，不到 20 个就当没警告、视而不见——一般警告也就两三个，有个数比两三个大就可以了。合成完输出文件后开始 run：mdrun 带 -o、-x、-c、-e、-g 这些输出文件参数。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>参数文件控制GROMACS运行所需的所有参数。它有180多个参数，谁也记不住。不用全记，平常用的就一二十个，其他的150多个浏览一遍，知道是否有关即可。全是变量等于数值的形式。</p><p>DT指的是单步长，就是以前说的走一步两步的间距。这个单步长是0.002皮秒，你这个可以改0.001，可以改0.004，都可以改单步长。单步长很显然越小，这个轨迹算的越精确。底下这个N44呢，是总长5000，那你就得算25000。0.002乘以25000是多少？50万，那就是说这个run跑了50个皮秒，这是他的真实时间。</p><p>用的是GROMACS这个子命令，那么前头带上这个总命令gmx grompp行了调用它。那么这个参数-p，这都是对应的，你不能把-c写到这儿，-p就指的是拓扑文件，-c指的是就是构型文件，-f指的是后头要输入一个参数文件，把这三个文件进行合成，合成了之后给我输出一个拓扑点tpr。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-output">
+  <div class="slides"><figure class="slide" id="slide-11">
+<img src="slides/slide_11.png" alt="课件第11页 5、输出文件：xtc/trr/ener/confout/cpt/log 共 6 个">
+<figcaption><span class="sno">11</span><span class="stitle">5、输出文件：xtc/trr/ener/confout/cpt/log 共 6 个</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div class="sec-tt">
+        <h2>输出文件与检查点</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 11</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>输出文件一般 6 个：压缩精度坐标轨迹（最重要）、全精确坐标轨迹、能量、最后一帧构型、检查点、日志。你数着好像 5 个？少说了一个检查点文件。检查点文件很重要——一个 run 跑很长，实习时几十秒几分钟，真正科研上可能跑两个月。</p><p>检查点文件定期对模拟体系做全息照相，拍下当时状态，比如隔 100 万步全拍一遍。万一停电或哪坏了，电一断全部损失太可惜；有了检查点，损失掉也就是几天的时间，不至于把前头十几天都损失掉。</p><p>日志文件可以拿 vi 打开：看看哪步断了、发生了啥事，记录这个状态怎么跑的、用了哪些参数——相当于一个清单。最后一帧构型文件也很重要：起始构型跑完输出最后一帧，你想继续算就用这一帧作为输入再往后算，总有一个接续。</p><p>能量文件全面监控模拟体系运行过程中的状态：温度多少、压力多少、体系处于什么状态。还有轨迹文件——我们计算半天，最终目的就是要这条轨迹。轨迹有两种：一种是全精度坐标输出，包含坐标、速度、受力，精度不压缩但文件体积大，可能 100 多 G 硬盘放不下；另一种是压缩精度的坐标，牺牲一点精度让输出尽量小，从 100 多 G 缩减到二三十 G。科研跑分子动力学模拟常用压缩精度的轨迹坐标。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>输出文件不一定都是编码，一般是6个。你说不对，刚才这边12345是5个。怎么变成6个？少说了一个检查点文件。这个检查点文件也很重要。</p><p>这个检查点文件呢，定期对你的模拟体系进行全息照相，拍下当时状态。万一停电或哪儿坏了怎么办？电一断没结果，全部损失太可惜。你损失掉也就损失个几天的时间，你不至于把前头十多天都损失掉。所以检查点文件呢，它的作用在这儿。</p><p>这个log文件呢，是个日志文件。这个可以拿vi打开。vi打开了之后呢，一看就是看看你比方说断电了，或者哪跑坏了。或者说第几步到、到第几步的时候，它断了，有个发生了点啥事。</p><p>轨迹有两种，一种是全精度的坐标输出。它包含空间坐标、速度坐标，以及二三维方向的受力。其精度不压缩，保证全精度。但坏处是文件体积大，可能达100多G，硬盘放不下。后来有了压缩精度的坐标，这才是最重要的。即牺牲一点精度，让输出文件尽量小。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-vmd">
+  <div class="slides"><figure class="slide" id="slide-12">
+<img src="slides/slide_12.png" alt="课件第12页 用 VMD 观察模拟轨迹：下载、Windows 安装与回传数据">
+<figcaption><span class="sno">12</span><span class="stitle">用 VMD 观察模拟轨迹：下载、Windows 安装与回传数据</span></figcaption>
+</figure>
+<figure class="slide" id="slide-13">
+<img src="slides/slide_13.png" alt="课件第13页 VMD 简单演示：trjconv -pbc mol 预处理、装入构型与轨迹、动画输出">
+<figcaption><span class="sno">13</span><span class="stitle">VMD 简单演示：trjconv -pbc mol 预处理、装入构型与轨迹、动画输出</span></figcaption>
+</figure>
+<figure class="slide" id="slide-14">
+<img src="slides/slide_14.png" alt="课件第14页 典型的科研动画：甲烷水合物（可燃冰）晶体融化">
+<figcaption><span class="sno">14</span><span class="stitle">典型的科研动画：甲烷水合物（可燃冰）晶体融化</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">08</span>
+      <div class="sec-tt">
+        <h2>VMD 可视化：看轨迹动画</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 12</span><span class="chip">课件 13</span><span class="chip">课件 14</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>拿到轨迹后，一般先调到本地机器上，用 VMD 可视化程序跑一下看看，让动画跑起来，这就放心了。VMD 是针对三维大规模生物分子系统做显示动画分析的，支持 Linux、Windows，免费开源，下载地址在官网上，Windows 上很轻松就能装。</p><p>演示流程：从应用客户端传回数据，启动 VMD 看体系长啥样、分子长啥样，让它走两步看看。VMD 看 DNA、氨基酸这些生物分子画得很复杂，咱们主要看一看分子长啥样就行。</p><p>注意：用 VMD 观察结构时，在 Linux 端要先预处理轨迹——加一条 trjconv 命令做 -pbc mol 处理，把轨迹预处理一下，让分子在 PBC 之间来回跳动时连起来。昨天刚加的这两条：不加的话画出来的图像是乱的，加上就不乱了。然后输入 PDB 或轨迹文件，输出成 xtc 文件放到 VMD 里。</p><p>在界面上打开它，把构型装进去，调调图像，就可以观察动画：既可以输出单帧快照，也可以输出动画视频。到这一步讲完之后你就可以做动画了。想真正把单帧快照拍好非常痛苦——调颜色、调大小、调背景，杂七杂八，那都是人家努力的结果，还得有点美术和艺术细胞。</p><p>典型的科研动画：这是一块笼形水合物（可燃冰），红的是甲烷分子，这些是水分子。加温之后漂亮的晶体融化了，化完之后成了液态水，甲烷全释放出来变成气态甲烷。这个动画就是别人做出来的动态画。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>拿到轨迹后，一般先调到本地机器上，用VMD可视化程序跑一下看看。让动画跑起来看看，这就放心了。VMD是针对三维大规模生物分子系统，做显示动画分析的。Linux、Windows都支持这个，非常easy，就不多说了。</p><p>原来的时候我没这两条，这是昨天刚加的。如果不加这两条，画出来的图像是乱的。加上这条就不乱了，所以要加上。一要调成object，就是pbc这种，把轨迹预处理一下。让分子之间在PBC之间来回跳动，把它连接起来。</p><p>这个就是一个典型的一个科学动画，这个是一块水合物，这块水合物又叫笼形水合物，它是长成笼的结构的。那可燃冰嘛，这头这些这些都是甲烷分子，这些红的，这些呢，是水分子。你看它融化，加温了之后呢，它那么很漂亮的一个晶体，非常有趣。化完了之后，这边成了液体的水，然后呢，那些甲烷呢，全都释放出来，再成了一些气态，气态的甲烷。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-hw">
+  <div class="slides"><figure class="slide" id="slide-15">
+<img src="slides/slide_15.png" alt="课件第15页 MP 作业3.4：加速比图、1388 水分子长方体、正方体盒子与 VMD 动画">
+<figcaption><span class="sno">15</span><span class="stitle">MP 作业3.4：加速比图、1388 水分子长方体、正方体盒子与 VMD 动画</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">09</span>
+      <div class="sec-tt">
+        <h2>作业布置：加速比图与盒子制作</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）</span><span class="chip">课件 15</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>这次的作业正好赶上十一放假，你们想玩就来玩几天，适可而止，还得留点时间做作业。从今天到下一次课（应该是 8 号，1～7 号休息），时间留得挺多的。</p><p>第一道题：学习 water 例子，记录 1～12 个 CPU 核的并行运算时间（秒），做加速比图。MPI 都装好了，mpirun -np 写 1 就是 1 核、写 2 就是 2 核，一直写到 12 核并行，几十秒钟就完事。嫌不过瘾就做 2～24 核（以 2 为间隔），你们最大只能做到 24 核，因为给你们权限只能用 24 个核，这是跟集群管理员商量的结果。加速比的定义是串行时间除以并行时间，反映你用两个 CPU 加速了多少——不太可能加速到两倍，1.8 倍或 1.3 倍都有可能。</p><p>第二道题：把 water512 例子做成一个含 1388 个水分子的长方体盒子——具体长宽高爱怎么处理怎么处理，做完之后得让盒子能装起来、能跑起来。就用编辑盒子那一套：editconf、genbox 或者其他，随便折腾，一旦跑起来就行。</p><p>第三道题：把长方体盒子折叠后，变成密度为 1.005g/cm³ 的正方体盒子，只要能跑起来就行。把自己当成面团揉搓撑拽，往届学生都能做到，我相信你们也一定能行。</p><p>第四道题：用 VMD 观察任意一条轨迹（水分子、长方体、正方体都行），随便选一条轨迹制作动画。另外前面 3.1 到 3.4 涉及一些操作，量不大，请在 10 月 7 号之前全部完成。下节课我会专门讲如何优化调整 mdp 参数，非必要先不要改 mdp 参数文件。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这个正好赶上11放假了，你们想玩就来玩几天，就适可而止，还得留点时间做作业。下一次课好像是8号吧。1~7日休息，然后8号那个好像是个周五，不是周二就是周四。</p><p>做这个CPU核的这个运行，看它能跑多少秒出来。然后做一个加速比图。那很简单嘛，MPI已经都装好了都能run对吧？你就mpi run，然后run那个gmx_mpi，MD run。然后那个地方-np的时候呢，写1就是1，写2就是2核，写3就是3核，一直写到12核并行。</p><p>加速比是怎么定义的呢？串行时间除以并行的时间就是那个加速比。它能够反映出来，你用两个CPU，加速了多少。你不太可能加速到两倍，但是你加速到了1.8倍或者是1.3倍，这都是有可能的。</p><p>第二个作业呢，就是以这个water512，它里头是512个水分子。你这个例子你自己去想办法，把它做成一个含有1388个水分子的长方体盒子。你做完了之后呢，你得让那个盒子能够装起来，别失败，能跑起来。你自己想办法。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-crash">
+  <div class="slides"><figure class="slide" id="slide-16">
+<img src="slides/slide_16.png" alt="课件第16页 MD 原理：系统初始构型不影响平衡状态（能量最小化与小步长）">
+<figcaption><span class="sno">16</span><span class="stitle">MD 原理：系统初始构型不影响平衡状态（能量最小化与小步长）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">10</span>
+      <div class="sec-tt">
+        <h2>运行崩溃的处理：能量最小化与小步长</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）</span><span class="chip">课件 16</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>编译盒子时最可能出现的问题是构型一运行就崩溃：查看 md.log 文件会发现报错，最常见的原因是两个原子离得太近——距离太近中间作用力特别大，力大到 10 的几十次方，GROMACS 处理不了就退出，提示距离设置不了。一般用两种办法解决。</p><p>第一种叫能量最小化。原本能量较低，但压缩或拖拽编辑后坐标改变、能量升高不再是最小值。把 mdp 参数文件里的 integrator 从 md 改成 steep（最陡下降），运行；运行完后再改回 md。注意：对构型做一次处理，必须以输出的构型作为下一轮输入才生效——否则还用原来的，能量依然高，就白干了。它使体系能量迅速下降：哪两个分子挨得太近导致能量非常高，系统就把这个分子拿掉，把周围分子移过来填补，周围分布均匀，体系能量一下就低了。</p><p>第二种叫小步长运行。把单步长 dt 改得小小的，比如 0.0001。两个原子离得很近时，单步长大会一步就磕碰过去出错；单步长小，一点一点靠近，等靠近到力已经很大了，就把它顶开，体系就能运行了。既然能运行，能量一定变小了、移动开了，之后再把 dt 改回目标值，用小步长输出的构型作为输入再合成运行。</p><p>为啥要改回来？小步长不划算——想跑 50 皮秒，步长 0.002 要 25000 步；改成 0.001 就得 50000 步，机时就白转了。下节课还会专门讲。能量最小化和结合着用也行：先试试这个不行再试试那个，最后目的只有一个——编辑完的盒子能用不出错。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>编译盒子时最可能出现的问题是构型一运行就崩溃。查看md.log文件会发现报错。其实最常见的原因是两个原子离得太近。原子距离太近会导致中间作用力特别大，那力大到如果计算，是10的几十次方那么大。GROMACS处理不了就会退出。</p><p>关键是把integrator等于steep，原来不是md吗？把它写成steep。然后运行，运行完后再把这个改回md。两步运行后会产生输出文件，将其作为新的输入再处理。一定要记住：对构型做一次处理，必须以输出的构型作为下一轮输入才生效。否则若还用原来的，因能量依然高，就白干了。</p><p>第二种办法呢，叫小步长进行。把这个单步长DT改的小小的。两个原子离得很近，如果你的单步长太大的话，一步就能算到这儿去，那不就早磕碰过去了？那就会出错。那你把单步长算小一点，一点一点靠近，等到它靠近到这儿的时候，它那个力量已经很大了，就把它顶开了，这样一来呢，这个体系呢它就可以运行了。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-slurm">
+  <div class="slides"><figure class="slide" id="slide-17">
+<img src="slides/slide_17.png" alt="课件第17页 演示：用 Slurm 提交任务（sbatch、计算节点 node01~10）">
+<figcaption><span class="sno">17</span><span class="stitle">演示：用 Slurm 提交任务（sbatch、计算节点 node01~10）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">11</span>
+      <div class="sec-tt">
+        <h2>用 Slurm 提交任务</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）</span><span class="chip">课件 17</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>到了这一步，就要用 SLURM 计算任务了，用 sbatch 提交。量其实都不大，用登录节点跑好像也不是不行，但我们已经开始用 MD 跑模拟了，就值得用 sbatch 提交了。批量提交的意思是避免大家在登录节点上用——上面就 24 个核，这个人也跑那个人也跑，最后很拥挤，大家都不知道，还影响其他用户使用。</p><p>用 sbatch 提交任务可以使分子模拟运行于计算节点（node01~10），而不是登录节点。SLURM 是 Simple Linux Utility for Resource Management，一个优秀的开源作业调度系统。模板在指定路径下，把模板拷过去、打开修改几个参数就行。</p><p>提交任务用 sbatch；查看任务用 squeue；任务想删掉就 scancel 加任务号。就是这些。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>用sbatch提交任务，这个没办法，就是我们已经开始准备要跑一些状态。你们先习惯了，去用这个sbatch提交。按说呢，这个量都不大，用那个登录节点跑好像也不是不行。但是呢，就是我们已经开始用MD在跑模拟了，就值得用sbatch提交了。</p><p>批量提交的意思呢，就是避免大家在登录节点上用。因为那上面就24个核，这个人也跑，那个人也跑，最后那上面很拥挤，结果大家都不知道，也影响其他用户的使用。</p><p>那么我们用sbatch提交任务的话呢，就可以使得分子模拟运行于计算节点，而不是登录节点。你看这个Slurm啥意思呢，就是Simple Linux Utility for Resource Management。就是一个资源的调度管理的一个东西。提交任务呢，用sbatch提交；查看任务呢，用squeue。另外，如果那个任务你想删掉，就scancel掉那个任务号就行。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-encourage">
+  <div class="slides"><figure class="slide" id="slide-18">
+<img src="slides/slide_18.png" alt="课件第18页 面对困难的忠告：顶住，不要退缩；失败，从头再来">
+<figcaption><span class="sno">18</span><span class="stitle">面对困难的忠告：顶住，不要退缩；失败，从头再来</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">12</span>
+      <div class="sec-tt">
+        <h2>忠告与课堂演示</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）</span><span class="chip">课件 18</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>你们前一段时间安装了好几天，肯定遇见了一些困难。遇见困难，顶住，别退缩，扛过去了，这个小山头就过去了。你失败了，没事儿，我们讲的东西全是从 0 开始、从 0 讲的——MD 从 0 装，大不了这系统里头啥都没有，你啥东西都删光，我不是还是从 0 开始吗？哪个包万一装错了，删了，从头再解压、再弄一遍，就这么个过程。</p><p>记着这些话：古人学问无遗力，少壮功夫老始成。纸上得来终觉浅，绝知此事要躬行。AI 是很强大，但是再强大，有些操作它就是用不了——我相信 AI 代理绝对能干这些事，但是你得知道里头的运作规律：实践过、操作过、吃过、看过、练过、想过，你再用 AI 给你代理，你才知道哪些做得了哪些做不了。否则啥都让 AI 干了，要人干啥。</p><p>CPU 算得快确实比我算得快，内存硬盘记得多，AI 确实聪明，天文地理数学历史一查都知道。但是你还得想一想：我们来上学，要学点啥？我们要用 AI，不能让他把我们替代了。将来学习、工作，最后一定得把自己弄成不可替代的人，你们就成功了，就能找到很好的岗位。</p><p>下面我们要演示：动画制作与 Slurm 提交任务。演示的话呢，不知道能不能演示得那么顺利。</p><div class="videos"><div class="video"><h4>课堂演示录屏（MP3.4）：动画制作与 Slurm 提交任务</h4><video controls preload="metadata" src="videos/录屏MP3.4-动画制作-slurm提交任务.mp4"></video></div></div><details class="raw"><summary>原声转写（节选，未整理）</summary><p>遇见一些困难呢，就是这个，顶住，别退缩，扛过去了。这个小山头就过去了。然后，你失败了，没事儿，我们讲的东西全是从0开始，从0讲的。你们所以从头再来，你说哪个包，万一装错了，删了，拿倒从头再检压缩，再弄一遍。就这么一过程。</p><p>就是古人学问无遗力，少壮功夫老始成。纸上得来终觉浅，绝知此事要躬行。就是AI是很强大，但是再强大，就是你再用那些东西，就说这场操作他就用不了。你得实践过、操作过、吃过、看过、练过、想过，你再用那些AI去给你代理一下，你才知道他哪些做得了，做不了。</p><p>将来一说你们学生学习，工作，最后你们一定得把自己弄成不可替代的人，你们就成功了，你们就能找到很好的岗位。下面我们要演示，演示的话呢，不知道能不能演示的那么顺利。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（矿物物理学）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>
