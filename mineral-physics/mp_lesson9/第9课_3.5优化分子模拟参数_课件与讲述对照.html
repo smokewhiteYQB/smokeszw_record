@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>矿物物理学 · 第9节 3.5 优化分子模拟参数｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.videos{margin-top:14px;border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.video + .video{border-top:1px solid #e4e9f0;}
+.videos h4{font-size:12.5px;font-weight:700;color:#0a1f38;background:#f2f5f9;padding:8px 12px;border-bottom:1px solid #e4e9f0;}
+.videos video{display:block;width:100%;max-height:460px;background:#0b0f14;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>矿物物理学 · 第9节 3.5 优化分子模拟参数</h1>
+    <div class="sub">第9节 3.5 优化分子模拟参数 ｜ 2026-10-08 ｜ 郭光军</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 25 页 · 整理 14 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-basic">01 开场：先把模拟跑对，再谈分析</option>
+<option value="sec-forcefield">02 力场选择与水模型</option>
+<option value="sec-system-size">03 体系大小与万亿原子世界纪录</option>
+<option value="sec-dt-nsteps">04 单步长 dt、总步长 nsteps 与秒级模拟</option>
+<option value="sec-cutoff">05 截断半径 rlist / rvdw / rcoulomb</option>
+<option value="sec-coupling">06 温度耦合、压力耦合与系综选择</option>
+<option value="sec-seed">07 初始速度、随机数种子与"绝对/相对重复"</option>
+<option value="sec-integrator-output">08 积分器与轨迹输出间隔</option>
+<option value="sec-advanced-config">09 进阶参数与构型调优</option>
+<option value="sec-experience">10 参数调优的经验</option>
+<option value="sec-lesson">11 惨痛教训与意外收获：comm-mode 与气舱</option>
+<option value="sec-summary">12 小结</option>
+<option value="sec-homework">13 MP 作业 3.5</option>
+<option value="sec-closing">14 面对困难的忠告</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 矿物物理学-3.5-优化分子模拟参数.pdf 逐页渲染，转写原文见 record_20261008.txt。</div>
+<section class="sec" id="sec-basic">
+  <div class="slides"><figure class="slide" id="slide-01">
+<img src="slides/slide_01.png" alt="课件第1页 封面：优化分子模拟参数（授课人：郭光军）">
+<figcaption><span class="sno">01</span><span class="stitle">封面：优化分子模拟参数（授课人：郭光军）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-02">
+<img src="slides/slide_02.png" alt="课件第2页 开展MD模拟的基本要求：垃圾进，垃圾出（GIGO）">
+<figcaption><span class="sno">02</span><span class="stitle">开展MD模拟的基本要求：垃圾进，垃圾出（GIGO）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>开场：先把模拟跑对，再谈分析</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 1</span><span class="chip">课件 2</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>到这节课，你们文件都搞定、已经可以做点模拟了，这节课专门讲模拟参数的优化——主要就是 mdp 文件那 180 多个参数。提交一个模拟之前，首先要想清楚自己要干什么：是做个测试、完成一项任务，还是想研究个什么东西。没想清楚就先不着急提交；想清楚了，确实要提交，那就交给它跑。</p><p>提交之后模拟就要开始跑，你得清楚地知道自己设的每一个参数。180 多个参数谁也记不住，我也记不住；但关键是你要清楚自己改了哪个参数、期待它输出什么性质，反复检查一下设的是不是你想要的那个东西。成了再弄，不成先别提交，多查一下没什么坏处——设参数的时候一定要有个理由。</p><p>我们这两步的目标只有一个：保证提交的模拟是按你的意图正确运行的。先把它弄对，然后再考虑轨迹分析和结果解释。为什么这么强调？因为跑模拟这一步是要花钱的：预处理、后处理不花什么钱，几秒钟分分钟就完事；但 mdrun 一跑起来要排队算，十几秒不值钱，一算就是好几千小时就贵了。超算中心一般按每核每小时一毛钱计费，便宜的能到一分钱一核，贵的两毛钱，乘上去钱不少。</p><p>所以这一步相当于我们去野外采了块石头、放了一炮采集地震数据，那是要花钱的；样品采对了，回来分析可以慢慢来。最可怕的是做了三个月模拟，回头一查某个参数是错的，全错完。对做模拟的人来说就一句话：垃圾进、垃圾出（Garbage-in, Garbage-out）。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>实际上你们就应该会了，这节课呢，就讲这个参数模拟，就是模拟参数的优化，主要是那个MVP文件的。所以我们要开展模拟的话，你首先就应该想到的是，你在做什么？你想干一件啥事？</p><p>提交的那个任务里头，你设定的每一个参数，你说这个我做不到，那参数文件里头有180多个参数，那哪记得住？我也记不住那些呢，不要紧。但是你要清楚的知道你改的那个参数……就是设定参数的时候就要一定要有个理由。</p><p>跑模拟的那一个，可是要用MD run就把它run……这个超算中心，一般他们计费的大约都是以每小时每核一毛钱。就大概是这个量级……这个相当于什么？相当于我们去野外打了块石头，采了个样，或者到野外去放了一炮，采集了好多地震数据。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-forcefield">
+  <div class="slides"><figure class="slide" id="slide-03">
+<img src="slides/slide_03.png" alt="课件第3页 1、力场的选择：查文献、考虑研究目的与计算开销">
+<figcaption><span class="sno">03</span><span class="stitle">1、力场的选择：查文献、考虑研究目的与计算开销</span></figcaption>
+</figure>
+<figure class="slide" id="slide-04">
+<img src="slides/slide_04.png" alt="课件第4页 水的势能模型：100 多种，刚性/柔性/可极化">
+<figcaption><span class="sno">04</span><span class="stitle">水的势能模型：100 多种，刚性/柔性/可极化</span></figcaption>
+</figure>
+<figure class="slide" id="slide-05">
+<img src="slides/slide_05.png" alt="课件第5页 同类原子之间的相互作用：O-O 的 L-J 势能">
+<figcaption><span class="sno">05</span><span class="stitle">同类原子之间的相互作用：O-O 的 L-J 势能</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>力场选择与水模型</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 3</span><span class="chip">课件 4</span><span class="chip">课件 5</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>后面要说的重要参数大概 10 个左右，最重要的就是力场的选择——你想跑哪个东西。我们一直拿水做例子：要模拟水，就得查文献、了解水的力场发展；不管是研究二氧化硅、粘土还是什么，都要考虑自己的研究目的，看哪个力场最合适、别人常用哪一个；再一个就是计算开销，不同力场的开销不一样。</p><p>水这个东西看着简单、我们很熟悉，其实挺复杂——既简单又复杂。水的势能模型有 100 多种：刚性的、柔性的、可极化的；单点的 SSD，三点的 SPC、SPC/E、TIP3P，四点的 TIP4P、TIP4P/2005、TIP4P/ice，五点的 ST2、TIP5P，六点的 NvdE。做分子生物学的常选 TIP3P，早期常用 SPC、SPC/E，现在 TIP4P/2005、TIP5P 这些都很常用。</p><p>点数多、作用点多，稍微精确一些，但计算量也大。回想两个分子之间算相互作用：三点对三点要算 9 次距离，五点对五点就要算 25 次——力场/势能计算是分子动力学最吃 CPU 的地方，90% 以上的机时都耗在这。所以三点不精确、五点太费劲，选四点确实不错，主要就是考虑计算开销。像 SPC/E 模型，氧带两个负电荷沿四面体方向分布，相当于两个氢和两个负电荷的位置，做某些拓扑结构时用它就合适。</p><p>前面说的是同类原子之间的作用，比如水里氧氧、氧氢的参数查表就行。这里讲的是异类原子之间的作用——比如体系里有钠、有水、有甲烷，氧和碳之间没有直接参数，力场就没法算。为此要用交叉规则，即 Lorentz-Berthelot（LB）混合法则：距离参数 σ 取算术平均（碳碳和氧氧的 σ 相加除以 2）；能量参数 ε 取几何平均（碳碳和氧氧相乘再开方）。</p><p>这个差异要记住，以前考试有同学记反了。其实很好记：距离是直观的，两者相加除以二就是算术平均；能量抽象、看不见摸不着，就乘积开方取几何平均。OPLS 力场则是两个参数都用几何平均。原子间交叉作用的公式有十多个、写两页 PPT 都写不完，但不需要全记，记住最重要的 LB 法则就行。为什么用这种交叉结构？因为缺乏精确数据——真想弄清碳氧之间的作用，得专门优化：参考水分子氧氧参数的优化过程，把二氧化碳或甲烷溶进水里测溶解度，和实验值对齐；准了就用这套碳氧势函数，不准就重新选力场。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>你像他们搞分子那个分子生物学那些，他们就经常选用tip three g……水的模型的100多种，刚性的柔性的，极化的，3点的，4点的5点的6点的，那选哪个合适呢？</p><p>你按一个5点的对另外一个5点的，你中间的算量一二十五次。那么多距离在计算那一个地方，就是算力场……分子动力学90%以上的机时都耗在那。所以你看，3点不精确，5点太费劲，选4点挺好，确实不错，主要考虑计算开销。</p><p>为此采用交叉规则，即Lorentz-Berthelot混合法则。距离参数西格玛取算术平均……对于能量参数，将碳碳和氧氧的做乘积后开方，称为几何平均。这点差异应记住，以前考试有同学记反了。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-system-size">
+  <div class="slides"><figure class="slide" id="slide-06">
+<img src="slides/slide_06.png" alt="课件第6页 2、体系大小：尺寸效应（粘度、扩散系数）">
+<figcaption><span class="sno">06</span><span class="stitle">2、体系大小：尺寸效应（粘度、扩散系数）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-07">
+<img src="slides/slide_07.png" alt="课件第7页 顶级体系大小已达万亿级原子（1.62 万亿铜原子、45000 块 DCU、NEP 机器学习力场）">
+<figcaption><span class="sno">07</span><span class="stitle">顶级体系大小已达万亿级原子（1.62 万亿铜原子、45000 块 DCU、NEP 机器学习力场）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>体系大小与万亿原子世界纪录</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 6</span><span class="chip">课件 7</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>下一个关键参数是体系大小、分子数多少。1000 多个水分子大概能代表一杯水的取样，但减到 100 个甚至 10 个就体现不出宏观性质了，分子数不能太小；可太大也不好，1 万个还行，到百万级时每两个分子间都要算力，开销巨大、耗时过长。所以要在中间取舍；体积过小还会产生尺寸效应，带来麻烦。</p><p>什么叫尺寸效应？比如二氧化硅在 6000 多 K 熔体里，某个方向分子数变少、另一个方向变多，测出来的扩散系数居然随分子数线性变化——这就错了，没人会信。两个人在不同位置测，一个 120 这个单位、另一个在这儿，谁对？这就是观测量随体系大小变化。遇到这种情况必须把体系一直放大，放大到曲线停下来、达到平台，再用那个值；以前计算能力有限做不到，那就把这个关系式表达出来报告给大家也行。</p><p>现在顶级已经做到什么程度？万亿级原子——我看着都觉得可怕。今年 7 月 10 号我去郑州开曙光 8000 发布会，他们会场大 PPT 上跑了 414.7 亿个原子的水（除以 3 大概 100 多亿个水分子），看大到一定程度的一小滴水性质有没有本质变化。过了不到一个月，龙芯中科的公司联合曙光、苏州实验室樊哲勇团队，在这套机器上跑了 1.6 万亿个铜原子，想看规模大了之后会不会跑出缺陷、表面张力有没有变化。</p><p>它用了 45000 块 DCU 加速卡（整套机器 10 万卡只用了一半），体系尺寸 2.26×2.26×3.77 微米——拿显微镜就能看见，已经是介观尺度的物体。力场用的是 NEP 机器学习力场：拿机器学习先学第一性原理跑出的轨迹，学出势函数再放回经典分子动力学里用，达到原子级精度。这创了世界纪录——在那之前日本一台计算机跑了 1000 亿个原子，现在一下到 1.6 万亿。拿阿伏伽德罗常数算还不到一摩尔，差 10 到 15 个数量级，但人类在大方向上有的是需求。我自己算过的最大体系也就三四十万个原子，最初算水才几千个原子。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>像二氧化硅在6000多K的容体中，扩散系数是N的1/3的倒数……测出的扩散系数居然是线性变化，这就错了，没人会信。所谓尺寸量，就是观测的量随体积大小发生变化。遇到这种情况，必须把体系一直放大。</p><p>就是曙光8000的发布会……当时说跑了414.7亿个原子的水分子……联合的苏州实验室……就在这套机器上跑了1.6万亿个铜原子。他弄那么大，意思就是想看看那样子跑着跑着会不会跑出缺陷。</p><p>然后呢，他就用到了45000块DCU加速板。原来我给你们讲一下，这一套机器是10万卡用了一半……达到2.26微米乘以2.26微米，再乘以3.771微米……就是机器学习力场，就是他拿机器学习的力场先去学习第一性原理跑出来的轨迹……这就创了世界纪录。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-dt-nsteps">
+  <div class="slides"><figure class="slide" id="slide-08">
+<img src="slides/slide_08.png" alt="课件第8页 3、单步长 dt、总步长 nsteps（Matsumoto 2002 Nature 水结冰）">
+<figcaption><span class="sno">08</span><span class="stitle">3、单步长 dt、总步长 nsteps（Matsumoto 2002 Nature 水结冰）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-09">
+<img src="slides/slide_09.png" alt="课件第9页 顶级的总步长已达到秒级（Anton 超级计算机、D. E. Shaw 研究所）">
+<figcaption><span class="sno">09</span><span class="stitle">顶级的总步长已达到秒级（Anton 超级计算机、D. E. Shaw 研究所）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>单步长 dt、总步长 nsteps 与秒级模拟</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 8</span><span class="chip">课件 9</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>下一个主要参数是单步长 dt 和总步长 nsteps。dt 相当于分子模拟里下一帧的时间间隔：dt 小则轨迹精确，大则不精确，这是时间离散化的取舍。太大肯定不行——两个原子一撞就穿过去了，好比正常需要 5 个 dt 走过来，你非要 5 倍 dt 一步到位，力很大，模拟就崩溃了。但太小也吃亏：人家 5 步算到这儿，你用 50 步，多花 50 倍的钱，不划算。</p><p>步长和温度有关：低温下允许的步长比较大，高温下步长要变小。道理很简单——温度一高分子速度就快，正常 5 个 dt 走完的距离，速度快了可能两个原子就顶到边上，崩溃了，所以要把 dt 放得更小。这个作业里会让大家试，温度和最大步长的关系曲线就是 Matsumoto 2002 年在 Nature 上发的水结冰那篇文章里的图。</p><p>总步长 nsteps 也很纠结：总步长乘以单步长就是总模拟时间，大家都希望这个时间尽量长——我们取轨迹是为了做统计平均，轨迹越多、样本量越大，统计越准。就像咱们班 16 个同学统计出来的分数，跟 160 个同学统计的肯定不一样。但大了当然花钱多，你算一纳米非要算 1000 ns，数据绝对更好，代价也大。</p><p>那个有名的例子就是水结冰：Matsumoto 2002 年把 1000 多个分子降温一直跑，跑到大概 300 ns 时势能呼一下变低——结冰了。当时 2002 年大多数模拟只能跑几十纳秒，受计算能力限制；有人敢算到几百纳秒看到水结冰，而 50 ns 时没结冰也很正常，水可以以过冷态长时间保持。</p><p>到 2009 年能算到微秒级了（1 微秒 = 1000 纳秒）。另一个例子是甲烷和水形成水合物（可燃冰）：放入后能量略降、形成气泡，然后长时间不再下降，处于准稳态；直到 1.2 微秒（1200 ns）能量才开始下降，代表水合物结构的参数随之上升。在只能算到几百纳秒的年代谁敢继续算？作者是把程序丢上去一直在那儿算，打球度假回来一看，解成水合物了——完全是意外，我和他还合作发过论文。</p><p>现在顶级的总步长达到秒级：1000 个微秒是一秒，相当于把刚才的时间尺度拉远了 1000 多倍。因为经常要模拟蛋白质（比如新冠病毒 3CL 蛋白酶），有些东西要模拟很久才能看到变化，为此专门设计了安东（Anton）超级计算机——美国 D. E. Shaw 研究所研制，从芯片设计开始就定好了坐标计算和通讯方式，专为分子动力学打造的专用 ASIC。它综合性能不在 Top500 之列、跑不过 Top1，但跑 MD 快多倍；新冠 3CL 蛋白酶能模拟 1000 微秒，两次拿戈登贝尔奖。Anton 建成后不让中国人在上面算，一定要算得找美国合作伙伴。2025 年春 Anton3 服役（Anton2 已退役）。</p><p>国内对标的是专门设计的分子动力学芯片，所谓 MGC 超算系统、代号"天穹"。我感觉人类分子模拟下一步的理想，是在计算机里模拟一个能成活的细胞——那得上万亿原子、可能还不止，能看到 DNA 怎么解卷、折叠、复制。离这个还很远，但方向肯定是这个。你们就记住两个数：顶级总步长奔着微秒甚至宏观秒去，体系达到万亿原子级别。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>DT相当于分子模拟时下一帧的时间间隔。DT小则轨迹精确，大则不精确……这肯定不精确，哐一下顶上去，力很大就崩溃了。</p><p>这个例子是说什么呢？这个例子挺有名的，是一个水结冰的例子……他就是把大概1000多个水分子，给它温度降低……跑到大概300ns的时候，你看这个势能，前面一直势能这么高，呼一下就变低……它结冰了。</p><p>这是关于甲烷和水形成水合物的研究……直到1.2微秒（即1200纳秒）时能量才开始下降……他忘了丢上去的程序，一直在那儿算。过了几个月，他去打球、度假，回来一看状态还好。</p><p>为达到秒级速度，专门设计了一套超级计算机，叫安东……安东建成后，不让中国人在上面计算。如果中国人一定要算，必须找美国合作伙伴合作……2025春，Anton3服役。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-cutoff">
+  <div class="slides"><figure class="slide" id="slide-10">
+<img src="slides/slide_10.png" alt="课件第10页 4、截断半径 rlist、rvdw、rcoulomb">
+<figcaption><span class="sno">10</span><span class="stitle">4、截断半径 rlist、rvdw、rcoulomb</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>截断半径 rlist / rvdw / rcoulomb</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）</span><span class="chip">课件 10</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>再一个很重要的参数就是截断半径。第一节课讲 MD 原理时说过为什么要截断：截断外头跟中心原子距离太远、作用力微弱，可以忽略。但截太小不行——外头还有跟你作用的原子你都不要了，肯定算不进去；圈画太大，圈内分子数增多，计算量跟着变大。一般半径不要超过盒子边长的一半，参考原始势能优化时的取值。</p><p>GROMACS 里涉及三个半径：rvdw 是范德华半径，用于 Lennard-Jones 势能计算；rcoulomb 是静电力截断；rlist 是邻居列表（neighbor list）——为中心粒子构建一个邻居标号，比如周围 20 个原子打成 6、78、136 这样的标号，算短程力时只在邻居列表内查找，避免无效的距离计算。rlist 要略大于 rvdw 和 rcoulomb 的最大值，保证把相关原子都圈进来。</p><p>实际应用中常把三者设成同一个值以简化，设 1.0 nm 比较安全，有些力场要求 1.2 nm；设 0.8、0.9 会损失精度。这次作业里就让大家测 0.8、1.0、1.2 三个截断半径的计算速度：截断越小算得越快，1.2 最慢——可以画图写报告。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我们在第一节课讲分子动力学模型原理时就说了，为啥要设计一个截断半径？就是因为截断半径外头的，跟中心原子距离太长……这个太小了呢，那不行，外头还有跟你作用的，你都不要了，肯定算不进去。</p><p>Gmax涉及三个半径：Rvdw即范德华半径，用于Lennard-Jones势能计算。RCoulomb用于静电力计算。Neighbor list为中心粒子构建邻居标号……Rlist需略大于Rvdw和RCoulomb的最大值。</p><p>实际应用中常将三者设为相同值以简化。设1.0nm较安全，部分力场需1.2nm。若设0.8或0.9nm会损失精度，后续将通过实验确定最佳Rlist值。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-coupling">
+  <div class="slides"><figure class="slide" id="slide-11">
+<img src="slides/slide_11.png" alt="课件第11页 5、温度耦合 Tcoupl、tau_t、ref_t（Nosé-Hoover 温浴）">
+<figcaption><span class="sno">11</span><span class="stitle">5、温度耦合 Tcoupl、tau_t、ref_t（Nosé-Hoover 温浴）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-12">
+<img src="slides/slide_12.png" alt="课件第12页 6、压力耦合 Pcoupl、tau_p、ref_p（Parrinello-Rahman 压浴）">
+<figcaption><span class="sno">12</span><span class="stitle">6、压力耦合 Pcoupl、tau_p、ref_p（Parrinello-Rahman 压浴）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-13">
+<img src="slides/slide_13.png" alt="课件第13页 7、模拟系综的选择：NVE / NVT / NPT">
+<figcaption><span class="sno">13</span><span class="stitle">7、模拟系综的选择：NVE / NVT / NPT</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>温度耦合、压力耦合与系综选择</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）</span><span class="chip">课件 11</span><span class="chip">课件 12</span><span class="chip">课件 13</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>模拟里要设定温度和压力，关键是怎么把温度设到目标值。具体公式不用死记，理解设置逻辑就行：对位置 R 求二阶导是加速度，按牛顿第二定律 F=ma，为控制温度，就在加速度上加一个修正项。修正项涉及 (T−T₀)/T：T 是即时温度（来自动能 ½mv²，系统对整条轨迹做系综平均），T₀ 是目标温度，比如想控制在 300 K 就设 T₀=300。</p><p>即时温度是一条波动曲线，每一点记为 T：303 K 时减 T₀ 得正，反馈后加速度微调减小、分子速度降下来；299 K 时差值为负，反馈后产生微小加速度把速度提上去。速度快就减速、慢就提速，引入这个机制后，即使原来温度波动大，最终也会稳定趋向 T₀——宏观上像把物体泡在恒温的水里，所以叫"温浴"。常用的是 Nosé-Hoover 方法，另有一种 Berendsen 方法方程不同：它控温非常平稳、但有人为性，文献验证精度不够；通常用来做快速降温——比如研究铁在 300 K 的表现，先加热到 1000 K，用 Berendsen 粗降下来，再切断换成高精度的 Nosé-Hoover，温度就设得很好。这是做模拟的常用技巧。</p><p>tau_t 太小控温精确，但会引入非物理的周期性振荡：系综里的 Q 相当于温浴的"质量"，质量大加速减速就费劲、变化慢；质量小体系来回变化太快，波动太密太规律、显得假。一般要取 5 倍于系统固有弛豫时间，让温浴周期长一点，不打扰体系自己的弛豫过程。ref_t 就是那个目标温度 T₀，实践一下就清楚了。</p><p>压力耦合跟温度是一个道理：方程写得很复杂不用细看，核心还是对加速度做微小修正——计时压力减参考压力，小了就推、大了就压。常用 Parrinello-Rahman 压浴，tau_p 同样不能太小。体系远离平衡时先用粗略的温压快速平衡，再切成 Berendsen/Parrinello-Rahman 正式控温控压。</p><p>务必记住这张系综表：NVE（微正则系综）粒子数、体积、能量守恒，温度压力都涨落，温浴压浴都不用；NVT（正则系综）用温浴恒温，压力涨落，不用压浴；NPT 温浴压浴都用，恒温恒压。N、V、P、T、E 这些字母还能组合，比如 NPμ 体系，但计算不方便，在分子动力学里基本被淘汰；巨正则系综允许粒子进出（粒子数在 800 到 1100 之间变化、化学势相等），GROMACS 不支持，要用得走 GCMC（巨正则蒙特卡洛）——MD 是分子动力学，MC 是蒙特卡洛。GROMACS 里 N 始终恒定：只设压力没意义，只设温度考察的是 NVT，两个都不设就是 NVE。这个考过试。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>关键在于如何将温度设为目标值……修正项涉及(T-T0)/T，其中T为即时温度，T0为目标温度。例如想控制在300K，则设T0=300K。</p><p>常用的是Nosé-Hoover方法……另一种是Berendsen方法……通常若想使体系从高温等不平衡态迅速达到目标状态，该方法很常见……降下来之后，把那个分域切断，换成高精度的温度，就可以把温度设置得很好。</p><p>tau_t小则控制温度精确，但会引入非物理的周期性振荡……一般要5倍于系统固有的弛豫时间。</p><p>微正则系综NVE保持粒子数、体积、能量恒定，允许温压波动……NVT系综使用温控使温度恒定，允许压力波动……NPT系综同时控制温压……GROMACS中N始终恒定。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-seed">
+  <div class="slides"><figure class="slide" id="slide-14">
+<img src="slides/slide_14.png" alt="课件第14页 8、产生初始速度：gen_vel、gen_temp、gen_seed">
+<figcaption><span class="sno">14</span><span class="stitle">8、产生初始速度：gen_vel、gen_temp、gen_seed</span></figcaption>
+</figure>
+<figure class="slide" id="slide-15">
+<img src="slides/slide_15.png" alt="课件第15页 拓展：真正的随机数（潘建伟团队 2018 量子随机数）">
+<figcaption><span class="sno">15</span><span class="stitle">拓展：真正的随机数（潘建伟团队 2018 量子随机数）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div class="sec-tt">
+        <h2>初始速度、随机数种子与"绝对/相对重复"</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）</span><span class="chip">课件 14</span><span class="chip">课件 15</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>gen_vel 是产生初始速度的开关：yes 就不认 gro 文件里原来的速度坐标，重新产生一套；no 就用构型文件里给的速度坐标。改成 yes 还要告诉它产生温度 gen_temp——宏观上就是产生一个对应特定温度、符合麦克斯韦分布的速度，分布的整体平均就是这个温度。</p><p>怎么产生这些速度呢？还差一个 gen_seed——随机数种子。分子模拟大量用到随机数，但可惜都是伪随机数，看着像真的、其实不是。重要方法之一是乘同余法（Lehmer, 1951）：设一个种子 X₀（比如 5），乘一个常数 A（比如取 10000），得到的数再除以一个大数 M（一般取 65535），取余数作为下一个随机数。5×10000=50000，除以 65535 不够除，第一个随机数就是 50000；50000×10000=5 亿，除以 65535 取余得 9856；再 9856×10000 除以 65535 取余……以此类推产生一长串。这些数看着随机，但都由种子决定——给别人你的参数文件，他改个种子，跑出来的轨迹完全不同；种子相同，结果一模一样。</p><p>这就涉及模拟的绝对重复和相对重复。绝对重复：同一个人、同一台机器、同一个盒子、初始/拓扑/参数文件和种子全相同，轨迹可以逐位复现。但现在很难做到——大家都用并行机，10 核和 100 核跑，数据在核之间交换时精度有一点点损失（小数点后第 7、8 位差一丁点儿），状态就分叉了：前面的轨迹都一样，差一点点，后面完全没谱，这就是蝴蝶效应——南美蝴蝶扇翅膀，北半球起台风。</p><p>这带来一个要命的问题：两人实验条件参数都一样，跑出来的东西却不一样，谁对谁错？这就要靠相对重复：A 算的水密度平均下来 0.998，B 的轨迹虽然不同、密度 0.997，换个人可能 0.999——结构和观测量在误差范围内一致就行。要求轨迹完全一样不现实，但每人跑 10 条取平均，统计结果都收敛到同一个值，这就叫相对重复。</p><p>最后拓展一句：伪随机数不管是基于软件算法还是经典热噪声（比如工厂录音机录一天噪声取来用），理论上都能重复，不算真随机。真正的随机数要靠量子纠缠的内禀随机性——潘建伟团队 2018 年 9 月在国际上首次实现器件无关的量子随机数，上一个数跟下一个数毫无关系，在数值模拟和密码学里用途很大。我们分子模拟要是能直接用量子方法产生随机数就好了。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>gen_vel: 开关（yes产生全新的初速度，no用原始速度）……gen_temp: 产生Maxwell分布速度的温度……gen_seed：产生初始速度的随机数种子。</p><p>比方说第一个随机数X0，我们随便说是55……用5乘一个数。乘以一个A……5万除以65535得到的余数是多少？余数5万吧……5万乘以1万得5亿，5亿除以65535，我要它的余数……算出来是9856。</p><p>但这一步现在很难做到。难在大家用了并行机……小数点后第7位、第8位有那么一点点的不同差异……这就是蝴蝶效应，就是人家说的蝴蝶效应，就是南美洲那蝴蝶轻轻扇了扇翅膀，北半球这头呢，就起了台风了。</p><p>就说啥呢？这个首先T，比方说这个算一个密度……它这个平均完了之后呢，是ρ=0.998……你算了多少呢？你的算出来是0.997……不要求轨迹完全一样，只要得到观测性能即可。</p><p>真正的随机数得用量子纠缠内在随机性。潘建伟团队2018年在国际上首次实现了与器件无关的量子随机数。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-integrator-output">
+  <div class="slides"><figure class="slide" id="slide-16">
+<img src="slides/slide_16.png" alt="课件第16页 9、求解运动方程的算法：integrator（md / md-vv / steep）">
+<figcaption><span class="sno">16</span><span class="stitle">9、求解运动方程的算法：integrator（md / md-vv / steep）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-17">
+<img src="slides/slide_17.png" alt="课件第17页 10、轨迹输出间隔：nstxout、nstxout-compressed、nstlog">
+<figcaption><span class="sno">17</span><span class="stitle">10、轨迹输出间隔：nstxout、nstxout-compressed、nstlog</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">08</span>
+      <div class="sec-tt">
+        <h2>积分器与轨迹输出间隔</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）</span><span class="chip">课件 16</span><span class="chip">课件 17</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>integrator 是求解运动方程的算法。最常用的是 md——意味着跑分子动力学，用的是蛙跳（leap-frog）算法；设成 md-vv 就是 velocity Verlet，另一套算法；如果只做能量最小化，那就是 steep（最陡下降）这类，很简单。</p><p>再一个是轨迹输出。每一步都输出肯定放不下：常用步长 0.002 ps（2 飞秒），往大了最多 4 飞秒，往小可以到 1 飞秒甚至 0.5 飞秒（飞秒是 10⁻¹⁵ 秒）；跑 100 万、1000 万步，每步都存硬盘肯定爆。所以要隔一定步数输出：nstxout、nstvout、nstfout 控制高精度的原子坐标、速度、力的输出频率，精度高但占地方，用得少，一般设 1 万、10 万步采样。</p><p>真正常用的是 nstxout-compressed——有损压缩的原子坐标。设 200、500、1000 步输出一次都行，compressed-x-precision 控制压缩精度：高精度坐标小数点后六七位都准、但体积大；做分子动画或统计分析，四位有效数字就够了，所以压掉一部分精度。经验值：compressed 设 1000 输出约 4 位有效数字，100 输出 3 位，1 万输出 5 位，平时多用 1000 和 10000 两档。</p><p>nstenergy 输出系统能量，要专门提出来观测——输出太宽就看不见能量波动了，一般和坐标间隔大致相当；nstlog 输出运行日志，也没必要太密，隔 1000 或 10000 步都行。这里的核心权衡是：既想采样密一点，又要考虑硬盘占用。要注意——采样间隔只能"由密变疏"，不能"由疏变密"：每 1000 步存一次，回头想看第 500 步的状态，那个数据当时已经没了；只能重新跑一个每 500 步输出的任务，再从里面抽每 1000 步的用，反过来采不出来。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我们最常用的是让integrator=MD。这个MD意味着我们在跑分子模拟，而且用的是蛙跳算法。如果让它等于MD-VV，那就是用Velocity Verlet算法……如果只是做能量最小化，那就是不同的算法。</p><p>咱们步长平常用的是0.002ps，就等于两个飞秒……若每步都输出，跑100万或1000万步数据量太大，硬盘放不下。因此需设定间隔步数输出。</p><p>印象中设为1000时输出4位有效数字，100时输出3位，1万时输出5位。平时多用1000和10000这两个值。</p><p>比方说每隔1000步输出，回头想看第500的数，那已经消失了……但是，不可能从每1000步输出的轨迹里，采出每500的。那采不出来，计算完那时候已经消失了。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-advanced-config">
+  <div class="slides"><figure class="slide" id="slide-18">
+<img src="slides/slide_18.png" alt="课件第18页 11、进阶参数：约束、NEMD、硬墙、电场、自定义">
+<figcaption><span class="sno">18</span><span class="stitle">11、进阶参数：约束、NEMD、硬墙、电场、自定义</span></figcaption>
+</figure>
+<figure class="slide" id="slide-19">
+<img src="slides/slide_19.png" alt="课件第19页 12、设计模拟构型时的调优">
+<figcaption><span class="sno">19</span><span class="stitle">12、设计模拟构型时的调优</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">09</span>
+      <div class="sec-tt">
+        <h2>进阶参数与构型调优</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）</span><span class="chip">课件 18</span><span class="chip">课件 19</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>前面是基本参数，满足要求才执行；下面这些是进阶参数。COM-pulling 输出约束力，可以开展约束分子动力学：本来分子之间随便跑，现在要求 301 号原子和 189 号原子距离必须是 R，就像一根棍把它们约束住，两分子怎么跑距离都是 R。Non-equilibrium MD（非平衡分子动力学）：比如模拟孔隙，中间气体液体流动吸附，但边界不希望动，就把边界原子 freeze 掉——速度始终为零。Walls 硬墙边界、Electric fields 外加电场、Free energy 自由能计算，这些都是产生特殊功能的。</p><p>还有 user defined thingies——用户自定义参数。要在 GROMACS 文件里引用这些参数，比较高阶：得读它的源代码、看懂后在里头做小手术，添几行代码把你的意图带进去，我们以前也用过，回头讲案例时会说。</p><p>最后一个是构型调优。参数调优一路听下来，取舍不外乎：数不能太大（大了没用）、不能太小（小了没用），在一堆数里找个折中、用起来方便。构型也是：做溶解度两相比例，水放多少、甲烷放多少？水太多甲烷显得少，水少了又显得多，多试几个看哪个体系好用。像我博士期间挖管子——管长多大、孔径多少、这边留多少空间，全都要自己定；长的短的、粗的细的挖了很多个，试到合适为止，这就是几何尺寸合理性。回头案例课还会讲。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这个可以输出约束力，开展约束分子组合运动……比方说301号原子和189号原子。你要求它们的距离必须是R……就相当于一个棍把它约束住。</p><p>模拟那个孔隙的时候，孔隙中间的气体或液体在流动或吸附……但是你不希望边界动怎么办呢？把那个边界固定住，Freeze掉……还有呢，像加个硬墙了。还有呢，给这个体系加上个电场了。</p><p>但是这一步参数比较高阶一点，就是你要修改gromacs的某些源代码。你要读它的源代码，在那儿费点劲要读。看懂了之后呢，在里头做一些小手术。</p><p>比如做溶解度两相比例，水放多少好，甲烷放多少好……像这个构型，我挖了一个管子……管长用多大？孔径用多少？这边留的空间留多少？这些参数全都要自己定。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-experience">
+  <div class="slides"><figure class="slide" id="slide-20">
+<img src="slides/slide_20.png" alt="课件第20页 参数调优的经验">
+<figcaption><span class="sno">20</span><span class="stitle">参数调优的经验</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">10</span>
+      <div class="sec-tt">
+        <h2>参数调优的经验</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）</span><span class="chip">课件 20</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第一，这些参数大多数要在写论文时用于方法描述，对应于实验流程。做实验要写清楚用的什么试剂、什么钢瓶的气体、哪个公司的部件、加热到多少度、怎么检漏；做模拟也一样，刚才说的主要参数论文里都得写出来——只有描述清楚，别人才能重复你的工作；你的工作不能被重复，就不可靠了，说明你可能漏了关键参数。你做的不过是个计算机实验，要让别人能重复出来。</p><p>第二，了解参数性能要耐心，一次只试一个参数。一次连续调两三个肯定调不出来——结果出来了你说是 A 影响的还是 B 影响？控制变量，什么都不动只动一个参数，试完看结构。但你可以同时要很多 CPU 做任务级并行提高效率：比如找最合适的截断半径，0.7、0.8、0.9、1.1、1.2 一次提交 5 个任务，分别跑，一会儿算完一看 0.9 挺好，效率一下就上去了。</p><p>第三，勤做笔记和测试记录，善于思考总结。做着做着就忘了前头干过啥，翻本子一看啥也没记，就没印象了——做好笔记，哪天设的什么参数、出了什么问题，一翻日期就找到。我的学生笔记做得好：早先电子化程度低大家多手写，后来电子笔记普及、查阅方便，但电子笔记太容易改，这点我很讨厌。按时间序列记录后前文就不应再改，否则不可靠；手写反而可靠，涂改痕迹明显——要改就标注日期和错误处，不标日后没法追溯（比如把 33.5 改成 4.5，别人根本看不出来）。原始记录要保持原始状态。</p><p>第四，充分利用 AI 工具、GROMACS 论坛、网上资源、周边同行和论文作者，勤查多问。调参数的方法八仙过海各显神通，但本质是信息沟通——一沟通问题就解决，继续推进；不要自己憋着花一周，别人一天就解决了。会交流的人学得快、进步快。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这些参数大多数要在写论文时用于方法描述，对应于实验流程……你的工作要是不能被别人重复，就达不到要求。那就是不可靠了，或者是你漏掉了什么关键参数？</p><p>我一次连续调两三个参数，你放心，你指定调不出来……我让那个体系什么参数都不动，我就动一个参数……你比方说你想找一个，你哪一个阶梯干径最合适。那你0.7、0.8、0.9、1.1、1.2，你那三数你提交5个任务。</p><p>但电子笔记易修改，这点我很讨厌。按时间序列记录后，前文不应再改，否则不可靠。手写反而可靠，涂改痕迹明显……例如将33.5改为4.5，他人难以察觉曾修改。</p><p>调参数方法多样，可谓八仙过海各显神通。无论问AI、论坛还是作者，多查多问。善于交流的人学得快，进步快……花一周无益，别人一天便解决。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-lesson">
+  <div class="slides"><figure class="slide" id="slide-21">
+<img src="slides/slide_21.png" alt="课件第21页 参数调优的惨痛教训：comm-mode 质心移动（耗时一年）">
+<figcaption><span class="sno">21</span><span class="stitle">参数调优的惨痛教训：comm-mode 质心移动（耗时一年）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-22">
+<img src="slides/slide_22.png" alt="课件第22页 惨痛教训中的意外收获：气舱构型（Tian et al., 2018, JCP）">
+<figcaption><span class="sno">22</span><span class="stitle">惨痛教训中的意外收获：气舱构型（Tian et al., 2018, JCP）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">11</span>
+      <div class="sec-tt">
+        <h2>惨痛教训与意外收获：comm-mode 与气舱</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）</span><span class="chip">课件 21</span><span class="chip">课件 22</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>讲一个惨痛教训。当时模拟甲烷穿过石墨管：按直觉，管子越粗，冲量和流量应该越大。我们测出来一条曲线，横轴孔径、纵轴流量，起初随孔径增大流量变大——符合预期；可后来流量居然开始变小。百思不得其解：管子粗了，流量为什么反而变小？</p><p>我们排查各种参数，花了一年才找到原因，是田文泉同学发现的。设计里有个很不显眼的参数叫质心移动 comm-mode（Center of Mass motion），含 Linear、Angular、None 三个值。它决定盒子内分子的整体运动方式：盒子不动时总动量理论上必须为 0，但计算坐标和速度有误差，总动量可能不为零（比如 -0.003），意味着体系有个微小净速度，需要校正减去，保证质心不动。</p><p>以前做纯体系，平移校正一下很简单；但这次做传输体系，高压区分子移过来时质心会微移，我们却把它校正（comm-mode 设 Linear）给移回去了——相当于在流动方向上踩了刹车，干扰了流动。应该允许质心移动才对。就这么个参数，花了一年才想到。修正后结果和预测高度吻合、几乎一模一样。</p><p>但一年排查也不是没有收获：为了找问题试了好多构型和参数，无意间发现流量和横截面边长有关——横截面弄宽一点流量就下来，再宽一点又下来，到一定程度才收敛。我们据此提出"气舱"构型：两边开放导致分子横移是不对的，应该包起来，上下两边加上孔壁围挡，去掉那个多余效应，流量就对了。这个发现最后写成 Tian et al., 2018, JCP。这个例子以后还会用。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>当时模拟甲烷穿过石墨管。管子越粗，冲量和流量应越大。但我们测得一条蓝色曲线……但后来流量竟开始变小。我们百思不得其解：管子粗了，流量为何变小？</p><p>我们排查参数，花了一年才查出原因。这是田文泉同学发现的。设计中有个不显眼参数叫质心移动，即Center of Mass motion……盒子不动时，总动量必须为0。</p><p>高压区分子移过来时，质心会微移。蓝点设置将其移回，干扰了流动。应允许质心移动。花了一年才找到此问题。</p><p>为查这个问题，试了好多构型和参数，无意间发现流量和截面积有关……我们发现了这个。据此提出构建一种叫"气舱"的构型。两边开放导致腻子横移是不对的，应该包起来。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-summary">
+  <div class="slides"><figure class="slide" id="slide-23">
+<img src="slides/slide_23.png" alt="课件第23页 小结：跑起来 → 算得对 → 分析 → 创新发现">
+<figcaption><span class="sno">23</span><span class="stitle">小结：跑起来 → 算得对 → 分析 → 创新发现</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">12</span>
+      <div class="sec-tt">
+        <h2>小结</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）</span><span class="chip">课件 23</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>简单总结一下今天这个状态：首先，克服计算机硬件、Linux 操作系统、MD 软件编译安装的困难，让 MD 软件跑起来——这一步你们已经过去了。其次，以弄清楚 GROMACS 三个主文件（拓扑、构型、参数）中的各种参数为目标，通过读手册和动手测试相结合，做到正确运行软件，保证算的东西是对的；今天讲的就是参数文件的设置和优化。</p><p>然后，系统模拟、分析轨迹、开展观测和研究——取样取这条轨迹样品，只要取对了，后面的分析慢慢开展，下节课讲轨迹分析看哪些关键点。最后，创新发现、发表论文、享受 MD 的乐趣：这就是一个计算机实验，运气好你能做出新东西，写报告发表论文。我用后面几次课让你们体会 MD 的乐趣，非常有意思。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>首先，克服计算机硬件、Linux操作系统、MD软件编译安装中遇到的困难，实现能够运行的目标，让MD软件跑起来。其次，以弄清楚Gromacs三个主文件中的各种参数为目标……做到正确运行软件，保证算的东西是对的。然后，系统模拟，分析轨迹，开展观测和研究。最后，创新发现，发表论文，享受MD的乐趣。</p><p>下一节课讲分析笔记，看主要关键点是什么……最后，希望你们能够做分类模型有所发现……然后最后，就享受MD的乐趣。这个我不知道你们现在能不能体会……我用后面的几次课让你们体会，就是安定的乐趣，非常有意思。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-homework">
+  <div class="slides"><figure class="slide" id="slide-24">
+<img src="slides/slide_24.png" alt="课件第24页 MP 作业 3.5">
+<figcaption><span class="sno">24</span><span class="stitle">MP 作业 3.5</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">13</span>
+      <div class="sec-tt">
+        <h2>MP 作业 3.5</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（尾）</span><span class="chip">课件 24</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>最后 5 分钟说作业，3 道题，很简单，就是学例子。例子是水合物，里头有钾有水：把甲烷删掉，就都成水了——拿 VMD 看一眼，可能还是笼子的样子。给它加热到 100 度（373 K）平衡，就得到 TIP4P/ice 的液态水（这个构型模型就叫 TIP4P/ice；用现成的 SPC/E 水例子也行，出题就是让你们多操作）。</p><p>第一步做完，把水分别设成 300 K、400 K、500 K 去模拟，测什么呢？测最大单步长能用到多少。例子里设的是 0.002 ps（2 飞秒），4 飞秒行不行？都能用，但往大了算肯定有一步长模拟就崩溃、出不了正常结果。所谓"正常"，标准是单步长能单核跑出 1 万步就算能用。注意先在 NPT 系综做，再在 NVT 系综做，按 PPT 正确设置。</p><p>第二题：在 NVT 系综里把截断半径分别设成 0.8、1.0、1.2，计算运行速度——0.8 肯定最快（截断越小计算量越少），1.2 最慢；感兴趣可以测其他值、画图写报告。报告注明用 12 核并行、跑了多久，统一数据格式方便对比。</p><p>注意事项：一定要用 Slurm 提交计算任务；用不同目录和文件名（-deffnm，即 deffnm）规划自己的模拟测试，避免所有输出重名混乱。作业包括 3.3、3.4、3.5、3.6 几组，按上回说的分组去做；3.1～3.3 是个人做的，尽量交，我弄一弄回头给你们讲。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这个作业呢，就3道题，很简单……你可以把那个甲烷给它删了。删了呢，它就都成水了……给它加热到100度，就373K，你把它平衡了，平衡了你就得到了TIP4P/ice的水。</p><p>然后你测试啥呢？你看看你最大的单步长，你能用到多少……咱们说的正常，指单步长能单核跑出1万步就算能用。记得变换温度。第2个要注意，先在NPT系统做，再在NVT系统做。</p><p>在NVT系统里测试，将截断半径分别设为0.8、1.0、1.2。计算运行速度，0.8肯定最快。因截断半径越小，计算量越少；1.2肯定慢……报告时注明用12核并行及耗时。</p><p>1、一定要用Slurm提交计算任务；2、用不同目录和文件名（-deffnm）规划自己的模拟测试。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-closing">
+  <div class="slides"><figure class="slide" id="slide-25">
+<img src="slides/slide_25.png" alt="课件第25页 面对困难的忠告：顶住，不要退缩；失败，从头再来">
+<figcaption><span class="sno">25</span><span class="stitle">面对困难的忠告：顶住，不要退缩；失败，从头再来</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">14</span>
+      <div class="sec-tt">
+        <h2>面对困难的忠告</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（尾）</span><span class="chip">课件 25</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>最后一张片子。这一段你们可能被作业折腾得挺麻烦，但顶住这一波过去，就掌握了 MD 模拟的基本方法、达到入门状态。入门之后真的不可限量——以后想算啥就算啥，针对某个东西查资料、做模拟、做设计，它就是个计算机实验。</p><p>不要怕失败：成功的那条路每一个环节都不能错；做不出来一定是中间某些环节有问题，把它查出来、弄对就行。你们以后做研究都是这套办法。最难的那段其实已经过去了——安装软件稍麻烦，上节课的构型也稍麻烦，后头就不麻烦了，下节课观测轨迹也不麻烦，就是真正去做测试。顶住，不要退缩；失败，从头再来。这节课就到这儿，下课。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>可能你们遇见了一些困难，被折腾对吧？被这个弄了一些作业都觉得挺麻烦的。你顶住这一波过去，你就掌握了MD模拟的基本方法，最起码你就达到了入门的状态。</p><p>不要怕失败。你放心，成功的那一条路，每一个环节都不能错……失败肯定是中间的某些环节有问题，你就把它查出来，去把它弄对。</p><p>面对困难的忠告：顶住，不要退缩；失败，从头再来。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（矿物物理学）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>

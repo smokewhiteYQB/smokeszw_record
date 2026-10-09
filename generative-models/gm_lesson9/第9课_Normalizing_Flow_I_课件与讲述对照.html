@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>生成式模型与科学智能应用 · 第9节 Lecture 7 Normalizing Flow I｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.videos{margin-top:14px;border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.video + .video{border-top:1px solid #e4e9f0;}
+.videos h4{font-size:12.5px;font-weight:700;color:#0a1f38;background:#f2f5f9;padding:8px 12px;border-bottom:1px solid #e4e9f0;}
+.videos video{display:block;width:100%;max-height:460px;background:#0b0f14;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>生成式模型与科学智能应用 · 第9节 Lecture 7 Normalizing Flow I</h1>
+    <div class="sub">第9节 Lecture 7 Normalizing Flow I ｜ 2026-10-08 ｜ 刘云帆</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 24 页 · 整理 11 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-admin-roadmap">01 作业提醒与课程体系位置</option>
+<option value="sec-recap-framework">02 回顾：学习一个生成模型的大框架</option>
+<option value="sec-recap-two-models">03 回顾：AR 与隐变量模型的优缺点，Flow 的设计初衷</option>
+<option value="sec-design-goal">04 Flow 的设计目标与简单分布变换动机</option>
+<option value="sec-cov-1d">05 复习：一维变量变换公式</option>
+<option value="sec-cov-nd">06 复习：高维变换、雅可比行列式与同胚条件</option>
+<option value="sec-flow-model">07 Normalizing Flow：模型表示与似然计算</option>
+<option value="sec-cascade-planar">08 级联构造与 Planar Flow</option>
+<option value="sec-learning-inference">09 学习、推断与 NF 设计原则</option>
+<option value="sec-jacobian">10 行列式高效计算：三角雅可比引出下节课</option>
+<option value="sec-summary">11 总结与课堂问答</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 Lecture7_Normalizing_Flow_I.pdf 逐页渲染，转写原文见 record_20261008.txt。</div>
+<section class="sec" id="sec-admin-roadmap">
+  <div class="slides"><figure class="slide" id="slide-01">
+<img src="slides/slide_01.png" alt="课件第1页 封面：Generative Models & AI4S Applications，Lecture 7 Normalizing Flow I（刘云帆）">
+<figcaption><span class="sno">01</span><span class="stitle">封面：Generative Models & AI4S Applications，Lecture 7 Normalizing Flow I（刘云帆）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-02">
+<img src="slides/slide_02.png" alt="课件第2页 Announcements：作业 1 于 10 月 18 日截止；作业 2 之后发布">
+<figcaption><span class="sno">02</span><span class="stitle">Announcements：作业 1 于 10 月 18 日截止；作业 2 之后发布</span></figcaption>
+</figure>
+<figure class="slide" id="slide-03">
+<img src="slides/slide_03.png" alt="课件第3页 Roadmap：课程体系（概率建模 → AR 模型 → 最大似然估计 → …）">
+<figcaption><span class="sno">03</span><span class="stitle">Roadmap：课程体系（概率建模 → AR 模型 → 最大似然估计 → …）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>作业提醒与课程体系位置</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 1</span><span class="chip">课件 2</span><span class="chip">课件 3</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>Normalizing Flow 直译叫标准流模型，简称流模型（Flow）。今天先讲基础理论，下节课讲具体模型；在具体模型之前先把事物（基础理论）讲清楚。</p><p>先说作业：第一个作业 10 月 18 号截止——中午看了一下，现场交了 40 多人，但咱们学科有 200 个人，一定要记得交，18 号晚上截止。第一个作业结束之后会留第二个作业，可能讲完模型、讲完概率之后留第二个。关于作业有什么问题吗？现在只交了 40 多个。</p><p>讲新内容之前，先看这部分在课程体系中的位置：第一部分讲概率建模、用模型训练模型（AR 自回归模型）；第二部分针对中间的模型部分讲几个不同变体——之前用三节课讲了隐变量模型（数学比较多、最复杂），现在开始讲第二个 Normalizing Flow 模型，之后还会讲一个扩散（Diffusion）模型；讲完这三个经典模型，再讲一些一定模型和其他内容。因为间隔时间稍长，课一开始先带大家回顾课程大框架，让大家了解这门课是干嘛的。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>的译叫做标准流模型，咱们就把它简称或者叫流模型……咱们的第一个作业是在10月18号截止……现场交了40多个，40多人，但是咱们学科有200个人。我想提醒大家一下，这个一定要记得交作业。</p><p>我们现在在讲的课程第二步，第一部分我们讲的是这个建模……我们之前有三节课时间讲了这个引变2模型……然后咱们是现现在开始讲一第二个标准流模型，然后第三个之后会讲一个干模型。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-recap-framework">
+  <div class="slides"><figure class="slide" id="slide-04">
+<img src="slides/slide_04.png" alt="课件第4页 Recap：Learning a Generative Model（生成模型是一个参数化分布 pθ(x)）">
+<figcaption><span class="sno">04</span><span class="stitle">Recap：Learning a Generative Model（生成模型是一个参数化分布 pθ(x)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-05">
+<img src="slides/slide_05.png" alt="课件第5页 Recap：Learning a Generative Model（机器学习视角：model family / learning / 优化）">
+<figcaption><span class="sno">05</span><span class="stitle">Recap：Learning a Generative Model（机器学习视角：model family / learning / 优化）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>回顾：学习一个生成模型的大框架</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 4</span><span class="chip">课件 5</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>这门课最一开始讲生成建模：我们需要训练一个生成模型，它是一个以 θ 为参数化的概率分布 pθ(x)。我们在数据集上训练——数据集是 N 个样本（一张狗图跟其他样本），每个样本都是从真实数据分布 p_data 下独立同分布采样的。目标就是让模型分布和真实分布尽量接近，这是总体愿景，所有模型都在这个大框架下。</p><p>从机器学习视角看，生成模型和判别模型都在这个框架里：机器学习包含两大成分——model family（模型族，把函数范围定下来）和 learning（学习的目标及策略），第三是具体的参数优化算法。具体到生成模型，还要关注三个功能方面：第一是生成模型首先要会生成；第二是密度估计——给定一个样本，计算它的似然是多少；第三是表征学习——关心数据分布自身是什么样的，想从数据中挖掘内在的隐含结构信息（这是隐变量模型想做的事）。</p><p>为实现目标主要关注两方面：怎么表示模型，以及表示之后怎么优化参数。优化方法我们比较清楚，到目前为止只介绍了一种——最大似然（Max Likelihood）：写出给定模型对一个样本 x 的似然，尤其在数据集上的似然表示，然后在数据集上最大化模型对真实样本的似然。写定学习目标后再优化，但优化方法因模型而异：AR 自回归模型用梯度下降就行；VAE 这类隐变量模型优化就困难些——似然写法和优化过程（离散化之类的）都会有困难。本课程最主要关注的是怎么表示 pθ(x)。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>它是一个概率分布Pθ distribution，它是一个以系统为参数化的PC的X……目标呢，就大概是让我们这个模型，模型建模的这个分布和我们标准的分布尽量接近。</p><p>机器学习包含两个大的这个成分，一个是model family模型……第二个是learning，是我们的这个学习的目标及策略……第一个就是生成模型首先的生成，然后，后面是这个密度估计……最后第三个是这个表征学习。</p><p>针对第二个问题，即怎么优化参数，我们比较清楚。因为到目前为止，只介绍了一种方法，就是最大似然的方法……但优化的方法因模型而异。比如对于AR模型……就是用梯度下降方法可以优化。那对于之前说的隐变量模型或者VAE模型，它的优化就稍微困难一点。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-recap-two-models">
+  <div class="slides"><figure class="slide" id="slide-06">
+<img src="slides/slide_06.png" alt="课件第6页 Recap：How to represent pθ(x)？（AR 链式法则 pros/cons；LVM 边缘似然问题）">
+<figcaption><span class="sno">06</span><span class="stitle">Recap：How to represent pθ(x)？（AR 链式法则 pros/cons；LVM 边缘似然问题）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>回顾：AR 与隐变量模型的优缺点，Flow 的设计初衷</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 6</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>之前讲了两个表示 pθ(x) 的方法。第一个是自回归（AR）模型：样本的自然对数似然等于各维度条件分布的乘积（链式法则）——当前维度的条件分布依赖之前所有维度。优点是似然计算简单，把各部分概率相乘就行（相当于一个 Softmax）；缺点是没有直接提供表征学习的方法，没法从过程中直接学数据内在结构——不像隐变量模型那样引入隐变量 z。</p><p>第二个是隐变量模型（VAE 为代表）：通过建模数据 X 和隐变量 z 的联合分布来弥补 AR 的不足，能更好表示数据结构、能做表征学习；问题是边缘似然要对所有可能的隐变量积分才能得到一个样本的边缘似然，计算复杂度高——不知道哪些 z 能解释这个样本，必须考虑所有 z 的情况。好处是通过联合分布挖掘了相关性信息，隐变量就是数据结构。</p><p>能不能结合两者的优点？——把 AR 似然好计算的优点，跟隐变量模型表征学习的优点结合起来，设计一种既有流（能挖掘数据内在信息）、又没有 VAE 那种似然难算问题的隐变量模型。也就是设计一个隐变量模型、同时它的似然比较好计算，这样建模和训练都好实现、比较完美。这就是 Normalizing Flow 这节课要讲的初衷。</p><p>今天内容：上半节课讲 Flow Model 的设计初衷到底是什么；复习变量变换公式（Change of Variable Formula，微积分内容，大家可能忘了，但在 NF 篇章里比较重要）；下半节课介绍一种简单的模型，以及一些导致后续设计困难的问题。具体模型下下周再讲。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>第一个模型是自回归AR模型，其似然可简单写出……优点是计算简单……缺点是该模型未直接提供表征学习方法……第二个模型是隐变量模型，能更好地表示数据结构……问题在于边缘似然的计算，需对所有可能的隐变量进行积分。</p><p>我们考虑能否结合这两个模型的优点……我们就想设计一种隐变量模型，同时它的似然比较好计算……也就是我们这个Normalizing Flow这节课要讲的内容的一个初衷。</p><p>然后呢，大家稍微复习一下这个内容，就是这个Change of Variable Formula，变量变换的一个公式……但是这个公式在Normalizing Flow这个篇章中还是比较重要的。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-design-goal">
+  <div class="slides"><figure class="slide" id="slide-07">
+<img src="slides/slide_07.png" alt="课件第7页 Introduction：Goal——训练时似然易求，生成采样时易采样">
+<figcaption><span class="sno">07</span><span class="stitle">Introduction：Goal——训练时似然易求，生成采样时易采样</span></figcaption>
+</figure>
+<figure class="slide" id="slide-08">
+<img src="slides/slide_08.png" alt="课件第8页 Motivation：Transforming simple distributions to represent complex ones">
+<figcaption><span class="sno">08</span><span class="stitle">Motivation：Transforming simple distributions to represent complex ones</span></figcaption>
+</figure>
+<figure class="slide" id="slide-09">
+<img src="slides/slide_09.png" alt="课件第9页 Motivation：简单分布变换（GMM → VAE 的外推）">
+<figcaption><span class="sno">09</span><span class="stitle">Motivation：简单分布变换（GMM → VAE 的外推）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>Flow 的设计目标与简单分布变换动机</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 7</span><span class="chip">课件 8</span><span class="chip">课件 9</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>我们想设计一种新的隐变量模型、似然好计算。怎么设计？直接从出发点考虑有点困难，先从大方向想：对任意生成模型、任意 p(x) 分布，我们希望它有什么好性质？其实挺直接——希望训练和生成采样时都有好性质。</p><p>训练时：因为我们只讲了最大似然估计，希望似然 easy 求、好计算；最极端的情况是有闭式密度——比如高斯分布直接代入 x 就得到 log likelihood。生成/测试时：希望好采样、好生成。AR 和 VAE 都比较好生成，但 AR 采样时必须序列化——每个维度单独不断采样，不能并行把所有维度一次采出来；VAE 没有这个问题。所以我们希望有好采样的性质。</p><p>针对这两个目标，最简单的分布（正态分布、均匀分布）都满足似然好算、样本好采这两个要求；但显然不能直接用它们建模——太简单了，真实数据分布非常复杂。真实分布是通过简单分布变化得到的。所以直接的方法是构造一个变换（transformation），把简单随机变量 z 的分布映射到更复杂的随机变量 x，使 x 的分布表示真实数据的复杂分布——这就是初衷。</p><p>其实上节课讲的隐变量模型做的就是这件事。比如高斯混合模型（GMM）：作为隐式模型，它引入高斯成分 z（离散的不同成分），把几个高斯分布按不同权重加权求和得到混合分布——用简单分布表示复杂分布，正好满足动机。把 GMM 的离散 z 外推成连续的 z，就得到 VAE：z 符合一个先验分布 p_Z（比如标准正态），采到一个 z 之后建模 p(x|z)，让 x 分布从 z 变换出来也是简单的；每个分布（经验分布、条件分布）都很简单，但整体表达的分布很复杂。隐变量模型就是简单分布连续组合去表现复杂分布。</p><p>但隐变量模型的问题在哪？三节课讲下来大家遇到的最大问题就是隐变量不好求——不知道 z，导致 p(z|x)、边缘似然没法求。从设计 p(x|z) 的角度看：VAE 满足第二点（好采样——从 p_Z 采 z，经编解码器得到样本），但训练复杂——边缘似然是积分形式，不知道哪些 z 能解释样本，必须考虑所有 z。能不能解决？问题的根源是没有一对一映射：给一个样本你不知道哪个 z 决定了它现在的样子。如果能建立 X 跟 z 的一一映射——给一个 X 就知道对应的 z 是多少，代入 p_Z 就得到对应的 log 似然——就能把不好算的隐变量模型改造成想要的模型。</p><p>所以结论：我们想建立一种 F，它是 z 和 X 之间的可逆映射。注意确定性——之前隐变量模型里 X 和 z 不是确定性的：编码器把 X 编码成后验分布、采样 z、再输出 X。而这里用一个 fθ，模型里不再是分布，而是一个由深度模型实现的确定性映射。这种确定性意味着：我们不光能从 z 得到 X，给定 X 之后还能从 fθ⁻¹ 返回到 z 所在的 p_Z 分布中，得到 X 对应的密度，直接算结果。这就是标准流模型的初衷，非常简单。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我们希望它在训练，还有我们的这个生成和采样的时候都有比较好的一个性质……训练的时候，我们希望它这个似然是easy求……那最极端的一种情况就是我们有一个闭式的这个密度。</p><p>但是，这里主要针对的是，比如AR模型，我们之前讲在采样的时候，它必须得什么序列化的进行采样……但是，VAE模型没有这个问题。</p><p>因此，直接的方法是构造一种变换（transformation）。将简单的一变量分布C映射到更复杂的随机变量……比如之前介绍的高斯混合模型（GMM）……如果我们把这个高斯混合模型的高斯更外推一点的话，可以得到比如VAE的模型。</p><p>如果能建立X跟C的一一映射……我们想要建立一种MAIC的，所以这里是F，它是一个可逆的映射……它不再是一个分布，而是一个确定性的、由深度模型实现的映射。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-cov-1d">
+  <div class="slides"><figure class="slide" id="slide-10">
+<img src="slides/slide_10.png" alt="课件第10页 Review：1-D 玩具例子（Z~U[0,2]，X=4Z）">
+<figcaption><span class="sno">10</span><span class="stitle">Review：1-D 玩具例子（Z~U[0,2]，X=4Z）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-11">
+<img src="slides/slide_11.png" alt="课件第11页 Review：Change of Variable Formula（1-D，Y=F(X)，p_X(x)=p_Z(h(x))|h'(x)|）">
+<figcaption><span class="sno">11</span><span class="stitle">Review：Change of Variable Formula（1-D，Y=F(X)，p_X(x)=p_Z(h(x))|h'(x)|）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>复习：一维变量变换公式</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）</span><span class="chip">课件 10</span><span class="chip">课件 11</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>没有问题的话，复习微积分里的一个小知识点。备课时犹豫要不要展开讲，但发现必须讲——因为变量变换公式展开后，决定了后续更复杂模型的设计动机。</p><p>先给一个一维小例子：假设有一维变量 z，概率密度是 p_Z。z 在 U[0,2] 上均匀分布——归一化后密度是 1，区间长度 2，所以任一点密度是 1/2。假设实现一个最简单的系统：f 没有参数，只有线性变换 X=4z。现在想计算样本 x=4 处的密度 p_X(4)：把 x=4 代入 X=4z 得 z=1，于是 p_X(4)=p_Z(1)=1/2——这个对吗？</p><p>直观来看不对。因为 X=4z，X 自然也是均匀分布：z 是 [0,2] 均匀，X 显然是 [0,8] 均匀；[0,8] 区间长度 8，任一点密度都应该是 1/8。问题出在：p_X(4) 这是一个事件，应该在密度上作一个小积分，不能在密度表达式里直接做变量代换——直接代换不严谨。为什么要修正？因为做映射时，取值区间被拉伸了：同样一个小事件，映射前后概率相等，但区间变了，密度就会相应变化（变稀或变稠）。所以这里要乘 1/4——因为区间扩大了 4 倍。</p><p>一维变量变换公式的正式定义：Y=F(X)，X 到 Y 的映射 F 单调且可逆，逆映射记作 h=F⁻¹。给定样本 y 后，通过逆映射找到对应的 x=h(y)，再从先验分布 p_X 中求似然。公式：p_Y(y) = p_X(h(y))·|h'(y)|。直观说就是：把 y 映射回 x 所在点的密度，再乘以修正项 h'(y)——这是 F 或 h 对取值区间拉伸、压缩的修正，反映两边密度的变化。</p><p>不严谨的小证明：想象 X 和 z 之间一个极小区间对应的事件，映射后还是同一个事件；因为一一对应可逆，两边小概率（概率质量）相等。考察 dP/dx 的变化，z 和 x 之间映射是 F 和 h，dP/dz 乘 dz = dP/dx 乘 dx，所以 dP/dx = p_z·|dz/dx| = p_z(h(x))·|h'(x)|。</p><p>把公式带回刚才的例子：F(z)=4z，h(x)=x/4；在 x=4 处，h(x)=1，先在 z=1 点量 p_z 密度 1/2，再乘 |h'(x)|=1/4——1/2×1/4=1/8。密度做了 1/4 的修正，和直观一致。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>备课时我犹豫是否展开讲，但后来发现必须讲一下。因为变量化公式展开后，决定了后续更复杂模型的设计动机。</p><p>那假设我们现在实现了一个最简单的一个小的系统，我们的F、C是没有参数，只有一个就是一个线性X=4g……那PS=44这个点的自然是1/2……但是直观来看应该不是……那你Z是02的均匀分布的话，那你X显然应该是08的均匀分布……它的密度都应该是1/8。</p><p>换句话说，就是我们不能在密度表达里面直接去做这种变量的代换……因为它把你的这个区间、概率取值这个区间也经常发生拉伸……所以这就导致了为什么我们这里乘1/4，因为我们扩大了4倍。</p><p>PS即X的概率密度。它等于将X映射回G的分布时，在该点的密度。再乘以修正项，即H(X)的导数……1/2×1/4，1/8。可以看到它的密度是进行一个1/4的一个修正。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-cov-nd">
+  <div class="slides"><figure class="slide" id="slide-12">
+<img src="slides/slide_12.png" alt="课件第12页 Review：Volume and determinants（推广到 n-D）">
+<figcaption><span class="sno">12</span><span class="stitle">Review：Volume and determinants（推广到 n-D）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-13">
+<img src="slides/slide_13.png" alt="课件第13页 Review：Change of Variables Formula（Linear case in n-D，X=AZ，det A）">
+<figcaption><span class="sno">13</span><span class="stitle">Review：Change of Variables Formula（Linear case in n-D，X=AZ，det A）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-14">
+<img src="slides/slide_14.png" alt="课件第14页 Review：Change of Variables Formula（General case in n-D，雅可比行列式）">
+<figcaption><span class="sno">14</span><span class="stitle">Review：Change of Variables Formula（General case in n-D，雅可比行列式）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-15">
+<img src="slides/slide_15.png" alt="课件第15页 Review：Definition——同胚可逆映射 f: ℝⁿ→ℝⁿ">
+<figcaption><span class="sno">15</span><span class="stitle">Review：Definition——同胚可逆映射 f: ℝⁿ→ℝⁿ</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>复习：高维变换、雅可比行列式与同胚条件</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（尾）</span><span class="chip">课件 12</span><span class="chip">课件 13</span><span class="chip">课件 14</span><span class="chip">课件 15</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>一维情况清楚后，高维情况类似，只是把 h'(x) 换成高维下的导数——也就是变换对应的雅可比矩阵的行列式。先看高维线性情况：z 在 [0,1]ⁿ 单位立方体上均匀分布，做线性变换 X=Az，A 可逆。变换后立方体变成平行四边形，z 均匀则 X 仍均匀，总质量 1，密度等于 1 除以区间面积——这个面积等于可逆矩阵 A 的行列式 det A。逆矩阵 A⁻¹ 的行列式是 det A 的倒数，所以 p_X(x) = p_z(z)·|det A|⁻¹ = p_z(A⁻¹x)·|det A⁻¹|，和一维情况一致。</p><p>但我们最终要的是非线性一般情况——设计网络映射 f 时不可能是线性的，为增强表达能力必须用非线性。线性情况下导数就是行列式；高维非线性情况下，导数是雅可比矩阵，相应的面积变化是雅可比矩阵的行列式。</p><p>复习一下雅可比矩阵：从 n 维空间映射到 m 维空间，输入 x 是 n 维向量，映射每一维 f₁…fₘ 都是 x 的函数；∂f/∂x 是 m×n 矩阵——每一行是输出某维对 x 各维的偏导，每一列是不同输出维对同一输入维的偏导，相当于多元函数导数的推广。虽然映射是非线性的，但取极小区间时局部线性化：原始空间一个微小区域面积比例为 1，只要区间足够小就视为局部线性系统；映射后和线性情况一样，面积变化是映射的雅可比矩阵的行列式。</p><p>高维一般情况的结论：正向映射 X=f(z)，反向映射 z=f⁻¹(x)=h(x)；模型输出位置对应样本 x，通过逆映射找到对应 z，原始先验密度在该点乘以修正项（逆映射雅可比矩阵的行列式）。训练得到流模型后，输出样本的概率可直接从先验密度得出并修正——这就实现了"设计隐变量模型、使其密度可直接计算"的目标。</p><p>最后提醒几点限制：第一，z 和 X 必须是连续变换；第二，它们必须维度相同——如果维度不同，雅可比矩阵不是方阵就没法算行列式（那时要用其他方法，不在本课范围）。所以要求映射是同胚（homeomorphism）：连续、可逆、且维度相同。另外可写成熟悉的形式：逆变换雅可比等于正向变换雅可比的逆，求行列式时就是原行列式的倒数——纯数学变换，用哪种形式都行。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>比如在S1单位方阵区间，零一均匀分布下，进行线性变换X=AC。A可逆……该面积等于可逆矩阵变换的行列式，即1除以A的行列式。</p><p>设计网络映射F时，不可能是线性变换。为增强表达能力，需采用非线性……线性变换A的导数就是行列式。但在高维非线性情况下，导数是雅可比矩阵。</p><p>它是一个M×N的矩阵。每一行对应输出维度对X各维度的偏导……考虑极小区间内的线性化……映射后与线性情况一样，仍是矩阵的行列式。不过这个矩阵是映射的雅可比矩阵。</p><p>首先z和X必须是连续变换。其次，它们必须有相同的维度。若维度不同，雅可比矩阵不是方阵，就算不了行列式……所以我们要求它是同胚、连续且具有相同维度。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-flow-model">
+  <div class="slides"><figure class="slide" id="slide-16">
+<img src="slides/slide_16.png" alt="课件第16页 Normalizing Flow Models：Model Representation（VAE vs Flow 确定性映射）">
+<figcaption><span class="sno">16</span><span class="stitle">Normalizing Flow Models：Model Representation（VAE vs Flow 确定性映射）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-17">
+<img src="slides/slide_17.png" alt="课件第17页 Normalizing Flow Models：Model Learning（对数似然精确计算）">
+<figcaption><span class="sno">17</span><span class="stitle">Normalizing Flow Models：Model Learning（对数似然精确计算）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div class="sec-tt">
+        <h2>Normalizing Flow：模型表示与似然计算</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（前）</span><span class="chip">课件 16</span><span class="chip">课件 17</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>休息后继续介绍流模型。它跟 VAE 类似，都是隐变量模型、通过结构映射从隐变量得到观测数据；但不同点在于：VAE 是由参数化映射 pθ(x|z)——给定 z 之后 x 的条件分布（可以用高斯之类建模均值和方差），是随机的、不可逆——推出 x 之后无法知道 z 具体值，必须用编码器网络预测后验分布 q(z|x)。</p><p>而 Flow 本身是确定性可逆映射 fθ：输入 z 直接得到 x 样本。更重要的是，给定样本 x 后可以反推对应的 z——因为 f 输入输出空间相同、z 和 x 维度相等。这是最主要的区别。</p><p>模型表示完，怎么学习？上课初讲过的最大似然仍然适用。VAE 因没有一对一映射，必须对隐变量积分求边缘分布；而 Flow 因为有可逆映射，每个样本的似然非常好算：给一样本 x，直接用逆映射找到对应 z，找到该点的 p_Z 密度，再用变量变换公式修正，就得到 x 的对数似然；把所有样本的对数似然在数据集上相加，用最大似然训练。最大的改进就是：对数似然可以被直接、精确地计算——实现了"可计算对数似然的隐变量模型"。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>它与VAE类似，均为隐变量模型……而Flow本身是确定性可逆映射。输入G即可直接得到结果……更重要的是，给定样本后可得到对应的G，从而求得该样本。</p><p>相对于FC，我们的不同点在于输出建模具有不确定性。它不仅是随机的，而且不可逆。推导X后，无法得知向量具体值。因此，必须用Influence VAR等网络来预测其分布。</p><p>相对应的整流模型，因为有一个可逆的映射，每个样本自然非常好计算……然后通过刚才的公式进行修正，就得到对应的X的对数似然……所以最大的改进，就是它的对数似然可以直接被精确计算。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-cascade-planar">
+  <div class="slides"><figure class="slide" id="slide-18">
+<img src="slides/slide_18.png" alt="课件第18页 How to construct transformation f（级联简单可逆映射）">
+<figcaption><span class="sno">18</span><span class="stitle">How to construct transformation f（级联简单可逆映射）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-19">
+<img src="slides/slide_19.png" alt="课件第19页 A Toy Example：Planar Flows（x=u·h(wᵀz+b)+z）">
+<figcaption><span class="sno">19</span><span class="stitle">A Toy Example：Planar Flows（x=u·h(wᵀz+b)+z）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-20">
+<img src="slides/slide_20.png" alt="课件第20页 Planar Flows：Base distribution Gaussian → 复杂分布">
+<figcaption><span class="sno">20</span><span class="stitle">Planar Flows：Base distribution Gaussian → 复杂分布</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">08</span>
+      <div class="sec-tt">
+        <h2>级联构造与 Planar Flow</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（前）</span><span class="chip">课件 18</span><span class="chip">课件 19</span><span class="chip">课件 20</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>流模型似乎很简单：用网络实现从 z 到 x 的双射，雅可比行列式这样算，就能训练。但最大的问题是怎么实现这样一个一一映射——不光要可逆，还得能计算雅可比行列式，否则对数似然还是没法算。</p><p>最通用的办法是级联（compose）简单的可逆映射：采样时从最简单的先验分布（比如高斯）采一个输入 z₀，希望逐步得到分布复杂的 x。如果已有 M 个简单可逆映射 f₁…f_M，依次复合：z₁=f₁(z₀)，z₂=f₂(z₁)，…，x=f_M(z_{M-1})，整体记作 F。那么 x 的密度怎么算？用变量变换公式：把 x 通过一串逆映射映射回原始空间的 z₀，找到对应点的 p_Z，再把每个小映射的雅可比行列式乘起来——级联映射的逆映射就是各级逆映射的级联。</p><p>为什么要级联？因为不级联很难直接设计一个从隐空间到复杂数据空间的变换：直接设计既可逆又好算行列式的映射很难；而把 M 个简单可逆映射级联，整体必然可逆、好算——只需设计每个小的可逆模块并级联应用，雅可比行列式就是各小映射行列式的乘积。</p><p>以 Planar Flow（平面流）为例，每个小变换是最简单的仿射加非线性：x = z + u·h(wᵀz + b)。要设 w、u、b 参数并保证可逆。为什么叫平面流？——如果学过判别模型，wᵀz+b 代表空间中的一个超平面：参数定义了一个参数化超平面，基于它定义 h(wᵀz+b) 这样的激活变换，相当于定义空间中每个位置相对于这个超平面的变化量；h 表示变化大小，把变换差值加到原始输入上（跳跃连接）。</p><p>举例：把平面流作用到二维均匀分布，经一次映射得到双峰分布——它相对于 wᵀz+b 这条直线（超平面）做变换，相对于直线定义一系列变换、加偏置；应用一次、两次、直到十次，构成整个大映射，输出 x 的分布变得复杂。这样每一步映射都简单，却能建模复杂数据；而且从输出分布反推输入分布仍然可以——每个点都能找到对应密度，从而计算对数似然。用高斯先验输入，经压缩和变换也能得到复杂的一维分布。大家不必把具体形式和结果一一对应，理解意思即可。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>看来似乎所有的流模型都非常简单……但最大的问题就是我们怎么去实现这样一个一一映射。因为此特性不光是它要可逆，还得能够计算雅可比行列式。</p><p>当然，其实标准模型最简单或者最通用的一种方法，就是我们用简单的这种映射。不断的去把它给组合起来，提联起来……那它密度其实就是很简单的P(X)……把每一个映射它的雅可比矩阵的行列式给乘起来就可以了。</p><p>为什么要用级联映射？因为如果不用级联去构造，很难设计一个从隐空间直接映射到可见数据空间的变换……直接设计既好计算又可逆的映射较难，所以通用做法是用级联方式构建映射。</p><p>以平面流模型（Planar Flow）为例……等于$W^T x + b$，经过映射$h$……$Wx+b$代表空间中的超平面……应用变换1次、2次、3次，直到10次……用简单分布去进行变换，得到一个更复杂的分布表。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-learning-inference">
+  <div class="slides"><figure class="slide" id="slide-21">
+<img src="slides/slide_21.png" alt="课件第21页 Discussion：Learning and Inference（最大似然）">
+<figcaption><span class="sno">21</span><span class="stitle">Discussion：Learning and Inference（最大似然）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-22">
+<img src="slides/slide_22.png" alt="课件第22页 How to design a Normalizing Flow Model（简单先验 + 可逆 f）">
+<figcaption><span class="sno">22</span><span class="stitle">How to design a Normalizing Flow Model（简单先验 + 可逆 f）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">09</span>
+      <div class="sec-tt">
+        <h2>学习、推断与 NF 设计原则</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（中）</span><span class="chip">课件 21</span><span class="chip">课件 22</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>最后讨论高阶问题，引出下节课。用流模型计算每个样本的似然后，最终要在真实训练集上优化模型，所以关注整个数据集的对数似然——对每个样本取对数再相加，学习目标是最大化这个总和。可以看到对数似然形式整体很好，没有复杂式子，不需要引入不等式，数学形式简单——因为运算可逆、又有变量变换公式，组合起来就能精确计算数据上的对数似然。</p><p>采样更简单：从 p_Z 采一个 z，通过前向映射 f 得到 x 就行。推断（inference）呢？——Flow 仍是隐变量模型，最终关心怎么从数据 z 得到隐变量分布。这里非常简单：用逆映射 f⁻¹，把样本 x 输入逆变换，直接就得到对应 z，不需要像变分推断那样做近似。这就是流模型整个大框架：怎么表示、怎么学习、怎么采样、怎么推断。具体 f 怎么设计、行列式怎么算，下节课讲。</p><p>设计 NF 的原则：p_Z（先验分布）越简单越好——从里面采样得到输入，比如高斯；可逆变换 fθ 要满足：前向从 z 到 x 生成采样时高效，更重要的是训练时逆映射（从 x 到 z 的推断）也要好算高效——因为计算逆变换时需要雅可比行列式公式。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我们最终要在真实训练数据集上优化模型。因此，关注的是模型在整个数据集上的似然，即对数似然……可以看到，对数似然的形式整体较好，没有特别复杂的式子。不需要在推导中引入不等式。</p><p>那我们采样呢，其实更简单了是吧？采样的话，就是从Z给它映射到X就可以了……所以Influence用标准模型Influence非常非常简单，可以用这个相对应的这个逆……直接就给到对应的Z……不需要像变分推断去进行近似。</p><p>那首先，对于PC来说，这样的经验分布肯定是越简单越好……我们这个可逆变换F的话，我们需要它在前向从G到X时，在生成采样时能够高效计算。那更重要的是在训练的时候，我们需要它的逆映射……也是需要比较好且高效计算的。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-jacobian">
+  <div class="slides"><figure class="slide" id="slide-23">
+<img src="slides/slide_23.png" alt="课件第23页 How to compute determinants efficiently（雅可比三角矩阵，O(n³)→O(n)）">
+<figcaption><span class="sno">23</span><span class="stitle">How to compute determinants efficiently（雅可比三角矩阵，O(n³)→O(n)）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">10</span>
+      <div class="sec-tt">
+        <h2>行列式高效计算：三角雅可比引出下节课</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（中）</span><span class="chip">课件 23</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>最大的问题在这儿：变量变换公式里要计算 n×n 的雅可比矩阵及其行列式——数据 x 和 z 维度都是 n，雅可比矩阵就是 n×n。计算一个 n 阶矩阵行列式的复杂度至少是 O(n³)（消元法每个变量都要消元）。所以推导起来很简单、写起来很简单，但算起来非常复杂——光算一个行列式就很复杂，训练时计算样本对数似然其实不满足高效反向推断的要求。</p><p>怎么办？只能通过设计特殊的 f 结构降低整体对数似然的计算复杂度。线性代数里的标准解法：通过设计 f 让雅可比矩阵具有特殊结构——比如用消元法构造三角矩阵，让行列式好算。具体做法就是让雅可比矩阵成为三角矩阵：三角阵的行列式是对角线元素的乘积，求行列式复杂度降到 O(n)。</p><p>以 3×3 三角阵为例：首元素下方全为 0，意味着 f₁ 对 z₂、z₃ 的偏导为 0——x₁ 只依赖 z₁；x₂ 依赖 z₁、z₂ 而不依赖 z₃；x₃ 依赖 z₁、z₂、z₃。也就是每个 x_i 只依赖前序的 z（z₁…z_i），偏导非零即为此结构。这是什么模型？——对，就是 AR 模型：标准 AR 模型里 x_t 的生成依赖 x₁…x_{t-1}；这里映射依赖 z 的前序维度隐变量，也可以用 AR 模型实现。下节课会讲用 AR 模型实现隐变量和输出变量之间的关系。</p><p>所以最终目标是设计一个特殊结构的 f，使雅可比矩阵是三角阵、行列式计算复杂度 O(n)。今天 Flow 第一堂课就讲这些。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>而且变换向量公式里边最大的问题是需要计算N×N的雅可比矩阵及其行列式……计算一个N阶矩阵行列式的复杂度的话，应该至少是N的3次方吧……虽然写起来很简单，但是它其实算起来是非常复杂的。</p><p>那怎么办呢？因为我们最后推断得到了这样的结果，只能通过设计特殊的FC结构，来降低整体自然计算的复杂度……做法就是让雅可比矩阵成为三角矩阵。三角阵的行列式是对角线元素的乘积。这样求行列式的操作复杂度就是O(n)。</p><p>这是什么模型？如何实现？我们曾讲过此类模型吗？……焦AR模型……我们之前讲的标准AR模型是在X维度上，每个变量X_t值的生成，依赖于1到t-1的一些维度……下节课我们会讲到用AR模型实现隐变量和输出变量之间的关系。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-summary">
+  <div class="slides"><figure class="slide" id="slide-24">
+<img src="slides/slide_24.png" alt="课件第24页 Summary">
+<figcaption><span class="sno">24</span><span class="stitle">Summary</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">11</span>
+      <div class="sec-tt">
+        <h2>总结与课堂问答</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（尾）</span><span class="chip">课件 24</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>课堂问答里澄清了两点。第一，为什么要求函数可逆？——给定样本 x 就能唯一得到对应 z，把 z 的位置代入先验分布就得到 p_Z 这个值（相当于乘一个数再除一个数）；如果没有可逆约束，中间怎么取都可以。可逆约束够不够强？——挺强的：可逆就意味着 z 和 x 一一对应，给一个 x 得到对应 z，这跟隐变量模型最大的不同。VAE 只有单向映射 z→x，给一个 x 不知道 z 是多少，所以才需要积分/求和，引出 MCMC 近似或变分推断；这里都不需要。</p><p>但最大的问题是可逆变换到底怎么设计——下节课具体讲模型时会看到，可逆变换其实没那么好设计；而且要求变换可逆，表达能力是很有限的，模型效果一般。Flow 输入输出都是 n 维、连续的，这个要求挺高；如果降维（压缩），潜变量压缩和重构可能出问题，约束了性能。</p><p>总结：今天思路非常明确简单——动机是从 AR 模型和隐变量模型出发，把两者优点结合起来，构造一种隐变量模型、且似然可以直接计算；输出分布和隐变量分布通过变量变换公式计算，每个 x 得到对应 z、得到对应似然，实现既有隐变量又可算似然。最大的问题是雅可比行列式复杂，最终引出：需要通过设计特殊结构的 f，让雅可比矩阵具有特殊结构，降低计算复杂度，使真正的似然计算可行。没有问题就下课。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>要求可逆。为什么要函数可逆？给定样本X，就能唯一得到对应的G。把G的位置带入先验分布，就能得到PD这个值……那函数可逆这个约束还不够强吗？也挺强的吧。如果是可逆的，那G跟X是一一对应的。</p><p>你们在VAE里头，我们说过它最大的问题就是只有单向映射，只有从Z到X的映射。你给一个X，你不知道Z是多少，所以我们才需要去做积分或求和……但在这里边就不需要。但是最大的问题是，这个可逆变换到底怎么设计。</p><p>我们这一个动机就是从AR模型跟隐变量模型出发，希望把两个模型的优点结合起来……但是协方差矩阵的行列式比较复杂。所以说最终引出来这个行列式，我们需要通过设计特殊结构的FC，对应的协方差矩阵具有一个特殊的结构，从而去降低计算复杂度。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（生成式模型与科学智能应用）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>

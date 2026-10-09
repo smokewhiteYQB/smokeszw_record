@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>显微共焦拉曼光谱学 · 第9节 第四章（三）：显微拉曼模块搭建、测试常见问题与常用技术（上）｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.videos{margin-top:14px;border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.video + .video{border-top:1px solid #e4e9f0;}
+.videos h4{font-size:12.5px;font-weight:700;color:#0a1f38;background:#f2f5f9;padding:8px 12px;border-bottom:1px solid #e4e9f0;}
+.videos video{display:block;width:100%;max-height:460px;background:#0b0f14;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>显微共焦拉曼光谱学 · 第9节 第四章（三）：显微拉曼模块搭建、测试常见问题与常用技术（上）</h1>
+    <div class="sub">第9节 第四章（三）：显微拉曼模块搭建、测试常见问题与常用技术（上） ｜ 2026-10-08 ｜ 谭平恒</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 43 页 · 整理 12 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-filters-modes">01 带通滤光片补充与拉曼仪三种工作模式</option>
+<option value="sec-module-build">02 第三小节：显微拉曼模块的搭建</option>
+<option value="sec-collimation">03 第四小节：光路准直、调节与激光垂直入射</option>
+<option value="sec-grating">04 光栅的选择</option>
+<option value="sec-calibration">05 波长校正和波数校正</option>
+<option value="sec-wavelength">06 激发光波长的选择：避荧光与指认</option>
+<option value="sec-polarization">07 偏振配置选择与拉曼张量</option>
+<option value="sec-objective">08 物镜的选择</option>
+<option value="sec-high-pressure">09 高压拉曼测量</option>
+<option value="sec-recap-ch5">10 第四章回顾与第五章常用技术预告</option>
+<option value="sec-micro-history">11 显微测试技术：从 Cary 83 到纳米级制样</option>
+<option value="sec-confocal">12 共焦拉曼技术</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 Ch4-拉曼散射测量仪器与技术-2026秋.pdf 逐页渲染，转写原文见 record_20261008.txt。</div>
+<section class="sec" id="sec-filters-modes">
+  <div class="slides"><figure class="slide" id="slide-422">
+<img src="slides/slide_422.png" alt="课件第422页 显微拉曼和荧光光谱仪的本质（光谱仪+耦合模块）">
+<figcaption><span class="sno">422</span><span class="stitle">显微拉曼和荧光光谱仪的本质（光谱仪+耦合模块）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>带通滤光片补充与拉曼仪三种工作模式</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 422</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>先把上节课带通滤光片的尾巴收一下。因为长时间积分、激光功率大，原来接在这儿的带通滤光片饱和了；换了另一片带宽和深度不同的带通，信号基本被压下去，但大致在 85 cm⁻¹ 处仍有少量杂散光——这时测常规信号没问题，可 100 cm⁻¹ 的信号就被噪声盖住了、测不出来。如果用宽带滤光片、AG（陷波）滤波器在这个范围内性能差（截止到 200 cm⁻¹），那 200 cm⁻¹ 以上的信号才可信；滤光片性能不好、杂散光强，长时间积分会把后段信号整个吃掉。</p><p>所以挑选滤光片不是性能越好效果就越好：0.1 nm 大致对应 3 个波数，半宽 0.5 nm 在 20 多个波数内都截止不住；能截止激光、超过 8 个波数还能做的，就算顶级膜片、一级性能了。</p><p>接着讲三模式。观察样品图像要两个分束器：它们成 90° 夹角、与光线成 45°，也叫光路补偿器。画一下系统：白光经透镜汇聚，通过分束器反射到相机（分束器半反半透，相当于反射镜）；白光也会透过，原则上在此处也能测白光光谱。绿色激光经扩束后通过半反半透打到样品——两个分束器对激光做了补偿。拉曼信号光穿过分束器到达检测端，我们测的是经过两个分束器之后的拉曼信号。</p><p>光路里激光衰减到 25%，拉曼信号回来又衰减到 25%，最后只过 6%。白光不关的话，拉曼信号可能被白光盖住——但这是共路光路：激光打样品，白光是用来看样品的，能看到激光正好打在样品哪个地方。关灯则屏幕一片黑、只剩一个激光点，什么都看不见。</p><p>所以两种模式连用：一个看样品图像，一个看聚焦到样品什么地方；但真正测拉曼光谱时要把分束器移开，变成另一种形式——这时即使开着灯，灯光反射到这儿也进不了光路，不影响测试。原则上这 3 个模式就是拉曼光谱仪里常用的模式：用白光看样品图像必须用分光（分束器）系统，测拉曼一定得把它挪开。两种模式下激光照射位置不变、信号不变——它保证分束器放入或移出光路中间，照到样品上都是同一个点。如果没有上面这一半，开灯也没光，里面就看不到。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>由于使用了带通滤光片，已移植部分连接到此处。因长时间积分且功率大，导致该处饱和……大致在85波数处，仍有少量杂散光。此时测常规信号可行，但100波数的信号因被噪声掩盖而无法测出。</p><p>上节课讲到，观察样品图像需两个分束器。它们成90°夹角，与光线夹角45°，也称光路补偿器……激光衰减到25%，拉曼信号也衰减到25%，所以最后通过的只有6%。</p><p>所以说，一个模式是看样品图像，另一个模式是看聚焦到样品什么地方。这两个模式是连用的。但我真正要测拉曼光谱时，要把分束器移开，就变成另一种形式……原则上这3个模式，是拉曼光谱仪里常用的3个模式。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-module-build">
+  <div class="slides"><figure class="slide" id="slide-420">
+<img src="slides/slide_420.png" alt="课件第420页 第四章主要内容（3.模块搭建 / 4.常见问题 / 5.常用技术）">
+<figcaption><span class="sno">420</span><span class="stitle">第四章主要内容（3.模块搭建 / 4.常见问题 / 5.常用技术）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-421">
+<img src="slides/slide_421.png" alt="课件第421页 显微拉曼模块搭建：高性价比的拉曼光谱系统">
+<figcaption><span class="sno">421</span><span class="stitle">显微拉曼模块搭建：高性价比的拉曼光谱系统</span></figcaption>
+</figure>
+<figure class="slide" id="slide-423">
+<img src="slides/slide_423.png" alt="课件第423页 搭建显微拉曼和荧光光谱仪的要求（可耦合任意光谱仪）">
+<figcaption><span class="sno">423</span><span class="stitle">搭建显微拉曼和荧光光谱仪的要求（可耦合任意光谱仪）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-424">
+<img src="slides/slide_424.png" alt="课件第424页 显微共焦拉曼光谱模块（多路自由激光引入、低波数拓展）">
+<figcaption><span class="sno">424</span><span class="stitle">显微共焦拉曼光谱模块（多路自由激光引入、低波数拓展）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-425">
+<img src="slides/slide_425.png" alt="课件第425页 光路调节和激发波长升级（可插拔光学支架，已申请专利）">
+<figcaption><span class="sno">425</span><span class="stitle">光路调节和激发波长升级（可插拔光学支架，已申请专利）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-426">
+<img src="slides/slide_426.png" alt="课件第426页 高光谱透过率和低波数能力（低至 10~20 cm⁻¹）">
+<figcaption><span class="sno">426</span><span class="stitle">高光谱透过率和低波数能力（低至 10~20 cm⁻¹）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-427">
+<img src="slides/slide_427.png" alt="课件第427页 共焦设计：超低背景噪声和抗环境干扰（实验室开灯可测）">
+<figcaption><span class="sno">427</span><span class="stitle">共焦设计：超低背景噪声和抗环境干扰（实验室开灯可测）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-428">
+<img src="slides/slide_428.png" alt="课件第428页 2017 年第 19 届全国光散射学术会议展台现场测试">
+<figcaption><span class="sno">428</span><span class="stitle">2017 年第 19 届全国光散射学术会议展台现场测试</span></figcaption>
+</figure>
+<figure class="slide" id="slide-429">
+<img src="slides/slide_429.png" alt="课件第429页 功能拓展和个性化定制（反射/荧光/二次谐波等）">
+<figcaption><span class="sno">429</span><span class="stitle">功能拓展和个性化定制（反射/荧光/二次谐波等）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-430">
+<img src="slides/slide_430.png" alt="课件第430页 偏振光学元件的装卡装置及应用光谱仪（VV/VH，已申请专利）">
+<figcaption><span class="sno">430</span><span class="stitle">偏振光学元件的装卡装置及应用光谱仪（VV/VH，已申请专利）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-431">
+<img src="slides/slide_431.png" alt="课件第431页 全国范围内广泛推广：75+ 台、17 省、42 个研究单位">
+<figcaption><span class="sno">431</span><span class="stitle">全国范围内广泛推广：75+ 台、17 省、42 个研究单位</span></figcaption>
+</figure>
+<figure class="slide" id="slide-432">
+<img src="slides/slide_432.png" alt="课件第432页 所研发模块助力先进科研成果（用户历年发文）">
+<figcaption><span class="sno">432</span><span class="stitle">所研发模块助力先进科研成果（用户历年发文）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>第三小节：显微拉曼模块的搭建</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 420</span><span class="chip">课件 421</span><span class="chip">课件 423</span><span class="chip">课件 424</span><span class="chip">课件 425</span><span class="chip">课件 426</span><span class="chip">课件 427</span><span class="chip">课件 428</span><span class="chip">课件 429</span><span class="chip">课件 430</span><span class="chip">课件 431</span><span class="chip">课件 432</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>接下来进入第三小节：模块搭建。前面把拉曼光谱仪里用到的元件都介绍了，但大家手里往往只有一台光谱仪——每个研究组都有光谱仪，怎么测拉曼或荧光？需要搭光路，而且未必能搭好。通常拉曼系统是显微镜加光谱仪：有了光谱仪还差显微镜，还得把二者良好耦合，耦合不好效果就差。</p><p>显微共焦拉曼光谱仪的本质是"显微共焦耦合模块 + 光谱仪"，厂家通常做成一体；但实验室里往往只有分散的部件，原则上我们需要中间这部分。图中黑色部分就是我们自行设计的模块，由近 100 个元件装配而成，整体可插拔：换激光器很简单，系统支持 325、266、360、532 nm 激光导入。这是一个相对静态的系统——激光源可放在后方，光学支架要稳固，把激发光反射到样品上，同时让拉曼信号光透过去。</p><p>要升级激光怎么办？要调角度，所以我们专门申请了可插拔的样品架、滤光片架，这方面已申请专利。路线大致是：后面是光谱仪，前面是激光，一些耦合元件把它耦合到滤光片，最后经物镜打到样品上。这个模块本来可以做得很小，但做小了体积紧、操作不方便——越大越稳定。把盖子全部揭开是侧视图，再把所有灯关掉，两张图几乎一模一样：这意味着实验室不关灯也能调样品、调光路。你要实时显示光路调得怎么样，关灯就看不清样品放得正不正、调螺钉时位置指到哪儿。</p><p>很多商业化主机原则上要关灯才能测拉曼；我们这个可以盖子全开、实验室灯全开，照样测光谱，测得很好。举个例子：2017 年在中山大学开全国光散射会议，我们把模块拿到现场展台——面包板放桌上，样品放面包板上，后面是测试结构，在会议展台环境下也能正常运行。</p><p>另外我们还设计了偏振光纤元件的装卡套件，做角分辨拉曼光谱（下一章会专门讲怎么测角分辨拉曼）。这个也申请了专利：现在卖瑞利散射滤光片元件的，装卡装置就得向我们买——要么自己设计一个、尽量避开我们的专利，要么直接买，以前多是买更方便。这个装置在国内已经卖了 80 多套；北京离我们最近，卖得最多，因为我们没做推广，身边反而卖得最多。</p><p>这些模块装了我们自己的装置，有发射激光的、有收拉曼光的。有些用户发文时没写实验装置，但这些明显是我们的模块（这个上次没完全统计）。</p><p>中间这部分光路究竟怎么样？原则上一定要实际去测：这儿是个反射镜，激光从这儿打到下面样品；上面是平面，先有个拉曼滤光片，上面有个二向色镜，反射镜到这边还得有反射镜，然后把外光引进来，后面放些光学元件再引到整个系统。如果有 3 个不同波长的激光器，怎么切换？用挡板或滑块手动切换光路。我们做的不是全自动——全自动涉及软件设计；手动有手动的好处：266、325、365、532 能全归到一个系统里，任何时候加一个激光器、加一个拉曼滤光片就行（紫外的话得把显微镜换成紫外物镜，不然光下不去）。使用起来手动更好：自动出了问题只能找厂商，手动出了问题自己能解决。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>接下来进入第三小节：模块搭建。前面已介绍拉曼光谱仪中所有使用的元件。但大家手中往往只有光谱仪……显微共焦拉曼光谱仪的本质，是显微共焦耦合模块加上光谱仪。</p><p>图中黑色部分即我们自行设计的模块。它由近100个元件装配而成。整体采用可插拔形式……例如更换激光器很简单。系统支持325、266、360及532纳米激光器导入。</p><p>这意味着什么呢？意味着在实验室不关灯，我们也可以去调节样品，调节光度……所以很多商业化的主机，原则上要把灯关掉才能拉曼。但我们这个可以把盖子全部打开，把实验室的灯打开，是可以测光谱的。</p><p>这个例子是什么呢？就是当时我们在中山大学，2017年的时候，开一个全国光散射会议……在会议的展台环境下也是可以正常运行。</p><p>这些会设计了一些套件，用于安装偏振光纤元件，来做角分辨的拉曼光谱……这个也申请了一个专利……包括这个我们在国内的话，应该已经销售了80多套。</p><p>我们做的不是全自动的，是手动的……任何时候加一个激光器很简单，加一个拉曼滤光片就可以了……自动出了问题只能找厂商，手动出了问题自己可以解决。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-collimation">
+  <div class="slides"><figure class="slide" id="slide-433">
+<img src="slides/slide_433.png" alt="课件第433页 1. 光路准直和调节：双光阑、DC/DB/CP 反射镜调节">
+<figcaption><span class="sno">433</span><span class="stitle">1. 光路准直和调节：双光阑、DC/DB/CP 反射镜调节</span></figcaption>
+</figure>
+<figure class="slide" id="slide-434">
+<img src="slides/slide_434.png" alt="课件第434页 1. 光路准直：激光垂直入射样品表面的重要性（色差/像差）">
+<figcaption><span class="sno">434</span><span class="stitle">1. 光路准直：激光垂直入射样品表面的重要性（色差/像差）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-435">
+<img src="slides/slide_435.png" alt="课件第435页 1. 光路准直：如何判断激光垂直入射（散焦斑中心是否偏离）">
+<figcaption><span class="sno">435</span><span class="stitle">1. 光路准直：如何判断激光垂直入射（散焦斑中心是否偏离）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>第四小节：光路准直、调节与激光垂直入射</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 433</span><span class="chip">课件 434</span><span class="chip">课件 435</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>下面讲拉曼测试常见问题和常用技术，共 3 个半课时。常见问题包括：光路怎么校准调节、光栅怎么选、波长波数怎么校正、激发光波长怎么选、偏振配置怎么选、物镜怎么选、高压测试要注意什么。原则上不会全讲，第五章还有十几个问题和应用场景——好消息是国庆期间我把第五章 PPT 都做完了，现在是 177 页，中间绝大部分没变，只多了 4 页动能装置匹配的内容；需要新 PPT 可以找助教，但插进去页码可能跟你们手里的不一致，多出的几页不是那么重要，顺序基本没大变。</p><p>首先做拉曼光谱得先看光路怎么调节准直。准直要有标准，像一把标尺，要么别人设定、要么自己设定；自己设定标准时往往有两个光阑：任意一束激光打过来，能穿过这两个光阑，准直就完成了，但任何情况都要自己调。基准是所有光线最好在一个平面内——水平平面稳定性最好，竖直平面效果一样，所以一般讲水平平面。</p><p>假设这儿有个挡板开个孔，先让光路通过第一个光阑；第一个光阑不一定能精准对准、可能斜上去，光源足够小时可能打偏出去。设一个板就知道它打到上面了——光为什么能从这儿反射到那儿？因为这儿有个反射镜，角度可调。把光反射到指定位置，再一个反射镜……目的是让光穿过后面这一点。问题是：你怎么知道往哪个方向转反射镜？看指示器：不动反射镜、激光斑点偏离后面方向时，光沿平行方向走；狭缝小就被挡住、狭缝开大就继续往上走。办法是——发现激光斑偏离后面方向，只转动这一个反射镜，让激光尽量往那个方向靠；调好后再转第二个反射镜，好的话一次就放过去；调过了就反方向再转。如此穿过物镜、穿过光缆，看打到光缆哪个地方。调得好，两三个循环（双光阑、双反射镜）就能让激光通过；熟悉了直接看前光斑就行。</p><p>为什么要把它调正？我们在外面希望光沿某个线走，但测试时希望激光垂直于样品表面——而它往往不知是否垂直，可能偏 0.1° 或 0.5°。原则上要重建两个反射镜把它调回，这需要判断准心在屏幕上的位置和调节方法。</p><p>为什么激光必须垂直样品表面？因为光学系统总存在色差甚至像差：对不同波长，像差影响样品清晰度；色差取决于激光波长，不同波长焦点不同——可见红光可能聚焦在样品表面，但 325 nm 紫光可能聚焦在别处。用可见光看样品时看到的是可见光，但测紫外时希望紫外光聚焦到样品面，就得上下移动样品。如果光路准直、红光和紫外光焦点固定，上移样品不会改变聚焦点；但样品倾斜时，可见光聚焦在此、十字标记也在此，上移样品紫外光就聚焦到别处而非原位。我们现在很多测试是显微测试，这样测就麻烦了——你看到的样品和测试结果不是独立的东西。所以做显微光谱时非常重要：前面组织光路，第二要调节显微光路、让激发光垂直表面，否则做出来的效果会出问题。</p><p>怎么判断激光是否垂直入射？相机屏幕中间的十字叉是共焦焦点，激光打到附近都能看到一个激光斑。上下移动样品，看散斑变化：正入射时散斑先逐渐变大、再逐渐变小，但中心点不变；斜入射时散斑先朝一边散焦、中间聚焦、再向另一边散——一旦出现这种情况，就说明激光没有垂直入射，要通过两个反射镜调焦点。最好你们不要自己搭（问题不大），但商业化仪器肯定有规定范式；不要去试，最多弄明白怎么回事——去试把光路弄坏了麻烦。这样一个怎么调直、一个怎么准直、一个怎么判断正入射，光路就讲完了。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>常见问题包括：光度如何校准与调节，光栅如何选择，波长如何校正，波数如何校正。还包括激发光波长如何选择，偏振配置的选择，路径的选择，以及高压测试方面需要注意哪些地方……我在国庆节期间把第五章和PPT都做完了……中间绝大部分没有改变，只是增加了4页关于动能装置匹配使用的内容。</p><p>这标准就像一把标尺……若现阶段自己设定标准，往往会有两个光阑。任意一束激光打过来，若能穿过这两个光阑，光路的准直就完成了……原则上特别调得很好，两到三个循环。</p><p>那是因为光学系统总存在色差甚至相差……可见红光可能聚焦在样品表面，但325紫光可能聚焦elsewhere……所以说我们在做显微光谱的时候非常重要。</p><p>你看。我就上下移动，看那个散斑变化的大小……但是中心点是不变的。对吧，但如果说它是斜的，它会怎么样，它会是先朝一边散焦，中间到聚焦，再到另外一边再散。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-grating">
+  <div class="slides"><figure class="slide" id="slide-436">
+<img src="slides/slide_436.png" alt="课件第436页 2. 光栅选择：工作范围与刻线密度">
+<figcaption><span class="sno">436</span><span class="stitle">2. 光栅选择：工作范围与刻线密度</span></figcaption>
+</figure>
+<figure class="slide" id="slide-437">
+<img src="slides/slide_437.png" alt="课件第437页 2. 光栅选择：效率曲线（闪耀波长）">
+<figcaption><span class="sno">437</span><span class="stitle">2. 光栅选择：效率曲线（闪耀波长）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-438">
+<img src="slides/slide_438.png" alt="课件第438页 2. 光栅选择：全息 vs 刻划光栅、矩形/正弦槽、TE/TM 偏振">
+<figcaption><span class="sno">438</span><span class="stitle">2. 光栅选择：全息 vs 刻划光栅、矩形/正弦槽、TE/TM 偏振</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>光栅的选择</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（前）</span><span class="chip">课件 436</span><span class="chip">课件 437</span><span class="chip">课件 438</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第二个常见问题是光栅选择。选什么样的光栅主要从三方面考虑：工作范围、刻线密度和效率曲线。工作范围涉及光谱收集；不是数值孔径越高分辨率就越高，也不可能全波段分辨率都高。刻线密度也涉及光谱分辨率——以 600 线光栅为例，闪耀波长 500 nm，图中就是效率曲线，其他型号类似。</p><p>一般规律：刻线密度越高，探测范围越向短波延伸；要探测 1、2、3 μm 的光，刻线密度通常较低。还要关注 TE/TM 模式，这和光信号与光栅取向有关：光栅刻槽通常沿 y 方向、周期沿 x 方向、法线沿 z、入射面为 x-z 平面。常见的有矩形槽光栅和正弦槽光栅——矩形槽一般是刻划（ruled）光栅，正弦槽一般是全息（holographic）光栅。</p><p>TE 一般是 S 偏振态，TM 是 P 偏振态：电场沿 y 方向即沿刻线方向，S 平行于刻线、P 垂直于刻线。对普通光栅差别不大，但对这些光栅差别非常大——比如 700~800 nm 时一个方向效率为零、另一个方向却有 80%。光栅效率的各向异性是普遍现象。曾有学生测二维材料时发现两个方向效率不同，以为找到鉴别样品各向异性的新办法，后来分析发现是测试配置里少了必要光学元件——这种现象源于光栅在不同方向的效率差异，影响测试精度。</p><p>光的偏振方向相对于光栅不同时效率不一样，保证测试一致性很重要。两种处理方式：一是让检偏器选出 S 或 P 方向，后面用起偏器变回自然光（或把输入变成左旋/右旋，分解到 x、y 方向分量完全一样，可比）；二是把检偏器固定在光栅高效率方向——TE 模（平行刻线）效率都是高的，TM 模垂直刻线效率低。一般把检偏器固定在高效率方向，要测另一个偏振方向时用 1/2 波片转过去：假设 y 方向是 S 偏振、y 不动，后面要测 x 偏振方向时，用 1/2 波片把它转到 y 方向，效果就一样了。</p><p>如果不考虑光栅取向和效率曲线差异会怎样？你测出来一套角分辨结果，换一块光栅测出来是另一套——别人重复不了，因为你们用的光栅不一样。当然非故意的这种很难被发现；但以专业角度看别人论文，就知道偏振配置用得对不对。这就是光栅选择。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我们第二个常见问题是光栅的选择。究竟要选择什么样的光栅？主要从三个方面考虑：工作范围、刻线密度和效率曲线。</p><p>一般来说，刻线密度越高，探测范围越向短波方向延伸……矩形槽光栅通常是刻划光栅，而正弦槽光栅一般是全息光栅。</p><p>TE一般是S偏振态，TM是P偏振态……比如在700~800nm时，一个方向效率为零，另一个方向却有80%的效果。这意味着光栅效率的各向异性是普遍存在的现象。</p><p>那也就是说别人重复你的结果是重复不了的。因为你们用的光纤不一样……但事实上，只要以专业角度去看别人的论文，就知道偏振配置用得对不对。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-calibration">
+  <div class="slides"><figure class="slide" id="slide-439">
+<img src="slides/slide_439.png" alt="课件第439页 3. 波长校正和波数校正（汞灯 546.07 nm、单晶硅 520.7 cm⁻¹）">
+<figcaption><span class="sno">439</span><span class="stitle">3. 波长校正和波数校正（汞灯 546.07 nm、单晶硅 520.7 cm⁻¹）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>波长校正和波数校正</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（中）</span><span class="chip">课件 439</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>为什么要校正？激光打到光栅上沿某方向衍射、经聚焦透镜形成斑点；聚焦后焦面原则上不一定是平面，但 CCD 是平面的（无论成本还是效率都不可能做弯曲 CCD），因此可能存在未被发现的误差。原则上可通过转动光栅调整：把硅 520.7 cm⁻¹ 放在 CCD 中心，再转动光栅放到边上——每个位置测量都有误差，我们校正的是中心位移。</p><p>实际操作：拿单晶硅 520.7 cm⁻¹ 谱线打在样品屏幕上，软件输入 520.71 回车，光转到 CCD 中心；如果显示 522.7，说明实测比真值高了 2 个波数，软件减 2 个波数就行。但这只能保证中心测得准，能保证两侧也准吗？用 532 测硅中心是 520.7，转到 633 用红光测，规律还是不是 520.71？特别在意波数准确性，就要做波长校正或波数校正。</p><p>一般用特征谱线：汞灯等气体灯发出的光是原子能级跃迁产生的，波长永远恒定、过程稳定——汞谱线 546.07 nm，放哪儿都是 546.07（除非改变温度，300°C 环境下测才会偏离；常温下就是这个位置）。如果有无穷多线且覆盖整个 CCD，每一处都可以校。标准谱线还有：金刚石主线 1332.06 cm⁻¹、体相石墨 1582 cm⁻¹——窗口正好覆盖这两个位置时，测一个整谱，再测金刚石、石墨的谱，就能把这个范围校正一遍。我们需要一把尺子，即标准图谱——标准拉曼峰或标准光源都行，本质是校正问题，汞灯等谱线数据可查。</p><p>CCD 边缘怎么校？原则上把标准主峰放到边缘位置校。但转动光栅会引入新问题：光栅的精度和重复性影响校正结果。为减少齿轮回程差，很多仪器校正时单向移动——比如要到 520 cm⁻¹，先从 600 退过来；从 1800 移到 520 也保持同向，保证光栅始终沿同一方向转。</p><p>想结果更精还要多想一步：变温光谱里假设 200 和 1500 cm⁻¹ 处有峰，从 4 K 测到 300 K，能不能用一个窗口覆盖 1~2000 cm⁻¹？CCD 一般 1052 个点，一点对应约 2 个波数——用这种分辨率测拉曼峰位随温度变化，结果不可信。怎么办？2 K、5 K、20 K 各测一次，光栅从 300 转到 1500 再转回 200，最后数据没规律——因为变化频繁、光栅反复转动。很多人把光栅固定在 200 cm⁻¹，先从 4 K 变到 300 K，降温回 4 K 后再把光栅挪到 1500 cm⁻¹ 做变温——这时光栅不动，测量更准。要想结果可靠，就得边做边思考，而不是靠运气。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>另外就是波长和波数的校正……聚焦后焦面原则上不一定是平面，但CCD是平面的……若发现显示为522.7，说明实测比精准结构高了2个波数。那就得减两个波数。</p><p>它这个灯发出来，因为它是原子之间的一个能级跳跃发出来的光，所以它的波长永远是恒定的……你像这个汞谱线，它就是546.07nm……我们的金刚石，它的主线是1332.06cm⁻¹。我们的体相石墨是1582cm⁻¹。</p><p>为减少齿轮回程差带来的误差。许多仪器在校正时会单向移动……这样能确保光栅始终沿同一方向转动。</p><p>很多人将光栅固定在200波数，先从4K变到370K。降温回4K后，再将光栅挪到1500波数做变温。此时光栅不动，测量更准。要想结果可靠，就得边做边思考，而非靠运气。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-wavelength">
+  <div class="slides"><figure class="slide" id="slide-440">
+<img src="slides/slide_440.png" alt="课件第440页 4. 激发光波长的选择（常用激光线、∝1/λ⁴）">
+<figcaption><span class="sno">440</span><span class="stitle">4. 激发光波长的选择（常用激光线、∝1/λ⁴）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-441">
+<img src="slides/slide_441.png" alt="课件第441页 4.1 避开荧光干扰（532/633/785 对比）">
+<figcaption><span class="sno">441</span><span class="stitle">4.1 避开荧光干扰（532/633/785 对比）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-442">
+<img src="slides/slide_442.png" alt="课件第442页 4.2 指认和确定拉曼光谱（相对波数坐标 vs 绝对波长坐标）">
+<figcaption><span class="sno">442</span><span class="stitle">4.2 指认和确定拉曼光谱（相对波数坐标 vs 绝对波长坐标）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>激发光波长的选择：避荧光与指认</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（中）</span><span class="chip">课件 440</span><span class="chip">课件 441</span><span class="chip">课件 442</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第四方面是激光波长选择。常用激光线：244、266、325、355、473、488、514、532、633、785、1064 nm。其中 325 nm 是氦镉激光线，355 nm 通常是 1064 nm 的三倍频；473、488、514 nm 是氩离子激光线，532 nm 是 1064 nm 的倍频；633 nm 是氦氖激光；785 nm 一般用半导体激光器（原来很难得到高质量 785 nm，非常难且贵，现在好多了）。</p><p>同等条件下（激发功率、光栅、采集时间相等），激发光波长越短拉曼信号越强，近似 ∝1/λ⁴。但打个比方：测硅时 633、532、266 对比，266 nm 信号会强多少倍？实际上会弱几十倍甚至上百倍，因为不满足同等条件——硅是半导体、带隙 1.1 eV（约 1100 cm⁻¹），633 nm 穿透深度约 500 nm，532 nm 约 480 nm，266 nm 只有 10 nm，穿透深度衰减 40 倍，测出来的信号当然不同。但测透明金刚石时紫外光信号可能更强——可见物镜数值孔径可用 0.9，紫外最多 0.3 或 0.4；如果可见光也用 0.3、0.4，那功率、光栅、分辨率、采集时间各方面都要拉平才能比。</p><p>主线是：每条谱线最后测的是光子，不同波长光子打到探测器上测能量。原则上面积一样，但积分块不同、CCD 响应不同。分辨率越细强度越低，分辨率越差信噪比越高——比较时所有条件要一样，不能单纯比技术质量。用到 1/λ⁴ 时也要考虑强度到底能强多少倍、面积和展宽（分辨率一差展宽就大）。</p><p>选波长主要看四个因素：一是避开荧光干扰，二是指认确定是拉曼信号还是荧光信号，三是给到不同深度的信息，四是是否损伤样品。前面讲过二维材料用 457 nm 做、0.3 mW 就把样品烧了；用 785 nm 开到几十 mW 都没问题——这就像涂防晒霜：紫外光高能粒子容易把皮肤里分子的键打断，457 比 785 光子能量高得多，更容易损伤材料，道理一样。</p><p>避荧光看图：分别用 532、633、785 激发。532 激发时右边荧光信号很强——算能量差：532 nm 约 2.3 eV，633 nm 约 1.96 eV，差 0.35 eV、接近 3000 cm⁻¹，正好 3000 cm⁻¹ 处荧光背景直接抬上去，那块看不到细节；用 785 nm 没有背景、测出来很平。所以 785 nm 能避荧光，紫外激光也能避荧光。取决于你的系统：荧光在可见光区就尽量用近红外或紫外；荧光在近红外就尽量用可见光和紫外——没有固定公式，看实际情况。</p><p>指认：荧光峰不动，拉曼信号随激发线走。用不同激发波长激发时，采用波数（拉曼位移）坐标，所有拉曼峰对得齐；采用绝对波长坐标则对不齐。看图：1.959 eV 激发时有个荧光峰 P1、P2，拉曼峰 1、2、3 跟着激光线移动；换成 2.089 eV 激发，拉曼位移坐标下峰 1、2、3 全部对齐，而荧光峰 P1、P2 相对地跑了——中间位置不动的那个峰就是拉曼峰，其余都是荧光峰。波长、波数、能量一一对应，这张图把过程坐标、能量坐标、绝对波数坐标都画出来了。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>常用激光有244、266、325、355、473、488、514、532等……在同等条件下，如激发光功率、采集时间等相等，激发光波长越短，拉曼信号越强。</p><p>这是主线。这是一个谱线，我们每一个谱线最后测的是光子……这意味着分辨率越细，强度越低；分辨率越差，信噪比越高。</p><p>你看一下这个图，分别用532、633和785激发……532大概是2.3eV，633是1.96eV左右，相差约0.35eV。0.35eV接近3000波数……所以用785可以避开荧光，另外用紫外激光也能避开荧光。</p><p>但是至少大家可以看到，我们的荧光是不动的，但是我们的拉曼信号是随着激发光移动……因为我们的荧光总是不动的，而我们的拉曼信号是随着激发线走的。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-polarization">
+  <div class="slides"><figure class="slide" id="slide-443">
+<img src="slides/slide_443.png" alt="课件第443页 5. 偏振配置选择：拉曼散射强度与拉曼张量">
+<figcaption><span class="sno">443</span><span class="stitle">5. 偏振配置选择：拉曼散射强度与拉曼张量</span></figcaption>
+</figure>
+<figure class="slide" id="slide-444">
+<img src="slides/slide_444.png" alt="课件第444页 5. 偏振配置选择：MnF₂ 不同偏振配置下的振动模式">
+<figcaption><span class="sno">444</span><span class="stitle">5. 偏振配置选择：MnF₂ 不同偏振配置下的振动模式</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div class="sec-tt">
+        <h2>偏振配置选择与拉曼张量</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（中）</span><span class="chip">课件 443</span><span class="chip">课件 444</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第五个方面是偏振配置，要考虑拉曼散射强度。前面讲对称性时说过：拉曼散射强度 I ∝ |eₛ·R·eₗ|²，中间是拉曼张量 R，前后是激发光偏振矢量和散射光偏振矢量（有时还要加转置或维格纳符号）。</p><p>一个拉曼模不一定只有一个拉曼张量，可能有多个——多个张量是简并出来的。比如硅在 Γ 点，LO1、LO2 和 TO 频率相同发生简并，因此有 3 个拉曼张量；二维石墨烯的 G 模和 TO 简并，因此基频声子有两个拉曼张量；对称性很低时就只有一个拉曼张量。注意拉曼张量元之间不相干，绝对值在求和号内部而非外侧。</p><p>以 D₄ₕ 晶体为例，包含 A₁g、B₁g、B₂g、E₉ 模，按入射光和散射光偏振方向计算：结果不为 0，该偏振配置下可见；为 0 则不可见、是禁戒的。这些模式一一对应，比如 G 模对应 A₁g 模，都可以指认。实际上还存在 E₉ 模对应 YX 分量，具体要查原文微分推导——本来以为这种偏配置下该模式应该出不来，可能是某种效应，讲的时候才发现这个问题。MnF₂ 的例子（如 y(zz)x 偏振）就是按这个方法把不同偏振配置下非零模式列成表。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那么第五个方面就是……偏振配置的话，我们要考虑到我们的拉曼散射的强度……你看我们中间的一个拉曼张量，前面什么的激发光的偏振矢量和散射光的偏振矢量。</p><p>多个拉曼张量是怎么来的？是简并出来的。假设硅在伽马点，其LO1、LO2和TO频率相同发生简并，因此有3个拉曼张量。对于二维石墨烯，A和TO模简并，故基膜声子有两个拉曼张量。</p><p>注意拉曼张量元之间无相干，绝对值在求和号内部而非外侧……根据入射光和反射光的偏振方向进行计算。若结果不为0，该偏振配置下可见；若为0则不可见，说明是禁戒的。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-objective">
+  <div class="slides"><figure class="slide" id="slide-445">
+<img src="slides/slide_445.png" alt="课件第445页 6. 物镜的选择：放大倍数、数值孔径、工作距离三参数">
+<figcaption><span class="sno">445</span><span class="stitle">6. 物镜的选择：放大倍数、数值孔径、工作距离三参数</span></figcaption>
+</figure>
+<figure class="slide" id="slide-446">
+<img src="slides/slide_446.png" alt="课件第446页 6. 物镜选择（透明介质）：小 NA 有时信号反而强">
+<figcaption><span class="sno">446</span><span class="stitle">6. 物镜选择（透明介质）：小 NA 有时信号反而强</span></figcaption>
+</figure>
+<figure class="slide" id="slide-447">
+<img src="slides/slide_447.png" alt="课件第447页 6. 物镜选择（透明介质）：聚焦体积与衰减">
+<figcaption><span class="sno">447</span><span class="stitle">6. 物镜选择（透明介质）：聚焦体积与衰减</span></figcaption>
+</figure>
+<figure class="slide" id="slide-448">
+<img src="slides/slide_448.png" alt="课件第448页 6. 物镜选择（不透明介质）：信号 ∝ NA²">
+<figcaption><span class="sno">448</span><span class="stitle">6. 物镜选择（不透明介质）：信号 ∝ NA²</span></figcaption>
+</figure>
+<figure class="slide" id="slide-449">
+<img src="slides/slide_449.png" alt="课件第449页 6. 物镜选择（工作距离）：真空窗口与最小工作距离">
+<figcaption><span class="sno">449</span><span class="stitle">6. 物镜选择（工作距离）：真空窗口与最小工作距离</span></figcaption>
+</figure>
+<figure class="slide" id="slide-450">
+<img src="slides/slide_450.png" alt="课件第450页 6. 物镜选择（入射光瞳）：扩束与拉曼光片尺寸">
+<figcaption><span class="sno">450</span><span class="stitle">6. 物镜选择（入射光瞳）：扩束与拉曼光片尺寸</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">08</span>
+      <div class="sec-tt">
+        <h2>物镜的选择</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（后）</span><span class="chip">课件 445</span><span class="chip">课件 446</span><span class="chip">课件 447</span><span class="chip">课件 448</span><span class="chip">课件 449</span><span class="chip">课件 450</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第六个是物镜选择，涉及三个关键参数：放大倍数、数值孔径（NA）、工作距离（WD）。表里把倍数、NA、WD 对应到具体型号都列出来了。物镜还涉及工作波段：紫外波段用紫外物镜、红外用近红外物镜——因为透镜材料在不同波长折射率不同，要把光聚焦到样品上，折射率不同聚焦位置和深度就有差异，所以紫外要用紫外材料、红外要用红外材料。</p><p>随便用一种材料行不行？不好说。显微物镜有机械筒长，且是恒定值——奥林巴斯的机械筒长好像是 45 mm。NA 越大、WD 越长，镜身运动总长度就固定；不然转转盘时物镜太长会把样品扫走——发生这种事显微镜就卖不出去了。所以不同波段、不同厂家要选不同材料体系设计。大家照相时靠近边缘出现紫边，就要选特殊镜片（不同波长折射率基本相近），价格就贵了。</p><p>透明介质：聚焦体积多大、激光在介质里有没有衰减？原则上透明样品激光会有衰减——没有衰减时照的体积越大、强度越强。所以用小 NA 物镜，有时比用大 NA 物镜测得的强度还强——并不是 NA 越小越好，但透明样品里这是要注意的地方。</p><p>不透明介质结果就不一样了：激光很快被样品吸收，聚焦体积有限，这时大数值孔径就有很大优势——信号强度与 NA² 成正比。10× 物镜下 NA 0.2 和 0.9 看着差别不大，但平方后 0.04 对 0.81 差 20 倍，差距显著。很多样品不透明，选高 NA 物镜至关重要。</p><p>工作距离：样品裸露在空气中时工作距离无所谓；但样品在真空腔内，真空系统决定了最小工作距离——图中深色部分就是最小工作距离。操作不当学生可能直接把物镜顶上去；窗口太薄，物镜一压真空腔窗就坏了。所以选物镜要考虑场景对工作距离的要求。</p><p>入射光瞳：除非把纳米管做得特别长能从左扫到右，很多东西你是找不到的。我们测单层石墨烯边界的拉曼——信号来自边界，大致宽度只有 3.5 nm，也就是说石墨烯边界 3.5 nm 之内的区域才对拉曼有贡献，贡献区域足够小、基本没有测试误差。一旦把激光扩束、占满整个物镜光阑，扫描结果就特别好，特征就是空间分辨率很高；一点都不扩束，1/2 斑特别显著、半宽至少差 3 倍。所以测试时要充分利用物镜功能，必须考虑入射光斑大小。</p><p>现在大家用的拉曼光片有 1 英寸、1/2 英寸的——1/2 英寸加卡环，透过光通量可能也就 8 mm；但很多物镜的入射光瞳远大于 8 mm。曾有学生测五腔一性材料，发现 NA 越低反而效果越好——一问才知道他的入射光斑太大、大于拉曼电光片尺寸：拉曼信号光出来是平行光、布满整个光路，不管入射光是否布满，拉曼光出来时布满，光斑太小就意味着大部分拉曼信号没被收集到。换成较大的拉曼光片问题就解决了。拉曼测试里这类小问题很多，直接影响结果可信度，经验多了才能发现。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>第六个，就是我们的物镜的选择。说物镜的话会涉及到三个关键的参数：第一个是它的放大倍数，一个是它的数值孔径，一个是它的工作距离。</p><p>假设我们紫外波段有紫外的路径，红外波段有近红外的路径。为什么呢？因为我们的晶体材料，它在不同的波长，它的折射率是不一样……你讲到奥林巴斯，好像它就是45毫米。</p><p>所以说用小估小数字孔径的估计，有可能比用大数字孔径的估计它的强度变强……对我们的如果说是不透明的样品，那这个结果就不一样了……信号强度与数值孔径的平方成正比……0.04与0.81相差20倍。</p><p>若样品在真空腔内，真空系统决定了最小工作距离……若窗口较薄，物镜下压会导致真空腔窗户损坏。</p><p>我们就去测单层石墨烯边界的拉曼强度……大致的宽度也就是3.5个纳米……拉曼光片有1英寸的小的呢，有1/2英寸……可能也就是它的透过的光通量，可能也就是8个毫米。但是关键是很多物镜，它的光束光阑远远超过8个毫米。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-high-pressure">
+  <div class="slides"><figure class="slide" id="slide-451">
+<img src="slides/slide_451.png" alt="课件第451页 7. 高压拉曼测量：金刚石对顶砧（DAC）">
+<figcaption><span class="sno">451</span><span class="stitle">7. 高压拉曼测量：金刚石对顶砧（DAC）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-452">
+<img src="slides/slide_452.png" alt="课件第452页 7. 高压拉曼测量：压力 cell 与红宝石定温定压">
+<figcaption><span class="sno">452</span><span class="stitle">7. 高压拉曼测量：压力 cell 与红宝石定温定压</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">09</span>
+      <div class="sec-tt">
+        <h2>高压拉曼测量</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（后）</span><span class="chip">课件 451</span><span class="chip">课件 452</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>另外是高压拉曼测试。压强与接触面积有关：面积越小子压强越大，据此做成了金刚石对顶砧（DAC）——金刚石是世界上最硬的材料，上台面大、下台面小，施加力后下面产生足够大压强。</p><p>怎么测压强？必须有标准，通常用红宝石：红宝石荧光双峰的相对强度随温度改变（二能级系统，温度越高激发态越多、荧光越强），所以双峰相对强度可以定温度；峰位还与压强有关（加压过程中原子间距变小、频率变化，类似热胀冷缩），所以用单个峰位来定压强。买金刚石对顶砧时要有光学窗口，它对物镜工作距离有要求——购买时要考虑现有物镜能不能用，或为特定对顶砧选合适工作距离的物镜；最好工作距离长且 NA 大，效果越好，这是选择原则之一。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>另外是高压拉曼测试。压强与接触面积有关，面积越小，压强越大。据此制作了金刚石对顶砧……但如何测试压强？必须有标准。通常用红宝石作标准。</p><p>红宝石荧光双峰的相对强度随温度改变，这是二能级系统……此外，压强还与峰位有关。因此，可用双峰相对强度定温度。用单个峰位来定压强……购买金刚石对顶针时，需考虑现有物镜是否可用。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-recap-ch5">
+  <div class="slides"><figure class="slide" id="slide-453">
+<img src="slides/slide_453.png" alt="课件第453页 第四章回顾">
+<figcaption><span class="sno">453</span><span class="stitle">第四章回顾</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">10</span>
+      <div class="sec-tt">
+        <h2>第四章回顾与第五章常用技术预告</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（尾）</span><span class="chip">课件 453</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>下面总结回顾：第一部分讲了拉曼光谱发展史；拉曼光谱类型（棱镜摄谱仪、光栅光谱仪、FT 光谱仪）；现代拉曼光谱仪构成——激光器加光学元件加滤波元件加显微镜加单色仪加 CCD；激光器种类、模式选择、单纵模实现；光栅、反射镜、滤光技术、Notch filter；共焦显微光路、光路准直、空间分辨率；具体实验考量——激发光波长、光谱分辨率、偏振配置、高压环境等。</p><p>接下来是拉曼光谱测试常用技术，一共列了 8 个：显微测试技术、共焦拉曼技术、拉曼成像技术、显微拉曼空间分辨率、表面增强拉曼（SERS/TERS）、共振拉曼、超低波数拉曼、紫外拉曼。后面逐个讲解。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>下面总结回顾前文内容。第一部分讲了拉曼光谱的发展史……然后讲构成，包括激光器、光学元件、滤波元件、狭缝及CCD……介绍了光路准直及空间分辨率等相关内容。同时需考虑实验中的具体考量因素。如激光波长、光谱分辨率、偏振配置等多方面。</p><p>接下来将涉及拉曼光谱测试常用技术。这里面我们列了多少个技术？8个技术是吧？8个技术，你看这里面有个显微测试技术、共焦拉曼技术、拉曼成像技术、显微拉曼空间分辨率、表面增强拉曼光谱、共振拉曼技术、超滤波拉曼技术。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-micro-history">
+  <div class="slides"><figure class="slide" id="slide-454">
+<img src="slides/slide_454.png" alt="课件第454页 1. 显微测试技术：1970s Cary 83 显微拉曼采样">
+<figcaption><span class="sno">454</span><span class="stitle">1. 显微测试技术：1970s Cary 83 显微拉曼采样</span></figcaption>
+</figure>
+<figure class="slide" id="slide-455">
+<img src="slides/slide_455.png" alt="课件第455页 1. 显微测试技术：微小区域化学性质的变化">
+<figcaption><span class="sno">455</span><span class="stitle">1. 显微测试技术：微小区域化学性质的变化</span></figcaption>
+</figure>
+<figure class="slide" id="slide-456">
+<img src="slides/slide_456.png" alt="课件第456页 1. 显微测试技术：拉曼显微术的原始概念">
+<figcaption><span class="sno">456</span><span class="stitle">1. 显微测试技术：拉曼显微术的原始概念</span></figcaption>
+</figure>
+<figure class="slide" id="slide-457">
+<img src="slides/slide_457.png" alt="课件第457页 1. 显微测试技术：拉曼制样体积随年代（g→10⁻¹² g）">
+<figcaption><span class="sno">457</span><span class="stitle">1. 显微测试技术：拉曼制样体积随年代（g→10⁻¹² g）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">11</span>
+      <div class="sec-tt">
+        <h2>显微测试技术：从 Cary 83 到纳米级制样</h2>
+        <div class="sec-meta"><span class="time">录音：第 3 段（前）</span><span class="chip">课件 454</span><span class="chip">课件 455</span><span class="chip">课件 456</span><span class="chip">课件 457</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>先讲显微测试技术。最早的时候大家测的是不是显微？——不是。显微测试当然有好处，但也没那么简单，光学上有一定要求。图里这是 1970 年代的工作：激光聚焦到样品表面，样品约 100 μm、光斑也 100 μm——说实话 100 μm 不小。但以前做化学的，要么测透明化学药品、不需要相机；要么测半导体，可以加大激光功率。直到 1970 年代后才开始测显微，显微镜还没应用到拉曼上。</p><p>测试中发现：激光打到样品不同位置，拉曼光谱某些地方信号不一样——某个点跟其他点不一样。以前测拉曼从不关心样品均不均匀，打上去就行；现在发现在不同位置测得不一样，就需要尽量把光斑聚焦小。聚焦小，激发体积变小；但相对收集角，收集信号区域会变大。计算表明整体效果上样品体积减小强度会减小，但测出来不是那么回事——于是大家把光斑越做越小。</p><p>拉曼显微有一些测试方案（如 617 点方案）：原理类似背景成像，把激光聚焦到样品一点一点扫描；或变成平行光线扫描；或对激光整体扫描，用拉曼光谱经光栅和滤波直接成像——这属于微区测试概念。微区测试能力一提升，对样品量要求就变少：原来需要克级（每立方厘米克级），后来体积越来越小、质量越来越轻。</p><p>制样体积和年代：1928 年 g 级、1970 年 10⁻³ g、1980 年 10⁻¹² g、1990 年更小——已经能探测到纳米量级。1990 年的工作测碳纳米管：激光光斑虽然大，但样品很小，加共振增强，还是能测到单根碳纳米管。再往后是针尖增强（TERS）：空间分辨率能到 1~2 nm，甚至 0.5 nm。0.5 nm 意味着什么？可以通过针尖增强去看一个原子、一个分子——分子振动时有很多拉曼峰，每个峰对应分子表面不同位置的不同振动幅度；用某一个峰作为扫描参数对分子扫描，就能把这个峰对应的原子振动形式、分子内部结构探测出来。这是最近的工作（约 2021 年）。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>上次讲的显微测试技术，最早的时候，说实话，大家测的是不是测的一个显微？……那是1970年代……聚焦到这个表面上的样品是多少？样品是100微米，光斑100微米也不小。</p><p>我只要打到样品上的不同位置，然后它的拉曼光谱就某些地方就出现了信号不一样……以前的话，我们在测试拉曼的时候，我们从来不关心我这个样品均匀不均匀。</p><p>原来我们需要克级别的量，即每立方厘米还有克的级别。最后体积变得越来越小，同时质量也变得越来越轻……它都可以去探测到小到纳米的一个级别。</p><p>原则上尽管我的激光光斑很大，但是我的样品很小，我还是能够测到。再加上它的共振增强，我还是能够测得到单根碳纳米管的……它的空间分辨率能够达到0.5个纳米。0.5个纳米意味着什么呢？我们就可以通过针尖增强，去看一个原子，去看一个分子。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-confocal">
+  <div class="slides"><figure class="slide" id="slide-458">
+<img src="slides/slide_458.png" alt="课件第458页 2. 共焦拉曼技术：引入孔径（针孔）">
+<figcaption><span class="sno">458</span><span class="stitle">2. 共焦拉曼技术：引入孔径（针孔）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-459">
+<img src="slides/slide_459.png" alt="课件第459页 2. 共焦拉曼技术：物像共轭，偏离共轭像点则测不到信号">
+<figcaption><span class="sno">459</span><span class="stitle">2. 共焦拉曼技术：物像共轭，偏离共轭像点则测不到信号</span></figcaption>
+</figure>
+<figure class="slide" id="slide-460">
+<img src="slides/slide_460.png" alt="课件第460页 2. 共焦拉曼技术：聚苯乙烯珠深度分辨测量">
+<figcaption><span class="sno">460</span><span class="stitle">2. 共焦拉曼技术：聚苯乙烯珠深度分辨测量</span></figcaption>
+</figure>
+<figure class="slide" id="slide-461">
+<img src="slides/slide_461.png" alt="课件第461页 2. 共焦拉曼技术：2 μm ¹³C 金刚石薄膜深度分布">
+<figcaption><span class="sno">461</span><span class="stitle">2. 共焦拉曼技术：2 μm ¹³C 金刚石薄膜深度分布</span></figcaption>
+</figure>
+<figure class="slide" id="slide-462">
+<img src="slides/slide_462.png" alt="课件第462页 2. 共焦拉曼技术：三层复合膜的共焦拉曼光谱">
+<figcaption><span class="sno">462</span><span class="stitle">2. 共焦拉曼技术：三层复合膜的共焦拉曼光谱</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">12</span>
+      <div class="sec-tt">
+        <h2>共焦拉曼技术</h2>
+        <div class="sec-meta"><span class="time">录音：第 3 段（前）</span><span class="chip">课件 458</span><span class="chip">课件 459</span><span class="chip">课件 460</span><span class="chip">课件 461</span><span class="chip">课件 462</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>一旦有了显微，后面就是共焦。注意：显微不一定导致共焦，但共焦直接跟纤维（针孔）相关。共焦是什么意思？激光从这边打过来，聚焦到狭缝或针孔——光斑原则上会聚在此处；上下移动样品，成像效果不同。针孔大小恒定，光斑变大时透过量变小；只有正好聚焦在表面时强度最大，偏离后迅速减小。这是早期共焦显微镜的做法，但调光路极难：激光必须经过并聚焦于针孔，后续光路校准困难。实际上激光无需聚焦形成物像关系——共焦系统中两个孔成物像关系，物定则像定。</p><p>用双物镜加 分束器的系统看：激光从中间射入，经分束器聚焦在红色区域，随后通过针孔——这是共焦系统的针孔。此时激发的拉曼信号全部穿过针孔、信号很强；若把透镜或样品上下移动，激光照到样品下方、焦点前移，通过针孔的能量变小、强度变弱。共焦的优势是极大提高纵向分辨率（可达 2 μm），同时改善横向分辨率（小于 1 μm），并有效减少荧光干扰。</p><p>为什么减荧光？激光照射激发电子和空穴，它们扩散、相遇复合时发出荧光和拉曼。拉曼信号范围与照射面积一致，且过程极快；但荧光信号范围更大。没有共焦孔径时所有信号都被接收，拉曼会被荧光盖住；有了共焦——激光斑后一个针孔，针孔越小视场限制越窄，只有范围内的信号能被探测，这段荧光被针孔屏蔽。调光路时物镜激光斑点必须对应针孔，偏离就测不到拉曼。</p><p>举个真实例子：剑桥大学合作伙伴来学习，他们测拉曼要 20 多分钟、功率还大；在我们这儿只测 5 分钟、功率不大，信号强度却是他们的好几倍。一问才知道他们不会调共焦孔——针孔要对准样品平面下方的共轭位置，偏离物镜焦点当然测不到或信号很弱。</p><p>再考一下大家：测发光器件，电极发出强光、要测它的荧光，在拉曼系统里怎么测？很简单——把检测点移到发光处，点对了就测出来了，原理和拉曼一样，只是电子荧光不用激光激发。当时一位北大教授很困惑，告诉他这个方法，电致发光就测出来了（这是基金委重点课题）。某种意义上要有原创、活学活用——共焦本质是物理效应：激光必须聚焦在共焦针孔的像点，物像倒置关系；上下移动时焦点处强、偏离处弱，正常测量会测出杂散的非本真信号，共焦下只能测到焦点附近的本真信号。</p><p>实例：2~5 μm 的 ¹³C 金刚石薄膜长在天然金刚石衬底上，从表面往里面做深度扫描——¹³C 金刚石的拉曼信号先增强再减弱，衬底天然金刚石的信号逐渐增强最后降下来（透明会饱和，最后平走）。要测到 ¹³C 信号，最佳聚焦点就对在膜层位置。三层复合膜的例子也是：只要测到中心层信号就出来了。所以共焦拉曼既能提高空间分辨率，又能提高信噪比——不必要的拉曼信号也是噪声，上下两个就是噪声；不用共焦，这三层的信号就混在一起。</p><p>最后补一句信噪比：定谱仪信噪比是信号强度除以背景强度；背景是拉曼效应转换来的，经光电转换计算机处理后可以很光滑。原则上拉曼噪声就是散粒噪声——有 1 万个光子就有约 100 个光子的抖动，但能处理得很光滑。所以比较的是拉曼信号与背景噪声的强度，而不是背景的抖动。下面还有一课时，接着讲拉曼成像。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>显微并不一定导致共焦……共焦是什么意思呢？……当针孔正好聚焦在表面，上下移动会改变焦面位置。只有在最佳聚焦时强度最大，偏离后迅速减小。</p><p>共焦的优势在于极大提高纵向分辨率，可达2微米。同时改善横向分辨率，使其小于1微米。这有效减少了荧光干扰……没有共焦孔径，所有信号均被接收，拉曼信号会被荧光掩盖。</p><p>剑桥大学合作伙伴曾来学习。他们测拉曼信号需20多分钟且功率大。而在我们这仅测5分钟，功率不大，信号强度却是他们的几倍……后来问他们是否会调共焦孔……他们可能不会。</p><p>我们这是拉曼系统。测发光器件时，假如电极发出强光，我要测其荧光信号。在拉曼系统中怎么测？很简单，把检测点移动到发光处……当时北大教授很困惑，我告诉了他这个方法。</p><p>这是一个碳13金刚石和天然金刚石……这是做的深度扫描……只要测到中心，信号就出来了。所以共焦拉曼技术能提高空间分辨率。另外，它能提高信噪比。不必要的拉曼信号也是噪声，大家记住这点。</p><p>原则上拉曼就是散粒噪声。若有1万个光子，就有100个光子的抖动即噪声……我们下面还有一课时。我们下面讲第四。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（显微共焦拉曼光谱学）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>
