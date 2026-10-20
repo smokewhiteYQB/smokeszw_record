@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>矿物物理学 · 第11节 4.1 地质流体和熔体｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.videos{margin-top:14px;border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.video + .video{border-top:1px solid #e4e9f0;}
+.videos h4{font-size:12.5px;font-weight:700;color:#0a1f38;background:#f2f5f9;padding:8px 12px;border-bottom:1px solid #e4e9f0;}
+.videos video{display:block;width:100%;max-height:460px;background:#0b0f14;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>矿物物理学 · 第11节 4.1 地质流体和熔体</h1>
+    <div class="sub">第11节 4.1 地质流体和熔体 ｜ 2026-10-15 ｜ 郭光军</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 56 页 · 整理 15 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-opening">01 开场与地质流体的重要性</option>
+<option value="sec-water">02 水：最重要最奇特的地质流体</option>
+<option value="sec-amorphous">03 无定形相图与第二临界点</option>
+<option value="sec-max-density">04 “一水两构”解释水的最大密度与过冷水结冰</option>
+<option value="sec-viscosity-energy">05 实例1：计算SPCE水的粘滞度（上）——能量守恒与参数优化</option>
+<option value="sec-viscosity-control">06 实例1：控制能量守恒的新方法</option>
+<option value="sec-viscosity-result">07 实例1：粘滞度计算与过冷水扩展</option>
+<option value="sec-acf">08 实例1：ACF的温度变化与快慢弛豫拟合</option>
+<option value="sec-eos">09 实例2：计算水的状态方程</option>
+<option value="sec-co2">10 实例3：优化 CO2 的势能模型</option>
+<option value="sec-co2-h2o">11 实例4：CO2-H2O 的交叉相互作用与 C-H-O 体系</option>
+<option value="sec-melt-size">12 熔体与实例5：SiO2 动力学性质的尺寸效应</option>
+<option value="sec-partition">13 实例6：液态铁与硅酸盐熔体之间的元素配分及地核演化</option>
+<option value="sec-water-melt">14 实例7：SiO2 熔体中水的溶解机制</option>
+<option value="sec-summary">15 总结与作业提示</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 矿物物理学-4.1-地质流体和熔体.pdf 逐页渲染，转写原文见 record_20261015.txt。</div>
+<section class="sec" id="sec-opening">
+  <div class="slides"><figure class="slide" id="slide-01">
+<img src="slides/slide_01.png" alt="课件第1页 封面：分子模拟在熔流体研究中的应用——地质流体和熔体（授课人：郭光军）">
+<figcaption><span class="sno">01</span><span class="stitle">封面：分子模拟在熔流体研究中的应用——地质流体和熔体（授课人：郭光军）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-02">
+<img src="slides/slide_02.png" alt="课件第2页 地质流体：自然界的溶液和气体，相当于地球的体液；俯冲、脱水、熔融、成矿、生油生气运移成藏都离不开">
+<figcaption><span class="sno">02</span><span class="stitle">地质流体：自然界的溶液和气体，相当于地球的体液；俯冲、脱水、熔融、成矿、生油生气运移成藏都离不开</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>开场与地质流体的重要性</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 1</span><span class="chip">课件 2</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>这节课讲第四章：分子模拟在熔流体研究中的应用，主要讲应用。第一节讲熔体和流体，第二节讲跟气体有关的，第三节讲跟天然气水合物有关的。最后一次课（21号、27号）做一次讨论课，把问题讨论一遍，第四章结束；之后张志刚老师开始讲第五章。</p><p>这一课的听法：听起来应该比较轻松，就像听学术报告——好多东西不必要全都懂，涉及的题目方方面面很多，你们充分扩展自己的知识面就可以。特别需要记忆的东西没那么多，主要是讲一些实例：分子模拟能干很多事儿——能干地质流体的事儿、能干熔岩的事儿。</p><p>首先讲地球内部的地质流体。自然界的溶液或气体，组分包括 H2O、CO2、CH4 等烷烃、N2、O2、H2S、SO2、H2 等气体，以及 Na⁺、K⁺、Ca²⁺、Mg²⁺、Cl⁻、F⁻、SO₄²⁻、HCO₃⁻ 和各种水合金属离子——相当于地球的体液。地球内部不光是固体：除了地幔地壳到地核还有很多，有海洋、有岩浆；俯冲、成矿、风化、生油、生气、运移、成藏，哪儿都离不开流体。地质流体对地球中物质与能量重新分配起主导作用。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这节课讲第四章：分子模拟在融合体研究中的应用，主要讲应用。第一节讲溶体和流体中的。第二节讲跟气体有关的。第三节讲跟天然气水合物有关的。</p><p>地质流体是自然界的溶液和气体……相当于地球的这个体面。那地球内部嘛，对吧？不光是固体吧……俯冲、成矿、风化啊、生油啊、生气啊、运移啊、成矿，哪儿都离不开流体。OK，所以地质流体呢，非常重要。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-water">
+  <div class="slides"><figure class="slide" id="slide-03">
+<img src="slides/slide_03.png" alt="课件第3页 水（H2O）：普遍存在、生命必需；简单又复杂、普通又奇特、熟悉又神秘；列出大量水的异常性质">
+<figcaption><span class="sno">03</span><span class="stitle">水（H2O）：普遍存在、生命必需；简单又复杂、普通又奇特、熟悉又神秘；列出大量水的异常性质</span></figcaption>
+</figure>
+<figure class="slide" id="slide-04">
+<img src="slides/slide_04.png" alt="课件第4页 水的相图：三相点、沸点100℃、临界点、固液线斜率（压力增大熔点降低）">
+<figcaption><span class="sno">04</span><span class="stitle">水的相图：三相点、沸点100℃、临界点、固液线斜率（压力增大熔点降低）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-05">
+<img src="slides/slide_05.png" alt="课件第5页 冰的相图：冰1h六方晶体、冰1c、冰2、冰3、冰4、冰6……冰22，往低温和高压方向">
+<figcaption><span class="sno">05</span><span class="stitle">冰的相图：冰1h六方晶体、冰1c、冰2、冰3、冰4、冰6……冰22，往低温和高压方向</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>水：最重要最奇特的地质流体</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 3</span><span class="chip">课件 4</span><span class="chip">课件 5</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>地质流体里头最重要最重要的是水。水这个东西太重要：一个氧两个氢，有一个夹角、有个键长，就这么点事儿，它们能形成氢键，氢键结构是四面体——就这点事儿，到现在也没有完全搞清楚。关于水的论文，Nature 每年都有几篇。为什么一开始就做分子模拟、总要从水开始玩起？因为水普遍存在、生命必需，既简单又复杂、既普通又奇特、既熟悉又有神力。</p><p>水的异常性质一大堆：水密度在 4℃ 取极大（否则会随温度呈线性或正弦变化，此处难取最大值）；水的表面比内部致密；压力会降低冰的熔点（滑冰时冰刀压力大，使固体冰融化成液体，所以容易滑行）；冰有大量的稳定晶相；水的熔点、沸点和临界点都高；压缩率极小；比热非常大；液态水容易过热、容易过冷但很难玻璃化；折射率在低于 0℃ 附近取极大；导热率高在 130℃ 时取极大；冰的热导率随压力减小；粘度随压强降低；热水可能比冷水结冰快——有小孩做过冰淇淋实验验证。有论文总结了约六七十处水的异常，你们回头看看。</p><p>水的相图高中就学过：三相点在气液固交界处，沸点在 100℃，再往上到临界点，水和蒸汽混在一起看不清；注意固液线斜率，压力增大熔点降低——这是水的奇特之处。大学阶段应了解更复杂的：冰的相图，往低温和高压方向去——最常见的雪花是冰 1h 的六方晶体；还有冰 1c、冰 2、冰 3、冰 4、冰 6 等，一直排到了冰 22（昨天备课时搜了一下，确认现在有 22 种冰相）。</p><p>2026 年 9 月，爱丁堡大学研究团队用金刚石对顶砧技术，在 >308 GPa 的高压下成功观测到立方晶系的冰 X 到正交晶系冰 XXII 的相变（Osmond et al., 2026, Nature Materials）：他们做金刚石压腔实验后做 X 光衍射，从 100 多 GPa 开始往上一直是单峰，到了 308GPa 和 314GPa 时出现两个峰、出了一个小尖儿；再测算晶格参数 c/a 比值，直到 308K 都接近于 1——这说明是正方晶系；超过 308K 突然突变，两轴不一样长了，变成了正交晶系。你别看这只是水的事，其实很重要。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>地质流体里头最重要最重要的是水……为什么一开始呢，就做到分子模拟。总要从水开始玩起呢？就是因为这东西普遍存在，生命必须。既简单又复杂，既普通又奇特。</p><p>水在4℃时密度最大，这很特别……压力增加会降低水的熔点。滑冰时冰刀压力大，使固体冰融化成液体，所以容易滑行……我列出的只是一部分。有论文总结了约六七十处水的异常。</p><p>水的相图高中就学过，三相点在气液固交界处……注意固液线斜率，压力增大容量降低。这是水的奇特之处。</p><p>2026年9月，爱丁堡大学研究团队用金刚石压砧，在308GPa下成功观测到立方晶体的冰X，即冰22……等超过308K时突然突变，代表两轴相比不再是1，两个轴不一样长了。这变成了正交晶系。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-amorphous">
+  <div class="slides"><figure class="slide" id="slide-06">
+<img src="slides/slide_06.png" alt="课件第6页 2026年9月爱丁堡大学：金刚石对顶砧 >308 GPa 成功观测立方晶系冰X到正交晶系冰XXII的相变（Osmond et al., 2026, Nature Materials）">
+<figcaption><span class="sno">06</span><span class="stitle">2026年9月爱丁堡大学：金刚石对顶砧 >308 GPa 成功观测立方晶系冰X到正交晶系冰XXII的相变（Osmond et al., 2026, Nature Materials）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-07">
+<img src="slides/slide_07.png" alt="课件第7页 水的无定形相图：Sciortino（1992, Nature）提出低温区存在低密度水和高密度水的第二临界点；28年后（2020, Science）用 TIP4P/2005 和 TIP4P/ice 两个水模型分别验证">
+<figcaption><span class="sno">07</span><span class="stitle">水的无定形相图：Sciortino（1992, Nature）提出低温区存在低密度水和高密度水的第二临界点；28年后（2020, Science）用 TIP4P/2005 和 TIP4P/ice 两个水模型分别验证</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>无定形相图与第二临界点</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 6</span><span class="chip">课件 7</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>再往上讲到水的无定型相图时就复杂了，这是研究生阶段应该了解的内容。刚才讲的那些东西，不过是把温度改成了压力：这边是压力，熔点在这儿、稳定的液体也在这儿。往低温方向走，就很容易出现过冷态——只要让液体非常纯净、里头不要有杂质，它就不容易结冰，能变成过冷态的水。</p><p>过程再往下就到了无人区：这个范围内没有人能够做到，水到那儿之后就变成玻璃化了。但他们推测这个地方有一个 C2 临界点：C1 边界点是气体方上走，走到气体和蒸汽、水和蒸汽分不清的地方就是 C1 边界点；C2 临界点被认为是高密度水和低密度水的临界点。这个理论 1992 年（Sciortino, Nature）就猜到了，后来过了 28 年，第一次通过 TIP4P/2005 和 TIP4P/ice 两个水模型分别模拟都验证了（2020, Science）——到这个地方，高密度水和低密度水就混为一体了。你看这种水的基础研究，都是发生在非常高的顶刊上。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>过程再往下，就到了无人区。这个范围内就没有人能够做到，水到那儿之后就变成玻璃化了。但是他们推测这个地方有一个C211。C1边界点是气体方上走……这个C2临界点呢，它认为是一个高密度的水和低密度的水的临界地方。</p><p>开始这个理论呢，92年的时候就猜到了。后来过了28年，第一次通过TIP4P/2005和TIP4P/20这两个水模型分别模拟都验证了。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-max-density">
+  <div class="slides"><figure class="slide" id="slide-08">
+<img src="slides/slide_08.png" alt="课件第8页 用“一水两构”解释水的最大密度：0℃四面体有序相（低密度水）占优；温度升高无序高密度水占优密度升高；4℃以上分子间距增大密度降低">
+<figcaption><span class="sno">08</span><span class="stitle">用“一水两构”解释水的最大密度：0℃四面体有序相（低密度水）占优；温度升高无序高密度水占优密度升高；4℃以上分子间距增大密度降低</span></figcaption>
+</figure>
+<figure class="slide" id="slide-09">
+<img src="slides/slide_09.png" alt="课件第9页 动画：过冷水结冰（supercooled water）（F. Wang，2017，个人通讯）">
+<figcaption><span class="sno">09</span><span class="stitle">动画：过冷水结冰（supercooled water）（F. Wang，2017，个人通讯）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>“一水两构”解释水的最大密度与过冷水结冰</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 8</span><span class="chip">课件 9</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>水的密度随温度的变化有个最大值。你们做模拟的话，把水加热后量一量密度，可能到某个地方就出现最大密度，再量下去密度就会变小。为什么出现最大值？现在的解释（两态模型）是：零度的时候，水分子更多处于四面体有序相——类似这种四面体的氢键连着的低密度水；高温下变成无序的，无序后单位体积可容纳更多水分子，形成高密度水。温度升高，分子无规则运动增加、有序结构减少，高密度水增多，密度升高；继续升温到 4℃ 以上，分子间距变大、趋向气体状态并最终蒸发，密度降低。</p><p>水的密度特性对人类生存极重要：夏季池塘表层温度高、底层低；冬季底层温度高、表层结冰。冰密度小于水，故浮于水面——若河道结冰下沉，冷风持续吹拂，冬季气温极低，河道将彻底冻结、生物全部冻死；现在冬季底层保持 4℃，表层结冰如盖、阻隔冷风，确保冰下生物存活。</p><p>过冷水结冰实验人人可做：从冰箱取出一杯水，看似液体，轻触即凝固、难以捏动。在冰箱中放入农夫山泉等矿泉水，越干净越好（建议纯净水），放 10 瓶可能有一两瓶不结冰，别的已冻成块——那种不结冰的温度肯定在零下 10℃ 以下（冷冻箱一般零下 15~20℃）；拿出来晃一下给个刺激，马上就结冰。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>现在的解释是这样的。就是说零度的时候呢，水分子更多的处于四面体有序相……高温下呢，它变成无序的。无序后，单位体积可容纳更多水分子，形成高密度水……于是出现密度最大值。</p><p>冰密度小于水，故浮于水面。这对人类生存极重要。若河道结冰下沉……河道将彻底冻结，生物全部冻死。现冬季底层保持4℃，表层结冰如盖，阻隔冷风，确保冰下生物存活。</p><p>在冰箱中放入农夫山泉等矿泉水，越干净越好……你放进10瓶，可能有一两瓶不结冰……拿出这样一瓶晃一下给个刺激，马上就结冰。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-viscosity-energy">
+  <div class="slides"><figure class="slide" id="slide-10">
+<img src="slides/slide_10.png" alt="课件第10页 实例1：计算SPCE水的粘滞度——不同参数组合的能量漂移、能量漂移随单步长的变化（计算粘滞度必选NVE；A/B无Shift势，C/D有Shift势）">
+<figcaption><span class="sno">10</span><span class="stitle">实例1：计算SPCE水的粘滞度——不同参数组合的能量漂移、能量漂移随单步长的变化（计算粘滞度必选NVE；A/B无Shift势，C/D有Shift势）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-11">
+<img src="slides/slide_11.png" alt="课件第11页 常规方法不能准确设置能量：老方法能量随机设定，温度相差5~8 K，系统误差约15%">
+<figcaption><span class="sno">11</span><span class="stitle">常规方法不能准确设置能量：老方法能量随机设定，温度相差5~8 K，系统误差约15%</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>实例1：计算SPCE水的粘滞度（上）——能量守恒与参数优化</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 10</span><span class="chip">课件 11</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第一个例子是我做博士后期间的第一份工作：计算 SPC/E 水的粘滞度。做的时候有个特点：查统计物理公式后，要求必须选 NVE 系综，其他系统公式都不好使。既然要求等能量，粒子数、体积、能量都不动，做完模拟后我想看看能量是否没有漂移、是否保持守恒。</p><p>结果用不同步长 0.25fs 到 0.05fs 一做，发现能量开始漂移。为啥漂移呢？这是计算上的问题：Lennard-Jones 势能有个截断半径，在 10 埃处截断时那一点肯定不为 0，有个小误差 Δ——因为你在这儿截断，它不能均匀柔和地到 0 去，计算时不对称，相当于此处有能量但人为切成 0 了，能量就不容易保持守恒。如果减小步长，它就可以算得均匀一点；步长越大就越糟糕。我最后挑了一个 0.1 飞秒——平常咱们用 2 飞秒都可以跑得很好，但做能量守恒时迫不得已改成了 0.1 飞秒。那时候没有 GROMACS，我用的是 LAMMPS 的一个很小的程序。</p><p>我又试了试不同参数组合下的能量漂移：A 是 9 埃截断半径、B 是 10 埃，这两个都没有用 shift 势，不行；C 是 9 埃、D 是 10 埃，两者都用了 shift 势——shift 势就是人为地把 Lennard-Jones 势向上挪一点点，挪的量非常小不影响物质属性，但挪上去一点点之后计算上就容易保持能量守恒。D 这个组合就比较好。我最后选择了 9 埃和 10 埃之间的截断半径。</p><p>这一步叫参数优化：搞一项研究的时候，先找一找那些参数能不能满足你的要求——这么试试、那么试试，都满足了，就可以恒能量往下做模拟，做出来的结果更准确。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这个例子是我做博士后期间的第一份工作……计算了SPC水的粘度。做的时候有个特点，查统计物理公式后，要求必须选NVE系统。其他系统公式都不好使，就NVE系统下公式好使。</p><p>这不是Lennard-Jones势能吗？有个截断半径。在10埃处截断时，那一点肯定不为0，有个小误差德尔塔……所以计算上，能量就不容易保持守恒。</p><p>Shift势是啥意思呢？就是人为地把Lennard-Jones势向上挪了一点点……但是挪上去一点点之后，就使得计算上容易保持能量守恒了。所以这个能量的变化，像D这个组合就比较好。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-viscosity-control">
+  <div class="slides"><figure class="slide" id="slide-12">
+<img src="slides/slide_12.png" alt="课件第12页 控制不同模拟的能量守恒：跑完一段后挑一帧能量接近的继续NVE（302.8K<T<303.2K 判定）（Guo & Zhang, 2001, Mol. Phys.）">
+<figcaption><span class="sno">12</span><span class="stitle">控制不同模拟的能量守恒：跑完一段后挑一帧能量接近的继续NVE（302.8K<T<303.2K 判定）（Guo & Zhang, 2001, Mol. Phys.）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-13">
+<img src="slides/slide_13.png" alt="课件第13页 新老方法的关键对比：老方法温度相差5~8K、系统误差15%；新方法温度相差小于1K、系统误差<2%">
+<figcaption><span class="sno">13</span><span class="stitle">新老方法的关键对比：老方法温度相差5~8K、系统误差15%；新方法温度相差小于1K、系统误差<2%</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>实例1：控制能量守恒的新方法</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 12</span><span class="chip">课件 13</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>然后怎么办？前头先拿 NVT 系综把体系弛豫一下，弛豫 3 纳秒；从这儿开始再往后面变成 NVE 系综。前面能量是波动的（NVT 里头可以波动），到了 NVE 它就守恒、一直往前走。</p><p>然后我又遇到一个问题：算一个状态没问题、能量守恒，但如果想重新算一下做平行的或重复的实验（多做几个取平均），就遇到麻烦了——因为能量的波动挺大：截断时你也不知道是从哪儿截断的、取哪个值，你没法控制。相当于做了 3 个状态，让他们停下来的时候设置的能量是不一样的。</p><p>还有一个恶果：能量高的（红色）和能量低的（蓝色），最后跑出来获得的平均温度能相差 5~8K——就像做室内实验，你是 300K 做的还是 305K 做的、292K 做的，差那么大不行，时间控制不好会引起系统误差，有 15% 的误差。</p><p>我想了个主意：让状态跑完之后，跑到 9 个皮秒，在这里头挑一帧、让它算后面一大段，看看它最后平均出来的温度能不能在 302.8 到 303.2K 之间（差值只有 0.2~0.4K）；如果满足就让它跑完，不满足就再挑一帧——挑能量尽量接近的那一帧停下来，把那一帧的输出跑后面的 NVE 系综。我用人续用（人工挑选）就获得了这个小目标：绿色的线在两万多帧停，红色、蓝色在别的步骤停，停下来之后它们的能量都尽量一致。</p><p>这样一来，三个状态的能量都控制到一样，它们得到的温度相差小于 1K——把以前这么大的温差缩小到这么小，控制得很好，系统误差一下降到 2% 以下。这就是这项工作比较创新的地方（Guo & Zhang, 2001, Mol. Phys.）。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>先拿那个NVT系统，先把那个体系弛豫一下，弛豫个3纳秒。然后从这儿开始，再往后面就变成了NVE系统。你看前面这个能量它是波动的，对吧，NVT里头就可以波动的。到了NVE呢，它就守恒了。</p><p>他们最后跑出来了之后，获得的那个平均的温度能相差5~8K……那不行，那你时间控制不好，这会引起系统误差，有15%的误差。</p><p>我让这个状态跑完了之后，跑到这个9个皮秒，然后在这里头，我挑一帧……看看它最后平均出来的那个温度能不能在我这个302.8到303.2K之间……它们得到的温度相差小于1K，就相当于我把以前这么大的温差，缩小了这么小的温差，我控制得很好，系统误差一下降到2%以下。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-viscosity-result">
+  <div class="slides"><figure class="slide" id="slide-14">
+<img src="slides/slide_14.png" alt="课件第14页 水的各种粘滞度计算公式：应力张量（对角元压强、非对角元剪切）">
+<figcaption><span class="sno">14</span><span class="stitle">水的各种粘滞度计算公式：应力张量（对角元压强、非对角元剪切）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-15">
+<img src="slides/slide_15.png" alt="课件第15页 获得纯水的粘滞度：BACF、LACF、SACF 应力自相关函数及其时间积分，粘滞度由3.2ps处的平台值获得（Guo & Zhang, 2001, Mol. Phys.）">
+<figcaption><span class="sno">15</span><span class="stitle">获得纯水的粘滞度：BACF、LACF、SACF 应力自相关函数及其时间积分，粘滞度由3.2ps处的平台值获得（Guo & Zhang, 2001, Mol. Phys.）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-16">
+<img src="slides/slide_16.png" alt="课件第16页 粘滞度计算结果（NVE系综，每个点重复20次）：A-E 五个状态点，从303K到213K过冷水；ηS 6.5→650 ×10⁻⁴ Pa·s">
+<figcaption><span class="sno">16</span><span class="stitle">粘滞度计算结果（NVE系综，每个点重复20次）：A-E 五个状态点，从303K到213K过冷水；ηS 6.5→650 ×10⁻⁴ Pa·s</span></figcaption>
+</figure>
+<figure class="slide" id="slide-17">
+<img src="slides/slide_17.png" alt="课件第17页 计算过冷水的粘滞度：相图上 E、D、C、B、A 五个状态点（Water/Ice I/临界点/Steam）">
+<figcaption><span class="sno">17</span><span class="stitle">计算过冷水的粘滞度：相图上 E、D、C、B、A 五个状态点（Water/Ice I/临界点/Steam）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div class="sec-tt">
+        <h2>实例1：粘滞度计算与过冷水扩展</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 14</span><span class="chip">课件 15</span><span class="chip">课件 16</span><span class="chip">课件 17</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>跑完确认样子取对了、几条能量都设一致之后，就放进公式。公式不多讲，反正是用不同的公式可以计算这个粘度：应力张量 Pij 的对角元对应压强、非对角元对应剪切应力；应用四相方法之后可以做剪切粘度，其他的可以做体积年热度、纵向年热度。</p><p>做出来后，把自相关函数摆上一排——剪切应力自相关函数 SACF、体应力自相关函数 BACF、LACF，它们长得很有规律；然后把它积分一下，显示它们最后都衰减到 0 了（这 1 往后一直跑到 5 个皮秒，自相关函数衰减下来）。分减下来之后做积分就获得了粘度：从积分过来找那个平台值（3.2ps 处的平台值），一个粘度就获得了。</p><p>获得 A 点就做出来了，最后报告的是这篇论文最重要的一个值：SPC/E 水在 303K 条件下的粘度为 6.5±0.4（×10⁻⁴ Pa·s），实验值为 7.86，误差为 17%——此前无人计算过 SPC/E 水模型的粘度，我的工作表明它被低估约 17%。据此我发表了首篇论文于 Molecular Physics，当时该刊影响因子不足 2、属 3 或 4 区；彼时科研院所多写中文核心论文，年产仅十余篇，故该成果颇受认可。</p><p>随后我向过冷方向拓展，研究 0℃ 至 -60℃ 的过冷水及 A-E 级体系（相图上 303K 到 213K 五个状态点：303K 粘度 6.5，273.15K 12.2，253.15K 22.5，233.15K 69.3，213.15K 650，实验值分别为 7.86、17.2、42.4）。因缺乏实验数据，这属探索性研究：随温度降低粘度逐渐升高，自相关函数呈现规律变化、形如长尾——我把 ACF 随温度的变化作为第二篇论文成果。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>把那个自相关函数，这几个SCS就是那个剪切的自相关数……咱放上一排……然后把它积分一下，这个地方显示的就是它们最后都衰减到0了。</p><p>SPCE水平为6.25±0.4帕秒。在303K条件下，其粘度为6.5，实验值为7.86。误差为17%。此前无人计算SPC/E水模型粘度，我的工作表明其低估约17%。据此我发表首篇论文于Molecular Physics。</p><p>随后我向过冷方向拓展，研究0℃至-60℃的过冷水及BCDE级体系……随温度降低，粘度逐渐升高。自相关函数呈现规律变化，形如长尾。我将ACF随温度的变化作为第二篇论文成果。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-acf">
+  <div class="slides"><figure class="slide" id="slide-18">
+<img src="slides/slide_18.png" alt="课件第18页 新现象——ACF的温度变化：剪切应力自相关函数SACF与体应力自相关函数BACF随温度的长尾行为（Guo et al., 2002, Mol. Phys.）">
+<figcaption><span class="sno">18</span><span class="stitle">新现象——ACF的温度变化：剪切应力自相关函数SACF与体应力自相关函数BACF随温度的长尾行为（Guo et al., 2002, Mol. Phys.）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-19">
+<img src="slides/slide_19.png" alt="课件第19页 拟合应力自相关函数：快弛豫+慢弛豫两部分拟合（SACF与BACF）">
+<figcaption><span class="sno">19</span><span class="stitle">拟合应力自相关函数：快弛豫+慢弛豫两部分拟合（SACF与BACF）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-20">
+<img src="slides/slide_20.png" alt="课件第20页 获得过冷水多个物理性质（Guo et al., 2002, Mol. Phys.）">
+<figcaption><span class="sno">20</span><span class="stitle">获得过冷水多个物理性质（Guo et al., 2002, Mol. Phys.）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">08</span>
+      <div class="sec-tt">
+        <h2>实例1：ACF的温度变化与快慢弛豫拟合</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 18</span><span class="chip">课件 19</span><span class="chip">课件 20</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第二篇论文（Guo et al., 2002, Mol. Phys.）：自相关函数的温度变化。SACF 和 BACF 随温度从 A 到 E，长尾特征越来越明显。经文献调研与拟合，我把自相关函数拆解为两部分：一部分为快速衰减项（快弛豫），另一部分为慢值域、缓慢持续的部分（慢弛豫）。拟合后可提取频率参数，进而得出过冷水体系的持续时间。</p><p>这些数据十分宝贵：提取频率后，查阅文件可知其对应氢键弯曲振荡频率（ωS 从 44.0 到 47.6 ps⁻¹、ωB 从 6.9 到 12.1 ps⁻¹），特征非常明显。随后我做了 A-E 补充 4 个点并合并，推进到第二阶段。完成后我便出差了。</p><p>说点背景：博士期间我研究矿床学，曾野外考察金矿；来到中科院地质所后，开始现学自动模拟——当时水平与你们现在一样，花了两年做过冷水研究，最终毕业出站，留在所里工作。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>经文献调研与拟合，我将自相关函数拆解为两部分：一部分为快速衰减项；另一部分为慢值域，即缓慢持续的部分。拟合后可提取欧米伽参数，进而得出过冷水体系的持续时间。</p><p>提取欧米伽后，查阅文件可知其对应氢键弯曲振荡频率，特征非常明显。随后我做了ADCDE，补充4个点并合并，推进到第二天阶段。</p><p>博士期间我研究矿床学，曾野外考察金矿。来到中科院地质所后，我开始现学自动模拟。当时水平与你们现在一样，花了两年做过冷水研究，最终毕业出站，留在所里工作。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-eos">
+  <div class="slides"><figure class="slide" id="slide-21">
+<img src="slides/slide_21.png" alt="课件第21页 实例2：计算水的状态方程——自编ISOMD程序，评价四种水分子势能模型（Zhang et al., 2005, PEPI）">
+<figcaption><span class="sno">21</span><span class="stitle">实例2：计算水的状态方程——自编ISOMD程序，评价四种水分子势能模型（Zhang et al., 2005, PEPI）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-22">
+<img src="slides/slide_22.png" alt="课件第22页 四个模型中，SPCE水表现最好，误差<1%（298.15K、0.101325MPa）">
+<figcaption><span class="sno">22</span><span class="stitle">四个模型中，SPCE水表现最好，误差<1%（298.15K、0.101325MPa）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-23">
+<img src="slides/slide_23.png" alt="课件第23页 模拟值与实验值的对比：密度、体积 vs 压力/温度，IAPWS95、Experiment、Simulated with SPCE（Zhang et al., 2005, PEPI）">
+<figcaption><span class="sno">23</span><span class="stitle">模拟值与实验值的对比：密度、体积 vs 压力/温度，IAPWS95、Experiment、Simulated with SPCE（Zhang et al., 2005, PEPI）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-24">
+<img src="slides/slide_24.png" alt="课件第24页 水的PVT数据点的范围：在宽广温压范围内开展分子模拟计算约500个状态点（红点为实验点、白点为模拟点）">
+<figcaption><span class="sno">24</span><span class="stitle">水的PVT数据点的范围：在宽广温压范围内开展分子模拟计算约500个状态点（红点为实验点、白点为模拟点）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-25">
+<img src="slides/slide_25.png" alt="课件第25页 提出水的PVT状态方程：B=a₁+a₂/Tr²+…，C、D、E、F、G 各参数；273.15至2000K、100MPa到20GPa范围可准确预测">
+<figcaption><span class="sno">25</span><span class="stitle">提出水的PVT状态方程：B=a₁+a₂/Tr²+…，C、D、E、F、G 各参数；273.15至2000K、100MPa到20GPa范围可准确预测</span></figcaption>
+</figure>
+<figure class="slide" id="slide-26">
+<img src="slides/slide_26.png" alt="课件第26页 分子模拟的水状态方程优于实验拟合的外延：基于模拟数据拟合的ZD状态方程外延预测 vs 基于实验数据拟合的IAPWS（Sverjensky et al., 2014, GCA）">
+<figcaption><span class="sno">26</span><span class="stitle">分子模拟的水状态方程优于实验拟合的外延：基于模拟数据拟合的ZD状态方程外延预测 vs 基于实验数据拟合的IAPWS（Sverjensky et al., 2014, GCA）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">09</span>
+      <div class="sec-tt">
+        <h2>实例2：计算水的状态方程</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 21</span><span class="chip">课件 22</span><span class="chip">课件 23</span><span class="chip">课件 24</span><span class="chip">课件 25</span><span class="chip">课件 26</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第二个例子是张志刚老师的研究（2005 年毕业，推测 02 年入所），他开展了多项地质流体研究，其中一项是计算水的状态方程。思路是先评估 SPCE、TIP4P 等势能模型：当时他们组自编了一个 MD 程序 ISOMD（后来淘汰了，主要是为了模拟水，适用范围不像其他软件功能强大）；比较后发现 SPC/E 预测效果较好——在 298.15K 和 1 个大气压下测得密度 0.997，与文献报告的 0.998 非常贴近，其他模型则稍差。这就叫对势能模型进行评价：哪个准就用哪个，那肯定用 SPCE。</p><p>选定后他拿 SPCE 做了好多点，跟国际上公布的 IAPWS95 状态方程对比（IAPWS 是水和蒸汽性质国际协会，人家把以前大家做的实验状态方程检查搜罗了上万点，拟合出来的方程就是那条红线）；拿 SPCE 做出的点跟它对比，确实吻合得很好。</p><p>做完后要明确目的：跟实验对比、人家做完了再模拟没意思。真正目的在于——实验点只覆盖有限范围，感觉不错后就往更大温压范围做：高温高压广阔空间（3000K、4000K 及 11 到 20 个 GPa 范围）实验不好做，模拟就开始发力，啪啪啪点了 500 多个点。逻辑就是这样：先比对好势能，再推广到实验未踏足的领域。</p><p>模拟完 500 多个点，据此提出一套水的 PVT 状态方程：从 273.15 到 2000K、100MPa 到 20GPa 范围可准确预测。别觉得状态方程头大，其实很简单：PV/RT 等于压缩因子 Zc，是一串东西；找里头参数 B、C、D、E、F、G（涉及 a₁ 到 a₁₄），Tr、Vr、Tc、Vc 定义都说得清楚，把东西往方框里一套即可。最后未知量是 PVT：给温度压力，就告知摩尔体积——摩尔体积多少，就是水的密度多少，状态方程就要这点东西。</p><p>我们应该特别感谢和尊重当年最开始做实验的那波人：他们一点一点一个点一个点把水的状态方程、PVT 性质给大家测了。现在从网上查觉得拿起来很容易，以前没有的时候都是靠科研一点一点做出来的，都是很宝贵的技术数据。这个状态方程你们把它往 DeepSeek 或 AI 里一塞让它写出来，分分钟也能写出来，把温度压力投进去输出数值，也挺准。</p><p>2014 年有人新做了几个实验点做对比（Sverjensky et al., 2014, GCA）：拿 IAPWS 状态方程外延预测（原来没到这么高温度压力，是外延的），和基于分子模拟数据的状态方程外延预测相比，发现分子模拟预测的蓝色点跟实验点更近、效果更好。为什么？分子模拟描述的是氧原子与氢原子间静电力的相互作用，它不在乎温度和压力，所以算在里面就能外推；而实验把这一段做成了，只能在这头内插，不敢外推——外推很危险。这就是分子模拟跟直接外推不一样的地方：我把这一段算准了，就敢去外推。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>再举一例，这是张志刚老师的研究……他的思路是先评估SPCE、TIP4P等势能模型。比较后发现SPC/E预测效果较好。在298.15K和1个大气压下，他测得密度为0.997，与文献报告的0.998非常贴近。</p><p>这是高温高压广阔空间，实验未做到。如3000K、4000K及11到20个地方范围内。实验不好做，模拟就开始发力。啪啪啪点了500多个点……据此提出一套水源PVP状态方程。</p><p>别觉得状态方程头大，其实很简单。PV÷RT等于压缩因子Zc……最后未知量是PVT。给温度压力，就告知摩尔体积。摩尔体积多少，就是说水的密度是多少。</p><p>分子模拟的这个效果就要比这个实验数据要好……为啥呢？因为分子模拟描述的是氧原子与氢原子间静电力的相互作用，它不在乎温度和压力。所以算在里面就能外推。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-co2">
+  <div class="slides"><figure class="slide" id="slide-27">
+<img src="slides/slide_27.png" alt="课件第27页 实例3：优化CO2的势能模型：MSM是基础模型；EPM2气液相平衡很准但PVT不如MSM；TraPPE相平衡和PVT都欠佳；Errington exp-6高密度PVT出色但临界区差">
+<figcaption><span class="sno">27</span><span class="stitle">实例3：优化CO2的势能模型：MSM是基础模型；EPM2气液相平衡很准但PVT不如MSM；TraPPE相平衡和PVT都欠佳；Errington exp-6高密度PVT出色但临界区差</span></figcaption>
+</figure>
+<figure class="slide" id="slide-28">
+<img src="slides/slide_28.png" alt="课件第28页 本次CO2模型的优化策略：MSM和EPM2预探索参数空间、σOO敏感、按对应态理论比例缩放ε和σ、迭代收敛（Zhang et al., 2005, JCP）">
+<figcaption><span class="sno">28</span><span class="stitle">本次CO2模型的优化策略：MSM和EPM2预探索参数空间、σOO敏感、按对应态理论比例缩放ε和σ、迭代收敛（Zhang et al., 2005, JCP）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-29">
+<img src="slides/slide_29.png" alt="课件第29页 本次CO2模型的性能：P<100MPa时预测PVT性质<1%，表现最好优于其他模型">
+<figcaption><span class="sno">29</span><span class="stitle">本次CO2模型的性能：P<100MPa时预测PVT性质<1%，表现最好优于其他模型</span></figcaption>
+</figure>
+<figure class="slide" id="slide-30">
+<img src="slides/slide_30.png" alt="课件第30页 气液共存线与实验吻合很好，与EPM2相当，TraPPE表现最差">
+<figcaption><span class="sno">30</span><span class="stitle">气液共存线与实验吻合很好，与EPM2相当，TraPPE表现最差</span></figcaption>
+</figure>
+<figure class="slide" id="slide-31">
+<img src="slides/slide_31.png" alt="课件第31页 结构性质与中子衍射实验吻合较好：273-373K范围内本次模型优于EPM2，范围外低温区不如EPM2，高温区二者相当（Zhang et al., 2005, JCP）">
+<figcaption><span class="sno">31</span><span class="stitle">结构性质与中子衍射实验吻合较好：273-373K范围内本次模型优于EPM2，范围外低温区不如EPM2，高温区二者相当（Zhang et al., 2005, JCP）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">10</span>
+      <div class="sec-tt">
+        <h2>实例3：优化 CO2 的势能模型</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 27</span><span class="chip">课件 28</span><span class="chip">课件 29</span><span class="chip">课件 30</span><span class="chip">课件 31</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>做完水的之后，张老师又优化了一个二氧化碳的势能模型——地质流体除了水，里头二氧化碳多，就先弄个二氧化碳。二氧化碳的势能现在已有好几个，他们分析后觉得不满意，想自己弄一个更好的：MSM 是基础模型（区间平衡值，但 PVT 不太准）；EPM2 相平衡准但 PVT 性质不如 MSM；TraPPE 的相平衡和 PVT 都欠佳；Errington 用 exp-6 势能方程，高密度条件下 PVT 出色，但临界区差、且不如 LJ 方程使用方便。</p><p>优化策略：用 MSM 和 EPM2 模型进行一系列模拟，预先了解势能参数空间的情况，发现 PVT 性质对 σOO 敏感；稍微减小 MSM 模型中的 σOO，又会导致相平衡性质严重偏离；根据对应态理论，按比例缩放参数 ε 和 σ，尝试找到具有很好相平衡性质的参数；在这些参数基础上再减小 σOO 的值；重复以上步骤，经几次迭代达到收敛。这个过程非常费脑子、也看运气（Zhang et al., 2005, JCP）。</p><p>做出后去预测：P<100MPa 时本模型预测 PVT 性质<1%，表现最好优于其他模型；气液共存线与实验吻合很好、与 EPM2 相当，TraPPE 表现最差；结构性质与中子衍射实验吻合较好——273-373K 范围内本次模型优于 EPM2，范围之外的低温区不如 EPM2，高温区二者相当。</p><p>弄出势能后要马上评测性质：算 PVT 性质、气液共存性质、结构性质（用 RDF 测一下）、扩散性质（动力学性质）——发明势能后要尽量多测性质，综合起来好就觉得满意，这叫势能面评测，算的性能越多越好，因为用户可能感兴趣不同的点。像 TIP4P 水和 TIP4P/2005 水都是这样弄出来后进行评测的：TIP4P/2005 水最大的特点是预测水的熔点比较准，各有特色。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>二氧化碳的势能现在已有好几个，他们分析后觉得不满意，想自己弄一个更好的。像MSM是一个基础模型……那个是指数6的状态方程，用起来麻烦。</p><p>对epsilon调一调，sigma调一调。反复调整后……他们依据一些规律……经过多次迭代，把几组数变到目标值，这需要反复尝试。</p><p>做出后去预测，这是人家的实验状态方程，模拟的点符合预测。PVT性能误差小，仅5%……发明势能后，要尽量多测性质。综合起来好，就觉得满意。这叫势能面评测，算的性能越多越好。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-co2-h2o">
+  <div class="slides"><figure class="slide" id="slide-32">
+<img src="slides/slide_32.png" alt="课件第32页 实例4：CO2-H2O的PVTx性质">
+<figcaption><span class="sno">32</span><span class="stitle">实例4：CO2-H2O的PVTx性质</span></figcaption>
+</figure>
+<figure class="slide" id="slide-33">
+<img src="slides/slide_33.png" alt="课件第33页 针对ab initio势能面拟合法：建立CO2-H2O定向坐标系，逐点计算不同距离的势能值；多维单纯形非线性法拟合得到最优LJ参数（4对共8个）">
+<figcaption><span class="sno">33</span><span class="stitle">针对ab initio势能面拟合法：建立CO2-H2O定向坐标系，逐点计算不同距离的势能值；多维单纯形非线性法拟合得到最优LJ参数（4对共8个）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-34">
+<img src="slides/slide_34.png" alt="课件第34页 比较CO2-H2O的不同混合规则：LB混合规则和Kong氏混合规则结果大体相当，系统偏大于实验约3.6-4.0%；ab initio势能面平均误差0.8%（Zhang and co-workers, 2006, GCA）">
+<figcaption><span class="sno">34</span><span class="stitle">比较CO2-H2O的不同混合规则：LB混合规则和Kong氏混合规则结果大体相当，系统偏大于实验约3.6-4.0%；ab initio势能面平均误差0.8%（Zhang and co-workers, 2006, GCA）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-35">
+<img src="slides/slide_35.png" alt="课件第35页 比较CO2-H2O的不同混合规则（实验数据对比）">
+<figcaption><span class="sno">35</span><span class="stitle">比较CO2-H2O的不同混合规则（实验数据对比）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-36">
+<img src="slides/slide_36.png" alt="课件第36页 CO2-H2O体系的数据范围：673.15~2073.15K、0.1~5GPa；ab initio势能面参数明显优于LB和Kong混合规则，平均精度小于1.0%">
+<figcaption><span class="sno">36</span><span class="stitle">CO2-H2O体系的数据范围：673.15~2073.15K、0.1~5GPa；ab initio势能面参数明显优于LB和Kong混合规则，平均精度小于1.0%</span></figcaption>
+</figure>
+<figure class="slide" id="slide-37">
+<img src="slides/slide_37.png" alt="课件第37页 C-H-O地幔流体系统：1273K、2.4GPa下碳饱和的C-H-O流体系统模型预测与实验对比（Zhang et al., 2016, SCES; Zhang C et al., 2009, GCA）">
+<figcaption><span class="sno">37</span><span class="stitle">C-H-O地幔流体系统：1273K、2.4GPa下碳饱和的C-H-O流体系统模型预测与实验对比（Zhang et al., 2016, SCES; Zhang C et al., 2009, GCA）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">11</span>
+      <div class="sec-tt">
+        <h2>实例4：CO2-H2O 的交叉相互作用与 C-H-O 体系</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）</span><span class="chip">课件 32</span><span class="chip">课件 33</span><span class="chip">课件 34</span><span class="chip">课件 35</span><span class="chip">课件 36</span><span class="chip">课件 37</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>有了水和二氧化碳的势能，下一步就研究水加二氧化碳的体系。这马上就涉及一个问题：二氧化碳的势能是 CO2-CO2 相互作用项，水用 SPC/E 水是 H2O-H2O 相互作用项，下一步马上就涉及碳和水之间的交叉相互作用（CO2-H2O 相互作用项）。</p><p>一涉及交叉项，还记得吗？就是那时候没办法，人用缺省的就用那个 MD 混合法则：Lorentz-Berthelot 混合规则（σ 取算术平均、ε 取几何平均）。实际上像这种交叉相互作用的公式得有几十个，甭管多复杂，不过就是把水的势能和二氧化碳的势能互相交叉一下。但老师说了：这些方程都是权宜之计——只有在我没办法弄的情况下才用交叉相互作用，我有办法就不用，就应该对水和二氧化碳之间的相互作用单独做。</p><p>他们单做了这个：用基于量子力学的从头算（ab initio），把二氧化碳和水放在一定距离上，通过计算距离得到势能，用 Lennard-Jones 方程拟合出专属二氧化碳和水的 ε 与 σ（多维单纯形非线性法，4 对共 8 个参数）。这比传统交叉相互作用更好：LB 混合规则和 Kong 氏混合规则模拟结果大体相当、均系统偏大于实验数据约 3.6-4.0%；而 ab initio 势能面较好地消除了这些系统偏差，平均误差 0.8%（Zhang and co-workers, 2006, GCA）。适用温压范围 673.15~2073.15K、0.1~5GPa。</p><p>这个逻辑：实验只覆盖了很小范围，但用分子模型方法扩大了范围。他们把碳氢氧体系做了两个势能（二氧化碳势能、二氧化碳-水交叉相互作用势能），就可以研究 C-H-O 的地幔流体系统：图里头黑点是实验点、线是他们做出来的线，吻合比较准（1273K、2.4GPa 下碳饱和的 C-H-O 流体系统模型预测与实验对比；Zhang et al., 2016, SCES; Zhang C et al., 2009, GCA）。</p><p>有了这个，就去预测克拉通以下流体的成分：发现 200 多公里深度时，成分主要是 50% 多的水、37% 的甲烷、10% 左右的乙烷，再加一点氢气；往浅处去就变成好多水，甲烷变少了、乙烷也变少了，再往上就消失了，再往上氧化成二氧化碳，变成了 16% 的二氧化碳。这样就预测了碳氢氧体系从深度到浅部成分的变化，这是发表在 GRL 上的工作。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>下一步马上就涉及到碳和水之间的交叉相互作用……实际上呢，像这种交叉相互作用的这个公式呢，得有几十个。……这些方程都是权宜之计。就是只有在我没办法对吧，我没有办法弄的情况下，我就用你这个交叉相互作用。我有办法，我就不用你这个。</p><p>他们用那个基于量子力学的那个二微分一，那个从头算……通过计算距离得到势能，用Lennard-Jones方程拟合出专属二氧化碳和水的EPS与西格玛……而LB混合法则等偏离较远，误差约0.8，另两种混合规则误差为3.6~4.15。</p><p>发现200多公里深度时，成分主要是50%多的水，37%的甲烷，10%左右的乙烷，再加一点氢气……再往上氧化成二氧化碳，变成了16%的二氧化碳。这样一来，就预测了碳氢氧体系从深度到浅部组织的变化。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-melt-size">
+  <div class="slides"><figure class="slide" id="slide-38">
+<img src="slides/slide_38.png" alt="课件第38页 熔体：地质熔体是高粘滞度液体，硅酸盐、铁镍合金等高温熔融而成；分布于早期岩浆洋、液态外核、核幔边界、软流圈、地幔柱热点等">
+<figcaption><span class="sno">38</span><span class="stitle">熔体：地质熔体是高粘滞度液体，硅酸盐、铁镍合金等高温熔融而成；分布于早期岩浆洋、液态外核、核幔边界、软流圈、地幔柱热点等</span></figcaption>
+</figure>
+<figure class="slide" id="slide-39">
+<img src="slides/slide_39.png" alt="课件第39页 实例5：SiO2动力学性质的尺寸效应：BKS势、MOLDY程序、NVE系综控温6543K和3310K、粒子数30-2400、重复5-31次、截断半径1nm、Ewald sum长程力">
+<figcaption><span class="sno">39</span><span class="stitle">实例5：SiO2动力学性质的尺寸效应：BKS势、MOLDY程序、NVE系综控温6543K和3310K、粒子数30-2400、重复5-31次、截断半径1nm、Ewald sum长程力</span></figcaption>
+</figure>
+<figure class="slide" id="slide-40">
+<img src="slides/slide_40.png" alt="课件第40页 模拟结果（SiO2熔体扩散系数）">
+<figcaption><span class="sno">40</span><span class="stitle">模拟结果（SiO2熔体扩散系数）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-41">
+<img src="slides/slide_41.png" alt="课件第41页 尺寸效应（finite-size effect）：6543K高温下扩散系数显著尺寸效应 D~1/N^1/3；3310K低温下 lnD~1/N，从截距可估算真实值（Zhang et al, 2004, JPCM）">
+<figcaption><span class="sno">41</span><span class="stitle">尺寸效应（finite-size effect）：6543K高温下扩散系数显著尺寸效应 D~1/N^1/3；3310K低温下 lnD~1/N，从截距可估算真实值（Zhang et al, 2004, JPCM）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-42">
+<img src="slides/slide_42.png" alt="课件第42页 导致尺寸效应的原因：粒子进出周期边界模拟盒子的扰动；系统动力学不均一性；系统本征结构体积受限于尺寸大小（Ruocco et al. 2004 JCP; Yeh et al. 2004 JPC）">
+<figcaption><span class="sno">42</span><span class="stitle">导致尺寸效应的原因：粒子进出周期边界模拟盒子的扰动；系统动力学不均一性；系统本征结构体积受限于尺寸大小（Ruocco et al. 2004 JCP; Yeh et al. 2004 JPC）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">12</span>
+      <div class="sec-tt">
+        <h2>熔体与实例5：SiO2 动力学性质的尺寸效应</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）</span><span class="chip">课件 38</span><span class="chip">课件 39</span><span class="chip">课件 40</span><span class="chip">课件 41</span><span class="chip">课件 42</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>地球内部除地质流体外，还有能流动的熔体。地幔矿物晶体无法流动，但内部存在高粘滞度的硅酸盐熔体（也有碳酸盐熔体，但主流是硅酸盐熔体）：粘度大，分布于早期岩浆洋、核幔边界超低速带、下地幔顶部、上地幔底部、软流圈低速带、地幔柱热点、地幔楔、岩浆侵入溢流等区域。岩浆侵位成矿离不开熔体，它是地球内部传热的重要部分。</p><p>第三个例子是二氧化硅熔体动力学性质的尺寸效应，由我的博士后合作导师张毅刚老师开展。主要计算扩散系数和粘滞度：描述势能用 BKS 势函数（不是 Lennard-Jones）；模拟使用 NVE 系综控温 6543K 和 3310K，粒子数 30-2400 个，重复模拟 5-31 次，截断半径 1nm，用 Ewald sum 计算长程力，单步长 0.2-1fs，平衡时间 0.2-4ns，取样时间 1-14ns，能量守恒 <10⁻⁵，取样间隔 0.3ps——跟做实验一样，温度设多少、压力多少、粒子数多少、每个状态重复多少次，就是典型表格。</p><p>数据填满后一眼看不出名堂，一定要作图分析。作图发现规律：高温下（6543K）二氧化硅熔体中，扩散系数与粒子数立方根倒数成正比 D~1/N^1/3；低温下（3310K）lnD 与 N 的负一次方成正比 lnD~1/N。观察到现象后要解释为什么——搞科研常先确定现象再问为什么。首先想到这是典型的尺寸效应：体系大小变化导致扩散系数变化。原因是周期性边界条件下，粒子在边界的进出是非物理的——中间粒子正常，边界粒子进出属非物理过程；盒子边长越长，边界的影响越小；很小的体积，边界对这个体系的影响就特别大。</p><p>当时我们只知道粒子进出具有周期性边界条件这个扰动、导致误差和 L 成反比（L 相当于对体积开立方），这个结构我们能坚持住，但没解释清楚。好巧不巧，论文投出去（2004 年）之后审稿意见回来，人家说“你这个解释了、这是为啥”；我们琢磨审稿意见时又查到一篇论文，正好谈系统本征结构的体积受限于尺寸大小、和 N 分之一有关系——人家给我们解释了，我们把这篇引用一用，咔咔一回复，论文就发了（Zhang et al, 2004, JPCM）。</p><p>2004 年同时几个组把这事儿都谈清楚了：Ruocco et al.（2004, JCP）说了周期性边界条件对它的影响；Yeh et al.（2004, JPC）说了体系本身结构对它的影响。我们的低温结果 lnη~1/N 与前者一致，高温结果 D~1/N^1/3 与后者一致。既有实验验证、又有内在理论分析，很有意思的一份工作。</p><p>顺带说本征结构/表征单元体（REV）的道理：岩石很大，取样时取一点代表整体；若样品尺寸与整体差不多，就缩小尺寸再取。岩石均匀、含钾长石石英等，当尺寸缩小到只取到一个晶体时，样品仅是钾长石、不能代表整块岩石。画一条线：横轴是尺寸、纵轴是任意性质——尺寸大时性质稳定，小到仅取一块矿物时性质开始波动；这个界限就是单元体的代表性极限。取到这个尺寸即可，再小数据就不同了。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>地幔矿物晶体无法流动，但内部存在高粘稠度的硅酸盐熔体。虽也有碳酸盐熔体，但主流是硅酸盐熔体。其粘度大，分布于早期岩浆洋、核幔边界、软流圈及热点等区域。</p><p>现讲三个例子，首先是二氧化硅熔体动力学性质的尺寸效应。该工作由我的博士后合作导师张毅刚老师开展……做出来后，温度设多少？压力弄了多少？粒子数是多少？……数据填满后，一眼看不出名堂，一定要作图分析。</p><p>作图分析发现规律：高温下二氧化硅熔体中，扩散系数与粒子数立方根倒数成反比。低温下，D与N的负一次方成正弦平方关系……原因是周期性边界条件下，粒子在边界的进出是非物理的。</p><p>好巧不巧，这个论文投出去之后，就是2004年投出去之后，人家审稿意见回来了……我们又查到了这样一篇论文。这篇论文正好谈的是系统的本征结构的体积受限于尺寸的大小……我们把这篇引用一用，咔咔一回复。然后我们的论文就发了。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-partition">
+  <div class="slides"><figure class="slide" id="slide-43">
+<img src="slides/slide_43.png" alt="课件第43页 实例6：液态铁与硅酸盐熔体之间的元素配分：ab-initio VASP、PAW赝势、GGA近似、400eV截断、NVT、256原子、单步长1fs、二相平衡分离21ps、取样35ps">
+<figcaption><span class="sno">43</span><span class="stitle">实例6：液态铁与硅酸盐熔体之间的元素配分：ab-initio VASP、PAW赝势、GGA近似、400eV截断、NVT、256原子、单步长1fs、二相平衡分离21ps、取样35ps</span></figcaption>
+</figure>
+<figure class="slide" id="slide-44">
+<img src="slides/slide_44.png" alt="课件第44页 用计算几何构建多面体Fe簇并识别其它原子：平移Fe簇质心、alpha-shape法构建多面体、随机射线法判断溶解原子、内外成分确定（Zhang and Guo, 2009, GRL）">
+<figcaption><span class="sno">44</span><span class="stitle">用计算几何构建多面体Fe簇并识别其它原子：平移Fe簇质心、alpha-shape法构建多面体、随机射线法判断溶解原子、内外成分确定（Zhang and Guo, 2009, GRL）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-45">
+<img src="slides/slide_45.png" alt="课件第45页 计算结果：铁相中元素X wt% / 熔体相中元素X wt% = 元素配分系数">
+<figcaption><span class="sno">45</span><span class="stitle">计算结果：铁相中元素X wt% / 熔体相中元素X wt% = 元素配分系数</span></figcaption>
+</figure>
+<figure class="slide" id="slide-46">
+<img src="slides/slide_46.png" alt="课件第46页 两相法测Si和O在硅酸盐熔体和液态铁之间的配分，结果与实验数据一致；计算表明2.7 wt%的Si和0.5 wt%的O可通过深部岩浆洋过程加入到地核中（39 GPa, 3116 K）（Zhang & Guo, 2009, GRL）">
+<figcaption><span class="sno">46</span><span class="stitle">两相法测Si和O在硅酸盐熔体和液态铁之间的配分，结果与实验数据一致；计算表明2.7 wt%的Si和0.5 wt%的O可通过深部岩浆洋过程加入到地核中（39 GPa, 3116 K）（Zhang & Guo, 2009, GRL）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-47">
+<img src="slides/slide_47.png" alt="课件第47页 FPMD计算得到C的配分系数=9±3，推断外核中C含量为0.1~0.7 wt%（Zhang & Yin, 2012, PNAS）">
+<figcaption><span class="sno">47</span><span class="stitle">FPMD计算得到C的配分系数=9±3，推断外核中C含量为0.1~0.7 wt%（Zhang & Yin, 2012, PNAS）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-48">
+<img src="slides/slide_48.png" alt="课件第48页 地核早期演化模型：早期岩浆洋快速冷却（a）→缓慢降温弱磁场（b）→氧化镁析出地磁场转强（c）→内核形成地核发电机新能量源（d）（Liu et al, 2020, EPSL，2017届刘为一）">
+<figcaption><span class="sno">48</span><span class="stitle">地核早期演化模型：早期岩浆洋快速冷却（a）→缓慢降温弱磁场（b）→氧化镁析出地磁场转强（c）→内核形成地核发电机新能量源（d）（Liu et al, 2020, EPSL，2017届刘为一）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">13</span>
+      <div class="sec-tt">
+        <h2>实例6：液态铁与硅酸盐熔体之间的元素配分及地核演化</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）</span><span class="chip">课件 43</span><span class="chip">课件 44</span><span class="chip">课件 45</span><span class="chip">课件 46</span><span class="chip">课件 47</span><span class="chip">课件 48</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第六个实例是液态铁和硅酸盐熔体间的元素配分，由代康老师完成（Zhang and Guo, 2009, GRL）。他用 VASP 软件包（PAW 赝势、GGA 近似、平面波截断能 400eV、迭代精度 10⁻⁴ eV），这相当于用分子动力学模拟流体——因涉及液态铁和硅酸盐熔体，先讲其道理。模拟用 NVT 系综、256 个原子、单步长 1fs，只做了 35ps 的相格离、21ps 取样，加起来也就 50 多 ps。为什么这么少的原子、这么短的模拟时间？因为这个东西很难算，计算速度是我们经典分子动力学的 1%，特别慢，所以算不了大体系。</p><p>算的方法很简单：把硅、铁、氧、镁这些硅酸盐成分和铁混到一块儿，堆到盒子里开始跑模拟；等跑平衡之后一看，铁原子就聚团了、相当于分离出来了——你怎么跑都这样：开始均匀分布，一跑铁原子就成一团，分成了一个单独的铁相。这一部分认为是地球内核的铁，外头这部分认为是外壳外面的硅酸盐熔体。</p><p>目的是想看看铁相里头氧原子有多少个、硅酸盐熔体相里头氧原子有多少个，这样就算配分系数了。但你凭什么把铁相分割出来？原子都在不停地动，怎么估计它的体积？利用了一种方法叫 Alpha Shape 法：建立多面体（平移 Fe 簇质心到盒子中心，alpha-shape 法构建多面体，随机射线法判断溶解原子——内外连接线穿过奇数个面为内部），然后把铁相分离出来。一旦分离出来就好办了：去数里头原子有多少个——铁相中元素 X 的 wt% / 熔体相中元素 X 的 wt% = 元素配分系数。</p><p>先在 2023K 和 2233K 实验点做模拟，结果与实验数据吻合较好，说明模拟可靠；于是推广到更高温度和压力——做了 39GPa 和 3116K 模拟，研究深部岩浆洋过程。根据配分系数推算，2.7% 的硅和 0.5% 的氧进入地核（通过深部岩浆洋过程加入地核中）。这就是将分子逻辑与地球科学联系的逻辑：看似简单只需数原子个数，但需先准确分开两相，这需要做边界工作，分离后只是加减乘除运算。</p><p>搞定了硅和氧的配分系数，按科学逻辑接下来做氢、碳等元素：碳做了几个点以后都挺好，得到碳的配分系数大概是 9±3，根据这个配分系数进一步推算外核中碳的含量大约是 0.1%~0.75 wt%（Zhang & Yin, 2012, PNAS），这个结果发表在 EPSL/PNAS 上。这就是用计算模拟的手段——跟做实验一样，测了关键的配分系数，然后去回答地球内部的问题：外头里头的氢元素你有多少？这就是这种计算能力带来的认知。虽然我们进不了那么深，但我们可以计算；实验做不了那么大压力和温度，计算就方便多了。</p><p>再提一个：2017 届有个学生叫刘为一（当时是硕士），坐的位置好像比较吉利（大概有 8 个同学坐这个位置考试成绩都是前三），他瞪着大大的眼睛、比较活跃、听不懂就举手直接问。他 17 年来上课，2020 年就做出了这篇论文（Liu et al, 2020, EPSL）——在前面的基础上继续深耕镁元素在外壳和硅酸盐熔体之间的配分，然后有一系列跟地壳早期演化有关的故事：早期岩浆洋快速冷却（对应地核快速降温区间，快速降温释放的热能驱动对流产生产生磁场）；42 到 35 亿年地核缓慢降温、可能有较弱磁场；35 到 13 亿年以氧化镁为主的氧化物析出开始（配分系数小、它待不了那么多，轻的东西往上浮，这就是镁的析出），地磁场重新转强；最后在 13 亿年内核开始形成，地核发电机获得新的能量源，地磁场强度再次变强。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>第六个实例是液态铁和硅酸盐熔体间的元素配分，由代康老师完成。他用VASP软件包及其他势能近似计算……它的计算速度是我们经典分子动力学的1%，特别慢，所以就算不了大体系，只能这样。</p><p>等到跑平衡之后一看，这些铁原子就要聚团，相当于分离出来了……利用了一种方法叫Alpha Shape法，建立一个多面体……一旦分离出来就好办了。</p><p>根据配分系统推算，2.7%硅和0.5%氧进入地核。这就是将分子逻辑与地球科学联系的逻辑……看似简单，只需数氧原子个数。但需先准确分开两项，这需要做边界工作。</p><p>这时候最重要的结构就是Mg-Fe像那个碳……得到那个碳的配分系数，大概是9.93。根据这个配分系统，进一步可以推算外壳中碳的含量。大约是0.1%~0.75%。这个结果呢，就发在EPSL上。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-water-melt">
+  <div class="slides"><figure class="slide" id="slide-49">
+<img src="slides/slide_49.png" alt="课件第49页 实例7：SiO2熔体中水溶解机制：LAMMPS-3Mar2020、ReaxFF、4500原子=500 SiO2+1000 H2O、NPT、1473K、100-700MPa、升压10MPa/30ps、Nosé-Hoover、6-39ns、步长0.25fs、平行4次">
+<figcaption><span class="sno">49</span><span class="stitle">实例7：SiO2熔体中水溶解机制：LAMMPS-3Mar2020、ReaxFF、4500原子=500 SiO2+1000 H2O、NPT、1473K、100-700MPa、升压10MPa/30ps、Nosé-Hoover、6-39ns、步长0.25fs、平行4次</span></figcaption>
+</figure>
+<figure class="slide" id="slide-50">
+<img src="slides/slide_50.png" alt="课件第50页 alpha-shape算法：从离散点集抽象出直观形状，用球从外围绕点集滚动一圈，压到的点为边界点，收尾相连形成边界">
+<figcaption><span class="sno">50</span><span class="stitle">alpha-shape算法：从离散点集抽象出直观形状，用球从外围绕点集滚动一圈，压到的点为边界点，收尾相连形成边界</span></figcaption>
+</figure>
+<figure class="slide" id="slide-51">
+<img src="slides/slide_51.png" alt="课件第51页 识别含H物种：以-Si-O-H-O-H为例用树形搜索法，终止条件（1）搜到Si原子（2）无法进一步搜索O原子或H原子；新发现结构水对溶解度贡献高于自由水">
+<figcaption><span class="sno">51</span><span class="stitle">识别含H物种：以-Si-O-H-O-H为例用树形搜索法，终止条件（1）搜到Si原子（2）无法进一步搜索O原子或H原子；新发现结构水对溶解度贡献高于自由水</span></figcaption>
+</figure>
+<figure class="slide" id="slide-52">
+<img src="slides/slide_52.png" alt="课件第52页 反应前/反应后 50fs：-Si-O-H-O-Si → -Si-O-H">
+<figcaption><span class="sno">52</span><span class="stitle">反应前/反应后 50fs：-Si-O-H-O-Si → -Si-O-H</span></figcaption>
+</figure>
+<figure class="slide" id="slide-53">
+<img src="slides/slide_53.png" alt="课件第53页 SiO2熔体中水的溶解机制（水在熔体中的赋存状态）">
+<figcaption><span class="sno">53</span><span class="stitle">SiO2熔体中水的溶解机制（水在熔体中的赋存状态）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-54">
+<img src="slides/slide_54.png" alt="课件第54页 彭博博士论文，2025，“SiO2熔体中水溶解机制的反应力场分子动力学模拟研究”；Peng et al，2025, ACS ESC">
+<figcaption><span class="sno">54</span><span class="stitle">彭博博士论文，2025，“SiO2熔体中水溶解机制的反应力场分子动力学模拟研究”；Peng et al，2025, ACS ESC</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">14</span>
+      <div class="sec-tt">
+        <h2>实例7：SiO2 熔体中水的溶解机制</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（尾）</span><span class="chip">课件 49</span><span class="chip">课件 50</span><span class="chip">课件 51</span><span class="chip">课件 52</span><span class="chip">课件 53</span><span class="chip">课件 54</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>最后一个例子：二氧化硅熔体里的水的溶解机制，是我指导的学生彭博去年完成的（彭博博士论文，2025；Peng et al, 2025, ACS ESC），做完之后就毕业了。他用的是 LAMMPS 软件，因为要用 LAMMPS 里的反应力场（ReaxFF）——之前涉及的都是刚性分子，分子之间没有反应，比如没见着哪个键断了：进去的水永远是一个氧两个氢，再跑也是一个氧两个氢的水；但用了反应力场，键可以断，所以可以模拟化学反应。</p><p>模拟体系：4500 原子（500 个 SiO2 + 1000 个 H2O），NPT 系综、周期边界条件，温度 1473K，压力 100-700 MPa，升压梯度 10 MPa/30 ps，温度耦合 Nosé-Hoover，模拟时间 6-39 ns，步长 0.25 fs，平行模拟 4 次。这个经典反应力场能模拟反应且速度快（此前才二三百个原子）。</p><p>观察水分子溶解过程：模拟后形成熔体球，水分子分布在四周。需割出溶解球——用 Alpha Shape 算法：用一个球从外围绕着点集滚动一圈，压到的点作为边界点，边界点收尾相连形成边界，实现两相分离。实验首次评价了该力场预测二氧化硅中水溶解度的能力：绘制熔体球剖面图并统计水分——外部是水、内部为熔体及过渡层，边缘水浓度高、内部才稳定。体系放大后可知不能将内部水全数计入溶解度，报告中的溶解度应为此部分；这部分和实验的偏差是 -47%（偏低了 47%）。就像我最初做的剪切粘度温度比实验室数据低一样——你必须得有人先做，做完才知道这个方法好不好，这是首先做了这个。</p><p>光把水分子在熔体里数一遍没意思，更有意思的是看水分子在熔体里的赋存状态——识别含氢物种。水进入熔体后，关注氢的成分在哪：二氧化硅里本来就有很多氧，只要识别了含氢物种就能确定水的存在形式。得编程序识别：以 -Si-O-H-O-H 为例用树形搜索法——随便找个氧原子做起点，往这边分支，只要能接上硅原子和氢就往那边找，找的不是硅原子而是氧，找到一个点之后接着往后找，直到搜不到为止。终止条件：（1）某一分支搜索到 Si 原子；（2）无法进一步搜索 O 原子或 H 原子。</p><p>定完这个规则一搜，搞了半天里头有好多含氢物质，这里列的是其中比较重要的、大概有 12 个左右。最重要的就是硅氧氢（结构水 -Si-O-H），第二种是水分子单独的水分子在里面，还有氧氢的分子、单独的氢离子等等。新发现：结构水（-Si-O-H）对溶解度的贡献高于自由水（H2O）；随压力增大，自由水的增加速率高于结构水；以及 10 类次要但有意义的含 H 物种。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>他用的软件是LAMMPS。我们当时为啥用LAMMPS的软件呢？……因为我们要用LAMMPS里头的反应力场。……但是，如果我们用了这个反应力场的话，那这个键可以断，所以可以模拟化学反应。</p><p>模拟后形成溶体球，水分子分布在四周。需割出溶解球，使用Alpha Shape算法……实验首次评价了该力场预测二氧化硅中水溶解度的能力……这部分和实验的偏差是-47%，偏低了47%。</p><p>这时就得编程序识别。比如这儿有个物种叫硅氧氢。我们弄了个方法，随便找个氧原子做起点……（1）某一分支搜索到Si原子（2）无法进一步搜索O原子或H原子。</p><p>新发现：结构水（-Si-O-H）对溶解度的贡献高于自由水（H2O）；随压力增大，自由水的增加速率高于结构水；以及10类次要但有意义的含H物种。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-summary">
+  <div class="slides"><figure class="slide" id="slide-55">
+<img src="slides/slide_55.png" alt="课件第55页 总结：地质流体和熔体是地球内部动力学必不可少的研究主题，矿物物理学方法大有可为">
+<figcaption><span class="sno">55</span><span class="stitle">总结：地质流体和熔体是地球内部动力学必不可少的研究主题，矿物物理学方法大有可为</span></figcaption>
+</figure>
+<figure class="slide" id="slide-56">
+<img src="slides/slide_56.png" alt="课件第56页 作业MP3.4-3.6的几个提示：1388个水分子盒子、editconf -density单位kg/m³、用轨迹平衡段（-b和-e）、冰和水RDF画一张图、密度最大点加大统计量、Slurm提交、团队作战，10月25日22:00前提交">
+<figcaption><span class="sno">56</span><span class="stitle">作业MP3.4-3.6的几个提示：1388个水分子盒子、editconf -density单位kg/m³、用轨迹平衡段（-b和-e）、冰和水RDF画一张图、密度最大点加大统计量、Slurm提交、团队作战，10月25日22:00前提交</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">15</span>
+      <div class="sec-tt">
+        <h2>总结与作业提示</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（尾）</span><span class="chip">课件 55</span><span class="chip">课件 56</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>总结：地质流体和熔体是地球内部动力学必不可少的研究主题，矿物物理学方法大有可为。这节课主要讲应用实例：水的异常性质与状态方程、CO2 势能优化、C-H-O 体系、硅酸盐熔体动力学与配分、水溶解机制——分子模拟在高温高压极端条件下有很强的预测优势。</p><p>作业 MP3.4-3.6 的提示：1）3.4-1 题不限方式，做成 1388 个水分子的长方体盒子，能跑即可；2）利用 editconf 编辑盒子时若用 -density 参数，注意单位是 kg/m³；3）涉及体积、密度等观测时注意要用轨迹的平衡段（用 -b 和 -e），不要仅用最后一帧（因 1 个数据波动太大，而平均值波动小）；4）冰和水的 RDF 最好画在一张图上对比，MSD 类似；5）密度最大点不易识别，需要高效设计，可能还要加大统计量（如延长模拟时间、或重复模拟求平均）；6）一定要用 Slurm 提交 mdrun 任务，否则将占满登录节点、影响他人；7）如果提交任务后排队时间太长，应及时反映，可申请预留算力资源。</p><p>要求按照分组名单团队作战，提交作业时写明每人的贡献。务必在 10 月 25 日（周日）22:00 之前提交完全部作业。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>地质流体和熔体是地球内部动力学必不可少的研究主题，矿物物理学方法大有可为。</p><p>作业MP3.4-3.6的几个提示：1、3.4-1题不限方式，做成1388个水分子的长方体盒子，能跑即可。2、利用editconf编辑盒子时，若用-density参数，注意单位是kg/m3……6、一定要用Slurm提交mdrun任务，否则将占满登录节点，影响他人。</p><p>要求按照分组名单团队作战，提交作业时写明每人的贡献。务必在10月25日（周日）22:00之前提交完全部作业。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（180083070901P2003H）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>

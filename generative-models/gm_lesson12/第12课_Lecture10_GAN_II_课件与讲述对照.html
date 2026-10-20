@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>生成式模型与科学智能应用 · 第12节 Lecture 10 GAN II：Wasserstein GAN（推土机距离/对偶/Lipschitz）、对抗损失作为通用损失、GAN 的 Scaling（ProGAN/StyleGAN）｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.videos{margin-top:14px;border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.video + .video{border-top:1px solid #e4e9f0;}
+.videos h4{font-size:12.5px;font-weight:700;color:#0a1f38;background:#f2f5f9;padding:8px 12px;border-bottom:1px solid #e4e9f0;}
+.videos video{display:block;width:100%;max-height:460px;background:#0b0f14;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>生成式模型与科学智能应用 · 第12节 Lecture 10 GAN II：Wasserstein GAN（推土机距离/对偶/Lipschitz）、对抗损失作为通用损失、GAN 的 Scaling（ProGAN/StyleGAN）</h1>
+    <div class="sub">第12节 Lecture 10 GAN II：Wasserstein GAN（推土机距离/对偶/Lipschitz）、对抗损失作为通用损失、GAN 的 Scaling（ProGAN/StyleGAN） ｜ 2026-10-20 ｜ 刘云帆</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 52 页 · 整理 7 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-recap">01 回顾：GAN 与训练问题</option>
+<option value="sec-jsd-limit">02 JS 散度的局限：饱和与梯度消失</option>
+<option value="sec-wasserstein">03 Wasserstein 距离：推土机距离</option>
+<option value="sec-wgan">04 WGAN：对偶问题、Critic 与 Lipschitz</option>
+<option value="sec-adversarial-loss">05 对抗损失作为通用损失：条件生成与图像任务</option>
+<option value="sec-translation">06 图像翻译：Pix2Pix、CycleGAN 与 StarGAN</option>
+<option value="sec-domain-scaling">07 域适应与 GAN 的 Scaling</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 Lecture10_Generative_Adversari.pdf 逐页渲染，转写原文见 record_20261020.txt。</div>
+<section class="sec" id="sec-recap">
+  <div class="slides"><figure class="slide" id="slide-01">
+<img src="slides/slide_01.png" alt="课件第1页 封面：Generative Models & AI4S Applications，Lecture 10 Generative Adversarial Networks II（刘云帆）">
+<figcaption><span class="sno">01</span><span class="stitle">封面：Generative Models & AI4S Applications，Lecture 10 Generative Adversarial Networks II（刘云帆）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-02">
+<img src="slides/slide_02.png" alt="课件第2页 Announcements：作业 1 于 10 月 25 日截止；作业 2 近期发布">
+<figcaption><span class="sno">02</span><span class="stitle">Announcements：作业 1 于 10 月 25 日截止；作业 2 近期发布</span></figcaption>
+</figure>
+<figure class="slide" id="slide-03">
+<img src="slides/slide_03.png" alt="课件第3页 Recap：GAN 之前的生成模型——AR（链式）、VAE（边缘似然积分）、Normalizing Flow（变量变换）；学习目标都是最大似然 / 最小化 D_KL(pθ‖pdata)">
+<figcaption><span class="sno">03</span><span class="stitle">Recap：GAN 之前的生成模型——AR（链式）、VAE（边缘似然积分）、Normalizing Flow（变量变换）；学习目标都是最大似然 / 最小化 D_KL(pθ‖pdata)</span></figcaption>
+</figure>
+<figure class="slide" id="slide-04">
+<img src="slides/slide_04.png" alt="课件第4页 Recap：GAN 是生成器与判别器的双人极小极大博弈——判别器 Dφ(x)=Pφ(y=1|x) 分类真实/虚假；生成器 Gθ: z→x 确定性映射、在判别器指导下提升生成质量">
+<figcaption><span class="sno">04</span><span class="stitle">Recap：GAN 是生成器与判别器的双人极小极大博弈——判别器 Dφ(x)=Pφ(y=1|x) 分类真实/虚假；生成器 Gθ: z→x 确定性映射、在判别器指导下提升生成质量</span></figcaption>
+</figure>
+<figure class="slide" id="slide-05">
+<img src="slides/slide_05.png" alt="课件第5页 Recap：训练目标——最优判别器 D_G* 下，生成器最小化一个缩放平移的 JS 散度">
+<figcaption><span class="sno">05</span><span class="stitle">Recap：训练目标——最优判别器 D_G* 下，生成器最小化一个缩放平移的 JS 散度</span></figcaption>
+</figure>
+<figure class="slide" id="slide-06">
+<img src="slides/slide_06.png" alt="课件第6页 Recap：GAN 训练的问题——模式坍塌（JS 散度的 mode-seeking 特性）、梯度消失（训练早期过于自信的 D）；现有修复大多经验驱动（换架构/标签平滑/加噪声/GAN-hacks）；问题：有没有理论性或系统性的改进？">
+<figcaption><span class="sno">06</span><span class="stitle">Recap：GAN 训练的问题——模式坍塌（JS 散度的 mode-seeking 特性）、梯度消失（训练早期过于自信的 D）；现有修复大多经验驱动（换架构/标签平滑/加噪声/GAN-hacks）；问题：有没有理论性或系统性的改进？</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>回顾：GAN 与训练问题</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 1</span><span class="chip">课件 2</span><span class="chip">课件 3</span><span class="chip">课件 4</span><span class="chip">课件 5</span><span class="chip">课件 6</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>今天讲得稍微轻松一点，没有那么多复杂内容，因为网络比较简单。再提醒一下作业：25 号交第一次作业，最终截止日前训练一个 GAN 项目。正式进入课程前，回顾上节课内容：我们讲了 VAE、Flow 和 GAN，虽然表达不同，但学习目标一致——即最大化似然、或等价地最小化模型分布与真实数据间的散度；学习框架也是一样的。</p><p>从这三个网络引出 GAN 模型：它是一个双玩家博弈过程，包括判别器 D 和生成器 G。判别器是最简单的二分类器，区分真实和虚假样本：给定样本 X，判断其标签是否真实；判别器要优化区分真假概率。相对的，生成器是隐变量模型，接受噪声输入、用确定性网络结构映射到输出 X——这种映射由确定性网络实现，但不要求可逆（这与之前讲的 Flow 和 VAE 有区别：它们虽然都是确定映射，但不用可逆）。因为不用可逆，我们知道自己的先验分布、随便直接写出来，但 X 的分布是生成器输出的分布——生成分布是一个没法直接写出来的隐式分布。</p><p>生成器和判别器之间博弈的过程：用 D 判断样本到底是真的还是假的，用这个判断的信号反馈到生成器、指导生成过程，形成一些更难分辨真假的样本——难以分辨真假，说明你生成的样本越来越真了，就这么一个比较直观的想法。</p><p>把学习过程写出来就是一个非常简单的目标函数：包括两项、是一个 minmax 的形式。判别器想要最大化这个损失目标：拆解来看，对于符合真实数据分布的样本，要最大化它属于真实样本的概率（D(x) 是给定样本判断为真的概率）；对于生成器生成的、符合 pG 分布的样本，要最小化它被判为真的概率——换句话说就是要区分真实样本和虚假样本、把它们分开，让分类的精确率更高。相反地，生成器的目标函数同样是最小化这个目标函数：最小化目标函数前一项（与生成器无关），后一项就是要最小化 log(1−D(G(z)))——等价于最大化 D(G(z))，即生成样本被判别器判为真的概率要非常大——这就是对抗的体现。</p><p>上节课讲的最优判别器形式 D_G*，大家记住就行。把最优判别器带入目标函数，可以推导出：在最优判别器的条件下，生成样本的目标是最小化一个 JS 散度——即 pdata 与 pG 之间的距离度量。所以最小化这样的 JS 散度，写开来就是这样一个具体表达式——你待会要具体讨论它到底有什么问题：为什么这样一个看起来很好的结论（一个散度的具体结论），在实际训练过程中会有问题。</p><p>最后给大家科普一下 GAN 训练的一些问题：比如最一开始有模式崩溃的问题、梯度消失的问题；还有很多技巧，有人把它总结成一些工程性的手册供大家参考——如果在做作业、训练时遇到问题，可以参考前人是怎么解决的。既然 GAN 有这么多问题，我们还有很多具体的方法去解决它：比如说可以改变生成器和判别器的相对能力，让它们之间的对抗稍微好一点；或者是给输入加一些噪声（这种真实或虚假的噪声），感觉没那么好训练。所以在 GAN 研究里最重要的之一，就是我们能不能提出一种理论和方法从根本上解决这个问题、提升训练质量和训练稳定性。这是我们今天的一个安排：上半个（多）小时给大家讲讲这个 Wasserstein GAN；下一部分给大家科普一下把对抗损失提取出来做一个通用的 loss 方式、它的一些相关研究；另外如果有时间还讲一下它是怎么在高分辨率里头 scaling 的。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>它虽然都是确定（映射），但它不用可逆。</p><p>难以分辨真假的那你生成的样本越来越真了，就这么一个比较直观的一个想法。</p><p>在最优判别器的情况下，目标函数就是这样一个形式。所以最小化这样的JS散度，如果要写开来的话，就是这样一个具体表达式。</p><p>所以在GAN研究里最重要的之一，就是我们能不能提出一种理论和方法来解决这个问题。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-jsd-limit">
+  <div class="slides"><figure class="slide" id="slide-07">
+<img src="slides/slide_07.png" alt="课件第7页 Wasserstein GAN：回顾 JS 散度——它是度量 d(pdata,pθ) 的一种；在最优判别器下生成器最小化 JS 散度（看起来很好）；问题：JS 散度的局限是什么？">
+<figcaption><span class="sno">07</span><span class="stitle">Wasserstein GAN：回顾 JS 散度——它是度量 d(pdata,pθ) 的一种；在最优判别器下生成器最小化 JS 散度（看起来很好）；问题：JS 散度的局限是什么？</span></figcaption>
+</figure>
+<figure class="slide" id="slide-08">
+<img src="slides/slide_08.png" alt="课件第8页 Wasserstein GAN：JS 散度的局限——如果 p 和 q 没有重叠，D_JSD 是常数（log 2）→生成器 G 收不到任何梯度">
+<figcaption><span class="sno">08</span><span class="stitle">Wasserstein GAN：JS 散度的局限——如果 p 和 q 没有重叠，D_JSD 是常数（log 2）→生成器 G 收不到任何梯度</span></figcaption>
+</figure>
+<figure class="slide" id="slide-09">
+<img src="slides/slide_09.png" alt="课件第9页 Wasserstein GAN：JS 散度只在 p 和 q 接近时有信息——一旦相距远就饱和（没有梯度给生成器）">
+<figcaption><span class="sno">09</span><span class="stitle">Wasserstein GAN：JS 散度只在 p 和 q 接近时有信息——一旦相距远就饱和（没有梯度给生成器）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-10">
+<img src="slides/slide_10.png" alt="课件第10页 Wasserstein GAN：极端情况——只要 p≠q，D_JSD 就饱和（没有距离信息），完全失效">
+<figcaption><span class="sno">10</span><span class="stitle">Wasserstein GAN：极端情况——只要 p≠q，D_JSD 就饱和（没有距离信息），完全失效</span></figcaption>
+</figure>
+<figure class="slide" id="slide-11">
+<img src="slides/slide_11.png" alt="课件第11页 Wasserstein GAN：目标——当 p 和 q 支撑不重叠时也需要一个“更平滑”的距离度量：能否有一个像绿线那样的度量？">
+<figcaption><span class="sno">11</span><span class="stitle">Wasserstein GAN：目标——当 p 和 q 支撑不重叠时也需要一个“更平滑”的距离度量：能否有一个像绿线那样的度量？</span></figcaption>
+</figure>
+<figure class="slide" id="slide-12">
+<img src="slides/slide_12.png" alt="课件第12页 Wasserstein GAN：Wasserstein 距离（推土机距离 Earth Mover's Distance）——若两个分布是“两堆土”，距离=把 p 搬到 q 的成本（成本=质量×距离）；当 p 和 q 不重叠时也不饱和（距离被正确度量），与 JS 散度相反">
+<figcaption><span class="sno">12</span><span class="stitle">Wasserstein GAN：Wasserstein 距离（推土机距离 Earth Mover's Distance）——若两个分布是“两堆土”，距离=把 p 搬到 q 的成本（成本=质量×距离）；当 p 和 q 不重叠时也不饱和（距离被正确度量），与 JS 散度相反</span></figcaption>
+</figure>
+<figure class="slide" id="slide-13">
+<img src="slides/slide_13.png" alt="课件第13页 Wasserstein GAN：JS 散度 vs Wasserstein 距离——JS 在均值不同时恒为 log 2；W(p,q)=|μp−μq| 平滑变化">
+<figcaption><span class="sno">13</span><span class="stitle">Wasserstein GAN：JS 散度 vs Wasserstein 距离——JS 在均值不同时恒为 log 2；W(p,q)=|μp−μq| 平滑变化</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>JS 散度的局限：饱和与梯度消失</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 7</span><span class="chip">课件 8</span><span class="chip">课件 9</span><span class="chip">课件 10</span><span class="chip">课件 11</span><span class="chip">课件 12</span><span class="chip">课件 13</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>针对 WGAN 这个工作介绍，我们还是从上一课看到这个图出发：经过上一课学习，我们知道原始的 GAN 是去最小化一个 JS 距离。现在看这个图，里面这个亮斑就是我们的数据分布（一个双峰的分布）；假设我们的生成器是一个单峰分布的话，让 GAN 来学习这个生成器，它就可能一头倾向于其中一个单独的峰——它会把这个（质量比较小的）风险丢掉、单独去组合其中一个模式。之前用 KL 散度去学习那些模型呢，它就更体现这种模态覆盖（mode covering）的特征：会尽量扩大生成器的生成范围，很多质量会分布在非真实数据（没有真实数据）的地方——这就是不同目标函数的一些特性。</p><p>我们刚才说过，如果现在的判别器是最优的，那么生成器是要最小化这个 JS 距离这样一个目标函数。我们需要设计一个更好的方案来提升稳定性或性能，还是从目标函数的改进入手——换句话说，我们要看看现有的目标函数 JS 到底有什么问题。回想上节课讲的 JS 散度：它与其他距离度量如 KL 散度有一个最大特点——JS 散度的取值范围是 0 到 log 2，而不是 0 到无穷大。一般来说，两个分布越不像，距离应该越大、甚至趋近于无穷；但对于 JS 散度来说并非如此，它的最大距离是 log 2。为什么？从表达式可以较简单地看出来：哪怕分布 P 和 Q 的距离再远，它们与混合分布 (P+Q)/2 之间的 KL 散度之和，至少有一半的分量是重叠的——换句话说，比较 P 和 Q 时建立了中间混合分布、再分别与两端做对比，再怎么拉开距离，至少有一半分量重叠，因此 JS 散度不会变得特别大。</p><p>这会带来一个问题：直观想象一下，如果 P 和 Q 完全没有重叠（P 有质量的地方 Q 为 0，或相反），此时散度取到一个特定值（log 2）。那这个时候如果我改变 P 和 Q 的分布，它的这个散度应该也还是差不多——求出来是一个常数，换句话说它没法给生成器提供任何梯度信息、或者说出现了一个饱和现象。</p><p>如果不是很直观的话，可以看一个例子：现在 P 和 Q 是两个高斯，均值差是 1、方差比较大、还有一定的交集，这个时候它的 JS 距离是 0.337；保证均值不变、把方差缩小——重叠的部分更少、两个分布看起来离得更远，JS 距离变成 0.633、变大了；进一步缩小方差，把这两个高斯分布弄成这种尖峰的情形——这个时候 JS 算出来是 0.653（就是 log 2）：这两个分布即使如此地不像，它的 JS 距离还是被限制在 log 2。那如果保持方差不变、把均值差别拉大：按理说这两个分布的差距应该变大，但这个时候它的 JS 依然是 log 2、跟刚才一样——就是这个均值变大了以后、距离拉开了，但这个距离的度量 JS 却没有变化。</p><p>如果这两个分布一个是真实分布、一个是生成器输出的分布，假设我们有最优的判别器——生成器面对着这样的最小化距离，就没办法知道我应该怎么变：因为不管怎么变，你的这个度量它都不变——JS 的距离对于你的生成器输出没有任何优化的梯度信息。把刚才那个形式画出来：横轴表示两个高斯分布（生成分布和真实分布）的均值差距，纵轴是 JS 值——当均值差距在 0 附近时，距离还有较明显的变化；只要两个分布距离足够远（无论正方向还是负方向），JS 都不变。这样的话，如果你刚初始化一个生成器、生成的分布和真实的分布比较远，就落在一个饱和的区间——不管你怎么变、生成分布怎么变，度量变化不大、生成器信号极弱、梯度多为 0，不知道如何提升（降低损失）。仅在完全重合时距离突变为 0，否则恒为 log 2。接近真实分布时梯度突然消失，无法提供指导——这是 JS 散度在训练中的表现，我们需要改进它、寻找合适的度量。</p><p>理想曲线应如绿线所示：均值差距为 0 时距离为 0；稍有偏差时距离适度增大；偏差越大、距离均匀递增——这是不饱和情况。换句话说，深度学习或机器学习中梯度很难规划，我们想要这种绿色形式的距离度量。怎么实现呢？就是今天要讲的 Wasserstein 距离（简称 W 距离）。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>JS散度的取值范围是0到log2，而不是0到无穷大。</p><p>无论怎么变，你的这个（距离度量）它都不变。话说你这个JS的距离对于你的输出，你的生成器输出不合法（不提供梯度）。</p><p>仅在完全重合时距离突变为0，否则恒为2（log2）。这种监督信号对生成器无效，梯度多为0。</p><p>我们想要这种绿色形式的距离度量。怎么实现呢？就是今天要讲的Wasserstein距离。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-wasserstein">
+  <div class="slides"><figure class="slide" id="slide-14">
+<img src="slides/slide_14.png" alt="课件第14页 Wasserstein GAN：玩具例子——如何以最小成本把 P 搬到 Q？（P 和 Q 有相同的总质量）">
+<figcaption><span class="sno">14</span><span class="stitle">Wasserstein GAN：玩具例子——如何以最小成本把 P 搬到 Q？（P 和 Q 有相同的总质量）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-15">
+<img src="slides/slide_15.png" alt="课件第15页 Wasserstein GAN：搬运例子详解——P 与 Q 叠加：P1→P2 搬 2 单位、P4→P3 搬 1 单位、P2→P3 搬 2 单位……总成本=质量×距离">
+<figcaption><span class="sno">15</span><span class="stitle">Wasserstein GAN：搬运例子详解——P 与 Q 叠加：P1→P2 搬 2 单位、P4→P3 搬 1 单位、P2→P3 搬 2 单位……总成本=质量×距离</span></figcaption>
+</figure>
+<figure class="slide" id="slide-16">
+<img src="slides/slide_16.png" alt="课件第16页 Wasserstein GAN：直觉理解——W(P,Q)=min 总搬运成本（所有搬运计划中取最小）">
+<figcaption><span class="sno">16</span><span class="stitle">Wasserstein GAN：直觉理解——W(P,Q)=min 总搬运成本（所有搬运计划中取最小）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-17">
+<img src="slides/slide_17.png" alt="课件第17页 Wasserstein GAN：离散搬运计划——搬运矩阵 Γ=(γij)，γij=从 bin i 搬到 bin j 的质量；满足列和=Pi、行和=Qj；W(P,Q)=min_Γ Σ γij·d(i,j)（成本=质量×距离）">
+<figcaption><span class="sno">17</span><span class="stitle">Wasserstein GAN：离散搬运计划——搬运矩阵 Γ=(γij)，γij=从 bin i 搬到 bin j 的质量；满足列和=Pi、行和=Qj；W(P,Q)=min_Γ Σ γij·d(i,j)（成本=质量×距离）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-18">
+<img src="slides/slide_18.png" alt="课件第18页 Wasserstein GAN：连续定义——Γ 可看作分布耦合 γij=P(X=i,Y=j)，即以 P 和 Q 为边际的联合分布；推广为期望形式，再扩展到连续域 W1(p,q)=inf E‖X−Y‖">
+<figcaption><span class="sno">18</span><span class="stitle">Wasserstein GAN：连续定义——Γ 可看作分布耦合 γij=P(X=i,Y=j)，即以 P 和 Q 为边际的联合分布；推广为期望形式，再扩展到连续域 W1(p,q)=inf E‖X−Y‖</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>Wasserstein 距离：推土机距离</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 14</span><span class="chip">课件 15</span><span class="chip">课件 16</span><span class="chip">课件 17</span><span class="chip">课件 18</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>所谓 W 距离，就是用一种 Wasserstein 级别的距离来表示两个分布之间的差距、而不用刚才说的 JS 散度。这个距离通俗叫 Earth Mover's Distance，翻译过来叫推土机距离。它到底是什么意思呢？其实非常直观：比如想衡量分布 P 和分布 Q 之间的距离，在推土机距离下，度量方法是将 P 的概率质量搬运到 Q 的形式——所耗费的最小成本即为距离。成本有两项：一是搬运了多少概率质量，二是这些质量对应的移动距离——用这种形式描述从一个分布变到另一个分布的成本。</p><p>这种方法有个很好的特性，就是不会饱和：即使 P 和 Q 再远或再近，进行搬运总会产生成本——将概率质量从一个分布搬到另一个分布，因此不会出现饱和现象。回到刚才那个极端的例子（两个尖峰分布）：如果是 JS 散度，两个均值不重合时距离是 log 2；如果用 Wasserstein（推土机）度量，把其中一个分布搬到另外一个分布，质量乘以距离——质量是 1、距离是均值差（比如 3），成本是 6——换句话说，在 Wasserstein 度量下，这两个尖峰分布（哪怕变成两个 Dirac 分布、完全没有任何概率质量的重叠）依然可以计算分布之间的距离。而且这个距离符合刚才说的绿线的性质：一旦两个分布离得越远，代价（成本）越高——当然这就是我们希望得到的性质。</p><p>我们不光要考虑定义，还想在这个定义下尽量地去找到一个尽量小的搬运方法——相当于生成模型想要在这个距离的路径下尽量减少搬运的成本。考虑一个简单的例子：两个分布 P 和 Q 都是离散分布、一共 4 个 bin——P 是 (3,2,1,2,4) 这样的一个分布，要搬到 Q (1,2,4,3,6)——它们的概率质量是相等的（搬之前和搬之后都必须是合法归一化的概率质量分布）。我们想找一个成本最小的搬运方式。直观地看：把 P 和 Q 两个分布叠加——第一个 bin 中 P 比 Q 多 2 个单位质量；第二个 bin 质量一样；第三个 bin 中 Q 比 P 多 3 个质量；第四个 bin 中 Q 多 1 个。第一步把第一个 bin 多余的 2 个单位搬到（需要质量的）地方去……搬了 2 个单位质量，总 cost 是 4；不仅要算距离还要算质量，为补齐最后分布将最后一块补上概率——两个分布间距离即总差距为 5。这是这个具体例子，但搬运方式有很多——对于复杂高维分布，要在所有搬运计划中找到成本最小的方法，这是 Wasserstein 最重要的目标。</p><p>直接考虑较难，讲些结论：考虑离散分布搬运，定义搬运计划矩阵 Γ=(γij)：每个单元是非负值，表示从 bin i 搬到 bin j 的质量。对于这样的矩阵，它应符合特定性质：将所有列加起来（行求和），按定义是从 bin i 发出的总质量、应等于原始的 P_i；对于列的求和，把 γ_ij 列所有行加起来，就是搬到目标 Q_j 的概率质量。如果学过马尔可夫链或概率转移，可能更容易理解；不明白也没关系，可以先接受这个结构，后续会用到。</p><p>这是我们定义的搬运矩阵。想要表示距离，就可以写成这种形式：搬运的质量 γij 乘以搬运距离 d(i,j)，把所有的成本 cost 加起来——就是搬运的距离；在所有的可能搬运方式中找到一个成本最低的搬运，就是我们要达成的一个最优化的形式。</p><p>为什么要讲这个？因为如果我们把 Γ 看成一个联合分布的矩阵的话，这个形式其实就是一个边际分布：我们从联合分布求边际分布——比如一个两个变量的联合分布，把其中一个变量全部加起来（marginalize），就变成了另外一个变量的边际分布。因为 Γ 满足这样的性质，我们可以把它看成一个联合分布的表达矩阵。在概率论里我们先学了联合分布（两个事件同时发生的概率），然后把其中一个概率加起来得到另一个事件的单独概率；现在反过来，我们有了 P 和 Q 两个边际，通过这个搬运计划看成联合——这个联合分布的边际就是 P 和 Q。我们是从边际分布去想构造这样的联合分布，或者说我们可以通过这个（运输计划）去追求这样的思想。</p><p>刚才写的是离散形式，实际上在求解过程中我们把它转化成一个连续的形式：W(P,Q)=min Σ γij·d(i,j)——若将联合分布视为概率质量分布，该形式可用期望表示（对距离求和即得期望，涉及两个变量，Γ 代表期望定义）；之后将离散变量写为连续变量形式：W1(p,q)=inf E‖X−Y‖（γ∈Π(p,q)），距离用 L2 范数表示——这就是具体要优化的目标，要求在给定条件下找到最优的搬运方法。</p><p>若不好理解，我们看具体应用：之前判别器计算 pG 与 pdata 之间的 JS 距离；现在改用 W 距离——用网络度量生成与真实分布之间的 W 距离，用该距离代替之前的 JS 距离，因其具备良好性质。可视化说明：假设已有 P 和 Q 两个分布，从 P 搬运到 Q 构造联合分布——已知边际分布可构造无数种联合分布（只要边缘化后结果一致）；在诸多联合分布中选取搬运距离最小的一种。图中虚线代表 X=Y 曲线，其上的概率质量无需搬运；以橙色点为例，其概率质量为 γ(X,Y)，将其质量搬至虚线上对应点需计算移动距离——目标是找到一种联合分布，将所有点移至虚线且总成本最低，该最低成本即为两个分布间的距离度量。此定义仅为直观示例，优化该问题非常复杂、涉及对偶理论，具体方法请查阅原文。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>成本有两项：一是搬运了多少概率质量，二是这些质量对应的移动距离。</p><p>这个方法有个很好的特性，就是不会饱和。</p><p>对于复杂高维分布，要在所有搬运计划中找到成本最小的方法。这是Wasserstein最重要的目标。</p><p>我们把伽马派看成一个联合同布的一个表达的一个矩阵。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-wgan">
+  <div class="slides"><figure class="slide" id="slide-19">
+<img src="slides/slide_19.png" alt="课件第19页 Wasserstein GAN：在 GAN 中使用 Wasserstein 距离替代 JS 散度——W1(p,q)=inf E‖X−Y‖（Π(p,q)：p 和 q 的耦合）">
+<figcaption><span class="sno">19</span><span class="stitle">Wasserstein GAN：在 GAN 中使用 Wasserstein 距离替代 JS 散度——W1(p,q)=inf E‖X−Y‖（Π(p,q)：p 和 q 的耦合）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-20">
+<img src="slides/slide_20.png" alt="课件第20页 Wasserstein GAN：可视化——从 X 搬运到 Y 的耦合">
+<figcaption><span class="sno">20</span><span class="stitle">Wasserstein GAN：可视化——从 X 搬运到 Y 的耦合</span></figcaption>
+</figure>
+<figure class="slide" id="slide-21">
+<img src="slides/slide_21.png" alt="课件第21页 Wasserstein GAN：对偶问题——原问题对所有搬运计划求解非常困难；用 Kantorovich-Rubinstein 对偶得到：W1(p,q)=sup E[f(x)]−E[f(x)]，其中 f 是 1-Lipschitz（|f(x)−f(y)|≤‖x−y‖₁，直觉：f 不能变化太快、梯度受限）">
+<figcaption><span class="sno">21</span><span class="stitle">Wasserstein GAN：对偶问题——原问题对所有搬运计划求解非常困难；用 Kantorovich-Rubinstein 对偶得到：W1(p,q)=sup E[f(x)]−E[f(x)]，其中 f 是 1-Lipschitz（|f(x)−f(y)|≤‖x−y‖₁，直觉：f 不能变化太快、梯度受限）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-22">
+<img src="slides/slide_22.png" alt="课件第22页 Wasserstein GAN：实践中实现 Lipschitz——权重裁剪（weight clipping）、梯度惩罚（Gradient Penalty，正则化损失）（Gulrajani et al., NeurIPS 2017 WGAN-GP）">
+<figcaption><span class="sno">22</span><span class="stitle">Wasserstein GAN：实践中实现 Lipschitz——权重裁剪（weight clipping）、梯度惩罚（Gradient Penalty，正则化损失）（Gulrajani et al., NeurIPS 2017 WGAN-GP）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-23">
+<img src="slides/slide_23.png" alt="课件第23页 Wasserstein GAN：目标函数——max_{w∈W} E[f_w(x)]−E[f_w(x)]；f_w 用神经网络参数化→“Critic”模型；w∈W 满足 1-Lipschitz">
+<figcaption><span class="sno">23</span><span class="stitle">Wasserstein GAN：目标函数——max_{w∈W} E[f_w(x)]−E[f_w(x)]；f_w 用神经网络参数化→“Critic”模型；w∈W 满足 1-Lipschitz</span></figcaption>
+</figure>
+<figure class="slide" id="slide-24">
+<img src="slides/slide_24.png" alt="课件第24页 Wasserstein GAN：优化——Critic 模型 f_w：给 x∼pdata 高分（“真实性打分器”）、给 x∼pg 低分">
+<figcaption><span class="sno">24</span><span class="stitle">Wasserstein GAN：优化——Critic 模型 f_w：给 x∼pdata 高分（“真实性打分器”）、给 x∼pg 低分</span></figcaption>
+</figure>
+<figure class="slide" id="slide-25">
+<img src="slides/slide_25.png" alt="课件第25页 Wasserstein GAN：W-GAN vs 原始 GAN——原始 GAN：max E[log D(x)]−E[log(1−D(G(z)))]，“赝品鉴定专家”（真/假）；W-GAN：max E[f_w(x)]−E[f_w(x)]，没有对数、1-Lipschitz 约束、“艺术评论家”（打分/质量→改进方向/梯度）">
+<figcaption><span class="sno">25</span><span class="stitle">Wasserstein GAN：W-GAN vs 原始 GAN——原始 GAN：max E[log D(x)]−E[log(1−D(G(z)))]，“赝品鉴定专家”（真/假）；W-GAN：max E[f_w(x)]−E[f_w(x)]，没有对数、1-Lipschitz 约束、“艺术评论家”（打分/质量→改进方向/梯度）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-26">
+<img src="slides/slide_26.png" alt="课件第26页 Wasserstein GAN：W-GAN vs 原始 GAN——梯度被 1-Lipschitz 约束">
+<figcaption><span class="sno">26</span><span class="stitle">Wasserstein GAN：W-GAN vs 原始 GAN——梯度被 1-Lipschitz 约束</span></figcaption>
+</figure>
+<figure class="slide" id="slide-27">
+<img src="slides/slide_27.png" alt="课件第27页 Wasserstein GAN：W-GAN vs 原始 GAN——可视化对比（真实样本/生成分布/判别器输出）">
+<figcaption><span class="sno">27</span><span class="stitle">Wasserstein GAN：W-GAN vs 原始 GAN——可视化对比（真实样本/生成分布/判别器输出）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>WGAN：对偶问题、Critic 与 Lipschitz</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 19</span><span class="chip">课件 20</span><span class="chip">课件 21</span><span class="chip">课件 22</span><span class="chip">课件 23</span><span class="chip">课件 24</span><span class="chip">课件 25</span><span class="chip">课件 26</span><span class="chip">课件 27</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>刚才我们导出了 W 距离原问题的定义，将其转化为对偶问题——原问题和对偶问题值相等，所以实际上是用对偶形式来解释。用这种形式可以看出到底是什么意思：我们要优化的不再是抽象的搬运计划或方法——对于给定的分布 P，我们要找一个判别函数 f，来最大化这样一个值：前面一项是对于属于 P 分布的 X 的期望、后面是属于另一分布的项——我们要找到这样的判别函数 f 来最大化这两个分布之间打分的差距。这就比较直观了：在概率视角下比较直接——找到一个函数 f，最大化对真实分布的打分、同时最小化对生成分布的打分，其实就是最大化这两个分布之间打分的差距。</p><p>但归根结底回到一个框架还有一个小问题：这个 f 稍微有点限制——它要求打分函数符合 Lipschitz 性质。看起来很神秘，其实写出来比较简单：对于任意两个点 X 和 Y，它们函数值的差距要小于（等于）对应原始样本的差距——换句话说，打分的程度不能变化得太快。为什么做这个限制？这在机器学习中经常见（无论是限制函数还是限制函数导数都经常出现）。可以这样考虑：因为 f 是一个打分函数，它对真实量和生成量进行打分——这函数总得反映一个样本到底是真是假吧；如果函数变化很快，我们可以不反映真实样本与生成样本的差距、而是通过数值方法扩大这两个打分的差距——所以要用相同的差异去约束打分差：样本打分差距和样本间差距总在同一量级，能反映函数的变化。</p><p>其几何意义是什么？刚才想得比较抽象，画出来看一下：假设 X 是紫色线上的一个点，给定该点后，其他位置模的变化必须约束在斜率（Lipschitz 常数）范围内——这个斜率限制了变化范围，固定此点后其他点不能随意变化；且限制需作用于所有点，从而约束函数整体的变化。具体怎么实现 Lipschitz 条件呢？原始 WGAN 中，训练好判别器后将其梯度截断到 [−c, c] 之间——即限制打分函数相对输入的变化率（weight clipping）。之后 WGAN-GP 提出新约束：引入一个惩罚项（正则化损失）——不去强硬地把梯度切断，而是把梯度算成 loss 的一部分（加进损失函数），最小化距离的同时最小化距离和梯度的变化，让你在距离和梯度的变化之间做出权衡，把这个规则变成一个可学习的目标函数。具体细节大家可以看一下原来的文章。</p><p>刚才我们把对偶形式写成概率里面的表达：对于符合真实分布的样本打分、与虚假样本打分之间的差别非常大——有这样的优化判别系统（critic）。所以说现在这个概念不是一个一般的二分类模型：在 GAN 模式，它的权重（参数）需要让我们所有的样本满足（Lipschitz）标准。跟之前的做一个比较：之前用 GAN 的判别器是一个真/假的判断、是一个简单的分类器；经过 WGAN 一系列的变化之后，它就变成了一个评分器一样、出现一个连续打分的概念——因为它里边有很多好的性能（比如说它里面没有 log、数据的稳定性要强一些，还有一些其他的限制）。</p><p>为什么要这样设置？看一个简单的例子直观地比较这两种：比如真实样本是一个蓝色的分布（平在这个空间上）。如果用原始的 GAN（包括原始的代码），它的判别器输出是这样红色的线——它在真实样本这边给得很大、在虚假样本的地方给得很小——如果你的生成样本分布是这样的话，你会发现梯度就饱和了：在这个地方没有任何的梯度，只有当生成分布发（展）到这个地方它才会提供信息。而相对应的，如果是我们一个青色的线（W 距离的 critic），它的整个整流性你会发现它在任意的一个位置都可以给你提供一个稳定的梯度信息——在这样梯度信息的引导下，就可以引导我们这个系统在任意位置都有一个梯度。</p><p>再看一个生成结果对比：蓝色的系统是我们生成的样本、绿色的是用样本估计出来的一个概率分布（几个模式的一个圆环的数据分布）。如果用原始的 GAN 目标函数，它的模型只是一开始捕捉其中一个小模式中的其中一个；而用 WGAN 训练出来的网络，它可以先去把样本张开、管理整体的分布、再细化到细节——所以它的模式坍塌问题就稍微少一点，能覆盖到全体。这就是 WGAN 的稳定性体现。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我们要找一个判别函数F，来最大化这样一个值……最大化这两个分布之间打分的差距。</p><p>它要求打分函数符合Lipschitz性质。……就是对于任意两个点X和Y，它们函数值的差距要小于对应原始样本的差距。</p><p>如果函数变化很快，我们可以不反映真实样本与生成样本的差距，而是通过数值方法扩大这两个打分的差距。</p><p>原始WGAN中，训练好判别器后，将其梯度截断到[-c, c]之间。……之后WGAN-GP提出新约束，引入一个惩罚项。</p><p>经过这个WGAN一系列的变化之后呢，它就变成了一个评分器一样，出现一个连续打分的概念。</p><p>它在任意的一个位置，它都可以给你提供一个稳定的梯度信息。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-adversarial-loss">
+  <div class="slides"><figure class="slide" id="slide-28">
+<img src="slides/slide_28.png" alt="课件第28页 Adversary as a Loss Function：关键动机——本质上 GAN 定义了一个对抗损失函数→一个通用框架，可以与其他损失（重建损失）、生成模型（VAE/AR）、实际任务（域适应）合作">
+<figcaption><span class="sno">28</span><span class="stitle">Adversary as a Loss Function：关键动机——本质上 GAN 定义了一个对抗损失函数→一个通用框架，可以与其他损失（重建损失）、生成模型（VAE/AR）、实际任务（域适应）合作</span></figcaption>
+</figure>
+<figure class="slide" id="slide-29">
+<img src="slides/slide_29.png" alt="课件第29页 Adversary as a Loss Function：替代输入——到目前为止 GAN 接收随机噪声 z∼pz（x=G(z)），称为无条件生成">
+<figcaption><span class="sno">29</span><span class="stitle">Adversary as a Loss Function：替代输入——到目前为止 GAN 接收随机噪声 z∼pz（x=G(z)），称为无条件生成</span></figcaption>
+</figure>
+<figure class="slide" id="slide-30">
+<img src="slides/slide_30.png" alt="课件第30页 Adversary as a Loss Function：条件生成——输入可以来自任何其他源 x：z=E(x)、x'=G(z)、x/x'→D(·)；生成条件在给定输入 x 上，通过重建改善 x 的视觉质量">
+<figcaption><span class="sno">30</span><span class="stitle">Adversary as a Loss Function：条件生成——输入可以来自任何其他源 x：z=E(x)、x'=G(z)、x/x'→D(·)；生成条件在给定输入 x 上，通过重建改善 x 的视觉质量</span></figcaption>
+</figure>
+<figure class="slide" id="slide-31">
+<img src="slides/slide_31.png" alt="课件第31页 Adversary as a Loss Function：通用目标函数（重建损失+对抗损失）">
+<figcaption><span class="sno">31</span><span class="stitle">Adversary as a Loss Function：通用目标函数（重建损失+对抗损失）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-32">
+<img src="slides/slide_32.png" alt="课件第32页 Adversary as a Loss Function：例子——超分辨率 GAN（SRGAN，CVPR 2016/2017）：PSNR 更差但视觉质量更好">
+<figcaption><span class="sno">32</span><span class="stitle">Adversary as a Loss Function：例子——超分辨率 GAN（SRGAN，CVPR 2016/2017）：PSNR 更差但视觉质量更好</span></figcaption>
+</figure>
+<figure class="slide" id="slide-33">
+<img src="slides/slide_33.png" alt="课件第33页 Adversary as a Loss Function：SRGAN 结果——Original/Reconstruction/Recon.+Adv.（加入对抗损失后细节恢复更真实）">
+<figcaption><span class="sno">33</span><span class="stitle">Adversary as a Loss Function：SRGAN 结果——Original/Reconstruction/Recon.+Adv.（加入对抗损失后细节恢复更真实）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-34">
+<img src="slides/slide_34.png" alt="课件第34页 Adversary as a Loss Function：例子——图像修复（Image Inpainting）Context Encoder（CVPR 2016）：抠掉中间、用周边上下文补全">
+<figcaption><span class="sno">34</span><span class="stitle">Adversary as a Loss Function：例子——图像修复（Image Inpainting）Context Encoder（CVPR 2016）：抠掉中间、用周边上下文补全</span></figcaption>
+</figure>
+<figure class="slide" id="slide-35">
+<img src="slides/slide_35.png" alt="课件第35页 Adversary as a Loss Function：例子——视觉 tokenizer（VQ-GAN，CVPR 2021）：VQ-VAE 只用 L2 损失 vs VQ-GAN 加对抗损失">
+<figcaption><span class="sno">35</span><span class="stitle">Adversary as a Loss Function：例子——视觉 tokenizer（VQ-GAN，CVPR 2021）：VQ-VAE 只用 L2 损失 vs VQ-GAN 加对抗损失</span></figcaption>
+</figure>
+<figure class="slide" id="slide-36">
+<img src="slides/slide_36.png" alt="课件第36页 Adversary as a Loss Function：VQ-GAN 对比结果——同样的下采样与码本大小下，加对抗损失后重建质量显著提升">
+<figcaption><span class="sno">36</span><span class="stitle">Adversary as a Loss Function：VQ-GAN 对比结果——同样的下采样与码本大小下，加对抗损失后重建质量显著提升</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>对抗损失作为通用损失：条件生成与图像任务</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（前）</span><span class="chip">课件 28</span><span class="chip">课件 29</span><span class="chip">课件 30</span><span class="chip">课件 31</span><span class="chip">课件 32</span><span class="chip">课件 33</span><span class="chip">课件 34</span><span class="chip">课件 35</span><span class="chip">课件 36</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>接下来的时间稍微轻松一点，给大家看看 GAN 具体有哪些其他应用。如果把整个框架画出来，它整体就是一个生成器加一个判别器——生成器跟之前的 AR 模型意思差不多，最大不同是用网络实现了一个判别器。我们可以把判别器的功能抽象成对抗损失：对抗损失通过各种设计，能在不同任务中得到灵活应用。</p><p>你要问到底有什么用？这里展示的网络结构：之前都是从先验分布里采样得到一个随机噪声、然后输出（在 GAN 里是一个能辨别真假的系统）——虽然它有噪声输入，但我没有对输入进行控制，整体看噪声是什么样它就生成什么样（无条件生成）。当然我们还可以不这么干：比如把噪声扩展成一个具体的样子，通过编码器编码、考虑条件化数据——我们不再随机采样，而是给定一个输入，这就叫做条件生成。这个框架的意思是：输入 X 经编码器得到特征后，再送入生成器；我们让生成的 X' 和真实的 X 之间用一个重建的形式（类似于 VAE）；如果在 AE 的输出后面再接一个判别器判别真假、在对抗网络的损失情况下训练这个判别器，可以得到什么效果？因为有重建损失约束，输出图像和输入图差别不会特别大；同时用判别器采用对抗训练的形式，让输出难以分辨真假、从而提升输出的逼真度。换句话说，我们可以用这样的模型做超分或信号增强：保留输入数据的一些信息和内容、利用对象的真实情况。</p><p>对于这样的框架，我们可以把损失函数抽象出来：把重建的形式写成一个抽象形式、同样把对抗的形式也写成抽象形式——这样可以把判别器和对抗训练过程从通用训练目标来说进行整合。这个通用损失函数是通过对抗训练提升输出的真实性；当然之后会了解到可以通过设计提升输出除了真实性以外的其他特性。</p><p>刚才说的框架其实是一种图像超分或图像增强任务：超分是给定一个模糊图像、对中间的细节纹理和内容进行恢复。比如这是 CVPR 2016/2017 的工作：最左边是真实图像；中间图像是把最左边图像下采样 4 倍或 16 倍、再用双线性插值方法插值回原尺寸——可以看到它非常模糊，因为下采样和插值中信息丢失。作者考虑了两种超分方法：一是 SRResNet 用重建损失监督；二是在重建损失上加对抗损失得到超分辨率结果——加了该损失后细节恢复更好：虽然单纯重建得到的结果分辨率高且边缘锐利，但具体细节组合模糊；而加入对抗训练后整体细节恢复非常真实。若只看 PSNR（恢复图像与真值差距），我们的 PSNR 比单纯重建方法差，但整体视觉质量明显更好——这是 GAN 模型的特点：定量指标不好，但定性视觉效果更真实。</p><p>再看斑马纹理较多的案例：左边是真实图像，下方对应几个结果——一个是重建效果（虽不模糊但平淡）；若在对抗损失基础上加入感知损失，生成效果更逼真，包括马和草的纹理都更好——这是对抗方法的最大优点，让生成结果更真实。具体为何变好？超分文章给出了解释：真实图像在特征空间的分布是特定的、每个位置对应一个真实样本；若只用 MSE 损失进行重建超分，本质是对高分结果取平均——平均化即模糊化，导致结果模糊；若加入对抗损失，则是从真实分布中选择一个可能解——模型不再平均、而是选择真实路径，提升输出真实性。这是直观解释、非严谨证明。是否仅用对抗损失？需结合具体任务考虑。</p><p>刚才讨论的是超分任务（将模糊数据生成清晰高分辨率数据），再考虑图像修复任务：例如给定街景图像、挖空中间部分，训练新模型对缺失内容进行补充——若用 L2 损失补充，结果合理但非常模糊；若仅用对抗网络，细节真实但与原图无关（这种结果不合理）；只有将两者结合，才能得到理想结果——它既符合周边图像的内容、本身又具有较好的舒适度。这个网络怎么构建？比如在训练时找到具体图像、把中间抠出来、将周边的完整图像作为输入；损失函数就是定义图像和网络输出之间的对抗性——这样就有了编码器-解码器结构，通过网络编码来补全后台的上下文信息，给生成网络提供周边信息和互补结构、更符合原图情景。</p><p>之前讲过 VQ-VAE 结构（用 VAE 结构、中间是离散空间、损失函数还是 L1）；CVPR 2021 提出在 VQ-VAE 基础上加入了对抗机制等改进（VQ-GAN），很大程度上提升了整体渲染效率。看图片效果：最左边两个是输入图像、右边是根据输入图像编码后重建的结果——第二列是 VAE 结构、第三列是改进结构（VQ-GAN）；放大看可以明显看到，改进结构的重建结果比 VAE 呈现的结果明显提升：在同样的 8 倍下采样和 512 大小的情况下，特征提取的效果更好（比如对松鼠皮毛等细节的处理效果，要比 VAE 模糊的效果好很多）。把后边几列连列起来看：每一列的不同之处在于编码下采样的尺度——编码之后这个码本大小不一样（8192、16384、1024 等）；结果就是可以看到，在加入对抗系统之后，哪怕你的词表从 8192 降到 1024、下采样要求从 8 倍到 16 倍，重建的图像效果依然是真实性非常高——换句话说，加入对抗机制之后，你对架构进行监督，误差可以更小、下采样的倍数可以更多、可以用更小的码本去建模你的图片。当然它只是展示重建效果比较好；用 VQGAN 对图像进行编码之后，下一步的任务需要用那个码本去做一些其他的任务——具体码本怎么样、下一步任务怎么样，这个我不知道。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我们可以把判别器的功能抽象成对抗损失。对抗损失通过各种设计，能在不同任务中得到灵活应用。</p><p>我们不再随机采样，而是给定一个输入，这就叫做条件生成。</p><p>若只看PSNR……我们的PSNR比单纯重建方法差。但整体视觉质量明显更好。</p><p>若只用MSE损失进行重建超分，本质是对高分结果取平均。平均化即模糊化。</p><p>若仅用对抗网络，细节真实但与原图无关。……只有将两者结合，才能得到理想结果。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-translation">
+  <div class="slides"><figure class="slide" id="slide-37">
+<img src="slides/slide_37.png" alt="课件第37页 Adversary as a Loss Function：例子——图像翻译（Image Translation）：把图像从一个域映射到另一个域（内容/语义来自 X、风格来自 Y）">
+<figcaption><span class="sno">37</span><span class="stitle">Adversary as a Loss Function：例子——图像翻译（Image Translation）：把图像从一个域映射到另一个域（内容/语义来自 X、风格来自 Y）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-38">
+<img src="slides/slide_38.png" alt="课件第38页 Adversary as a Loss Function：成对图像翻译（Pix2Pix，CVPR 2017）——判别器区分真假图像对（edge, photo）">
+<figcaption><span class="sno">38</span><span class="stitle">Adversary as a Loss Function：成对图像翻译（Pix2Pix，CVPR 2017）——判别器区分真假图像对（edge, photo）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-39">
+<img src="slides/slide_39.png" alt="课件第39页 Adversary as a Loss Function：Pix2Pix 结果">
+<figcaption><span class="sno">39</span><span class="stitle">Adversary as a Loss Function：Pix2Pix 结果</span></figcaption>
+</figure>
+<figure class="slide" id="slide-40">
+<img src="slides/slide_40.png" alt="课件第40页 Adversary as a Loss Function：无配对数据问题——获得配对太昂贵甚至不可能、没有 ground-truth">
+<figcaption><span class="sno">40</span><span class="stitle">Adversary as a Loss Function：无配对数据问题——获得配对太昂贵甚至不可能、没有 ground-truth</span></figcaption>
+</figure>
+<figure class="slide" id="slide-41">
+<img src="slides/slide_41.png" alt="课件第41页 Adversary as a Loss Function：不成对图像翻译（CycleGAN，ICCV 2017）——学习一个反向映射来强制循环一致性">
+<figcaption><span class="sno">41</span><span class="stitle">Adversary as a Loss Function：不成对图像翻译（CycleGAN，ICCV 2017）——学习一个反向映射来强制循环一致性</span></figcaption>
+</figure>
+<figure class="slide" id="slide-42">
+<img src="slides/slide_42.png" alt="课件第42页 Adversary as a Loss Function：CycleGAN 循环一致性——X→Y→X 重建应与输入一致，Y 域同理；以重建作为监督、无需配对数据">
+<figcaption><span class="sno">42</span><span class="stitle">Adversary as a Loss Function：CycleGAN 循环一致性——X→Y→X 重建应与输入一致，Y 域同理；以重建作为监督、无需配对数据</span></figcaption>
+</figure>
+<figure class="slide" id="slide-43">
+<img src="slides/slide_43.png" alt="课件第43页 Adversary as a Loss Function：多域图像翻译（StarGAN，CVPR 2018）——如果有很多域怎么办？成对翻译需大量网络，能否用统一模型？">
+<figcaption><span class="sno">43</span><span class="stitle">Adversary as a Loss Function：多域图像翻译（StarGAN，CVPR 2018）——如果有很多域怎么办？成对翻译需大量网络，能否用统一模型？</span></figcaption>
+</figure>
+<figure class="slide" id="slide-44">
+<img src="slides/slide_44.png" alt="课件第44页 Adversary as a Loss Function：StarGAN 框架——单一生成器+目标域标签：多任务重建、欺骗判别器、满足域分类">
+<figcaption><span class="sno">44</span><span class="stitle">Adversary as a Loss Function：StarGAN 框架——单一生成器+目标域标签：多任务重建、欺骗判别器、满足域分类</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>图像翻译：Pix2Pix、CycleGAN 与 StarGAN</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（中）</span><span class="chip">课件 37</span><span class="chip">课件 38</span><span class="chip">课件 39</span><span class="chip">课件 40</span><span class="chip">课件 41</span><span class="chip">课件 42</span><span class="chip">课件 43</span><span class="chip">课件 44</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>在图像领域，非常重要的一个任务是 Image Translation（图像变换）：具体任务目标就是把一些图像从一个域映射到另一个域。比如看这个图：输入草稿线里的草稿、对应另一个域的真实图像——这两个域可以对应（左边任务设置对应右边 Sketch 和实照片）。图像转换也可以在另一种图的条件下进行：比如 X 是真实风景照片、另一个域是油画——我们可以做两个域之间的风格迁移，把真实图像映射到油画里；但没法得到匹配的配对去训练、无法在训练中真的得到对应模块。大家最关心的是怎么把图像从 X 域应用到 Y 域——在保留 X 域中图像内容和语义的情况下，把风格迁移到对应域（比如草稿画的鞋子、形状还是鞋子、意义一样，但整体风格被迁移了）。</p><p>对于这种无匹配的情况，模型是怎么看的呢？有成对数据的情况：生成器生成对应的真实输出，判别器不再单独判别输出图像真假、而是同时接收输入草稿和迁移后的输出图像——判别器判决图像对的真假，这与之前只判别单图真实性的判别器不同：原判别器仅判定输出图像是生成还是真实，现引入新机制让判别器评估图像对的一致性——若判别器无法区分生成对与真实对，则一致性被纳入训练目标，相当于生成的图像与目标图像构成真实的一对（Pix2Pix 框架）。文章结果显示，从语义图恢复出的真实图像在加入 L1 损失后真实性大幅提升——普通结构系统如 L1 层任务类似，但加入损失后生成质量更高：图片输出既真实又符合输入约束。</p><p>刚才讲的是有成对数据的情况（生成过程既有草稿又有真实照片）；但在很多场景下没有这种设置——例如油画与真实照片的转换中，无法为每幅油画找到对应的真实照片。针对无配对数据情况，2017 年提出新范式（CycleGAN）：既然 X 和 Y 域样本无一一对应关系，便提出 Cycle Consistency 循环一致性约束——什么意思呢？将 X 域样本映射到 Y 域，因 Y 域无监督信号、不知真实样式，于是训练另一模型将其从 Y 映射回 X；若有两个映射模型，映射回来的结果应与输入一致——例如将油画映射为风景画、再映射回油画，两者应相同。下图展示具体含义：X 域输入映射至 Y 域、再映射回 X 域，输入与重建结果应尽量相似；不仅 X 域，Y 域也应保持（循环）损失。这样无需额外数据配合、以重建形式作为监督。这种循环一致性思想在许多工作中很有名。</p><p>看它的例子：将莫奈画作映射为真实图像、或将真实图像映射为莫奈风格；也可实现斑马与普通马之间的映射，体现域间关系。底下是受控图像转换过程：对同一照片可映射为莫奈、梵高等不同艺术风格，实现图像风格转换。</p><p>如果考虑两域之间的一对一映射，若数据域足够多，需构造的映射非常多——如有 4 个域存在 12 个方向的映射、需训练 12 个网络来实现。为解决这个问题，想用统一的一个网络实现：2018 年 CVPR 上有人提出 StarGAN 思想——用同一个生成器、加入目标域标签，实现任意原域到任意目标域的转换。具体做法是对传统 GAN 网络改进：判别器不仅要区分真实和虚假样本，还要作为域分类器、判断输出属于哪一域；生成器训练中，给定输入图像和目标标签得到输出，通过判别器的域分类监督信号指导生成器学习；另外，将输出的目标域图像和原域标签结合、再通过同一个网络映射回原域得到重建图像——这其实是在 CycleGAN 的循环一致性基础上加入了一个域分类的监控信号（三循环一致性）。这就是该模型的结果：给定一个人脸及对应属性可得到输出结果——例如对同一个人进行金发转换、性别转换或年龄变化，还能改变肤色为苍白；生成效果中颜色变化不错，但年龄变化较大、生成了杂乱内容。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>判别器不再单独判别输出图像真假，而是同时接收输入草稿和迁移后的输出图像。</p><p>若判别器无法区分生成对与真实对，则一致性被纳入训练目标。</p><p>既然X和Y域样本无一一对应关系，便提出Cycle Consistency循环一致性约束。</p><p>如有4个域，存在12个方向的映射，需训练12个网络来实现。……用同一个生成器，加入目标域标签（StarGAN）。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-domain-scaling">
+  <div class="slides"><figure class="slide" id="slide-45">
+<img src="slides/slide_45.png" alt="课件第45页 Adversary as a Loss Function：例子——域适应（ADDA，CVPR 2017）：源域带标签、目标域无标签；如何把“对齐两个分布”的效果泛化？">
+<figcaption><span class="sno">45</span><span class="stitle">Adversary as a Loss Function：例子——域适应（ADDA，CVPR 2017）：源域带标签、目标域无标签；如何把“对齐两个分布”的效果泛化？</span></figcaption>
+</figure>
+<figure class="slide" id="slide-46">
+<img src="slides/slide_46.png" alt="课件第46页 Adversary as a Loss Function：ADDA 流程——①用带标签源数据训练模型 ②通过欺骗判别器对齐 pS 与 pT 的特征空间 ③在目标数据上复用训练好的模型">
+<figcaption><span class="sno">46</span><span class="stitle">Adversary as a Loss Function：ADDA 流程——①用带标签源数据训练模型 ②通过欺骗判别器对齐 pS 与 pT 的特征空间 ③在目标数据上复用训练好的模型</span></figcaption>
+</figure>
+<figure class="slide" id="slide-47">
+<img src="slides/slide_47.png" alt="课件第47页 Scaling of GAN Models：为什么 GAN scaling 重要？——W-GAN 提供了稳定训练的先进目标；问题是：要放大到更大图像，能简单提高生成器输出分辨率吗？">
+<figcaption><span class="sno">47</span><span class="stitle">Scaling of GAN Models：为什么 GAN scaling 重要？——W-GAN 提供了稳定训练的先进目标；问题是：要放大到更大图像，能简单提高生成器输出分辨率吗？</span></figcaption>
+</figure>
+<figure class="slide" id="slide-48">
+<img src="slides/slide_48.png" alt="课件第48页 Scaling of GAN Models：实践困难——优化：D 容易压制 G；多尺度合成：局部纹理 vs 全局结构；隐变量可控性……">
+<figcaption><span class="sno">48</span><span class="stitle">Scaling of GAN Models：实践困难——优化：D 容易压制 G；多尺度合成：局部纹理 vs 全局结构；隐变量可控性……</span></figcaption>
+</figure>
+<figure class="slide" id="slide-49">
+<img src="slides/slide_49.png" alt="课件第49页 Scaling of GAN Models：Progressive Growing of GANs（PG-GAN，ICLR 2018）——动机：逐渐提高生成分辨率（4×4→8×8→…→1024×1024）">
+<figcaption><span class="sno">49</span><span class="stitle">Scaling of GAN Models：Progressive Growing of GANs（PG-GAN，ICLR 2018）——动机：逐渐提高生成分辨率（4×4→8×8→…→1024×1024）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-50">
+<img src="slides/slide_50.png" alt="课件第50页 Scaling of GAN Models：StyleGAN（CVPR 2019）——设计新颖的生成器架构：分别建模高层属性与随机变化、逐层注入/调制隐变量输入、自监督学习">
+<figcaption><span class="sno">50</span><span class="stitle">Scaling of GAN Models：StyleGAN（CVPR 2019）——设计新颖的生成器架构：分别建模高层属性与随机变化、逐层注入/调制隐变量输入、自监督学习</span></figcaption>
+</figure>
+<figure class="slide" id="slide-51">
+<img src="slides/slide_51.png" alt="课件第51页 Scaling of GAN Models：StyleGAN2（CVPR 2020）——系统改进 StyleGAN 的公式与架构（水滴状伪影、不真实透视牙齿等）">
+<figcaption><span class="sno">51</span><span class="stitle">Scaling of GAN Models：StyleGAN2（CVPR 2020）——系统改进 StyleGAN 的公式与架构（水滴状伪影、不真实透视牙齿等）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-52">
+<img src="slides/slide_52.png" alt="课件第52页 Scaling of GAN Models：进一步阅读——StyleGAN3、Projected GANs、StyleGAN-NADA、StyleGAN-XL、EG3D、GET3D、StyleGAN-T、Diffusion-GAN 等">
+<figcaption><span class="sno">52</span><span class="stitle">Scaling of GAN Models：进一步阅读——StyleGAN3、Projected GANs、StyleGAN-NADA、StyleGAN-XL、EG3D、GET3D、StyleGAN-T、Diffusion-GAN 等</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div class="sec-tt">
+        <h2>域适应与 GAN 的 Scaling</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（后）</span><span class="chip">课件 45</span><span class="chip">课件 46</span><span class="chip">课件 47</span><span class="chip">课件 48</span><span class="chip">课件 49</span><span class="chip">课件 50</span><span class="chip">课件 51</span><span class="chip">课件 52</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>对抗训练思想在泛用模型系统中也有应用——最后讲一个域适应（Domain Adaptation）应用场景：现有原域数据如车牌图像、但无数字标签，可在该数据集上训练分类系统识别图像与数字标签；现有一个目标域手写数字集图像。如何在车牌数据上训练数字识别模型、并应用到手写数字上？用网络对抗组合做：通过微调——刚才说在训练（GAN）里不能区分生成分布和真实分布，可以解决这个问题：我们可以再加一个类似于生成器的网络，来让我们（的判别器）不能区分源域和目标域——如果源域跟目标域有区分的话，和这个语言预训练的关系就可以用了。它就是对抗损失在其他分类或者判别任务的应用。</p><p>具体怎么做（ADDA 流程）？第一部分：我们有源域的数据和源域的 label，可以训练一个判别器（分类网络）——既包含一个原有的 CNN 特征提取的东西、再加一个分类头，就可以得到对应输出的标签，可以在源域上训练一个分类器。第二步：把第一步拿到的源域特征提取模块拿出来、固定住，然后在目标域上建一个对应的目标域网络；让这两个网络的输出再训练一个判别器——当判别信息无法区分源域网络和目标域网络输出的特征时，相当于我的源域输出特征和目标输出特征对齐了，域之间的区别就弥合了。第三步：在对抗损失的情况下得到目标域的适应性网络以后，把它在测试时拿过来：把目标域数据提取到对应的特征——因为经过了第二部分的训练，这个特征的分布和源域图像输出的分布是一样的；既然特征的分布一样，就可以把第一阶段这个分类器也拿过来，用第一阶的分类器进行一个具体的分类任务。</p><p>第三个部分可能有点讲不了、没有长时间了，稍微给大家过一下就行：怎么在基础的 GAN 训练完了以后，把它在更高分辨率的图像上进行应用。2018 年他们在 ICLR 2018 提出了 ProGAN（PG-GAN）：逐渐提升输出图像的分辨率——一开始在一个 4×4 的图像上训练一个生成系统，然后逐渐提升到 8×8、不断提升到 1024×1024；它不单是网络层级和输出输入情况，而且在加入每一层的时候、把从前一个分辨率提升到后一个分辨率，在这个设计上它也是逐渐有一个 α 参数去控制它原始分辨率的输出和新分辨率输出之间的融合效果——这样它的分辨率逐渐提升，而且在训练新分辨率后它的特征上也（保持稳定）。</p><p>后边英伟达还提出 StyleGAN：在原本 GAN 的基础上重新设计生成器架构——不再是采用一个 latent code 后进行一个网络输出，而是采用 latent code 以后从一些中间的地方（Style Modulation）注重探索生成器的分辨率、引导生成器每一个分辨率的效果，从而得到一个解耦的风格控制。StyleGAN2 系统改进 StyleGAN 的公式与架构：修复水滴状伪影、不真实的透视（牙齿与姿态）等问题。在 ProGAN 结束以后，他们在 CVPR 2021 通过图像做 3D 重建——人透视的一个人（EG3D）：生成过程中牙齿变化一直没变、整体看起来也比较真实，但组织关系有问题——他就发现了 4D 生成中连带 3D 的一些问题，请大家分析并改进。</p><p>在 2021 之后该方向仍有研究：2021 年提出 StyleGAN3（别名自由生成对抗网络）；到 2023 年相关模型问世（StyleGAN-T、Diffusion-GAN 等），虽服务单一但仍在发展——其实 GAN 的大规模资源分析与扩散模型 PK，当时能量与扩散模型相当，直到 2024 年这一契机（“The GAN is dead; long live the GAN!”）。GAN 即对抗的意思，基本还有提升空间：能通过高清图像、在很多情况下用一些（技术）效果较好。OK，刚才介绍了 GAN 模型研究的内容——如果感兴趣可以看论文解析，我把具体在线学习资料发给大家，没问题可以下课。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>让这两个网络的输出，然后再训练一个判别器。当判别信息无法区分源域的整体（特征）……相当于是我的这个源域的输出特征和目标输出特征就对齐了。</p><p>它一开始是在一个4×4的图像上训练一个生成系统，然后呢逐渐的把它提升到8×8的。在不断的提升，不断的它提升到这个1024×1024。</p><p>它不再是采用一个 latent code 后再进行一个网络输出，而是采用一个 latent code 以后就是从一些中间的一个地方……得到解耦的风格控制（StyleGAN）。</p><p>当时能量与扩散模型相当，直到2024年这一契机（“The GAN is dead; long live the GAN!”）。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（生成式模型与科学智能应用）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>

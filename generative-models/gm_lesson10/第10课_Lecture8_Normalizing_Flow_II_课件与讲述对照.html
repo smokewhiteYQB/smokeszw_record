@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>生成式模型与科学智能应用 · 第10节 Lecture 8 Normalizing Flow II：三角雅可比流模型（NICE/RealNVP）、自回归流（MAF/IAF）与概率蒸馏（Parallel WaveNet）｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.videos{margin-top:14px;border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.video + .video{border-top:1px solid #e4e9f0;}
+.videos h4{font-size:12.5px;font-weight:700;color:#0a1f38;background:#f2f5f9;padding:8px 12px;border-bottom:1px solid #e4e9f0;}
+.videos video{display:block;width:100%;max-height:460px;background:#0b0f14;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>生成式模型与科学智能应用 · 第10节 Lecture 8 Normalizing Flow II：三角雅可比流模型（NICE/RealNVP）、自回归流（MAF/IAF）与概率蒸馏（Parallel WaveNet）</h1>
+    <div class="sub">第10节 Lecture 8 Normalizing Flow II：三角雅可比流模型（NICE/RealNVP）、自回归流（MAF/IAF）与概率蒸馏（Parallel WaveNet） ｜ 2026-10-13 ｜ 刘云帆</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 43 页 · 整理 8 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-recap-qa">01 回顾：NF 动机与上节课答疑</option>
+<option value="sec-nice">02 NICE：加性耦合层与缩放层</option>
+<option value="sec-realnvp">03 Real-NVP：仿射耦合</option>
+<option value="sec-ar-flow">04 把自回归模型看成流模型</option>
+<option value="sec-maf">05 MAF：Masked Autoregressive Flow</option>
+<option value="sec-iaf">06 IAF：Inverse Autoregressive Flow</option>
+<option value="sec-distillation">07 概率蒸馏与 Parallel WaveNet</option>
+<option value="sec-summary">08 总结：Normalizing Flow 模型</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 Lecture8_Normalizing_Flow_II.pdf 逐页渲染，转写原文见 record_20261013.txt。</div>
+<section class="sec" id="sec-recap-qa">
+  <div class="slides"><figure class="slide" id="slide-01">
+<img src="slides/slide_01.png" alt="课件第1页 封面：Generative Models & AI4S Applications，Lecture 8 Normalizing Flow II（刘云帆）">
+<figcaption><span class="sno">01</span><span class="stitle">封面：Generative Models & AI4S Applications，Lecture 8 Normalizing Flow II（刘云帆）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-02">
+<img src="slides/slide_02.png" alt="课件第2页 Announcements：作业 1 于 10 月 18 日截止；作业 2 在作业 1 截止后发布">
+<figcaption><span class="sno">02</span><span class="stitle">Announcements：作业 1 于 10 月 18 日截止；作业 2 在作业 1 截止后发布</span></figcaption>
+</figure>
+<figure class="slide" id="slide-03">
+<img src="slides/slide_03.png" alt="课件第3页 Recap：NF 的动机——AR 模型似然易算但没有隐变量；VAE 有隐变量但边缘似然难算；NF 想要两者兼得">
+<figcaption><span class="sno">03</span><span class="stitle">Recap：NF 的动机——AR 模型似然易算但没有隐变量；VAE 有隐变量但边缘似然难算；NF 想要两者兼得</span></figcaption>
+</figure>
+<figure class="slide" id="slide-04">
+<img src="slides/slide_04.png" alt="课件第4页 Recap：Model Representation——NF 与 VAE 类似是指向隐变量模型，但映射 fθ: ℝⁿ→ℝⁿ 是确定性且可逆的（X=fθ(Z)，Z=fθ⁻¹(X)）">
+<figcaption><span class="sno">04</span><span class="stitle">Recap：Model Representation——NF 与 VAE 类似是指向隐变量模型，但映射 fθ: ℝⁿ→ℝⁿ 是确定性且可逆的（X=fθ(Z)，Z=fθ⁻¹(X)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-05">
+<img src="slides/slide_05.png" alt="课件第5页 Recap：Model Learning——用最大似然原理学习 p_X(x;θ)；由于变量变换公式，边缘似然可以精确计算（区别于 VAE）">
+<figcaption><span class="sno">05</span><span class="stitle">Recap：Model Learning——用最大似然原理学习 p_X(x;θ)；由于变量变换公式，边缘似然可以精确计算（区别于 VAE）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-06">
+<img src="slides/slide_06.png" alt="课件第6页 Recap：Construction——级联 M 个简单可逆变换构成整体 fθ；用变量变换公式计算密度；性质要求：可逆、有表达力、计算可行（O(n³)）">
+<figcaption><span class="sno">06</span><span class="stitle">Recap：Construction——级联 M 个简单可逆变换构成整体 fθ；用变量变换公式计算密度；性质要求：可逆、有表达力、计算可行（O(n³)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-07">
+<img src="slides/slide_07.png" alt="课件第7页 Recap：高效计算雅可比行列式——设计 fθ 使雅可比为三角矩阵，行列式=对角线乘积，复杂度 O(n³)→O(n)；目标：设计三角雅可比">
+<figcaption><span class="sno">07</span><span class="stitle">Recap：高效计算雅可比行列式——设计 fθ 使雅可比为三角矩阵，行列式=对角线乘积，复杂度 O(n³)→O(n)；目标：设计三角雅可比</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>回顾：NF 动机与上节课答疑</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 1</span><span class="chip">课件 2</span><span class="chip">课件 3</span><span class="chip">课件 4</span><span class="chip">课件 5</span><span class="chip">课件 6</span><span class="chip">课件 7</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>AR 模型的特点是似然函数易于计算：给定样本 X，其概率密度可直接求解；但它缺乏隐变量建模能力。相比之下，隐变量模型完全相反：具备隐变量建模，但边缘似然难以计算。新模型旨在结合两者优点：构造隐变量模型，保留底层设计，同时确保似然易算、便于训练。该模型与 VAE 的计算图相似、均属隐变量模型——建立不可观测变量 Z 到可观测数据 X 的映射；但与 Normalizing Flow 不同：后者通过确定性函数映射，给定 X 可用逆运算直接求出 Z，从而高效计算似然。</p><p>先回应上节课同学的问题。有同学问：经过这样的设计后，模型是否具备特定性能？——给定 X 能求出对应的 Z，就说明这个 latent 是可知的。但其实客观上来讲，这个说法并不是很准确：我们其实都不知道这个 latent 是什么。比如男女身高这样一个统计问题，男生女生的身高分布可以看作一个 latent 的实现；但对于一般情况，你直接从网络收集一些图像、音频或文字数据，并不知道对应的 latent 是什么——你只不过假设 X 和 Z 有诸如此类的这种关系，然后把关系表达成模型、带到训练集中训练，得到对应参数后，这个模型就有能力刻画这样的关系。可逆的话，对任意一个 X，在我们假设的模型下都可以求得对应的 Z，使密度比较好算；但从客观上来说，你并不知道 Z 究竟是什么。</p><p>还有同学问：是不是要设计 f⁻¹ 和 f 这两个不同的映射？其实从今天的课程中我们知道，它其实是同一个映射函数：我们设计了 f 以后，它自然而然的就能写出对应的逆变换——一对一约束是流模型的一个约束、也是它良好性质的一个特征。这是对上一课同学提问的回复。</p><p>有一个模型表征以后，我们还想通过最大似然去学习这个 f 的参数。上节课讲了变量变换公式：给定 X 后，若想求样本 X 的密度，可通过可逆变换找到对应的 Z，把 Z 代入先验分布得到该点密度，再用逆变换雅可比矩阵的行列式进行修正，即可得到对应样本密度——例如这里的样本密度可以直接精确计算，而不像另一边需要通过很复杂的公式计算。</p><p>表示和学习都讲完后，我们稍微讨论一下怎么构建模型——似乎这个模型里最重要的就是怎么去构建这个 Flow。上节课讲了一个通用的解决方法：用简单的映射串联起来得到一个复杂的可逆映射——要实现一个有表达力的函数，可以设计一系列简单的微小变换串联起来实现整体的变换，它可以实现双射的一对一映射。复杂映射有一个较好的性质：如果带入刚才的变量变换公式，这样设计得到的模型，密度依然可以较好地计算——你可以把每一个小映射的雅可比矩阵设计好并存储起来，最后放到一起就是行列式的计算。</p><p>但雅可比矩阵行列式的计算复杂度非常高：O(n³) 运算，n 是数据的维度——对于这样的运算，我们在实际中没有办法真的计算它，复杂度实在太高了。所以我们唯一能做的就是设计 Flow：让它对应的雅可比矩阵的行列式能够比较好地计算。比较直接的方法就是设计出让这个雅可比矩阵对应的是一个三角阵——三角阵的行列式是对角线元素的乘积，我们可以将三次方的复杂度简化为 O(n) 线性时间。设计映射使其雅可比呈对角或三角形式，这就是我们的目标。</p><p>上节课看了 Planar Flow 的简单例子，本节课具体看 Flow 的设计方法、介绍几种经典方法：第一节讲三角雅可比的基础模型（NICE、RealNVP）；第二节把流模型与自回归模型联系起来（MAF、IAF）；最后讲概率蒸馏方法（Parallel WaveNet）——串联两种模型的优势。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>上节课有同学问：经过这样的设计后，模型是否具备特定性能？……其实这样的说法不是很准确，因为我们其实都不知道这个C（latent）。</p><p>还有一同学问我，是不是我们要设计这个f⁻¹跟f这两个不同的映射。那其实我们从今天的课程中知道，它其实是同一个映射函数……我们设计了f以后，它自然而然的就能写出对应的逆变换。</p><p>雅可比矩阵行列式的计算复杂度非常高，为O(N³)运算，N是数据的维度。对于这样的运算，我们在实际中是没有办法去真的计算它的。</p><p>所以比较直接的方法就是设计出让这个雅可比矩阵对应的是一个三角阵。三角阵的行列式是对角线元素的乘积。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-nice">
+  <div class="slides"><figure class="slide" id="slide-08">
+<img src="slides/slide_08.png" alt="课件第8页 Lecture Outline：三角雅可比流模型 → 自回归流模型（MAF/IAF）→ 概率蒸馏与 Parallel WaveNet">
+<figcaption><span class="sno">08</span><span class="stitle">Lecture Outline：三角雅可比流模型 → 自回归流模型（MAF/IAF）→ 概率蒸馏与 Parallel WaveNet</span></figcaption>
+</figure>
+<figure class="slide" id="slide-09">
+<img src="slides/slide_09.png" alt="课件第9页 Flow Models with Triangular Jacobians：NICE（Non-linear Independent Components Estimation，ICLR 2015）——变换由加性耦合层与缩放层组成">
+<figcaption><span class="sno">09</span><span class="stitle">Flow Models with Triangular Jacobians：NICE（Non-linear Independent Components Estimation，ICLR 2015）——变换由加性耦合层与缩放层组成</span></figcaption>
+</figure>
+<figure class="slide" id="slide-10">
+<img src="slides/slide_10.png" alt="课件第10页 NICE：加性耦合层——隐变量 z 分成互斥两部分 z1:d 与 zd+1:n；前向映射：x1:d=z1:d（carry-over 恒等）+ xd+1:n=zd+1:n+mθ(z1:d)（加性耦合，mθ 为神经网络）">
+<figcaption><span class="sno">10</span><span class="stitle">NICE：加性耦合层——隐变量 z 分成互斥两部分 z1:d 与 zd+1:n；前向映射：x1:d=z1:d（carry-over 恒等）+ xd+1:n=zd+1:n+mθ(z1:d)（加性耦合，mθ 为神经网络）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-11">
+<img src="slides/slide_11.png" alt="课件第11页 NICE：加性耦合层可逆吗——逆映射 z1:d=x1:d、zd+1:n=xd+1:n−mθ(z1:d)；恒等部分直接取回，其余部分做减法即可">
+<figcaption><span class="sno">11</span><span class="stitle">NICE：加性耦合层可逆吗——逆映射 z1:d=x1:d、zd+1:n=xd+1:n−mθ(z1:d)；恒等部分直接取回，其余部分做减法即可</span></figcaption>
+</figure>
+<figure class="slide" id="slide-12">
+<img src="slides/slide_12.png" alt="课件第12页 NICE：雅可比可算吗——前向雅可比为三角矩阵，det J=1；①行列式与 mθ 无关；②无论 mθ 是否可逆，f⁻¹ 都可计算">
+<figcaption><span class="sno">12</span><span class="stitle">NICE：雅可比可算吗——前向雅可比为三角矩阵，det J=1；①行列式与 mθ 无关；②无论 mθ 是否可逆，f⁻¹ 都可计算</span></figcaption>
+</figure>
+<figure class="slide" id="slide-13">
+<img src="slides/slide_13.png" alt="课件第13页 NICE：缩放层——加性耦合层体积保持（det J=1），不能整体缩放密度、表达力有限；前向 xᵢ=sᵢ·zᵢ（sᵢ>0）、逆向 zᵢ=xᵢ/sᵢ、雅可比 J=diag(s)">
+<figcaption><span class="sno">13</span><span class="stitle">NICE：缩放层——加性耦合层体积保持（det J=1），不能整体缩放密度、表达力有限；前向 xᵢ=sᵢ·zᵢ（sᵢ>0）、逆向 zᵢ=xᵢ/sᵢ、雅可比 J=diag(s)</span></figcaption>
+</figure>
+<figure class="slide" id="slide-14">
+<img src="slides/slide_14.png" alt="课件第14页 NICE：生成结果（MNIST 等数据集）">
+<figcaption><span class="sno">14</span><span class="stitle">NICE：生成结果（MNIST 等数据集）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>NICE：加性耦合层与缩放层</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 8</span><span class="chip">课件 9</span><span class="chip">课件 10</span><span class="chip">课件 11</span><span class="chip">课件 12</span><span class="chip">课件 13</span><span class="chip">课件 14</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第一部分讲 Flow 设计——使其性能好且易计算。首先介绍 NICE（Non-linear Independent Components Estimation）工作，由 Dinh 等人在 ICLR 2015 发表，是著名的深度标准化流模型实现，后续改进版叫 RealNVP。该模型主要有两个层：加性耦合层（Additive Coupling Layers）与缩放层（Rescaling Layers），通过迭代缩放实现确定性表达。</p><p>NICE 设计的特殊点在于分解流量：按维度把 z 分解为互斥的两部分——例如总维度 n，取中间维度 d（课件里虽写 d，实则随机取一维），把流量分开处理：前 d 维与后 n−d 维分别处理。加性耦合有两个操作：先说正向映射、再是逆向映射。正向映射里第一个操作叫 carry-over（在生态模拟映射中经常出现，算是惯用词）——直观表达是让输出 X 的前 d 维等于输入变量的前 d 维，直接从前位拿到输出；其他模型中也有类似操作，本质差不多，即输出等于输入。</p><p>另一部分是加性耦合（Additive Coupling）运算——名字虽复杂但运算简单：让输出的后 n−d 维等于输入隐变量的后 n−d 维，加上一个变量——这个变量是输入前 d 维经过 mθ 参数化映射的结果，这是我们要学习的一步。系统层左边是两个方块表示输入变量，右边方块是输入的前 d 维直接拿过来得到输出的前 d 维；输出的后 n−d 维等于对输入前 d 维做映射、再加上输入的后 n−d 维，相加得到输出。之后再到下一层进行同样的操作，相当于复用同一个系统。</p><p>我们设计的标准化流形成前向映射，上节课说过关注两个问题：第一个是这个映射到底是不是可逆；第二个是映射的雅可比矩阵有没有特殊性质（对角线或三角形）。先验证可逆性：逆向映射比较好写——第一个是 carry-over 操作（恒等映射），把输入的前位拿过来；逆向时已知 X 要求 Z，X 的前 d 维直接赋给 Z，剩下的后 n−d 维把刚才的加项减掉就可以走回来。这是它的一个设计特点：它把输入和输出对应起来，只去对另外一部分进行变化——这样无论正向映射还是逆向映射，都非常好做、非常好计算。</p><p>除了可逆，另一个要求是对应的矩阵是否高效计算。把雅可比矩阵直接写出来：carry-over 部分其地位就是一个标准的单位阵；后面这部分对 X 求导，也是一个单位阵加上一个偏导数——这样的雅可比矩阵是三角的，其行列式就是对角线元素的乘积为 1（因为对角线都是单位）。所以这样构造的简单映射是可逆的，而且对应的雅可比矩阵也是三角的，满足了模型对于流映射的要求。</p><p>比较重要的一点是：这两个矩阵的运算里没有涉及行列式的运算，这跟 mθ 的具体设计没关系——实际上我们关键关注的是雅可比矩阵的行列式为 1，所以 mθ 到底怎么设计、参数量多少、是否可逆或线性，在整个大模型设计中其实没有关系：基本上任何一种 mθ 的设计都是 OK 的，都不影响流模型结构。这样的话，你虽然模型很简单，但可以用一个复杂的 mθ 系统让模型表达能力变强——这就是它最重要的设计意图，属于最简单的 Normalizing Flow 模型。</p><p>之后还是同一批人提出了缩放层（Re-Scaling Layers）。刚才说的雅可比行列式为 1，其实是映射前后概率密度的体积变化：因为恒等映射体积不变，导致表达能力较弱——它可以对输入分布进行剪切、翻转或平移，但无法拉伸或压缩，表达能力有限。所以他们设计了简单的缩放：每个维度乘对应系数 sᵢ（sᵢ>0），这种对角矩阵的行列式容易计算，整体高效且表达力尚可。NICE 系统的结果显示效果还可以，但有些模糊——比如人脸生成，与之前讲的 VAE 模型效果略有区别；另外是 SVHN（车牌数字识别数据集），一个彩色简单数据集，结果看不出明显优势，性能有限。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>Carryover直观表达是让输出X的前D维等于输入变量的前D维，直接从前位拿到输出，这就是carryover操作。</p><p>比较重要的一点是，这两个矩阵的运算里没有涉及行列式的运算。这跟MC的具体设计没关系……基本上任何一种MC的设计都是OK的，都不影响整流模型结构。</p><p>它可以对输入分布进行剪切、翻转或平移。但无法拉伸或压缩，表达能力有限。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-realnvp">
+  <div class="slides"><figure class="slide" id="slide-15">
+<img src="slides/slide_15.png" alt="课件第15页 Real-NVP：Real-valued Non-Volume Preserving Transformation（ICLR 2017）——扩展 NICE 的表达能力">
+<figcaption><span class="sno">15</span><span class="stitle">Real-NVP：Real-valued Non-Volume Preserving Transformation（ICLR 2017）——扩展 NICE 的表达能力</span></figcaption>
+</figure>
+<figure class="slide" id="slide-16">
+<img src="slides/slide_16.png" alt="课件第16页 Real-NVP：仿射耦合——x1:d=z1:d 恒等；xd+1:n=zd+1:n⊙exp(αθ(z1:d))+μθ(z1:d)；αθ 与 μθ 均为神经网络，同时包含平移与缩放、且都是数据依赖的；对比 NICE 的加性耦合与（非数据依赖的）缩放层">
+<figcaption><span class="sno">16</span><span class="stitle">Real-NVP：仿射耦合——x1:d=z1:d 恒等；xd+1:n=zd+1:n⊙exp(αθ(z1:d))+μθ(z1:d)；αθ 与 μθ 均为神经网络，同时包含平移与缩放、且都是数据依赖的；对比 NICE 的加性耦合与（非数据依赖的）缩放层</span></figcaption>
+</figure>
+<figure class="slide" id="slide-17">
+<img src="slides/slide_17.png" alt="课件第17页 Real-NVP：逆映射——z1:d=x1:d；zd+1:n=(xd+1:n−μθ(z1:d))⊙exp(−αθ(z1:d))">
+<figcaption><span class="sno">17</span><span class="stitle">Real-NVP：逆映射——z1:d=x1:d；zd+1:n=(xd+1:n−μθ(z1:d))⊙exp(−αθ(z1:d))</span></figcaption>
+</figure>
+<figure class="slide" id="slide-18">
+<img src="slides/slide_18.png" alt="课件第18页 Real-NVP：雅可比矩阵与行列式——整体变换是非体积保持的">
+<figcaption><span class="sno">18</span><span class="stitle">Real-NVP：雅可比矩阵与行列式——整体变换是非体积保持的</span></figcaption>
+</figure>
+<figure class="slide" id="slide-19">
+<img src="slides/slide_19.png" alt="课件第19页 NICE vs Real-NVP：前向变换与雅可比/行列式对比">
+<figcaption><span class="sno">19</span><span class="stitle">NICE vs Real-NVP：前向变换与雅可比/行列式对比</span></figcaption>
+</figure>
+<figure class="slide" id="slide-20">
+<img src="slides/slide_20.png" alt="课件第20页 Real-NVP：生成结果（真实图像 vs 生成样本）">
+<figcaption><span class="sno">20</span><span class="stitle">Real-NVP：生成结果（真实图像 vs 生成样本）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-21">
+<img src="slides/slide_21.png" alt="课件第21页 Real-NVP：插值结果——用 f⁻¹ 把 4 张图映射到隐空间，在参数化流形上插值 z，再前向生成中间图像">
+<figcaption><span class="sno">21</span><span class="stitle">Real-NVP：插值结果——用 f⁻¹ 把 4 张图映射到隐空间，在参数化流形上插值 z，再前向生成中间图像</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>Real-NVP：仿射耦合</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 15</span><span class="chip">课件 16</span><span class="chip">课件 17</span><span class="chip">课件 18</span><span class="chip">课件 19</span><span class="chip">课件 20</span><span class="chip">课件 21</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>同一团队对之前的 NICE 文章进行了改进，提出了 RealNVP（Real-valued Non-Volume Preserving Transformation），发表在 2017 年 ICLR 上。当时生成对抗模型比较火，大家都在做，但那个模型不好训练且缺乏数学证明；RealNVP 理论较好且生成效果不错，因此备受关注——但很快大家发现其生成能力不如预期，所以后来逐渐沉寂。</p><p>RealNVP 针对 NICE 模型表达能力差的问题进行了改进：NICE 的映射是恒等加偏置、较为简单；RealNVP 将映射稍微复杂化。该模型设计与 NICE 类似，正向映射分两部分：第一部分是对输入进行 Coupling 操作（carry-over），输出保持不变；第二部分映射设计更复杂——原来 NICE 是直接加偏置，RealNVP 则将输入乘以尺度参数再加偏置：xd+1:n = zd+1:n ⊙ exp(αθ(z1:d)) + μθ(z1:d)，这些参数均与输入的另一部分（z1:d）相关联——它不光要加一个偏置，还要乘以这样的一个缩放的设计。这里的 αθ 和 μθ 都是我们的参数化网络设计。</p><p>这样的一个仿射变换，既包含了平移也包含了缩放，而且平移和缩放这两个操作都非常依赖数据——都依赖于输入的前 d 维数据，所以说这样提升了它的表达能力，提升了整个网络的改造。它跟之前 NICE 的映射比较：之前的映射有加性耦合，后边的缩放不是数据相关的、而是一个编码的缩放参数，所以相对较弱。</p><p>这是 RealNVP 模型的正向映射。像 NICE 一样，有了正向映射后要看反向映射是否可逆、以及雅可比矩阵的结构。逆向映射比较简单：如果知道 X，carry-over 部分就是把输出的 X 的 1 到 d 维赋予输入的 Z（Z1:d = X1:d），然后 Z 的剩下 n−d 维可以直接从刚才的输出写出来：zd+1:n = (xd+1:n − μθ(z1:d)) ⊙ exp(−αθ(z1:d))——因为这个映射是仿射变换、一一对应，通过数学代数变换就走回来了。</p><p>对应的雅可比矩阵：前面 carry-over 部分还是单位阵（因为是恒等元素），剩余部分是所说的形式、左下角是对角线形式——整体来说它还是三角形式，雅可比矩阵的行列式比较好计算、可以直接写出来：等于 exp(Σαᵢ) 的形式。整个缩放层的体积变化不再是 1，它的表达能力大大增强了。</p><p>把刚才讲的两个模型并列起来稍微对比一下：看起来两个模型是完全一样的——前一项的设计都是用 carry-over 形式来做设计，这样保证在逆向映射时可以直接从 X 里读取信息，读到信息后偏置和缩放系数就能直接算出来；算出系数后，逆向映射的输出就可以通过代数直接计算。因为这个性质在下半节课比较重要，请大家记一下：它们的雅可比矩阵和行列式都是三角式结构、比较好计算。</p><p>看 RealNVP 的生成效果，展示了三种不同数据集的情况：左边是真实数据、右边是生成的——在三维自然数（MNIST）系统中生成效果很好，看不出差别；他们对人脸的生成效果比较逼真；最下面应该是卧室，但生成结构与自然人脸图像相比还有差距。大家知道为什么会有这种效果吗？这应该是可以预测的——感觉人脸是比较复杂的对象，新模型出来后一般都在首页展示人脸或动物脸的高分图像来看生成效果；但为什么同样一个模型它的人脸效果反而是最好的？可以看到它对一般数据的生成效果比较差——其实前提是图像归一化后，对象具有高度结构化和统一的特点：原始数据里人脸是非常结构化的（两个眼睛、鼻子都在固定位置），虽然数据分布看起来多样性很强、细节多，但对模型来说比较好拟合；用自然图像来说，组织像素信号很难，当时如果只在人脸图片上做实验会简单很多。这是一个无条件生成的结构。</p><p>下面这个结果是在隐变量模型中常见的一种实验结构——插值效果：每个数据集取 4 张图（左上、右上、右下、左下），叫 X1 到 X4，把这 4 张图输入训练好的网络得到对应的编码（这比较好计算，因为模型是可逆的、能直接算出来）；然后利用一种插值形式——用三角函数插值的方法，用不同的 cos 结构和范式对 z1 到 z4 进行插值，插值以后得到 z，再输入给模型得到对应的输出结果。可以看到变换虽不平滑，但实现了变化——比如高斯输入的人脸与背景的变化较平滑。这说明可逆变换设计得到的隐变量具有语义、刻画了图像的解析信息（如人脸、背景像素或个人属性），逆变换后能输出有意义的数据——说明 Flow 模型是可逆的、设计简单、生成的 z 有意义，可通过统一系统处理。这是第一部分介绍的两个基础模型，主要展示如何设计使 fθ 对应的雅可比矩阵为三角形、便于计算。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>当时生成对抗模型比较火，大家都在做，但该模型不好训练且缺乏数学证明。RealNVP理论较好且生成效果不错，因此备受关注。但很快大家发现其生成能力不如预期，所以后来逐渐沉寂。</p><p>它不光是要加一个偏置，还要乘以这样的一个缩放的设计。</p><p>其实前提是图像的归一化后，对象具有高度结构化和统一的特点。……虽然数据分布看起来多样性很强，细节多，但对模型来说比较好见（拟合）。</p><p>这说明可逆变化设计得到的自变量具有语义，刻画了图像的解析信息。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-ar-flow">
+  <div class="slides"><figure class="slide" id="slide-22">
+<img src="slides/slide_22.png" alt="课件第22页 Autoregressive Flow Models：把自回归模型看成流模型——条件概率为高斯（Gaussian AR Model），μᵢ 与 αᵢ 为神经网络（i>1），μ1、α1 为常数（先验分布）">
+<figcaption><span class="sno">22</span><span class="stitle">Autoregressive Flow Models：把自回归模型看成流模型——条件概率为高斯（Gaussian AR Model），μᵢ 与 αᵢ 为神经网络（i>1），μ1、α1 为常数（先验分布）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-23">
+<img src="slides/slide_23.png" alt="课件第23页 Autoregressive Flow Models：如何采样——替代采样器：①采样 zᵢ∼N(0,1) ②令 xᵢ=exp(αᵢ)zᵢ+μᵢ 并计算下一步的 μ、α；逐维进行">
+<figcaption><span class="sno">23</span><span class="stitle">Autoregressive Flow Models：如何采样——替代采样器：①采样 zᵢ∼N(0,1) ②令 xᵢ=exp(αᵢ)zᵢ+μᵢ 并计算下一步的 μ、α；逐维进行</span></figcaption>
+</figure>
+<figure class="slide" id="slide-24">
+<img src="slides/slide_24.png" alt="课件第24页 Autoregressive Flow Models：流模型解释——从标准高斯采样 z1..zn、经可逆映射生成 x1..xn，即高斯 AR 模型可看作一个 Normalizing Flow 模型">
+<figcaption><span class="sno">24</span><span class="stitle">Autoregressive Flow Models：流模型解释——从标准高斯采样 z1..zn、经可逆映射生成 x1..xn，即高斯 AR 模型可看作一个 Normalizing Flow 模型</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>把自回归模型看成流模型</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（前）</span><span class="chip">课件 22</span><span class="chip">课件 23</span><span class="chip">课件 24</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>下半节课讲两种稍复杂的内容：如何从流模型的视角建模自回归系统（AR 模型），并探讨二者联系。先直观讲解 AR：回顾自回归模型的基础概率分布表达形式——p(x)=Π p(xᵢ|x<ᵢ)，假设各条件分布均为高斯分布：p(xᵢ|x<ᵢ)=N(μᵢ(x1..xᵢ₋₁), exp(αᵢ(x1..xᵢ₋₁)))，均值和方差依赖前序变量 X；映射后 μ 与 α 由神经网络学习得到；X1 为先验分布、无前置条件，其参数可学习、代表模型初始状态。</p><p>AR 模型如何采样？最简单是按分解步骤采样：先采样 X1，再依次采样后续结构，得到最终输出。针对该高斯 AR 模型还有另一种采样方法——从重参数化思想理解，直接对分布进行采样：令 Z1 到 Zn 为 n 个独立的高斯分布随机变量，X1 以 μ1 为均值、α1 为方差，通过重参数化可表达为 xᵢ = exp(αᵢ)zᵢ + μᵢ；这样采样得到的 X1 仍服从原分布。得到 X1 后，它是由事先采样的 Z1 等变量计算得出的组合，就可以算 μ2 和 α2，然后采 X2……一直采下去，这也是一个回归的过程。</p><p>为什么可以这样采样？因为计算得到的 X1、X2、X3 的分布和原分布是一样的——从模型里采样一个 X，就按建模方法采样：先把这些标准分布算出来、再逐个计算，它们的分布是一样的、属于同分布。大家可能会问，为什么要这样做呢？想象一下：通过这个采样，可以用之前学过的流模型来解释——从标准高斯分布到 Z1、Z2、直到 Zn，每个都是标准分布，通过映射直接得到 X1..Xn，这个映射是可逆的。从这个角度看，高斯 AR 模型也可以被当作一种流模型——这就相当于给 AR 模型引入了一个隐变量（latent）的建模方法。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>X1为先验分布，无前置条件。其参数可学习，代表模型初始状态。</p><p>为什么可以这样采样？因为计算得到的X1、X2和X3，其分布和原分布是一样的。</p><p>从这个角度看，高斯AR模型也可以被当作一种模型（流模型）。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-maf">
+  <div class="slides"><figure class="slide" id="slide-25">
+<img src="slides/slide_25.png" alt="课件第25页 MAF：Masked Autoregressive Flow（NeurIPS 2017）——变换 f: Z→X 实现 p(xᵢ|x<ᵢ)=N(μᵢ(x<ᵢ), exp(αᵢ(x<ᵢ)))">
+<figcaption><span class="sno">25</span><span class="stitle">MAF：Masked Autoregressive Flow（NeurIPS 2017）——变换 f: Z→X 实现 p(xᵢ|x<ᵢ)=N(μᵢ(x<ᵢ), exp(αᵢ(x<ᵢ)))</span></figcaption>
+</figure>
+<figure class="slide" id="slide-26">
+<img src="slides/slide_26.png" alt="课件第26页 MAF：前向映射（采样）是自回归的、串行且慢——O(n) 时间">
+<figcaption><span class="sno">26</span><span class="stitle">MAF：前向映射（采样）是自回归的、串行且慢——O(n) 时间</span></figcaption>
+</figure>
+<figure class="slide" id="slide-27">
+<img src="slides/slide_27.png" alt="课件第27页 MAF：前向映射 z→x（逐维采样）；逆向映射 x→z——通过 masked network 并行计算所有 μᵢ、αᵢ，再并行算出所有 zᵢ">
+<figcaption><span class="sno">27</span><span class="stitle">MAF：前向映射 z→x（逐维采样）；逆向映射 x→z——通过 masked network 并行计算所有 μᵢ、αᵢ，再并行算出所有 zᵢ</span></figcaption>
+</figure>
+<figure class="slide" id="slide-28">
+<img src="slides/slide_28.png" alt="课件第28页 MAF 的性质：①前向映射是自回归的→采样慢；②逆映射可并行化→似然评估高效；③雅可比是三角的（AR 性）→行列式计算容易">
+<figcaption><span class="sno">28</span><span class="stitle">MAF 的性质：①前向映射是自回归的→采样慢；②逆映射可并行化→似然评估高效；③雅可比是三角的（AR 性）→行列式计算容易</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>MAF：Masked Autoregressive Flow</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（中）</span><span class="chip">课件 25</span><span class="chip">课件 26</span><span class="chip">课件 27</span><span class="chip">课件 28</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>有了流模型解释以后，看一个模型叫 MAF（Masked Autoregressive Flow），也是 2017 年提出的一种模型算法，出现在 ICLR/NeurIPS 前后的一些流模型方法中。它的名字叫 Masked Autoregressive Flow 这种 AR 模型：定义这样一个前向映射 F：Z→X，实现 p(xᵢ|x<ᵢ)=N(μᵢ(x<ᵢ), exp(αᵢ(x<ᵢ)))——它跟刚才我们采样的方法是完全一样的。</p><p>算法可视化：下面是 z1 到 zn，这是我们采样得到的服从标准正态分布的隐变量维度；采样一个输出 X 时，每一个 X 是由前面一个 X 计算（αᵢ、μᵢ 通过另一个映射）再和当前这个 zᵢ 结合计算出来——只是把刚才采样过程用可视化的方法展示。这样的采样过程可以并行吗？每个都是高斯的，好像必须串一起：我们在计算每一维度的时候，还是得从之前那个（维度）算起、然后应用计算法——所以它的前向映射必须是串行的：它虽然是 AR、符合 AR 的特征，但必须是串行的、非常慢，生成的过程是 O(n) 的。</p><p>看它的前向映射（从流模型的角度大概分两步）：第一步是计算得到对应的 μ、α，然后每一个输出的 X 维度就可以通过确定性的计算方法确定：xᵢ=exp(αᵢ)zᵢ+μᵢ，通过当前的 X 计算下一步的 μ、α，再采下一步不断得到。对于这样一个前向映射，想求它的逆向映射：给定一个样本 X（它每维度是多少），想求它对应的 latent——第一步在给定所有的 X 的时候，我们可以并行地把所有对应的 αᵢ 和 μᵢ 并行地算出，然后并行算出所有 zᵢ=(xᵢ−μᵢ(x<ᵢ))/exp(αᵢ(x<ᵢ))。</p><p>为什么逆向能并行？最大的特点是：当你计算逆向映射的时候，你就知道所有的 X——知道所有的 X，又有网络，每个 X 对应的 μ、α 就都知道，求 z2 的时候前面这些值不用一步一步推、直接就能算。类似于我们之前 AR 模型训练的时候有这样一个可以并行的方法：当你（训练/求似然）的时候所有的维度都知道，那计算的时候就不依赖于 AR 的串行——每个部分都是已知的，直接并行算。</p><p>总结 MAF 的性质：①前向映射是自回归的，所以采样比较慢（必须串行生成）；②逆向映射是可以并行化的，所以似然比较好计算——因为给定 X 求似然的过程可以并行、求逆后比较方便；③雅可比是三角的（AR 性），行列式较好计算。这两个性质保证了 MAF 的自然（对数）似然高效可算——因为训练要最大化似然，所以这种模型比较好训练；但它的采样比较慢——这种模型之后会产生一个特殊的用法，还有它发挥功能的地方。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>它虽然是AR，但是它还符合这个AR的特征，它必须是串行的，所以说非常慢。它的这个生成的过程是一个O(N)的。</p><p>它最大的一个特点，为什么能并行计算，就是因为当你计算逆向映射的时候，你就知道所有的X。</p><p>它比较好训练，但是它的采样比较慢。这种模型之后会产生一个特殊的用法，所以还有它发挥功能的地方。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-iaf">
+  <div class="slides"><figure class="slide" id="slide-29">
+<img src="slides/slide_29.png" alt="课件第29页 IAF：Inverse Autoregressive Flow——MAF 在 X 上自回归（p(X|x<ᵢ)），IAF 在 Z 上自回归（p(X|x≤ᵢ)）">
+<figcaption><span class="sno">29</span><span class="stitle">IAF：Inverse Autoregressive Flow——MAF 在 X 上自回归（p(X|x<ᵢ)），IAF 在 Z 上自回归（p(X|x≤ᵢ)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-30">
+<img src="slides/slide_30.png" alt="课件第30页 IAF：前向映射 z→x——采样 zᵢ∼N(0,1)、并行计算所有 μᵢ(z<ᵢ)、αᵢ(z<ᵢ)，再并行得到 xᵢ=exp(αᵢ)zᵢ+μᵢ（快）">
+<figcaption><span class="sno">30</span><span class="stitle">IAF：前向映射 z→x——采样 zᵢ∼N(0,1)、并行计算所有 μᵢ(z<ᵢ)、αᵢ(z<ᵢ)，再并行得到 xᵢ=exp(αᵢ)zᵢ+μᵢ（快）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-31">
+<img src="slides/slide_31.png" alt="课件第31页 IAF：逆向映射 x→z——只能串行计算（慢）：zᵢ 依赖于 z<ᵢ，必须逐个推">
+<figcaption><span class="sno">31</span><span class="stitle">IAF：逆向映射 x→z——只能串行计算（慢）：zᵢ 依赖于 z<ᵢ，必须逐个推</span></figcaption>
+</figure>
+<figure class="slide" id="slide-32">
+<img src="slides/slide_32.png" alt="课件第32页 IAF：逆映射串行步骤——先由 x1 得 z1，再算 μ2、α2，再得 z2，依次递推">
+<figcaption><span class="sno">32</span><span class="stitle">IAF：逆映射串行步骤——先由 x1 得 z1，再算 μ2、α2，再得 z2，依次递推</span></figcaption>
+</figure>
+<figure class="slide" id="slide-33">
+<img src="slides/slide_33.png" alt="课件第33页 IAF 总结：前向并行且快、逆向串行且慢；重要注记——对自身生成过的样本，仍可高效评估似然（缓存 z1..zn），对任意数据点则不成立">
+<figcaption><span class="sno">33</span><span class="stitle">IAF 总结：前向并行且快、逆向串行且慢；重要注记——对自身生成过的样本，仍可高效评估似然（缓存 z1..zn），对任意数据点则不成立</span></figcaption>
+</figure>
+<figure class="slide" id="slide-34">
+<img src="slides/slide_34.png" alt="课件第34页 NICE 和 Real-NVP 是 IAF 的特例——x1:d=u1:d，xd+1:D=ud+1:D⊙exp(α(u1:d))+μ(u1:d)；平移缩放因子可单趟（非自回归）算完">
+<figcaption><span class="sno">34</span><span class="stitle">NICE 和 Real-NVP 是 IAF 的特例——x1:d=u1:d，xd+1:D=ud+1:D⊙exp(α(u1:d))+μ(u1:d)；平移缩放因子可单趟（非自回归）算完</span></figcaption>
+</figure>
+<figure class="slide" id="slide-35">
+<img src="slides/slide_35.png" alt="课件第35页 Discussion：IAF vs MAF——两者都有表达力但权衡不同：MAF 似然快、采样慢→适合最大似然/密度估计；IAF 采样快、似然慢→适合实时生成；能否兼得两者优点？">
+<figcaption><span class="sno">35</span><span class="stitle">Discussion：IAF vs MAF——两者都有表达力但权衡不同：MAF 似然快、采样慢→适合最大似然/密度估计；IAF 采样快、似然慢→适合实时生成；能否兼得两者优点？</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>IAF：Inverse Autoregressive Flow</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（中）</span><span class="chip">课件 29</span><span class="chip">课件 30</span><span class="chip">课件 31</span><span class="chip">课件 32</span><span class="chip">课件 33</span><span class="chip">课件 34</span><span class="chip">课件 35</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>MAF 模型讲完后，还有一个相反的 IAF（Inverse Autoregressive Flow）：MAF 中 X 的条件分布依赖于之前的 X<ᵢ；IAF 不同，其条件分布依赖于前面的 Z≤ᵢ（从 z1 到 zᵢ）——它也是自回归模型，但依赖条件不同，这保证了两种模型的耦合性质。</p><p>对于 IAF 的前向计算：隐变量服从标准正态分布，可直接采样得到所有 z 值；所有采样可同时输入映射——因为不依赖序列计算，α 和 μ 可并行得出；一旦得到这些 μ、α，xᵢ=exp(αᵢ)zᵢ+μᵢ 也是可以并行计算的，不依赖于前一步——所以 IAF 模型跟 MAF 模型很大不同的一点，就是它的前向映射是并行的、很快。</p><p>但这样的话，它的一个问题是什么呢？前向映射并行，很大的问题就是模型设计就不能分层；这样它的代价就是反向映射必须是串行的：给定一个样本 X 想求对应的 z2，你会发现通过前面的公式，z2 依赖于前面所有的 z1——所以没办法，求 z 只能从第一个开始求：能求 z1（z1=(x1−μ1)/exp(α1)），然后算 μ2、α2，再求 z2，再求 z3……依次递推，所以 IAF 模型的反向映射只能串行计算。</p><p>这个 IAF 跟 MAF，它的前向映射和反向映射的并行性跟串行性是完全相反的。但 IAF 有一个非常特殊的一点：它的反向映射虽然从理论上推导是比较慢的、是串行的，但是——对于它自己生成过的一个样本，它的反向依然是可以直接计算的、依然可以并行。为什么？比如我输出的这个样本是我采样得到一个 z、然后计算得到输出样本 X；因为在前向运算以后，你就知道这些 z1..zn 和 X——那你在反向预测的时候，你不用再一个一个算：通过缓存 z1..zn，对自身生成样本的似然评估仍然高效。这稍微有点奇怪：为什么要先前向去生成过程、然后之后又要去逆向求密度？因为你不光是要得到这些 z，你其实是要得到它们对应的相应密度——得到密度以后你可以知道对应的这个 X 它的似然是多少，是为了计算似然方面提供便利。</p><p>介绍了这两个大的方向以后，可以强调一点：之前介绍的 NICE、RealNVP 这两个模型，其实都是刚才介绍的 IAF 模型的一种——把 RealNVP 的框架写出来：前向映射前 d 维输出等于输入隐变量的前 d 维（carry-over 操作），后 n−d 维输出等于输入的后 n−d 维和另一个输入（前 d 维的函数）进行运算——这个形式其实跟我们刚才那个 IAF 的形式完全是一样的。所以 NICE/RealNVP 是可以通过单趟（非自回归）高效计算平移缩放因子的 IAF 特例。</p><p>在这一节最后稍微比较一下刚才介绍的两个模型：MAF 模型每个 Xi 依赖前面的 X1 到 i−1，逆向运算可以并行、能快速计算似然——因此非常适合最大似然学习、做参数估计（密度估计）；IAF 模型恰恰相反，前向计算很快（各步可并行），但反向计算涉及统计量、是串行的——所以在实时生成中前向快有优势。最后的问题是：能否把这两个模型结合到一个框架里、结合两者优点？细节上为何能并行或串行，课下再研究，先记住结构。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>IAF不同，其条件分布依赖于前面的Z，即从G1到GX2。它是自回归模型，但依赖条件不同。</p><p>这个NF跟MAF，它是前向映射和反向映射，它的并行性跟串行性是完全相反的。</p><p>但是有一个比较重要的点，就是对于它自己生成过的一个样本，它的反向依然是可以直接计算的，它的反向依然是可以定的（并行）。</p><p>所以这个VC（NICE/RealNVP）模，它是可以通过单趟一次前向直接计算的。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-distillation">
+  <div class="slides"><figure class="slide" id="slide-36">
+<img src="slides/slide_36.png" alt="课件第36页 Probability Distillation：回顾 WaveNet——基于因果空洞一维卷积的音频生成模型，自回归采样慢→如何用 MAF/IAF 提升效率">
+<figcaption><span class="sno">36</span><span class="stitle">Probability Distillation：回顾 WaveNet——基于因果空洞一维卷积的音频生成模型，自回归采样慢→如何用 MAF/IAF 提升效率</span></figcaption>
+</figure>
+<figure class="slide" id="slide-37">
+<img src="slides/slide_37.png" alt="课件第37页 Model Distillation（蒸馏）——学生分布 p_s 通过最小化 KL 散度 D_KL(p_s‖p_t)=E_{x∼p_s}[log p_s(x)−log p_t(x)] 逼近教师分布 p_t；蒙特卡洛优化需要：①学生模型的样本 x ②学生给 x 的似然 ③教师给 x 的似然；问题：MAF/IAF 分别派给谁">
+<figcaption><span class="sno">37</span><span class="stitle">Model Distillation（蒸馏）——学生分布 p_s 通过最小化 KL 散度 D_KL(p_s‖p_t)=E_{x∼p_s}[log p_s(x)−log p_t(x)] 逼近教师分布 p_t；蒙特卡洛优化需要：①学生模型的样本 x ②学生给 x 的似然 ③教师给 x 的似然；问题：MAF/IAF 分别派给谁</span></figcaption>
+</figure>
+<figure class="slide" id="slide-38">
+<img src="slides/slide_38.png" alt="课件第38页 From WaveNet to Parallel WaveNet——教师模型：强大的待蒸馏模型（似然评估快、易用 MLE 训练、采样慢对教师不是问题）→ MAF；学生模型：目标模型（采样快、密度估计慢，但对自身生成的样本可通过缓存高效计算）→ IAF">
+<figcaption><span class="sno">38</span><span class="stitle">From WaveNet to Parallel WaveNet——教师模型：强大的待蒸馏模型（似然评估快、易用 MLE 训练、采样慢对教师不是问题）→ MAF；学生模型：目标模型（采样快、密度估计慢，但对自身生成的样本可通过缓存高效计算）→ IAF</span></figcaption>
+</figure>
+<figure class="slide" id="slide-39">
+<img src="slides/slide_39.png" alt="课件第39页 Parallel WaveNet：两阶段训练——（教师预训练 + 概率蒸馏）">
+<figcaption><span class="sno">39</span><span class="stitle">Parallel WaveNet：两阶段训练——（教师预训练 + 概率蒸馏）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-40">
+<img src="slides/slide_40.png" alt="课件第40页 Parallel WaveNet：并行生成——随机白噪声 z 经学生模型并行生成输出 x">
+<figcaption><span class="sno">40</span><span class="stitle">Parallel WaveNet：并行生成——随机白噪声 z 经学生模型并行生成输出 x</span></figcaption>
+</figure>
+<figure class="slide" id="slide-41">
+<img src="slides/slide_41.png" alt="课件第41页 Parallel WaveNet：结果对比（Original WaveNet vs Parallel WaveNet）">
+<figcaption><span class="sno">41</span><span class="stitle">Parallel WaveNet：结果对比（Original WaveNet vs Parallel WaveNet）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div class="sec-tt">
+        <h2>概率蒸馏与 Parallel WaveNet</h2>
+        <div class="sec-meta"><span class="time">录音：第 3 段（前）</span><span class="chip">课件 36</span><span class="chip">课件 37</span><span class="chip">课件 38</span><span class="chip">课件 39</span><span class="chip">课件 40</span><span class="chip">课件 41</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>讲案例前，先讲讲模型蒸馏的故事：比如 Model Distillation 是什么意思？其实很好理解：我们有两个模型，一个叫 Teacher（教师）、一个叫 Student（学生）。蒸馏操作的目标，就是让学生模型的输出分布去逼近教师模型的输出分布——通过调整学生模型的参数，使其输出接近教师模型。一般学生模型较小、运行较快；而教师模型较大、性能较强但速度较慢——这样我们可以让高效的小模型实现强大教师模型的功能、且速度更快。</p><p>为了优化目标函数（让学生分布尽量接近教师分布），我们需要知道如何优化：首先计算学生和教师模型在给定输入下的概率分布（KL 散度 D_KL(p_s‖p_t)=E_{x∼p_s}[log p_s(x)−log p_t(x)]）；另外，两个模型输出分布的距离期望服从学生分布，因此需要学生模型的样本——因为要处理期望、无法直接计算，必须按学生模型进行采样获得样本，用于后续计算损失值。求括号里的值：前面这一项是学生模型的对数似然、后面这一项是教师模型的对数似然。</p><p>那先前介绍了 MAF 和 IAF，我们肯定是想要一个做教师、一个做学生。哪个做学生比较好呢？采样快是吧——在推理这一方面，肯定想让学生模型采样比较快，因为我们最后要用的是这个学生模型，在训练好了以后在应用（推理）当中进行使用。那 MAF 为什么作为教师模型？刚才讲了它的特点：教师模型是一个比较强大的模型，我们要从它里面提取信息——这样一个教师模型必须得对样本计算似然比较快一点，因为这样我们计算 KL 散度就比较方便，才能比较好地用最大似然的方法去训练。但我们刚才说 MAF 采样比较慢——采样慢这个问题在蒸馏框架中是没有关系的：因为我们最后是要用学生模型，从教师模型中提取一些特征能力到学生模型，最终用学生模型生成新的样本，不需要教师模型去采样——这样就可以通过这个蒸馏框架的规则来排解掉一个比较大的问题。</p><p>接下来是学生模型的实现：学生模型是最终目标，其最大特点是采样快。刚才提到教师模型计算对数似然较慢，若用该模型实现服务速度不理想——为此引入一种方法能高效计算教师模型的似然：前提是样本分布一致；恰好中间流架构要求样本同分布，这与教师模型性质契合，可嵌入框架获得好效果。具体做法分两阶段展示：第一阶段是教师预训练——先收集额外样本，用最大化似然法训练教师网络（因 MAF 模型计算似然较快，可用大量数据高效训练这个大网络）；第二阶段固定 MAF 模型进行蒸馏——不再从外部数据出发，因为对于任意给定样本 MAF 无法高效计算似然，所以直接采样一些数据让学生模型直接生成样本；对于蒸馏训练，用教师模型可以高效地计算对应的 KL 项，用学生模型（IAF）也可以高效地计算该项（对自身生成样本通过缓存）——若教师和学生的似然都能高效计算，则整个 KL 散度都是可高效计算的——这样通过这个框架，规避掉两个模型的缺点、把各自的优点结合起来（分别是高效的自然（对数）似然和高效的采样）。</p><p>最后看一些结构：用刚才说的框架对一开始的 WaveNet 系统做改造——之前的 AR 模型（WaveNet）用 IAF 模型实现后，生成过程可以并行：输入不再是逐个信号，输出也是并行的。左边明显是 AR 模型（WaveNet），右边通过蒸馏算法把 AR 模型蒸馏到并行网络（Parallel WaveNet），效率也非常高。</p><p>WaveNet 是音频生成模型，基于因果空洞一维卷积，自回归采样慢——通过概率蒸馏框架把 WaveNet 蒸馏成 Parallel WaveNet，实现高质量并行语音合成（原始 WaveNet vs 并行 WaveNet 对比）。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>蒸馏操作的目标，就是让学生模型的输出分布去逼近教师模型的输出分布。</p><p>采样慢这个问题，在我们这个蒸馏的框架中，是没有关系的。因为我们最后是要用这个学生模型……我们不需要教师模型去采样。</p><p>若教师和学生的似然都能高效计算，则整个PS（KL）整体都是可高效计算的。这样通过该框架，规避掉两个框架的缺点，把他们好的点结合起来。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-summary">
+  <div class="slides"><figure class="slide" id="slide-42">
+<img src="slides/slide_42.png" alt="课件第42页 Summary：NF 的关键动机——用可逆变换 fθ 加变量变换公式把简单分布变成复杂分布；优点：边缘似然精确可算可优化、后验推断精确可算；缺点：x 与 z 必须连续且同维，对 fθ 网络结构施加严格约束">
+<figcaption><span class="sno">42</span><span class="stitle">Summary：NF 的关键动机——用可逆变换 fθ 加变量变换公式把简单分布变成复杂分布；优点：边缘似然精确可算可优化、后验推断精确可算；缺点：x 与 z 必须连续且同维，对 fθ 网络结构施加严格约束</span></figcaption>
+</figure>
+<figure class="slide" id="slide-43">
+<img src="slides/slide_43.png" alt="课件第43页 Summary：Flow 构造策略——简单双射级联；三角雅可比构造（NICE、Real-NVP）；自回归实现（用自回归结构构建可逆流，在前向与逆向速度之间权衡）">
+<figcaption><span class="sno">43</span><span class="stitle">Summary：Flow 构造策略——简单双射级联；三角雅可比构造（NICE、Real-NVP）；自回归实现（用自回归结构构建可逆流，在前向与逆向速度之间权衡）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">08</span>
+      <div class="sec-tt">
+        <h2>总结：Normalizing Flow 模型</h2>
+        <div class="sec-meta"><span class="time">录音：第 3 段（后）</span><span class="chip">课件 42</span><span class="chip">课件 43</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>总结一下这节课的内容。标准化流模型的出发点是想把 AR 模型跟隐变量模型的优点结合——设计一种既有表达力、似然又自然好计算的方案：把先验分布 pZ 通过确定可逆映射 fθ、用变量变换公式建模它们之间的关系。优点在于：给一个 X 后，可以确切计算对应的似然；而且后验分布（Z 的分布）的推断也可以通过变换直接计算。缺点在于 X 和 Z 必须是连续且同维度的，否则不行——这个同维度且可逆的要求很大程度上约束了 Flow 的设计范围，让系统表现能力稍差、不如其他的生成模型。</p><p>最后讲了一下怎么构造这个系统：因为标准化流模型的关键点就在于这个 Flow 是怎么构造的。我们讲了一种用小而简单的可逆网络级联的方法去构造；今天讲了 NICE、RealNVP 两种具体方式（三角雅可比构造）；最后把流模型跟 AR 模型组合起来，讲两种自回归流模型（MAF、IAF）的框架——把它嵌到一个蒸馏的框架里形成一个并行系统（Parallel WaveNet）。这就是我们这一节的内容，如果没有什么问题，大家可以下课了。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>标准化流模型的出发点是想把AR模型跟隐变量模型优点结合。设计一种既有流量又自然好计算的方案。</p><p>缺点在于X和G必须是连续且同维度的，否则不行。这个同维度且可逆的要求，很大程度上约束了FC（fθ）的设计范围，让系统表现能力稍差。</p><p>把它嵌到一个正的框架里，形成一个并行。OK，这就是我们这一节的内容，如果没有什么问题，大家可以下课了。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（生成式模型与科学智能应用）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>

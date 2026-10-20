@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>矿物物理学 · 第12节 4.2 页岩气和煤层气｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.videos{margin-top:14px;border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.video + .video{border-top:1px solid #e4e9f0;}
+.videos h4{font-size:12.5px;font-weight:700;color:#0a1f38;background:#f2f5f9;padding:8px 12px;border-bottom:1px solid #e4e9f0;}
+.videos video{display:block;width:100%;max-height:460px;background:#0b0f14;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>矿物物理学 · 第12节 4.2 页岩气和煤层气</h1>
+    <div class="sub">第12节 4.2 页岩气和煤层气 ｜ 2026-10-20 ｜ 郭光军</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 51 页 · 整理 16 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-opening">01 开场与页岩气简介</option>
+<option value="sec-adsorption-design">02 实例1：模拟页岩气的微观吸附（构型设计）</option>
+<option value="sec-adsorption-result">03 实例1：吸附密度随倾角的变化</option>
+<option value="sec-adsorption-explain">04 实例1：粗糙度与层积吸附势能</option>
+<option value="sec-adsorption-conclusion">05 实例1：结论</option>
+<option value="sec-nano-flow">06 实例2：模拟页岩气的纳米流动（上）——泵与流量</option>
+<option value="sec-open-vs-closed">07 实例2：开放体系与封闭体系</option>
+<option value="sec-javadpour">08 实例2：封闭体系首次证实 Javadpour 方程</option>
+<option value="sec-bend">09 倾斜角与转向角对流动的影响</option>
+<option value="sec-twophase">10 实例3：模拟气液两相流——圆管孔中的水锁</option>
+<option value="sec-waterlock">11 实例3：水锁的形成机理与模型</option>
+<option value="sec-dwl">12 实例3：狭缝孔与变形水层模型</option>
+<option value="sec-summary">13 小结：把模拟做对</option>
+<option value="sec-coalbed">14 煤层气与瓦斯突出</option>
+<option value="sec-coal-shear">15 煤的力解产气模拟</option>
+<option value="sec-hw-feedback">16 课后：3.3 并行作业反馈</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 矿物物理学-4.2-页岩气和煤层气.pdf 逐页渲染，转写原文见 record_20261020.txt。</div>
+<section class="sec" id="sec-opening">
+  <div class="slides"><figure class="slide" id="slide-01">
+<img src="slides/slide_01.png" alt="课件第1页 封面：分子模拟在熔流体研究中的应用——页岩气和煤层气（授课人：郭光军）">
+<figcaption><span class="sno">01</span><span class="stitle">封面：分子模拟在熔流体研究中的应用——页岩气和煤层气（授课人：郭光军）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-02">
+<img src="slides/slide_02.png" alt="课件第2页 页岩气：储量巨大的非常规天然气，赋存于富有机质泥页岩及其夹层的微纳米孔隙中，主要以吸附态和游离态存在；需要用水平井和水力压裂技术进行开采">
+<figcaption><span class="sno">02</span><span class="stitle">页岩气：储量巨大的非常规天然气，赋存于富有机质泥页岩及其夹层的微纳米孔隙中，主要以吸附态和游离态存在；需要用水平井和水力压裂技术进行开采</span></figcaption>
+</figure>
+<figure class="slide" id="slide-03">
+<img src="slides/slide_03.png" alt="课件第3页 页岩气与常规油气的差别：常规油气储层砂岩（毫米尺度孔隙、达西流） vs 非常规天然气储层页岩（微纳米尺度孔隙、非达西流）；通常的油气开发技术不再适用于页岩气开发">
+<figcaption><span class="sno">03</span><span class="stitle">页岩气与常规油气的差别：常规油气储层砂岩（毫米尺度孔隙、达西流） vs 非常规天然气储层页岩（微纳米尺度孔隙、非达西流）；通常的油气开发技术不再适用于页岩气开发</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>开场与页岩气简介</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 1</span><span class="chip">课件 2</span><span class="chip">课件 3</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>这节课讲页岩气和煤层气。页岩气是一种储量巨大的非常规天然气，赋存于富有机质泥页岩及其夹层的微纳米孔隙中，主要以吸附态和游离态存在，需要用水平井和水力压裂技术进行开采。好多年前河南那边打了特别多页岩气的井，产量也都上了好几百方了，逐渐就产出了；在这个过程中，页岩气评价有一个很重要的问题——想知道孔隙里头那个小小小孔里头能够有多少气。</p><p>计算起来很简单：要估算总气量，把吸附气量估算出来，再加上游离气量部分，溶解气少、一般忽略。</p><p>页岩气与常规油气差别很大：常规油气的储层是砂岩，毫米尺度孔隙、达西流；非常规天然气的储层是页岩，微纳米尺度孔隙、非达西流——通常的油气开发技术不再适用于页岩气开发。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>页岩气是一种储量巨大的非常规天然气，赋存于富有机质泥页岩及其夹层的微纳米孔隙中，主要以吸附态和游离态存在；需要用水平井和水力压裂技术进行开采。</p><p>计算起来很简单，你要想估算总气量，那你把吸附气量估算出来，再往游离气量部分一加，溶解气少。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-adsorption-design">
+  <div class="slides"><figure class="slide" id="slide-04">
+<img src="slides/slide_04.png" alt="课件第4页 微纳米尺度的吸附现象">
+<figcaption><span class="sno">04</span><span class="stitle">微纳米尺度的吸附现象</span></figcaption>
+</figure>
+<figure class="slide" id="slide-05">
+<img src="slides/slide_05.png" alt="课件第5页 实例1：模拟页岩气的微观吸附——构型设计：右侧吸附面固定为石墨（0001）晶面（以往大量模拟中广泛使用）；左侧为将石墨（0001）晶面倾斜α角后形成的新吸附面（α为石墨（0001）面与Y方向即孔壁的夹角）">
+<figcaption><span class="sno">05</span><span class="stitle">实例1：模拟页岩气的微观吸附——构型设计：右侧吸附面固定为石墨（0001）晶面（以往大量模拟中广泛使用）；左侧为将石墨（0001）晶面倾斜α角后形成的新吸附面（α为石墨（0001）面与Y方向即孔壁的夹角）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-06">
+<img src="slides/slide_06.png" alt="课件第6页 模拟方法与参数：Lammps、NVT周期边界条件、400K、30±0.1MPa、Nosé-Hoover、6ns、2fs、势能截断半径1nm、孔径5nm、左侧石墨倾角0~90°；通过监测游离气密度按甲烷状态方程换算纳米孔内压力">
+<figcaption><span class="sno">06</span><span class="stitle">模拟方法与参数：Lammps、NVT周期边界条件、400K、30±0.1MPa、Nosé-Hoover、6ns、2fs、势能截断半径1nm、孔径5nm、左侧石墨倾角0~90°；通过监测游离气密度按甲烷状态方程换算纳米孔内压力</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>实例1：模拟页岩气的微观吸附（构型设计）</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 4</span><span class="chip">课件 5</span><span class="chip">课件 6</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>我们做了页岩气微观吸附模拟，研究始于 2018 至 2019 年。页岩气吸附文章众多，因为构型简单——常用石墨层建立狭缝模型，并不新鲜；但我们在这一领域做出了新成果。选用石墨是因为它含碳量高，用以替代页岩中的有机质干酪根：干酪根含微纳米孔隙、可吸附气体，主要成分是碳、含少量氢和氧；它是生成油气前的无定型前驱物，经热成熟作用后最终产出油气，相当于提取过程中溶解了其他物质，留下的残渣就是干酪根。</p><p>我们建立了石墨（0001）晶面模型，独特之处在于将孔隙旋转了角度：角度可从 0° 到 90° 任意调整，模拟中分别测试了 5°、10° 等角度，直到旋转至 90° 进行对比分析，还做了六个构型。把石墨面旋转 90° 并非初始想法，是参考文献后尝试将直立面旋转。</p><p>模拟方法与参数：软件 Lammps，NVT 系综、周期边界条件，温度 400K，压力 30±0.1MPa，温度耦合 Nosé-Hoover，模拟时间 6ns，模拟步长 2fs，势能截断半径 1nm，孔径 5nm，左侧石墨倾角 α 0~90°；通过监测游离气密度，根据甲烷状态方程换算获得纳米孔内的甲烷压力。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我们做了页岩气微观吸附模拟。该研究始于2018至2019年。页岩气吸附文章众多，因构型简单。常用石墨层建立狭缝模型，并不新鲜。但我们在这一领域做出了新成果。</p><p>选用石墨因其含碳量高，用以替代页岩中的有机质干酪根……干酪根含微纳米孔隙，可吸附气体。它是生成油气前的无定型前驱物。经热成熟作用后最终产出油气。</p><p>我们建立了石墨0001晶面模型。独特之处在于将孔隙旋转了角度。角度可从0°到90°任意调整。模拟中分别测试了5°、10°等角度。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-adsorption-result">
+  <div class="slides"><figure class="slide" id="slide-07">
+<img src="slides/slide_07.png" alt="课件第7页 结果（吸附密度剖面）">
+<figcaption><span class="sno">07</span><span class="stitle">结果（吸附密度剖面）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-08">
+<img src="slides/slide_08.png" alt="课件第8页 结果：以1nm为吸附层厚度统计发现，吸附气密度在5°达到最大随后减小；60°之后吸附密度趋于稳定且低于0°的吸附密度（沿z方向甲烷密度剖面、游离气密度0.141g/cm³、不同倾角石墨吸附面的甲烷平均吸附密度）">
+<figcaption><span class="sno">08</span><span class="stitle">结果：以1nm为吸附层厚度统计发现，吸附气密度在5°达到最大随后减小；60°之后吸附密度趋于稳定且低于0°的吸附密度（沿z方向甲烷密度剖面、游离气密度0.141g/cm³、不同倾角石墨吸附面的甲烷平均吸附密度）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>实例1：吸附密度随倾角的变化</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 7</span><span class="chip">课件 8</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>未旋转的平行石墨壁吸附完成后，要验证准确性：查阅前人数据，其密度为 0.403，我们测得 0.401，数值接近，说明势能方法正确。密度计算方法是统计吸附峰及次峰，积分得到 4.54×10²⁴×3，证明步骤正确。模拟常面临“做得对吗”的质疑，与已知数据对比，若数值一致就可信。</p><p>但将石墨旋转 90° 后，吸附峰差异巨大：左侧密度仅 0.336（因温度压力条件不同），说明该面吸附量少。若所有面都如此计算，会引发新问题——你们算出来这么大，石墨在孔里头，谁知道是什么方向？这一面结构不一样，这就是做出不一样的地方。</p><p>弄完之后我们把转了角度的壁面都做出来，这是最经典的：零度没变化，变了角度之后，发现孔壁系统上有奇怪的现象，这都是别人没观察到的。把吸附密度做出来，从这儿做一个纳米：只要定下来这一个纳米之后，积分一下平均密度就算出来了。算出来观察到吸附密度随 α（转角）的变化是这样——从零度升高了、然后又降低下来，有这样的特点。</p><p>算出来之后就想理解为什么这样：大家不转的话做的都是零度这个点；转了之后有高有低。这个东西谁控制呢？我们再琢磨怎么控制，然后去解释。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>查阅前人数据，其密度为0.403。我们测得密度0.401，数值接近，说明势能方法正确。密度计算方法是统计吸附峰及次峰，积分得到4.54×10^24×3，证明步骤正确。</p><p>但将石墨旋转90°后，吸附峰差异巨大。左侧密度仅0.336，因温度压力条件不同。这说明该面吸附量少。若所有面都如此计算，会引发新问题。</p><p>零度没变化，变了角度之后，发现孔地系统上有奇怪的现象，这都是别人没观察到的。</p><p>算出来之后，我们观察到吸附密度随阿尔法，也就是转角度的变化是这样：这是零度升高了，然后又降低下来了，有这样一个特点。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-adsorption-explain">
+  <div class="slides"><figure class="slide" id="slide-09">
+<img src="slides/slide_09.png" alt="课件第9页 仅用粗糙度无法解释结果：0°面光滑，5°/10°/30°粗糙度递增，60°/90°粗糙度又变小；但极光滑面粗糙度为0时吸附密度仍高">
+<figcaption><span class="sno">09</span><span class="stitle">仅用粗糙度无法解释结果：0°面光滑，5°/10°/30°粗糙度递增，60°/90°粗糙度又变小；但极光滑面粗糙度为0时吸附密度仍高</span></figcaption>
+</figure>
+<figure class="slide" id="slide-10">
+<img src="slides/slide_10.png" alt="课件第10页 需要考虑层积吸附势能：吸附的本质是吸附质（甲烷）与吸附剂（石墨）之间的相互作用，除了最外层碳原子，1nm厚的石墨表面内部碳原子也发挥着作用；给出Uslice和Utotal的积分公式">
+<figcaption><span class="sno">10</span><span class="stitle">需要考虑层积吸附势能：吸附的本质是吸附质（甲烷）与吸附剂（石墨）之间的相互作用，除了最外层碳原子，1nm厚的石墨表面内部碳原子也发挥着作用；给出Uslice和Utotal的积分公式</span></figcaption>
+</figure>
+<figure class="slide" id="slide-11">
+<img src="slides/slide_11.png" alt="课件第11页 粗糙度与表面势能的叠加作用">
+<figcaption><span class="sno">11</span><span class="stitle">粗糙度与表面势能的叠加作用</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>实例1：粗糙度与层积吸附势能</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 9</span><span class="chip">课件 10</span><span class="chip">课件 11</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>实际上这个过程是搞科研的一个非常常规的方法：你观察一个现象，如果别人都观察过那没啥新鲜；你观察到新鲜现象之后，下一步就是要解释这个现象。没解释之前只是把现象报告出去（发个论文或做个报告），创新程度就差点意思；把道理也讲明白了，才是一篇好文章——不但看了现象，还把里头的机制、道理都说明白，相当于解决了问题。这就是科研的常规做法：观察现象是什么，回答为什么。</p><p>我们最先想到可能是粗糙度有影响：0° 时面很平，转 5° 时有阶梯性粗糙面，10° 更大，30° 更大，60°、90° 又变小；吸附层有明显锯齿状结构。根据面的形状计算出几何面粗糙度 Ra（查定义即可算出），结果发现粗糙度趋势与数据差不多，都是先涨后降——但这解释不了所有点，因为极光滑面粗糙度为 0 时仍有高吸附密度。</p><p>于是想到层积吸附势能：计算整个吸附面对甲烷的吸附势能是多少。这不用计算模拟，完全用数学办法就能算——碳和甲烷间是伦敦色散力、不带电，静电势能为 0；方程已给出，比如甲烷放在此处分别计算第 1 至第 4 层的势能，一直算到截断半径之外，推导数学公式并积分，得到结果。绘制曲线对比发现表面势能在 0° 时很高、随后下降，能解释现象。</p><p>影响吸附密度随 α 变化的因素有两个：一是表面粗糙度，越粗糙表面积越大、吸附越多；二是吸附势能，0° 时吸附点势能高、角度增大后势能降低、吸附量减少——二者叠加作用形成。本文主要发现石墨倾角变化存在不规则吸附峰；若用石墨（0001）平滑面评估含气量有风险，因为孔隙内壁面形态未知。我们定义了吸附区和表面区的概念：表面吸附并非仅第一层原子起作用，第一层原子下至少 1nm 厚的表层均对甲烷产生吸附作用，而且这个作用是可以计算的——特别远的地方到 1nm 之外，按截断半径说就都成 0 了，但 1nm 之内的就应该去算、能够算准。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>实际上这个过程，都是搞科研的一个非常常规的方法，就是你去观察一个现象。这个现象，如果别人都观察过，那没啥新鲜……你不但看两个现象，而且把里头的机制、道理都说明白，就相当于解决了问题。这就是科研的常规做法：观察现象是什么，回答为什么。</p><p>我们最先想到可能是粗糙度有影响。0°时面很平，转5°时有阶梯性粗糙面……结果发现粗糙度趋势与数据差不多，都是先涨后降。但这解释不了所有点，因为极光滑面粗糙度为0时，仍有高吸附密度。</p><p>于是我们想到层级吸附势能。这很好理解，即计算整个吸附面对甲烷的吸附势能是多少。这不用计算模拟，完全用数学办法就能算。因为碳和甲烷间是伦敦色散力，不带电，静电势能为0。</p><p>表面吸附并非仅第一层原子起作用。第一层原子下至少1nm厚的表层，均对甲烷产生吸附作用，而且这个作用是可以计算的。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-adsorption-conclusion">
+  <div class="slides"><figure class="slide" id="slide-12">
+<img src="slides/slide_12.png" alt="课件第12页 结论：1、发现随石墨倾角改变出现不规则吸附峰，评估含气量用石墨（0001）面有风险；2、定义“1nm吸附区”概念，发现甲烷吸附密度随倾角变化存在最大值；3、定义“1nm表面区”概念，提出孔壁表面层积吸附势能（LAAP）计算方法；4、LAAP通过表面吸附作用决定吸附密度，粗糙度通过改变表面积影响吸附密度（高恺博士论文，2022；Gao et al, 2022, Energy & Fuels）">
+<figcaption><span class="sno">12</span><span class="stitle">结论：1、发现随石墨倾角改变出现不规则吸附峰，评估含气量用石墨（0001）面有风险；2、定义“1nm吸附区”概念，发现甲烷吸附密度随倾角变化存在最大值；3、定义“1nm表面区”概念，提出孔壁表面层积吸附势能（LAAP）计算方法；4、LAAP通过表面吸附作用决定吸附密度，粗糙度通过改变表面积影响吸附密度（高恺博士论文，2022；Gao et al, 2022, Energy & Fuels）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>实例1：结论</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 12</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>结论四条：1、发现随石墨倾角改变出现了不规则吸附峰，评估含气量用石墨（0001）面有风险；2、定义了“1nm 吸附区”的概念，发现甲烷吸附密度随倾角变化存在最大值；3、定义了“1nm 表面区”的概念，提出孔壁表面层积吸附势能（LAAP）计算方法；4、LAAP 通过表面吸附作用决定吸附密度，而粗糙度通过改变表面积影响吸附密度。</p><p>这项工作是我们学生高恺 2022 年做出来的（高恺博士论文，2022，“页岩气在狭缝孔和球形孔中吸附行为的分子模拟研究”；Gao et al, 2022, Energy & Fuels）。吸附这一大块讲完了，接下来是易燃气的流动——我们组做的更多的是流动。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>影响吸附密度随α变化的因素有两个。一是表面粗糙度，越粗糙表面积越大，吸附越多。二是吸附势能，0°时吸附点势能高。角度增大后势能降低，吸附量减少。</p><p>这个就是我们学生高恺，2022年的时候，他把这个做出来之后就可了。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-nano-flow">
+  <div class="slides"><figure class="slide" id="slide-13">
+<img src="slides/slide_13.png" alt="课件第13页 微纳米尺度的流动机理：宏观用Hagen-Poiseuille方程，微观用Javadpour方程；分子输运概念图——粘性流、努森扩散、表面扩散（Sun et al., IJHMT, 2015）">
+<figcaption><span class="sno">13</span><span class="stitle">微纳米尺度的流动机理：宏观用Hagen-Poiseuille方程，微观用Javadpour方程；分子输运概念图——粘性流、努森扩散、表面扩散（Sun et al., IJHMT, 2015）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-14">
+<img src="slides/slide_14.png" alt="课件第14页 实例2：模拟页岩气的纳米流动——在模拟中实现泵的功能：在边界处加一个宽度为h的“气泵”，施加单向外力F，使孔喉两侧存在压力差，形成非平衡稳态循环气流">
+<figcaption><span class="sno">14</span><span class="stitle">实例2：模拟页岩气的纳米流动——在模拟中实现泵的功能：在边界处加一个宽度为h的“气泵”，施加单向外力F，使孔喉两侧存在压力差，形成非平衡稳态循环气流</span></figcaption>
+</figure>
+<figure class="slide" id="slide-15">
+<img src="slides/slide_15.png" alt="课件第15页 流量Q的统计（累计流过的甲烷分子随时间变化）">
+<figcaption><span class="sno">15</span><span class="stitle">流量Q的统计（累计流过的甲烷分子随时间变化）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-16">
+<img src="slides/slide_16.png" alt="课件第16页 压差的计算方法：1）理论计算法ΔP=N·F/A=ρhF（Zhu et al, 2004）；2）局部应力法P=NkBT/V+Σrij·fij/3V（Hardy, 1982）；3）状态方程法P=f(T,ρ)（Setzmann and Wagner, 1991）">
+<figcaption><span class="sno">16</span><span class="stitle">压差的计算方法：1）理论计算法ΔP=N·F/A=ρhF（Zhu et al, 2004）；2）局部应力法P=NkBT/V+Σrij·fij/3V（Hardy, 1982）；3）状态方程法P=f(T,ρ)（Setzmann and Wagner, 1991）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-17">
+<img src="slides/slide_17.png" alt="课件第17页 气泵形成的静态压差：状态方程法2.36 MPa、局部应力法2.59 MPa、理论法2.42 MPa，三种方法数值都差不多">
+<figcaption><span class="sno">17</span><span class="stitle">气泵形成的静态压差：状态方程法2.36 MPa、局部应力法2.59 MPa、理论法2.42 MPa，三种方法数值都差不多</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>实例2：模拟页岩气的纳米流动（上）——泵与流量</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 13</span><span class="chip">课件 14</span><span class="chip">课件 15</span><span class="chip">课件 16</span><span class="chip">课件 17</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>哈根-泊肃叶方程可以描述宏观流动，因为它们都是大气流——像水管、血管或其他管道里的流动，遵循该定律。但当管子细到微纳米尺度时情况就不同了：微纳米尺度的流动既有粘性、又有表面滑移流、还有努森扩散。努森扩散就是分子撞壁——像粉色球在微观下撞击壁面并反弹，来回撞击后前行，这种流动叫努森扩散。表面滑移是流体贴着地面滑移：宏观流动默认表面流速为零，所有宏观推导公式都假设液体与壁面接触处速度为零；而在微观中，流体与壁面接触处速度不为零、存在滑移。微观有一个著名公式描述努森扩散和滑移流，公式复杂不细讲，理论推导如此（Javadpour 方程）。</p><p>我们做了页岩气纳米流动的例子。起初很简单：实现流动后先跟公式比一比、验证是否符合预期，再推广到更大的压力范围内使用。实现流动时，在周期边界条件下给两侧人为加上外力，外力推着甲烷移动，形成密度差异和压力差，气体开始流动——这就形成了非平衡稳态循环流，需要用到 GROMACS 的功能。</p><p>首先做非平衡模拟，需将石墨冻结不动；其次使用用户自定义参数——我们改写了 GROMACS 源代码，对原子或分子人为施加外力，例如原合力 15.8、统一加 0.01 变为 15.81。该区域相当于气泵，推动气体形成压差。</p><p>完成后类似使用 GMX 工具，切片并计算密度；密度算出来后对该区域密度取平均，查状态方程即可算出压强，由此得到 P1 和 P2——体积压力为 (P1+P2)/2，压差为 P1−P2。监测流量时任选一截面，统计随时间穿过该截面的分子数，流量即分子数随时间的变化率、也就是斜率。计算关键在于准确估算压强，因为流动速度与压差正相关、压差越大流速越快。</p><p>压差估算有三种方法：第一种是理论估算——若截面面积为 A、N 个粒子各受外力 F，则总外力 N×F 即为压力差（ΔP=N·F/A=ρhF）；第二种是局部应力法，较复杂——需提取每个分子的位置和力等微观参量，通过点乘计算应力进而求得压力差；第三种是状态方程法——切片后因各片体积相同，只需统计每片内的甲烷分子数以计算密度，得出密度后结合状态方程算出压强。做流动实验前先让它不流动：把石墨孔堵死，相当于形成一道水坝，力仍加着，泵力使水坝下游是稀薄气体、上游是稠密气体，压力差就出来了——三种方法测的数值都差不多：状态方程法 2.36 MPa、应力法 2.59 MPa、理论法 2.42 MPa，确实挺准，可以接受。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>但当管子细到微纳米尺度时，情况就不同了。微纳米尺度的流动既有粘性，又有表面滑移流，还有努森扩散。努森扩散就是分子撞壁。</p><p>实现流动时，在周期边界条件下，给两侧人为加上外力。外力推着甲烷移动，形成密度差异和压力差，气体开始流动。这就形成了非平衡稳态循环流。</p><p>我们改写了GROMACS源代码，对原子或分子人为施加外力。例如原合力15.8，统一加0.01变为15.81。该区域相当于气泵，推动气体形成压差。</p><p>E5S法转态方程2.36，应力法2.59，理论法2.42，确实挺准，可以接受。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-open-vs-closed">
+  <div class="slides"><figure class="slide" id="slide-18">
+<img src="slides/slide_18.png" alt="课件第18页 用不同构型观测页岩气流动：开放体系（气仓）与封闭体系（气仓+围封）对比">
+<figcaption><span class="sno">18</span><span class="stitle">用不同构型观测页岩气流动：开放体系（气仓）与封闭体系（气仓+围封）对比</span></figcaption>
+</figure>
+<figure class="slide" id="slide-19">
+<img src="slides/slide_19.png" alt="课件第19页 在恒定外加力场下甲烷形成循环稳态流：J=ΔN/Δt，取样区统计甲烷流量">
+<figcaption><span class="sno">19</span><span class="stitle">在恒定外加力场下甲烷形成循环稳态流：J=ΔN/Δt，取样区统计甲烷流量</span></figcaption>
+</figure>
+<figure class="slide" id="slide-20">
+<img src="slides/slide_20.png" alt="课件第20页 开放体系存在尺寸效应：随横截面边长增大通量减小，至12.6nm才开始收敛；更重要的是纳米气流性质不纯，管内有边界约束、管外无边界约束">
+<figcaption><span class="sno">20</span><span class="stitle">开放体系存在尺寸效应：随横截面边长增大通量减小，至12.6nm才开始收敛；更重要的是纳米气流性质不纯，管内有边界约束、管外无边界约束</span></figcaption>
+</figure>
+<figure class="slide" id="slide-21">
+<img src="slides/slide_21.png" alt="课件第21页 封闭体系中粗糙度有影响：随横截面边长增大通量减小，至4~5.5nm开始收敛，不同于尺寸效应，而是气仓-孔道凹凸不平的表面摩擦引起">
+<figcaption><span class="sno">21</span><span class="stitle">封闭体系中粗糙度有影响：随横截面边长增大通量减小，至4~5.5nm开始收敛，不同于尺寸效应，而是气仓-孔道凹凸不平的表面摩擦引起</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div class="sec-tt">
+        <h2>实例2：开放体系与封闭体系</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 18</span><span class="chip">课件 19</span><span class="chip">课件 20</span><span class="chip">课件 21</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>方法弄好后让它流动。起初设计流动构型，大家都会这么设计：弄块石墨、中间挖圆孔、充填甲烷即可。开始我也让学生这么弄，后来发现非要封住不行，要在外面围一圈石墨封住。为什么封住？就是过程中设错了一个参数——质心校正参数。参数设错后一直得不到正确结果，花了一年时间也没查出问题：这相当于“灯下黑”，东西在眼前却找不着，思维固定，100 多个参数来回看了几十遍，到了那个参数认为没设错就过去了，一遍又一遍，最后查出来是设错了。</p><p>改正后的结果是流动已经开始，但发现流动时与截面积有关；前面就有关系，最后非要加一层围住——称之为气仓是封闭的，这边气仓是开放的。侧向移动对流动有影响，就这么点儿创新搞出这个东西，算弄对了这边的各种设置参数，这样一来模拟就可以正常进行。统计随时间变化的分子数就可以测流量。</p><p>流动之后，这个体系随着横截面变化，流量居然是变化的——我们无法接受这种情况：设计构型时有人设置大、有人设置小，得出的数不一样就麻烦了。将横截面积变化后得到曲线，发现大到一定程度数据才收敛（至 12.6nm 开始收敛），意识到体系存在尺寸效应。更麻烦的是里面的流动有外力围线挡住，但泵区部分没有东西围住、做不准——于是想到把它围起来。</p><p>围起来再做就成这个样子。这类表现力强的动画是做分类模型的，将来如果做分子模拟需要微分观测吗？那就要去画这种很有表达能力、清楚表达出来的情况，看起来挺漂亮。后来我们做项目报告、讲课或给大家做报告都用到了。</p><p>既然发现随横截面的变化有影响，那封闭体系也做一下横截面的变化：那个变化就很快了——也就过这么一两个纳米，数据就收敛了。我们知道这是因为它里头流动时最大摩擦就相当于表面：这边这么宽、那边这么宽，要把这个表面延续下去就得一直这么画，相当于表面摩擦，几个纳米就收敛了，不像开放体系——你看开放体系十来多个都奔着 20nm 去了，跟它不一个概念。这样一来我们就把数算对了。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>后来发现非要封住不行，要在外面围一圈石墨封住。为什么封住？就是那天讲的，过程中设错了一个参数，即质心校正参数。参数设错后一直得不到正确结果，花了一年时间也没查出问题。这相当于“灯下黑”。</p><p>流动之后，这个体系随着横截面变化，流量居然是变化的。我们无法接受这种情况……发现大到一定程度数据才收敛，意识到体系存在尺寸效应。</p><p>你看开放那个体系，你看看这十来多个都奔着20nm去了，跟它不一个概念，这一两个纳米就收敛了。这样一来呢，我们就把数算对了。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-javadpour">
+  <div class="slides"><figure class="slide" id="slide-22">
+<img src="slides/slide_22.png" alt="课件第22页 孔径对流量的影响：开放体系通量既不能用H-P方程描述也不能用Javadpour方程描述；封闭体系通量可以用Javadpour方程很好地描述，α值位于0~1之间——这是第一个来自分子模拟的证据表明该方程的有效性（田会全博士论文，2018；Tian et al, 2018, J. Chem. Phys.）">
+<figcaption><span class="sno">22</span><span class="stitle">孔径对流量的影响：开放体系通量既不能用H-P方程描述也不能用Javadpour方程描述；封闭体系通量可以用Javadpour方程很好地描述，α值位于0~1之间——这是第一个来自分子模拟的证据表明该方程的有效性（田会全博士论文，2018；Tian et al, 2018, J. Chem. Phys.）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-23">
+<img src="slides/slide_23.png" alt="课件第23页 前人常用开放体系模拟纳米流动（L. Liu & G. N. Patey 2016；Jipeng Li et al 2015；Wu et al 2019）：开放系统相比封闭系统一定低估了气体流动；但可能由于体系较小没考虑尺寸效应又导致高估流动。虽然可能互相抵消但并不确定是否完全，使用开放体系的结果时要十分谨慎">
+<figcaption><span class="sno">23</span><span class="stitle">前人常用开放体系模拟纳米流动（L. Liu & G. N. Patey 2016；Jipeng Li et al 2015；Wu et al 2019）：开放系统相比封闭系统一定低估了气体流动；但可能由于体系较小没考虑尺寸效应又导致高估流动。虽然可能互相抵消但并不确定是否完全，使用开放体系的结果时要十分谨慎</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">08</span>
+      <div class="sec-tt">
+        <h2>实例2：封闭体系首次证实 Javadpour 方程</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 22</span><span class="chip">课件 23</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>一旦算对，再看结果：蓝色的点是封闭体系下算的结果，红色的点是开放体系下算的结果；红线是宏观的哈根-泊肃叶公式去拟合——拟合不了；蓝线是用 Zhang-Vasudev 公式（Javadpour 方程）去拟合——也拟合不了。开放体系的红点你怎么弄都弄不对；但你掌握的公式（Javadpour 方程）就把蓝色的点给拟合得好好的。里头有一个参数 A，10.7055 那个值就提取出来了。</p><p>开放体系的红点既不能用这个描述、也不能用那个描述——为啥不能描述？因为它是错的，这个数据是不对的；而封闭体系一下，我就可以用 Javadpour 方程描述得很好，因为我们是在纳米管里头、纳米尺寸微纳米尺度，它展示的公式确实很好。这是从分子模拟角度证明该方程有效的第一个证据。因实验难观测纳米尺度流动，分子模拟起了作用，方法建立后得出了正确数据。</p><p>前人研究没有一个把它围起来，在这种不围起来的状况下，我总结一句：可能因体系小未考虑尺寸效应导致高估；但开放体系比封闭体系一定也是低估了——这种情况下到底是低估还是高估说不准，虽能抵消一部分但不能完全确定。有了这个结果后，再看以前开放体系下做的东西要慎重：因四周没有围线，很难说数值准不准，那也可能高。</p><p>顺带讲讲做模拟的得失：我做分子模拟对错比例约 4:6，即扔掉 40%、做成约 60%；学生常达 1:1，运气不好会扔掉 70% 的东西。花大钱没效益没办法，科研允许失败——做实验失败也一样花钱：取样出差、测试费花了却没结果。计算上别指望 100% 机时都做对，这不可能，一定会浪费很多，是允许的，只希望尽可能减少损失。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这个蓝线呢是用那个Zhang-Vasudev公式去拟合也拟合不了。你看这红点儿你就怎么弄都弄不对。但是呢，你掌握的公式呢，就把这个蓝色的点给拟合得好好的……为啥不能描述？因为它是错的。</p><p>这是从分子模拟角度证明方程有效的第一个证据。因实验难观测纳米尺度流动，分子模拟起了作用。</p><p>我做分子模拟对错比例约4:6。即扔掉40%，做成约60%。学生常达1:1。运气不好会扔掉70%的东西。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-bend">
+  <div class="slides"><figure class="slide" id="slide-24">
+<img src="slides/slide_24.png" alt="课件第24页 倾斜角和转向角对流动的影响">
+<figcaption><span class="sno">24</span><span class="stitle">倾斜角和转向角对流动的影响</span></figcaption>
+</figure>
+<figure class="slide" id="slide-25">
+<img src="slides/slide_25.png" alt="课件第25页 倾斜角和转向角对流动的影响（光滑孔道与粗糙孔道对比）">
+<figcaption><span class="sno">25</span><span class="stitle">倾斜角和转向角对流动的影响（光滑孔道与粗糙孔道对比）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-26">
+<img src="slides/slide_26.png" alt="课件第26页 用自由能解释弯折孔道的流动现象：光滑管在弯折处有势垒顶起、阻碍流动；粗糙管势垒淹没在粗糙地面中、对流动影响不大（张明敏博士论文，2020；Zhang et al, 2020, Fuel）">
+<figcaption><span class="sno">26</span><span class="stitle">用自由能解释弯折孔道的流动现象：光滑管在弯折处有势垒顶起、阻碍流动；粗糙管势垒淹没在粗糙地面中、对流动影响不大（张明敏博士论文，2020；Zhang et al, 2020, Fuel）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">09</span>
+      <div class="sec-tt">
+        <h2>倾斜角与转向角对流动的影响</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 24</span><span class="chip">课件 25</span><span class="chip">课件 26</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>开放体系那部分做完后，前一个学生（田文权）毕业了；后来又来一个学生叫张明敏，他继续做流动研究，给他定的任务是观测倾斜角和转向角对流动的影响：刚才那根管是直通的，现在把这根管斜着放，另外再把这根管中间转折一下。</p><p>为啥要做这种东西呢？因为只有转折的管，才有可能将来对孔隙里的迂曲度进行分析——岩心的孔隙连通后，管一定是曲曲弯弯的，那怎么评价迂曲度呢？最基础的你得先让那根管能拐弯。这项研究的核心就是把那个构型做出来：把那块石墨翻转、扭曲，中间挖个洞，再在这边翻折过来——说着简单，只要做完一边来一个镜像拼到一块儿就可以了；但做镜像涉及那些东西，你得自己编个小脚本，能够在石墨模块里做出这种构型来。构型做好了，剩下的方法前边都已经建立好了，你这边加上力让它往外流就可以了。</p><p>还专门做了两个体系：一个是光滑体系——让那根管顺着石墨的层面，表面很光滑；一个是粗糙体系——垂直于石墨的打点（之前算过，垂直后表面是粗糙的）。算的结果显示：光滑孔和粗糙孔随转向角和倾斜角的变化不同。做比值可知：光滑管道流得快，但倾斜角能促进流动；在转向量中，光滑管会抑制流动，但粗糙管中转向角会促进流动。</p><p>观察到这些现象后需解释原因：方法是计算沿管子一圈的自由能（周围势能）——光滑管中间在弯折处有势垒顶起，势能高阻碍跨越，从而阻碍流动，这很好理解；粗糙管的势垒不明显，从 0° 到 120° 势垒已淹没在粗糙地面中，因其本身存在诸多干扰，势垒作用失效，所以在粗糙孔内势能未起作用、对流动影响不大。</p><p>此事源自张明敏的博士论文：他研究了圆管孔内倾斜角、转向角、粗糙度对页岩气纳米流动的影响，并发表论文毕业（张明敏博士论文，2020；Zhang et al, 2020, Fuel）。当时正值疫情期间，师生无法见面——学生回家、老师留在所里，指导工作全靠视频：成天开视频会议，答辩也由老师组织线上进行，过程相当麻烦。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>为啥要做这种东西呢？因为只有转折的管，才有可能将来对孔隙里的迂曲度进行分析。因为岩心的孔隙连通后，管一定是曲曲弯弯的。</p><p>光滑管道流得快，但倾斜角能促进流动。在转向量中，光滑管会抑制流动。但粗糙管中，转向角会促进流动。</p><p>光滑管中间在弯折处有势垒顶起。势能高阻碍跨越，从而阻碍流动……粗糙管的势垒不明显。从0°到120°，势垒已淹没在粗糙地面中。</p><p>此事源自张明敏的博士论文。他研究了圆管孔内倾斜角、粗转向角、粗糙度对烟气纳米流动的影响，并发表论文毕业。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-twophase">
+  <div class="slides"><figure class="slide" id="slide-27">
+<img src="slides/slide_27.png" alt="课件第27页 实例3：模拟气液两相流——甲烷水合物分解CH4·5.75H2O(s)=CH4(g)+5.75H2O(l)；压实作用、粘土矿物膨胀、砂堵、冰堵、二次水合物形成等都会降低输运通道渗透率；我们聚焦于气-水两相流，研究水堵现象">
+<figcaption><span class="sno">27</span><span class="stitle">实例3：模拟气液两相流——甲烷水合物分解CH4·5.75H2O(s)=CH4(g)+5.75H2O(l)；压实作用、粘土矿物膨胀、砂堵、冰堵、二次水合物形成等都会降低输运通道渗透率；我们聚焦于气-水两相流，研究水堵现象</span></figcaption>
+</figure>
+<figure class="slide" id="slide-28">
+<img src="slides/slide_28.png" alt="课件第28页 方法：制备一个充满H2O和CH4的圆管状石英孔隙——1）切割圆管孔（φ=6nm、L=14nm），表面修饰羟基亲水；2）充满水弛豫0.3ns后移除部分水分子形成水膜，充入甲烷再弛豫1ns；3）对孔道划分格子用微元法测量水饱和度Sw和气饱和度Sg，手工调节水分子数目使偏差<0.01">
+<figcaption><span class="sno">28</span><span class="stitle">方法：制备一个充满H2O和CH4的圆管状石英孔隙——1）切割圆管孔（φ=6nm、L=14nm），表面修饰羟基亲水；2）充满水弛豫0.3ns后移除部分水分子形成水膜，充入甲烷再弛豫1ns；3）对孔道划分格子用微元法测量水饱和度Sw和气饱和度Sg，手工调节水分子数目使偏差<0.01</span></figcaption>
+</figure>
+<figure class="slide" id="slide-29">
+<img src="slides/slide_29.png" alt="课件第29页 方法：在分子模拟中获得高质量的气水两相流（以前的工作：泵致压差法驱动气体流动，Guo's group 2018, 2020，ΔP=ρhf；存在的问题：压力差ΔP不好控制，平均偏差可达23%）">
+<figcaption><span class="sno">29</span><span class="stitle">方法：在分子模拟中获得高质量的气水两相流（以前的工作：泵致压差法驱动气体流动，Guo's group 2018, 2020，ΔP=ρhf；存在的问题：压力差ΔP不好控制，平均偏差可达23%）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-30">
+<img src="slides/slide_30.png" alt="课件第30页 方法：在分子模拟中获得高质量的气水两相流（本次工作：首创纳米压力计，实测孔道入口和出口压力，Ps=(P1+P2)/2，ΔP=P1−P2；压力计边长6nm，压力误差<0.2%、压差误差<2%）">
+<figcaption><span class="sno">30</span><span class="stitle">方法：在分子模拟中获得高质量的气水两相流（本次工作：首创纳米压力计，实测孔道入口和出口压力，Ps=(P1+P2)/2，ΔP=P1−P2；压力计边长6nm，压力误差<0.2%、压差误差<2%）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-31">
+<img src="slides/slide_31.png" alt="课件第31页 模拟条件：Gromacs 2018.8、ClayFF力场、NVT、单步长2fs、288K、Nosé-Hoover、15MPa、压差3MPa、总时长10-25ns、总原子数15~21万、平行取样数每个体系重复4次、共计15个不同水饱和度（Sw）的体系">
+<figcaption><span class="sno">31</span><span class="stitle">模拟条件：Gromacs 2018.8、ClayFF力场、NVT、单步长2fs、288K、Nosé-Hoover、15MPa、压差3MPa、总时长10-25ns、总原子数15~21万、平行取样数每个体系重复4次、共计15个不同水饱和度（Sw）的体系</span></figcaption>
+</figure>
+<figure class="slide" id="slide-32">
+<img src="slides/slide_32.png" alt="课件第32页 结果：甲烷和水的流量（流经孔道的累计甲烷分子数随时间变化；甲烷和水流量随水饱和度的变化）">
+<figcaption><span class="sno">32</span><span class="stitle">结果：甲烷和水的流量（流经孔道的累计甲烷分子数随时间变化；甲烷和水流量随水饱和度的变化）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">10</span>
+      <div class="sec-tt">
+        <h2>实例3：模拟气液两相流——圆管孔中的水锁</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）</span><span class="chip">课件 27</span><span class="chip">课件 28</span><span class="chip">课件 29</span><span class="chip">课件 30</span><span class="chip">课件 31</span><span class="chip">课件 32</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>下一步是在气体流动设计中引入水、观察变化，这涉及气水两相流，与油气开发关系密切。我们当时的出发点就是水合物——水合物是下一节内容：水合物即可燃冰，在海底下分解后形成典型的气液两相流动；可燃冰是甲烷和配位水，分解产物为甲烷气和水。过程中流体遭遇压实、粘度膨胀、沙堵、冰堵等阻碍。别人有研究，我们重点研究基础的水堵，即水堵塞管子。</p><p>实验材料不是石墨，而是用二氧化硅代替石英：在二氧化硅中挖一个圆管孔（φ=6nm、L=14nm），表面修饰羟基（-OH）实现亲水。先将水塞满管子，持续一段时间后挖掉部分水，再充入甲烷气制成气水孔道。需告知放入的水量和气量：我们用微元法测定含水量——通过数格子计算，统计含水格子和含气格子、分别累加得到水和气的体积，从而得出水饱和度和气饱和度。水饱和度指孔内水的体积占比，气饱和度指气的体积占比。</p><p>完成这一步需编程加工构型。做分子模拟的构型较麻烦，特别是观测微观过程：宏观性质不用设计构型，但流动模拟需要——这就像在工厂加工零件，设计好尺寸后交由工厂实现。第一步完成后做好圆管纵截面构型，准备测试，结果发现气体流动预测方法失效：此前测气体很准，接近水后偏差达 20%~30%，压差难控制。</p><p>于是我们在构型上下方各挖出一个空腔，分别测量上下游压力：通过统计空腔密度、利用状态方程求出压力，此法称为纳米压力计法——这是流动模拟中首次创造纳米压力计技术。道理很简单，与宏观实验一致。我们将压力误差降至 2‰（0.2%），压力差误差降至 2%：原来误差达 20% 多，现在低于 2%，数据质量提高、结果更可靠。</p><p>模拟条件：Gromacs 2018.8、ClayFF 力场、NVT、单步长 2fs、288K、Nosé-Hoover、15MPa、压差 3MPa、总时长 10-25ns、总原子数 15~21 万、平行取样数每个体系重复 4 次、共计 15 个不同水饱和度（Sw）的体系。方法建立后，水饱和度从 0 变至 100，共做 15 个模拟、每个重复 4 次以计算误差，原子数达 20 多万，属较大体系。</p><p>随时间观察分子流经管子的数量变化，由斜率求出流量及随水饱和度的变化：水饱和度小时流量曲线很直；随着水增多，曲线逐渐变斜后变平——变平意味着斜率为零、即停止流动。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我们当时的出发点就是水合物……可燃冰是甲烷和配位水，分解产物为甲烷气和水。过程中，流体遭遇压实、粘度膨胀、沙堵、冰堵等阻碍。</p><p>我们用微元法测定含水量，通过数格子计算。统计含水格子和含气格子，分别累加得到水和气的体积。</p><p>结果发现气体流动预测方法失效。此前测气体很准，接近水后偏差达20%~30%，压差难控制。</p><p>于是我们在构型上下方各挖出一个空腔，分别测量上下游压力。通过统计空腔密度，利用状态方程求出压力。此法称为纳米压力计法。</p><p>我们将压力误差降至2‰（即0.2%），压力差误差降至2%。原来误差达20%多，现在低于2%。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-waterlock">
+  <div class="slides"><figure class="slide" id="slide-33">
+<img src="slides/slide_33.png" alt="课件第33页 结果：水锁的形成阻止了甲烷气流动——水锁模型V水锁=V圆柱−V球缺1−V球缺2，水锁是两个弯月面相夹的一段水柱、被环绕孔壁的一层水膜包裹；水锁体积模型值与测量值基本一致">
+<figcaption><span class="sno">33</span><span class="stitle">结果：水锁的形成阻止了甲烷气流动——水锁模型V水锁=V圆柱−V球缺1−V球缺2，水锁是两个弯月面相夹的一段水柱、被环绕孔壁的一层水膜包裹；水锁体积模型值与测量值基本一致</span></figcaption>
+</figure>
+<figure class="slide" id="slide-34">
+<img src="slides/slide_34.png" alt="课件第34页 结果：水锁的长度和形成时间——随水饱和度增加，水锁生长时几乎线性增大、形成时间越来越早（水锁形成过程Sw=0.54）">
+<figcaption><span class="sno">34</span><span class="stitle">结果：水锁的长度和形成时间——随水饱和度增加，水锁生长时几乎线性增大、形成时间越来越早（水锁形成过程Sw=0.54）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-35">
+<img src="slides/slide_35.png" alt="课件第35页 结果：水锁的形成机理——气-水表面张力与孔壁-水吸附力之间的竞争与平衡；气-水界面表面积下降由水的表面张力驱使，水膜厚度存在最大值及平台值（0.5nm）由孔壁吸附力导致">
+<figcaption><span class="sno">35</span><span class="stitle">结果：水锁的形成机理——气-水表面张力与孔壁-水吸附力之间的竞争与平衡；气-水界面表面积下降由水的表面张力驱使，水膜厚度存在最大值及平台值（0.5nm）由孔壁吸附力导致</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">11</span>
+      <div class="sec-tt">
+        <h2>实例3：水锁的形成机理与模型</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）</span><span class="chip">课件 33</span><span class="chip">课件 34</span><span class="chip">课件 35</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>究竟发生了什么？请看动画：一坨水在中间上下堆积并连起来，最终堵住管子——这就是流动中常见的栓塞，也叫水锁或水阻，简言之水把管子堵住了。通过分子模拟，我们看到了微管中水堵塞管子的过程。这是郑超做的动画。我确认他做对了，并询问水锁是否在管子正中间——不在：这边压力高、那边压力低，压力差就把水锁往右边推。</p><p>水锁弄出来之后，下一步就是建模型：水锁的定义是两个弯月面中间夹着一段水柱，这段水柱被旁边的水膜包裹着——两边都有水膜，中间有一个外立面的水柱把它堵住。根据这个模型，我们计算了随水饱和度变化的水锁体积：红色的线是模型直接计算的结果（V水锁=V圆柱−V球缺1−V球缺2），黑色的线是用微元法实际测量的结果，两者基本一致，说明模型做出来了。</p><p>这张图是刚才动画的截图（1ns、5ns、7ns、10ns）：这是横截面，原来管道里还有这么大空间可以穿过气流，后来变小了，最后完全堵死了。有了模型可以进一步计算水锁的长度：根据动画观察水锁形成的时间，发现随着水饱和度增加，水锁线性增长、形成时间越来越短。</p><p>观测到结果后要去解释为什么，即解释水锁形成的机理。我们用了两个重要的观测：一个是想办法把气水界面的表面积算出来（费点儿事，再费事也得算）——算出来发现随着时间增长，水的表面积在下降，等它到了水锁形成的时候哗一下掉下来一大块、然后逐渐走向稳定。水的界面为啥会下降呢？想想你在桌子上倒了一滩水，如果表面足够光滑，最后水一定摊成一个圆形、不会是尖角——这就是表面张力的作用，它要把自己收缩到面积最小为止。水锁形成时这就是很典型的现象：水的表面张力在驱使水锁的形成。</p><p>第二个观测是水膜的厚度：随着水饱和度增加，水膜厚度在增加（水多了水膜就厚），厚到一定程度达到顶峰、然后开始减小，减少到水锁形成之后水膜厚度就不再减少、保持恒定值约 0.5nm。为啥不再减少呢？因为孔壁对那个水膜吸附得紧紧的——它能吸附多少是有容量的；它吸附不了的，你的水都到那个水锁这儿，靠水的表面张力把它弄过来。最后水膜厚度就不再减少了。</p><p>于是做出这样一个动画：刚开始水膜薄变厚、中间变黄、中间弯曲、弯曲接起来形成水阻、然后水膜又开始变薄。这样一个动画很有表现力，它说了一个事儿：气水表面张力和孔壁水之间的吸附力，两者间的竞争与平衡形成水锁——表面张力将多余的水聚拢、堵住管子；孔壁则允许部分水被带走但需保留一部分。在长度固定的情况下能形成多长的固定结构？这便是水锁形成的道理。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>一坨水在中间上下堆积并连起来，最终堵住管子。这就是流动中常见的栓塞，也叫水锁或水阻。</p><p>水锁的定义是两个弯月面中间夹着一段水柱。这段水柱被旁边的水膜包裹着。</p><p>它就是表面张力的作用，它就要把自己收缩到面积最小为止。那么这个水锁形成的时候，这就是一个很典型的现象，就是水的表面张力在驱使这个水锁的形成。</p><p>因为地面对那个水膜吸附得紧紧的。它能吸附多少，那是有容量的。……最后呢，水花的厚度就不再减少了。</p><p>两者间的竞争与平衡形成水头，原理很简单。表面张力将多余的水聚拢，堵住管子。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-dwl">
+  <div class="slides"><figure class="slide" id="slide-36">
+<img src="slides/slide_36.png" alt="课件第36页 进一步模拟狭缝孔中的气水两相流：狭缝孔几何特征简单，意图详查水相形态变化对渗透率的影响">
+<figcaption><span class="sno">36</span><span class="stitle">进一步模拟狭缝孔中的气水两相流：狭缝孔几何特征简单，意图详查水相形态变化对渗透率的影响</span></figcaption>
+</figure>
+<figure class="slide" id="slide-37">
+<img src="slides/slide_37.png" alt="课件第37页 水相形态随水饱和度的变化（Sw=0.05、0.2、0.54、0.60）">
+<figcaption><span class="sno">37</span><span class="stitle">水相形态随水饱和度的变化（Sw=0.05、0.2、0.54、0.60）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-38">
+<img src="slides/slide_38.png" alt="课件第38页 水相形态随水饱和度的变化：Sw<0.2离散液滴、Sw=0.2均匀薄层、0.2<Sw<0.56弓形喉道、0.56≤Sw≤1水锁栓塞（SiO2狭缝孔中水相分布示意图，青色甲烷气相、白色液态水相、网状SiO2孔壁）">
+<figcaption><span class="sno">38</span><span class="stitle">水相形态随水饱和度的变化：Sw<0.2离散液滴、Sw=0.2均匀薄层、0.2<Sw<0.56弓形喉道、0.56≤Sw≤1水锁栓塞（SiO2狭缝孔中水相分布示意图，青色甲烷气相、白色液态水相、网状SiO2孔壁）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-39">
+<img src="slides/slide_39.png" alt="课件第39页 提出变形水层模型（Deformed Water Layer Model）：气流受控于平行水层的有效孔宽与变形水层的喉道宽度的加权平均，权重是水饱和度与临界饱和度的比值；所有参数都有明确的物理意义；对比平行水层模型Krg_PWL=(1−Sw)² 和 Masuda模型Krg=(1−Sw)^N">
+<figcaption><span class="sno">39</span><span class="stitle">提出变形水层模型（Deformed Water Layer Model）：气流受控于平行水层的有效孔宽与变形水层的喉道宽度的加权平均，权重是水饱和度与临界饱和度的比值；所有参数都有明确的物理意义；对比平行水层模型Krg_PWL=(1−Sw)² 和 Masuda模型Krg=(1−Sw)^N</span></figcaption>
+</figure>
+<figure class="slide" id="slide-40">
+<img src="slides/slide_40.png" alt="课件第40页 DWL模型准确描述狭缝孔的相渗曲线：把实际参数D0=5.74nm、Lz=14.16nm、Swl=0.56直接代入DWL模型，可直接得到红线，理论预测与实测一致">
+<figcaption><span class="sno">40</span><span class="stitle">DWL模型准确描述狭缝孔的相渗曲线：把实际参数D0=5.74nm、Lz=14.16nm、Swl=0.56直接代入DWL模型，可直接得到红线，理论预测与实测一致</span></figcaption>
+</figure>
+<figure class="slide" id="slide-41">
+<img src="slides/slide_41.png" alt="课件第41页 郑超博士论文，2023，“天然气水合物分解产物的气-水两相渗流分子模拟研究”；Zheng et al, 2023, Fuel；Zheng et al, 2025, GRL">
+<figcaption><span class="sno">41</span><span class="stitle">郑超博士论文，2023，“天然气水合物分解产物的气-水两相渗流分子模拟研究”；Zheng et al, 2023, Fuel；Zheng et al, 2025, GRL</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">12</span>
+      <div class="sec-tt">
+        <h2>实例3：狭缝孔与变形水层模型</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）</span><span class="chip">课件 36</span><span class="chip">课件 37</span><span class="chip">课件 38</span><span class="chip">课件 39</span><span class="chip">课件 40</span><span class="chip">课件 41</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>完成圆管实验后，我们进行了更深入思考：为何随水饱和度增加形态会发生变化？此前因圆管几何结构太复杂、未能透彻分析。为此将圆管替换为更简单的狭缝进行实验，几何简化后便于观测水相形态随水饱和度的变化：低饱和度时水呈离散水滴状——俯视图看是一坨一坨的；当水饱和度达 0.2 时，水连成一片形成均匀薄层；饱和度继续增加，形成弯曲的弓形喉道；超过临界饱和度后形成水锁，这与圆管孔隙情况类似。</p><p>示意图显示：Sw<0.2 为离散液滴状，Sw=0.2 为均匀薄层，随后形成弓形喉道，进一步增加饱和度形成水锁栓塞、呈现最终形态（SiO2 狭缝孔中水相分布示意图：青色为甲烷气相、白色为液态水相、网状区为 SiO2 孔壁）。</p><p>我们继续深入思考，能否搞一个模型来描述刚才观察的结果。之前大家描述时都用平行水层模型（很简单、公式也简单）；另外有一个 Masuda 模型，在水文定制里很常用，是 (1−Sw)^N，但 N 说不清楚、没有物理含义，拟合多少是多少。当时主要就这两类模型。我们提出了变形水层模型：由平行水层等体积变化成弓形；气流受平行水层宽度和变形水层喉道影响，环境影响是加权平均——这个值和那个值加权平均后的空间可描述气流变化，权重是水饱和度除以临界水饱和度。</p><p>这样我们就提出了一个方程：它相当于平行水层模型加上一个校正系数——小于临界水饱和度时以此描述，大于时形成水锁、渗透率变为 0。这里每个参数都有明确的物理含义：把实际参数（管长、宽度、空间宽度、临界水饱和度 0.56）往模型里一带，直接算出来就是一条红线；这根红线跟着观测的黑点比，几乎是完美契合——而平行水层模型（PWL）比较难行，Masuda 模型是一条绿线，哪个都弄不准。我们这个直接就是值往里一带就是这个值，你要是没这些值去拟合，拟合出来的结果就 0.999，非常难——我们相当于用它就可以描述这条相渗曲线。</p><p>这两份工作做完之后：第一份工作（2023 年把圆管孔做完）写了一篇论文，郑超博士毕业了；然后去地质大学武汉做博后，又做了第二篇论文——平行狭缝，发了 GRL（郑超博士论文，“天然气水合物分解产物的气-水两相渗流分子模拟研究”；Zheng et al, 2023, Fuel；Zheng et al, 2025, GRL）。</p><p>像我们做这个东西的好处：把流动做到这个份上，我们认为我们已经是做的 number one 了、做得非常准，方法建立得非常好。对页岩气开采的意义：你就得想办法排水、把水除掉——不管是抽排掉还是吸收掉还是消耗掉，总而言之把水弄没了，这些气就哗哗哗流出来了；水多的话就可以形成水锁效应。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>低饱和度时，水呈离散水滴状；俯视图看，是一坨一坨的。当水饱和度达0.2时，水连成一片，形成均匀薄层。饱和度继续增加，形成弯曲的弓形喉道。超过临界饱和度后，形成水锁。</p><p>另外有一个Muskat模型，在水文定制里很常用。它是1-Sw的平方和N次方，但N说不清楚，没有物理含义，拟合多少是多少。</p><p>你这根红线跟着我们观测的这个黑点来比的话，那就是几乎是完美的契合在一块了。描述得非常好。</p><p>你这个水呢，你不管是抽排掉还是吸收掉，还是消耗掉，你总而言之，你把那水弄没了，这些气就哗哗哗就流出来了。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-summary">
+  <div class="slides"><figure class="slide" id="slide-42">
+<img src="slides/slide_42.png" alt="课件第42页 小结：1、气仓封闭体系可以产生正确的页岩气纳米流动，而开放体系不能，首次证实页岩气纳米流动服从Javadpour理论公式描述；2、孔道表面粗糙度对流动的影响大于孔道形状，与倾斜角的促进流动作用不同，转向角在粗糙孔中促进流动、在光滑孔中阻碍流动，粗糙度与表面势能共同控制页岩气吸附密度；3、纳米压力计可精确监测局部压力，水锁形成机理是气-水表面张力与孔壁-水吸附力的竞争与平衡，变形水层模型可精确描述狭缝孔相渗曲线；4、分子模拟研究中特别强调要把模拟做对，从多个角度反复核查观测到的现象是正确的，精益求精">
+<figcaption><span class="sno">42</span><span class="stitle">小结：1、气仓封闭体系可以产生正确的页岩气纳米流动，而开放体系不能，首次证实页岩气纳米流动服从Javadpour理论公式描述；2、孔道表面粗糙度对流动的影响大于孔道形状，与倾斜角的促进流动作用不同，转向角在粗糙孔中促进流动、在光滑孔中阻碍流动，粗糙度与表面势能共同控制页岩气吸附密度；3、纳米压力计可精确监测局部压力，水锁形成机理是气-水表面张力与孔壁-水吸附力的竞争与平衡，变形水层模型可精确描述狭缝孔相渗曲线；4、分子模拟研究中特别强调要把模拟做对，从多个角度反复核查观测到的现象是正确的，精益求精</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">13</span>
+      <div class="sec-tt">
+        <h2>小结：把模拟做对</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）</span><span class="chip">课件 42</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>总结一下，前三条都是跟流动、页岩气这些相关的、做得比较好的工具：1、气仓封闭体系可以产生正确的页岩气纳米流动，而开放体系不能，首次证实页岩气的纳米流动服从 Javadpour 理论公式的描述；2、孔道表面粗糙度对流动的影响要大于孔道形状；与倾斜角的促进流动作用不同，转向角在粗糙孔中促进流动、在光滑孔中阻碍流动；粗糙度与表面势能共同控制页岩气的吸附密度；3、纳米压力计可以精确监测体系中局部压力；水锁的形成机理是气-水表面张力与孔壁-水吸附力之间的竞争与平衡；变形水层模型可精确描述狭缝孔的相渗曲线。</p><p>大家了解一下即可，记不住没关系，但请务必记住第 4 条：分子模拟研究中特别强调要把模拟做对，从多个角度反复核查观测到的现象是正确的，精益求精。若将来做分子模拟或实验，务必确保操作正确，需从多角度反复检测、保证数据准确无误；对数据质量要精益求精，若误差大应设法减小，从而提升数据认可度。数据正确后，自然规律便清晰呈现——无需过度费脑，只需确保实验和模拟做对。我们在此过程中吃过亏、跳过坑，经历不少挫折，核心在于反复做好数据、减小误差、确保实验正确。</p><p>打个比方：研究生初期通常能掌握仪器操作或取样等基础技能，无论回单位做实验还是模拟，这些基本都能做到；难点在于分析现象背后的机理、回答“为什么”。常有人只提交实验结果、不进行深入分析——做研究需从报告中揭示道理或进行解释。这如同去医院：护士负责抽血化验并出具报告，但仅交报告不够，要像大夫那样解读数据含义，否则无法说明数据背后的实际意义。你们将来要努力到那个位置，能从化验单里看出症状、分析出道理、揭示出规律——那是你们做研究生要干的活。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>总结一下的话就是说前三条吧，这个都是跟那个流动一元气这些相关的。就是做得比较好的工具……大家了解一下即可，记不住没关系，但请务必记住第4条。</p><p>若将来做分子模拟或实验，务必确保操作正确。需从多角度反复检测，保证数据准确无误。对数据质量要精益求精。</p><p>光做个实验在那也很重要，我没说不重要。但要看出道理，得去当坐诊的大夫。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-coalbed">
+  <div class="slides"><figure class="slide" id="slide-43">
+<img src="slides/slide_43.png" alt="课件第43页 煤层气：以甲烷为主的烃类气体，自生自储在煤层中，主要吸附在煤基质颗粒表面、部分游离于孔隙中，是煤的伴生矿产资源，通常采用排水降压开采（天然气资源概念图：常规油气、致密砂岩气、页岩气、煤层气）">
+<figcaption><span class="sno">43</span><span class="stitle">煤层气：以甲烷为主的烃类气体，自生自储在煤层中，主要吸附在煤基质颗粒表面、部分游离于孔隙中，是煤的伴生矿产资源，通常采用排水降压开采（天然气资源概念图：常规油气、致密砂岩气、页岩气、煤层气）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-44">
+<img src="slides/slide_44.png" alt="课件第44页 瓦斯突出：煤层瞬间释放大量瓦斯而造成的地质灾害；四川白皎煤矿2092工作面同一煤层顺层韧性剪切带（糜棱煤）中先后发生7次煤与瓦斯突出，其中大型突出4次（彭立世等, 1988）">
+<figcaption><span class="sno">44</span><span class="stitle">瓦斯突出：煤层瞬间释放大量瓦斯而造成的地质灾害；四川白皎煤矿2092工作面同一煤层顺层韧性剪切带（糜棱煤）中先后发生7次煤与瓦斯突出，其中大型突出4次（彭立世等, 1988）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-45">
+<img src="slides/slide_45.png" alt="课件第45页 超量瓦斯来自哪里？四川天府矿区一次大型突出瓦斯量平均213 m³/t、郑州大平煤矿183 m³/t、淮北芦岭煤矿89 m³/t；实测瓦斯含量仅10-30 m³/t（侯泉林等, 2014）；猜想：1、围岩气体转移？（数量不足且渗透率低）2、构造应力作用下的产物——力解产气？（大多为间接证据）">
+<figcaption><span class="sno">45</span><span class="stitle">超量瓦斯来自哪里？四川天府矿区一次大型突出瓦斯量平均213 m³/t、郑州大平煤矿183 m³/t、淮北芦岭煤矿89 m³/t；实测瓦斯含量仅10-30 m³/t（侯泉林等, 2014）；猜想：1、围岩气体转移？（数量不足且渗透率低）2、构造应力作用下的产物——力解产气？（大多为间接证据）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">14</span>
+      <div class="sec-tt">
+        <h2>煤层气与瓦斯突出</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（尾）</span><span class="chip">课件 43</span><span class="chip">课件 44</span><span class="chip">课件 45</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>还有 20 多分钟，简单再讲一下煤层气。煤层气主要是自生自储在煤层内的系统，相当于煤的伴生资源：以甲烷为主的烃类气体，主要吸附在煤基质颗粒表面、部分游离于孔隙中，通常采用排水降压开采。</p><p>在煤矿开采里比较麻烦的是会发生瓦斯突出：瓦斯突出就是哐一声爆炸，煤粉带着气体忽悠一下从巷道出来——如果那时叫突出，因为里头都是甲烷那些可燃气体，要是遇见明火砰砰一声炸了那就是瓦斯爆炸。所以突出和爆炸是两回事：瓦斯突出是煤粉加着气体啪一下全出来了；爆炸那就更麻烦。这事后人因不能呼吸而窒息、一下就死好多人，而且经常发生在构造地——原生的可能发生的就少，主要是发生在构造煤一定要集中的区域。四川白皎煤矿 2092 工作面，同一煤层顺层韧性剪切带（糜棱煤）中先后发生 7 次煤与瓦斯突出，其中大型突出 4 次。</p><p>有个问题大家不明白：为什么瓦斯突出时会一下子喷出那么多气体？有的猜是围岩里头气体转移了，但那种数量不够——因为大家测过煤层里能够吸附多少瓦斯，也就 10~30 个方（m³/t）；突出来的时候经常是要突出上百方、几百方（四川天府矿区一次大型突出瓦斯量平均 213 m³/t、郑州大平煤矿 183 m³/t、淮北芦岭煤矿 89 m³/t）。那你说它是原来吸附的那一对，后来大家就想到可能是构造应力下的产物——力解产气？大多为间接证据，这是问号、不知道，但是找原因。然后我们就开始琢磨这事儿：是不是因为构造应力或者怎么样发生了什么变化。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>煤层气主要是自生自在于煤层内的系统，相当于煤的伴生资源。</p><p>瓦斯突出就是哐一声爆炸，煤粉带着气体，忽悠一下从巷道出来……所以突出和爆炸是两回事。</p><p>因为大家测过煤层里能够吸附多少瓦斯，也就10~30个方。突出来的时候，经常是要突出上百方、几百方。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-coal-shear">
+  <div class="slides"><figure class="slide" id="slide-46">
+<img src="slides/slide_46.png" alt="课件第46页 模拟细节：Lammps（Sandia国家实验室经典分子动力学程序，扩展性好、免费开源）；反应力场ReaxFF用键级表达原子成键，可以模拟化学反应（煤的热解、燃烧、炸药爆炸等）；选定Lammps之前曾尝试过GULP、DFTB+等模拟软件">
+<figcaption><span class="sno">46</span><span class="stitle">模拟细节：Lammps（Sandia国家实验室经典分子动力学程序，扩展性好、免费开源）；反应力场ReaxFF用键级表达原子成键，可以模拟化学反应（煤的热解、燃烧、炸药爆炸等）；选定Lammps之前曾尝试过GULP、DFTB+等模拟软件</span></figcaption>
+</figure>
+<figure class="slide" id="slide-47">
+<img src="slides/slide_47.png" alt="课件第47页 模拟细节：体系组成6个无烟煤分子（C154H96O9），施力大小0.07 eV/Å，施力方向X-1,3,4、X-2,5,6等组合，NVT系综、600K、单步长0.2fs、模拟时间300ps、每20fs输出轨迹，共210组模拟用VARxMD分析，34条轨迹产生C1-C4片段和CO2、H2、H2O等气体分子，但是没有看到CH4分子">
+<figcaption><span class="sno">47</span><span class="stitle">模拟细节：体系组成6个无烟煤分子（C154H96O9），施力大小0.07 eV/Å，施力方向X-1,3,4、X-2,5,6等组合，NVT系综、600K、单步长0.2fs、模拟时间300ps、每20fs输出轨迹，共210组模拟用VARxMD分析，34条轨迹产生C1-C4片段和CO2、H2、H2O等气体分子，但是没有看到CH4分子</span></figcaption>
+</figure>
+<figure class="slide" id="slide-48">
+<img src="slides/slide_48.png" alt="课件第48页 新发现：缩聚芳环可以被剪破！缩聚芳环结构在煤化过程中很难被破坏，热解需要2500K才能破裂；本次模拟表明在剪切应力作用下，缩聚芳环在600K就可以破裂，反应途径有攻击破裂和直接破裂（王瑾博士论文，2019；Wang et al, 2019, Fuel）">
+<figcaption><span class="sno">48</span><span class="stitle">新发现：缩聚芳环可以被剪破！缩聚芳环结构在煤化过程中很难被破坏，热解需要2500K才能破裂；本次模拟表明在剪切应力作用下，缩聚芳环在600K就可以破裂，反应途径有攻击破裂和直接破裂（王瑾博士论文，2019；Wang et al, 2019, Fuel）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-49">
+<img src="slides/slide_49.png" alt="课件第49页 烟煤的力解模拟——分子直接施力：气体分子数N随外力F的变化；韧性变形、脆性变形、原生煤（Wang et al, 2021, Fuel；Wang et al, 2021, Energy & Fuels）">
+<figcaption><span class="sno">49</span><span class="stitle">烟煤的力解模拟——分子直接施力：气体分子数N随外力F的变化；韧性变形、脆性变形、原生煤（Wang et al, 2021, Fuel；Wang et al, 2021, Energy & Fuels）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-50">
+<img src="slides/slide_50.png" alt="课件第50页 烟煤的力解模拟——位错速度施力：用位错速度法对烟煤施加剪切应力，产生了大量气体，是煤分子直接施力法的几十倍（H2产量高达80%），已经达到387 m³/ton/ns的宏观量级（Wang et al, 2026, Inter. J. Hydrogen Energy）">
+<figcaption><span class="sno">50</span><span class="stitle">烟煤的力解模拟——位错速度施力：用位错速度法对烟煤施加剪切应力，产生了大量气体，是煤分子直接施力法的几十倍（H2产量高达80%），已经达到387 m³/ton/ns的宏观量级（Wang et al, 2026, Inter. J. Hydrogen Energy）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-51">
+<img src="slides/slide_51.png" alt="课件第51页 小结：1、煤在剪切应力作用下可以发生力化学反应，即使结构中很稳定的缩聚芳环也可以被剪破；应力导致官能团的脱落可以产生CH4、CO2、H2O、H2、CO等气体，产气量对应力大小敏感、存在最大值；这份工作首次提供煤发生力解产气的直接证据，对理解煤矿瓦斯突出发生条件具有重要意义；2、做有挑战性的创新工作不要怕艰难困苦，要大胆尝试和探索">
+<figcaption><span class="sno">51</span><span class="stitle">小结：1、煤在剪切应力作用下可以发生力化学反应，即使结构中很稳定的缩聚芳环也可以被剪破；应力导致官能团的脱落可以产生CH4、CO2、H2O、H2、CO等气体，产气量对应力大小敏感、存在最大值；这份工作首次提供煤发生力解产气的直接证据，对理解煤矿瓦斯突出发生条件具有重要意义；2、做有挑战性的创新工作不要怕艰难困苦，要大胆尝试和探索</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">15</span>
+      <div class="sec-tt">
+        <h2>煤的力解产气模拟</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（尾）</span><span class="chip">课件 46</span><span class="chip">课件 47</span><span class="chip">课件 48</span><span class="chip">课件 49</span><span class="chip">课件 50</span><span class="chip">课件 51</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>这个事儿实际上就是当时侯老师（咱们原来地修学院的院长）有一个学生叫王瑾，做模拟这边主要做实验的，然后让王瑾转行到我们所、找的我，看我能不能指导他们做那个模拟。我当时啥也不知道——我没做过煤这个东西，咋做也不知道：一开始调研实验、也问人家公司了，看看怎么做煤的分解。像煤的燃烧、热解这些，大家说了用反应力场，因为反应力场能让那个做化学反应；咱们现在做的呢是经典立场——经典立场里头水就是水、甲烷就是甲烷、二氧化硅就是二氧化硅，不牵扯到断键和合键、不牵扯到化学的产生变化。现在这个头要做化学反应，我们就开始尝试了好多模拟软件，最后选中还是不花钱的那个，用 Lammps 做（Lammps 是另外一个经典的分子动力学软件包，跟 GROMACS 齐名，免费开源）。反应力场 ReaxFF 用键级表达原子成键，可以模拟化学反应，如煤的热解、煤的燃烧、炸药爆炸等等。</p><p>具体怎么做呢？弄了一块煤，这是几个煤分子，大概是 6 个（C154H96O9 无烟煤分子）。这个是把煤分子展开了画，实际上根据周期边界条件都能塞到模拟盒子里头。然后怎么加上应力？后来用笨办法：里头 6 个分子，把 3 个分子往下拽施加一个力、另外 3 个分子往上施加一个力，这就形成了剪切作用。当时设定的温度是 600K——这算是比较低的温度，因为煤的热解经常要达到 2000K 才能受热分解，600K 的意思就是不让它发生热解。模拟参数：施力大小 0.07 eV/Å，NVT 系综、600K、单步长 0.2fs、模拟时间 300ps、每 20fs 输出轨迹，共开展 210 组模拟，用 VARxMD 软件分析。</p><p>模拟了之后确实看见了一些气体分子——二氧化碳、氢气、水，但是没看见甲烷：输出里大都是甲烷，但没看见甲烷，我当时就觉得有点儿失望。但即使在这种情况下，我们对这块无烟煤做的力学实验也都让王瑾毕业了，做了一个煤热解产气的量子化学计算的分子模拟研究。我们这篇文章发现什么呢：煤里头经常有这种苯环（缩聚芳环）——在煤行业领域，大家一直认为这种苯环都是很结实的、根本就不会破裂，只有热解到 2000 多 K、热量足够大、活化能大才能把它弄破裂。现在我们在 600K 底下，实际上是一个剪切应力就能把它拽开。大家觉得这很新奇，论文核心是缩聚芳环结构可被剪断，凭此发了篇论文（王瑾博士论文，2019；Wang et al, 2019, Fuel）。</p><p>但研究未结束：无烟煤未见甲烷，若产不出怎算成功？我们推测煤级太高。于是换用氢氧较多的烟煤进行力解模拟：对分子直接施力，一半向上、一半向下拉伸，结果转化为大量气体，又发了一篇论文——在烟煤低变质条件下我们看见了甲烷气。我们还改变了施加力的大小，从 0.01eV/Å 变到 0.07eV/Å，发现产气量先出现峰值、随后下降（Wang et al, 2021, Fuel；Wang et al, 2021, Energy & Fuels）。</p><p>最后总结出概念图：应力小不产气；应力大致脆性断裂也不产气；只有在韧性变形时，能量聚集后才会突然产生大量气体。这与宏观观察一致——瓦斯突出常发生在韧性剪切带，脆性变形无此现象；在韧性剪切带中煤会形成糜棱岩化结构，从而产生大量气体。</p><p>王瑾毕业后去太原理工大学任教。今年我们发表了一篇论文，提出位错速度模拟方法：直接对原子施力效果较差，新方法让煤一半错动、一半静止，给予理想速度——该条件下产生的气体是直接施力法的几十倍，达每纳秒每吨 300 多立方米（387 m³/ton/ns），这解释了瓦斯突出现象即瞬间产生大量气体；产物包括乙炔、乙烯、二氧化碳等，其中氢气产量特别多（H2 产量高达 80%；Wang et al, 2026, Inter. J. Hydrogen Energy）。</p><p>小结：1、煤在剪切应力作用下可以发生力化学反应，即使结构中很稳定的缩聚芳环也可以被剪破；应力导致官能团的脱落可以产生 CH4、CO2、H2O、H2、CO 等气体，产气量对应力大小敏感、存在最大值——这份工作首次提供了煤发生力解产气的直接证据，对理解煤矿瓦斯突出的发生条件具有重要意义。2、做有挑战性的创新工作不要怕艰难困苦，要大胆尝试和探索——回头看一些早期研究，尽管显得很初级很笨拙，但却是走在了没有脚印的无人区。</p><p>当年在无人区走路的感觉：草地上全是一片雪地，下了很厚的雪，你也不知道草地那儿有坑没坑、还是一块石头硌着脚，路在哪儿已经看不见了。看不见的时候，要么人特别聪明，通过周围景物或四周信息分析判断、走得很顺畅——那真是天才，反正我觉得我们不是天才；我们就知道看着人家、尝试着小心翼翼地跨一步走过去，走过去的时候也许看着很危险，但在无人区先干一步。有时候做工作就是这样：没人做的工作就是很难，你没有借鉴、不知道问谁，只能自己去慢慢试；有人做的工作或者热点工作做得好也挺好的，那个东西大家关心、做的人多、好问人、容易开展工作——反正是两类不同的特点。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>像煤的燃烧、热解这些呢，大家说了用反应力场，因为反应力场的时候呢就能让那个做化学反应。咱们现在做的呢是经典立场。</p><p>后来用笨办法，里头6个分子，把3个分子往下拽施加一个力，另外3个分子往上施加一个力，这就形成了剪切作用。</p><p>在煤行业领域，大家一直认为这种苯环都是很结实的，根本就不会破裂的。只有热解到2000多K……现在我们在600K底下，实际上是一个剪切应力就能把它拽开。</p><p>只有在韧性变形时，能量聚集后才会突然产生大量气体。这与宏观观察一致。瓦斯突出常发生在韧性剪切带。</p><p>该条件下产生的气体是直接施力法的几十倍，达每纳秒每吨300多立方米。这解释了瓦斯突出现象，即瞬间产生大量气体。</p><p>回头看一些早期研究，虽显初级且未产气，但当时走在无人区。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-hw-feedback">
+  <div class="slides"><figure class="slide" id="slide-42">
+<img src="slides/slide_42.png" alt="课件第42页 小结：1、气仓封闭体系可以产生正确的页岩气纳米流动，而开放体系不能，首次证实页岩气纳米流动服从Javadpour理论公式描述；2、孔道表面粗糙度对流动的影响大于孔道形状，与倾斜角的促进流动作用不同，转向角在粗糙孔中促进流动、在光滑孔中阻碍流动，粗糙度与表面势能共同控制页岩气吸附密度；3、纳米压力计可精确监测局部压力，水锁形成机理是气-水表面张力与孔壁-水吸附力的竞争与平衡，变形水层模型可精确描述狭缝孔相渗曲线；4、分子模拟研究中特别强调要把模拟做对，从多个角度反复核查观测到的现象是正确的，精益求精">
+<figcaption><span class="sno">42</span><span class="stitle">小结：1、气仓封闭体系可以产生正确的页岩气纳米流动，而开放体系不能，首次证实页岩气纳米流动服从Javadpour理论公式描述；2、孔道表面粗糙度对流动的影响大于孔道形状，与倾斜角的促进流动作用不同，转向角在粗糙孔中促进流动、在光滑孔中阻碍流动，粗糙度与表面势能共同控制页岩气吸附密度；3、纳米压力计可精确监测局部压力，水锁形成机理是气-水表面张力与孔壁-水吸附力的竞争与平衡，变形水层模型可精确描述狭缝孔相渗曲线；4、分子模拟研究中特别强调要把模拟做对，从多个角度反复核查观测到的现象是正确的，精益求精</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">16</span>
+      <div class="sec-tt">
+        <h2>课后：3.3 并行作业反馈</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（尾）</span><span class="chip">课件 42</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>讲完后还有 5 分钟，大家比较沉默没啥问题。趁这个时间把上午 3.3 的作业讲一讲：第一个是实测一下 1~4 个 CPU 核并行的 First run。提交完之后，陈欣怡算的时间都挺规范，还画出一条线、看着还挺直的；徐静怡正好介于中间——她观察到 1 核时间很长、跟这不一样，2 核的不一样、3 核的一样，4 核还略微快一点。她也观察了为啥，就去搜 AI 问一问，最后发现要通过 OMP_NUM_THREADS=1 来限制 OpenMP 使用的线程数。</p><p>这个地方涉及到两个概念：OpenMP 和 OpenMPI。OpenMPI 是 MPI 的一种实现、对应的是进程；OpenMP 对应的则是线程，这涉及到单机的共享内存——一个进程里可以运行多个线程。一个进程运行多个线程时并非同时运行，而是频繁切换：一个进程里有两个线程，一个用 CPU 时另一个就停着；第一个线程读数据不用 CPU 了，另一个赶紧用，这种频繁切换可以加速提高性能。但如果一个进程里线程特别多，就会遇到以前的问题——并行加速比掉下来。所以要想测 OpenMP 核数和性能的关系，用 OMP_NUM_THREADS=1 限制一下、让一个进程里只有一个线程，就可以做出比较好的数据。其他一些同学算完了之后只是测了一下、没有注意这个问题。</p><p>另外查了一下 300p1.c 这头有个错：NB 等于 6 的东西会出错——and/size 不整除，取整之后就少了一块东西。大多数同学通过增加好多行代码的控制把它调理好了，但这不是最优的；最优的话实际上只需要给它加 1 就可以了：加完 1 之后，原来相当于每一个 CPU 算 16 个，算了 6 个之后 96 个不够；加 1 变成 17 个，算 17×6=102 个，超出了，被控制住到不了 102、到 100 就结束了。这是最简单的方法。</p><p>最优的方法像李勇这个方法，是并行里头最常用的：意思就是 1、2、3、4 一直到 90，101、102、103 一直到 120……咱们是这样加，但是用 I 加的 stride 就会这样减，第一个词就这样算、第二个数这样算，就把这 100 这么分了——这么分的结果就是不管用几个 CPU 去算都能够分开来。这就是并行程序里最常用的把一个循环分解开的方法：begin+MY_stride*I、I 加的 stride。</p><p>其他的同学也都提了好多很棒的点子：雷立阳用这个方法可以把好多没有必要的警告输出给避免掉；王子双发现那个 run return 0 出来东西不对——没错，那个东西就是当年故意在里头留的一个 bug，谁愿意改就改一改；杨建丽说的要用 MPI_reduce，这有点儿麻烦；不德为说这个 be 这个是同步——这个不必要实际上是有必要的，只不过在这个小程序里头显不出来，但在大型的程序中有时候一定要进行同步，不同步的话当你的 CPU0 都想要数据了、CPU3 号还没算完呢，你朝它要数据，要过来的数据就不对了；韩正哥提到那个 pad 的 773 那个不太好，但那个不是太要紧的，取个什么值都可以，因为它上下两段已经在程序中分开了。好了，讲完了。</p><p>关于作业：下一节课（22号）上完课之后我要去绍兴开个会，回来正好是周日的晚上，所以作业尽量都在周日（10 月 25 日）的晚上之前交上；我周六的晚上不看，周一的早上开始看作业、给你们摘摘编编。下周就是最后一节课、讨论课，把作业讲一讲，留出半个小时到一个小时的时间完全讨论，到时候大家再准备一些问题。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>最后发现要通过OMP_NUM_THREADS=1来限制OpenMP使用的线程数。这个地方涉及到两个概念：一个叫OpenMP，一个叫OpenMPI。OpenMPI是MPI的一种实现，它对应的是进程。OpenMP对应的则是线程。</p><p>最优的方法呢，像李勇这个方法是最好的，这个方法就是并行里头最常用的方法……就是并行程序里头最常用的把一个循环分解开，就是用这种办法begin+MY_stride*I怎么样，然后I加的stride。</p><p>王子双呢就是发现那个run return 0那个出来东西不对。没错，那个东西就是当年故意在里头留的一个bug，谁愿意改就改一改。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（180083070901P2003H）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>

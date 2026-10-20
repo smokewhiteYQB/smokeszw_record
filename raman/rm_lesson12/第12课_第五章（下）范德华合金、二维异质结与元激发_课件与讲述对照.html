@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>显微共焦拉曼光谱学 · 第12节 第五章（下）：范德华合金、二维异质结与元激发（表面/折叠/莫尔/受限声子、极化激元、电子拉曼）｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.videos{margin-top:14px;border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.video + .video{border-top:1px solid #e4e9f0;}
+.videos h4{font-size:12.5px;font-weight:700;color:#0a1f38;background:#f2f5f9;padding:8px 12px;border-bottom:1px solid #e4e9f0;}
+.videos video{display:block;width:100%;max-height:460px;background:#0b0f14;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>显微共焦拉曼光谱学 · 第12节 第五章（下）：范德华合金、二维异质结与元激发（表面/折叠/莫尔/受限声子、极化激元、电子拉曼）</h1>
+    <div class="sub">第12节 第五章（下）：范德华合金、二维异质结与元激发（表面/折叠/莫尔/受限声子、极化激元、电子拉曼） ｜ 2026-10-20 ｜ 谭平恒</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 58 页 · 整理 8 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-alloy">01 范德华合金材料</option>
+<option value="sec-heterostructure">02 二维范德华异质结：界面耦合与波函数投影</option>
+<option value="sec-surface-phonon">03 表面声子</option>
+<option value="sec-folding">04 折叠声子与超晶格</option>
+<option value="sec-moire">05 莫尔声子与转角材料</option>
+<option value="sec-confined">06 受限声子：量子限制效应</option>
+<option value="sec-polariton">07 声子-等离子体极化激元</option>
+<option value="sec-electronic-raman">08 电子拉曼散射</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 Ch5-材料物性的拉曼光谱研究-2026秋.pdf 逐页渲染，转写原文见 record_20261020.txt。</div>
+<section class="sec" id="sec-alloy">
+  <div class="slides"><figure class="slide" id="slide-531">
+<img src="slides/slide_531.png" alt="课件第531页 3. 范德华合金材料：合金的概念（两种或两种以上金属与金属或非金属经一定方法合成的具有金属特性的物质；半导体合金/传统合金/相分离异质结构）">
+<figcaption><span class="sno">531</span><span class="stitle">3. 范德华合金材料：合金的概念（两种或两种以上金属与金属或非金属经一定方法合成的具有金属特性的物质；半导体合金/传统合金/相分离异质结构）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-532">
+<img src="slides/slide_532.png" alt="课件第532页 3. 范德华合金材料：单层TMD合金的拉曼光谱——二维合金Mo1-xWxS2（层内无序、层间范德华力、带隙可调）">
+<figcaption><span class="sno">532</span><span class="stitle">3. 范德华合金材料：单层TMD合金的拉曼光谱——二维合金Mo1-xWxS2（层内无序、层间范德华力、带隙可调）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-533">
+<img src="slides/slide_533.png" alt="课件第533页 3. 范德华合金材料：单层TMD合金的拉曼光谱——高频区因无序效应明显展宽（E' 28.8cm⁻¹ vs 20.2cm⁻¹），低频区C模线宽与体材料类似（无序效应可忽略），线性链模型可用于解释合金低频模">
+<figcaption><span class="sno">533</span><span class="stitle">3. 范德华合金材料：单层TMD合金的拉曼光谱——高频区因无序效应明显展宽（E' 28.8cm⁻¹ vs 20.2cm⁻¹），低频区C模线宽与体材料类似（无序效应可忽略），线性链模型可用于解释合金低频模</span></figcaption>
+</figure>
+<figure class="slide" id="slide-534">
+<img src="slides/slide_534.png" alt="课件第534页 3. 范德华合金材料：二维半导体合金薄片的层数鉴别——ωC(N)=ωC,bulk·cos(π/2N)、ωLB(N)=ωLB,bulk·sin(π/2N)，组分未知时也可确定层数N">
+<figcaption><span class="sno">534</span><span class="stitle">3. 范德华合金材料：二维半导体合金薄片的层数鉴别——ωC(N)=ωC,bulk·cos(π/2N)、ωLB(N)=ωLB,bulk·sin(π/2N)，组分未知时也可确定层数N</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>范德华合金材料</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 531</span><span class="chip">课件 532</span><span class="chip">课件 533</span><span class="chip">课件 534</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>低频模对应原子层的刚性振动：水平方向为剪切振动、竖直方向为呼吸振动，频率随层数增加而改变。高频模通常只能观察到一个声子，但事实上其数量应与层数相关，少数共振情况下可观察到多个。如何理解这些高频模的频率和峰位？我们提出范德华模型解释了峰位移动。本征三维晶体材料中，高频模的峰强是未解难题——解释峰位较简单（与层数相关），但峰强受多种因素影响、检测较难；后续体系可将强度检测得较好，主要检测高频模强度。</p><p>下面讨论铝合金这一泛化体系。合金由两种或以上金属或非金属原子合成，它不一定具有金属特性——虽然“合金”含“金”字且多源于金属，但也存在非金属合金（大家注意一下，回去我把这个修改一下）。实际上常见的合金，很多金属材料性能要好也需具备合金特性，所谓合金意味着它本身是不纯的——但材料纯与不纯是相对的，不纯则是绝对的。像不锈钢掺的其他元素非常少，但就能具有不锈的功能。</p><p>不仅是金属有合金，半导体材料也有：若通过 MBE 或其他方法生长合金材料，就涉及晶格常数——若晶格常数很接近，生长出的合金质量就非常好；但若差别较大，生长过程中就不会形成薄膜，可能形成岛状生长，最后形成量子点并产生应变（后面讲应变和量子点时都会涉及）。</p><p>对于二维材料，如 TMD 材料中的 MoS2：每一层上下是硫原子、中间是钼原子，内部共价键作用非常强，但单层材料间是范德华力作用——这是二维材料的本质。若在原 MoS2 材料中掺入钨，钨会在中间层随机分布：单独看单元仍有特定结构，但在电镜下金属层整体呈现无序状态；随着组分从 X=0 改变到 X=1，材料性质会发生转变。这种二维合金层的金属层是无序的，但层间仍是范德华相互作用。</p><p>观察拉曼光谱可见有趣结果：体材料 MoS2 有尖锐的 E2g 和 A1g 峰及剪切模；合金体材料也有剪切模，但半宽跟纯材料一模一样——从剪切模来看它跟纯二维材料没差别。但看高频层内模（A 模等）明显展宽：展宽是无序性问题，无序就会展宽、频率也会改变，所以在高频范围观察到的是无序效应导致的展宽。为什么低频范围拉得非常窄、感觉不到无序？这体现剪切模振动特性——整个无序层做刚性振动，所以看不到它的无序；当然频率随组分改变而变（有效质量变了），但半宽基本没变。在半导体合金材料里，这特性非常明显，让我们很好理解二维材料的刚性振动（对剪切模和呼吸模来说）。</p><p>如何通过偏振拉曼识别出呼吸模还是剪切模？可以看到体材料频率跟两层材料频率是根号 2 倍、满足以前特征。有个比较有意思的情况：通常我们要鉴别某一种物质或层数，可以看峰位（如 2D 模判断多少层石墨烯）；但在这里我们不知道合金的组分是多少，然而它的体材料和两层材料频率满足 √2 的关系——意味着在二维材料组分不知道的情况下，它的呼吸模或剪切模仍然会遵从本征二维材料的规律。测到的最成熟的关系都可以用线性链模型公式描述。</p><p>低频拉曼光谱确定层数很简单：先测一个体材料（一般能看到剪切模或呼吸模），它的频率除以 √2 就是两层材料的频率；然后测超薄材料——只要是满足 √2 倍而看不到其他模式，那这个材料就是两层材料（两层材料里面有可能呼吸模就变成拉曼活性）；根据两层就可以导出其他层数，通过呼吸模、剪切模的频率位置就能完全确定其他层数。这说的是合金，对其他所有二维材料都可以这么定层数。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>虽然“合金”含“金”字且多源于金属，但也存在非金属合金。大家注意一下，回去我把这个修改一下。</p><p>材料纯与不纯是相对的，不纯则是绝对的。像不锈钢掺的其他元素非常少，但就能具有不锈的功能。</p><p>为什么低频范围拉得非常窄，感觉不到无序？这体现剪切模振动特性，因为整个无序的长做刚性震动。所以我看不到它的无序。</p><p>只要是满足√2倍而看不到其他模式，那这个材料就是两层材料。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-heterostructure">
+  <div class="slides"><figure class="slide" id="slide-535">
+<img src="slides/slide_535.png" alt="课件第535页 4. 二维范德华异质结：二维材料家族（单层TMD/一维纳米带/二维晶体/二维合金/多层TMD/转角双层TMD/转角多层石墨烯）">
+<figcaption><span class="sno">535</span><span class="stitle">4. 二维范德华异质结：二维材料家族（单层TMD/一维纳米带/二维晶体/二维合金/多层TMD/转角双层TMD/转角多层石墨烯）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-536">
+<img src="slides/slide_536.png" alt="课件第536页 4. 二维范德华异质结：二维材料基器件本质上是范德华异质结（在石墨烯上生长MoS2、无应变AlN、GaN层）">
+<figcaption><span class="sno">536</span><span class="stitle">4. 二维范德华异质结：二维材料基器件本质上是范德华异质结（在石墨烯上生长MoS2、无应变AlN、GaN层）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-537">
+<img src="slides/slide_537.png" alt="课件第537页 4. 二维范德华异质结：范德华异质结构的基本构建单元（Gr金属电极/高迁移率、hBN绝缘介电/隧穿势垒/封装、TMD半导体沟道）">
+<figcaption><span class="sno">537</span><span class="stitle">4. 二维范德华异质结：范德华异质结构的基本构建单元（Gr金属电极/高迁移率、hBN绝缘介电/隧穿势垒/封装、TMD半导体沟道）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-538">
+<img src="slides/slide_538.png" alt="课件第538页 4. 二维范德华异质结：TMD/hBN范德华异质结的界面耦合（WS2/hBN）——剪切模局域在组分内；呼吸模是整个堆叠层的集体振动">
+<figcaption><span class="sno">538</span><span class="stitle">4. 二维范德华异质结：TMD/hBN范德华异质结的界面耦合（WS2/hBN）——剪切模局域在组分内；呼吸模是整个堆叠层的集体振动</span></figcaption>
+</figure>
+<figure class="slide" id="slide-539">
+<img src="slides/slide_539.png" alt="课件第539页 4. 二维范德华异质结：二维范德华异质结构中的跨维度电子-声子耦合（2D激子与3D呼吸模声子的强耦合，Type-I能带排列）">
+<figcaption><span class="sno">539</span><span class="stitle">4. 二维范德华异质结：二维范德华异质结构中的跨维度电子-声子耦合（2D激子与3D呼吸模声子的强耦合，Type-I能带排列）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-540">
+<img src="slides/slide_540.png" alt="课件第540页 4. 二维范德华异质结：预测LB模式强度的波函数投影模型（只有接近3LW中LB3,2的模可观测：大的波函数投影/小的波函数投影）">
+<figcaption><span class="sno">540</span><span class="stitle">4. 二维范德华异质结：预测LB模式强度的波函数投影模型（只有接近3LW中LB3,2的模可观测：大的波函数投影/小的波函数投影）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-541">
+<img src="slides/slide_541.png" alt="课件第541页 4. 二维范德华异质结：TMD/Gr范德华异质结的界面耦合（MoS2/Gr）——转移与退火前后（AFM高度差2.3nm→1.3nm）">
+<figcaption><span class="sno">541</span><span class="stitle">4. 二维范德华异质结：TMD/Gr范德华异质结的界面耦合（MoS2/Gr）——转移与退火前后（AFM高度差2.3nm→1.3nm）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-542">
+<img src="slides/slide_542.png" alt="课件第542页 4. 二维范德华异质结：TMD/Gr范德华异质结的界面耦合——剪切模局域在组分内、呼吸模来自整个异质结构；定量理解用波函数投影">
+<figcaption><span class="sno">542</span><span class="stitle">4. 二维范德华异质结：TMD/Gr范德华异质结的界面耦合——剪切模局域在组分内、呼吸模来自整个异质结构；定量理解用波函数投影</span></figcaption>
+</figure>
+<figure class="slide" id="slide-543">
+<img src="slides/slide_543.png" alt="课件第543页 4. 二维范德华异质结：三元范德华异质结中Gr/hBN界面耦合——通过相关三元vdWHs揭示未知的Gr/hBN界面耦合">
+<figcaption><span class="sno">543</span><span class="stitle">4. 二维范德华异质结：三元范德华异质结中Gr/hBN界面耦合——通过相关三元vdWHs揭示未知的Gr/hBN界面耦合</span></figcaption>
+</figure>
+<figure class="slide" id="slide-544">
+<img src="slides/slide_544.png" alt="课件第544页 4. 二维范德华异质结：三元范德华异质结中Gr/hBN界面耦合——二元vdWHs中的LB力常数表；波函数投影用于LB模">
+<figcaption><span class="sno">544</span><span class="stitle">4. 二维范德华异质结：三元范德华异质结中Gr/hBN界面耦合——二元vdWHs中的LB力常数表；波函数投影用于LB模</span></figcaption>
+</figure>
+<figure class="slide" id="slide-545">
+<img src="slides/slide_545.png" alt="课件第545页 4. 二维范德华异质结：三元范德华异质结中Gr/hBN界面耦合——由VHS选择性LB共振（t(1+1)LG与t(1+1+1)LG的不同转角）">
+<figcaption><span class="sno">545</span><span class="stitle">4. 二维范德华异质结：三元范德华异质结中Gr/hBN界面耦合——由VHS选择性LB共振（t(1+1)LG与t(1+1+1)LG的不同转角）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-546">
+<img src="slides/slide_546.png" alt="课件第546页 4. 二维范德华异质结：三元范德华异质结中Gr/hBN界面耦合——多个转角界面与不同共振条件→选择性激发tMLG基vdWHs中的LB模">
+<figcaption><span class="sno">546</span><span class="stitle">4. 二维范德华异质结：三元范德华异质结中Gr/hBN界面耦合——多个转角界面与不同共振条件→选择性激发tMLG基vdWHs中的LB模</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>二维范德华异质结：界面耦合与波函数投影</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 535</span><span class="chip">课件 536</span><span class="chip">课件 537</span><span class="chip">课件 538</span><span class="chip">课件 539</span><span class="chip">课件 540</span><span class="chip">课件 541</span><span class="chip">课件 542</span><span class="chip">课件 543</span><span class="chip">课件 544</span><span class="chip">课件 545</span><span class="chip">课件 546</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>二维材料有很多：单层材料可以制成纳米带（一维结构），也可以是二维晶体或二维合金，还可以是多层材料——多层材料层与层之间可以有转角，即沿水平方向移动后堆垛（如 2H、3R 方式），同时还可以转一个角度，这就是转角或扭角材料。有转角的双层和多层材料通常也是范德华异质结，由相同材料组成时叫同质结；若把不同材料放在一起，就是真正的异质结或异质晶体——比如将过渡金属硫族化合物和石墨烯组合（一层石墨烯、一层氮化硼、一层二硫化钼上下堆叠）。</p><p>这种二维材料组成的结构有个好处：做器件过程中不用考虑晶格匹配——因为它没有悬挂键，任何材料都可以堆到其他上面，这样可以做成质量非常高的界面；普通半导体材料那可不行，主要还是在于它没有悬挂键、在二维材料里面所有的层面都是饱和的。做二维材料主要看应用：可以做探测器、调制器、激光器——但实现这些功能不是单个二维材料能完成的，要有电极：通常以石墨烯作为电极、用其他材料作为包裹层（把包裹层上下包起来，防止不稳定材料退化），也可以把它当做衬底、上面生长其他二维材料，质量会非常好。</p><p>但如果只是把二维材料简单放在不平的衬底上，它会跟着衬底形状发生改变——后面会展示把材料放在超薄衬底上的效果；如果不放在超薄衬底上，拉曼光谱的半宽会有差异。这就有必要研究钝化（封装）异质结，看它的界面质量究竟怎么样。另外一个问题：假设做探测器等光电子器件，究竟是希望在性能测试之前确定质量好坏，还是通过测试结果来确定？肯定是希望去加电之前就知道它是好的、是坏的——相当于起到一个质检的过程，但普通来做很难；我们的拉曼光谱用来做这种异质结界面质量的检测，非常方便。</p><p>要做相应的检测，这里有几个典型的例子：做电极材料的是石墨烯、做衬底或包裹材料的是 hBN（硼烷）、做势垒层或有源层光电材料的是 TMD——这三种单元之间组成的异质结该怎么表征？首先看 TMD 材料和 hBN 组成的异质结（WS2/hBN）：用 AFM 测厚度误差会很大，我们就测它的剪切模和呼吸模（低频范围）——测出来非常漂亮，是因为我们用特定的激发光、在共振条件下去测这些信号。两层 WS2 + 39 层 hBN、三层 MoS2 + 39 层 hBN、三层 MoS2 + 32 层/44 层 hBN：随着氮化硼数量增加，呼吸模数量也增加，但剪切模在箭头所指位置保持不变——这意味着异质结的剪切模源自三层二硫化物，无论加多少氮化硼其频率均不变，说明界面无耦合。</p><p>若将二硫化钨和二硫化钼制成异质结，两者剪切模都很强且频率不变：因无耦合，无法据此判断界面质量。呼吸模则不同：随层数增加观察到的呼吸模数量增多（N 层异质结可观察到 N-1 个呼吸模），数量增加意味着二硫化钨和氮化硼间存在界面耦合；虽能通过呼吸模测层间力常数（hBN 力常数 9.88、界面力常数 8.97，两者基本一致——但这两种物质完全不同），膨胀未知。样品中相互作用不随层数改变，因此可通过建立线性模型求解振动方程，通过拟合实验结果确定体相和界面的力常数。若两层 WS2 + 三层 hBN 无耦合，仅能观测到 WS2 的呼吸模；若有耦合，则会出现复杂复系统模式——据此可判断界面质量。优质界面制备往往需要工艺优化，并非一蹴而就。</p><p>进而探究呼吸模与电子态的耦合机制：WS2 带隙约 1.9eV、hBN 为超宽带隙半导体约 6.0eV，形成异质结后电子态被束缚在二维材料内；声子态横跨 WS2 和 hBN、不受厚度限制、表现为三维特性——这意味着二维电子态与三维声子态产生了耦合（跨维度电子-声子耦合）。测其共振拉曼线型结果基本一致。它们究竟如何耦合？我们引入全维度电子-声子耦合概念：设定一个波函数——声子的包含数就是原子的位移，即 N 层中每一层的原子对某一个声子都会有位移，这构成了一个波函数。严格来说，WS2 的电子态应与内部振动产生强耦合，但现在它是整体在产生振动，该怎么办？将整体振动投影到三层 WS2 的振动上，这叫波函数投影。</p><p>以呼吸模为例：它本是上下振动，加了氮化硼后振动形式发生了变化——此时两者做同向振动但振幅不同，若减去振幅相同的部分，剩下的是较弱的相对振动成分，因此该部分的波函数投影比例较小、强度也较弱；再看两层 WS2 做相同振动的情况，其在基底里的投影很强、拉曼强度也会很强。根据波函数投影模型，计算结构与实验观察结果很相近——此处解决不同拉曼模间的相对强度问题（不是比较不同材料强度，而是同种物质不同拉曼模的强度比），有助于定量理解哪种模的电子-声子相互作用更强或更弱。</p><p>再看 TMD 与石墨烯组成的异质结（MoS2/Gr）：将 TMD 材料转移至石墨烯上，刚转移时 AFM 测得高度差为 2.3nm，退火后变为 1.3nm（对应两层结构）——说明退火提升了界面质量。看 Mapping 图：双层 MoS2 + 两层石墨烯后模式产生劈裂，但剪切模位置未变——为何如此？可用层间耦合模型解释：剪切模本身属 MoS2，因层间剪切耦合极弱，增加石墨烯层数不改变其位置；但呼吸模频率会随石墨烯层数增加而改变，需用层间耦合模型理解。做此工作前我们观察了转角石墨烯的呼吸模，明确了其呼吸相互作用机制——在现有模型框架内，用一个鉴别力常数即可预测不同异质结中呼吸模的位置。</p><p>强度怎么预测？为何此处峰强、彼处峰弱甚至消失？用波函数投影模型来理解——该模型包含紧束缚近似。事实上 17 年和 19 年的工作当时未解释相对强度，但后来将后续模型应用到前期成果，能很好地解释实验结果——因此应建立物理模型而非单纯拟合：若仅用函数拟合，无法探索材料物理性质的本质。</p><p>这里列出 hBN 和石墨烯组成异质结再加 TMD 材料的例子：发现只能看到剪切模、看不到呼吸模——因为两种材料的呼吸模式都是禁戒的；但剪切模能看到，只是非常弱。一旦加了一层 TMD 材料，马上就能看到很多呼吸模——它的频率受 TMD 材料和氮化硼的耦合强度影响，也受氮化硼跟石墨烯的耦合常数影响；有足够数据就能用现行模型把这些未知量定下来，定下来后就能确定氮化硼与石墨烯的力常数，再把石墨烯与 TMD 材料之间的相互作用定下来。需要测定氮化硼、石墨烯与各二维材料的耦合常数，这需要很多样品来标定；根据这些常数应用耦合模型就能解释现象。看到这么多呼吸模，强度怎么理解？用了波函数投影——看上面材料和下面材料，右边轮廓是不是很相近？所以投影模型是有效的。</p><p>除了刚才说的三种材料异质结，还有转角材料：把石墨烯做成扭转材料、再与氮化硼组成异质结。这里有个奇特结果——转角石墨烯的半狄拉克点能量跟转角相关：如果是 3 层石墨烯，每两层都是扭曲的且角度不同，那么它就会有两个狄拉克点；只要跟任何一个狄拉克点共振，都能够测到它的低频模态。看 15 度、11 度的结果：从 1.96 到 2.54eV 测它的拉曼谱，结果完全不一样、轮廓也不一样；理论计算跟实验结果吻合得还可以，但中间有个节点、有个调制我们没有预测到——为什么有这么一个调制？当时没有解释清楚，感觉是不是也有类似的缺陷在里面；要真正研究这个结果，得去改变氮化硼的厚度详细地做。解这个拟合用的不是波函数投影模型，而是紧束缚模型。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这种二维材料组成的结构有个好处。在做器件过程中，不用考虑晶格匹配。因为它没有悬挂键，任何材料都可以堆到其他上面。</p><p>肯定是希望我们在去加电之前，就能够知道它是好的、是坏的。这样的话，相当于我们起到一个质检的过程。</p><p>随着硼烷数量增加，呼吸模数量也增加。但剪切模在箭头所指位置保持不变。这意味着异质结的剪切模源自三层二硫化物。无论加多少红氮，其频率均不变，说明界面无耦合。</p><p>我将整体震动投影到三层二硫化钨的震动上，这叫波函数投影。</p><p>因此，应建立朴实模型而非单纯拟合。若仅用函数拟合，无法探索材料物理性质的本质。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-surface-phonon">
+  <div class="slides"><figure class="slide" id="slide-547">
+<img src="slides/slide_547.png" alt="课件第547页 5. 表面声子：表面声子模——界面模式局域在表面/界面并沿界面传播；柱状纳米线中表面声子变为拉曼活性（SO声子，频率满足ωSO²=ωTO²+ω̃p²/(ε∞+εm·f(x))）">
+<figcaption><span class="sno">547</span><span class="stitle">5. 表面声子：表面声子模——界面模式局域在表面/界面并沿界面传播；柱状纳米线中表面声子变为拉曼活性（SO声子，频率满足ωSO²=ωTO²+ω̃p²/(ε∞+εm·f(x))）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-548">
+<img src="slides/slide_548.png" alt="课件第548页 5. 表面声子：表面声子模—GaAs纳米线（Bulk GaAs TO/LO与纳米线中的表面声子）">
+<figcaption><span class="sno">548</span><span class="stitle">5. 表面声子：表面声子模—GaAs纳米线（Bulk GaAs TO/LO与纳米线中的表面声子）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-549">
+<img src="slides/slide_549.png" alt="课件第549页 5. 表面声子：表面声子模—GaAs纳米线（TO/LO与SO声子频率公式）">
+<figcaption><span class="sno">549</span><span class="stitle">5. 表面声子：表面声子模—GaAs纳米线（TO/LO与SO声子频率公式）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-550">
+<img src="slides/slide_550.png" alt="课件第550页 5. 表面声子：表面声子模—GaP纳米线（SO声子位于390cm⁻¹附近，频率分布随外部介质介电常数εm与直径d显著不同）">
+<figcaption><span class="sno">550</span><span class="stitle">5. 表面声子：表面声子模—GaP纳米线（SO声子位于390cm⁻¹附近，频率分布随外部介质介电常数εm与直径d显著不同）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-551">
+<img src="slides/slide_551.png" alt="课件第551页 5. 表面声子：表面声子模—碳纳米管（振动模式频率对半径有很强依赖，(10,10)碳纳米管紧束缚计算）">
+<figcaption><span class="sno">551</span><span class="stitle">5. 表面声子：表面声子模—碳纳米管（振动模式频率对半径有很强依赖，(10,10)碳纳米管紧束缚计算）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-552">
+<img src="slides/slide_552.png" alt="课件第552页 5. 表面声子：表面声子模—碳纳米管（armchair方向卷曲(n,n)碳纳米管的拉曼图谱与紧束缚计算）">
+<figcaption><span class="sno">552</span><span class="stitle">5. 表面声子：表面声子模—碳纳米管（armchair方向卷曲(n,n)碳纳米管的拉曼图谱与紧束缚计算）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>表面声子</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段</span><span class="chip">课件 547</span><span class="chip">课件 548</span><span class="chip">课件 549</span><span class="chip">课件 550</span><span class="chip">课件 551</span><span class="chip">课件 552</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>三个材料体系都挑了比较熟的二维氮化材料，下面讲元激发。接下来讲一系列元激发，重点引入声子概念：光子可是波或粒子，晶格振动是格波，为描述其立体性抽象出声子。下面讲表面声子、折叠声子、莫尔声子、受限声子及等离子体激元等激发。</p><p>表面研究方面国家有多个重点实验室（如物理所的表面物理；复旦大学有物理系、厦门大学有做固体表面化学的系）。研究表面主要在于表面跟内部有不同的属性：表面的相互作用会比体相弱一些。现在研究表面、研究催化，往往催化也是跟表面有关系——表面有不同的构型，不同构型所产生的物理和化学性质就不一样。对声子来说也是一样的道理：有些振动只在表面发生、只在布里渊区（表面）出现。假如在柱状纳米线中，表面声子容易受到径向或截面方向的调制，这样它原来不拉曼活性的就变成拉曼活性的。跟表面相关的声子一般都是光学模，我们称为表面声子（surface optical phonons，SO 声子）。</p><p>表面声子的频率跟体材料频率有一定的关系：跟 LO、TO 有关，还跟外面的介电常数有关。最直接的例子是纳米线：体材料的 GaAs 有一个 LO、一个 TO，但在纳米线里面会多出来一个拉曼峰（SO 声子）。把表面声子放在空气中间、放在 PMMA 里面，表面声子模就不一样——因为它跟外面的介电常数紧密相关；直径不同（160nm、69nm、46nm），频率也不一样——与直径之间的一关系。实验测出的值与理论计算值，若从绝对值看拟合不好，但从趋势看拟合很好——为何有平均频率？因存在分布且表面有形状（如多边形），这些都会影响频率。因此通常不奢求定量解释，能定性解释实验结果已很不错。</p><p>另一种加敏纳米线（直径 20nm 和 50nm）置于介质中，虽装置不同导致差异但规律基本一致。原则上纳米线和量子点也有表面声子模。另一个典型特性是拉曼谱：所有原子处于界面（如碳纳米管），其拉曼模可视为表面声子模，表面声子与直径及间距长度相关。看碳纳米管的拉曼光谱：高频部分与直径关系不显著；低频部分与直径关系极大，其频率甚至与直径成反比——直径越小频率越高，这可用简单模型计算出来。</p><p>正是由于碳纳米管低频模与直径相关，还与丰富的能带结构联系，需在共振散射条件下观察：若测普通样品无信号大家便没兴趣，但碳纳米管不同——虽难获纯净样品，用任何激发光都易对应直径，分析后可得相对丰度并确定。碳纳米管发现后拉曼光谱仪卖点很多：只要大研究组做碳纳米管，学术研究推动表征、表征促进销售，环环相扣。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>在柱状纳米线中，由于表面声子会在其径向或者截面方向受到调制，而破坏平移对称性，为拉曼散射提供了额外动量，因此其表面声子可以变为拉曼活性。</p><p>实验测出的值与理论计算值，大家看吻合度。若从绝对值看，网络拟合不好；但从趋势看，网络拟合很好。</p><p>看纳米管的拉曼光谱：高频部分与直径关系不显著；低频部分与直径关系极大，其频率甚至与直径的导数成正比。所以直径越小，频率越高。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-folding">
+  <div class="slides"><figure class="slide" id="slide-553">
+<img src="slides/slide_553.png" alt="课件第553页 6. 折叠声子和莫尔声子：超晶格（artificial lattice）——两种不同组元以纳米到几十纳米薄层交替生长的多层膜结构（IBM江崎和朱兆祥1970年提出）">
+<figcaption><span class="sno">553</span><span class="stitle">6. 折叠声子和莫尔声子：超晶格（artificial lattice）——两种不同组元以纳米到几十纳米薄层交替生长的多层膜结构（IBM江崎和朱兆祥1970年提出）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-554">
+<img src="slides/slide_554.png" alt="课件第554页 6. 折叠声子和莫尔声子：外延生长需要晶格匹配——叠层生长（Frank-van der Merwe）/岛状生长（Volmer-Weber）、量子点、应变">
+<figcaption><span class="sno">554</span><span class="stitle">6. 折叠声子和莫尔声子：外延生长需要晶格匹配——叠层生长（Frank-van der Merwe）/岛状生长（Volmer-Weber）、量子点、应变</span></figcaption>
+</figure>
+<figure class="slide" id="slide-555">
+<img src="slides/slide_555.png" alt="课件第555页 6. 折叠声子和莫尔声子：一维超晶格中的声子折叠效应——GaAs/AlAs超晶格（A B B A A B…排列、折叠声子）">
+<figcaption><span class="sno">555</span><span class="stitle">6. 折叠声子和莫尔声子：一维超晶格中的声子折叠效应——GaAs/AlAs超晶格（A B B A A B…排列、折叠声子）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-556">
+<img src="slides/slide_556.png" alt="课件第556页 6. 折叠声子和莫尔声子：两种组分声子谱不相似的情况——频率在布里渊区边界分裂，“约束”效应成为主导，声子约束在各自材料中">
+<figcaption><span class="sno">556</span><span class="stitle">6. 折叠声子和莫尔声子：两种组分声子谱不相似的情况——频率在布里渊区边界分裂，“约束”效应成为主导，声子约束在各自材料中</span></figcaption>
+</figure>
+<figure class="slide" id="slide-557">
+<img src="slides/slide_557.png" alt="课件第557页 6. 折叠声子和莫尔声子：两种组分声子谱相似的情况——超晶格晶胞使原布里渊区缩小发生折叠，测量到的声子支数目增多">
+<figcaption><span class="sno">557</span><span class="stitle">6. 折叠声子和莫尔声子：两种组分声子谱相似的情况——超晶格晶胞使原布里渊区缩小发生折叠，测量到的声子支数目增多</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>折叠声子与超晶格</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段</span><span class="chip">课件 553</span><span class="chip">课件 554</span><span class="chip">课件 555</span><span class="chip">课件 556</span><span class="chip">课件 557</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>除表面声子外，下面讲折叠声子。折叠声子和莫尔声子实际都是折叠声子。要讲折叠声子，就得先讲超晶格：通常晶格常数由原胞尺寸决定，但超晶格相当于超原胞。最易理解的是对比一维单原子链和双原子链：单原子链是晶体、晶格常数为 a；双原子链晶格常数是 2a（原则上 3 元、4 元链均可构造）——构造意味着材料结构相似但晶格不同，晶胞会变得很大、晶格常数也会变大，我们将这种情况取名为超晶格。</p><p>超晶格是一个很大的优势：原来一维单元之间只有 C1 值；一旦将晶格常数扩成 2 倍，布里渊区就会变小，这相当于把原来的地方折回来（能带折叠）；若两个原子质量不同，会产生额外相互作用导致能带劈裂。超晶格意味着布里渊区会发生折叠。</p><p>如何寻找超晶格？通常通过分子束外延或 MOCVD 生长：以一维单原子链、双原子链为例，生长时先在衬底上长一个很薄的层，随着层数变厚会产生应变并释放，应变释放后会形成量子点（AFM 测出的点、侧面形状由 TEM 测出）。虽然测试时未加盖层，但为保持材料稳定必须加上盖层——加上盖层，它的大小、厚度、密度都会发生改变，这是肯定的。另外在生长过程中由于有应变，该区域自动对齐了。</p><p>这种层状增长某种意义上来说就是一个超晶格、一种调制波。若把某一层像刚才所说的二维合金一样处理（一层衬底、一层合金交替），最后就变成 A 晶胞、B 晶胞、A 晶胞、B 晶胞的排列——这就形成了一个超晶格。一旦形成超晶格，晶格增大了、布里渊区就会缩小：A 原子跟 B 原子界面上的原子数非常少，原子间的相互作用力常数模型不会改变太多——所以很多时候通过不连续的折叠，就能解释相应的实验结果。折叠过后边界就打开了相互作用（跟声子在布里渊区边界一样），能看到 A1 模、B1 模——60 多个波数意味着样品是超薄的、折叠得很厉害：在 200 个波数时，60 多个波数用线性结构计算仅折叠 3 次，意味着它非常薄、超硬。</p><p>若两种材料声子谱差别不大，超晶格效应不明显、折叠过程中实用性降低——声子谱分裂为离散频率且无色散；若材料相似、色散差别小，功能区域缩小并显著增长。超晶格层层堆叠，折叠后可见新声子：生成膜随波长改变频率，主要因激光动量守恒——激光波矢折叠次数多（原仅为布里渊区 1/100），周期变大时折叠多次后与晶格周期接近，不同激发光自动选择不同分支。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>要讲折叠声子，就得先讲超晶格。通常晶格常数由原胞尺寸决定。但超晶格相当于超原胞。</p><p>一旦将晶格常数扩成2倍，布里渊区就会变小。这相当于把红的地方折回来。</p><p>频率上不去，在200个波数时，60多个波数用线性结构计算仅折叠3次。这意味着它非常薄、超硬。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-moire">
+  <div class="slides"><figure class="slide" id="slide-558">
+<img src="slides/slide_558.png" alt="课件第558页 6. 折叠声子和莫尔声子：莫尔（Moiré）超晶格——二维超晶格：双层转角石墨烯中的莫尔图样随转角变化（周期与转角密切相关）">
+<figcaption><span class="sno">558</span><span class="stitle">6. 折叠声子和莫尔声子：莫尔（Moiré）超晶格——二维超晶格：双层转角石墨烯中的莫尔图样随转角变化（周期与转角密切相关）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-559">
+<img src="slides/slide_559.png" alt="课件第559页 6. 折叠声子和莫尔声子：Moiré超晶格中莫尔条纹对异质结电子态的影响（Graphene/hBN的Hofstadter butterfly、TMD Moiré激子）">
+<figcaption><span class="sno">559</span><span class="stitle">6. 折叠声子和莫尔声子：Moiré超晶格中莫尔条纹对异质结电子态的影响（Graphene/hBN的Hofstadter butterfly、TMD Moiré激子）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-560">
+<img src="slides/slide_560.png" alt="课件第560页 6. 折叠声子和莫尔声子：转角双层材料中的晶体学超晶格和莫尔超晶格（晶体学超晶格可用指数(m,n)描述，莫尔超晶格可用莫尔晶格常数LM描述）">
+<figcaption><span class="sno">560</span><span class="stitle">6. 折叠声子和莫尔声子：转角双层材料中的晶体学超晶格和莫尔超晶格（晶体学超晶格可用指数(m,n)描述，莫尔超晶格可用莫尔晶格常数LM描述）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-561">
+<img src="slides/slide_561.png" alt="课件第561页 6. 折叠声子和莫尔声子：晶体学超晶格和莫尔超晶格及其倒空间的基矢（LM只依赖θ、LC还依赖|m-n|；gM=2b·sin(θ/2)）">
+<figcaption><span class="sno">561</span><span class="stitle">6. 折叠声子和莫尔声子：晶体学超晶格和莫尔超晶格及其倒空间的基矢（LM只依赖θ、LC还依赖|m-n|；gM=2b·sin(θ/2)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-562">
+<img src="slides/slide_562.png" alt="课件第562页 6. 折叠声子和莫尔声子：moiré超晶格倒空间基矢随转角θ的轨迹变化——六个具有非零gM或gC的声子折叠回Γ点并成为拉曼活性（Zone-folding effect）">
+<figcaption><span class="sno">562</span><span class="stitle">6. 折叠声子和莫尔声子：moiré超晶格倒空间基矢随转角θ的轨迹变化——六个具有非零gM或gC的声子折叠回Γ点并成为拉曼活性（Zone-folding effect）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-563">
+<img src="slides/slide_563.png" alt="课件第563页 6. 折叠声子和莫尔声子：机械剥离转移和CVD制备的转角双层MoS2材料——moiré声子（由moiré周期势诱导的折叠声子）">
+<figcaption><span class="sno">563</span><span class="stitle">6. 折叠声子和莫尔声子：机械剥离转移和CVD制备的转角双层MoS2材料——moiré声子（由moiré周期势诱导的折叠声子）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-564">
+<img src="slides/slide_564.png" alt="课件第564页 6. 折叠声子和莫尔声子：MoS2转角双层moiré超晶格中折叠后的moiré A1' 声子">
+<figcaption><span class="sno">564</span><span class="stitle">6. 折叠声子和莫尔声子：MoS2转角双层moiré超晶格中折叠后的moiré A1' 声子</span></figcaption>
+</figure>
+<figure class="slide" id="slide-565">
+<img src="slides/slide_565.png" alt="课件第565页 6. 折叠声子和莫尔声子：利用moiré声子探测转角双层材料中单层组分的声子色散曲线（与中子散射/X射线散射对比：低波数测试能力/样品尺寸/动量探测区间/空间分辨率）">
+<figcaption><span class="sno">565</span><span class="stitle">6. 折叠声子和莫尔声子：利用moiré声子探测转角双层材料中单层组分的声子色散曲线（与中子散射/X射线散射对比：低波数测试能力/样品尺寸/动量探测区间/空间分辨率）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-566">
+<img src="slides/slide_566.png" alt="课件第566页 6. 折叠声子和莫尔声子：C激子引起的莫尔声子相关模式的拉曼共振">
+<figcaption><span class="sno">566</span><span class="stitle">6. 折叠声子和莫尔声子：C激子引起的莫尔声子相关模式的拉曼共振</span></figcaption>
+</figure>
+<figure class="slide" id="slide-567">
+<img src="slides/slide_567.png" alt="课件第567页 6. 折叠声子和莫尔声子：Phonon renormalization in twisted bilayer MoS2 near magic angle（随转角增大，moiré图案原子重构，声子谱快速演化，层间与moiré声子模超强耦合）">
+<figcaption><span class="sno">567</span><span class="stitle">6. 折叠声子和莫尔声子：Phonon renormalization in twisted bilayer MoS2 near magic angle（随转角增大，moiré图案原子重构，声子谱快速演化，层间与moiré声子模超强耦合）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>莫尔声子与转角材料</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段</span><span class="chip">课件 558</span><span class="chip">课件 559</span><span class="chip">课件 560</span><span class="chip">课件 561</span><span class="chip">课件 562</span><span class="chip">课件 563</span><span class="chip">课件 564</span><span class="chip">课件 565</span><span class="chip">课件 566</span><span class="chip">课件 567</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>前面说的是 ABAB 生长，是一维超晶格；事实上还存在二维超晶格——针对二维材料，只要转动角度即可。以石墨烯为例：将两层石墨烯叠起并转动角度，能看到明暗相间的条纹；固定到某角度，从顶部看这两层材料也是一种结构，且该结构周期很大、原则上也是超晶格。像石墨烯和氮化硼多层二维材料放在一起，角度大时莫尔条纹周期性改变不明显，但角度特别小时能看到莫尔条纹；原碳、二硫化钨、二硒化钼也会形成明暗相间条纹。大家拿手机照屏幕会发现有一层不平的薄纱感——这某种意义上也是莫尔纹：自由点阵投影到 CCD 上，CCD 也是正交网格；就像双层窗帘交叠处稍拉动便可见明暗变化。</p><p>关于莫尔超晶格对物理性质的影响暂不讨论，重点分析材料：原则上超晶格可用指数表示——图中由两层石墨烯决定，固定某原子（如 A 原子）为零点，假设 NM 晶格矢量与 MN 长度一致；将上层材料从 OA 旋转至 OB 位置使两原理重合，此时矢量和在 OBCA 范围内形成一个原胞，该原胞可重复——定义此类转角材料为晶体学超晶格，因其具备真正超流特性。但从疏密程度看，红色区域比绿色区域更小：电子态实际上由红色区域决定，即莫尔超晶格。莫尔超晶格与转角直接相关：莫尔超晶格随转角增大持续减小，但晶体学超晶格不同；莫尔倒格矢大小与转角呈线性关系（gM=2b·sin(θ/2)），而晶体学则不然。决定物理性质更多的是莫尔超晶格，而非晶体学超晶格。</p><p>以石墨烯为例，转动中倒格矢沿中间曲线变化：超晶格不连续导致能带折叠，周围点折叠至中心——如 Γ12、Γ12' 等六个点会折叠到布里渊区中心，由于莫尔周期导致的折叠模我们称为莫尔声子。改变转角二维材料的角度，就能测得轨迹上各点的拉曼光谱——测定的是声子色散曲线，它沿 Γ 到 G1、G2、G3（而非 ΓK 或 ΓM，事实上从 ΓK 到 ΓM 变化并不大）。</p><p>看转角实验结果：0° 和 60° 为本征材料，中间测试了 12°、29°、45° 的拉曼光谱——频率因层间耦合变弱而改变，能看到剪切模和呼吸模（能观测到这些模式意味着耦合良好、物理效应可信）。看高频模：除 E 模和 A 模外边上还有肩峰，这个肩膀看得很明显——但注意坐标是指数坐标，指数坐标是用来放大弱信号的：1~1000 差了多少倍？110 在 1 到 1000 的坐标里根本看不到，但在指数坐标里 110 就间隔 1、11000 就间隔 3——所以我们用指数坐标来识别这些弱的拉曼信号，真正测出来没那么明显。</p><p>看这些拉曼模的频率：先增加后降低、再增加再降低，中间的频率模也有相应的改变。把转角转化成倒易空间的矢量，因为是折叠过后的结果，所以把这两个频率进行相减（我们做了检查）：本征 MoS2 单层在这个位置、测到的折叠声子波还在这个位置。色散关系是怎么样的？Gamma-M、Gamma-K 是不是在他们之间的？单层材料理论计算是在 410、实际测出来又在 403——理论计算在计算高频时跟实验吻合还是有差异，但不管怎么样，我们测出来的就是沿着这个轨迹的色散关系。</p><p>跟大家说一个例子：以前大家都做理论计算，其中一种材料是氮化铟：大家把材料长出来测它的荧光峰——荧光峰大致在 1.7 个电子伏特，马上理论科学家就算出来带隙等于 1.7、拟合实验结果，然后把其他数字根据这个拟合做了推广；结果后面人家做出高质量氮化铟材料发现荧光峰在 1600nm 左右、只有 0.8 个电子伏特——理论科学家又改一下参数马上又变成 0.8 了。我不是贬低理论科学家，因为他计算的时候没有参照标准；但这也说明你实现（依据）错了，那就导致其他也会跟进、错也一样。为什么前面会测出来 1.7？因为我们最先制备的材料都是不纯的材料，有杂质就会发光，很多人不专业就会把它看成是带隙发光——半导体材料最简单的就是在带隙发光，有没有杂质的情况，这就是在瞎说。</p><p>现在做理论的人越来越厉害，加上 AI，以至于现在越来越多的物理是由理论首先发现、然后再由实验去印证——而不是像以前那样根据实验结果去做理论解释；但是很多东西理论没法首先去考虑。自己做拉曼光谱时去找理论解释，但更多时候我们也可以自己去解释：建立模型发现形成了莫尔条纹，可以计算每个地方（因为是 6 个模折叠的中心），可以算这 6 个模的原子位移，会发现它受到莫尔势的调控——实验结果往往给理论科学家一些灵感或驱动去建设实验结构，但现在更重要的很多时候是理论的预测。</p><p>看莫尔条纹对分子振动的影响究竟有多大：刚才只说了两个模式（E 模和 A 模），把它拓展到全部布里渊区——单层材料的拉曼峰很弱，但变成两层材料后就有一系列拉曼峰了；随着转角增大会出现一系列新的拉曼峰，新的光学功能基本上来自于布里渊区折叠的效果。再通过角度拓展到导带，投影回去就能把实验测到的结果放进来，再把理论计算的结果也放进来——实验和理论的吻合比较好。</p><p>事实上要测声子色散曲线有 X 射线散射、中子散射、超晶格（拉曼折叠）：用超晶格来测有很多优势（低波数测试能力、样品要求、动量区间、空间分辨率、频率分辨率）；中子散射、X 射线散射的动量空间分辨率、动量探测区域高，但其他方面效果不好。折叠声子的意义：如果只通过单声子拉曼来测试，往往只能测到中心的点、扩散不到整个布里渊区，但通过折叠效应可以扩展到整个布里渊区。制备转角二维材料非常简单；但如果要做半导体材料（比如砷化镓）要得到能带色散关系，通过超晶格形式就很难——要用 MBE 长、且需按一定比例和厚度生长，要像这样遍地开花难度就很大。</p><p>莫尔纹一旦形成就有不同的莫尔纹，我们也可以做共振拉曼效应（基模共振效应基本类似）。刚才说了大角度的情况，那小角度怎么办？小角度在这里会出现反交叉现象——这儿是剪切模、这儿是呼吸模，这是大角度的呼吸模；在该区域内存在反交叉行为，这主要是莫尔声子与呼吸模相互作用导致的（左边是实验结果、右边是理论结果）。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>大家拿手机照屏幕，会发现有一层不平的薄纱感，这某种意义上也是摩尔纹。因为自由点阵投影到CCD上，CCD也是正交网格。</p><p>决定物理性质更多的是摩尔超晶格，而非晶体学超晶格。</p><p>所以我们在指数坐标里面，我们来识别这些弱的拉曼信号。所以说你真正要去测出来，它没有那么明显。</p><p>为什么前面会测出来1.7左右的电子伏特呢？因为我们最先制备的材料都是不纯的材料。那么它是有杂质的，一杂质就会发光，那很多人不专业的人，他就会把它看成是它的带隙发光。</p><p>现在加上AI，所以说以至于现在越来越多的物理是由理论首先发现，然后再由实验去印证。</p><p>如果只通过单声子拉曼来测试，往往只能测到中心的点。它扩散不到整个布里渊区，但通过折叠效应，可以扩展到整个布里渊区。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-confined">
+  <div class="slides"><figure class="slide" id="slide-568">
+<img src="slides/slide_568.png" alt="课件第568页 7. 受限声子：拉曼散射与动量守恒——不确定性原理Δx·Δp≥ℏ/2，Δq~1/ΔL；材料几何尺度受限时动量守恒弛豫，非布里渊区中心声子也能参与拉曼散射">
+<figcaption><span class="sno">568</span><span class="stitle">7. 受限声子：拉曼散射与动量守恒——不确定性原理Δx·Δp≥ℏ/2，Δq~1/ΔL；材料几何尺度受限时动量守恒弛豫，非布里渊区中心声子也能参与拉曼散射</span></figcaption>
+</figure>
+<figure class="slide" id="slide-569">
+<img src="slides/slide_569.png" alt="课件第569页 7. 受限声子：拉曼散射与动量守恒——动量守恒可能被破坏的原因（缺陷杂质/无序/自旋无序）；纳米材料(d<25nm)中声子波函数局域化引起选择定则弛豫（峰移动/反对称展宽/表面界面声子/高阶拉曼）">
+<figcaption><span class="sno">569</span><span class="stitle">7. 受限声子：拉曼散射与动量守恒——动量守恒可能被破坏的原因（缺陷杂质/无序/自旋无序）；纳米材料(d<25nm)中声子波函数局域化引起选择定则弛豫（峰移动/反对称展宽/表面界面声子/高阶拉曼）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-570">
+<img src="slides/slide_570.png" alt="课件第570页 7. 受限声子：从非晶Si的拉曼散射看动量守恒——非晶Si光谱反映声子态密度；c-Si与a-Si随温度变化">
+<figcaption><span class="sno">570</span><span class="stitle">7. 受限声子：从非晶Si的拉曼散射看动量守恒——非晶Si光谱反映声子态密度；c-Si与a-Si随温度变化</span></figcaption>
+</figure>
+<figure class="slide" id="slide-571">
+<img src="slides/slide_571.png" alt="课件第571页 7. 受限声子：RWL(Richter-Wang-Ley)模型——完整晶体洛伦兹线型、纳米微晶声子波函数加限制函数、|C(0,q)|²=exp(−q²L²/2α)">
+<figcaption><span class="sno">571</span><span class="stitle">7. 受限声子：RWL(Richter-Wang-Ley)模型——完整晶体洛伦兹线型、纳米微晶声子波函数加限制函数、|C(0,q)|²=exp(−q²L²/2α)</span></figcaption>
+</figure>
+<figure class="slide" id="slide-572">
+<img src="slides/slide_572.png" alt="课件第572页 7. 受限声子：尺寸对TMDs性质的影响——单层MoS2纳米带、离子注入纳米微晶（E'模向低频移动并反对称展宽、A1'模向高频移动）">
+<figcaption><span class="sno">572</span><span class="stitle">7. 受限声子：尺寸对TMDs性质的影响——单层MoS2纳米带、离子注入纳米微晶（E'模向低频移动并反对称展宽、A1'模向高频移动）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-573">
+<img src="slides/slide_573.png" alt="课件第573页 7. 受限声子：拉曼峰型对限制因子α和尺寸LD的依赖关系——I(ω)=∫2πq dq·exp(−q²LD²/2α)/((ω−ω(q))²+(Γ0/2)²)，与对应声子支的变化趋势一致">
+<figcaption><span class="sno">573</span><span class="stitle">7. 受限声子：拉曼峰型对限制因子α和尺寸LD的依赖关系——I(ω)=∫2πq dq·exp(−q²LD²/2α)/((ω−ω(q))²+(Γ0/2)²)，与对应声子支的变化趋势一致</span></figcaption>
+</figure>
+<figure class="slide" id="slide-574">
+<img src="slides/slide_574.png" alt="课件第574页 7. 受限声子：黑磷纳米晶拉曼峰光谱的轻微红移和非对称展宽（黑磷的各向异性声子色散关系）">
+<figcaption><span class="sno">574</span><span class="stitle">7. 受限声子：黑磷纳米晶拉曼峰光谱的轻微红移和非对称展宽（黑磷的各向异性声子色散关系）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-575">
+<img src="slides/slide_575.png" alt="课件第575页 7. 受限声子：利用RWL模型对黑磷纳米晶拉曼光谱的解释——只有考虑二维声子色散关系的声子限制模型才能更好吻合（∫dqxdqy）">
+<figcaption><span class="sno">575</span><span class="stitle">7. 受限声子：利用RWL模型对黑磷纳米晶拉曼光谱的解释——只有考虑二维声子色散关系的声子限制模型才能更好吻合（∫dqxdqy）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-576">
+<img src="slides/slide_576.png" alt="课件第576页 7. 受限声子：二维材料层内振动拉曼模和层间振动拉曼模的线宽本质——FWHM(LBM)∝(h1L/2)cos(qjh1L/2)×Δq∝1/N（不确定性原理Δx=N·h1L）">
+<figcaption><span class="sno">576</span><span class="stitle">7. 受限声子：二维材料层内振动拉曼模和层间振动拉曼模的线宽本质——FWHM(LBM)∝(h1L/2)cos(qjh1L/2)×Δq∝1/N（不确定性原理Δx=N·h1L）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>受限声子：量子限制效应</h2>
+        <div class="sec-meta"><span class="time">录音：第 3 段</span><span class="chip">课件 568</span><span class="chip">课件 569</span><span class="chip">课件 570</span><span class="chip">课件 571</span><span class="chip">课件 572</span><span class="chip">课件 573</span><span class="chip">课件 574</span><span class="chip">课件 575</span><span class="chip">课件 576</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>讲受限声子需先说不确定性原理（这两页 PPT 与原版略有不同）：不确定性原理指粒子位置和动量不可同时确定——位置与动量的不确定度之积大于常数 ℏ/2。事实上分子也有波函数即格波，其德布罗意波长很大故动量很明确；若材料几何尺寸受限（如纳米线或量子点），原格波可自由移动、Δq 趋近于 0；一旦尺寸变小，代表分子（振动）范围很小，此时 Δq 变大产生不确定度——几何尺寸受限会影响声子波矢的不确定度，这就是纳米体系中声子的量子限制效应，把这类声子称为受限声子。</p><p>最明显的是非晶（不是晶体，动量守恒被完全破坏）。事实上其他情况下晶格的动量守恒也可能受破坏：周期晶格里有杂质、原子排列无序、自旋无序（亚铁磁/顺磁相）等多种情况——所有的无序杂质都会导致声子拉曼散射里面的动量守恒定律受到破坏，选择定则基本上就不成立，或者说会加上一个 Δk（有一定的不确定度）。这样一来，原来一阶拉曼散射中只有布里渊区中心的声子才有拉曼散射，这个不确定度就会带来其他区域的声子也参与拉曼散射。</p><p>非晶硅：左边是理论计算的结果、右边是实验测得的结果——实验测得的结果跟理论计算的态密度比较类似，但晶格里已经不存在声子色散关系了：如果动量守恒定律完全不存在，所有声子都会参与散射，最后就跟态密度直接关联起来，所以非晶硅的拉曼光谱更多的是代表声子振动的一个态密度。</p><p>在纳米体系里面，本质是因为纳米材料空间受限导致声子波函数局域化，使拉曼选择定则弛豫，过后就会表现出一系列现象：拉曼峰的移动、展宽，表面/界面声子出现，高阶拉曼出现。看拉曼峰的移动：若去看拉曼专著，他们会说拉曼模频率较低——那我们会问：声子的量子限制效应一定会导致声子频率降低吗？对硅材料来说的确是这样（晶体硅的位置、纳米硅的位置，不同尺寸纳米硅的拉曼峰，明显能看到不对称的线形）。很多专著甚至将其归结为唯象公式：峰位直接跟拉曼峰移动、跟晶体尺寸联系起来——但事实上这个限制效应跟纳米材料的晶向也有关系、跟纳米材料里面是否存在应变也有关系，所以我们更多还是要理解它的本质：很多时候如果不了解本质，可能就把别人的结果误用——别人列出一个公式说拉曼峰的移动与尺寸成正比，我们可能就把这个公式推到其他材料里面去了，那原则上是有问题的。</p><p>怎么理解声子的量子限制效应？这里有一个 RWL（Richter-Wang-Ley）模型。完整晶体是一个洛伦兹线形，其波函数原则上是平面波；但在尺寸为 L 的纳米微晶中声子波函数受限，需加限制函数 W(r,L)；C(0,q) 是该限制函数的傅里叶变换。科学家为易用进一步简化，直接采用指数函数 |C(0,q)|²=exp(−q²L²/2α)——这反映振幅从中心到边界的衰减，α 越大限制效应越强、衰减越快；但限制因子 α 具体值未知，文献中或取 3 或取 5，旨在解释实验结果。</p><p>前述为三维硅材料；若换作二维 TMD 材料，受限时则形成纳米带（长条带状结构）：我们实验室可以通过光刻蚀刻出二维条带、其半径可变；另外直接让二维材料尺寸逐渐减小——这类似于三维中的纳米线情况，而此处类似三维量子点。如何得到这些细微变化？最普遍的方式是离子注入：控制好离子束的剂量，它会自动形成大小不同的晶粒（晶粒尺寸肯定有个平均值）。</p><p>以二硫化钼为例用氩离子注入：随着注入剂量增大测其拉曼谱会发现奇怪现象——通常尺寸变小拉曼峰会红移，但此处 A 模峰位变大、E 模峰位变小（此前只说拉曼峰会移动，未指明方向，许多人误以为只向低处移动）。如何解释？需考虑尺寸关系及约束因子：有了声子限制模型和 LD，即可计算出线宽——固定约束因子后，随尺寸减小 A 模向高频移动、E 模向低频移动。为何 A 模往高处走？其色散关系远离布里渊区中心、频率变大，量子限制效应使非中心声子参与散射增多，频率自然升高；而 E 模（LO/TO）远离固定区、频率往低处走——通过拉曼峰移动可判别声子色散关系的移动方向。此外还观察到 M 点等临界点的高态密度特征——这是尺寸变小后拉曼峰呈现的特性：一个峰上升、一个峰下降。</p><p>再看黑磷：二硫化钼是面内各向同性材料，而黑磷面内各向异性显著（但不稳定）。随离子注入剂量增加，A1g 模基本未动、Ag2 和 B2g 模略有移动但幅度不大——如何解释？这涉及声子色散关系：在 Γ 点附近（从 Γ 经 K 到 M）色散很小，但 X 方向是平的、Γ 的 Y 方向变化很快；对 B2g 模来说基本是平的仅有微小斜率改变，对 Ag1 一个方向基本平、另一方向变化快且朝高波数走。考虑二维的声子色散曲线并进行计算（将 5 个方向的色散求和、对 QxQy 积分），得到的结果与实验结果吻合非常好：A1g 模向右展宽（往高频走、远离中心大部分区域），而平的地方保证中间位置不动、远处更高的声子参与振动，所以主峰不动但往高波数拓展；E 模基本上就是一个简单的展宽；A1g 主峰基本不变但往低波数拓展。总之，纳米晶体的拉曼光谱的解释必须依赖于它的尺寸效应关系——它是由尺寸效应关系完全决定的。</p><p>还有一个跟受限声子有关系的情况：通常讲 A 模（一阶模）、呼吸模，但大家会发现随着层数的增加 A 模的半宽逐渐减小——低频模更显著：我们能测到两个波数，15 层跟 119 层相比窄了很多（15 层 vs 119 层的低频拉曼峰）。但一旦要考虑拉曼峰半宽，一定要考虑仪器的展宽：我们使用了有限分辨率的光栅、CCD 也有尺寸大小（26μm，更高的就是 13μm、13.5μm，另外还有一个是 16μm，取决于 CCD 尺寸），如果要定量考虑拉曼峰的半宽就得把谱仪展宽去除掉——一旦把谱仪展宽去掉，115 层的时候本征半宽基本上就等于 0 了。</p><p>呼吸模的振动：整个这一层和上面这一层做相对振动、垂直于二维平面；在这个范围之内如果是两个原子，振动约束性更小一点，层数越多约束性越大。从 ΔxΔp 来说：两层的 Δx 很小、波函数约束在两层以内，N 层（100 多层）波函数约束在 100 多层以内——Δx 不同直接导致 Δp 不同、最后导致半宽不一样：谱仪的半宽正比于单层厚度再乘以 Δq（不确定度），把这些公式带进去，半宽就正比于 1/N（蓝线就是 1/N）——如果不减谱仪展宽，1/N 是得不出来的。所以有些时候讲温度、半导体的温度依赖关系、包括测载流子的寿命，原则上我们都应该把谱仪展宽减去。这个半宽反映出来了不确定性原理的本质；石墨烯如此，碱金属膜（不受影响、只受一些非均匀影响）则不同。</p><p>从物理上理解可以解释很多实验现象：像这个结果（石墨烯很宽、多层又小），最早别人发表了一个 PRB 的文章认为这是非线性效应的结果——但大家去看文章的时候，别人得出来的结论肯定就是对的吗？我去参加别人的博士论文答辩：一看人家有个 1300 有一个峰、1500 多有一个峰，人家马上就说这是什么什么 AG 模、那个是什么什么模，我就告诉他你错了（非答辩的情况下）——我说你错了，这个就是碳的峰；他说另外一个作者就是那么指认的。我就告诉他怎么鉴别：你换一个激发光的波长，如果这个峰还不变，那别人的指认就是对的；如果指认变了，别人的判断就不对——因为碳材料最明显的结果是 D 模，1300 多的峰会随激发光波长改变。所以指出错误要有依据，或者告诉别人如何判断对错、实验哪里考虑不全面。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>讲受限升值需先说不确定性原理……几何尺寸受限会影响声子波矢的不确定度。这点市场上也做了改变。</p><p>所有的无序杂质都会导致声子拉曼散射里面的动量守恒定律受到破坏。我们所说的选择定则基本上就不成立。</p><p>但事实上，这个限制效应跟纳米材料的晶向也有关系。跟纳米材料里面是否存在应变也有关系。所以我们更多还是要理解它的本质。</p><p>一旦把谱仪展宽去掉，你看115层的时候，它的本征半宽就基本上等于0了。</p><p>谱仪的半宽正比于单层厚度，再乘以ΔQ，即不确定度。把这些公式带进去，半宽就正比于1/N。</p><p>我告诉他，你换一个激发光的波长，如果这个峰还不变，那别人的指认就是对的。如果指认变了，别人的判断就不对。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-polariton">
+  <div class="slides"><figure class="slide" id="slide-577">
+<img src="slides/slide_577.png" alt="课件第577页 8. 声子-等离子体极化激元：元激发—准粒子—混合态（声子/磁振子/等离子体激元/极化激元集体激发；准电子/极化子/电子空穴对单粒子激发；光子与TO声子耦合形成极化激元）">
+<figcaption><span class="sno">577</span><span class="stitle">8. 声子-等离子体极化激元：元激发—准粒子—混合态（声子/磁振子/等离子体激元/极化激元集体激发；准电子/极化子/电子空穴对单粒子激发；光子与TO声子耦合形成极化激元）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-578">
+<img src="slides/slide_578.png" alt="课件第578页 8. 声子-等离子体极化激元：极化激元（polariton）VS 极化子（polaron）">
+<figcaption><span class="sno">578</span><span class="stitle">8. 声子-等离子体极化激元：极化激元（polariton）VS 极化子（polaron）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-579">
+<img src="slides/slide_579.png" alt="课件第579页 8. 声子-等离子体极化激元：极化激元种类（声子/激子/子带间/表面等离激元/布拉格/普勒克西顿/磁振子/皮顿/腔极化激元）">
+<figcaption><span class="sno">579</span><span class="stitle">8. 声子-等离子体极化激元：极化激元种类（声子/激子/子带间/表面等离激元/布拉格/普勒克西顿/磁振子/皮顿/腔极化激元）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-580">
+<img src="slides/slide_580.png" alt="课件第580页 8. 声子-等离子体极化激元：极化激元频率——ω±公式，ωp=√(ne²/ε0ε∞m*)为无耦合状态下的等离子体频率（n为电子密度）">
+<figcaption><span class="sno">580</span><span class="stitle">8. 声子-等离子体极化激元：极化激元频率——ω±公式，ωp=√(ne²/ε0ε∞m*)为无耦合状态下的等离子体频率（n为电子密度）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-581">
+<img src="slides/slide_581.png" alt="课件第581页 8. 声子-等离子体极化激元：极性晶体中的极化激元——n-GaAs（根据ω±关系式导出n-GaAs中的声子-等离子体极化激元频率，反推电子密度）">
+<figcaption><span class="sno">581</span><span class="stitle">8. 声子-等离子体极化激元：极性晶体中的极化激元——n-GaAs（根据ω±关系式导出n-GaAs中的声子-等离子体极化激元频率，反推电子密度）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-582">
+<img src="slides/slide_582.png" alt="课件第582页 8. 声子-等离子体极化激元：等离子体震荡Plasma Oscillation——电中性维持与简谐振动、ωp公式、电离层与无线电波传播">
+<figcaption><span class="sno">582</span><span class="stitle">8. 声子-等离子体极化激元：等离子体震荡Plasma Oscillation——电中性维持与简谐振动、ωp公式、电离层与无线电波传播</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div class="sec-tt">
+        <h2>声子-等离子体极化激元</h2>
+        <div class="sec-meta"><span class="time">录音：第 3 段</span><span class="chip">课件 577</span><span class="chip">课件 578</span><span class="chip">课件 579</span><span class="chip">课件 580</span><span class="chip">课件 581</span><span class="chip">课件 582</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>接下来讲声子-等离子体极化激元及电子拉曼散射。这实际上是混合的元激发，通常有集体激发和单粒子激发。元激发（准粒子）大体分为两类：集体激发——离子-离子相互作用引起的晶格振动（声子）、磁性材料中自旋-自旋相互作用引起的自旋波（磁振子）、金属中电子气相互作用引起的等离子体集体振荡（等离子体激元）、光子和光学模声子耦合（极化激元）；单粒子激发——正常金属中相互作用的电子变换成屏蔽电子或准电子（有效质量增大）、离子晶体中的电子或空穴带着周围极化场一起运动形成的极化子、半导体中的电子和空穴对。</p><p>由于光子是横向电磁场的量子，光照射离子晶体时将激发横向的电磁场，从而对离子晶体中光频支横波振动产生影响——特别是当光子频率与横波光学模声子（TO 声子）的频率 ωT 相近时，两者的耦合很强，其结果将使光子与横波光学模声子的色散关系曲线都发生很大的改变，形成光子-横光学模声子的耦合模式，其量子称为极化激元（polariton）。在砷化镓材料中 LO 或 TO 频率有差别（比如一个是 278、21，另一个是 268、292）——LO 和 TO 频率位置的差异是因为晶体内部产生额外电磁场，对声子振动影响很大、进而显著影响频率；当光子频率与横波光子的光学波声子频率接近时耦合很强，形成新的极化激元。原来的 LO 或 TO 频率加上光子的波矢，在交汇处变成新的色散关系。</p><p>极化激元种类很多：声子极化激元（红外光子与光学声子耦合）、激子极化激元（可见光与激子耦合）、子带间极化激元、表面等离激元极化激元、布拉格极化激元（布拉格激元）、普勒克西顿（等离激元与激子耦合）、磁振子极化激元、皮顿、腔极化激元（激子与微腔光子强耦合形成的玻色型准粒子）。</p><p>极化激元的频率与材料的介电常数、声子的频率密切相关：在长波近似下，波矢为零的声子-等离子体极化激元频率满足 ω±² 公式，其中 ωp=√(ne²/ε0ε∞m*) 为无耦合状态下的等离子体频率（n 为电子密度、e 为电子电量、m* 为电子有效质量）——通过测极化激元的拉曼光谱就能确定电子浓度。典型结果：根据 ω± 的关系式可导出 n-GaAs 中的声子-等离子体极化激元频率（没有直接调控样品中电子密度，而是根据不同的 ω± 值反推出各个样品的电子密度值，每一组实心黑点都对应一条拉曼光谱）。这在半导体材料应用上非常多。</p><p>等离子体震荡：等离子体受外部干扰正负电荷分离，分离的电荷受到库仑力和自身惯性的作用做简谐振动——外部电场或电波无法侵入等离子体（对外部电场有屏蔽作用），屏蔽能力与 plasma 频率和外部干扰频率有关。大气中存在电离层也会受到相应影响（电离层能反射无线电波形成远距离传输，FM 调频广播、WiFi、卫星通信等都依赖于此），这里就不详细说了。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>当光子频率与横波光子的光学波声子频率接近时，耦合很强，形成新的极化激元。</p><p>通过测极化激元的拉曼光谱，就能确定电子浓度。</p><p>每一组实心黑点都对应右图中一条拉曼光谱……根据不同的ω±值反推出各个样品的电子密度值。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-electronic-raman">
+  <div class="slides"><figure class="slide" id="slide-583">
+<img src="slides/slide_583.png" alt="课件第583页 9. 电子拉曼散射：电子拉曼散射VS常规拉曼散射——电子/空穴激发也可与光耦合发生非弹性散射；低波数连续谱、信号微弱、真空低温条件">
+<figcaption><span class="sno">583</span><span class="stitle">9. 电子拉曼散射：电子拉曼散射VS常规拉曼散射——电子/空穴激发也可与光耦合发生非弹性散射；低波数连续谱、信号微弱、真空低温条件</span></figcaption>
+</figure>
+<figure class="slide" id="slide-584">
+<img src="slides/slide_584.png" alt="课件第584页 9. 电子拉曼散射：GaAs晶格结构和电子能带结构（FCC）">
+<figcaption><span class="sno">584</span><span class="stitle">9. 电子拉曼散射：GaAs晶格结构和电子能带结构（FCC）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-585">
+<img src="slides/slide_585.png" alt="课件第585页 9. 电子拉曼散射：InGaAs/GaAs量子点的拉曼光谱（InAs/GaAs SA-QDs生长机制、n掺杂量子点两表面拉曼光谱）">
+<figcaption><span class="sno">585</span><span class="stitle">9. 电子拉曼散射：InGaAs/GaAs量子点的拉曼光谱（InAs/GaAs SA-QDs生长机制、n掺杂量子点两表面拉曼光谱）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-586">
+<img src="slides/slide_586.png" alt="课件第586页 9. 电子拉曼散射：p型掺杂Si/Ge量子点的电子拉曼散射（MBE生长510°C、8层Ge、量子点密度高尺寸小12nm×25nm×2nm）">
+<figcaption><span class="sno">586</span><span class="stitle">9. 电子拉曼散射：p型掺杂Si/Ge量子点的电子拉曼散射（MBE生长510°C、8层Ge、量子点密度高尺寸小12nm×25nm×2nm）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-587">
+<img src="slides/slide_587.png" alt="课件第587页 9. 电子拉曼散射：p型掺杂Si/Ge量子点的电子拉曼散射——850cm⁻¹拉曼线在497nm激发下共振、无能量色散，指认为局域hh到lh基态间的电子跃迁；随退火温度升高组分互混增强、量子限制减弱">
+<figcaption><span class="sno">587</span><span class="stitle">9. 电子拉曼散射：p型掺杂Si/Ge量子点的电子拉曼散射——850cm⁻¹拉曼线在497nm激发下共振、无能量色散，指认为局域hh到lh基态间的电子跃迁；随退火温度升高组分互混增强、量子限制减弱</span></figcaption>
+</figure>
+<figure class="slide" id="slide-588">
+<img src="slides/slide_588.png" alt="课件第588页 9. 电子拉曼散射：小尺寸Ge/Si量子点能带结构示意图——850cm⁻¹电子拉曼、PL间接hh1-带隙740meV、导纳谱空穴能级间距40meV；结合共振拉曼/电子拉曼/荧光谱/导纳谱确定量子点电子能结构">
+<figcaption><span class="sno">588</span><span class="stitle">9. 电子拉曼散射：小尺寸Ge/Si量子点能带结构示意图——850cm⁻¹电子拉曼、PL间接hh1-带隙740meV、导纳谱空穴能级间距40meV；结合共振拉曼/电子拉曼/荧光谱/导纳谱确定量子点电子能结构</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">08</span>
+      <div class="sec-tt">
+        <h2>电子拉曼散射</h2>
+        <div class="sec-meta"><span class="time">录音：第 3 段</span><span class="chip">课件 583</span><span class="chip">课件 584</span><span class="chip">课件 585</span><span class="chip">课件 586</span><span class="chip">课件 587</span><span class="chip">课件 588</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>我们来讲一下电子拉曼散射。常规拉曼是声子：从基态到激发态；电子也有基态和激发态——一个光子可以把电子从初态激发到激发态，使光子频率改变，这样入射光跟散射光的频率就有差别了，测出拉曼频移即拉曼光谱。电子拉曼散射与常规拉曼散射在实验原理上没有本质差别，但在实验技术上（低波数测量、杂散光抑制、信噪比等）有更高要求：因为电子或空穴在费米面附近是连续的能带结构，其低能激发对应着拉曼波数很低的连续谱，而且散射强度也非常小——通常情况下散射信号比声子要微弱得多；电子态及其激发只有在热波动充分抑制后才更清楚地显现，因此对电子拉曼散射来说，真空和低温是通常具备的基本条件，外加磁场或高压等极端条件将有助于揭示更全面的信息。</p><p>究竟是声子还是电子拉曼？虽直观看不出，但可确定：通过色散关系可计算声子拉曼；电子拉曼与初末态相关、其频率通常不接近声子频率——电子态与能带结构紧密相关：材料呈抛物线（体材料）、量子阱为台阶状、量子线是另一种形状、量子点三维受限形成孤立能级。通常量子点含衬底和盖层、相当于一个量子体系，存在受限空穴和电子子带。对材料掺杂后电子重新分布，光子激发会导致频率改变：观察 5K 下的拉曼光谱，除 LO 和 TO 模外还有宽峰——该宽峰对应 2 倍 TO 频率，范围在 1.68 至 1.73 之间，反映约 50meV 的子带间隔。</p><p>再看一个例子：硅超晶格在常温下的测试结果，有一阶、二阶的折返模和硅模；但在 6K 下测试时，你会发现晶体硅的特征——而这里是硅锗量子点，为何有个峰？因为量子点必须生长在硅衬底上，必然存在衬底峰。将蓝色线减去红色线进行归一化处理（若减得过多，可将红线乘以 0.7 或 0.8 后再减），通过尝试得到了图 5 的结果。用不同激发光测试，峰强度会先弱变强再变弱；此外在不同温度下进行退火处理——退火导致衬底硅向量子点扩散、约束效应变小、子带间隔减小，因此峰会逐渐向低波数移动直至消失。</p><p>最后测试了折射膜和电子拉曼的共振拉曼峰：从折射膜可知能级信息，从 850nm 处可得电子拉曼数据，从而确定子带大小。结合荧光谱和导纳图，就能把量子点的电子能结构确定下来：850cm⁻¹ 的拉曼线在 497nm 激发下共振、无能量色散，指认为局域 hh 到 lh 基态间的电子跃迁；随退火温度升高组分互混增强、量子限制减弱，850cm⁻¹ 峰逐渐消失。小尺寸 Ge/Si 量子点能带结构：850cm⁻¹ 电子拉曼、PL 间接 hh1-带隙 740meV、导纳谱空穴能级间距 40meV。现在可以通过共振拉曼、电子拉曼，结合荧光谱和导纳谱，知道量子点里第二谷（γ谷）的能量分布——这就是一个比较典型的例子。今天的课就上到这儿，正好上到 9 点。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>电子拉曼散射与常规拉曼散射在实验原理上没有本质差别，但在实验技术上如低波数测量、杂散光抑制、信噪比等方面有更高要求。</p><p>对电子拉曼散射来说，真空和低温是通常具备的基本条件，同时外加磁场或高压等极端条件将有助于揭示更全面的信息。</p><p>退火导致衬底硅向量子点扩散，约束效应变小，子带间隔减小。因此，峰会逐渐向低波数移动直至消失。</p><p>现在我们可以通过共振拉曼、电子拉曼，结合荧光谱和导纳谱，知道量子点里第二谷伽马谷的能量分布。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（显微共焦拉曼光谱学）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>

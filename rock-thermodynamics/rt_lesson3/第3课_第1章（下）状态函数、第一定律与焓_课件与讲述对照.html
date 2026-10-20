@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>岩石热力学 · 第3课 第1章（下）：状态函数与全微分、热与功、热力学第一定律、焓与热容｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.videos{margin-top:14px;border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.video + .video{border-top:1px solid #e4e9f0;}
+.videos h4{font-size:12.5px;font-weight:700;color:#0a1f38;background:#f2f5f9;padding:8px 12px;border-bottom:1px solid #e4e9f0;}
+.videos video{display:block;width:100%;max-height:460px;background:#0b0f14;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>岩石热力学 · 第3课 第1章（下）：状态函数与全微分、热与功、热力学第一定律、焓与热容</h1>
+    <div class="sub">第3课 第1章（下）：状态函数与全微分、热与功、热力学第一定律、焓与热容 ｜ 2026-10-20 ｜ 吴老师（岩石热力学）</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 32 页 · 整理 7 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-exact-diff">01 状态函数与全微分：格林公式与交叉偏导</option>
+<option value="sec-heat-work">02 热与功：途径函数与体积功</option>
+<option value="sec-internal-energy">03 内能与焦耳的热功当量实验</option>
+<option value="sec-first-law">04 热力学第一定律与第一类永动机</option>
+<option value="sec-enthalpy">05 焓、反应焓与盖斯定律</option>
+<option value="sec-vacuum-capacity">06 理想气体向真空膨胀与热容</option>
+<option value="sec-second-law">07 结尾：热力学第二定律的直观引入</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 第1章 地质流体状态方程与热力学基本函数.pdf 逐页渲染，转写原文见 record_20261020.txt。</div>
+<section class="sec" id="sec-exact-diff">
+  <div class="slides"><figure class="slide" id="slide-01">
+<img src="slides/slide_01.png" alt="课件第1页 热力学状态函数的本质（二元函数）：改变量（积分∫df）与具体路径无关，闭路曲线（环路）积分≡∮df=0">
+<figcaption><span class="sno">01</span><span class="stitle">热力学状态函数的本质（二元函数）：改变量（积分∫df）与具体路径无关，闭路曲线（环路）积分≡∮df=0</span></figcaption>
+</figure>
+<figure class="slide" id="slide-02">
+<img src="slides/slide_02.png" alt="课件第2页 热力学状态函数的本质——必要条件：反证法。假设……根据闭曲线积分的Green公式，(∂P/∂y−∂Q/∂x)dxdy">
+<figcaption><span class="sno">02</span><span class="stitle">热力学状态函数的本质——必要条件：反证法。假设……根据闭曲线积分的Green公式，(∂P/∂y−∂Q/∂x)dxdy</span></figcaption>
+</figure>
+<figure class="slide" id="slide-03">
+<img src="slides/slide_03.png" alt="课件第3页 热力学状态函数的本质——充分条件：因为根据闭曲线积分的Green公式，必有∮Pdx+Qdy=…">
+<figcaption><span class="sno">03</span><span class="stitle">热力学状态函数的本质——充分条件：因为根据闭曲线积分的Green公式，必有∮Pdx+Qdy=…</span></figcaption>
+</figure>
+<figure class="slide" id="slide-04">
+<img src="slides/slide_04.png" alt="课件第4页 二元函数的微分 df=Pdx+Qdy 属于全微分的充分必要条件：∂P/∂y=∂Q/∂x（交叉偏导相等）">
+<figcaption><span class="sno">04</span><span class="stitle">二元函数的微分 df=Pdx+Qdy 属于全微分的充分必要条件：∂P/∂y=∂Q/∂x（交叉偏导相等）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-05">
+<img src="slides/slide_05.png" alt="课件第5页 热力学状态函数的积分算法：V₀∫V P(V,T)dV + T₀∫T Q(V,T)dT（从参考态积分）">
+<figcaption><span class="sno">05</span><span class="stitle">热力学状态函数的积分算法：V₀∫V P(V,T)dV + T₀∫T Q(V,T)dT（从参考态积分）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-06">
+<img src="slides/slide_06.png" alt="课件第6页 三元函数具有全微分的充分必要条件：积分空间区域是空间单连通区域，空间单连通——内部没有“洞”、没有包围奇点的闭合曲面">
+<figcaption><span class="sno">06</span><span class="stitle">三元函数具有全微分的充分必要条件：积分空间区域是空间单连通区域，空间单连通——内部没有“洞”、没有包围奇点的闭合曲面</span></figcaption>
+</figure>
+<figure class="slide" id="slide-07">
+<img src="slides/slide_07.png" alt="课件第7页 四元函数具有全微分的充分必要条件：du=Pdx+Pdy+Pdz+Pdt（u=u(x,y,z,t)，交叉偏导相等的推广）">
+<figcaption><span class="sno">07</span><span class="stitle">四元函数具有全微分的充分必要条件：du=Pdx+Pdy+Pdz+Pdt（u=u(x,y,z,t)，交叉偏导相等的推广）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>状态函数与全微分：格林公式与交叉偏导</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段</span><span class="chip">课件 1</span><span class="chip">课件 2</span><span class="chip">课件 3</span><span class="chip">课件 4</span><span class="chip">课件 5</span><span class="chip">课件 6</span><span class="chip">课件 7</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>上节课我们留了一个尾巴：状态函数的积分与路径无关，数学上怎么判别？这节课我们把这个证明讲完。上节课最后我给大家留了一句话——状态函数等价于它的微分是恰当微分、全微分。今天我们要严格证明：二元函数 df=Pdx+Qdy 是全微分（恰当微分）的充分必要条件是交叉偏导相等 ∂P/∂y=∂Q/∂x。</p><p>先证必要性，用反证法。我们假设二元函数 df=Pdx+Qdy 的积分与路径无关、闭路积分为零，那么根据闭曲线积分的格林公式，沿任意闭路的积分等于 ∂Q/∂x−∂P/∂y 在围成区域上的二重积分。既然任意闭路积分都为零，二重积分必须恒为零，于是 ∂Q/∂x−∂P/∂y=0，即 ∂P/∂y=∂Q/∂x。</p><p>再证充分性：反过来，如果 ∂P/∂y=∂Q/∂x 成立，那么对任意闭路用格林公式，二重积分恒为零，所以闭路积分 ∮Pdx+Qdy=0，积分与路径无关，df 就是全微分。大家看，这就是格林公式把“面积分”和“线积分”联系起来的威力——状态函数这个物理概念，本质上就是多元微积分里的“全微分”概念。</p><p>然后推广：三元函数具有全微分的充分必要条件，要求积分空间区域是空间单连通区域——内部没有“洞”、没有包围奇点的闭合曲面。大家想：如果区域中间有个洞，绕洞转一圈积分就不一定为零了——拓扑性质介入了。四元函数同理，u=u(x,y,z,t)，要求交叉偏导全部相等，这是同一规律的逐级推广。我们热力学里的状态函数基本都是多元函数，这些判据以后都要用到。</p><p>最后给大家看状态函数的积分算法：从一个参考态出发，先沿一条路径积到目标态——比如先恒温变容、再恒容变温，分步积分，结果与路径无关，怎么方便怎么来。这就是我们以后计算焓变、熵变、自由能变的基本套路：设计一条好算的路径，把状态函数的改变量算出来。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>状态函数这个物理概念，本质上就是多元微积分里的全微分概念。</p><p>如果区域中间有个洞，绕洞转一圈积分就不一定为零了——拓扑性质介入了。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-heat-work">
+  <div class="slides"><figure class="slide" id="slide-08">
+<img src="slides/slide_08.png" alt="课件第8页 热（heat）、功（work）：热与功是系统发生热力学过程时与环境交换能量的两种形式；仅当系统经历某过程时才有意义">
+<figcaption><span class="sno">08</span><span class="stitle">热（heat）、功（work）：热与功是系统发生热力学过程时与环境交换能量的两种形式；仅当系统经历某过程时才有意义</span></figcaption>
+</figure>
+<figure class="slide" id="slide-09">
+<img src="slides/slide_09.png" alt="课件第9页 向环境放出热量的化学反应叫“放热反应”（exothermic）；从环境吸收热量的反应叫“吸热反应”（endothermic）">
+<figcaption><span class="sno">09</span><span class="stitle">向环境放出热量的化学反应叫“放热反应”（exothermic）；从环境吸收热量的反应叫“吸热反应”（endothermic）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-10">
+<img src="slides/slide_10.png" alt="课件第10页 功——系统发生状态变化时与环境交换能量的另一种形式，以符号W表示；规定系统得功时W为正值，系统对环境做功时W为负值">
+<figcaption><span class="sno">10</span><span class="stitle">功——系统发生状态变化时与环境交换能量的另一种形式，以符号W表示；规定系统得功时W为正值，系统对环境做功时W为负值</span></figcaption>
+</figure>
+<figure class="slide" id="slide-11">
+<img src="slides/slide_11.png" alt="课件第11页 汽缸内的气体体积为V，受热后膨胀了dV，相应地使活塞产生位移dl，则dl=dV/A，A为活塞截面积；假设…推导δW=−P(环)dV">
+<figcaption><span class="sno">11</span><span class="stitle">汽缸内的气体体积为V，受热后膨胀了dV，相应地使活塞产生位移dl，则dl=dV/A，A为活塞截面积；假设…推导δW=−P(环)dV</span></figcaption>
+</figure>
+<figure class="slide" id="slide-12">
+<img src="slides/slide_12.png" alt="课件第12页 在热力学中功是系统与环境间实际交换能量的一种形式，所以计算功时要用P(环)而非P(系统)；同时因为…不是系统的…">
+<figcaption><span class="sno">12</span><span class="stitle">在热力学中功是系统与环境间实际交换能量的一种形式，所以计算功时要用P(环)而非P(系统)；同时因为…不是系统的…</span></figcaption>
+</figure>
+<figure class="slide" id="slide-13">
+<img src="slides/slide_13.png" alt="课件第13页 若系统由始态1（P1、V1、T1）变化为末态2（P2、V2、T2），全过程的体积功W应当是各微小体积变化的…">
+<figcaption><span class="sno">13</span><span class="stitle">若系统由始态1（P1、V1、T1）变化为末态2（P2、V2、T2），全过程的体积功W应当是各微小体积变化的…</span></figcaption>
+</figure>
+<figure class="slide" id="slide-14">
+<img src="slides/slide_14.png" alt="课件第14页 可逆体积功：如果系统状态发生变化的全过程中，不仅系统内部任何瞬间都无限接近平衡态，而且系统与环境间也无限接近平衡">
+<figcaption><span class="sno">14</span><span class="stitle">可逆体积功：如果系统状态发生变化的全过程中，不仅系统内部任何瞬间都无限接近平衡态，而且系统与环境间也无限接近平衡</span></figcaption>
+</figure>
+<figure class="slide" id="slide-15">
+<img src="slides/slide_15.png" alt="课件第15页 可逆体积功：Wr=∫V1→V2 −PdV；曲线下所围成的面积代表系统与环境交换的功">
+<figcaption><span class="sno">15</span><span class="stitle">可逆体积功：Wr=∫V1→V2 −PdV；曲线下所围成的面积代表系统与环境交换的功</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>热与功：途径函数与体积功</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段</span><span class="chip">课件 8</span><span class="chip">课件 9</span><span class="chip">课件 10</span><span class="chip">课件 11</span><span class="chip">课件 12</span><span class="chip">课件 13</span><span class="chip">课件 14</span><span class="chip">课件 15</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>讲完了状态函数，我们来看热和功。热与功是系统发生热力学过程时与环境交换能量的两种形式——注意，仅当系统经历某个过程时，热和功才有意义。你说“这个系统有多少热”？没有这个说法。体系处于某个状态有确定的P、V、T、U、H、S，但热和功只属于过程。向环境放出热量的反应叫放热反应，从环境吸收热量的反应叫吸热反应——燃烧、中和都是放热，分解一般是吸热。</p><p>功用符号 W 表示：规定系统得功时 W 为正值，系统对环境做功时 W 为负值。大家注意，这个正负号约定各个教材不一样，但我们这门课统一用这个约定，你们以后写论文、做计算的时候要看清约定，不要搞混。</p><p>功的微元怎么推导？看这个气缸：气体体积为 V，受热后膨胀了 dV，活塞产生位移 dl=dV/A，A 是活塞截面积。作用在活塞上的力是环境的压力乘截面积，P(环)×A；力乘位移就是功的微元 δW=−P(环)A×dl=−P(环)dV。这里为什么用环境的压力而不是系统的压力？因为在热力学中，功是系统与环境间实际交换能量的一种形式——实际交换的量由环境承受的压力决定。而且我们推导的时候，力在位移过程中是变化的，我们取微元、舍掉二阶小量——这就是微积分的标准操作。大家注意这个负号：系统膨胀 dV>0 时 δW<0，说明系统对环境做功、能量从系统流出去；系统被压缩 dV<0 时 δW>0，环境对系统做功、能量流入系统。</p><p>那从始态1到末态2的全过程体积功是多少？把每个微小体积变化的功加起来，W=∑δW=−∫P(环)dV。可逆体积功：如果过程中不仅系统内部任何瞬间都无限接近平衡态，而且系统与环境间也无限接近平衡——比如活塞上放一堆细沙，一粒一粒地拿掉，让气体缓慢膨胀——那么 P(环) 无限接近 P(系统)，Wr=−∫PdV，就是 P-V 曲线下的面积。大家看这个图：1B2 这条路径和 1A2 这条路径，曲线下围成的面积不一样——所以功是途径函数，依赖具体路径，不是状态函数。</p><p>讲到这我想起一个思想实验——爱因斯坦特别推崇思想实验，我们热力学里到处是思想实验。设想氢气从1个大气压向真空膨胀，和向半个大气压的环境膨胀：起点终点都一样，但一个不做功、一个做功还要补热——热和功都是途径函数，就看你怎么走。这正是我们下一节讲热力学第一定律时要用到的。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>你说这个系统有多少热？没有这个说法。热和功只属于过程。</p><p>为什么用环境的压力？实际交换的量由环境承受的压力决定。</p><p>功是途径函数，依赖具体路径，不是状态函数。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-internal-energy">
+  <div class="slides"><figure class="slide" id="slide-16">
+<img src="slides/slide_16.png" alt="课件第16页 内能（internal energy）：又称为热力学能，它是系统内所有粒子除了整体势能及整体动能外，全部能量的总和">
+<figcaption><span class="sno">16</span><span class="stitle">内能（internal energy）：又称为热力学能，它是系统内所有粒子除了整体势能及整体动能外，全部能量的总和</span></figcaption>
+</figure>
+<figure class="slide" id="slide-17">
+<img src="slides/slide_17.png" alt="课件第17页 热功当量实验（1845‒1847）：James Prescott Joule（1818‒1889）；右侧重物下降速度…重物势能→叶轮搅拌→水温升高">
+<figcaption><span class="sno">17</span><span class="stitle">热功当量实验（1845‒1847）：James Prescott Joule（1818‒1889）；右侧重物下降速度…重物势能→叶轮搅拌→水温升高</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>内能与焦耳的热功当量实验</h2>
+        <div class="sec-meta"><span class="time">录音：第 3 段</span><span class="chip">课件 16</span><span class="chip">课件 17</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>内能（internal energy），又叫热力学能，它是系统内所有粒子除了整体势能及整体动能外，全部能量的总和——包括分子内部的平动、转动、振动动能，分子间相互作用势能，还有电子、原子核内部的能量。注意：内能的绝对值我们永远无法度量，我们只关心它的改变量 ΔU。这就像你问一个人有多少财产，他说不清，但他说得清今年挣了多少——热力学也一样，我们只算改变量。</p><p>能量从一种形式转化成另一种形式，中间到底怎么折算？这就引出了著名的焦耳热功当量实验。焦耳，James Prescott Joule，1818年生，1889年去世，是英国曼彻斯特的啤酒酿造商——富二代，家里开啤酒厂。他1845到1847年做了几百次实验：右边重物缓慢下降，带动容器里的叶轮搅拌水，重物的势能通过机械传动转化为水的内能，水温升高。他特别仔细：连水的比热、容器的热容都要扣除，重物下降要极缓慢——用脚踩滑轮控制，让铁块缓慢下降，这样动能可以忽略。</p><p>他测得：使1克水升高1℃需要的热量，等于重物下降一定高度做的功——约4.184焦耳。于是确立了热功当量：1卡路里=4.184焦耳。今天我们做热力学计算，卡和焦耳可以混着用，就是因为焦耳当年把这个当量测准了。为什么说这个实验是热力学的诞生？因为在此之前，热被认为是一种叫“热质”的神秘流体，物质温度高是因为热质多；焦耳证明热是能量的一种形式，机械能可以转化成热——这直接为能量守恒定律（热力学第一定律）铺平了道路。1847年6月，焦耳在牛津的一次科学会议上报告了自己的实验结果。</p><p>顺便说一句牛顿的名言“站在巨人的肩膀上”——据传这是牛顿讽刺胡克的话，因为胡克身材矮小。这些科学家的轶事大家随便听听，当段子就好。焦耳是幸运的，他做出工作的时候，整个科学界正好在寻找能量守恒的定量证据，他成功了。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>内能的绝对值我们永远无法度量，我们只关心它的改变量。</p><p>他特别仔细：连水的比热、容器的热容都要扣除，重物下降要极缓慢。</p><p>为什么说这个实验是热力学的诞生？因为热被认为是一种叫热质的流体，焦耳证明热是能量的一种形式。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-first-law">
+  <div class="slides"><figure class="slide" id="slide-18">
+<img src="slides/slide_18.png" alt="课件第18页 热力学第一定律：孤立系统无论经历何种变化，其能量守恒；1847年6月，焦耳对自己的热功当量实验作简要介绍">
+<figcaption><span class="sno">18</span><span class="stitle">热力学第一定律：孤立系统无论经历何种变化，其能量守恒；1847年6月，焦耳对自己的热功当量实验作简要介绍</span></figcaption>
+</figure>
+<figure class="slide" id="slide-19">
+<img src="slides/slide_19.png" alt="课件第19页 第一类永动机：有人想制造一种能对外界做功、却又不需要外界供给能量、机器系统内能也不发生变化的机器——不可能（能量守恒）">
+<figcaption><span class="sno">19</span><span class="stitle">第一类永动机：有人想制造一种能对外界做功、却又不需要外界供给能量、机器系统内能也不发生变化的机器——不可能（能量守恒）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>热力学第一定律与第一类永动机</h2>
+        <div class="sec-meta"><span class="time">录音：第 4 段</span><span class="chip">课件 18</span><span class="chip">课件 19</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>热力学第一定律，就是能量守恒与转化定律：孤立系统无论经历何种变化，其能量守恒。对封闭系统写成 ΔU=Q+W——系统内能的改变量，等于从环境吸收的热量加上环境对系统做的功。大家注意，热力学第一定律是一个公理，它是无数实验的总结，但无法从更基本的原理推导出来——就像几何里的公设，你只能接受它，然后推出一大套理论。</p><p>在热力学第一定律提出以前，有人想制造一种能对外界做功、却又不需要外界供给能量、机器系统内能也不发生变化的机器——这种机器叫第一类永动机。能量守恒定律宣布了它的死刑：做功必然要有能量来源，天上不会掉能量。我讲一个真实的例子：1978年之前，中科院每年都要接到很多自称发明了永动机的报告，后来科学院决定不再鉴定永动机，因为能量守恒定律已经把这个判了死刑。大家以后如果收到什么永动机项目的申报材料，直接扔到废纸篓里。</p><p>这里我给同学们讲一个相关的段子——王维的故事。1978年，有一位叫王维的人宣称发明了永动机，还上了《人民日报》？后来被证明是骗局。这提醒我们：做学问要脚踏实地，违反基本物理定律的“发明”不可能成功。热力学第一定律虽然简单，但它是一切的基石。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>热力学第一定律是一个公理，它是无数实验的总结，但无法从更基本的原理推导出来。</p><p>科学院决定不再鉴定永动机，因为能量守恒定律已经把这个判了死刑。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-enthalpy">
+  <div class="slides"><figure class="slide" id="slide-20">
+<img src="slides/slide_20.png" alt="课件第20页 焓的定义：当P=P(环)=常数时，恒压过程的体积功为W=−P(环)△V=−P(V2−V1)；推导H=U+PV">
+<figcaption><span class="sno">20</span><span class="stitle">焓的定义：当P=P(环)=常数时，恒压过程的体积功为W=−P(环)△V=−P(V2−V1)；推导H=U+PV</span></figcaption>
+</figure>
+<figure class="slide" id="slide-21">
+<img src="slides/slide_21.png" alt="课件第21页 焓（enthalpy）：H=U+PV，Qp=△H；热力学中规定任何纯元素的标准状态的焓为零（参考状态）">
+<figcaption><span class="sno">21</span><span class="stitle">焓（enthalpy）：H=U+PV，Qp=△H；热力学中规定任何纯元素的标准状态的焓为零（参考状态）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-22">
+<img src="slides/slide_22.png" alt="课件第22页 化学反应过程的反应焓：焓具有加和性，利用已有的热力学参数可以计算未知物质的焓；例如刚玉水化形成水铝矿（氢氧化铝）">
+<figcaption><span class="sno">22</span><span class="stitle">化学反应过程的反应焓：焓具有加和性，利用已有的热力学参数可以计算未知物质的焓；例如刚玉水化形成水铝矿（氢氧化铝）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-23">
+<img src="slides/slide_23.png" alt="课件第23页 等压过程热QP的计算（QP=ΔH）：C(s)+O₂(g)→CO₂(g)的ΔH1、ΔH2、ΔH3——盖斯定律（Hess，19世纪中叶俄国化学家）">
+<figcaption><span class="sno">23</span><span class="stitle">等压过程热QP的计算（QP=ΔH）：C(s)+O₂(g)→CO₂(g)的ΔH1、ΔH2、ΔH3——盖斯定律（Hess，19世纪中叶俄国化学家）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-24">
+<img src="slides/slide_24.png" alt="课件第24页 相变焓：纯物质于恒定温度T及该温度的平衡压力P下，1 mol发生相变时对应的焓的改变量——熔化焓、凝固焓、汽化焓">
+<figcaption><span class="sno">24</span><span class="stitle">相变焓：纯物质于恒定温度T及该温度的平衡压力P下，1 mol发生相变时对应的焓的改变量——熔化焓、凝固焓、汽化焓</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>焓、反应焓与盖斯定律</h2>
+        <div class="sec-meta"><span class="time">录音：第 5 段</span><span class="chip">课件 20</span><span class="chip">课件 21</span><span class="chip">课件 22</span><span class="chip">课件 23</span><span class="chip">课件 24</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>下面我们引进焓。为什么要引进焓？大家想：很多化学反应在开放容器里进行，环境压力恒定，比如常温常压下做实验，P(环)不变。这时恒压过程的体积功 W=−P(环)△V=−P(V2−V1)。代入第一定律：△U=Qp−P△V，移项得 Qp=△U+P△V=△(U+PV)——恒压过程中系统吸收的热量 Qp 等于 U+PV 这个组合量的改变量。于是人们把这个组合量定义为焓：H=U+PV。所以 Qp=△H——恒压过程的热量等于焓变。</p><p>大家注意区分恒压和等压：恒压是过程前后以及过程中压力恒定不变；等压有时指的是过程始末压力相等，中间可以变化。同样恒容、等温也有类似区别。我们这门课以后默认恒压。</p><p>焓字是个新造的汉字——它是从英文 enthalpy 翻译过来的，取自希腊语“内部的热”，据说最早出现在日本人的译名里，后来传回中国。H=U+PV，单位是焦耳。热力学中规定：任何纯元素的标准状态的焓为零——标准状态是1个大气压、25℃（298.15K）。注意，这里说的是“纯元素”，单质；而且这个规定有平均的意义——同位素问题怎么处理？用平均概念。生成焓：由单质生成1摩尔化合物时的焓变。大家注意，生成焓可以为负：CO₂的生成焓是负的——碳燃烧放热，说明 CO₂ 比单质碳和氧的焓低；水的生成焓也是负的。</p><p>焓具有加和性：利用已有的热力学参数，可以计算未知物质的焓。例如计算刚玉水化形成水铝矿（氢氧化铝）的焓——查铝、水、氧的标准生成焓，加起来就是氢氧化铝的生成焓，这就是加和性。反应焓也一样：一个反应的焓变，等于产物总焓减去反应物总焓。</p><p>盖斯定律（Hess，19世纪中叶俄国化学家）：在恒容或恒压条件下，反应的热效应只与始态和末态有关，与中间经过的路径无关——因为焓是状态函数。经典例子：C(s)+O₂(g)→CO₂(g) 的焓变，可以一步直接算，也可以先 C(s)+½O₂→CO(g)，再 CO(g)+½O₂→CO₂(g)，两步的焓变加起来——ΔH1=ΔH2+ΔH3。碳充分燃烧和不充分燃烧，最后生成物的状态一样，焓变就一样。这就是“反应热可以加减”的理论根据。</p><p>相变焓：纯物质于恒定温度T及该温度的平衡压力P下，1 mol物质发生相变时对应的焓的改变量——熔化焓（冰→水，约6 kJ/mol）、凝固焓、汽化焓。大家注意，相变焓的正负：熔化吸热为正，凝固放热为负。</p><p>我给大家讲一个丁文江的故事。丁文江是中国现代地质学的奠基人，曾任地质调查所所长，月薪6000大洋——那是当时天价，他捐给所里做研究。他主张“格致”——格物致知，把西方科学引进中国。胡适为他写了传记《丁文江传》。他最后是因煤气中毒去世的，非常可惜。为什么讲他？因为地质学与热力学的关系，从丁文江那一代人就开始建立了。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>恒压过程中系统吸收的热量Qp等于U+PV这个组合量的改变量，于是人们把它定义为焓。</p><p>热力学中规定任何纯元素的标准状态的焓为零——注意是纯元素，而且是平均意义。</p><p>盖斯定律：因为焓是状态函数，反应热与路径无关。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-vacuum-capacity">
+  <div class="slides"><figure class="slide" id="slide-25">
+<img src="slides/slide_25.png" alt="课件第25页 理想气体向真空膨胀：左侧空气向真空膨胀充满整个容器时 W=−∑P(环)dV=0；槽中水温不发生变化：Q=0">
+<figcaption><span class="sno">25</span><span class="stitle">理想气体向真空膨胀：左侧空气向真空膨胀充满整个容器时 W=−∑P(环)dV=0；槽中水温不发生变化：Q=0</span></figcaption>
+</figure>
+<figure class="slide" id="slide-26">
+<img src="slides/slide_26.png" alt="课件第26页 常温下压力不高的空气可以视为理想气体：(∂U/∂V)T=0、(∂U/∂P)T=0——内能仅仅是温度的函数">
+<figcaption><span class="sno">26</span><span class="stitle">常温下压力不高的空气可以视为理想气体：(∂U/∂V)T=0、(∂U/∂P)T=0——内能仅仅是温度的函数</span></figcaption>
+</figure>
+<figure class="slide" id="slide-27">
+<img src="slides/slide_27.png" alt="课件第27页 热容（heat capacity）：1 mol某物质温度升高（或降低）1 K所吸收（或放出）的热量（比热、比热容）">
+<figcaption><span class="sno">27</span><span class="stitle">热容（heat capacity）：1 mol某物质温度升高（或降低）1 K所吸收（或放出）的热量（比热、比热容）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-28">
+<img src="slides/slide_28.png" alt="课件第28页 恒容摩尔热容（CV,m）：1 mol物质在恒容、非体积功为零的条件下，仅仅因为温度升高1 K所需的能量">
+<figcaption><span class="sno">28</span><span class="stitle">恒容摩尔热容（CV,m）：1 mol物质在恒容、非体积功为零的条件下，仅仅因为温度升高1 K所需的能量</span></figcaption>
+</figure>
+<figure class="slide" id="slide-29">
+<img src="slides/slide_29.png" alt="课件第29页 恒压摩尔热容（CP,m）：1 mol物质在恒压、非体积功为零的条件下，仅仅因为温度升高1 K所需的能量">
+<figcaption><span class="sno">29</span><span class="stitle">恒压摩尔热容（CP,m）：1 mol物质在恒压、非体积功为零的条件下，仅仅因为温度升高1 K所需的能量</span></figcaption>
+</figure>
+<figure class="slide" id="slide-30">
+<img src="slides/slide_30.png" alt="课件第30页 恒压（定压）摩尔热容 CP,m=∂(Hm/∂T)P=f(T)；CP,m=a+b×10⁻⁵×…经验拟合多项式">
+<figcaption><span class="sno">30</span><span class="stitle">恒压（定压）摩尔热容 CP,m=∂(Hm/∂T)P=f(T)；CP,m=a+b×10⁻⁵×…经验拟合多项式</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>理想气体向真空膨胀与热容</h2>
+        <div class="sec-meta"><span class="time">录音：第 6 段</span><span class="chip">课件 25</span><span class="chip">课件 26</span><span class="chip">课件 27</span><span class="chip">课件 28</span><span class="chip">课件 29</span><span class="chip">课件 30</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>再看焦耳做过的一个经典思想实验——理想气体向真空膨胀。左侧容器有空气，右侧是真空，中间用销钉隔开；抽掉销钉，空气向真空膨胀充满整个容器。在这个过程中，气体没有对环境做任何功——因为另一边是真空，P(环)=0，W=−∑P(环)dV=0。水温不发生变化：Q=0。于是由第一定律 ΔU=Q+W=0，内能不变。温度也不变——对于理想气体，常温下压力不高的空气可以视为理想气体，(∂U/∂V)T=0、(∂U/∂P)T=0，这两式表明理想气体的内能仅仅是温度的函数，不随体积、压力变化。</p><p>这个结论非常重要：理想气体向真空膨胀不做功、不吸热、温度不变、内能不变。大家注意，这是理想气体的性质——真实气体向真空膨胀会有微弱温度变化，那正是我们后面要讲的节流效应。</p><p>接下来讲热容。热容（比热、比热容）是1 mol某物质温度升高（或降低）1 K所吸收（或放出）的热量。恒容摩尔热容 CV,m：1 mol物质在恒容、非体积功为零的条件下，仅仅因为温度升高1 K所需的能量——恒容时不做体积功，热量全变成内能，所以 CV,m=(∂U/∂T)V，是内能对温度的变化率。恒压摩尔热容 CP,m：恒压条件下温度升高1K所需的能量——恒压时体积会变、有体积功，热量变成焓变，所以 CP,m=(∂H/∂T)P，是焓对温度的变化率。</p><p>CP,m 和 CV,m 都是温度的函数：CP,m=∂(Hm/∂T)P=f(T)，写成经验拟合多项式 CP,m=a+b×10⁻⁵×… 这种形式。大家注意，这些多项式都是经验公式，拟合出来的，没有严格的理论推导——你查热力学数据手册，每个物质都有一串这样的系数，a、b、c、d，都是拟合值。使用时注意单位：一般要求热量单位用焦耳、温度用开氏度。</p><p>思考题（一）：已知红柱石的恒压摩尔热容，试计算在1 bar的压力下，从298.15 K开始，红柱石升温到某个温度所需要的热量。这就是作业：把热容对温度积分，Q=∫Cp,m dT。给大家的第一次作业里就有类似的题，用 Excel 积分或者手算都行。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>理想气体向真空膨胀不做功、不吸热、温度不变、内能不变。</p><p>这些多项式都是经验公式，拟合出来的，没有严格的理论推导。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-second-law">
+  <div class="slides"><figure class="slide" id="slide-32">
+<img src="slides/slide_32.png" alt="课件第32页 热力学第二定律的表述（1）Clausius：1850年，28岁的德国物理学家克劳修斯总结出热力学第二定律——热不能自发地从低温物体传到高温物体">
+<figcaption><span class="sno">32</span><span class="stitle">热力学第二定律的表述（1）Clausius：1850年，28岁的德国物理学家克劳修斯总结出热力学第二定律——热不能自发地从低温物体传到高温物体</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div class="sec-tt">
+        <h2>结尾：热力学第二定律的直观引入</h2>
+        <div class="sec-meta"><span class="time">录音：第 7 段</span><span class="chip">课件 32</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>最后给大家预告热力学第二定律。大家想想：把一瓶气体放在房间里，打开盖子，气体自发地向整个房间扩散——这个过程能自动反过来吗？扩散出去的气体会自动缩回瓶子里吗？不会。碎掉的灯泡能自动复原吗？不会。小朋友被热水烫过一次，绝不会再摸第二次——经验告诉我们，有些过程自发地朝一个方向进行，不可逆。</p><p>热量也是这样：它自发地从高温物体传向低温物体——热水放在桌上自然变凉，从来不会自己变热。这就是热力学第二定律的克劳修斯表述：热不能自发地从低温物体传到高温物体。注意“自发”两个字——空调可以把热量从屋里搬到屋外，但那是靠耗电做的功，不是自发。下节课我们正式进入第二定律，讲熵、讲卡诺循环，那才是热力学的重头戏。今天先到这里。</p><p>大家回去复习一下今天的内容：全微分判据、功的定义、第一定律、焓，下周我们讲第二定律的时候要用。作业别忘了做，两周时间，晚交要扣分。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>扩散出去的气体会自动缩回瓶子里吗？不会。碎掉的灯泡能自动复原吗？不会。</p><p>热量自发地从高温物体传向低温物体，从来不会自己变热。</p><p>注意自发两个字——空调可以搬运热量，但那是靠耗电做的功。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（岩石热力学）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>

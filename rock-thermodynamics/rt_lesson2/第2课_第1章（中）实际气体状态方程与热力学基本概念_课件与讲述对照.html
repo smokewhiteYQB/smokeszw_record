@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>岩石热力学 · 第2课 第1章（中）：实际气体状态方程（维里、Redlich-Kwong、殷辉安、段振豪）与热力学基本概念｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.videos{margin-top:14px;border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.video + .video{border-top:1px solid #e4e9f0;}
+.videos h4{font-size:12.5px;font-weight:700;color:#0a1f38;background:#f2f5f9;padding:8px 12px;border-bottom:1px solid #e4e9f0;}
+.videos video{display:block;width:100%;max-height:460px;background:#0b0f14;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>岩石热力学 · 第2课 第1章（中）：实际气体状态方程（维里、Redlich-Kwong、殷辉安、段振豪）与热力学基本概念</h1>
+    <div class="sub">第2课 第1章（中）：实际气体状态方程（维里、Redlich-Kwong、殷辉安、段振豪）与热力学基本概念 ｜ 2026-10-15 ｜ 吴老师（岩石热力学）</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 24 页 · 整理 5 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-equations">01 实际气体状态方程：维里、Redlich-Kwong、殷辉安、段振豪</option>
+<option value="sec-applications">02 状态方程的应用：CNG、LNG 与可燃冰</option>
+<option value="sec-basics">03 热力学基本概念：系统、变量与第零定律</option>
+<option value="sec-equilibrium">04 热力学平衡：热平衡、力平衡与化学平衡</option>
+<option value="sec-state-function">05 可逆过程与状态函数</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 第1章 地质流体状态方程与热力学基本函数.pdf 逐页渲染，转写原文见 record_20261015.txt。</div>
+<section class="sec" id="sec-equations">
+  <div class="slides"><figure class="slide" id="slide-01">
+<img src="slides/slide_01.png" alt="课件第1页 范德华方程：P=RT/(Vm−b)−a/Vm²；某些常用纯气体的范德华常数（CO₂、CH₄等的a、b值）——a、b依气体不同">
+<figcaption><span class="sno">01</span><span class="stitle">范德华方程：P=RT/(Vm−b)−a/Vm²；某些常用纯气体的范德华常数（CO₂、CH₄等的a、b值）——a、b依气体不同</span></figcaption>
+</figure>
+<figure class="slide" id="slide-02">
+<img src="slides/slide_02.png" alt="课件第2页 不同压力下CH₄（203 K）的摩尔体积对比：1/10/30个大气压实测、范德华与理想气体计算值对照——实测值为准，范德华方程更好">
+<figcaption><span class="sno">02</span><span class="stitle">不同压力下CH₄（203 K）的摩尔体积对比：1/10/30个大气压实测、范德华与理想气体计算值对照——实测值为准，范德华方程更好</span></figcaption>
+</figure>
+<figure class="slide" id="slide-03">
+<img src="slides/slide_03.png" alt="课件第3页 维里方程（virial）：Z=PVm/RT=1+B'P+C'P²+D'P³+…；B对应两分子相互作用、C三分子、D四分子……">
+<figcaption><span class="sno">03</span><span class="stitle">维里方程（virial）：Z=PVm/RT=1+B'P+C'P²+D'P³+…；B对应两分子相互作用、C三分子、D四分子……</span></figcaption>
+</figure>
+<figure class="slide" id="slide-04">
+<img src="slides/slide_04.png" alt="课件第4页 Redlich-Kwong气体状态方程（1949）：修正了van der Waals气体状态方程，形式简单、计算简便、精度尚可，广泛应用于工程">
+<figcaption><span class="sno">04</span><span class="stitle">Redlich-Kwong气体状态方程（1949）：修正了van der Waals气体状态方程，形式简单、计算简便、精度尚可，广泛应用于工程</span></figcaption>
+</figure>
+<figure class="slide" id="slide-05">
+<img src="slides/slide_05.png" alt="课件第5页 殷辉安方程——宽广温压范围内纯流体PVT性质的预测：形式简洁、统一，从接近临界点的亚临界区直到远离临界点的超临界区域均适用">
+<figcaption><span class="sno">05</span><span class="stitle">殷辉安方程——宽广温压范围内纯流体PVT性质的预测：形式简洁、统一，从接近临界点的亚临界区直到远离临界点的超临界区域均适用</span></figcaption>
+</figure>
+<figure class="slide" id="slide-06">
+<img src="slides/slide_06.png" alt="课件第6页 殷辉安(2001)方程中的各项参数：P=(RT−A)(1+b/V)/V；方程中b和V的单位为cm³，参数形式简洁">
+<figcaption><span class="sno">06</span><span class="stitle">殷辉安(2001)方程中的各项参数：P=(RT−A)(1+b/V)/V；方程中b和V的单位为cm³，参数形式简洁</span></figcaption>
+</figure>
+<figure class="slide" id="slide-07">
+<img src="slides/slide_07.png" alt="课件第7页 段振豪方程（Duan et al.）：自1992年以来，通过热力学、分子动力学、统计力学和量子力学方法的综合研究提出；可用于纯CO₂、纯H₂O等体系">
+<figcaption><span class="sno">07</span><span class="stitle">段振豪方程（Duan et al.）：自1992年以来，通过热力学、分子动力学、统计力学和量子力学方法的综合研究提出；可用于纯CO₂、纯H₂O等体系</span></figcaption>
+</figure>
+<figure class="slide" id="slide-08">
+<img src="slides/slide_08.png" alt="课件第8页 段振豪方程（Duan et al., 1992）：使用“双精度”算法计算；有描述一元系、混合体系、水-气-盐体系的不同版本">
+<figcaption><span class="sno">08</span><span class="stitle">段振豪方程（Duan et al., 1992）：使用“双精度”算法计算；有描述一元系、混合体系、水-气-盐体系的不同版本</span></figcaption>
+</figure>
+<figure class="slide" id="slide-09">
+<img src="slides/slide_09.png" alt="课件第9页 段振豪方程（Duan et al., 1992）：Pm Vm a₁+a₂/Tm²+a₃/Tm³… 各项参数的函数形式">
+<figcaption><span class="sno">09</span><span class="stitle">段振豪方程（Duan et al., 1992）：Pm Vm a₁+a₂/Tm²+a₃/Tm³… 各项参数的函数形式</span></figcaption>
+</figure>
+<figure class="slide" id="slide-10">
+<img src="slides/slide_10.png" alt="课件第10页 段振豪方程（Duan et al., 1992）：不同体系下的参数σ、ε、T、P（3.0626σ³、154.0 T、Pm=Tm=ε）">
+<figcaption><span class="sno">10</span><span class="stitle">段振豪方程（Duan et al., 1992）：不同体系下的参数σ、ε、T、P（3.0626σ³、154.0 T、Pm=Tm=ε）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>实际气体状态方程：维里、Redlich-Kwong、殷辉安、段振豪</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段</span><span class="chip">课件 1</span><span class="chip">课件 2</span><span class="chip">课件 3</span><span class="chip">课件 4</span><span class="chip">课件 5</span><span class="chip">课件 6</span><span class="chip">课件 7</span><span class="chip">课件 8</span><span class="chip">课件 9</span><span class="chip">课件 10</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>上节课我们讲了范德华方程，今天接着讲。范德华方程里的 a、b 两个参数，刚才我们已经看到表格了，不同气体的 a、b 是不一样的——有的气体 a 大有的 b 大，还有具体的值。我们通过把范德华方程应用到稀薄气体的情况下，它就还原成了理想气体状态方程。反过来理解：理想气体状态方程是实际气体在稀薄情况下、在压力几乎为零情况下的描述。这里我提一个问题：同样的一个方程，为什么不能准确描述气体？因为它的偏差，范德华方程两个参数 a、b 依不同气体而不同。理想气体状态方程 PV=nRT 只有一个常数 R——R 对任何气体都是一样的。也就是说理想气体状态方程没有考虑气体的个性，而范德华方程考虑了气体的个性。所以范德华方程比理想气体状态方程描述得更准确。</p><p>维里方程。大家看这个式子：Z=PVm/RT，Z 是压缩系数。维里方程把它展开成 1+B'P+C'P²+D'P³+… 这种幂级数的形式。这里边每一项的物理意义很有意思：B 对应两分子之间的相互作用，C 对应三分子之间的相互作用，D 对应四分子之间的相互作用。为什么？大家想想气体的分子——真实气体里分子之间是有相互作用的，这个相互作用是一对一对的、三三两两的、四四双双的，幂次越高对应的相互作用越弱。这是我们学过的数学：幂次越高、高阶无穷小。温度固定的时候，气压越高，分子之间挨得越近，相互作用越明显——所以维里方程本质上是在修正分子间相互作用。CF₄（四氟化碳）这个例子，它的维里系数怎么测呢？可以算、可以查表，不需要大家去测。</p><p>Redlich-Kwong 方程是1949年提出的。人们一直在问：范德华方程之后还有没有改进的空间？RK 方程修正了范德华方程，把温度依赖放进去了——大家看它形式上比范德华方程复杂一些，但复杂度尚可接受。它的特点是形式简单、计算简便、精度尚可，因此广泛应用于工程计算。为什么要放一个温度的根号进去？气体在不同温度下的行为不一样，尤其是接近液化时，分子间引力的温度依赖不能忽略。</p><p>接下来是咱们国家的学者提出的方程。殷辉安方程——殷辉安是成都理工大学的老师。他提出这个方程的目的是：一个状态方程能不能在宽广的温压范围内统一描述纯流体的 PVT 性质？大家看这个式子 P=(RT−A)(1+b/V)/V，形式上是不是很简洁？它最大的优点是从接近临界点的亚临界区直到远离临界点的超临界区域，都是同一个方程、同一组参数，不需要分段。以前的方程常常只在某一温压区间好用，出了这个区间误差就大了；殷辉安方程用一套参数把范围铺开。形式上简洁、统一，这是它的卖点。</p><p>下面是段振豪方程。段振豪老师是国际上知名的地学家，他1992年以来一直在做这个工作——用热力学、分子动力学、统计力学、量子力学这些方法综合起来，把流体 PVT 性质算得特别准。段氏方程可以用于纯CO₂、纯H₂O这些一元体系，也有混合体系、水-气-盐体系的版本。大家看它的形式，比前面的方程复杂多了——这是用高性能计算机和实验数据拟合出来的，参数特别多。大家注意“双精度”这个词：一般的浮点数是单精度，段氏方程要求用双精度算法计算，否则误差会累积。</p><p>这里我用 E+11 这样的科学记法给大家看段氏方程的系数——这是超临界体系的参数，σ、ε、T、P 这些变量都有具体的定义。这个方程厉害在什么地方呢？我们后边要做岩石热力学、做流体包裹体研究的时候，需要知道深部压力温度下 CO₂、H₂O 或 CH₄ 的摩尔体积，段氏方程一算就出来了。现在的问题是，段氏方程这么复杂，解它的时候怎么办？我们来讲迭代法——解非线性方程，它是近似方法，适用于单调函数。大家看左边这个图：Y=X 这条线，和 Y=f(X) 这条曲线，它们的交点就是方程的解。你看段氏方程在大于6 kbar 的时候也是可迭代的单调函数。具体怎么迭代呢？先猜一个初值，代入方程算出新值，再代回去，反复迭代直到两次结果几乎不变——精确到小数点后三位就行了。在Excel里做这个特别方便。这也是第一次作业的一部分，大家要用迭代法填甲烷的摩尔体积表。</p><p>用迭代法解非线性方程，我们要求精度高一点，一般算到小数点后三位。什么情况下收敛呢？单调函数一定收敛。大家在Excel里把公式列好，往下拉就行了——可以设置一个阈值，当两次迭代之差小于0.001就停止。这就是数值方法最朴素的形式，同学们以后写程序做计算都离不开它。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>理想气体状态方程没有考虑气体的个性，而范德华方程考虑了气体的个性。</p><p>维里方程本质上是在修正分子间相互作用。</p><p>殷辉安方程最大的优点是从亚临界区直到超临界区域，同一个方程、同一组参数，不需要分段。</p><p>段氏方程要求用双精度算法计算，否则误差会累积。</p><p>先猜一个初值，代入方程算出新值，再代回去，反复迭代直到两次结果几乎不变。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-applications">
+  <div class="slides"><figure class="slide" id="slide-11">
+<img src="slides/slide_11.png" alt="课件第11页 迭代（iteration）解非线性方程的近似办法：适用于单调函数；段氏方程在>6 kbar时也是可迭代的单调函数——Y=X与Y=f(X)的交点、Excel求解">
+<figcaption><span class="sno">11</span><span class="stitle">迭代（iteration）解非线性方程的近似办法：适用于单调函数；段氏方程在>6 kbar时也是可迭代的单调函数——Y=X与Y=f(X)的交点、Excel求解</span></figcaption>
+</figure>
+<figure class="slide" id="slide-12">
+<img src="slides/slide_12.png" alt="课件第12页 压缩天然气、液化天然气：CNG（compressed natural gas）在−40~+60℃常温加压储存；LNG液化后在−162℃低温储存">
+<figcaption><span class="sno">12</span><span class="stitle">压缩天然气、液化天然气：CNG（compressed natural gas）在−40~+60℃常温加压储存；LNG液化后在−162℃低温储存</span></figcaption>
+</figure>
+<figure class="slide" id="slide-13">
+<img src="slides/slide_13.png" alt="课件第13页 天然气水合物（可燃冰）：存在于洋底、冻土区；是高压下的笼形晶体，甲烷分子被包在冰的笼里">
+<figcaption><span class="sno">13</span><span class="stitle">天然气水合物（可燃冰）：存在于洋底、冻土区；是高压下的笼形晶体，甲烷分子被包在冰的笼里</span></figcaption>
+</figure>
+<figure class="slide" id="slide-14">
+<img src="slides/slide_14.png" alt="课件第14页 天然气水合物（可燃冰）：常压下冰>0℃融化，天然气水合物是高压下的笼形晶体，相平衡P−T可以相互抵消；降压、升温都会使其分解">
+<figcaption><span class="sno">14</span><span class="stitle">天然气水合物（可燃冰）：常压下冰>0℃融化，天然气水合物是高压下的笼形晶体，相平衡P−T可以相互抵消；降压、升温都会使其分解</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>状态方程的应用：CNG、LNG 与可燃冰</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段</span><span class="chip">课件 11</span><span class="chip">课件 12</span><span class="chip">课件 13</span><span class="chip">课件 14</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>我们学了状态方程，它有什么用呢？先看一个真实的例子：我们国家在四川盆地开采天然气，地下储层的压力可达几十上百兆帕，温度也有几百度。要知道地层深处的天然气，在那种压力温度下它的摩尔体积是多少——这就要用到状态方程。算错了怎么办？算错了会炸设备。所以这种计算是不能出错的。大家可能听过四川有天然气开采引发小地震的新闻，那是因为开采把地层的压力平衡打破了，跟状态方程没直接关系，但是做工程计算的时候，状态方程是基础。</p><p>再讲天然气怎么储存运输。CNG 是压缩天然气——常温下把天然气加压储存，压力一般在16~25兆帕，车载储气瓶就是这种。LNG 是液化天然气——天然气的主要成分甲烷沸点约−162℃，在常压下把它冷却到−162℃以下就变成液体，体积缩小约600倍，用特制的保温船跨洋运输。大家注意：同样是天然气，CNG 靠的是压力，LNG 靠的是低温——这就是状态方程的两条路：加压、降温，都是为了缩小体积。</p><p>然后是天然气水合物，俗称可燃冰。它存在于洋底和冻土区，是高压下的笼形晶体——甲烷分子被包在冰的笼子里，一个水分子笼装一个甲烷分子。大家看这个图：常压下冰到0℃就融化了，天然气水合物是高压下的笼形晶体，它的相平衡 P−T 曲线——在高压低温区稳定存在，压力降低或者温度升高，都会使它分解，甲烷就跑出来了。所以开采可燃冰的关键是控制温压，让甲烷可控地释放——这就是用状态方程算出来的相平衡边界。</p><p>可燃冰的能量密度非常高：1立方米可燃冰可以释放出160多立方米天然气。我国在南海试采过可燃冰，这是能源战略的一部分。它的相平衡边界就是 P−T 图上那条曲线，降压和升温两条路都能让它分解——所以开采设计必须精确知道储层的压力温度条件处于相图什么位置，这就是我们这门课的内容。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>算错了会炸设备。所以这种计算是不能出错的。</p><p>同样是天然气，CNG靠的是压力，LNG靠的是低温——状态方程的两条路。</p><p>开采可燃冰的关键是控制温压，让甲烷可控地释放。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-basics">
+  <div class="slides"><figure class="slide" id="slide-15">
+<img src="slides/slide_15.png" alt="课件第15页 系统（system）、环境（surrounding）：热力学基本概念；热力学状态（thermodynamic state）">
+<figcaption><span class="sno">15</span><span class="stitle">系统（system）、环境（surrounding）：热力学基本概念；热力学状态（thermodynamic state）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-16">
+<img src="slides/slide_16.png" alt="课件第16页 物质的量以摩尔（mole）数表示，1 mol=6.022×10²³个；广度变量（extensive variable）与强度变量">
+<figcaption><span class="sno">16</span><span class="stitle">物质的量以摩尔（mole）数表示，1 mol=6.022×10²³个；广度变量（extensive variable）与强度变量</span></figcaption>
+</figure>
+<figure class="slide" id="slide-17">
+<img src="slides/slide_17.png" alt="课件第17页 热力学第零定律（The zeroth law of thermodynamics）：如果一个“热”的系统与一个“冷”的系统相接触，最终两系统不再发生变化，即达到热平衡——传递性比喻">
+<figcaption><span class="sno">17</span><span class="stitle">热力学第零定律（The zeroth law of thermodynamics）：如果一个“热”的系统与一个“冷”的系统相接触，最终两系统不再发生变化，即达到热平衡——传递性比喻</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>热力学基本概念：系统、变量与第零定律</h2>
+        <div class="sec-meta"><span class="time">录音：第 3 段</span><span class="chip">课件 15</span><span class="chip">课件 16</span><span class="chip">课件 17</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>下面进入热力学的基本概念。系统是我们要研究的那一部分——比如一杯水、一块岩石、一个气体包裹体；环境是系统以外与之发生作用的部分。系统分几类：孤立系统，与环境既无物质交换也无能量交换；封闭系统，与环境无物质交换但有能量交换；开放系统，既有物质交换也有能量交换。还有一个绝热系统，专指没有热量交换——它允许做功。我们做岩石热力学实验的时候，经常要设计系统：你想研究哪个部分，把它圈出来，剩下的就是环境。</p><p>物质的量用摩尔表示，1摩尔是6.022×10²³个粒子。广度变量和强度变量是两类重要的量：广度变量跟物质的量成正比——质量、体积、内能、焓、熵，1摩尔水有这么多能量，2摩尔水就有两倍，所以广度变量有加和性；强度变量与物质的量无关——温度、压力、密度，半杯水和一杯水的温度是一样的。大家注意：广度变量除以物质的量就变成强度性质了——摩尔体积、摩尔焓、摩尔熵，在相图里我们用的都是摩尔量。这是这门课的基本功，后面推导处处要用。</p><p>热力学第零定律：如果两个系统各自与第三个系统达到热平衡，那么这两个系统之间也达到热平衡。大家想想，我们测体温是不是就是利用了第零定律？体温计先跟你的身体达到热平衡，读数就是你的温度。第零定律为什么叫“第零”？因为它太基本了——它确立了温度这个概念的合法性：温度相同，就可以说两个系统处于热平衡。我们课堂上是这样解释的：如果我和他是好哥们，他和他也是好哥们，那么我和他也必然是铁哥们——好哥们的比喻虽然粗俗，但它准确表达了传递性。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>广度变量除以物质的量就变成强度性质了——摩尔体积、摩尔焓、摩尔熵。</p><p>第零定律为什么叫“第零”？因为它太基本了——它确立了温度这个概念的合法性。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-equilibrium">
+  <div class="slides"><figure class="slide" id="slide-18">
+<img src="slides/slide_18.png" alt="课件第18页 热力学系统处于平衡态：(1)系统内部处于热平衡，各处温度相等；(2)系统内部处于力的平衡，各处压力相等；(3)化学平衡——各处组分不再变化">
+<figcaption><span class="sno">18</span><span class="stitle">热力学系统处于平衡态：(1)系统内部处于热平衡，各处温度相等；(2)系统内部处于力的平衡，各处压力相等；(3)化学平衡——各处组分不再变化</span></figcaption>
+</figure>
+<figure class="slide" id="slide-19">
+<img src="slides/slide_19.png" alt="课件第19页 平衡态（equilibrium state）：系统宏观状态不再变化；瞬(时)态（transient state）；稳态（steady state）：局部参数不随时间改变但非平衡">
+<figcaption><span class="sno">19</span><span class="stitle">平衡态（equilibrium state）：系统宏观状态不再变化；瞬(时)态（transient state）；稳态（steady state）：局部参数不随时间改变但非平衡</span></figcaption>
+</figure>
+<figure class="slide" id="slide-20">
+<img src="slides/slide_20.png" alt="课件第20页 局部平衡（local equilibrium）：系统的某一局部范围达到完全热力学平衡；部分平衡：整个系统中某些部分达到平衡而另一些未达到——岩石中三代矿物并存">
+<figcaption><span class="sno">20</span><span class="stitle">局部平衡（local equilibrium）：系统的某一局部范围达到完全热力学平衡；部分平衡：整个系统中某些部分达到平衡而另一些未达到——岩石中三代矿物并存</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>热力学平衡：热平衡、力平衡与化学平衡</h2>
+        <div class="sec-meta"><span class="time">录音：第 4 段</span><span class="chip">课件 18</span><span class="chip">课件 19</span><span class="chip">课件 20</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>一个热力学系统处于平衡态要满足三方面：第一，系统内部处于热平衡，各处温度相等；第二，系统内部处于力的平衡，各处压力相等；第三，化学平衡，各处组分不再变化。大家注意，这三条缺一不可。一个系统宏观状态不再变化，叫做平衡态。在平衡态之前有一个概念叫瞬态——系统正在变化过程中的状态。这里特别要注意区分平衡态和稳态：稳态是局部参数不随时间改变但系统并未达到平衡。比如一根铜丝，一头放在热水里一头放在冰水里，稳定之后铜丝上各点的温度不随时间变——这是稳态，不是平衡态，因为铜丝各点温度不一样。再比如马里亚纳海沟，深部海水等温线是往下拉的，温度梯度不随时间变，那是稳态不是平衡。</p><p>局部平衡：系统的某一局部范围达到了完全的热力学平衡。部分平衡：整个系统中某些部分达到平衡而另一些没有。这在地质上太重要了——岩石中的矿物形成于不同的世代，比如变质岩中三代矿物并存：第一代矿物、第二代矿物、第三代矿物，每一代矿物形成时都有它当时的温压条件，它们各自在自己形成的条件下达到平衡，但整个岩石并不处于单一平衡态。我们做地质温度计压力计的时候，就是假设矿物对在当时条件下达到平衡——这就是局部平衡思想的应用。</p><p>还有一个概念叫介稳平衡——亚稳状态。比如一块石头落在山洼里，它跟周围环境并没有达到完全平衡，但它看起来不变。最典型的例子：地表发现柯石英、蓝晶石——这些矿物应该形成于深部高温高压，在地表是亚稳的；钻石在地表也是亚稳的，它变成石墨要几十亿年。榴辉岩、花岗岩出露在地表，它们都不处于地表条件下的平衡态——它们只是变化得非常非常慢，看起来稳定。这种亚稳状态在我们地质上比比皆是。我们常说“水火不容”，但是变质岩里的流体与矿物却常常共存——这就是局部平衡和亚稳平衡的生动体现。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>稳态不是平衡态——铜丝传热是稳态，各点温度不一样。</p><p>岩石中三代矿物并存——每一代矿物形成时都有它当时的温压条件，整个岩石并不处于单一平衡态。</p><p>钻石在地表也是亚稳的，它变成石墨要几十亿年。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-state-function">
+  <div class="slides"><figure class="slide" id="slide-21">
+<img src="slides/slide_21.png" alt="课件第21页 系统状态发生任何变化均称为热力学过程；状态变化的具体历程称为热力学途径；可逆过程（reversible）">
+<figcaption><span class="sno">21</span><span class="stitle">系统状态发生任何变化均称为热力学过程；状态变化的具体历程称为热力学途径；可逆过程（reversible）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-22">
+<img src="slides/slide_22.png" alt="课件第22页 可逆过程：系统进行一个热力学过程后，能够沿原路径逆向回复到初态，不引起环境变化的热力过程；可逆过程的条件：内部可逆">
+<figcaption><span class="sno">22</span><span class="stitle">可逆过程：系统进行一个热力学过程后，能够沿原路径逆向回复到初态，不引起环境变化的热力过程；可逆过程的条件：内部可逆</span></figcaption>
+</figure>
+<figure class="slide" id="slide-23">
+<img src="slides/slide_23.png" alt="课件第23页 热力学状态函数（state function）：改变量与具体路径无关，仅仅与开始、终了状态有关（焓、熵、体积、自由能……）">
+<figcaption><span class="sno">23</span><span class="stitle">热力学状态函数（state function）：改变量与具体路径无关，仅仅与开始、终了状态有关（焓、熵、体积、自由能……）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-24">
+<img src="slides/slide_24.png" alt="课件第24页 热力学状态函数的本质：改变量（积分∫df）与具体路径无关，闭路曲线（环路）积分≡∮df=0">
+<figcaption><span class="sno">24</span><span class="stitle">热力学状态函数的本质：改变量（积分∫df）与具体路径无关，闭路曲线（环路）积分≡∮df=0</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>可逆过程与状态函数</h2>
+        <div class="sec-meta"><span class="time">录音：第 5 段</span><span class="chip">课件 21</span><span class="chip">课件 22</span><span class="chip">课件 23</span><span class="chip">课件 24</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>系统状态发生任何变化，都叫热力学过程；状态变化的具体历程叫热力学途径。可逆过程：系统进行一个热力学过程后，能够沿原路径逆向回复到初态，不引起环境变化。大家注意这个定义的两个要点：第一，能沿原路径逆向回来；第二，不引起环境任何变化。可逆过程的条件是：过程中系统内部以及系统与环境之间都无限接近平衡——每一步都是准静态的，没有摩擦、没有耗散。现实世界没有真正的可逆过程：走路会磨损鞋底、汽车会耗油——这些都是不可逆的。可逆过程是我们理想化的极限。</p><p>热力学状态函数：改变量与具体路径无关，仅仅与开始、终了状态有关。焓、熵、体积、自由能都是状态函数。它的本质是：改变量（积分）与路径无关，等价于闭路曲线积分为零——∮df=0。大家看这个图：从A到C走两条不同的路径，状态函数的改变量是一样的，因为积分与路径无关；绕一圈回到原状态，积分是零。这就像登泰山：从西路上去、东路下来，你的高度变化是一样的——高度是状态函数，高度差只取决于起点终点。但做功、放热就不一样了：爬上去和坐缆车上去，你做的功、放的热完全不同——热和功不是状态函数。</p><p>大家思考一个问题：状态函数的积分与路径无关，怎么判断一个量是不是状态函数？数学上有个判别法——它是不是恰当微分、全微分。这就要用到格林公式了。时间不够了，这个证明我们留到下节课再讲。今天先把概念建立起来：状态函数是体系的属性，途径函数（热、功）是过程的属性。体系处于某个状态就有确定的焓、熵、体积、自由能；但是体系不会“处于”某个热或功——只有经历过程，才有热和功。这个区别是理解整个热力学的基础。</p><p>所以今天我们小结一下：热力学要研究的两类量——状态函数（只看始末态）与途径函数（依赖具体路径）。状态函数的例子：P、V、T、U、H、S、G；途径函数的例子：Q、W。下一节课我们讲全微分、恰当微分，然后讲热力学第一定律。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>现实世界没有真正的可逆过程：走路会磨损鞋底、汽车会耗油——这些都是不可逆的。</p><p>爬上去和坐缆车上去，你做的功、放的热完全不同——热和功不是状态函数。</p><p>体系不会“处于”某个热或功——只有经历过程，才有热和功。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（岩石热力学）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>

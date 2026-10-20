@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>生成式模型与科学智能应用 · 第11节 Lecture 9 GAN I：走向无似然训练（双样本检验/判别器）、生成对抗网络与 JS 散度、GAN 的性质｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.videos{margin-top:14px;border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.video + .video{border-top:1px solid #e4e9f0;}
+.videos h4{font-size:12.5px;font-weight:700;color:#0a1f38;background:#f2f5f9;padding:8px 12px;border-bottom:1px solid #e4e9f0;}
+.videos video{display:block;width:100%;max-height:460px;background:#0b0f14;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>生成式模型与科学智能应用 · 第11节 Lecture 9 GAN I：走向无似然训练（双样本检验/判别器）、生成对抗网络与 JS 散度、GAN 的性质</h1>
+    <div class="sub">第11节 Lecture 9 GAN I：走向无似然训练（双样本检验/判别器）、生成对抗网络与 JS 散度、GAN 的性质 ｜ 2026-10-15 ｜ 刘云帆</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 42 页 · 整理 8 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-intro">01 开场：作业更新与课程位置</option>
+<option value="sec-likelihood-free">02 走向无似然训练：似然不是质量的可靠指标</option>
+<option value="sec-two-sample">03 双样本检验：通过样本比较分布</option>
+<option value="sec-discriminator">04 GAN 与判别器</option>
+<option value="sec-generator-jsd">05 生成器与 JS 散度</option>
+<option value="sec-training-algo">06 GAN 训练算法</option>
+<option value="sec-properties">07 GAN 的性质与模式坍塌</option>
+<option value="sec-summary">08 总结：GAN 的权衡</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 Lecture9_Generative_Adversaria.pdf 逐页渲染，转写原文见 record_20261015.txt。</div>
+<section class="sec" id="sec-intro">
+  <div class="slides"><figure class="slide" id="slide-01">
+<img src="slides/slide_01.png" alt="课件第1页 封面：Generative Models & AI4S Applications，Lecture 9 Generative Adversarial Networks I（刘云帆）">
+<figcaption><span class="sno">01</span><span class="stitle">封面：Generative Models & AI4S Applications，Lecture 9 Generative Adversarial Networks I（刘云帆）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-02">
+<img src="slides/slide_02.png" alt="课件第2页 Announcements：作业 1 第 1 题描述更新；作业 1 截止时间延后一周（10 月 25 日截止）">
+<figcaption><span class="sno">02</span><span class="stitle">Announcements：作业 1 第 1 题描述更新；作业 1 截止时间延后一周（10 月 25 日截止）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-03">
+<img src="slides/slide_03.png" alt="课件第3页 Roadmap：课程体系（概率建模 → AR 模型 → 最大似然 → 隐变量模型 → Normalizing Flow → GAN）——GAN 在第二部分的最后一站">
+<figcaption><span class="sno">03</span><span class="stitle">Roadmap：课程体系（概率建模 → AR 模型 → 最大似然 → 隐变量模型 → Normalizing Flow → GAN）——GAN 在第二部分的最后一站</span></figcaption>
+</figure>
+<figure class="slide" id="slide-04">
+<img src="slides/slide_04.png" alt="课件第4页 Recap：已学的生成模型——AR 模型（链式）、VAE（边缘似然积分）、Normalizing Flow（变量变换）；学习目标都是最大似然 / 最小化 D_KL(pθ‖pdata)">
+<figcaption><span class="sno">04</span><span class="stitle">Recap：已学的生成模型——AR 模型（链式）、VAE（边缘似然积分）、Normalizing Flow（变量变换）；学习目标都是最大似然 / 最小化 D_KL(pθ‖pdata)</span></figcaption>
+</figure>
+<figure class="slide" id="slide-05">
+<img src="slides/slide_05.png" alt="课件第5页 Recap：问题——似然是生成质量的好指示器吗？">
+<figcaption><span class="sno">05</span><span class="stitle">Recap：问题——似然是生成质量的好指示器吗？</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>开场：作业更新与课程位置</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 1</span><span class="chip">课件 2</span><span class="chip">课件 3</span><span class="chip">课件 4</span><span class="chip">课件 5</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>咱们今天讲新的一章内容。上节课讲了 Normalizing Flow，今天讲一种更熟悉的生成模型：生成式对抗网络（GAN）。上课前说一下作业问题：之前作业表述有问题，有学生反馈后，我和助教研究并更新了表述——题目考察内容未变，若清楚考察结构可按原题做、无需重交；但因表述改变，截止日期延至 25 号。</p><p>看新课在课程路线图的位置：我们在第二部分、已是最后一部分。之前讲了隐变量模型和 Normalizing Flow 模型，今天讲 GAN，它与前面模型有很大不同。之前我们从似然角度讨论模型，能写出似然表达式——这三个模型的表达式各有特点，体现了模型特性：比如 AR 是回归形式关系；隐变量模型用积分对隐变量建模（计算样本边缘似然时消去该变量）；上两节课讲的 Normalizing Flow 模型主要产生这样的结果（变量变换公式）。</p><p>虽然它们是不同的模型，但在更高层面上其实比较相似：从机器学习的方法设计来看，学习目标都是最大化似然——即在数据集上最大化似然以训练参数；最大似然等价于最小化 pdata 与 pθ 的 KL 散度，两者在训练过程中等价、优化参数时完全一致。换句话说，它们都用最大化似然方法训练，从生成模型设计角度看都是用 KL 散度度量距离，只是 pθ 上的表达形式不一样而已。今天我们讲这个不一样的模型，主要就是从这个高层视角的不同出发。</p><p>我们要提一个问题：这种似然度量到底是不是生成样本质量的一个好指示器？答案是不总是——当我们关注生成质量时，高似然并不总是代表好的生成质量。接下来会从另外一个角度去衡量 pdata 与 pθ 之间的差异。今天的课分两个部分：第一部分引入与似然无关的训练方法和模型组合方法，另外介绍一个对象：生成对抗网络；第三点给大家稍微梳理一下相关的性质——因为大家可能没有上过训练课，我来说得具体清楚一些。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>之前作业表述有问题，有学生反馈后，我和助教研究并更新了表述。……但因表述改变，截止日期延至25号。</p><p>换句话说，它们都用最大化似然方法训练。从生成模型设计角度看，都是用KL散度度量距离。只是Pc上的表达形式不一样而已。</p><p>我们要提一个问题：这种似然量度，到底是不是生成样本质量的一个好指示器？答案是不总是。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-likelihood-free">
+  <div class="slides"><figure class="slide" id="slide-06">
+<img src="slides/slide_06.png" alt="课件第6页 Towards Likelihood-Free Training：似然的优缺点——对最优模型（pθ*=pdata）最高测试时似然=最好样本质量；对不完美/实际模型（pθ*≠pdata）似然/D_KL 只是 d(pθ,pdata) 的一种可能度量（Theis et al., ICLR 2016）">
+<figcaption><span class="sno">06</span><span class="stitle">Towards Likelihood-Free Training：似然的优缺点——对最优模型（pθ*=pdata）最高测试时似然=最好样本质量；对不完美/实际模型（pθ*≠pdata）似然/D_KL 只是 d(pθ,pdata) 的一种可能度量（Theis et al., ICLR 2016）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-07">
+<img src="slides/slide_07.png" alt="课件第7页 Towards Likelihood-Free Training：高对数似然不一定意味着好样本质量，反之亦然">
+<figcaption><span class="sno">07</span><span class="stitle">Towards Likelihood-Free Training：高对数似然不一定意味着好样本质量，反之亦然</span></figcaption>
+</figure>
+<figure class="slide" id="slide-08">
+<img src="slides/slide_08.png" alt="课件第8页 Example 1：高测试对数似然、差样本质量——构造模型 pθ(x)=0.01·pdata(x)+0.99·pnoise(x)（99% 噪声、质量差）">
+<figcaption><span class="sno">08</span><span class="stitle">Example 1：高测试对数似然、差样本质量——构造模型 pθ(x)=0.01·pdata(x)+0.99·pnoise(x)（99% 噪声、质量差）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-09">
+<img src="slides/slide_09.png" alt="课件第9页 Example 1：取对数得下界 log pθ(x)≥log(0.01·pdata(x))=log pdata(x)−log 100">
+<figcaption><span class="sno">09</span><span class="stitle">Example 1：取对数得下界 log pθ(x)≥log(0.01·pdata(x))=log pdata(x)−log 100</span></figcaption>
+</figure>
+<figure class="slide" id="slide-10">
+<img src="slides/slide_10.png" alt="课件第10页 Example 1：对 x∼pdata 求期望——下界 E[log pdata]−log 100、上界 E[log pdata]；问题：如果 x 是高维（如图像）呢？——上下界几乎重合，E[log pθ]≈E[log pdata]">
+<figcaption><span class="sno">10</span><span class="stitle">Example 1：对 x∼pdata 求期望——下界 E[log pdata]−log 100、上界 E[log pdata]；问题：如果 x 是高维（如图像）呢？——上下界几乎重合，E[log pθ]≈E[log pdata]</span></figcaption>
+</figure>
+<figure class="slide" id="slide-11">
+<img src="slides/slide_11.png" alt="课件第11页 Example 2：好样本质量、差测试对数似然——考虑一个完全记住训练集的模型">
+<figcaption><span class="sno">11</span><span class="stitle">Example 2：好样本质量、差测试对数似然——考虑一个完全记住训练集的模型</span></figcaption>
+</figure>
+<figure class="slide" id="slide-12">
+<img src="slides/slide_12.png" alt="课件第12页 Example 2：生成质量最优（采样结果=真实训练数据）；测试时似然最差（测试集概率为 0）；例 1 和例 2 说明应把似然与样本解耦→无似然学习：目标不直接依赖似然">
+<figcaption><span class="sno">12</span><span class="stitle">Example 2：生成质量最优（采样结果=真实训练数据）；测试时似然最差（测试集概率为 0）；例 1 和例 2 说明应把似然与样本解耦→无似然学习：目标不直接依赖似然</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>走向无似然训练：似然不是质量的可靠指标</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 6</span><span class="chip">课件 7</span><span class="chip">课件 8</span><span class="chip">课件 9</span><span class="chip">课件 10</span><span class="chip">课件 11</span><span class="chip">课件 12</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第一部分介绍一下怎么用这种不需要似然的方法去训练——因为我们在这个模型之前一直是用 pθ 来表示，那不需要似然的话就不需要 pθ 这个东西。先讨论一下基于似然学习的一些优点或者缺点。第一点：在似然的框架下，假设我们有一个最优的模型，能够使用模型等于真实分布——就是模型足够完备、参数足够优秀，能够完全建模我们真实数据的分布（几乎相等）。这个时候，它的似然和它的样本质量其实是完全可比的：因为你的模型已经完全拟合了真实数据的分布，从似然的角度考虑，两个分布相同的话，对每个样本它的似然（值）都相等——似然价、似然能量，这是最好的情况。这里解释一下 test：训练好模型之后，去随机用测试集的样本测试它，就是这个似然的计算（测试时似然）。</p><p>但是实际情况下，我们不可能让模型真的等于数据的分布，所以必须考虑不完美或实际的模型——两个分布肯定不存在一一对应的关系。但是我们只能说：之前一直考虑的这个似然或者说 KL 散度，只是衡量两种分布的一种可能的形式、一种可能的具体度量而已。换句话说，我们可能还有其他距离度量方法，除了 KL 散度。</p><p>这张图展示了几种度量的结果：高亮区域代表二维平面上的数据分布形式，越亮的点密度越高、反映真实数据情况，白线代表数据分布特征的概率密度——从分布看数据有两个主要模式。现在考虑一个不完美的模型：假设用单峰模型去拟合双峰分布，后三个图展示了用不同距离度量最小化距离后的结果。比如 KL 散度，优化后单峰模型学习出白色等高线的形式：它将绝大部分质量覆盖在数据分布上、尝试扩大方差以覆盖更多区域，这导致在高概率区域外产生偏差——基于该白色分布采样时，会采到真实数据没有的区域。这是用 KL 散度优化后得到的模型情形。</p><p>另外两个尚未介绍。JSD 散度（JS 散度）：它得到的最后结果——白色部分限制了我们的模型，用 JS 散度作为两者的距离度量，最优化之后模型紧紧贴合到数据分布的某一个模态、而完全忽略了另一个、把这个模式完全丢掉了——但你不得不说，在这个模型采样的情况下，你确实能够很好地采样到一个匹配的真实且有质量的样本。MMD 这个指标覆盖了整个模块，但在其他没有分布稀疏的区域采样存在一定偏差。这代表了不同的距离度量优化后可能呈现出不同的形态和性质，所以说 KL 散度只是我们之前讨论的指标之一——我们今天最后发现，GAN 优化的就是这个（JS 散度）。这个图来源于 arXiv 2016 的一篇文章：文章讨论了生成模型的衡量办法，指出对于不完美的模型，即使测试数据上对数似然较高，采样样本的质量并不一定高；反之亦然，高质量采样的模型与测试对数似然并非紧密相关。毕竟最终结果都是关于质量的，建模的数学工具并不一定是一一对应的。</p><p>说起来比较简单，但我们可以通过直观的例子展示原因。第一个方向：高的似然并不一定保证比较好的样本质量。构造一种非常简单的特殊模型：我们的模型等于 0.01 的真实数据分布加上 0.99 的随机噪声——它既可以看出两个分布的加权求和，也可以理解为我在这个过程中有 1% 的概率采到真实数据、99% 的概率采到噪声。这样的模型肯定是很差的模型，生成的样本质量肯定很差，因为它基本上是一个噪声生成器。对于这样的模型，我们可以对似然做变换：把两边取对数，会发现其实比较难取——我们做一个比较极端的处理，直接消掉后面这一部分，留前面这一项，写到 log 0.01 的区间：log pθ(x) ≥ log(0.01·pdata(x)) = log pdata(x) − log 100——这个常数在后面会起到很大的作用。</p><p>考察测试时的对数似然：针对真实数据中属于分布 pdata 的样本，分析其期望值。求期望可自然推导出一个简单的上下界：下界源于模型本身（表现较好）——对不等式两边求期望，左侧项即为原期望；上界较直观——模型并非完美、最多只能拟合真实数据分布，效果必然差于或等于真实分布。若将上下界联立，可形成一个完整的数学表达式。现在考虑一个新问题：当数据样本 X 的维度越来越高时（从低分辨率变为高分辨率、或数量从 1 万增至 100 万），会出现什么问题？越来越小是吗？——对，这是一个直观的假设：当数据分布维度越来越高，数据越来越稀疏。还有一个直观的看法：比如 pθ 是一个 AR 模型，取 log 之后就是每一个维度的 log 条件分布连加起来——当数据维度越来越高时，加的项目越来越多，而且每一项的每个维度都是小于 1 的，加起来就是非常大的一个负数。但是我们刚才说了，这个上下界之间差距是一个常数 log 100——当 X 维度趋近于无穷大的时候，上下界几乎是一样的。</p><p>就会得出这样一个结果：我们构造的这个模型，它在测试时的似然就等于真实数据能达到的最高似然——当然是这个模型能取得的最高的似然值。但是我们从构造的时候就知道这是一个很差的模型，它采样的时候几乎 100% 采到一个噪声，生成质量很差。换句话说，我们通过这样一个简单的极端的玩具例子，给大家解释了：生成质量差但它的似然依然很高——似然与生成质量之间没有一个直观的关系。这是第一个方向：好的测试时似然并不一定带来好的样本质量。</p><p>另一个角度就比较好理解了：好的采样质量并不一定有高的测试时似然。这也可以通过一个极端的例子展示：比如我们训练了一个过拟合、或者说能记住训练集的模型——它就是一个样本一个圈。然后我们训练一个生成模型，能够完全记住这些统计分布：在测试样本的地方它的似然是极端的情况，生成质量肯定很高——因为你在这个过拟合的分布中采样，直接就能得到训练集的样本，生成的质量完全等于训练数据；但是测试时似然是最差的——测试集的数据来到我的模型里，它的似然是 0。所以说，你能从两个方面说明这两个指标并不是一一对应的。最后得到结论：我们想要把似然和样本质量之间解耦——之前一直是把它们联合起来干，所以这启发我们提出一种无似然（不需要似然）的训练方法。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>但是呢，在实际情况下，我们不可能真实情况下我们可能有一个最优的模型。我们不可能让我们的模型真的是等于这个数据的一个分布。</p><p>我们可以发现，用JS散度作为两者的距离度量，最优化之后模型紧紧贴合到数据分布的某一个模态，而完全忽略了另一个。</p><p>当你的X维度趋近于无穷大的时候，你们会发现这（上下界）几乎是一样的。</p><p>所以这个启发了我，想要提出一种无关系，不需要自然人（似然）的训练方法。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-two-sample">
+  <div class="slides"><figure class="slide" id="slide-13">
+<img src="slides/slide_13.png" alt="课件第13页 Comparing Distributions via Samples：从优化似然转向直接评估生成质量——基于样本的评估">
+<figcaption><span class="sno">13</span><span class="stitle">Comparing Distributions via Samples：从优化似然转向直接评估生成质量——基于样本的评估</span></figcaption>
+</figure>
+<figure class="slide" id="slide-14">
+<img src="slides/slide_14.png" alt="课件第14页 Comparing Distributions via Samples：给定来自两个分布 P 与 Q 的有限样本——它们来自同一分布（P=Q）吗？">
+<figcaption><span class="sno">14</span><span class="stitle">Comparing Distributions via Samples：给定来自两个分布 P 与 Q 的有限样本——它们来自同一分布（P=Q）吗？</span></figcaption>
+</figure>
+<figure class="slide" id="slide-15">
+<img src="slides/slide_15.png" alt="课件第15页 Comparing Distributions via Samples：应用到生成模型——给定 x∼Pdata 与 x∼Pθ 的有限样本，Pdata=Pθ 吗？">
+<figcaption><span class="sno">15</span><span class="stitle">Comparing Distributions via Samples：应用到生成模型——给定 x∼Pdata 与 x∼Pθ 的有限样本，Pdata=Pθ 吗？</span></figcaption>
+</figure>
+<figure class="slide" id="slide-16">
+<img src="slides/slide_16.png" alt="课件第16页 Two-Sample Tests（双样本检验）：S1={x∼Pdata}、S2={x∼Pθ}；原假设 H0: Pdata=Pθ；备择假设 H1: Pdata≠Pθ">
+<figcaption><span class="sno">16</span><span class="stitle">Two-Sample Tests（双样本检验）：S1={x∼Pdata}、S2={x∼Pθ}；原假设 H0: Pdata=Pθ；备择假设 H1: Pdata≠Pθ</span></figcaption>
+</figure>
+<figure class="slide" id="slide-17">
+<img src="slides/slide_17.png" alt="课件第17页 Two-Sample Tests：检验统计量 T 比较 S1 与 S2（如均值/方差差异）；T<阈值则接受 H0；关键观察：统计量 T 是无似然的（不涉及似然）；目标：训练 Pθ 最小化 S1 与 S2 的双样本检验目标">
+<figcaption><span class="sno">17</span><span class="stitle">Two-Sample Tests：检验统计量 T 比较 S1 与 S2（如均值/方差差异）；T<阈值则接受 H0；关键观察：统计量 T 是无似然的（不涉及似然）；目标：训练 Pθ 最小化 S1 与 S2 的双样本检验目标</span></figcaption>
+</figure>
+<figure class="slide" id="slide-18">
+<img src="slides/slide_18.png" alt="课件第18页 Two-Sample Tests via a Discriminator：好的统计量 T 很难设计——关键想法：学习一个最大化合适距离的统计量→训练一个分类器（判别器）">
+<figcaption><span class="sno">18</span><span class="stitle">Two-Sample Tests via a Discriminator：好的统计量 T 很难设计——关键想法：学习一个最大化合适距离的统计量→训练一个分类器（判别器）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>双样本检验：通过样本比较分布</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 13</span><span class="chip">课件 14</span><span class="chip">课件 15</span><span class="chip">课件 16</span><span class="chip">课件 17</span><span class="chip">课件 18</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>现在我们之前写的模型怎么办呢？学习范式要转变一下：之前一直要从似然角度把 pθ(x) 写出来、去最大化数据似然；现在没有这个条件，我们直接关注生成样本的质量——因为要把似然和质量分开，所以直接关注模型生成的最终结果：直接衡量生成质量，不借助中间间接的似然工具、直接测试衡量生成效果。换句话说，我们要提出一种基于样本的测量方法——比如左边是模型产生的样本、右边是真实样本，如果不把 pθ(x) 和 pdata(x) 表示成数学形式，怎么减少两者距离？</p><p>在判别学习或代数监督学习中，对每一样本若没有对应真实标签就没法计算。其实在这种情况下，没有样本时考虑的问题不再是两个分布的距离，而是从另一个角度：假设两个分布 P 和 Q，给定有限样本，判定它们是否来自同一分布——如果集合 S 来自同一分布，则 P=Q（虽不严谨）。在生成模型课堂里，大家知道 P 只有两个：一个是具体模型 pθ，另一个是真实数据 pdata。最终要考的问题是：如果我们有一堆真实数据的样本、另外还有一堆服从模型分布的样本，怎么考察这两个样本是否来自同一分布？如果无法区分，那就说明 Pθ 拟合得很好——从样本区分性的角度来看，Pθ 跟 Pdata 之间的距离是通过（样本的）差异来衡量的。</p><p>目前似乎没有现成的数学工具去直接描述这个，给大家稍微介绍一下它的统计学基本原理：我们可以把它简化成假设检验这样一个统计学概念（没学过没关系）。比如现在有两个样本集：一个是真实数据、一个是模型生成的经验分布——考虑一个叫双样本检验的方法：原假设（null hypothesis）是模型 Pθ 等于 Pdata，备择假设（alternative hypothesis）是 Pθ 不等于 Pdata。我们想从样本 S1 和 S2 中求一些值，比如均值差异：如果小于某阈值，就接受原假设；如果在均值或方差的差异大于某阈值，就说 Pθ 模型和真实模型分布不一样。这是用假设检验的角度去说，大家不理解没关系。</p><p>那怎么选呢？需要有一个测试统计量（test statistic）T，从样本中进行检验：比如计算样本间的均值或方差差异，这是可直接从样本计算的差异度量——若统计量小于阈值，我们就接受原假设并给出解释；若不满足条件，则从另一角度衡量 Pθ 与 Pdata 之间的差异。关键在于这种建模是 likelihood-free 的：无需知道具体分布。因此，我们训练生成模型时，通过优化参数来调整模型，面向双样本检验的目标——无论怎样，我们想最终接受原假设，即通过优化 Pθ 使原假设成立，从而了解模型与数据的关系。这是从统计学角度看待问题，若一时难以接受，此处稍作科普。</p><p>目前的关键问题是统计量 T 如何设计：前述的均值或方差差异可能是非常粗糙或效果差的计量方法——例如区分两个高斯分布的均值差异，需设计针对均值差异的统计量 T；区分方差则需针对方差差异。但对于文本这类高维分布，很难直接设计用于区分原假设和备择假设的统计量。那怎么办呢？其实难点就在于此。统一（设计）的解决思路：学习这个统计量、尽量最大化它——换句话说，就是训练一个分类器：在概率模型中叫做 discriminator 判别器——训练一个判别器、让它的输出作为 T，来区分到底是 Pθ=Pdata 还是 Pθ≠Pdata。所以到最后我们想要训练一个判别器、一个分类器，来区分模型跟真实数据。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>如果无法区分，那就说明Pθ拟合得很好。</p><p>关键在于这种建模是likelihood free的，无需知道具体分布。</p><p>统一积分假设的统计量T，我们就通过学习这个统计量来尽量最大化。换句话说，就是训练一个分类器。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-discriminator">
+  <div class="slides"><figure class="slide" id="slide-19">
+<img src="slides/slide_19.png" alt="课件第19页 GAN 背景：LeCun 在 NIPS 2016 评价——“过去十年机器学习中最有意思的想法”（Google Scholar 超 12 万引用）">
+<figcaption><span class="sno">19</span><span class="stitle">GAN 背景：LeCun 在 NIPS 2016 评价——“过去十年机器学习中最有意思的想法”（Google Scholar 超 12 万引用）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-20">
+<img src="slides/slide_20.png" alt="课件第20页 GAN：Two-Sample Test via Discriminator——判别器 Dφ(x)=Pφ(y=1|x)：①真实样本（y=1）②模型生成的假样本（y=0）；检验统计量 T=负分类器损失 −L(Dφ)：损失低=真假易区分（T 高）；损失高=真假难区分（T 低）；目标：最小化 L(Dφ) 即最大化 T">
+<figcaption><span class="sno">20</span><span class="stitle">GAN：Two-Sample Test via Discriminator——判别器 Dφ(x)=Pφ(y=1|x)：①真实样本（y=1）②模型生成的假样本（y=0）；检验统计量 T=负分类器损失 −L(Dφ)：损失低=真假易区分（T 高）；损失高=真假难区分（T 低）；目标：最小化 L(Dφ) 即最大化 T</span></figcaption>
+</figure>
+<figure class="slide" id="slide-21">
+<img src="slides/slide_21.png" alt="课件第21页 GAN：Discriminator in GAN——Dφ(x)=Pφ(y=1|x) 是 x 为真实样本的概率；训练目标：二分类交叉熵目标（固定 pθ）；最优判别器——sanity check：若 pθ=pdata，分类器不比随机猜测好（1/2）">
+<figcaption><span class="sno">21</span><span class="stitle">GAN：Discriminator in GAN——Dφ(x)=Pφ(y=1|x) 是 x 为真实样本的概率；训练目标：二分类交叉熵目标（固定 pθ）；最优判别器——sanity check：若 pθ=pdata，分类器不比随机猜测好（1/2）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-22">
+<img src="slides/slide_22.png" alt="课件第22页 GAN：最优判别器形式 Dφ*(x)=pdata(x)/(pdata(x)+pG(x))">
+<figcaption><span class="sno">22</span><span class="stitle">GAN：最优判别器形式 Dφ*(x)=pdata(x)/(pdata(x)+pG(x))</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>GAN 与判别器</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）</span><span class="chip">课件 19</span><span class="chip">课件 20</span><span class="chip">课件 21</span><span class="chip">课件 22</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>给大家科普一下这样的统计学基础，然后介绍 GAN 的一些基础背景。GAN 是在 2014 年由 Goodfellow 提出的，到现在我查了一下，已经有 12 万的谷歌学术引用；而且这个想法在 2016 年 ICLR 上被评为过去十年最有意思的一个 idea（LeCun 在 NIPS 2016 的评价：“过去十年机器学习中最有意思的想法”）。GAN 技术以后大家围绕这个模型做了很多工作。</p><p>刚才介绍了判别器的基础：判别器说到底就是一个二分类器——给定输入样本得到对应的标签，它输出输入样本是真实样本的概率：Dφ(x)=Pφ(y=1|x)，y=1 代表这个样本是一个真实样本，如果样本是假的标签就是 0。刚才我们是从假设检验的角度来考虑的：现在我们引入了这样的一个二分类器，这个时候就可以让分类器的损失的负值作为我们的一个测试统计量 T。</p><p>这个稍微有点儿抽象，就来看一看分类器大和小的时候分别是什么样的：对于真实（real）和虚假（fake）样本，如果它的分类 loss 比较低的话，那应该是真实样本和虚假样本容易区分的——因为真实样本和虚假样本差别很大的话，分类器能很容易地区分它，分类的损失就很低；把它写一个负值的话，那这个 T 就很大，T 比较大的话我们就会去接受备择假设（Pθ≠Pdata，模型分布和真实分布不同）。反过来，如果你的分类准确率比较低（loss 高），相当于真实样本和虚假样本很难去区分——很难区分就说明两个分布很相近，代表 Pθ 跟 Pdata 很相近。所以我们可以用一个分类器的损失，作为我们判断 Pθ 和 Pdata 是否相同的依据——最终对判别器，我们想最小化分类器的损失（训练分类器最大化 T、使得 Pθ≠Pdata）：你训练分类器的话，真假样本需要尽量地把它们分开。</p><p>它的损失函数可作为统计标准，判断样本是真实还是生成，因此需训练一个分类器。分类器输出给定样本为真实样本的概率（1 表示真实），目标是最大化该概率。目标函数包含两项：第一项中 X 服从真实分布，要最大化 log D(x)——让模型对真实样本预测为真的概率极大；第二项针对生成器产生的假样本，要最小化 log(1−D(G(z)))——降低假样本被判为真实的概率。综上，需正确分类：提高真样本概率、降低假样本概率，赋予真实样本高概率。换句话说，现有目标函数是二分类交叉熵损失——给定生成模型时，只需训练二分类模型，真实样本概率尽量高、虚假样本概率尽量低。</p><p>对该目标函数可求出最优判别器表达式 Dφ*(x)=pdata(x)/(pdata(x)+pG(x))：为何是该形式？直接求导即可算出，大家先记住、之后稍加推导便知。可简单验证：若模型完美（pG=pdata），无法区分真实与生成样本，则概率为 1/2——因两者分布完全一致，只能靠猜，表现如抛硬币。具体原因可查看 GAN 原文，此处不推导、仅检查特殊情况。可视化最优分类器：以一维为例，真实数据分布为左侧蓝线高斯分布，PT 是生成模型的分布——当前生成分布与真实数据间仍有差距；固定生成器，最优判别器的形式如图中绿色线所示。当 pG=pdata 二者完全一致时，对应特定的图形（判别器输出恒为 1/2）。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>判别器说到底就是一个2分类器。给定输入样本得到对应的标签，它输出一个标签的概率。</p><p>如果它的分类准确率比较高的话，那相当于你真实样本和错误样本和虚假样本它很难去区分。</p><p>若模型完美，无法区分真实与生成样本，则概率为1/2。因两者分布完全一致，只能靠猜，表现如抛硬币。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-generator-jsd">
+  <div class="slides"><figure class="slide" id="slide-23">
+<img src="slides/slide_23.png" alt="课件第23页 GAN：Generator in GAN——生成器与判别器之间的双人极小极大博弈；生成器：有向隐变量模型、确定性映射 z→x（Gθ），不要求可逆">
+<figcaption><span class="sno">23</span><span class="stitle">GAN：Generator in GAN——生成器与判别器之间的双人极小极大博弈；生成器：有向隐变量模型、确定性映射 z→x（Gθ），不要求可逆</span></figcaption>
+</figure>
+<figure class="slide" id="slide-24">
+<img src="slides/slide_24.png" alt="课件第24页 GAN：生成器——pθ(x) 是隐式诱导的分布（对比 VAE 的 pθ(x)=∫pθ(x|z)p(z)dz）；最小化一个支持 H0: Pθ=Pdata 的双样本检验目标">
+<figcaption><span class="sno">24</span><span class="stitle">GAN：生成器——pθ(x) 是隐式诱导的分布（对比 VAE 的 pθ(x)=∫pθ(x|z)p(z)dz）；最小化一个支持 H0: Pθ=Pdata 的双样本检验目标</span></figcaption>
+</figure>
+<figure class="slide" id="slide-25">
+<img src="slides/slide_25.png" alt="课件第25页 GAN：训练目标——如何解释这个目标函数？">
+<figcaption><span class="sno">25</span><span class="stitle">GAN：训练目标——如何解释这个目标函数？</span></figcaption>
+</figure>
+<figure class="slide" id="slide-26">
+<img src="slides/slide_26.png" alt="课件第26页 GAN：训练目标解释——最大化真实样本被判为真的概率、最小化假样本被判为真的概率">
+<figcaption><span class="sno">26</span><span class="stitle">GAN：训练目标解释——最大化真实样本被判为真的概率、最小化假样本被判为真的概率</span></figcaption>
+</figure>
+<figure class="slide" id="slide-27">
+<img src="slides/slide_27.png" alt="课件第27页 Jenson-Shannon Divergence：JS 散度——也称为对称化的 KL 散度，“到平均分布的总散度”">
+<figcaption><span class="sno">27</span><span class="stitle">Jenson-Shannon Divergence：JS 散度——也称为对称化的 KL 散度，“到平均分布的总散度”</span></figcaption>
+</figure>
+<figure class="slide" id="slide-28">
+<img src="slides/slide_28.png" alt="课件第28页 JS 散度性质：非负（有界 [0, log2]）；对称性 D_JSD(p,q)=D_JSD(q,p)；D_JSD(p,q)=0 当且仅当 p=q；满足三角不等式→Jenson-Shannon 距离">
+<figcaption><span class="sno">28</span><span class="stitle">JS 散度性质：非负（有界 [0, log2]）；对称性 D_JSD(p,q)=D_JSD(q,p)；D_JSD(p,q)=0 当且仅当 p=q；满足三角不等式→Jenson-Shannon 距离</span></figcaption>
+</figure>
+<figure class="slide" id="slide-29">
+<img src="slides/slide_29.png" alt="课件第29页 JS 散度：GAN 的目标——在最优判别器下 V(G,D*)=2·D_JSD(pdata,pG)−log4；最优生成器 pG=pdata；最优时 V=−log4">
+<figcaption><span class="sno">29</span><span class="stitle">JS 散度：GAN 的目标——在最优判别器下 V(G,D*)=2·D_JSD(pdata,pG)−log4；最优生成器 pG=pdata；最优时 V=−log4</span></figcaption>
+</figure>
+<figure class="slide" id="slide-30">
+<img src="slides/slide_30.png" alt="课件第30页 JS 散度：对不完美的 pθ，JS 散度倾向于 mode-seeking（找到单个模式）；KL 散度（对数似然目标）试图平均两个模式（mode covering）；JSD 偏好拟合好一个模式（对丢失模式的惩罚有限）">
+<figcaption><span class="sno">30</span><span class="stitle">JS 散度：对不完美的 pθ，JS 散度倾向于 mode-seeking（找到单个模式）；KL 散度（对数似然目标）试图平均两个模式（mode covering）；JSD 偏好拟合好一个模式（对丢失模式的惩罚有限）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>生成器与 JS 散度</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（前）</span><span class="chip">课件 23</span><span class="chip">课件 24</span><span class="chip">课件 25</span><span class="chip">课件 26</span><span class="chip">课件 27</span><span class="chip">课件 28</span><span class="chip">课件 29</span><span class="chip">课件 30</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>刚才说了判别器，这是对抗模型——除了判别器，还有生成器：两者如同玩家对抗的过程（Generator 和 Discriminator）。生成器可以表达一个概率系统、用 G 表示：从图上看，它是有向的隐变量模型——我们从先验中采样 Z，通过生成器这个神经网络直接映射回数据空间，所以它也是隐变量模型；其映射是确定性的，这与之前讲的流模型一样，区别在于不需要可逆——直接用神经网络实现映射即可。</p><p>另外对应这样的模型，其生成样本的分布是隐式的：因为无法写出对应的 pθ 分布、甚至连表达都表达不出来——但之前讲的可逆映射模型可以表达出来（因为可以将 X 对应回原来的 Z、找到它并写出密度）。对于 GAN，生成的分布只是隐式结构；从检验角度看，是通过优化 Pθ 去支持假设，使模型与真实样本接近相等。</p><p>若写成数学形式，就是判别器的目标加生成器：现在加入生成器，表达形式基本一样，只是将固定的 Pθ 改为含参函数。我们要最大化这个值（判别器目标），同时优化 G 来最小化它——最大化目的是让真实样本概率非常高、区分虚假生成样本；若要最小化目标，需优化生成器：最大化 D(G(z)) 的值——让生成样本更趋近真实、使判别器认为其概率变大。这与判别器目标函数完全相反、优化方向不同。</p><p>直观想法是最大化判别效果。重要步骤：将表达式参数简化，代入最优判别式形式——假设判别器已最优化，便于分析生成模型。将 D* 代入每个 D 的表达式：第一项 X 无关 pG，代入后化简；后项代入 1−D*，等于 pdata/(pdata+pG)。代入后做变形：将每个分母除以 2——旨在让公式成立：原式是 pdata+pG，对 X 所有可能取值求和积分，因为每个分布合法、加起来概率有数，分别积分后归一化积分为 1、总和为 2，除以 2 是为了将分布表达为合理的概率密度形式。</p><p>写成概率形式后，变为 log 上概率除以下概率——为何写成密度形式？因为可套用学过的表达式：X 属于某分布，内部是 log 一个分布除另一个分布，可写成散度形式——这是真实分布与中间均匀分布的距离，同理也是生成分布与中间均匀分布的距离。我解释一下：在最优判别器情况下，不考虑判别器影响、只考虑生成器回归，它优化的是两个 KL 散度的形式，这种形式称为 JS 散度——定义上是二倍 JS 散度。换句话说，在最优情况下，生成模型优化最小化——即最小化真实分布 Pdata 与生成分布 Pθ 的 JS 距离。说白了，目标函数是最小化这个距离，这个距离不是 KL 距离、而是 JS 距离。</p><p>在引入 JS 散度之后，介绍一下它的性质。JS 散度（Jenson-Shannon Divergence）最大的性质是可以理解成对称化的 KL 散度：KL 散度本身是不对称的（交换优化链中分布的顺序，表现可能不一样），但通过构建让中间有一个均匀分布，它可以表达成对称的形式——交换后表达形式是一样的，体现 JS 的对称性；它也可以理解为相对于均匀（平均）分布的总差距。另外介绍几个性质：首先是非负性——它是一种散度的形式、也可以说是一个距离，两个分布之间的距离大于等于 0；另外它还有上界——不仅有下界还有上限 [0, log2]。</p><p>我想问一下，为什么会有上限？按理来说，衡量两个分布的距离，距离越拉越远应该是越来越大。其实这个上限一方面可以求出来，另一方面可以直观表达：比如 P 这个分布，P 和平均分布之间的距离——这个平均分布总是会包含着前一项有一部分质量，所以永远有一个最大的距离的限制。什么时候能达到上界？就是当 P 和 Q 完全正交、或者是完全互斥的时候——P 有质量的地方 Q 没有质量（比如刚才那种极端情况），1/2 加 KL 散度，两个距离相加——因为它有一个中间的平均分布的杂糅作为一个中间的介质，两个方向到中间的这个平均分布的距离有一个上限。OK，这只是一个小的细致的讨论，大家也可以从数学上直接去算。</p><p>在同样的框架里边，刚才说了在最优判别器的情况下，我们去训练生成器，它也要最小化 JS 散度的一部分。当我的生成器也达到最优，这个时候散度等于 0（pG=pdata），这就是最优生成器——最终 V(G,D*)=−log 4。以上就是一个统计的推导：把最优判别器带到目标函数里看一下，我们这个生成模型 G 到底在做什么。</p><p>以 JS 散度作为训练目标训练得到的结果，就是捕捉真实数据分布中的某一个模式——为什么优化 JS 会得到这样一个结果，目前还不是很清楚。相对应的，KL（对数似然目标）就是 Mode Covering：它会尽量去覆盖更多质量、更多一模一样的数据（照顾两个不同的模式）。而 JS 散度是 Mode Seeking：偏好拟合好一个模式（对丢失模式的惩罚有限）。最后得出的结论就是：GAN 的优化目标是 JS 散度。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>其映射是确定性的，这与之前讲的流模型一样。区别在于不需要可逆，直接用神经网络实现P即可。</p><p>对于大模型（GAN），生成的分布只是隐式结构。</p><p>这种形式称为JS散度。定义上是二倍JS散度。</p><p>而KL就是一个Mode Covering，它现在包两个。它会尽量去靠更大质量、更多一模一样的数据。……而JS散度是Mode Seeking。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-training-algo">
+  <div class="slides"><figure class="slide" id="slide-31">
+<img src="slides/slide_31.png" alt="课件第31页 The GAN Training Algorithm：采样 m 个训练点与 m 个噪声向量；D-step：固定 Gθ、优化 Dφ（随机梯度上升）；G-step：固定 Dφ、优化 Gθ（随机梯度下降）；重复若干 epoch">
+<figcaption><span class="sno">31</span><span class="stitle">The GAN Training Algorithm：采样 m 个训练点与 m 个噪声向量；D-step：固定 Gθ、优化 Dφ（随机梯度上升）；G-step：固定 Dφ、优化 Gθ（随机梯度下降）；重复若干 epoch</span></figcaption>
+</figure>
+<figure class="slide" id="slide-32">
+<img src="slides/slide_32.png" alt="课件第32页 The GAN Training Algorithm：一维可视化训练过程">
+<figcaption><span class="sno">32</span><span class="stitle">The GAN Training Algorithm：一维可视化训练过程</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>GAN 训练算法</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（中）</span><span class="chip">课件 31</span><span class="chip">课件 32</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>接下来把整个训练方向给大家梳理一下。训练 GAN 怎么做？第一步先采样确定样本：从训练集中采样真实数据；另外为了训练判别器，还需要一些虚假数据——从先验分布中采样一些 Z、交给生成器生成对应的假样本。之后，第一步要先训练判别器：把生成器 G 固定下来，最优化判别器（通过梯度上升的方法更新参数）——为什么要上升？因为我们要最大化判别器目标；相反，如果是生成器的话，它要最小化——训练时把判别器 D 固定下来，通过梯度下降来最小化它对应的值。将 D 步和 G 步不断迭代循环，理论上是一训练一迭代。</p><p>这时我问大家几个问题。第一：为什么要先训练判别器？就是让生成器和判别器之间的关系，通过判别器区分真实样本跟虚假样本的信号来引导生成器更新——如果 G 和 D 都是随机初始化的，一开始训练信号不足，D 根本没法区分真实样本区间，一般需要先训练其区分能力。第二个问题：为什么要把 G 和 D 打包迭代？既然 D 有判别能力，如果只训练 D、把它训练得最好，完美区分生成样本和真实样本——理论上你有最优的判别器，但直观或实践上这是做不到的：因为 D 是判别器，只负责找到任何区分的信号，而区分真假和给生成器带来有效的更新梯度其实是两个概念——能判别真假不代表能给生成器带来有效的更新梯度，设计时需考虑这一点。实际来说，如果 D 特别强的话，它（对生成器）没信号完全没办法——它随便找一小块没意义的信号就能告诉你，这个信号不能提升生成样本的方向，这对训练没有帮助。</p><p>把 G 和 D 的更新可视化（就是 3:1 的原则）：这个图中有 4 个部分、3 条线——蓝色的线是判别器的输出值、绿色的线是生成分布、红色的曲线是初始化的生成分布——生成分布和真实分布有一定的差距，可以看到震荡：这个震荡不是说真的震荡，只是说最初的判别器还没训练好。第一步更新判别器以后可以发现，它的信号也比较稳定：在真实分布质量比较多的情况下肯定有一个比较高的值、在虚假样本质量比较高的地方可以做出稳定的输出。接下来更新完判别器以后更新生成器——更新生成器时判别器是不动的（蓝线不动），生成器的输出从蓝线的信号里找到一个范式的分布。不断迭代这两步，最后得到收敛。理论情况下最优的收敛结构就是：生成器的分布和真实分布完全一致、完全重叠——这个时候判别器输出就是一条 1/2 的横线，无法识别、只能猜。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>如果G和D都是随机初始化的，一开始训练信号不足，D根本没法区分真实样本区间。一般需要先训练其区分能力。</p><p>能判别真假不代表能给生成器带来有效的更新梯度。</p><p>理论情况下最优的收敛结构就是这样……这个时候你的产品系统输出就是一条1/2（的横线），它无法识别，只能猜。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-properties">
+  <div class="slides"><figure class="slide" id="slide-33">
+<img src="slides/slide_33.png" alt="课件第33页 Property of GANs：“史无前例”的高生成质量——哪一张是真实的？（1024×1024）">
+<figcaption><span class="sno">33</span><span class="stitle">Property of GANs：“史无前例”的高生成质量——哪一张是真实的？（1024×1024）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-34">
+<img src="slides/slide_34.png" alt="课件第34页 Property of GANs：VAE vs GAN——VAE：像素级重构→平均/模糊生成；GAN：感知（perceptual）相似度度量→真实/锐利结果">
+<figcaption><span class="sno">34</span><span class="stitle">Property of GANs：VAE vs GAN——VAE：像素级重构→平均/模糊生成；GAN：感知（perceptual）相似度度量→真实/锐利结果</span></figcaption>
+</figure>
+<figure class="slide" id="slide-35">
+<img src="slides/slide_35.png" alt="课件第35页 Property of GANs：GAN 研究前沿——2014 GAN→DCGAN→CoGAN→PGGAN→StyleGANv1/v2→GigaGAN（2016 48×48 → 2025 4096×4096）；GAN 成功应用于多个领域，但实践中训练非常困难（不稳定/模式坍塌/评估）">
+<figcaption><span class="sno">35</span><span class="stitle">Property of GANs：GAN 研究前沿——2014 GAN→DCGAN→CoGAN→PGGAN→StyleGANv1/v2→GigaGAN（2016 48×48 → 2025 4096×4096）；GAN 成功应用于多个领域，但实践中训练非常困难（不稳定/模式坍塌/评估）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-36">
+<img src="slides/slide_36.png" alt="课件第36页 Property of GANs：优化挑战——定理：若能直接更新 pG 且 D 每步最优，则 G 保证收敛到数据分布；这是不现实的假设；实践中 G 与 D 的 loss 持续震荡（不崩溃的话）、很容易崩溃、没有鲁棒的停止准则">
+<figcaption><span class="sno">36</span><span class="stitle">Property of GANs：优化挑战——定理：若能直接更新 pG 且 D 每步最优，则 G 保证收敛到数据分布；这是不现实的假设；实践中 G 与 D 的 loss 持续震荡（不崩溃的话）、很容易崩溃、没有鲁棒的停止准则</span></figcaption>
+</figure>
+<figure class="slide" id="slide-37">
+<img src="slides/slide_37.png" alt="课件第37页 Property of GANs：The Flip Trick——训练早期 G 差→D(G)≈0→∇log(1−D(G)) 梯度消失；而 ∇(−log D(G)) 有强梯度→最大化被判为“真实”的概率">
+<figcaption><span class="sno">37</span><span class="stitle">Property of GANs：The Flip Trick——训练早期 G 差→D(G)≈0→∇log(1−D(G)) 梯度消失；而 ∇(−log D(G)) 有强梯度→最大化被判为“真实”的概率</span></figcaption>
+</figure>
+<figure class="slide" id="slide-38">
+<img src="slides/slide_38.png" alt="课件第38页 Property of GANs：Mode Collapse（模式坍塌）——GAN 最臭名昭著的局限：生成器只产生数据分布中少数模式的样本，失去多样性">
+<figcaption><span class="sno">38</span><span class="stitle">Property of GANs：Mode Collapse（模式坍塌）——GAN 最臭名昭著的局限：生成器只产生数据分布中少数模式的样本，失去多样性</span></figcaption>
+</figure>
+<figure class="slide" id="slide-39">
+<img src="slides/slide_39.png" alt="课件第39页 Property of GANs：模式坍塌示意——真实分布为高斯混合时，生成分布在模式间不断振荡">
+<figcaption><span class="sno">39</span><span class="stitle">Property of GANs：模式坍塌示意——真实分布为高斯混合时，生成分布在模式间不断振荡</span></figcaption>
+</figure>
+<figure class="slide" id="slide-40">
+<img src="slides/slide_40.png" alt="课件第40页 Property of GANs：模式坍塌的修复大多是经验驱动的——换架构/正则项/注入小噪声等；“How to Train a GAN? Tips and tricks”（Soumith Chintala，PyTorch 联合创始人）">
+<figcaption><span class="sno">40</span><span class="stitle">Property of GANs：模式坍塌的修复大多是经验驱动的——换架构/正则项/注入小噪声等；“How to Train a GAN? Tips and tricks”（Soumith Chintala，PyTorch 联合创始人）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-41">
+<img src="slides/slide_41.png" alt="课件第41页 Property of GANs：“Beauty Lies in the Eyes of the Discriminator”——GAN 创作的《Edmond de Belamy 肖像》在纽约佳士得拍卖：预估价 $7,000–10,000，成交价 $432,500">
+<figcaption><span class="sno">41</span><span class="stitle">Property of GANs：“Beauty Lies in the Eyes of the Discriminator”——GAN 创作的《Edmond de Belamy 肖像》在纽约佳士得拍卖：预估价 $7,000–10,000，成交价 $432,500</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div class="sec-tt">
+        <h2>GAN 的性质与模式坍塌</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（后）</span><span class="chip">课件 33</span><span class="chip">课件 34</span><span class="chip">课件 35</span><span class="chip">课件 36</span><span class="chip">课件 37</span><span class="chip">课件 38</span><span class="chip">课件 39</span><span class="chip">课件 40</span><span class="chip">课件 41</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>最后一部分，给大家稍微讨论一些在真实训练中或研究中 GAN 的一些性质。为什么 GAN 最火？大概在 14 年提出一直到 22 年（StyleGAN），它都是一个非常好的、几乎是业界最强的生成系统。比如这两张人脸，大家可以猜猜哪一张是生成的——这就是史无前例的高质量，1024×1024 的。为什么 GAN 在当时比较出名？其实 VAE 首先出现在 13 年还是 14 年，但 GAN 最大的特点就是史无前例的高质量，而 VAE 生成得比较模糊。</p><p>为什么 VAE 模糊而 GAN 清晰？其实当时有很多工作去讨论：为什么 VAE 能挖掘出空间的结构化很好的（隐空间），但生成效果非常差？它非常不稳定、可信性很差，有很多很多工作讨论，但其实都没有讨论方法论、没能给出自己的解释。一个主要的观点：VAE 是以像素级重构的输出结果——是某种平均的情况，所以生成的结果是平均的、平均就意味着模糊；而 GAN 用感知（perceptual）的相似度度量——从特征上、图像质量上、语义上的一些标准（下一节我们会讨论这是什么意思）。所以你生成的结果在语义上、感知上是可信的，但你要给出自己的解释。</p><p>这个图是我之前画的一个图：从最一开始 2014 年 GAN 提供的价值是 48×48 的点积，之后随着时间——2018 年英伟达做 StyleGAN 的时候就已经能很容易达到 1024×1024、512×512；然后他们提出了一系列图片（PGGAN/StyleGANv1/v2）；今年（2025）还在做 GAN 的工作，提出一个低价 GAN 的工作能达到 4K。GAN 在很多情况下都非常成功，但是在实际的训练中实现的话是非常非常难的——因为训练非常不稳定，而且有 mode collapse（模式坍塌）问题。所以我们提出了很多方法、很多的技巧去训练，这可以说是一个熟练工种。</p><p>理论上来说，在理想情况下你的生成器一定是能够收敛到真实数据的分布、一定能训练出最好的数据——但前提是：你能直接更新你的 pG，而且你的每一步 D 都是最优。明显不可能：你的 D 不可能是最优的，而且你不可能直接更新 pG 这个分布，你只能去更新 G 的参数、只能通过参数去更新你的 G。所以最优的情况是达不到的。实际的一个训练过程可以看到：绿色的是真实（的 loss），它的 loss 是非常大幅度的震荡——大家基本就崩溃了，平衡被打破了；你只能在平衡未打破之前去解释。所以在真实情况下 G 和 D 的 loss 震荡非常大，你没法通过一个 loss 找到最好的点，所以没有一个很好的解——前提是你不 crash，但是非常容易 crash、非常容易就竖不起来、或者说模式崩溃；而且没有一个很明确的停止条件、它很快就收敛了。现在的过程中如果大家去看 Mode Collapse 相应的生成结果的话，会发现生成的效果其实有慢慢变好，但你怎么去找到一个点说你的模型收敛了？其实很快就告诉你：没有一个参考。</p><p>另外一个点：刚才说了这个损失函数，它不是分类的损失函数吗？后面这一项是关于生成器 G 的一个（log(1−D(G))）项——它看起来很有道理，但实际上在训练的时候，我们一般都不用这一项，而是用负对数似然（−log D(G)）——为什么要这样做？如果大家实际去训练、看 loss 图或应用记录的话，如果用原始的这一项，在训练初始接近零的时候几乎没有梯度——因为 G 差→D(G) 接近 0→∇log(1−D(G)) 梯度消失。而 −log D(G) 有强梯度。所以原文中提出这样一个概念：就用这个（flip）作为一开始的梯度。</p><p>另外，GAN 最大的一个问题：虽然能产生比较精致的图像，但它最大的缺点就是模式崩溃（mode collapse）。直观来讲，模式崩溃就是一个模型只会捕捉到数据分布中的极少部分的一些模式、丢了很多模式，导致输出模式多样性很差。比如我们构造一个多模态的分布，在训练的时候你会发现生成分布会在训练过程中不断在这几个模式中跳跃、只去捕捉到其中一个——cover 的所有模式会非常清晰地显现；但你在任意一个点，对应的生成效果就很差。</p><p>对于这个问题，大家提出了很多改进方法：比如说很好的架构、更强的一些特征化的方法；还有一些为了限制判别器能力的方法——一般来说实践中判别器的能力都比较强，能力太强的话，我们就把真实数据加一点噪声、让它不是那么好去区分等等这些小技巧。甚至有人（Soumith Chintala，PyTorch 联合创始人）总结了像技术手册似的“How to Train a GAN? Tips and tricks to make GANs work”——他在做 GAN 的时候很活跃，如果大家感兴趣可以看一看。</p><p>但是其实 GAN 生成的图像还有一些其他的作用——比如不光看生成质量，生成质量不好的时候它也有它的功效：有一帮 AI 艺术家创造了一幅画（《Edmond de Belamy 肖像》），是一个人的肖像；这幅画在纽约佳士得拍卖——他们估计大概是 7000 到 1 万多一平方，但最近成交的价格是 43 万多。虽然它生成的结果从分布完成度很多角度很差、还有很多回忆（瑕疵），但它其实相当于形成了自己的一个风格；最有意思的是，在 GAN 的优化中，把艺术家的签名其实都忘掉了。</p><p>以上就是今天所有的内容：主要介绍了对抗的、高质量的生成模型（GAN 的框架、判别器、生成器、JS 散度与训练算法），下一节课我们讨论它的实践来训练。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>如果这两张人脸，大家可以猜猜哪一张是生成的。这真是厉害。这就是史无前例的高质量，1024×1024的。</p><p>它（VAE）是以呈现这个输出的一个结果可能是一些他人无物平均的一个情况。……你生成了一些结果，但是语义上感知一些结果的话，感知的这个概率中就是一个结论。</p><p>你只能在平衡未打破之前去解释。……没有一个很好的解。前提是你不crash，但是非常容易crash，或者说是模式崩溃。</p><p>如果D特别强的话，它没信号完全没办法。</p><p>他们估计的这个画大概是7000~1万多一平方，但是最近成交的价格是一个43万多。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-summary">
+  <div class="slides"><figure class="slide" id="slide-42">
+<img src="slides/slide_42.png" alt="课件第42页 Summary：GAN 的关键动机——生成器与判别器的双人极小极大博弈；优点：非常逼真/高质量/视觉可信的生成、采样高效、框架简单直观易改进；缺点：极难训练、严重受模式坍塌困扰">
+<figcaption><span class="sno">42</span><span class="stitle">Summary：GAN 的关键动机——生成器与判别器的双人极小极大博弈；优点：非常逼真/高质量/视觉可信的生成、采样高效、框架简单直观易改进；缺点：极难训练、严重受模式坍塌困扰</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">08</span>
+      <div class="sec-tt">
+        <h2>总结：GAN 的权衡</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（后）</span><span class="chip">课件 42</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>总结一下 GAN：关键动机是生成器与判别器之间的双人极小极大博弈。优点：非常逼真/高质量/视觉可信的生成、采样高效、框架简单直观、容易调整和改进；缺点：极难训练、严重受模式坍塌困扰。下一节课我们讨论它的实践——怎么训练。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>OK，那以上就是今天所有的内容。那我们今天就给大家介绍一下，就是我们主要有一个对抗的、高质量的内容。下一节课我们讨论它的实践来训练。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（生成式模型与科学智能应用）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>

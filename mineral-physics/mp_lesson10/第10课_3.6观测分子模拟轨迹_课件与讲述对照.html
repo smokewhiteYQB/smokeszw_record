@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>矿物物理学 · 第10节 3.6 观测分子模拟轨迹｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.videos{margin-top:14px;border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.video + .video{border-top:1px solid #e4e9f0;}
+.videos h4{font-size:12.5px;font-weight:700;color:#0a1f38;background:#f2f5f9;padding:8px 12px;border-bottom:1px solid #e4e9f0;}
+.videos video{display:block;width:100%;max-height:460px;background:#0b0f14;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>矿物物理学 · 第10节 3.6 观测分子模拟轨迹</h1>
+    <div class="sub">第10节 3.6 观测分子模拟轨迹 ｜ 2026-10-13 ｜ 郭光军</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 25 页 · 整理 11 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-overview">01 开场回顾：分子动力学模拟与观测总览</option>
+<option value="sec-basic-obs">02 基本观测：gmx energy 与平衡态识别</option>
+<option value="sec-density-expansion">03 测量密度与膨胀系数</option>
+<option value="sec-rdf">04 结构观测：径向分布函数 RDF</option>
+<option value="sec-msd">05 自扩散系数：MSD 爱因斯坦关系式</option>
+<option value="sec-viscosity">06 粘滞度：Green-Kubo 公式与自相关函数</option>
+<option value="sec-visualization">07 可视化观察：VMD 与动画案例</option>
+<option value="sec-programming">08 编程分析观测轨迹</option>
+<option value="sec-homework">09 MP 作业 3.6：冰水系列实验</option>
+<option value="sec-practice">10 实习操作、注意事项与演示</option>
+<option value="sec-review">11 往届作业讲评</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 矿物物理学-3.6-观测分子模拟轨迹.pdf 逐页渲染，转写原文见 record_20261013.txt。</div>
+<section class="sec" id="sec-overview">
+  <div class="slides"><figure class="slide" id="slide-01">
+<img src="slides/slide_01.png" alt="课件第1页 封面：矿物物理学 · 观测分子模拟轨迹（授课人：郭光军）">
+<figcaption><span class="sno">01</span><span class="stitle">封面：矿物物理学 · 观测分子模拟轨迹（授课人：郭光军）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-02">
+<img src="slides/slide_02.png" alt="课件第2页 分子动力学模拟：宏观性质 = ⟨微观参量⟩，相当于超级显微镜">
+<figcaption><span class="sno">02</span><span class="stitle">分子动力学模拟：宏观性质 = ⟨微观参量⟩，相当于超级显微镜</span></figcaption>
+</figure>
+<figure class="slide" id="slide-03">
+<img src="slides/slide_03.png" alt="课件第3页 MD 模拟的流程：初始位置/速度 → 运动方程 → 趋向平衡 → 提取微观参量 → 统计公式得宏观性质">
+<figcaption><span class="sno">03</span><span class="stitle">MD 模拟的流程：初始位置/速度 → 运动方程 → 趋向平衡 → 提取微观参量 → 统计公式得宏观性质</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>开场回顾：分子动力学模拟与观测总览</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 1</span><span class="chip">课件 2</span><span class="chip">课件 3</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>今天是第 3 章的最后一节课，即第 3.6 节。前面五次课讲了分布同学原理、并行计算基础、输入中参数优化和模拟原理，中间还有电路安装环节，最后一步是观测分子模拟轨迹。经过实习操作，大家都会运行了。</p><p>现在再看这张图，理解会深刻一些：跑完模拟后，每隔几步把坐标输出来，得到观参；利用统计公式得到宏观性质，就像万花筒一样，什么性质都能算出来，相当于做实验。播放动画或看图片，都是分子级别的，像超级显微镜，这是分子动力学简单原理。</p><p>从流程看是计算机实验：放入初始位置、编辑构型、设置速度，然后开始跑；运动方程用 MD，选上 integrator 选项；可控调节进行温浴压浴，设置成 NVT 系综趋向平衡；最后把微分材料取出来。今天讲的是模拟已完成、轨迹已取出——这相当于从山上取了样品回来，只要样品取得好、典型就没毛病；接下来就要对它进行观测。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>今天的课是第3章的最后一节课，即第6节课。前5次课讲了分布同学原理、并行计算基础、输入中参数优化和模拟原理……最后一步是观测分子模拟轨迹。</p><p>跑完4的模拟后，每隔几步把坐标输出来，得到观参。利用统计公式得到宏观性质，就像万花筒一样……播放动画或看图片，都是分子级别的，像超级显微镜。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-basic-obs">
+  <div class="slides"><figure class="slide" id="slide-04">
+<img src="slides/slide_04.png" alt="课件第4页 1、模拟系统的基本观测 gmx energy：能量E、温度T、压力P、体积V；NVE/NVT/NPT 三种系综">
+<figcaption><span class="sno">04</span><span class="stitle">1、模拟系统的基本观测 gmx energy：能量E、温度T、压力P、体积V；NVE/NVT/NPT 三种系综</span></figcaption>
+</figure>
+<figure class="slide" id="slide-05">
+<img src="slides/slide_05.png" alt="课件第5页 2、平衡态的识别：E、T、P、V 稳定波动即达平衡，之前不取样、之后开始取样">
+<figcaption><span class="sno">05</span><span class="stitle">2、平衡态的识别：E、T、P、V 稳定波动即达平衡，之前不取样、之后开始取样</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>基本观测：gmx energy 与平衡态识别</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 4</span><span class="chip">课件 5</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第一步是基本观测，用 Gromacs 的 gmx energy 工具观测能量、温度、压力和体积的变化。为什么关注这几个量？因为你按意图设置了 NVE、NVT 或 NPT 系综——你希望这些量不变，其他量波动。第一位是粒子数 N，第二位对应 V、PE 能量及温度。然后看跑出来的结果是否符合设置：若不是，就跑错了，模拟可能失败，要的是成功的。所以第一步测试是对轨迹进行清检。</p><p>取出后，体检完成，要看是否达到平衡态。我们讲过，做了半天，前头趋向平衡的部分不取样——因为是非平衡的，没意思，不能代表样品。真正的取样得从平衡开始。什么是平衡？就是一个量围绕着一个值一直波动：能量从高处下来这一段不平衡，相当于向那个方向走过去，这点样就不要了；这边几个量随能量稳定波动时才开始要。</p><p>注意，设置不是定值：里头只有一个 N 是定值（粒子数固定）。你设置的温度一直在波动，别看它直得像一根线，其实是以非常小的幅度在波动；能量可能非常平直，但仔细放大也会有微微变化。而像压力 P 就会大幅波动。所以取出来后，比如你设置的是 NVE，就把 E 取出来看它是否够平、平均值是否非常稳定；设置 NVT 的话，T 应该在 300K 附近波动，把平衡段 T 求个平均，可能是 300.03 或 299.99——控制得很好。如果不是这个值，那可能设置弄错了，回头再查。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>第一步是基本观测，用GMXN这个工具。观测能量、温度、压力和体积的变化。为何关注这几个量？因为你按意图设置了NVE、NVT或NPT系统……若不是，就跑错了……所以第一步测试，是对轨迹进行清检。</p><p>取出后，体检完成，要看是否达到平衡态……真正的取样，得从平衡开始。什么是平衡？就是一个量围绕着一个值一直波动。</p><p>你设置那个温度呢，它就是一直在波动……如果是NVE，你就看看把那个E取出来，看它是不是够平……可能有可能就是300.03。哎呀，你说控制挺好。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-density-expansion">
+  <div class="slides"><figure class="slide" id="slide-06">
+<img src="slides/slide_06.png" alt="课件第6页 3、测量密度 gmx density：ρ=m/V；NPT 温压确定最方便，NVT 压力不定，NVE 温压都不确定">
+<figcaption><span class="sno">06</span><span class="stitle">3、测量密度 gmx density：ρ=m/V；NPT 温压确定最方便，NVT 压力不定，NVE 温压都不确定</span></figcaption>
+</figure>
+<figure class="slide" id="slide-07">
+<img src="slides/slide_07.png" alt="课件第7页 4、测量膨胀系数 αP=V⁻¹(∂V/∂T)_P：NPT 固定 P、变化 T 做系列模拟测 V，V 对 T 作图求导（张志明，2018 课程作业）">
+<figcaption><span class="sno">07</span><span class="stitle">4、测量膨胀系数 αP=V⁻¹(∂V/∂T)_P：NPT 固定 P、变化 T 做系列模拟测 V，V 对 T 作图求导（张志明，2018 课程作业）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>测量密度与膨胀系数</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 6</span><span class="chip">课件 7</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>体检过关后，就可以对它进行观测。最重要最简单的观测是测密度（g/cm³）：密度=质量/体积，粒子数一定则质量一定，除以体积就得到密度。所以用 NPT 系综把温度和压力都固定下来最方便——只需统计体积 V 的波动，取平均值得到物质体积，质量 M 固定，密度=M/V。</p><p>这看似简单却极重要。过去人们费力研究 PVT 性质，比如求 1 大气压、300K 下水的密度，或深海 1100km、10℃ 时海水的密度，以前靠实验测量；现在用分子模拟可轻松测得，方法非常多。注意：若用 NVT 系综，V 和 N 固定导致密度固定，但无法确定对应压力；所以测密度用 NPT 更合理，常用 GROMACS。</p><p>再谈膨胀系数，分线膨胀、面膨胀和体积膨胀。1m 长的铁丝加热后变长，加热越多长得越多，这是线膨胀；铁板加热面积增大是面膨胀；三维体积增大是体膨胀。公式是 αP = (1/V)·(∂V/∂T)_P——体积随温度的变化率除以体积。</p><p>分子模拟中完全按定义实现：比如一块冰，在 250K 测一下体积，275K、300K、325K 再测，V 对 T 的斜率就是 ∂V/∂T，除以 V 就是膨胀系数（膨胀系数很小，取哪个 V 都差不多）。这就是 2018 年课程的作业。</p><p>这里会有一个奇怪的问题：都 300 多 K 了怎么还是冰、没融化吗？——这是分子模拟的另一类现象，物质特别容易进入非稳态，即过冷态/过热态：这块冰加热到 300 多 K 还没化，就像 300g 水降温到 273K 没结冰、再降到 250K 还没结冰（过冷水），反过来就是过热冰。回头做作业时去体会：看冰过热到什么程度就顶不住了、非化不可。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>最重要最简单的一个观测就是测试一下它的密度……如果你用NPT去做，你把温度压力都固定下来，它就很方便，你就去统计它那个体积的变化。</p><p>再谈谈膨胀系数，它分为线膨胀、面膨胀和体积膨胀三方面……α就是膨胀系数，它等于什么呢？等于1/V乘以(∂V/∂T)在恒压下。</p><p>然后你这儿可能会奇怪说：这不对，这都已经300多K了，怎么还是冰呢？……那就是过冷态……这就叫过冷水，那就成冰了，这就叫过热冰。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-rdf">
+  <div class="slides"><figure class="slide" id="slide-08">
+<img src="slides/slide_08.png" alt="课件第8页 5、结构——RDF 径向分布函数：g(r)=ρ(r)/ρ₀，ρ(r)=n(r)/(4πr²dr)，ρ₀=N/V，直方图统计">
+<figcaption><span class="sno">08</span><span class="stitle">5、结构——RDF 径向分布函数：g(r)=ρ(r)/ρ₀，ρ(r)=n(r)/(4πr²dr)，ρ₀=N/V，直方图统计</span></figcaption>
+</figure>
+<figure class="slide" id="slide-09">
+<img src="slides/slide_09.png" alt="课件第9页 5、RDF：X 射线衍射实验测量汞的结构（固体/液体）（秦允豪，1999，热学）">
+<figcaption><span class="sno">09</span><span class="stitle">5、RDF：X 射线衍射实验测量汞的结构（固体/液体）（秦允豪，1999，热学）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-10">
+<img src="slides/slide_10.png" alt="课件第10页 5、RDF：TIP4P/ice 模型水的 gOO(r) 结构（273K）（胡昊瑾，2020 课程作业），0.28nm 氢键峰">
+<figcaption><span class="sno">10</span><span class="stitle">5、RDF：TIP4P/ice 模型水的 gOO(r) 结构（273K）（胡昊瑾，2020 课程作业），0.28nm 氢键峰</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>结构观测：径向分布函数 RDF</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 8</span><span class="chip">课件 9</span><span class="chip">课件 10</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>再讲一个重要观测：求物质的 RDF，即径向分布函数。什么叫径向分布函数？它是两个粒子距离为 r 的概率密度：距离为 1 埃的密度有多大、10 埃的概率是多少，统计出来得到概率值。显然距离 1 埃和 10 埃的密度可能不同，于是出现波峰波谷——这反映了物体的结构。</p><p>具体怎么算？g(r) = ρ(r)/ρ₀：ρ₀ 是平均数值密度（如体积 100 里有 1000 个粒子，ρ₀=10）；ρ(r) 是随径向距离变化的局部密度——取一个 r+dr 的薄球壳（体积 4πr²dr），数出球壳里的粒子数，通过统计直方图完成：直方图像挂了很多盒子，看不同 r 处有几个粒子；统计完画图，曲线除以 4πr²dr 得到 ρ(r)，再除以平均密度 N/V 就得到 g(r)。</p><p>别急，刚才只对中间一个粒子计算。体积里有 1000 个粒子，需把每个都算进去并平均——每个粒子的直方图略有变化，1000 个平均后就有统计意义，完成这一帧计算；一条轨迹算了 1 万帧，再把结果平均，就是一般径向分布函数的时间平移和空间平移，全平均后得到最终的 g(r)。</p><p>看实验例子：测汞晶体时，固定距离有高峰和低峰；化成液体后变成另一个样子。想一下为什么：在简单立方这类结构中，距离为 1（边长）的概率非常小，到处都是距离唯一的例子所以难找；√2 就很大，立方体哪个对角线不是 √2；√3 的空间密度没那么多，就找一个矮的峰子；距离为 0.25 的恐怕找不着。所以晶体一定表现出单一的独立动能结构，液体就长成液体那样。</p><p>再看水的结构，这叫近程有序、远程无序：远程从一再往远处就平了，平意味着 g(r)=1（都以背景疏密度出现，没有结构显出谁多谁少）；近程则有很高的峰。为什么在 0.28nm 处有一个高峰？——因为两个水分子之间形成氢键，氢键长度就是 0.282nm，这条线就是它的结构。水的固体结构像拱桥一样一高峰一低峰交替；液体从这开始一高、近程有序、远程全平；气体则没什么结构，可能最开始有一点点小尖。从这张图体会：把粒子的 XYZ 坐标弄出来之后，通过统计就能把结构表现出来。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>什么叫径向分布函数？它是两个粒子距离为r的概率密度……于是出现波峰波谷。这反映了物理物体的结构。</p><p>RDF简称g(r)，它等于ρ(r)除以ρ0……球壳体积是4πr²dr，即表面积乘以dr。数出球壳里的粒子数，通过统计直方图完成。</p><p>为什么它零感这位高峰位置在哪呢？……这个位置大概是0.28nm……因为两个水分子之间形成了氢键，那个氢键的长度就是0.282纳米。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-msd">
+  <div class="slides"><figure class="slide" id="slide-11">
+<img src="slides/slide_11.png" alt="课件第11页 6、自扩散系数 gmx msd：扩散系数表示密度差为一个单位时单位时间通过单位面积的物质量">
+<figcaption><span class="sno">11</span><span class="stitle">6、自扩散系数 gmx msd：扩散系数表示密度差为一个单位时单位时间通过单位面积的物质量</span></figcaption>
+</figure>
+<figure class="slide" id="slide-12">
+<img src="slides/slide_12.png" alt="课件第12页 6、自扩散系数：爱因斯坦关系式 MSD(t)=⟨|r(t+t₀)-r(t₀)|²⟩，先时间平均再对 N 个粒子平均，单粒子输运统计精度高">
+<figcaption><span class="sno">12</span><span class="stitle">6、自扩散系数：爱因斯坦关系式 MSD(t)=⟨|r(t+t₀)-r(t₀)|²⟩，先时间平均再对 N 个粒子平均，单粒子输运统计精度高</span></figcaption>
+</figure>
+<figure class="slide" id="slide-13">
+<img src="slides/slide_13.png" alt="课件第13页 6、MSD 计算过程：对一条轨迹依次取时间间隔 1~9 求距离平方，再对所有粒子平均">
+<figcaption><span class="sno">13</span><span class="stitle">6、MSD 计算过程：对一条轨迹依次取时间间隔 1~9 求距离平方，再对所有粒子平均</span></figcaption>
+</figure>
+<figure class="slide" id="slide-14">
+<img src="slides/slide_14.png" alt="课件第14页 6、自扩散系数 D：从 MSD 斜率求 D=斜率/6；掐头去尾取中间（短时牢笼效应、长时统计少）">
+<figcaption><span class="sno">14</span><span class="stitle">6、自扩散系数 D：从 MSD 斜率求 D=斜率/6；掐头去尾取中间（短时牢笼效应、长时统计少）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>自扩散系数：MSD 爱因斯坦关系式</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 11</span><span class="chip">课件 12</span><span class="chip">课件 13</span><span class="chip">课件 14</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>再讲一个例子：扩散系数。它是一个与时间有关的东西，表示浓度差为一个单位时，单位时间内通过单位面积的物质的量——注意这是物质的量，不是质量。它等于 -D·dN/dC：这边密度高、那边密度低，中间有个密度梯度，高密度向低浓度扩散。</p><p>当分子做无规则热运动时，局部密度涨落也会发生，使分子发生扩散。你看这一杯水看上去平平整整，但放大到分子尺度，会看到分子碰撞过程中这里密一点、那里疏一点，过一会儿疏的变密、密的变疏——这就是密度涨落；只要有这种涨落，物质就会从高密度向低密度扩散。</p><p>怎么从轨迹求它？爱因斯坦很早找到了关系式（统计热力学里大量推导的结果）：MSD，平均平方位移，MSD = ⟨|r(t+t₀)-r(t₀)|²⟩ = 6Dt。这坨东西怎么求？对每个粒子，先把相隔时间为 t 的距离平方求出来（位置 7 和 8 相距为 1、位置 4 和 5 相距为 1……一条轨迹起码有 9 个相距为 1 的点），对不同 t₀ 平均；再算时间相距为 2、3……直到 9；然后对 1000 个粒子平均，最后除以 N 和 Nt。</p><p>光看公式理解还得想一会儿，拿图一说就明白：一条轨迹 1000 个 XYZ 坐标，按规则求完，MSD 就是一条线；这条线的斜率除以 6 就是扩散系数（公式里有 6）。</p><p>注意两个细节：MSD 前半段看着很光滑、后头有点波动——因为前头有 9 个 10 个数在平均，最后一个数只剩一个数平均，统计意义小所以波动；把最前头一小点放大，它不是直线而是小折线，斜率跑得更快——因为极短时间分子间有牢笼效应：分子在极短时间内自由飞行跑得挺快，撞到邻居被怼回来，好一会儿才能跳出孔隙，所以短时非直线。求斜率时：若线很直、统计量足够就精准求解；统计量不足就掐头去尾取中间（去掉 150 之后和 20 之前的），只对中间段求斜率——掐头因短时牢笼非线性，去尾因尾部统计少，中间段最准。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>它是一个与时间有关的东西，表示浓度差为一个单位时，单位时间内通过单位面积的物质的量……它等于-DdN/dC嘛。</p><p>这一块东西，叫做MSD，叫平均平方的位移……它等于6倍的G，P D就是那个核算系数……就是你T时刻的那个坐标减去你0时刻的那个坐标。的那个平方……弄完了之后，对它进行系统平均就OK了。</p><p>最前头那一点就是笼效应……它撞到那些自己的邻居之后，就被怼回来……求斜率时需确保准确……应舍弃两端数据。例如去掉150之后和20之前的部分，仅对中间段求斜率。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-viscosity">
+  <div class="slides"><figure class="slide" id="slide-15">
+<img src="slides/slide_15.png" alt="课件第15页 7、粘滞度 gmx tcaf：动量传输，反映液体内摩擦与反抗形变能力，J动量=-η(dv/dz)，单位 Pa·s">
+<figcaption><span class="sno">15</span><span class="stitle">7、粘滞度 gmx tcaf：动量传输，反映液体内摩擦与反抗形变能力，J动量=-η(dv/dz)，单位 Pa·s</span></figcaption>
+</figure>
+<figure class="slide" id="slide-16">
+<img src="slides/slide_16.png" alt="课件第16页 7、粘滞度：Green-Kubo 方程，Pαβ 为应力张量非对角元，自相关函数 ACF 随时间衰减，积分得剪切粘滞度">
+<figcaption><span class="sno">16</span><span class="stitle">7、粘滞度：Green-Kubo 方程，Pαβ 为应力张量非对角元，自相关函数 ACF 随时间衰减，积分得剪切粘滞度</span></figcaption>
+</figure>
+<figure class="slide" id="slide-17">
+<img src="slides/slide_17.png" alt="课件第17页 7、计算过冷水的剪切粘滞度（自相关函数 ACF）">
+<figcaption><span class="sno">17</span><span class="stitle">7、计算过冷水的剪切粘滞度（自相关函数 ACF）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>粘滞度：Green-Kubo 公式与自相关函数</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 15</span><span class="chip">课件 16</span><span class="chip">课件 17</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>再讲粘度。粘滞度涉及物质动量的传输（前述密度/扩散是质量传输），反映液体内摩擦力及抗形变能力。水易流动，蜂蜜难拖出且变化缓慢。设想两块板，一块速度 V、另一块静止，存在速度梯度 dv/dz；梯度乘以粘度得动量通量 F/A——F/A 是压强（帕斯卡），但压强是正向力，这里是侧向剪切力；单位就是粘度的单位帕·秒（Pa·s）。</p><p>典型例子：铺路的沥青看着是固体、实际是液态，粘度极大——以前做过沥青滴落实验，漏斗里的沥青滴了几十年，去年或前年又滴了一滴，这证明沥青是液态。</p><p>分子动力学中怎么求？用 Green-Kubo 方程：粘度等于常数对自相关函数积分。括号内是应力张量的非对角线元素 Pαβ（对应剪切应力；对角线对应压力）的乘积，P0×Pt 称为自相关函数 ACF，随时间衰减，对其积分可得粘度。</p><p>自相关函数好比走路：若朝某方向走，零时刻与当前时刻紧密相关，走直线曲线不会衰减；但来回走就像在广场散步——这一步跟下一步可能很有关系，第二步跟第一步关系就不大，走到 100 步时跟最开始出发的第一步没啥关系。求的时候把 P0 跟 Pt 乘积，变换起点 t 求多个相距为 t 的乘积平均，再对整个时间平均就得到粘度。</p><p>注意：粘滞度是系统的总体输运性质，不是单粒子输运（扩散系数每个粒子都可以那样扩散、统计精度高；粘度只有一个压力/应力，统计精度就差）。这是我做的第一份工作：把 P 和 V 取出来，随时间倒数波动看不出规律；但把 P0×Pt 做自相关计算之后就有规律了，求曲线下方面积即积分，就得到水的粘度。</p><p>这一部分简单提了几个：密度、膨胀系数、扩散系数、粘度及其他的东西——这就是一个万花筒，你想算啥都有现成的工具；你相当于做高压实验，想 500K 就 500K、想 5000K 就 5000K，改数 1000 万遍都行。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>粘滞度涉及物质动量传递……它反映液体内摩擦力及抗形变能力……J动量=-ηdv/dz……此时弦的单位就是粘度的单位，即帕·秒。</p><p>在分子动力学中如何求它？用的是Green-Kubo方程，粘度等于常数对这一项积分……这两个乘积称为自相关函数。该函数随时间衰减，对其积分可得粘度。</p><p>这个就是用力的把那个P和V取出来之后……但是，你把这个P做了这个P0×Pt，做完这个自相关计算之后，我可就找着规律了。非常有规律……求一下曲线下方的面积，就是对它积分，就得到了黏度。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-visualization">
+  <div class="slides"><figure class="slide" id="slide-18">
+<img src="slides/slide_18.png" alt="课件第18页 用可视化软件观察轨迹：VMD、Ovito；MS Visualizer、Vesta">
+<figcaption><span class="sno">18</span><span class="stitle">用可视化软件观察轨迹：VMD、Ovito；MS Visualizer、Vesta</span></figcaption>
+</figure>
+<figure class="slide" id="slide-19">
+<img src="slides/slide_19.png" alt="课件第19页 观察页岩气的吸附：纳米孔可以吸附大量的甲烷">
+<figcaption><span class="sno">19</span><span class="stitle">观察页岩气的吸附：纳米孔可以吸附大量的甲烷</span></figcaption>
+</figure>
+<figure class="slide" id="slide-20">
+<img src="slides/slide_20.png" alt="课件第20页 观察页岩气的流动：甲烷从高压区通过纳米孔流向低压区">
+<figcaption><span class="sno">20</span><span class="stitle">观察页岩气的流动：甲烷从高压区通过纳米孔流向低压区</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div class="sec-tt">
+        <h2>可视化观察：VMD 与动画案例</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 18</span><span class="chip">课件 19</span><span class="chip">课件 20</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第二步是展开分子尺度上的观测，相当于一架电子显微镜。普通显微镜通过镜头、目镜看，电子显微镜要经过更复杂的方式。这个地方要看的话，就要求助于可视化软件：VMD 功能强大、全方位展示模拟体系；Ovito 也很常用；MS Visualizer、Vesta 可以绘制精美的分子结构图。</p><p>科研里做模拟，动画怎么做？看一个例子：石墨中间挖了个孔，中间放了很多甲烷分子，看会发生什么——最直观的感觉就是吸附过程。最开始做这个时大家不信：页岩那块石头紧得不行，里头能有纳米孔吸附大量甲烷气？我们做了一个纳米孔、放进好多甲烷，一跑模拟真吸进去了——别小看那一点点小孔，只要小孔够多，就可以吸很多很多气。</p><p>下一个例子是做流动：还是那个纳米孔，两边设置成高压区和低压区，有压力差，气体就从高压区流向低压区。中间两个红点给一个甲烷分子专门涂了颜色做标记，看它从那边往这边流——这样就模拟了稳定的甲烷流动。类似这种观察太多了：生物学的蛋白、核酸，自己就打卷形成 DNA 结构。</p><p>动画做完之后表现确实挺好。你们做分类模型、将来遇到类似问题时，一定要做出这种表现力很强、能说明问题、大家耐看的动画——能做好绝对就是成功。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>像VMD就是可视化的，Material Studio也是很好的一个展示模拟体系的软件……那么我们看看科研以后，我们做这个模拟的时候，怎么做这个动画。</p><p>这个是石墨，石墨中间挖了个孔，中间放了很多甲烷分子的气。然后呢，我们看看会发生什么……你看，吸附过程对吧？……真吸进去了。我们就信了。</p><p>还是那个例子，我们呢，给两边呢，给它设置成一个高压区。这边低压区……中间有两个红点儿，那个就是专门给一个甲烷的涂了个颜色……我们就模拟了一个稳定的甲烷的流动。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-programming">
+  <div class="slides"><figure class="slide" id="slide-21">
+<img src="slides/slide_21.png" alt="课件第21页 用编程分析观测轨迹：仅看动画不够，必须编程从分子坐标提取信息；应掌握 C/Fortran/Python；高级阶段读模拟软件源代码">
+<figcaption><span class="sno">21</span><span class="stitle">用编程分析观测轨迹：仅看动画不够，必须编程从分子坐标提取信息；应掌握 C/Fortran/Python；高级阶段读模拟软件源代码</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">08</span>
+      <div class="sec-tt">
+        <h2>编程分析观测轨迹</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 21</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>光看动画就没意思了，肯定想研究：气体从这边跑到那边，跑得有多快？压力差大的时候是不是应该快？温度高是不是跑得快？随材质变化（石墨变石英、做成粘土）又跑得多快？这就要去测量：画一根线，以 50 为截面，统计过了 50 那个面就认为流过来了——分子在位置波动，有时过不去，但统计显示流过来的比流过去的多；累计流过的量随时间变化，求斜率即流量，除以横截面积得通量。吸附到中间后统计体积和甲烷分子数可求密度；沿径向方向数，疏密交替，最终得到类似衍射峰的图样，第一、第二衍射峰表明半晶态结构有多层系。</p><p>这类研究很多，仅看动画不够，需从分子坐标提取信息。这步较麻烦，现有工具如 RDF 无法满足自定义测量需求——必须掌握至少一种编程语言（C、Fortran 或 Python）去实现你的视角：你想怎么观测轨迹，就怎么编程序去看。这个独特的视角是任何人也不会提前先验了程序让你用的：别人发表了很多论文、写了一些成绩，你可以去用，但那时你已经在人之后了；想在人之前看一看，就自己编程序、编独特的视角，那就得比别人强。</p><p>学习 MD 的高级阶段应该是去读模拟软件的源代码：一开始小白入门摸一摸挺好玩的；中级阶段熟手，模拟起来没问题、可以写论文做科研了；高级阶段按说应该读一读 GROMACS 的源代码，能读懂其中一部分或几个函数，水平就又提高了。反正做分子动力学研究，必须走编程处理数据这条路，科研创新几乎全在于此。我对自己带的学生要求：必须写一个软件著作权登记了才能毕业——其实都能完成，因为整个过程离不开编程，最后把程序整理提交即可申请。</p><p>这节课主要讲解分析观测轨迹：根据统一物理学原理，由观测参数求出物质性质；其次进行分子动力学模拟转化为新模型。编程不必强求完全掌握，先入门即可。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那你肯定想研究……你就要去测量测量这儿……你就以50为那个截面，你就去统计过了50那个面你就认为流过来了……计算斜率即冲量或流量，除以横截面积得通量。</p><p>必须掌握至少一种编程语言，如C、Fortran或Python。让你去实现你的视角……这个独特的视角，是任何人也不会提前先验了程序让你用的。</p><p>等到学习MD的高级阶段的话，应该是去读模拟软件的源代码……反正不管怎么着吧，就是做分子动力学研究，必须走编程处理数据这条路。科研的创新呢，几乎全在于组织。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-homework">
+  <div class="slides"><figure class="slide" id="slide-22">
+<img src="slides/slide_22.png" alt="课件第22页 MP 作业 3.6：冰膨胀系数；升温至500K观测最大过热温度并制作融化动画；降温找液态水最大密度点；冰与水的 RDFoo 与 MSD/自扩散系数">
+<figcaption><span class="sno">22</span><span class="stitle">MP 作业 3.6：冰膨胀系数；升温至500K观测最大过热温度并制作融化动画；降温找液态水最大密度点；冰与水的 RDFoo 与 MSD/自扩散系数</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">09</span>
+      <div class="sec-tt">
+        <h2>MP 作业 3.6：冰水系列实验</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）</span><span class="chip">课件 22</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>这是最后一次布置作业。前三章及 3.3 节之前的作业已提交完毕；后续 3.4、3.5、3.6 节涉及分子动力学模拟的三次作业无需急于提交，接下来三节课主要讲解案例、不再留新作业，大家有十天时间完成。</p><p>作业第一题：以 examples/ice 为出发点，用 NPT 系综做几个升温模拟，观测体积（或从密度换算），计算冰的膨胀系数。只需加热，体积必然膨胀而非收缩；绘制曲线求斜率，注意公式中要除以体积 V，否则计算错误。</p><p>第二题：持续升温至 500K，虽然预计冰会融化，但需仔细观测具体融化时机——离开 273K 后未必立即融化，可能处于亚稳态（过热冰）。请观测过热冰达到何种程度才会必然融化，把最大过热温度调整好；并观察冰的融化过程，制作大约 30 秒的小动画，尽量把融化表现得很形象、漂亮。</p><p>第三题：一直加热到 500K 一定化完了，是一杯水（高温冰融水）。从这个出发点开始降温，降到普通温度或冰点以下，观察它的最大密度点出现在哪——大家都说水的最大密度是 4℃（277K），但 TIP4P/ice 水的最大密度不一定在 4℃，究竟在哪去找一找。提示：千万不要用轨迹最后一帧的密度（密度是波动的，最后一点可能取在峰值或谷底），应求轨迹平衡段的平均密度；最大密度点附近可能不易分辨，可用重复 run 的平均提高数据精度。</p><p>第四题：你已经获得了一块水的温度，随便降低肯定能得到 273K 一般条件下的一坨水；从这个例子出发（它本身是一块冰），把它做到 273K 一般条件下的冰。计算冰和水的 RDFoo（氧原子之间的，氢先甭管），看看冰是固体、水是液体，两个 RDF 有什么变化；再求冰的 MSD/自扩散系数和水的 MSD/自扩散系数。想象就知道水的扩散系数一定比冰大——冰是固体，分子只能在晶格那儿振动，跑好半天也跑不出去，所以扩散系数小；水的大，算出来看看是多少。</p><p>实习相关操作（GROMACS）：做索引文件、求 RDF、求 MSD 这些，本来要演示，后来发现演示时间有点长，就做了个录屏已经放到网上了，大家回头参考，可以避免一些坑。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这是最后一次布置作业。前三章及3.3节之前的作业已提交完毕。后续3.4、3.5和3.6节涉及分子动力学模拟。这三次作业无需急于提交。</p><p>第一题要求从特定状态出发进行升温模拟，观察体积变化并计算冰的膨胀系数……但务必注意公式中需除以体积V，否则计算错误。</p><p>持续升温至500度……离开273K后未必立即融化，可能处于亚稳态，称为“过热冰”。请观测过热冰达到何种程度才会必然融化。</p><p>大家都说水有一个最大密度点，平常水的最大密度是4℃，即277K。但这个水是TP和PS水，它的最大密度不一定在4℃……千万不要用轨迹最后一帧的那个密度，因为它的密度是波动的。</p><p>计算一下冰和水的2DF能量，就是氧原子之间的吧？……那你想象一下，就知道水的扩散系数一定比冰的大。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-practice">
+  <div class="slides"><figure class="slide" id="slide-23">
+<img src="slides/slide_23.png" alt="课件第23页 实习作业相关操作：gmx energy/density/make_ndx/rdf/msd 命令用法">
+<figcaption><span class="sno">23</span><span class="stitle">实习作业相关操作：gmx energy/density/make_ndx/rdf/msd 命令用法</span></figcaption>
+</figure>
+<figure class="slide" id="slide-24">
+<img src="slides/slide_24.png" alt="课件第24页 实习作业注意事项：Slurm 提交、任务级并行、-deffnm 重命名、100万步以内、gen_seed 随机种子、Excel 散点图规范">
+<figcaption><span class="sno">24</span><span class="stitle">实习作业注意事项：Slurm 提交、任务级并行、-deffnm 重命名、100万步以内、gen_seed 随机种子、Excel 散点图规范</span></figcaption>
+</figure>
+<figure class="slide" id="slide-25">
+<img src="slides/slide_25.png" alt="课件第25页 演示：提取 E、T、P、V 观测平衡态；几个模拟轨迹后处理工具用法">
+<figcaption><span class="sno">25</span><span class="stitle">演示：提取 E、T、P、V 观测平衡态；几个模拟轨迹后处理工具用法</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">10</span>
+      <div class="sec-tt">
+        <h2>实习操作、注意事项与演示</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）</span><span class="chip">课件 23</span><span class="chip">课件 24</span><span class="chip">课件 25</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>实习相关操作：gmx energy -f aaa.edr 提取 E/T/P/V，用 Excel 观察演化图（压力波动大正常）；gmx density -f aaa.xtc -s bbb.tpr -sl 1（用 -b 100 -e 1000 平衡取样）；gmx make_ndx -f aaa.gro -o ccc.ndx（输入 OW 制作索引文件）；gmx rdf -f aaa.xtc -s bbb.tpr -n ccc.ndx -o RDFoo.xvg；gmx msd -f aaa.xtc -s bbb.tpr -n ccc.ndx -o MSDw.xvg。模拟中 warning 过多可能退出，可用 -maxwarn 20 忽略；出现 error 则必查。</p><p>注意事项：用 Slurm 提交 mdrun 任务，否则将运行于登录节点，影响大家；建立不同的目录，考虑任务级并行以提高作业完成效率，多则排队；对输入输出文件进行必要的重命名（-deffnm），以便区分不同系列 run；每个模拟的总步长设 100 万步以内（100 万步乘以 0.002 皮秒约两纳秒，时间够用），不取最初的 10 万步非平衡轨迹；如果做重复（平行）模拟，记得设置互不相同的随机数种子 gen_seed——那颗种子决定了你这个状态；学习用 Excel 导入文本、分隔数据、绘制散点图，加上 x、y 轴标签及单位；添加趋势线，保存必要的 Excel 数据和图表及截图。</p><p>跑模拟的时间控制：跑得特别短统计不到位，跑得特别长又费时间。建议一般设 100 万步以内。用 Slurm 提交就别在节点上跑，建不同目录，像正常用户一样使用学校超算平台资源跟大家排队——任务提交后没跑出来就可以接着提交其他任务，不需要等一个跑完才提交第二个；每个用户最多用到 24 个 CPU，要布局好你的任务（每核都用 24 不一定好，任务太多会降低速度）。</p><div class="videos"><div class="video"><h4>课堂演示录屏（MP3.6）：GROMACS 实习演示——提取 E/T/P/V、轨迹后处理工具</h4><video controls preload="metadata" src="videos/录屏MP3.6-观测分子模拟轨迹.mp4"></video></div></div><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这是跟实习有关的一个相关操作，就是GROMACS那里，建单子的做一个索引文件，求RDF啊，求MSD就这些……我就给你们做了个录屏，已经搁到网上了，你们回头参考一下。</p><p>后面你们跑模拟呢，如果跑的时间特别短，那统计就不到位；跑的时间特别长又费时间。我建议一般设100万步以内……然后这个用那个4提交，这样的话就别在节点上跑。</p><p>如果需要用到重复或者平行的状态的时候……那你就要去记着设置一个不同的随机数的种子。因为咱们讲过，那颗种子决定了你这个状态。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-review">
+  <div class="slides"></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">11</span>
+      <div class="sec-tt">
+        <h2>往届作业讲评</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（尾）</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>这一课讲得快，是留出半小时讲作业，有利于后面做作业。后面还有 4 次课，下次课开始讲第 4 章，重点是实例和案例，三次课讲完案例，最后一次课进行分子模拟讨论、讲作业并集中答疑。现在有了 AI，群里问得少了，你们用了 AI 后问题弄得挺深入，自学得快——将来搞研究，新技术新设备新软件来了要快速掌握，几小时或三五天就要掌握，只有这种结构搞科研才能得心应手。</p><p>MP1.1 翻译作业讲评：王思双他们的表现形式很生动；大多数翻译得挺好，特别是李咏、宋维、宋德维他们用了 AI 并反复校验结果全对；其他同学个别错误主要在致反性没对（若是非弹性的与 11SP 有一点区别）。以前 AI 出来之前往届学生好多词不认识乱发信息，比如把 impact 翻译成影响。你们用 AI 之后确实很好，要大量用 AI——用不好是无能的，一定要把它用好。</p><p>我最欣赏的一个作业是 202 级一位同学做的：图体现了科学与艺术的结合，能体会到他对矿物物理学的理解已上升到它是照亮天体的一盏明灯。地球内部是不可入的，咱们最深也就到 12km 取个样就下不去了；有两盏灯：一盏是地震学，用地震波照出里头结构；第二盏是矿物物理学，照出骨头上贴的肉是什么——通过高压实验、模拟力学计算一点一点发清楚这个专业。</p><p>MP2.1 作业（用 AI 阅读 DAC 综述）：大家都完成得挺好，两个组总结了 DAC 发展史、两个组对红宝石荧光测压很感兴趣、一个组总结了 DAC 的江湖故事——作业都放到资料库里互相看，将来提起 DAC 总是津津乐道。MP2.2 自学高压研究的判测手段和物性：刘正坤、刘阳、杨艳丽那个组做得挺好，有的写了 20 多页弄得很详细；但学了之后一定要看一看材料，有初步印象。MP3.1 求 LJ 方程特殊点：曲线与 0 交点是 0，井深已知，无穷远处势能为 0；不少同学漏掉无穷远点，有同学（2025 级郭源）数学好，还发现一个拐点（二阶导数为零的点）——拐点之上是排斥力、之下是吸引力，很多同学对此有误解；画图要有标签和单位，Excel 作图要规范严谨。</p><p>MP3.2 加速比作业讲评：40 个 CPU 核资源要争取用好不能让它闲着。算最短时间：比如先做 40 核 2.4 小时的任务，再做单核 10 小时，其他任务摆下，时间最短 12.4 小时；加速比=串行时间/并行时间，再除以核数就是并行效率。随着核数增加加速比在增加但越增加越慢，有峰值、再往后降低——搞科研一定先对自己系统拿加速比试试：追求速度用较多核，不追求速度、有多任务时用较少的核增加并行效率。有十几个同学把散点图画成了分类图（横轴等间距了），完全改变了规律，要画成散点图才能看出规律性变化。52 个任务的最短时间：D 方案（40 核 10h + 4 核 10 个 4.1h + 20 核 2 个 2.21h = 16.2h）；C 方案（40 核 10h 后剩 2 个用 24 核，16.29h）更省钱；更好的组合（5 核 8 个 + 10 核 4 个 = 16h）；最优是打破常规用 3 核跑 12 个（36 核，约 5.14h）——这是 2023 年黄莹提到的问题，在加速比曲线 2 和 4 之间内插一个点。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这一课讲得快，是留出半小时讲作业，有利于后面做作业。后面还有4次课。下次课开始讲第4章……最后一次课进行分子模拟讨论，讲作业并集中答疑。</p><p>咱们讲前面的作业。作业是翻译一个关系图……你们用AI之后确实很好。这是往届学生做的结果，图也很漂亮。</p><p>地球内部是不可入的。咱们最深也就到12km……有两盏灯：一盏是地震学……第二盏是矿物物理学，照出骨头上的肉贴的是什么。</p><p>加速比例是谁呢？就是这些东西分别除以串行的时间……求出加速比之后，再除以那个合数，就是并行效率……有峰值，再往后加速比降低了，这一点非常重要。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（180083070901P2003H）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>

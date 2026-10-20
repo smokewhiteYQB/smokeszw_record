@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>显微共焦拉曼光谱学 · 第10节 第一次习题课：第1~3章复习与习题｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.videos{margin-top:14px;border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.video + .video{border-top:1px solid #e4e9f0;}
+.videos h4{font-size:12.5px;font-weight:700;color:#0a1f38;background:#f2f5f9;padding:8px 12px;border-bottom:1px solid #e4e9f0;}
+.videos video{display:block;width:100%;max-height:460px;background:#0b0f14;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>显微共焦拉曼光谱学 · 第10节 第一次习题课：第1~3章复习与习题</h1>
+    <div class="sub">第10节 第一次习题课：第1~3章复习与习题 ｜ 2026-10-13 ｜ 林妙玲</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 49 页 · 整理 22 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-opening">01 开场与习题课安排</option>
+<option value="sec-ch1-structure">02 第1章复习：晶体结构</option>
+<option value="sec-ch1-vibration">03 第1章复习：晶格振动</option>
+<option value="sec-hw1-lattice">04 作业1：晶格、基元与NaCl复式晶格</option>
+<option value="sec-hw2-fcc">05 作业2：FCC原胞与倒格子计算</option>
+<option value="sec-hw3-d4">06 作业3：D4群与立方体对称操作</option>
+<option value="sec-hw4-acoustic">07 作业4：声学支与光学支</option>
+<option value="sec-hw5-dos">08 作业5：声子态密度与范霍夫奇点</option>
+<option value="sec-hw6-staggered">09 作业6：交错力常数的一维双原子链</option>
+<option value="sec-ch2-review">10 第2章复习：拉曼光谱学介绍</option>
+<option value="sec-hw1-raman-id">11 作业1：拉曼峰的鉴别</option>
+<option value="sec-hw2-selection">12 作业2：拉曼选择定则——为什么只测Γ点声子</option>
+<option value="sec-hw3-snr">13 作业3：信噪比的定义与优化</option>
+<option value="sec-hw4-units">14 作业4：单位换算与激光选择</option>
+<option value="sec-hw5-techniques">15 作业5：晶体振动的探测技术</option>
+<option value="sec-ch3-review">16 第3章复习：拉曼散射理论基础</option>
+<option value="sec-hw1-classical">17 作业1：光散射理论的经典与量子描述</option>
+<option value="sec-hw2-polarization">18 作业2：背散射几何下的偏振选择定则</option>
+<option value="sec-hw3-resonance">19 作业3：共振拉曼散射</option>
+<option value="sec-hw4-raman-ir">20 作业4：拉曼活性与红外活性</option>
+<option value="sec-hw5-order">21 作业5：一阶与二阶拉曼散射</option>
+<option value="sec-closing">22 结课</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 习题课1fn (1).pdf 逐页渲染，转写原文见 record_20261013.txt。</div>
+<section class="sec" id="sec-opening">
+  <div class="slides"><figure class="slide" id="slide-01">
+<img src="slides/slide_01.png" alt="课件第1页 封面：第一次习题课（显微共焦拉曼光谱学2026秋，中国科学院半导体研究所，林妙玲，20261013）">
+<figcaption><span class="sno">01</span><span class="stitle">封面：第一次习题课（显微共焦拉曼光谱学2026秋，中国科学院半导体研究所，林妙玲，20261013）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>开场与习题课安排</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 1</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>今天的课是第一次习题课，主要讲 1~3 章的习题，穿插复习及思考题。若课上有时间，我会留出时间让大家对一下答案；若时间紧张，则课后思考完成，不强制要求掌握，做完后若不确定对错可以来问。已和助教确认，习题尚未发回——最好发给大家对照查看，效果更佳。1 至 3 章都交了吧？交了就行。</p><p>后续没时间整体划范围复习，所以先回顾所学内容，根据题型说明哪些需掌握、哪些仅需了解及掌握程度。第一章涉及两部分：晶体结构和晶格振动。我们一直强调要了解原子在晶体中的排布——这与拉曼光谱密切相关：晶格或化学键的振动反映在拉曼光谱的各峰中，其物理含义源于振动。求解时我们将原子视为小球、用弹簧连接：拉近产生排斥力、拉伸产生回复力，该模型接近原子振动，原子在平衡位置做微小振动。晶体中原子的排布构型决定了受力及振动方向，因此需了解原子位置与排布。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我们第二次习题课应该在课程结束后。主要讲习题，穿插复习及思考题。若课上有时间，我会留出时间让大家对一下答案。</p><p>我们一直强调要了解原子在晶体中的排布。这与拉曼光谱密切相关。晶格或化学键的振动反映在拉曼光谱的各峰中，其物理含义源于振动。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-ch1-structure">
+  <div class="slides"><figure class="slide" id="slide-02">
+<img src="slides/slide_02.png" alt="课件第2页 第1章 晶体结构主要内容：格子、晶格定义、原胞和基矢、简单晶格和复式晶格、布拉伐(Bravais)格子、对称性简介、晶格的宏观对称性、倒格子和布里渊区">
+<figcaption><span class="sno">02</span><span class="stitle">第1章 晶体结构主要内容：格子、晶格定义、原胞和基矢、简单晶格和复式晶格、布拉伐(Bravais)格子、对称性简介、晶格的宏观对称性、倒格子和布里渊区</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>第1章复习：晶体结构</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 2</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>晶体具有长程周期性，可用最小单元平铺描述整体结构。我们介绍了晶体和晶格的定义：原子排列的具体形式称为晶格，具有平移对称性以及长程有序的特点；最小单元即原胞，需判断所选重复单元是否为最小。对于简单晶格和复式晶格，标准不同：简单晶格中一个单元内只有一个原子；若是复式晶格，要看基元包含几个原子，原胞中就应包含几个原子。例如硅，除顶点原子外，它在体对角线 1/4 处还有一个不等价原子，所以有两个原子；石墨烯平面内也由两个原子构成，属复式晶格。</p><p>原胞如何描述？这涉及基矢。就像三维空间建立笛卡尔坐标系来描述位置和矢量，在晶体中沿原胞的三个方向建立基本单位：二维有两个方向、三维有三个、一维有一个，这些与维度相关的矢量定义为基矢，由基矢就能描述晶体。</p><p>有了这些定义后，根据对称性对原胞或晶胞的基矢进行分类，这种以基矢为单元的格子称为布拉维格子：二维有 5 种、三维有 14 种，这是根据对称性操作的多少来划分的。要注意，布拉维格子不是基于原胞划分，而是基于晶胞——需要在满足更多对称性的前提下考虑最小单元，因此有简单立方、面心立方等类型。</p><p>分类后如何描述不同种类的布拉维格子？需要引入“群”的概念来认识对称性：所谓完备，是指所有对称操作及其乘积仍在集合内，这样的集合定义为群。拥有不同对称操作的布拉维格子具有不同特征，对称性与宏观物理量一一对应：简单立方晶格的介电常数本应是张量却简化为标量，就是由其高对称性决定的。我们介绍一系列对称操作及其变化矩阵，将矩阵作用于介电常数张量，结果需保持原形式、参数一一对应，对比后发现许多项必须为零，最终只有对角线元素非零且三个维度数值相等，体现各向同性——张量退化为标量形式。</p><p>以多层石墨烯为例：其二维平面内各向同性，面内两个方向的介电常数相等；但第三个维度与面内不同（六边形底座决定了整体为六棱柱形状），介电张量变成标量形式、只有对角线上有数值（ε₁、ε₁、ε₂）。对石墨烯来说面内的光学折射率在不同方向上也相等；但如果它不再是严格的对称六边形，变成了像黑磷一样的材料，面内两个方向上会有不同的性质，介电常数有区别，沿面内两个方向的折射率就会相应不同。群论不能解释定量问题，但在定性上能简化很多计算：原来向量有 9 个分量，做对称性分析后可能变成 2 个或 3 个物理量，再去做计算就会简化非常多。</p><p>最后从实空间介绍了倒格子空间以及布里渊区的概念。大家需了解倒格子与实空间正格子的对应关系，有一些简单例子需要去算，还要大概了解布里渊区是什么样子的——因为我们后面看文献等是基础，只要涉及到晶体就逃避不开这个物理概念。分子晶体会表现出区别于本身小分子时的不同特性，现在很多化学、生物等领域也在做晶体，比如蛋白质折叠后堆积成分子晶体；我们跟化学组有很多合作，同样要用这一套晶体理论来理解里面的振动等信息，单独用某个键的振动不足以理解它的行为。</p><p>为什么从实空间会倒映出来一个倒格子？最主要的还是由于周期性：有了周期性可以做傅里叶变换，傅里叶变换之后要求前后两项平移一个周期是不变的，会有一个 e 的 i 次方这样的量；由基矢和基元来决定晶格和基矢，就会决定 G 矢量，这个 G 矢量就是倒格子的倒格子矢量。注意：因为 Rₙ 遍布原胞里面所有的原子，所以还是要用原胞的概率（原胞基矢）来描述——如果用晶格基矢的话，有些原子在倒易空间就没法得到完备的解。我们让 aᵢ·bⱼ=2πδᵢⱼ，定义了倒格子基矢 b₁、b₂、b₃ 与 a₁、a₂、a₃ 之间的一套关系。</p><p>后面经常讲到布里渊区中心：为什么我们拉曼测的是布里渊区中心的声子？因为布里渊区大小由实空间的晶格常数来定，是一个 π/a 的量级（对于一维单原子链，波矢是 2π/a，大小约为 1.4）。不同对称性在倒格子空间一一对应，物理性质满足时空对称性；了解该规则后，只需研究部分区域即可推知整体宏观性质。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>对于简单晶格和复式晶格，标准不同。简单晶格中，一个单元内只有一个原子。若是复式晶格，要看基元包含几个原子，原胞中就应包含几个原子。例如硅，有两个原子。</p><p>后面涉及简单晶格和复式晶格，与原胞基础有类似也有不同。有了这些定义后，我们根据对称性对原胞或晶胞的基矢进行分类。这种以基矢为单元的格子称为布拉维格子。二维有5种，三维有14种。</p><p>对称性与宏观物理量是一一对应的。简单立方晶格的介电常数本应是张量，却简化为标量，这是由其高对称性决定的。</p><p>为什么从实空间会倒映出来一个倒格子？最主要的还是由于我们的周期性。就是我们有了周期性，那么我们可以做傅里叶变换。</p><p>后面也经常讲到布里渊区中心。大家就是要知道，为什么我们拉曼测的是布里渊区中心的声子。因为我们布里渊区这个大小是由我们实空间的晶格常数来定的。它是一个π/a的一个量级。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-ch1-vibration">
+  <div class="slides"><figure class="slide" id="slide-03">
+<img src="slides/slide_03.png" alt="课件第3页 第2章 晶格振动主要内容：一维单原子链的晶格振动、周期性边界条件、长波极限和短波极限、一维双原子链的晶格振动、声学波和光学波、二维/三维晶体的晶格振动、晶格振动态密度、范霍夫奇点、研究实例">
+<figcaption><span class="sno">03</span><span class="stitle">第2章 晶格振动主要内容：一维单原子链的晶格振动、周期性边界条件、长波极限和短波极限、一维双原子链的晶格振动、声学波和光学波、二维/三维晶体的晶格振动、晶格振动态密度、范霍夫奇点、研究实例</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>第1章复习：晶格振动</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 3</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第二节讲晶格振动。原子排布影响运动，势能偏导得到回复力；原子质量与回复力决定晶格振动频率，即拉曼谱横坐标波数。频率对应能量，核心任务是求解定本振动（本征振动）以找出频率。三维晶体计算复杂，需分维度计算且原子排布复杂，因此举例采用一维模型，可得完整解析解形式。</p><p>求解晶格振动时需掌握牛顿定律方法：首先要分析受力（第一步），写出运动方程（第二步）。有了方程之后，要懂得体系里的波解应该是什么样的形式——形式上写对了，最后带进去求解才有可能是对的。最主要的是振幅：对于等价原子的材料体系，振幅可以是一样的；若是不等价原子，振幅则要有多个（A、B、C，与原胞里面的原始原子数相对应）。格波是一个波动方程的形式，有频率和相位（Aq）。形式解与周期有关：如果是简单晶格，周期是 N；如果不是简单晶格，可能有两种、三种或四种原子，要看原胞里面有多少个原子。有时候写成一个复数初始的相位，但一般情况下不写也没有关系——因为在拉曼光谱里面这个初始相位其实是得不出来的。</p><p>有了形式解后就代入格波解求解，得到色散关系（ω 与 q 的关系）。还要明确 q 的取值范围由两个条件决定：一个是周期性（物理区），第二个是边界。基于周期性边界条件，讨论长波极限和短波极限——即 q 趋近于零或无穷大时频率和原子振动的对应关系：q 的大小决定了 ω，也决定了原子的位移形式（两个参数都定了，就能得出两个原子之间的振动形式）。</p><p>声学波和光学波的特征都是基于色散关系来讨论。一维里面基于简单模型介绍完之后，二维和三维的设定比较复杂，我们要了解的是二维和三维不同维度的体系晶格振动有什么基本特征：光学生子跟声学生子应该有多少个、q 的取值应该满足什么类型。</p><p>然后是态密度：由周期性边界条件，q 在物理区内是周期性取值的，q 的密度转化为 ω 的密度即态密度。有了晶格振动态密度之后就有范霍夫奇点——简单来说就是看密度极大值的那些点，把它定义为范霍夫奇点。为什么这个点很重要呢？因为它决定了很多实验上能看到的事情：电子能量结构的范霍夫奇点通常就是吸收巨大的那些点；在拉曼光谱里面，光谱起点对应态密度比较高的那些点，你的拉曼光谱通常也能探测到那些态密度比较低的点，在相应的区域你可能就看不到这样的一些声子、它就激活不了，你只能看到对布里渊区中心的一些声子。研究的实例给大家简单过了一下。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>原子质量与回复力决定晶格振动频率，即拉曼谱横坐标波数。频率对应能量，核心任务是求解定本振动以找出频率。</p><p>有了方程之后，你要懂得体系里的波解应该是什么样的形式。形式上写对了，最后带进去求解才有可能是对的。</p><p>Q的取值范围由两个条件决定。一个是周期性，也可由物理区决定。第二个是边界。</p><p>有了晶格振动态密度之后，就有范霍夫奇点。简单来说，就是看密度极大值的那些点，把它定义为范霍夫奇点。为什么这个点很重要呢？因为它决定了很多实验上能看到的事情。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-hw1-lattice">
+  <div class="slides"><figure class="slide" id="slide-04">
+<img src="slides/slide_04.png" alt="课件第4页 作业1：简单说明晶格、基元、布拉伐格子、原胞及基矢的概念，并以NaCl为例，具体说明如何用“基元+布拉伐格子”来构建其复式晶格结构（晶格/基元/布拉伐格子/原胞/基矢概念回顾）">
+<figcaption><span class="sno">04</span><span class="stitle">作业1：简单说明晶格、基元、布拉伐格子、原胞及基矢的概念，并以NaCl为例，具体说明如何用“基元+布拉伐格子”来构建其复式晶格结构（晶格/基元/布拉伐格子/原胞/基矢概念回顾）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-05">
+<img src="slides/slide_05.png" alt="课件第5页 作业1：NaCl结构——晶格=基元+布拉伐格子；面心立方（FCC）布拉伐格子沿体对角线方向平移1/2套构而成，其“基元”是一个Na⁺和一个Cl⁻离子对">
+<figcaption><span class="sno">05</span><span class="stitle">作业1：NaCl结构——晶格=基元+布拉伐格子；面心立方（FCC）布拉伐格子沿体对角线方向平移1/2套构而成，其“基元”是一个Na⁺和一个Cl⁻离子对</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>作业1：晶格、基元与NaCl复式晶格</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 4</span><span class="chip">课件 5</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>有了基础认识后，习题就简单了。第一题需反复学习理解概念：晶格、基元、布拉伐格子、原胞和基矢。晶格：原子排列的具体形式，具有平移对称性及长程有序；基元：晶体中重复排列的基本单位，由不等价原子构成；布拉伐格子：用位于基元平衡位置的几何点（格点）替代每一个基元，格点在空间周期性排列的总体连成的网格；原胞：以格点为顶点、边长等于三个方向周期（基矢）的平行六面体，是晶格最小的周期性单元；基矢：原胞的边矢量。</p><p>以氯化钠为例说明如何用基元和布拉伐格子构建复式晶格：NaCl 晶体可以看作是由 Na⁺ 离子和 Cl⁻ 离子各自构成的面心立方（FCC）布拉伐格子沿体对角线方向平移 1/2 套构而成；其“基元”是一个 Na⁺ 和一个 Cl⁻ 离子对，将这一对离子抽象为一个格点，其布拉伐格子是一个面心立方格子。</p><p>补充：以氯化铯为例，它虽是简单晶格、看似体心立方晶格，但若将顶点和体心的原子视为一个单元、画出周围 8 个单元，会发现它是简单立方布拉伐格子加中心原子。题目要求分析的是氯化钠，它是面心立方格子：看起来好像也是一个面心立方，但相邻的两个原子的大小是不同的，说明这不是一个严格的面心立方；把两个原子的中心等效到中心的一个原子，再把排布情况画出来（把周围的 8 个都画出来），才能得到比较完整的面心立方的布拉菲格子。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>晶格：原子排列的具体形式称为晶格，具有平移对称性以及长程有序的特点。基元：晶体中重复排列的基本单位，由不等价原子构成。</p><p>主要看基元与布拉伐格子的排布，及其与最终晶体结构的对应关系。原子排列形式抽象为网格即晶格。</p><p>以氯化铯为例，它虽是简单晶格，看似体心立方晶格。若将顶点和体心的原子视为一个单元，画出周围8个单元，会发现它是简单立方布拉伐格子加中心原子。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-hw2-fcc">
+  <div class="slides"><figure class="slide" id="slide-06">
+<img src="slides/slide_06.png" alt="课件第6页 作业2：原胞与倒格子计算——已知面心立方（FCC）晶体的晶格常数为a：(a)写出其晶胞的基矢，并计算其原胞基矢和原胞体积（原胞基矢、倒格子基矢公式、原胞体积a³/4、原胞含1个原子）">
+<figcaption><span class="sno">06</span><span class="stitle">作业2：原胞与倒格子计算——已知面心立方（FCC）晶体的晶格常数为a：(a)写出其晶胞的基矢，并计算其原胞基矢和原胞体积（原胞基矢、倒格子基矢公式、原胞体积a³/4、原胞含1个原子）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-07">
+<img src="slides/slide_07.png" alt="课件第7页 作业2：根据倒格子基矢，结合布里渊区的定义画出其第一布里渊区——FCC晶格的倒格子是体心立方（BCC），其第一布里渊区是一个截角八面体（布里渊区定义回顾）">
+<figcaption><span class="sno">07</span><span class="stitle">作业2：根据倒格子基矢，结合布里渊区的定义画出其第一布里渊区——FCC晶格的倒格子是体心立方（BCC），其第一布里渊区是一个截角八面体（布里渊区定义回顾）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>作业2：FCC原胞与倒格子计算</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 6</span><span class="chip">课件 7</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第二题是关于计算的问题，大家考试里可能也会碰到（考试可能相对简单，一般情况下不会考特别难）。这是晶胞与倒格子的计算：给你一个明确的形式，你只要知道怎么对应过去就 OK，这是一个计算的问题。</p><p>面心立方晶体，晶格常数为 a。首先要注意晶胞和原胞的区别：如果是晶胞的话，我们要考虑它的对称性，以立方体的对称性作为依据；若以笛卡尔坐标系立方体三轴计算，无法遍历每个面心原子——基于这三矢量无法触及中间原子，因此晶胞基矢不全面，无法得到完整原子排布。考虑原胞需选三个矢量（a₁=a(𝚤+𝚥)/2、a₂=a(𝚥+𝗄)/2、a₃=a(𝗄+𝚤)/2），由三个连续面可得原胞基矢；取基矢时需满足右手螺旋定则。原胞体积为 a³/4（a₁·(a₂×a₃) 混合积运算），晶胞内含 4 个原子，故原胞含 1 个原子，这满足简单晶格中原胞只含 1 个原子的规则，所选原胞即为最小单元。</p><p>第二小问基于原胞基矢计算倒格子基矢：倒格子基矢对应原胞基矢，有特定计算公式（b₁=2π(a₂×a₃)/a₁·(a₂×a₃) 等），计算涉及叉乘除以原胞体积，可写出 B₁、B₂、B₃；若计算无误，可验证 B₁ 与 A₂、A₃ 是否垂直。找倒格子基矢有两种方式：一是建立坐标系写出 a₁、a₂、a₃ 的矢量形式直接计算，只要计算正确就不会出错；二是针对较简单的晶格处理——确定 A₁、A₂、A₃ 后先明确 A₂、A₃ 的方向，由 A₂、A₃ 建立的面找出其法向量（即 B₁ 的方向），大小取决于 A₁、A₂ 的叉乘结果再乘以 2π。</p><p>第三小问画第一布里渊区：倒格子空间中以原点为中心的部分区域——从原点作与最近邻倒格点、次近邻倒格点……的连线，再画出这些连线的垂直平分面；包含原点的多面体包围的区域就是第一布里渊区。FCC 晶格的倒格子是一个体心立方（BCC），其第一布里渊区是一个截角八面体。</p><p>进一步理解：第二布里渊区是四个三角形，不是连续区域；第三布里渊区是粉色区域，也不是连续区域。但第一或第二布里渊区里的点，通过减去 N₁B₁+N₂B₂+N₃B₃ 总能到达第一布里渊区里的某个点——第二、第三、第四、第五布里渊区里的格点都跟第一布里渊区的特定点一一对应，所以通常只研究最中心的第一布里渊区上的点，它的特性就可以知道这个晶格的宏观物理量具有什么样的特性。由面心立方算出倒格子是体心立方：由中心点向 8 个顶点画线做垂直平分面，围出封闭区域；再向第二近邻（立方体上下左右前后 6 个面中心、距离为 a）画垂直平分面，把角切掉——8 个面由顶点连线决定、6 个面由相邻晶面切出，所以是一个截角八面体。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>如果是晶胞的话，我们最大的要考虑它的对称性对不对？所以我们就是要以这样的一个立方体的对称性来作为依据。</p><p>若以笛卡尔坐标系立方体三轴计算，无法遍历每个面心原子。基于这三矢量，无法触及中间原子。</p><p>原胞体积为a³/4。计算公式为a₁·(a₂×a₃)，即混合积运算。大家只要知道矢量叉乘和点乘的计算方法，由定义就能推导。</p><p>所以其实你在第二、第三、第四、第五布里渊区里面找到一些格点。其实它们都是跟第一布里渊区的特定的点一一对应的。</p><p>它还有多少个面，还有6个……所以它是一个斜角的这样一个八面体的这样的一个形状。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-hw3-d4">
+  <div class="slides"><figure class="slide" id="slide-08">
+<img src="slides/slide_08.png" alt="课件第8页 作业3：一个平面正方形在自身平面内的所有对称操作构成D4群——E(不动)、T(旋转90°)、T2(旋转180°)、T3(旋转270°)、S0/S1/S2/S3(四个镜面)，共8种">
+<figcaption><span class="sno">08</span><span class="stitle">作业3：一个平面正方形在自身平面内的所有对称操作构成D4群——E(不动)、T(旋转90°)、T2(旋转180°)、T3(旋转270°)、S0/S1/S2/S3(四个镜面)，共8种</span></figcaption>
+</figure>
+<figure class="slide" id="slide-09">
+<img src="slides/slide_09.png" alt="课件第9页 作业3：将此概念扩展到三维空间——立方体的常见对称操作：E恒等、3条四重轴(C₄)共9个、4条三重轴(C₃)共8个、6条二重轴(C₂)共6个">
+<figcaption><span class="sno">09</span><span class="stitle">作业3：将此概念扩展到三维空间——立方体的常见对称操作：E恒等、3条四重轴(C₄)共9个、4条三重轴(C₃)共8个、6条二重轴(C₂)共6个</span></figcaption>
+</figure>
+<figure class="slide" id="slide-10">
+<img src="slides/slide_10.png" alt="课件第10页 作业3：立方体对称操作汇总——反演中心(i)、6个镜面、3个与i相关的镜面，共24个对称操作；加反演中心共48个">
+<figcaption><span class="sno">10</span><span class="stitle">作业3：立方体对称操作汇总——反演中心(i)、6个镜面、3个与i相关的镜面，共24个对称操作；加反演中心共48个</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>作业3：D4群与立方体对称操作</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 8</span><span class="chip">课件 9</span><span class="chip">课件 10</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第三题是群论或对称性操作的基本知识。D4 群包含 8 种具体的对称操作：E（不动，即恒等操作，对于任何一点群都有）；T（旋转 90°）、T2（旋转 180°）、T3（旋转 270°）；S0（垂直镜面）、S1（水平镜面）、S2（对角线镜面）、S3（对角线镜面）——正方形有镜面及对角线镜面，这些镜面可由旋转操作实现。在立方体中旋转加反演可实现镜面操作，二者等价，写出经验或旋转操作均无问题。</p><p>将此概念扩展到三维空间，立方体的常见对称操作：恒等 E（1 个）；3 条四重轴（绕面心轴旋转 90°/180°/270°，共 3×3=9 个）；4 条三重轴（绕体对角线旋转 120°/240°，共 4×2=8 个）；6 条二重轴（绕对棱中点轴旋转 180°，共 6 个）——共 24 个对称操作；加上反演中心 i 及其组合（与 i 相关的 9+8+6+1 个），简单立方总共 48 个对称性操作。加反演中心的操作可与镜面对应：课上讲过哪些对称操作与哪个镜面对应，大家课下可再查找，对应一个角就明白了；若课下不仔细推导弄明白，很快会忘记。</p><p>考试时不会说给你一个 D4 群让你写出对称操作，这个只有在作业里出现，让大家了解更多的群论及对称性操作的知识——作业时大家是可以上网查找的。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>对于正方形，有旋转90°、180°、270°。还有镜面及对角线镜面。这些镜面可由旋转操作实现。在立方体中，旋转加反演可实现镜面操作，二者等价。</p><p>旋转轴有四重、三重、二重轴，加反演中心。这些轴共24个操作，加反演中心又有24个。简单立方总共48个对称性操作。</p><p>但是在考试的时候不会说让你就给你一个第四群，然后就让你去写出它的一个对称操作，这个是不会的。这个就是只有在作业群里会出现。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-hw4-acoustic">
+  <div class="slides"><figure class="slide" id="slide-11">
+<img src="slides/slide_11.png" alt="课件第11页 作业4：以一维双原子链为例——在长波极限（q→0）下声学支和光学支的原子振动模式有何根本区别（声学支：原胞内两原子振动相位相同、振幅相近，整体表现为质心振动；光学支：相位相反、质心几乎不动，表现为相对振动）；对于一个三维晶体原胞中包含n个原子，其声学支和光学支数目分别是多少">
+<figcaption><span class="sno">11</span><span class="stitle">作业4：以一维双原子链为例——在长波极限（q→0）下声学支和光学支的原子振动模式有何根本区别（声学支：原胞内两原子振动相位相同、振幅相近，整体表现为质心振动；光学支：相位相反、质心几乎不动，表现为相对振动）；对于一个三维晶体原胞中包含n个原子，其声学支和光学支数目分别是多少</span></figcaption>
+</figure>
+<figure class="slide" id="slide-12">
+<img src="slides/slide_12.png" alt="课件第12页 作业4：求解过程——形式解代入运动方程、3n个线性齐次方程组、系数行列式为零得到3n个ω(q)；3个声学波（原胞内原子整体运动）+3n-3个光学波（原胞内原子相对振动）">
+<figcaption><span class="sno">12</span><span class="stitle">作业4：求解过程——形式解代入运动方程、3n个线性齐次方程组、系数行列式为零得到3n个ω(q)；3个声学波（原胞内原子整体运动）+3n-3个光学波（原胞内原子相对振动）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div class="sec-tt">
+        <h2>作业4：声学支与光学支</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 11</span><span class="chip">课件 12</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>接下来是晶格振动的作业题。第一题以一维双原子链为例：在波矢 q 趋于零时，声学支和光学支的原子振动模式有什么区别？讨论所有原子振动以及频率有什么特征的时候，一定是有对应的 q 值的——要有前提条件，是在长波极限、短波极限还是一般情况下去讨论。</p><p>在长波极限下：声学声子的原胞振动倾向于整个原胞的振动，所有的原子都同相位振动；光学声子则是原胞不动的振动，两个原子之间相对振动（相位相反、质心几乎不动）。</p><p>对于三维晶体原胞中包含 n 个原子，声学支和光学支分别是多少？声学支与维度有关系：在物理中心，声学声子是所有原子朝同一个方向振动，所以在多少个维度上运动就有多少支声学声子——一维只有一个声学声子（单原子链或双原子链都一样），二维有两个，三维有三个声学支。除了声学支剩下的就是光学支，即所有原子之间相对振动的形式：所以有 3n−3 个光学支。具体由自由度决定，即力学方程中联立方程的数量决定了声子支数：一维单原子链只有一个方程，一维双原子链原胞内有两个原子需联立两个方程（两个声子支：一个声学、一个光学）；三维情况原胞内有 n 个原子需联立 3n 个方程，有 3n 个 ω 与 q 的关系（对应体系自由度），其中有 3 个声学支、其余为光学支。</p><p>结合周期性边界条件限定 q 的取值，q 的取值总数等于晶体中原胞的个数：假设晶体中有 N 个原胞，物理布里渊区内 q 有 N 个取值；原胞内 n 个原子决定联立方程数，总自由度为 3×N×n，声子数目与体系自由度一一对应。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>在长波极限下声学声子的原胞振动，我们知道它是倾向于我整个原胞的这样一个振动，对吧？就所有的都是同相位的振动，而光学声子，那么我们设这个原胞不变的振动，就是我两个原子之间是相对振动的这样一个情况。</p><p>所以二维的体系，那么你就有两个维度……三维的话，我们这三个方向它都可以使得它原子以相同的速度跟相同的相位去沿这个方向振动。所以我们是有三个声学支。</p><p>回想一维单原子链，只有一个方程。在一维双原子链时，原胞内有两个原子，需联立两个方程求解。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-hw5-dos">
+  <div class="slides"><figure class="slide" id="slide-13">
+<img src="slides/slide_13.png" alt="课件第13页 作业5：（1）简述声子色散关系、声子态密度、态密度范霍夫奇点的概念，并定性说明声子色散曲线形状与声子态密度之间的关系（色散关系/态密度定义g(ω)=limΔN/Δω/范霍夫奇点）">
+<figcaption><span class="sno">13</span><span class="stitle">作业5：（1）简述声子色散关系、声子态密度、态密度范霍夫奇点的概念，并定性说明声子色散曲线形状与声子态密度之间的关系（色散关系/态密度定义g(ω)=limΔN/Δω/范霍夫奇点）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-14">
+<img src="slides/slide_14.png" alt="课件第14页 作业5：（2）基于一维单原子链的色散关系，求解一维单原子链的振动模式态密度（态密度发散/奇点、一维晶体ω-(ω+Δω)对应端点处两段、Nₐ/2π）">
+<figcaption><span class="sno">14</span><span class="stitle">作业5：（2）基于一维单原子链的色散关系，求解一维单原子链的振动模式态密度（态密度发散/奇点、一维晶体ω-(ω+Δω)对应端点处两段、Nₐ/2π）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-15">
+<img src="slides/slide_15.png" alt="课件第15页 思考题：不同维度对态密度的影响——自由电子E=ℏ²k²/2m，三维态密度连续、二维台阶状、一维奇点、零维一根根能级">
+<figcaption><span class="sno">15</span><span class="stitle">思考题：不同维度对态密度的影响——自由电子E=ℏ²k²/2m，三维态密度连续、二维台阶状、一维奇点、零维一根根能级</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">08</span>
+      <div class="sec-tt">
+        <h2>作业5：声子态密度与范霍夫奇点</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 13</span><span class="chip">课件 14</span><span class="chip">课件 15</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第五个是一些概念问题，还有关于态密度计算的问题。第一小问是声子色散曲线、声子态密度以及态密度函数起点的概念。声子色散关系：声子频率 ω 随波矢 q 的变化关系；声子态密度：态密度是单位能量范围内声子态的数目，定义式 g(ω)=lim(Δn/Δω)，即在这个范围内取非常小的 Δω，看里面有多少个态的数目；范霍夫奇点：声子色散曲线上等频率面间振动态的数目出现尖锐的峰和斜率的突变（一级微商不连续）的地方，通常和晶体对称性相联系、常出现在布里渊区的某些高对称点上。</p><p>声子色散曲线形状和声子态密度之间的关系：在色散曲线上，q 由周期性边界条件决定是均匀取值的（q=2πl/L），所以一段 Δω 涵盖了多少 Δq 很容易确定。求态密度可分两部分：第一部分是 q 空间的概率密度（N 与 q 的关系），一维是 L/2π（或 Nₐ/2π）、二维是 S/(2π)²、三维是 V/(2π)³，仅与维度有关；第二部分是 Δω 与 Δq 的关系，相当于色散曲线斜率的导数 dω/dq 的倒数——斜率大小直接决定态密度。直观理解：若曲线较平缓，在较小的能量范围内横跨的 q 范围越大、状态数目越多——色散曲线越平缓，斜率越趋近于 0，得到的态密度越大。定性来说，声子色散曲线越平缓，态密度越大。</p><p>第二小问基于一维单原子链的色散关系求解振动模式态密度：只需知道色散关系的解析式，求导处理 dω/dQ 的关系即可；注意求出的 g 是 ω 的函数，要把 q 换成 ω（k 与 q 等价）。一维比较特殊，q 有正有负，所以要乘以 2。最后求出的 g(ω) 是一个 ω 的表达式，有的同学写到这里就结束了，要注意变换一下。</p><p>思考题：自由电子的色散曲线很简单 E=ℏ²k²/2m，计算三维、二维、一维、零维的态密度——三维态密度连续、二维是台阶状、一维有一些奇点（看纳米管的能带结构/态密度基本上就是这种形状）、零维是三维受限变成一根一根的能级（能级没有所谓的态密度或者说态密度极大）。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>声子态密度：态密度是单位能量范围内声子态的数目。定义式g(ω)=lim(ΔN/Δω)……在单位能量范围内，有多少个态的数目。</p><p>直观理解来看，若曲线较平缓，在较小的能量范围内横跨的Q范围越大，状态数目就越多。这与公式相对应：色散曲线越平缓，斜率越趋近于0，得到的态密度越大。</p><p>对1维的话就比较特殊，所以最后我们求出来G(ω)。这个是ω，自变量后面也是ω。就是我们是一个ω的表达式，大家要注意，可能有的同学写到这里就结束了，就是要变化一下。</p><p>对于一维的话，那么它是有一些奇点的。这个大家如果去看过一些纳米管，它的这个能带结构的这样的一个，就是它的一个态密度的话，基本上就是这样子的一个形状。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-hw6-staggered">
+  <div class="slides"><figure class="slide" id="slide-16">
+<img src="slides/slide_16.png" alt="课件第16页 作业6：考虑一个一维双原子链，两种原子的质量均为m，最近邻原子之间的间距为a/2，仅考虑最近邻原子间的相互作用，且最近邻原子间的力常数交替等于c和5c（交错力常数一维双原子链：每个原胞中两个原子所处环境不同）">
+<figcaption><span class="sno">16</span><span class="stitle">作业6：考虑一个一维双原子链，两种原子的质量均为m，最近邻原子之间的间距为a/2，仅考虑最近邻原子间的相互作用，且最近邻原子间的力常数交替等于c和5c（交错力常数一维双原子链：每个原胞中两个原子所处环境不同）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-17">
+<img src="slides/slide_17.png" alt="课件第17页 作业6：(a)写出原子的运动方程并推导色散关系ω(q)；(b)求在布里渊区中心(q=0)和边界(q=π/a)处两支声子模的频率ω⁻和ω⁺（ω⁻声学支、ω⁺光学支，带隙分析）">
+<figcaption><span class="sno">17</span><span class="stitle">作业6：(a)写出原子的运动方程并推导色散关系ω(q)；(b)求在布里渊区中心(q=0)和边界(q=π/a)处两支声子模的频率ω⁻和ω⁺（ω⁻声学支、ω⁺光学支，带隙分析）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">09</span>
+      <div class="sec-tt">
+        <h2>作业6：交错力常数的一维双原子链</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 16</span><span class="chip">课件 17</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>再看运动方程和频率计算。这是一维双原子链模型：原胞内两原子质量均为 m，但相邻力常数交替等于 c 和 5c（每个原胞中有两个原子、两个原子所处的环境不同）。注意题目给出的最近邻间距是 a/2，则力常数为 c 和 5c；课上例子间距为 a、对应 2N+1——需根据具体条件判断间距与力常数的对应关系，这是易错点。</p><p>对这两个原子进行受力分析：左边弹力较大、右边力也较大。将格波形式代入（原胞内有两个原子，需联立两个方程求解），振动幅度 A 和 B 为未知量、构成二元一次方程组；为使解非零，需令系数行列式等于 0，化简后得到 ω 与 k 的关系——这表明存在声学支和光学支，是双原子链的典型特征。</p><p>其次要求解布里渊区中心和边界：若未给出 q 值，需自行计算布里渊区边界（与倒格子计算相关，知识点相互串联考察）；此处直接给出 q 值，将其代入频率表达式即可得具体数值。当 k 趋近于 0 时，ω⁻ 趋近于 0 即为声学支，ω⁺ 频率最高即为光学支；在布里渊区边界时，声学支达到最大值、光学支达到最小值，光学支与声学支之间存在带隙。带隙大小与两原子环境差异（力常数比值）相关，请大家回去与一维双原子链（两原子质量不同、带隙与质量比值相关）进行比较。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>注意题目给出的最近邻间距是A/2，则力常数为A而非2A。课上例子间距为A，对应2N+1。若间距为A/2，则对应不同表达式。需根据具体条件判断间距与力常数的对应关系，这是易错点。</p><p>当k趋近于0时，ω-趋近于0，即为声学支；ω+频率最高，即为光学支。在布里渊区边界时，声学支达到最大值，光学支达到最小值。光学支与声学支之间存在带隙。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-ch2-review">
+  <div class="slides"><figure class="slide" id="slide-18">
+<img src="slides/slide_18.png" alt="课件第18页 第2章 拉曼光谱学介绍主要内容：光散射及光谱简介、拉曼光谱简介、拉曼光谱测试、晶格振动的其它实验探测方法、拉曼光谱的应用概述、晶格振动理论及其常用计算方法">
+<figcaption><span class="sno">18</span><span class="stitle">第2章 拉曼光谱学介绍主要内容：光散射及光谱简介、拉曼光谱简介、拉曼光谱测试、晶格振动的其它实验探测方法、拉曼光谱的应用概述、晶格振动理论及其常用计算方法</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">10</span>
+      <div class="sec-tt">
+        <h2>第2章复习：拉曼光谱学介绍</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 18</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第二章是固体光学的简要介绍，因课时较少仅作普通概述。第 2 章第 5 节的应用概述与第 5 章内容重复，故未详细讲解。我们讲解了光谱、光反射及不同类型反射：用光谱描述光与物质相互作用的现象，包括吸收、散射和荧光，介绍了不同光谱的横纵坐标区别。</p><p>拉曼光谱与其他光谱有显著区别。拉曼光谱与红外光谱的横坐标虽都是波数，但也存在区别：假设某个峰既是红外活性又是拉曼活性（比如 521 cm⁻¹），在拉曼光谱、红外光谱都能看到，频率是一模一样的，但横坐标含义有差异——红外光谱里零波数的位置是绝对的波数，代表没有能量；而在拉曼光谱里零波数不代表没有能量，代表的是入射光能量的位置。所以它们数值一模一样、含义有天壤之别。</p><p>重点介绍了瑞利散射、布里渊散射与拉曼散射之间的区别，以及拉曼光谱如何做测试。最主要就是讲信噪比——如何去提升信噪比，这是日常做光谱时需要注意的、需要你优化条件、找到最合适条件的关键。还有其他的实验方法也简单介绍了一下。在这一章里还有一个重要的概念：看光谱时横坐标有不同的意义，要掌握不同的横坐标单位之间怎么换算——虽然在仪器上做测试时仪器会给你换算，但科研中仍需自己掌握换算方法，这也是非常重要的技能，是考试可能涉及的知识（并非直接考查）。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>在红外光谱里，零波数的位置是一个绝对的波数，就是我代表的是我没有能量。但是在拉曼光谱里面，零波数它不代表没有能量，其实代表的是我入射光的能量的一个位置。</p><p>最主要就是给大家讲的这个信噪比，就是如何去提升这个信噪比。这是我们日常在做光谱的时候需要注意的。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-hw1-raman-id">
+  <div class="slides"><figure class="slide" id="slide-19">
+<img src="slides/slide_19.png" alt="课件第19页 作业1：拉曼峰的鉴别——列举至少两种实验方法判断观测到的峰是否为材料本征拉曼峰（方法一：改变激发光波长，拉曼位移不变/荧光绝对波长不变；方法二：测试反斯托克斯信号）">
+<figcaption><span class="sno">19</span><span class="stitle">作业1：拉曼峰的鉴别——列举至少两种实验方法判断观测到的峰是否为材料本征拉曼峰（方法一：改变激发光波长，拉曼位移不变/荧光绝对波长不变；方法二：测试反斯托克斯信号）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">11</span>
+      <div class="sec-tt">
+        <h2>作业1：拉曼峰的鉴别</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 19</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>在拉曼光谱测试中，只要打光上去，材料发射的任何信号都会被光谱仪接收——因为光谱仪不区分光信号，所以观察到的一系列信号都可能进入主机，不一定是拉曼散射信号，需要做鉴别。最常见的是环境杂散光影响：比如开着灯测弱信号时，杂散光会进入干扰测试结果，盖上盖子或关灯后背景直接下降，说明是环境杂散光影响了测试；还有一种是半导体或化学材料可能有荧光，如果荧光信号与拉曼散射信号在同一波段就需要处理。</p><p>判断一个观测到的峰是否为材料的本征拉曼峰，方法一：改变激发光波长——若该峰在拉曼位移坐标上位置不变则为拉曼峰，若其在波长坐标上位置不变则是荧光峰。原理：拉曼散射是散射信号，入射光与材料相互作用后，散射光子相对于入射光子能量的平移由材料振动能级决定、与激发光波长无关；而荧光（光致发光）是自发性发光，其绝对波长（能量）由材料的能级特性决定，是固定的——用不同激发光激发，电子都跃迁到导带再发射，PL 能量在电子伏特或纳米单位下不变；而拉曼散射总是相对入射光平移这么多，变化激发光时拉曼峰位在波数坐标上不变、荧光峰的“拉曼位移”会变化。</p><p>方法二：测试反斯托克斯信号（Anti-Stokes）——一阶拉曼散射会成对产生斯托克斯（能量损失）信号和反斯托克斯（能量增益）信号，两者拉曼位移绝对值相等。若观测到的峰既有 Stokes 又有对应能量的 Anti-Stokes 峰，即为拉曼信号；而荧光峰不成对出现。当然这是一般情况，也有很多特殊情况：包括超晶格里面的声子测不同波长频率会变化、石墨烯在共振条件下测拉曼散射也不是一一对应的，这些后面都会讲到。对于很多普通的例子，可以用这两种方法判断是不是一个材料本身的拉曼峰。</p><p>这里还有一个隐藏原理与第二道题相关：我们测试的通常是布里渊区中心的声子，变换信号波长时波矢移动不大，在布里渊区内光学生子随光能量变化能量也不会有剧烈变化——所以选用不同激发光波长才能探测到同一频率的信号。但对于布里渊散射（用可见光波长激发、探测深水声子），声学声子斜率是线性的且较大，稍微改变信号光能量频率就会发生改变，所以通过改变激光波长看位置是否不变来判断拉曼峰，对布里渊散射是有问题的。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>因为光谱仪不区分光信号，所以观察到的一系列信号都可能进入主机，不一定是拉曼反射信号，需要做鉴别。</p><p>拉曼散射是散射的信号……荧光是什么呢？荧光是自发性的发光……它们这些位置都是固定的，就是我的绝对的波数，就是我的能量，我的能级特性。</p><p>那么，第2个方法呢，就是通过这个斯托克斯跟反斯托克斯。当然，你要用到的，大家第4章也学到了，那么你要同时测到一通感，你是需要有线玻璃玻片对吧？</p><p>对于布里渊散射，虽用可见光波长的激发光，但探测的是深水声子。其斜率是线性的且较大。稍微改变信号光能量，频率就会发生改变。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-hw2-selection">
+  <div class="slides"><figure class="slide" id="slide-20">
+<img src="slides/slide_20.png" alt="课件第20页 作业2：拉曼选择定则的理解——一阶拉曼散射满足准动量守恒ℏkₛ−ℏk_L=±ℏq+ℏG，利用此定则解释为什么使用可见光激光（如λ=633nm）进行的常规拉曼测试只能探测到布里渊区中心（Γ点）附近的声子（光子波矢k~10⁻²nm⁻¹、布里渊区边界q~π/a~10nm⁻¹，相差约3个数量级）">
+<figcaption><span class="sno">20</span><span class="stitle">作业2：拉曼选择定则的理解——一阶拉曼散射满足准动量守恒ℏkₛ−ℏk_L=±ℏq+ℏG，利用此定则解释为什么使用可见光激光（如λ=633nm）进行的常规拉曼测试只能探测到布里渊区中心（Γ点）附近的声子（光子波矢k~10⁻²nm⁻¹、布里渊区边界q~π/a~10nm⁻¹，相差约3个数量级）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">12</span>
+      <div class="sec-tt">
+        <h2>作业2：拉曼选择定则——为什么只测Γ点声子</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 20</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第二道题是拉曼选择定则的理解：一阶拉曼散射过程需满足准动量守恒 ℏkₛ−ℏk_L=±ℏq+ℏG。利用此定则解释为什么使用可见光激光（如 λ=633nm）进行的常规拉曼测试只能探测到布里渊区中心（Γ点，q≈0）附近的声子。</p><p>数量级估算：对于可见光激光 λ=633nm，光子波矢 k=2π/λ~10⁻² nm⁻¹；布里渊区边界波矢数量级为 q~π/a，晶格常数通常 a~3×10⁻¹⁰m，所以 q~π/a~10 nm⁻¹。两者相差约 3 个数量级。因此一阶拉曼散射只能探测到布里渊区中心附近很小一部分区域内的声子，即布里渊区中心的声子。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>主要就是我的处理区域，A是一个纳米级的数量级。而我用到的布里渊区或者是拉曼反射，它的波长通常是可见光几百纳米，所以我们就相差了3个数量级。这个时候，我就是只能测到这个布里渊区中心的这样一个峰。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-hw3-snr">
+  <div class="slides"><figure class="slide" id="slide-21">
+<img src="slides/slide_21.png" alt="课件第21页 作业3：信噪比（SNR）是评价拉曼光谱质量的关键指标——拉曼光谱测量所产生的σy来自数个贡献（σS拉曼峰标准偏差、σB背景信号、σD探测器暗信号、σF 1/f噪声、σR读出噪声）">
+<figcaption><span class="sno">21</span><span class="stitle">作业3：信噪比（SNR）是评价拉曼光谱质量的关键指标——拉曼光谱测量所产生的σy来自数个贡献（σS拉曼峰标准偏差、σB背景信号、σD探测器暗信号、σF 1/f噪声、σR读出噪声）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-22">
+<img src="slides/slide_22.png" alt="课件第22页 作业3：a)拉曼光谱信噪比的科学定义是所测拉曼峰强度与其标准偏差的比值SNR=S̅/σy；b)若拉曼信号很弱且存在较强荧光背景，可采取的措施：选择合适波长激光、增加信号积分时间、对样品进行预处理">
+<figcaption><span class="sno">22</span><span class="stitle">作业3：a)拉曼光谱信噪比的科学定义是所测拉曼峰强度与其标准偏差的比值SNR=S̅/σy；b)若拉曼信号很弱且存在较强荧光背景，可采取的措施：选择合适波长激光、增加信号积分时间、对样品进行预处理</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">13</span>
+      <div class="sec-tt">
+        <h2>作业3：信噪比的定义与优化</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 21</span><span class="chip">课件 22</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第三是关于信噪比的问题。首先需了解信噪比的定义：噪声并非光谱抖动的误差，而是所有非拉曼散射信号的因素——如荧光背景、环境杂散光等。拉曼光谱测量所产生的 σy 来自数个贡献：σS 为所测拉曼峰强的标准偏差；σB 为背景信号的标准偏差，来自激光、样品和环境光源的非拉曼信号的光谱背景（除了样品和相关光学元件的荧光、热发射以及激光导致的杂散光等背景信号以外，也与来自环境光源并进入光谱仪被探测器检测到的杂散光子信号有关）；σD 为探测器暗信号的标准偏差（通常为 φDt^1/2，φD 为暗计数率）；σF 为 1/f 噪声（发生在固态元件或真空电子管中，噪声功率与频率 f 成反比）；σR 为读出噪声。它有不同的来源，所以我们要通过实验判断哪一个噪声占主要因素，尽量去减少这个噪声来提高信噪比。</p><p>a) 拉曼光谱信噪比的科学定义：所测拉曼峰强度与其标准偏差的比值 SNR=S̅/σy，其中 S̅ 是基线以上拉曼峰的平均强度，σy 为该强度的标准偏差；σy 通常由两次连续测量光谱之差谱位于拉曼峰处的标准偏差再除以 2 得到。</p><p>b) 若某样品的拉曼信号很弱、且存在较强的荧光背景，从实验操作角度可采取的措施：一是选择合适的激光波长——拉曼散射信号总是落在离激光波长很靠近的位置，变化一下激光波长能让它远离荧光的位置（使用能量远离荧光激发线的激光，以避开或减弱荧光背景）；二是增加信号积分时间——在探测器线性响应范围内延长单次测量的积分时间，信号累积线性增加，而散粒噪声等主要噪声源随时间的平方根增加，从而提升 SNR；三是对样品进行预处理——如对易光解或产生荧光的样品进行淬火、包覆或置于低温、真空环境中测试（比如二维半导体材料单层荧光很强，可以通过载流子转移把电子空穴在空间上分离——用一个二维半导体材料跟石墨烯（半金属、化学势低）复合，电子和空穴都可以跑掉，或者用另一个半导体材料让电子跑到一侧、空穴跑到另一侧，从而降低荧光，使拉曼信号能看出来）。前提是进行确定（处理）后不影响你原来想要观察的拉曼散射信号，受到处理方式影响不大时才可以进行这样的处理。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>噪声并非光谱抖动的误差，而是所有非拉曼散射信号的因素。如荧光背景、环境杂散光等，都是噪声来源。</p><p>我们知道背景噪声和积分时间的平方根成正比，而信号和时间成正比，所以一除有一个时间的1/2次方关系。你可以通过适当增加积分时间来增加信噪比。</p><p>比如像二维材料的半导体这些材料，单层的材料荧光是很强的。其实你可以通过载流子的转移……你就可以把这个荧光进行淬灭。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-hw4-units">
+  <div class="slides"><figure class="slide" id="slide-23">
+<img src="slides/slide_23.png" alt="课件第23页 作业4：拉曼光谱中的单位换算问题——某材料Stokes本征拉曼峰位于1000cm⁻¹，分别用532nm和633nm激光激发，计算两种情况下该Stokes和Anti-Stokes拉曼峰的信号波长（nm）（波长/波数/能量换算：cm⁻¹≈10⁷/λnm、εeV≈1240/λnm、1cm⁻¹≈1.24×10⁻⁴eV）">
+<figcaption><span class="sno">23</span><span class="stitle">作业4：拉曼光谱中的单位换算问题——某材料Stokes本征拉曼峰位于1000cm⁻¹，分别用532nm和633nm激光激发，计算两种情况下该Stokes和Anti-Stokes拉曼峰的信号波长（nm）（波长/波数/能量换算：cm⁻¹≈10⁷/λnm、εeV≈1240/λnm、1cm⁻¹≈1.24×10⁻⁴eV）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-24">
+<img src="slides/slide_24.png" alt="课件第24页 作业4：计算过程——633nm：E₀≈1.96eV、拉曼信号能量2.08/1.84eV、信号波长595/676nm；532nm：E₀≈2.33eV、信号波长505/562nm">
+<figcaption><span class="sno">24</span><span class="stitle">作业4：计算过程——633nm：E₀≈1.96eV、拉曼信号能量2.08/1.84eV、信号波长595/676nm；532nm：E₀≈2.33eV、信号波长505/562nm</span></figcaption>
+</figure>
+<figure class="slide" id="slide-25">
+<img src="slides/slide_25.png" alt="课件第25页 作业4：荧光影响信噪比的实例——材料在560nm附近存在较强荧光信号，选用633nm激光激发更适合本次测试（532nm激发会使得光谱具有较高荧光背景，信噪比较差）">
+<figcaption><span class="sno">25</span><span class="stitle">作业4：荧光影响信噪比的实例——材料在560nm附近存在较强荧光信号，选用633nm激光激发更适合本次测试（532nm激发会使得光谱具有较高荧光背景，信噪比较差）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">14</span>
+      <div class="sec-tt">
+        <h2>作业4：单位换算与激光选择</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 23</span><span class="chip">课件 24</span><span class="chip">课件 25</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第四个是单位换算问题。某材料的 Stokes 本征拉曼峰位于 1000 cm⁻¹，分别用 532nm 和 633nm 激光激发，计算两种情况下该 Stokes 和 Anti-Stokes 拉曼峰的信号波长（nm）。计算的时候最好不要死记公式，要理解斯托克斯跟反斯托克斯是怎么来的、原理是什么：中心波长要把它变成 0 波数，所以先算 532 和 633 的绝对波数——用 10⁷ 除以 λ（nm）得到绝对波数；拉曼峰在 1000 个波数，加减此值可得反斯托克斯和斯托克斯信号的绝对波数；再用 10⁷ 除以散射光子绝对波数算出波长。需明确斯托克斯与反斯托克斯对应的波长长短，以便进行测试。</p><p>具体换算关系：1cm⁻¹≈10⁷/λnm；能量 εeV≈1240/λnm；1cm⁻¹≈1.24×10⁻⁴ eV（约 8065 cm⁻¹ 对应 1 eV）。633nm：E₀≈1240/633≈1.96eV，ΔE=1000cm⁻¹≈0.12eV，拉曼信号能量（Stokes）1.84eV、（Anti-Stokes）2.08eV，信号波长（Stokes）676nm、（Anti-Stokes）595nm；532nm：E₀≈2.33eV，拉曼信号能量 2.21/2.45eV，信号波长 562/505nm。计算拉曼信号时需要同时考虑 Stokes/anti-Stokes 过程。</p><p>第二个问题：材料在 560nm 附近存在较强的荧光信号，为了提高拉曼光谱的信噪比，哪一个波长的激光更适合此次测试？应选 633nm——它更远离 560。若荧光在 630 左右，选 532 还是 730 激光更能探测拉曼信号？建议选 700 多波长：因波长较长，若带隙在 600 多，700 多激光可能无法激发电子跃迁至导带，此时不会产生荧光，但可能有少量上转换荧光——这与材料特性有关，若上转换荧光强仍可观察到；如果上转换效率很低，几乎看不到荧光，就能得到很好的信噪比。虽然与 633、532、730 原理相同，但要从原理出发选择更好波长。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>就是计算的时候最好还是不要死记那个公式……我的中心波长是要把它变成0波数，所以你相当于你就是要把这个532和633，它的一个绝对的波数是什么？1240除以这个λ去乘以806806对吧。</p><p>应选633，因为它更远离560。若荧光在630左右，选532还是730激光更能探测拉曼信号？……建议选700多波长。因波长较长，若带隙在600多，700多激光可能无法激发电子跃迁至导带。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-hw5-techniques">
+  <div class="slides"><figure class="slide" id="slide-26">
+<img src="slides/slide_26.png" alt="课件第26页 作业5：列举三种可用于探测晶体振动的实验技术，介绍其探测的测量内容和探测到的主要信息（拉曼光谱、远红外和红外光谱、布里渊散射谱、非弹性中子散射、超声技术、非弹性电子隧道谱、X射线漫散射对比表）">
+<figcaption><span class="sno">26</span><span class="stitle">作业5：列举三种可用于探测晶体振动的实验技术，介绍其探测的测量内容和探测到的主要信息（拉曼光谱、远红外和红外光谱、布里渊散射谱、非弹性中子散射、超声技术、非弹性电子隧道谱、X射线漫散射对比表）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">15</span>
+      <div class="sec-tt">
+        <h2>作业5：晶体振动的探测技术</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 26</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第五题列举三种可用于探测晶体振动的实验技术，介绍其探测的测量内容和探测到的主要信息。课件给出了一张对比表：拉曼光谱（电磁波，测量散射光的强度随频率的变化，探测 q~0 下的光学声子、极化特性，与拉曼光谱相关的声子色散/态密度有限信息）；远红外和红外光谱（透射或反射光的强度随频率的变化，探测绝缘体和半导体的红外介电性质、q~0 下的光学声子，薄膜和吸附物的振动性质）；布里渊散射谱（测量散射光强度随频率的变化，探测小波矢量 q 下的声学模式、声速、声子-声子相互作用）；非弹性中子散射 INS（散射中子的强度随能量和动量转移，探测声子色散、态密度）；超声技术 US（超声脉冲的速度和衰减，探测声速等）；非弹性电子隧道谱 IETS（金属-绝缘体-金属隧穿的电流-电压，探测分子振动）；X 射线漫散射（散射 X 射线的强度随动量转移的变化，探测声子色散信息）。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>接下来是晶体振动探测技术，相信大家没什么问题。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-ch3-review">
+  <div class="slides"><figure class="slide" id="slide-27">
+<img src="slides/slide_27.png" alt="课件第27页 第3章 拉曼散射理论基础主要内容：声子简正模、光散射理论、拉曼散射选择定则、一阶拉曼散射、二阶拉曼散射、共振拉曼散射、表面增强拉曼散射*、非线性拉曼散射*">
+<figcaption><span class="sno">27</span><span class="stitle">第3章 拉曼散射理论基础主要内容：声子简正模、光散射理论、拉曼散射选择定则、一阶拉曼散射、二阶拉曼散射、共振拉曼散射、表面增强拉曼散射*、非线性拉曼散射*</span></figcaption>
+</figure>
+<figure class="slide" id="slide-28">
+<img src="slides/slide_28.png" alt="课件第28页 第3章细分：散射起源及散射实验、散射概率与散射截面（与散射强度相关）、光散射的宏观理论（经典理论）、光散射的微观理论（量子理论）——散射概率和散射截面的经典物理和量子物理描述、电偶极辐射和感生偶极矩、分子的光散射、微分散射截面与量子跃迁概率、含时间微扰论、光散射的量子力学诠释">
+<figcaption><span class="sno">28</span><span class="stitle">第3章细分：散射起源及散射实验、散射概率与散射截面（与散射强度相关）、光散射的宏观理论（经典理论）、光散射的微观理论（量子理论）——散射概率和散射截面的经典物理和量子物理描述、电偶极辐射和感生偶极矩、分子的光散射、微分散射截面与量子跃迁概率、含时间微扰论、光散射的量子力学诠释</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">16</span>
+      <div class="sec-tt">
+        <h2>第3章复习：拉曼散射理论基础</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）</span><span class="chip">课件 27</span><span class="chip">课件 28</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>下面看第三章拉曼散射理论基础。首先讲分子振动模式（声子简正模）：通过运动方程求解出 ω 和 q 的关系，但对于每个频率的具体振动形式，需代入整体形式才能看到，很难直接得到原子振动形式。因此用声子振动模形式，将交织的振动分开——原子振动由多个声子振动叠加而成。如何分解声子振动使其相互独立？就像三维空间某点可用三个互不干扰的坐标表示（XYZ 投影）：在声子简正模中要找出正交归一化解，使它们相互独立、互不串扰，此时原子的振动可分解到这三个方向上；找到这组基后就能知道原子在各组分中的贡献。这实质上是做正则变换：两个小球由三段弹簧连接的模型，从运动方程求解，通过加减得到新变量（大 X 和小 X），它们满足新方程、解出单一 ω 关系；而单独考虑时需同时考虑 ω₁ 和 ω₂。这相当于将原坐标正则变换为新坐标，由此得到声子简正模及色散曲线（色散曲线即变换系数）。这些模式对应色散曲线上任意 q 值的点，其 ω 即为该点的取值。</p><p>第二部分从散射的基本原理出发，介绍散射概率、散射截面及其计算方法，包括宏观（经典）理论和量子理论。讨论拉曼光谱时涉及 5 个物理量：频率、峰位、峰宽、线形强度和偏振特性。光散射理论部分重点讲解强度及其影响因素：从拉曼散射基本原理出发，介绍散射概率和截面的定义，并用经典及量子理论表示出来，明确其与哪些物理量有关。</p><p>经典理论中电偶极辐射与 ω 的四次方成正比，这是瑞利散射的普适关系——蓝天白云由瑞利散射引起（蓝光散射更多），朝霞晚霞则因散射方向改变、地面看到的是剩余颜色，这由强度与 ω⁴ 的关系决定。拉曼散射也满足此关系：对于无共振体系如金刚石或氟化钙，在介电常数很大且考虑仪器响应后，可见光不同波段的拉曼强度呈现完美的 ω⁴ 关系。当然这很难做，因为谱仪是色散型的、不同光学元件对不同波段有不同的响应效率，要找出这些元件的响应效率并去除，才能看到 ω⁴ 关系。</p><p>对于量子方面，从量子跃迁概率考虑强度关系（微扰理论）：过程包含光子激发电子、电子从基态变到激发态、与声子作用后复合放出散射光子，涉及三个哈密顿量及矩阵——光子-电子和电子-声子耦合矩阵元。由量子理论可知，物理量交换次序会影响结果：将经典电偶极辐射理论放入量子框架，可见斯托克斯与反斯托克斯强度不同，这解决了经典理论无法解决的问题。</p><p>有了基础认识后讲了拉曼选择定则，花很多时间讲解表格由来：目的是让大家清楚如何查表知道拉曼散射哪些是活性、哪些是非活性，这是基本技能；但若发现异常现象，需明确群论假设及分析过程，判断研究体系是否破坏了该规则。所以我们讲怎么查找拉曼张量、怎么计算偏振拉曼强度。后面是一阶二阶拉曼散射，最主要的是强度关系——一阶二阶拉曼散射强度随温度的变化关系是不同的，所以可根据温度变化规律找出一阶还是二阶。还有就是共振，这与量子理论相关：从电子能级出发，怎么样才能实现共振？有单共振、双共振，我们大概了解了这些内容，具体如何运用概念处理或分析数据在第 5 章、第 6 章会深入讲解。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>如何分解声子振动使其相互独立？就像三维空间某点可用三个互不干扰的坐标表示。进行XYZ投影。在声子谐振模中，要找出正交归一化解，使它们相互独立、互不串扰。</p><p>经典理论中电偶极辐射与欧米伽的四次方成正比，这是瑞利散射的普适关系。蓝天白云由瑞利散射引起……拉曼散射也满足此关系。</p><p>目的是让大家清楚如何查表知道拉曼散射哪些是活性、哪些是非活性。这是基本技能，但若发现异常现象，需明确群论假设及分析过程。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-hw1-classical">
+  <div class="slides"><figure class="slide" id="slide-29">
+<img src="slides/slide_29.png" alt="课件第29页 作业1：光散射理论的经典描述与量子描述——A)经典理论中一个振动模具有“拉曼活性”的判据是什么，结合感生偶极矩表达式说明（极化率受晶格振动调制α=α₀+Δα₀Q₀cos(ωqt−q·r)）；B)量子理论中拉曼散射对应于怎样的能级跃迁过程；C)根据P的表达式推导Stokes和Anti-Stokes散射信号的频率大小和波矢表达式，并说明经典理论在两者相对强度上的局限性">
+<figcaption><span class="sno">29</span><span class="stitle">作业1：光散射理论的经典描述与量子描述——A)经典理论中一个振动模具有“拉曼活性”的判据是什么，结合感生偶极矩表达式说明（极化率受晶格振动调制α=α₀+Δα₀Q₀cos(ωqt−q·r)）；B)量子理论中拉曼散射对应于怎样的能级跃迁过程；C)根据P的表达式推导Stokes和Anti-Stokes散射信号的频率大小和波矢表达式，并说明经典理论在两者相对强度上的局限性</span></figcaption>
+</figure>
+<figure class="slide" id="slide-30">
+<img src="slides/slide_30.png" alt="课件第30页 作业1：推导过程——P=α·E展开，应用三角函数公式cosαcosβ=(cos(α+β)+cos(α−β))/2">
+<figcaption><span class="sno">30</span><span class="stitle">作业1：推导过程——P=α·E展开，应用三角函数公式cosαcosβ=(cos(α+β)+cos(α−β))/2</span></figcaption>
+</figure>
+<figure class="slide" id="slide-31">
+<img src="slides/slide_31.png" alt="课件第31页 作业1：结果中包含三种频率成分：ωL（瑞利散射）、ωL−ωQ（斯托克斯散射）、ωL+ωQ（反斯托克斯散射）；若Δα₀=(∂α/∂Qᵢ)₀=0，则不产生拉曼散射——极化率随该振动模式发生变化是产生拉曼散射的经典物理本质">
+<figcaption><span class="sno">31</span><span class="stitle">作业1：结果中包含三种频率成分：ωL（瑞利散射）、ωL−ωQ（斯托克斯散射）、ωL+ωQ（反斯托克斯散射）；若Δα₀=(∂α/∂Qᵢ)₀=0，则不产生拉曼散射——极化率随该振动模式发生变化是产生拉曼散射的经典物理本质</span></figcaption>
+</figure>
+<figure class="slide" id="slide-32">
+<img src="slides/slide_32.png" alt="课件第32页 作业1：能级图像——晶格振动能级角度：Rayleigh≫Raman、Stokes/Anti-Stokes与声子占据有关（IRaman/IAnti-Stokes≈exp(ℏω/kBT)）；电子能级角度：虚能级跃迁">
+<figcaption><span class="sno">32</span><span class="stitle">作业1：能级图像——晶格振动能级角度：Rayleigh≫Raman、Stokes/Anti-Stokes与声子占据有关（IRaman/IAnti-Stokes≈exp(ℏω/kBT)）；电子能级角度：虚能级跃迁</span></figcaption>
+</figure>
+<figure class="slide" id="slide-33">
+<img src="slides/slide_33.png" alt="课件第33页 作业1：经典理论局限——Stokes:频率ωL−ωQ、波矢kL−q；Anti-Stokes:频率ωL+ωQ、波矢kL+q；从经典理论推导出的偶极矩P表达式中不难看出斯托克斯与反斯托克斯信号具有相同的振幅，与实际（Anti-Stokes≪Stokes）情况不符">
+<figcaption><span class="sno">33</span><span class="stitle">作业1：经典理论局限——Stokes:频率ωL−ωQ、波矢kL−q；Anti-Stokes:频率ωL+ωQ、波矢kL+q；从经典理论推导出的偶极矩P表达式中不难看出斯托克斯与反斯托克斯信号具有相同的振幅，与实际（Anti-Stokes≪Stokes）情况不符</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">17</span>
+      <div class="sec-tt">
+        <h2>作业1：光散射理论的经典与量子描述</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）</span><span class="chip">课件 29</span><span class="chip">课件 30</span><span class="chip">课件 31</span><span class="chip">课件 32</span><span class="chip">课件 33</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>关于光散射理论的经典和量子描述。A) 经典理论中一个振动模具有“拉曼活性”的判据是什么？结合感生偶极矩表达式说明：在经典理论中，一个振动模的“拉曼活性”判据是极化率随该振动模式发生变化——极化率受到频率为 ωQ 的晶格振动的调制：α=α₀+Δα₀Q₀cos(ωqt−q·r)，考虑入射光场 E=E₀cos(ωLt−kL·r)，偶极矩 P=α·E。应用三角函数公式 cosαcosβ 积化和差，P 的结果中包含三种频率成分：ωL（瑞利散射）、ωL−ωQ（斯托克斯散射）、ωL+ωQ（反斯托克斯散射）；如果 Δα₀=(∂α/∂Qᵢ)₀=0，则上述公式中不产生频率为 ωL±ωQ 的项、即没有拉曼散射。因此，极化率随该振动模式发生变化是产生拉曼散射的经典物理本质。这就是拉曼活性和红外活性的区别：红外是吸收过程（一阶过程），电偶极矩有变化；拉曼是散射过程（二阶过程），极化率有变化。</p><p>B) 量子理论中拉曼散射对应于怎样的能级跃迁过程：光、电、声三个粒子耦合的过程——光子激发电子、电子从基态跃迁到一个虚能级（一般画虚线，因为没有实能级无法实现共振），虚能级上的电子马上就和声子发生相互作用，最后回到它的初态。由于是虚能级，电子没办法在那里长待，所以拉曼散射过程非常快——一般是一个飞秒量级的过程。而荧光：光激发上去之后需要经过一个无辐射弛豫（带边），最后才发光，过程比拉曼慢，量级为皮秒、纳秒或微秒。因此出现时间门控技术：探测器前设闸门，光入射时开启允许信号进入，随后迅速关闭闸门阻挡后续信号，仅探测皮秒级的拉曼信号，从而有效抑制皮秒至微秒级的荧光干扰——这是利用两者时间差实现的荧光抑制技术（现有仪器仅针对特定波长，未覆盖多波长）。晶格振动能级角度：分子在基态与激发态间的跃迁描述斯托克斯和反斯托克斯过程；瑞利散射因与入射光直接可比拟，信号强度远大于拉曼散射（IRayleigh≫IRaman）；斯托克斯与反斯托克斯与振动能级间的声子分布比例有关（IAnti/IRaman≈exp(−ℏω/kBT)）。</p><p>C) 根据 P 的表达式推导 Stokes 和 Anti-Stokes 散射信号的频率大小和波矢表达式：Stokes 频率 ωL−ωQ、波矢 kL−q；Anti-Stokes 频率 ωL+ωQ、波矢 kL+q。从经典理论推导出的偶极矩 P 的表达式中不难看出，斯托克斯信号与反斯托克斯信号具有相同的振幅，与实际（常温下 Anti-Stokes≪Stokes）情况不符——经典理论在两者相对强度上有局限性。量子理论中交换算子会产生额外系数（N+1 和 N），以此描述强度比值，解决了经典理论无法解决的问题。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>一个是吸收过程，电偶极矩满足跃迁，即电偶极矩有变化，这是红外吸收的。另一个是散射，是二阶过程，所以极化率有变化。在振动过程中，极化率变化才能满足拉曼活性。</p><p>由于它是一个虚能级，所以电子没办法在那里长待，所以大家可想而知，我的拉曼散射过程其实是非常快的。一般是一个飞秒量级的过程。</p><p>从由经典理论推导出的偶极矩P的表达式中不难看出，斯托克斯信号与反斯托克斯信号具有相同的振幅，与实际情况不符。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-hw2-polarization">
+  <div class="slides"><figure class="slide" id="slide-34">
+<img src="slides/slide_34.png" alt="课件第34页 作业2：背散射几何下的偏振选择定则与实验验证——考虑具有D3h对称性的单层MoS₂，其位于布里渊区中心的拉曼活性模式为E'和A₁'，拉曼张量分别为R(E')、R(A₁')；A)请写出背散射配置下四种常见的线偏振散射配置（如VV、HV、VH、HH，需明确入射与散射光的偏振方向与实验室坐标轴的关系）">
+<figcaption><span class="sno">34</span><span class="stitle">作业2：背散射几何下的偏振选择定则与实验验证——考虑具有D3h对称性的单层MoS₂，其位于布里渊区中心的拉曼活性模式为E'和A₁'，拉曼张量分别为R(E')、R(A₁')；A)请写出背散射配置下四种常见的线偏振散射配置（如VV、HV、VH、HH，需明确入射与散射光的偏振方向与实验室坐标轴的关系）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-35">
+<img src="slides/slide_35.png" alt="课件第35页 作业2：四种线偏振配置定义——z̅(xx)z、z̅(xy)z、z̅(yx)z、z̅(yy)z（入射光偏振方向与散射光分析方向平行/垂直的各种组合）">
+<figcaption><span class="sno">35</span><span class="stitle">作业2：四种线偏振配置定义——z̅(xx)z、z̅(xy)z、z̅(yx)z、z̅(yy)z（入射光偏振方向与散射光分析方向平行/垂直的各种组合）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-36">
+<img src="slides/slide_36.png" alt="课件第36页 作业2：B)假设入射光沿z方向（垂直样品）、偏振沿x方向，计算在VV（散射光偏振分析沿x）和VH（散射光偏振分析沿y）配置下E'模和A₁'模的相对拉曼强度">
+<figcaption><span class="sno">36</span><span class="stitle">作业2：B)假设入射光沿z方向（垂直样品）、偏振沿x方向，计算在VV（散射光偏振分析沿x）和VH（散射光偏振分析沿y）配置下E'模和A₁'模的相对拉曼强度</span></figcaption>
+</figure>
+<figure class="slide" id="slide-37">
+<img src="slides/slide_37.png" alt="课件第37页 作业2：计算与讨论——E'模在平行偏振（VV）配置下可见、在交叉偏振（VH）配置下完全消失；A₁'模在VV和VH配置下强度均不为零且理论计算强度相等；因此可通过对比同一模式在VV和VH配置下的信号强度明确区分两个模式">
+<figcaption><span class="sno">37</span><span class="stitle">作业2：计算与讨论——E'模在平行偏振（VV）配置下可见、在交叉偏振（VH）配置下完全消失；A₁'模在VV和VH配置下强度均不为零且理论计算强度相等；因此可通过对比同一模式在VV和VH配置下的信号强度明确区分两个模式</span></figcaption>
+</figure>
+<figure class="slide" id="slide-38">
+<img src="slides/slide_38.png" alt="课件第38页 作业2：线偏振散射配置的实现——90°散射配置与背散射配置、入射光偏振方向与散射光偏振方向、二分之一波片（λ/2）改变偏振、检偏器；讨论光栅对不同偏振方向响应不同对实验结果的影响">
+<figcaption><span class="sno">38</span><span class="stitle">作业2：线偏振散射配置的实现——90°散射配置与背散射配置、入射光偏振方向与散射光偏振方向、二分之一波片（λ/2）改变偏振、检偏器；讨论光栅对不同偏振方向响应不同对实验结果的影响</span></figcaption>
+</figure>
+<figure class="slide" id="slide-39">
+<img src="slides/slide_39.png" alt="课件第39页 思考题：两层MoS₂中剪切模（C模，不可约表示Eg）和呼吸模（LB模，不可约表示A1g）在背散射四种圆偏振配置（σ+σ+、σ+σ−、σ−σ+、σ−σ−）下的拉曼信号强度及圆偏振特性（左旋/右旋圆偏振琼斯矢量（1,−i,0）T与（1,i,0）T）">
+<figcaption><span class="sno">39</span><span class="stitle">思考题：两层MoS₂中剪切模（C模，不可约表示Eg）和呼吸模（LB模，不可约表示A1g）在背散射四种圆偏振配置（σ+σ+、σ+σ−、σ−σ+、σ−σ−）下的拉曼信号强度及圆偏振特性（左旋/右旋圆偏振琼斯矢量（1,−i,0）T与（1,i,0）T）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">18</span>
+      <div class="sec-tt">
+        <h2>作业2：背散射几何下的偏振选择定则</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）</span><span class="chip">课件 34</span><span class="chip">课件 35</span><span class="chip">课件 36</span><span class="chip">课件 37</span><span class="chip">课件 38</span><span class="chip">课件 39</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第二点是背散射情况下的偏振选择定则及实验验证。需掌握给定拉曼张量在不同偏振配置下的计算方法：考虑具有 D3h 对称性的单层 MoS₂，其位于布里渊区中心的拉曼活性模式为 E' 和 A₁'，拉曼张量分别为 R(E')（有 b、d 参数）和 R(A₁')（有 a 参数）。A) 背散射配置下四种常见的线偏振散射配置：VV（入射与散射偏振均沿 X）、VH（入射沿 X、散射分析沿 Y）、HV、HH；通常用 Porto 记法 z̅(xx)z、z̅(xy)z、z̅(yx)z、z̅(yy)z——括号内前一个为入射光偏振、后一个为散射光偏振，前后分别表示散射光和入射光的传播方向。</p><p>B) 假设入射光沿 z 方向（垂直样品）、偏振沿 x 方向，计算在 VV（散射光偏振分析沿 x）和 VH（散射光偏振分析沿 y）配置下 E' 模和 A₁' 模的相对拉曼强度：拉曼强度 I∝e_s·R·e_i 的平方。对 E' 模（两个拉曼张量，进行平方求和）：在 VV 配置下可见（I∝d²），在 VH 配置下完全消失（I=0）；对 A₁' 模（只有一个拉曼张量）：在 VV 和 VH 配置下强度均不为零（I∝a²）且理论计算强度相等。因此，通过对比同一个模式在 VV 和 VH 配置下的信号强度，可以明确区分它们：在 VH 配置下消失的是 E' 模，VH 配置下依然存在且强度与 VV 配置下相近的是 A₁' 模。大家不仅要关注拉曼活性，还要关注拉曼配置的取向才能观察到信号——你可以通过拉曼配置选择不同的声子模式，从而判断来源。</p><p>线偏振配置的实现：入射光处可以加偏振片；做实验时一定要先验证偏振方向（大部分入射光的偏振方向垂直于地面，但也有例外如太宝石激发光束是水平的），再选择后续加的偏振片。若要在入射光处改变偏振方向，可以在该位置加上二分之一波片（λ/2）——入射光偏振方向固定，加上二分之一波片后可以改变它是水平还是竖直，然后再照射到样品上。散射光端一般要加一个偏振片（检偏器），保证探测到的光是统一偏振，因为不同光栅对不同偏振方向的接收效果不同，定量描述的话这里还是要加一个检偏器。很多文献如果不是很专业的话一般在这里可能就不加了，但其实那个分析就是有问题的。</p><p>用 VH 和 HH、HV 和 VH 理论上计算的结果是一样的，所以很多时候改变入射光方向变成 VV 或 HV 两种配置是没有问题的。有的组为了方便，前面不改变入射光（保持 V），在后面散射光放一个偏振片让它可以是 H 或 V——但这时要非常小心：光栅对不同的偏振方向本身是有取向性的、效率不同，你一旦放了 V 或放了 H，虽然都有这部分光会过去，但最后结果理论上应该一样、实际由于光路上元件的响应不同，可能导致理论和实验的结果不一致。所以最好的结果还是多放一个二分之一波片放在前面去实现 HH 和 VV 的配置，不改变散射端的偏振方向去进行测量。</p><p>另一种偏振选择是转样品——但对于很小的样品一转就找不着了，所以提供另一种思路：在共同光路上加一个二分之一波片，你转 θ 角相当于样品转到 θ 的角度，两种配置其实是一模一样的、等价的——完全不用改变样品，放在那里转 λ/2 波片，就可以测到同个位置的点、得到更为精确的结构。</p><p>思考题：原来课上讲的都是线偏振，怎么做圆偏振的实验、怎么计算圆偏振的拉曼散射选择定则？给了一个结果：2~4 层的二硫化钼低频模，一个是剪切模（C 模，Eg）、一个是呼吸模（LB 模，A1g）。在圆偏振计算下会发现：在平行的圆偏振配置下（RR/LL）只能看到 LB 模；在交叉的圆偏振配置下（RL/LR）只能看到剪切模（C 模）——圆偏振能把两种模式完全区分开。而如果是线偏振，由于 C 模在平行和交叉偏振配置下都能看到信号，你总是不能把 C 模直接测出来、需要去做减法；运用圆偏振的话，就可以把 C 模和 LB 模完全区分开，在一个光谱图里面就会很干净、能看到单独的某一个信号。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>对于一阶模，VV和VH的计算结果相同，这一点大家要知道。它有两个拉曼向量，所以进行平方求和。对于A1模，只有一个拉曼张量，不同偏振配置下计算结果不同。</p><p>做实验时，一定要先验证偏振方向，再选择后续加的偏振片。若要在入射光处改变偏振方向，可以在该位置加上二分之一波片。</p><p>但是这个时候大家就要非常的小心，因为你的光栅对不同的偏振方向本身是有取向性的，就是它的效率是不同的。</p><p>所以这种片大家可以算一下，这两种配置其实是一模一样的，是等价的。在这里你完全不用去改变样品。</p><p>如果是对于线偏振的话，由于C模式在平行和交叉偏振配置下都能看到信号……但是运用圆偏振的话，就可以把C膜和LB膜完全区分开。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-hw3-resonance">
+  <div class="slides"><figure class="slide" id="slide-40">
+<img src="slides/slide_40.png" alt="课件第40页 作业3：共振拉曼散射的机理及其对选择定则的突破——共振拉曼散射能极大增强信号并可能激活非共振条件下禁戒的模式；A)请画出并简要描述“入射共振”与“出射共振”、“双共振”的能级跃迁示意图">
+<figcaption><span class="sno">40</span><span class="stitle">作业3：共振拉曼散射的机理及其对选择定则的突破——共振拉曼散射能极大增强信号并可能激活非共振条件下禁戒的模式；A)请画出并简要描述“入射共振”与“出射共振”、“双共振”的能级跃迁示意图</span></figcaption>
+</figure>
+<figure class="slide" id="slide-41">
+<img src="slides/slide_41.png" alt="课件第41页 作业3：能级跃迁示意图——非共振、入射共振、出射共振、双共振（ℏωph等）">
+<figcaption><span class="sno">41</span><span class="stitle">作业3：能级跃迁示意图——非共振、入射共振、出射共振、双共振（ℏωph等）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-42">
+<img src="slides/slide_42.png" alt="课件第42页 作业3：B)为什么在二阶拉曼过程中可以探测到波矢q远离布里渊区中心（Γ点）的声子——一阶拉曼散射动量守恒kS=kL±q，光子波矢远小于声子波矢故q≈0；二阶拉曼散射涉及两个声子，动量守恒kS=kL±q1±q2，两个声子波矢可以大小相等方向相反，矢量和为零但每个声子自身波矢可达布里渊区边界量级">
+<figcaption><span class="sno">42</span><span class="stitle">作业3：B)为什么在二阶拉曼过程中可以探测到波矢q远离布里渊区中心（Γ点）的声子——一阶拉曼散射动量守恒kS=kL±q，光子波矢远小于声子波矢故q≈0；二阶拉曼散射涉及两个声子，动量守恒kS=kL±q1±q2，两个声子波矢可以大小相等方向相反，矢量和为零但每个声子自身波矢可达布里渊区边界量级</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">19</span>
+      <div class="sec-tt">
+        <h2>作业3：共振拉曼散射</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）</span><span class="chip">课件 40</span><span class="chip">课件 41</span><span class="chip">课件 42</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第三是关于共振的，用电子能级共振的图像来理解。A) 画出并简要描述入射共振、出射共振和双共振的能级跃迁示意图：若未达实能级而在虚能级，拉曼强度通常较弱；但若入射光能量与某电子跃迁能级匹配，或相互作用后达到该能级，可实现共振——此过程增强拉曼强度，称为入射共振；若是出射过程（散射光子能量与电子能级匹配），则称出射共振；若有两个接近能级刚好实现该过程，即为双共振。这是从原子能级角度绘制，若用抛物线能带结构也可类似绘制。</p><p>B) 为什么在二阶拉曼过程中可以探测到波矢 q 远离布里渊区中心（Γ点）的声子？一阶拉曼散射（产生或湮灭一个声子）的动量守恒关系为（忽略倒格矢 G）：kS=kL±q，由于参与散射的光子波矢（kL、kS）远小于声子波矢 q，可得 q≈0——因此只能探测布里渊区中心附近的声子。二阶拉曼散射涉及两个声子（例如同时产生两个斯托克斯声子，或产生一个斯托克斯声子并湮灭一个反斯托克斯声子），其动量守恒关系为 kS=kL±q1±q2：两个声子的波矢可以大小相等、方向相反，在这种情况下它们的矢量和为零，但每个声子自身的波矢可达到布里渊区边界量级——所以二阶拉曼可以探测到波矢远离 Γ 点的声子。这与一阶非共振拉曼散射通常只探测 q≈0 声子的限制不同。</p><p>声子不一定来自布里渊区中心，可有有限 q 值：可以是 q 到 −q 再回来，实现一个或两个共振（后者即双共振）；或者先上去不共振，展示一个声子共振、再吸收声子也共振（若后两个过程均共振也是双共振）；还有上去共振、反射光声子共振、散射声子也共振，在另一处组合所有过程都共振——称为三共振拉曼散射过程。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>若入射光能量与某电子跃迁能级匹配，或相互作用后达到该能级，可实现共振。此过程增强拉曼强度，称为入射共振；若是出射过程，则称出射共振。若有两个接近能级刚好实现该过程，即为双共振。</p><p>二阶拉曼散射涉及两个声子……两个声子的波矢可以大小相等、方向相反。在这种情况下，它们的矢量和为零，但每个声子自身的波矢，达到布里渊区边界量级。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-hw4-raman-ir">
+  <div class="slides"><figure class="slide" id="slide-43">
+<img src="slides/slide_43.png" alt="课件第43页 作业4：拉曼活性与红外活性模式的理解与判断——A)简述具有拉曼活性的振动模式和具有红外活性的振动模式的性质差异；B)单层石墨烯Γ点的对称性为D6h，Γ点振动模式的不可约表示为Γ₁LG=A₂u+B₂g+E₁u+E₂g，四个不可约表示分别对应四种振动模式，请结合D6h点群的特征标表说明哪些具有拉曼活性、哪些具有红外活性">
+<figcaption><span class="sno">43</span><span class="stitle">作业4：拉曼活性与红外活性模式的理解与判断——A)简述具有拉曼活性的振动模式和具有红外活性的振动模式的性质差异；B)单层石墨烯Γ点的对称性为D6h，Γ点振动模式的不可约表示为Γ₁LG=A₂u+B₂g+E₁u+E₂g，四个不可约表示分别对应四种振动模式，请结合D6h点群的特征标表说明哪些具有拉曼活性、哪些具有红外活性</span></figcaption>
+</figure>
+<figure class="slide" id="slide-44">
+<img src="slides/slide_44.png" alt="课件第44页 作业4：D6h点群的特征标表">
+<figcaption><span class="sno">44</span><span class="stitle">作业4：D6h点群的特征标表</span></figcaption>
+</figure>
+<figure class="slide" id="slide-45">
+<img src="slides/slide_45.png" alt="课件第45页 作业4：声子的拉曼活性与红外活性回顾——拉曼活性对应极化率χαβ的改变（基本函数是二次函数的不可约表示，x²、y²、z²、xy、xz、yz）；红外活性对应感应偶极矩mα的改变（基本函数是一次函数的不可约表示，x、y、z）；在有对称中心的晶体中拉曼活性与红外活性互相排斥">
+<figcaption><span class="sno">45</span><span class="stitle">作业4：声子的拉曼活性与红外活性回顾——拉曼活性对应极化率χαβ的改变（基本函数是二次函数的不可约表示，x²、y²、z²、xy、xz、yz）；红外活性对应感应偶极矩mα的改变（基本函数是一次函数的不可约表示，x、y、z）；在有对称中心的晶体中拉曼活性与红外活性互相排斥</span></figcaption>
+</figure>
+<figure class="slide" id="slide-46">
+<img src="slides/slide_46.png" alt="课件第46页 作业4：只有偶表示的声子才可能有一阶拉曼散射；只有奇表示的声子才可能有一阶红外吸收（相似变换形式与二次函数/一次函数相同）">
+<figcaption><span class="sno">46</span><span class="stitle">作业4：只有偶表示的声子才可能有一阶拉曼散射；只有奇表示的声子才可能有一阶红外吸收（相似变换形式与二次函数/一次函数相同）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-47">
+<img src="slides/slide_47.png" alt="课件第47页 作业4：石墨烯D6h点群分析——Γvib=A₂u⊕B₂g⊕E₁u⊕E₂g；B2g：拉曼活性R；E2g：拉曼活性R（张量）；A2u：红外活性IR；E1u：红外活性IR（iA/oA）">
+<figcaption><span class="sno">47</span><span class="stitle">作业4：石墨烯D6h点群分析——Γvib=A₂u⊕B₂g⊕E₁u⊕E₂g；B2g：拉曼活性R；E2g：拉曼活性R（张量）；A2u：红外活性IR；E1u：红外活性IR（iA/oA）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">20</span>
+      <div class="sec-tt">
+        <h2>作业4：拉曼活性与红外活性</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）</span><span class="chip">课件 43</span><span class="chip">课件 44</span><span class="chip">课件 45</span><span class="chip">课件 46</span><span class="chip">课件 47</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>这是查表结果，主要考察看表能力。A) 简述具有拉曼活性的振动模式和具有红外活性的振动模式的性质差异：拉曼活性对应极化率 χαβ 的改变（声子的拉曼活性——原子（离子）间的距离变化会引起极化率的改变；相似变换形式与二次函数相同，基本函数是二次函数的不可约表示——x²、y²、z²、xy、xz、yz 对应的振动模式是拉曼活性的）；红外活性对应感应偶极矩 mα 的改变（晶胞格子间的原子间距的改变——若对称中心等效电荷 q 始终为零，偶极矩的变化 δμ=q×δd=0×δd=0，则不具红外活性；相似变换形式与一次函数相同，基本函数是一次函数的不可约表示——x、y、z 对应的振动模式是红外活性的）。在有对称中心的晶体中，拉曼活性与红外活性是互相排斥的。</p><p>B) 单层石墨烯 Γ 点的对称性为 D6h，Γ 点振动模式的不可约表示为 Γvib=A₂u⊕B₂g⊕E₁u⊕E₂g，四个不可约表示分别对应四种振动模式，请结合 D6h 点群的特征标表说明哪些具有拉曼活性、哪些具有红外活性：查特征标表——只有偶表示的声子才可能有一阶拉曼散射（基本函数是二次函数的不可约表示），只有奇表示的声子才可能有一阶红外吸收（基本函数是一次函数的不可约表示）。结果：E₂g（偶表示、对应 x²−y²、xy）和 B₂g（偶表示、对应 xy 类）具有拉曼活性 R；A₂u（奇表示、对应 z）和 E₁u（奇表示、对应 x、y）具有红外活性 IR。</p><p>回顾判断规则：拉曼散射是二阶过程（极化率改变），红外吸收是偶极矩跃迁的一阶过程；据此判断——奇函数表示可能有一阶拉曼散射？不对，是偶表示对应拉曼（二次函数）、奇表示（一次函数、XYZ）对应红外吸收活性。在有对称中心的晶体中两者互相排斥。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>拉曼活性对应极化率改变，红外活性对应偶极矩改变。拉曼散射是二阶过程，红外吸收是偶极矩跃迁的一阶过程。</p><p>在有对称中心的晶体中，拉曼活性与红外活性是互相排斥的。</p><p>以单层石墨烯D6h为例，其特征标表中，二次函数如X平方等三项为拉曼活性。而Z、X、Y等一次函数对应偶极矩变化，这两项为红外活性。通过查表可区分拉曼和红外活性。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-hw5-order">
+  <div class="slides"><figure class="slide" id="slide-48">
+<img src="slides/slide_48.png" alt="课件第48页 作业5：简述一阶拉曼散射、二阶拉曼散射的基本概念及区分方法——一阶：仅单个声子参与的散射过程，动量守恒限制参与的是布里渊区中心的声子，峰型尖锐强度较高，Stokes积分强度与温度呈(n+1)关系；二阶：两个声子参与的散射过程，动量守恒对k大小无限制、原则上可研究整个布里渊区声子谱，散射谱连续、强度与声子态密度有关，一般比一阶弱一到两个数量级，和频/差频峰的积分强度与温度呈n₁(n₂+1)关系">
+<figcaption><span class="sno">48</span><span class="stitle">作业5：简述一阶拉曼散射、二阶拉曼散射的基本概念及区分方法——一阶：仅单个声子参与的散射过程，动量守恒限制参与的是布里渊区中心的声子，峰型尖锐强度较高，Stokes积分强度与温度呈(n+1)关系；二阶：两个声子参与的散射过程，动量守恒对k大小无限制、原则上可研究整个布里渊区声子谱，散射谱连续、强度与声子态密度有关，一般比一阶弱一到两个数量级，和频/差频峰的积分强度与温度呈n₁(n₂+1)关系</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">21</span>
+      <div class="sec-tt">
+        <h2>作业5：一阶与二阶拉曼散射</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）</span><span class="chip">课件 48</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>最后一道题是一阶拉曼散射和二阶拉曼散射的基本概念，区分方法是根据温度。一阶拉曼散射：散射过程中仅有单个声子参与；由于动量守恒限制，参与一阶拉曼过程的是布里渊区中心的声子；峰型较尖锐、强度较高；Stokes 散射信号和 Anti-Stokes 散射信号与瑞利散射信号的能量差的绝对值相等；一阶 Stokes 拉曼峰的积分强度与温度呈 (n+1) 关系。</p><p>二阶拉曼散射：发生两个散射过程的拉曼散射，一般来说是两个声子参与的拉曼散射过程；二阶拉曼散射比较平坦，在强度上一般情况下要比一阶拉曼散射弱一到两个数量级；二阶拉曼过程中的动量守恒对 k 的大小并没有限制，原则上可研究整个布里渊区的声子谱，散射谱是连续谱、强度与声子态密度有关；二阶 Stokes 和频拉曼峰的积分强度与温度呈 n₁(n₂+1) 关系，差频拉曼峰的积分强度与温度呈 n₂(n₁+1) 关系。</p><p>一阶二阶重点在于动量关系，以及强度随温度的变化关系，掌握这两点即可。这是 1~3 章的习题，多为概念及部分计算，大家回去看看，有问题下次习题课再探讨。今天的课就上到这里。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>一阶二阶重点在于动量关系，以及强度随温度的变化关系，掌握这两点即可。这是1~3章的习题，多为概念及部分计算。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-closing">
+  <div class="slides"><figure class="slide" id="slide-49">
+<img src="slides/slide_49.png" alt="课件第49页 谢谢（Thanks for your attention）">
+<figcaption><span class="sno">49</span><span class="stitle">谢谢（Thanks for your attention）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">22</span>
+      <div class="sec-tt">
+        <h2>结课</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（尾）</span><span class="chip">课件 49</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>今天的习题课到这里。回顾一遍：第一章的作业涵盖了需掌握的内容（晶格、基元、布拉伐格子、原胞、基矢、NaCl 复式晶格构建、FCC 原胞与倒格子计算、D4 群与立方体对称操作、双原子链声学光学支、态密度与范霍夫奇点、交错力常数双原子链）；第二章讲了固体光学简要介绍、拉曼峰鉴别、选择定则、信噪比与单位换算、晶体振动探测技术；第三章讲了光散射理论的经典与量子描述、偏振选择定则与实验验证、共振拉曼散射、拉曼与红外活性、一阶与二阶拉曼散射。</p><p>下次习题课在课程结束后进行，大家可以回去看看今天的习题，有问题下次习题课再探讨。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这是1~3章的习题，多为概念及部分计算。大家回去看看，有问题下次习题课再探讨。今天的课就上到这里。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（显微共焦拉曼光谱学）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>

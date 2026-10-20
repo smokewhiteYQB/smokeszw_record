@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>岩石热力学 · 第1课 第1章（上）：地质流体状态方程与热力学基本函数——单位体系、理想气体与临界现象｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.videos{margin-top:14px;border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.video + .video{border-top:1px solid #e4e9f0;}
+.videos h4{font-size:12.5px;font-weight:700;color:#0a1f38;background:#f2f5f9;padding:8px 12px;border-bottom:1px solid #e4e9f0;}
+.videos video{display:block;width:100%;max-height:460px;background:#0b0f14;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>岩石热力学 · 第1课 第1章（上）：地质流体状态方程与热力学基本函数——单位体系、理想气体与临界现象</h1>
+    <div class="sub">第1课 第1章（上）：地质流体状态方程与热力学基本函数——单位体系、理想气体与临界现象 ｜ 2026-10-13 ｜ 吴老师（岩石热力学）</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 36 页 · 整理 7 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-opening">01 开场与两个经典实验：沥青滴漏与岩石蠕变</option>
+<option value="sec-units">02 单位体系与常见温压尺度</option>
+<option value="sec-abs-zero">03 绝对零度与热力学温标</option>
+<option value="sec-ideal-gas">04 理想气体状态方程的推导与应用</option>
+<option value="sec-micro-model">05 理想气体微观模型与经验定律</option>
+<option value="sec-critical">06 实际气体的液化、临界点、超临界流体与相图</option>
+<option value="sec-van-der-waals">07 状态方程谱系与范德华方程</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 第1章 地质流体状态方程与热力学基本函数.pdf 逐页渲染，转写原文见 record_20261013.txt。</div>
+<section class="sec" id="sec-opening">
+  <div class="slides"><figure class="slide" id="slide-01">
+<img src="slides/slide_01.png" alt="课件第1页 第1章 地质流体状态方程与热力学基本函数：地质流体状态方程、热力学状态函数及其本质、焓熵与Gibbs自由能、热力学第零/一/二/三定律——热力学来自生活，指导生活、科研，实际上很简单！">
+<figcaption><span class="sno">01</span><span class="stitle">第1章 地质流体状态方程与热力学基本函数：地质流体状态方程、热力学状态函数及其本质、焓熵与Gibbs自由能、热力学第零/一/二/三定律——热力学来自生活，指导生活、科研，实际上很简单！</span></figcaption>
+</figure>
+<figure class="slide" id="slide-02">
+<img src="slides/slide_02.png" alt="课件第2页 澳大利亚昆士兰大学沥青滴落实验（1927，Thomas Parnell）：证明焦油沥青是超高黏度液体而非固体；沥青加热倒入封口玻璃漏斗，凝固后切开下端记录滴落">
+<figcaption><span class="sno">02</span><span class="stitle">澳大利亚昆士兰大学沥青滴落实验（1927，Thomas Parnell）：证明焦油沥青是超高黏度液体而非固体；沥青加热倒入封口玻璃漏斗，凝固后切开下端记录滴落</span></figcaption>
+</figure>
+<figure class="slide" id="slide-03">
+<img src="slides/slide_03.png" alt="课件第3页 沥青滴落完整时间线（共9滴）：1938年第1滴，1947第2滴，1956第3滴（帕内尔生前仅见证3滴成型），1962/1968/1979/1988/2000年，2014年4月24日第9滴（空调恒温后周期拉长）；截至2026年第10滴仍在缓慢成型，预估2020年代末落下">
+<figcaption><span class="sno">03</span><span class="stitle">沥青滴落完整时间线（共9滴）：1938年第1滴，1947第2滴，1956第3滴（帕内尔生前仅见证3滴成型），1962/1968/1979/1988/2000年，2014年4月24日第9滴（空调恒温后周期拉长）；截至2026年第10滴仍在缓慢成型，预估2020年代末落下</span></figcaption>
+</figure>
+<figure class="slide" id="slide-04">
+<img src="slides/slide_04.png" alt="课件第4页 李四光纪念馆中的恒温岩石蠕变实验（1962年李四光亲自设计）：地壳应力长时间持续缓慢加载，岩石发生蠕变（长期塑性永久变形）；恒温箱体消除温度波动、试件台放置花岗岩/大理石/灰岩标准试件">
+<figcaption><span class="sno">04</span><span class="stitle">李四光纪念馆中的恒温岩石蠕变实验（1962年李四光亲自设计）：地壳应力长时间持续缓慢加载，岩石发生蠕变（长期塑性永久变形）；恒温箱体消除温度波动、试件台放置花岗岩/大理石/灰岩标准试件</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>开场与两个经典实验：沥青滴漏与岩石蠕变</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 1</span><span class="chip">课件 2</span><span class="chip">课件 3</span><span class="chip">课件 4</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第一章我们从热力学的零基础开始讲，学过的同学当成复习一遍，没学过的同学，恭喜你进入一个全新的领域。这门课学完之后，你会发现你长了一双别人没有的翅膀——尤其是对于变质岩和研究岩石的同学而言，如果你不懂热力学，学得再好也只能得50分。这是另外给你助力的强有力的工具，而且我敢保证今后你的人生观世界观都会随之发生变化，括弧除非你不听。</p><p>这一章我们讲地质流体、状态方程与热力学基本函数。地质流体指的是两种形态：一种是气体，一种是超临界流体。状态方程就是拿 P、V、T 三个参数来构建它们之间的函数关系式。热力学状态函数及其本质，这既是补课内容也是我们垫底的——即便学过我们还要复习一下，要不后边没法儿听。热力学不神秘，它来自生活很朴素，反过来还要指导生活和科研。</p><p>先讲一个著名的实验，1927年，整整快100年了。当时澳大利亚昆士兰大学的一个教授，为了向学生证明沥青是液体而不是固体，做了这个实验。他叫 Thomas Parnell，是昆士兰大学首任物理系教授。他把沥青融化之后装到玻璃漏斗里面，玻璃漏斗下面是可以漏东西的——既然沥青是液体，它应该能滴下来。这个实验非常有名，到今年就100年了。这个老师生前看到过沥青滴落实验。该实验不同时间滴落，今年还在进行，预计20年代末会滴下第10滴。在这个系里，一代代物理学教师都错过了那一刻。你看，它拉成丝了，马上掉了是吧？我们去打球回来差不多了，结果就在他打球时停下来。</p><p>这个实验进行了100年，很多人说沥青已证明是液体，但作为一个著名实验还在做。大家注意看，这里有一个类似的实验：这是李四光先生在地质力学研究所做的，就是证明岩石受压之后会变弯。这是1962年设计的实验，其中有一个一直在进行。岩石变形不在地表常温常压下，所以要给它加压——地壳应力是长时间持续缓慢加载的，岩石会发生蠕变，也就是长期塑性永久变形。恒温箱体消除温度波动干扰、模拟地下稳定地温环境；试件台放置花岗岩、大理石、灰岩标准试件。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这门课学完之后，你会发现你长了一双别人没有的翅膀。</p><p>这个实验进行了100年，很多人说沥青已证明是液体。但作为一个著名实验还在做。</p><p>岩石变形不在地表常温常压下，所以要给它加压。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-units">
+  <div class="slides"><figure class="slide" id="slide-05">
+<img src="slides/slide_05.png" alt="课件第5页 P（压力）、V（体积）、T（温度）：1 atm = 101325 Pa（严格定义）；压强是单位面积上受到的作用力，因此也可用牛顿每平方米">
+<figcaption><span class="sno">05</span><span class="stitle">P（压力）、V（体积）、T（温度）：1 atm = 101325 Pa（严格定义）；压强是单位面积上受到的作用力，因此也可用牛顿每平方米</span></figcaption>
+</figure>
+<figure class="slide" id="slide-06">
+<img src="slides/slide_06.png" alt="课件第6页 常见物品的温度压强：高压锅约1.7~1.8 atm、115~117℃；工业锅炉11个大气压183℃；小轿车轮胎2个多大气压、中型车3~4、重载卡车6~8；常规潜艇下潜300多米承受约30多个大气压、攻击型核潜艇500~600米50~60个大气压">
+<figcaption><span class="sno">06</span><span class="stitle">常见物品的温度压强：高压锅约1.7~1.8 atm、115~117℃；工业锅炉11个大气压183℃；小轿车轮胎2个多大气压、中型车3~4、重载卡车6~8；常规潜艇下潜300多米承受约30多个大气压、攻击型核潜艇500~600米50~60个大气压</span></figcaption>
+</figure>
+<figure class="slide" id="slide-07">
+<img src="slides/slide_07.png" alt="课件第7页 普朗克尺度：把量子效应（约化普朗克常数）、引力（万有引力常数）与光速结合；普朗克长度1.6×10⁻³⁵ m（比质子小20个数量级）；低于普朗克时间（5×10⁻⁴⁴ s）现有热力学物理规律失效——时间和长度的下限">
+<figcaption><span class="sno">07</span><span class="stitle">普朗克尺度：把量子效应（约化普朗克常数）、引力（万有引力常数）与光速结合；普朗克长度1.6×10⁻³⁵ m（比质子小20个数量级）；低于普朗克时间（5×10⁻⁴⁴ s）现有热力学物理规律失效——时间和长度的下限</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>单位体系与常见温压尺度</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 5</span><span class="chip">课件 6</span><span class="chip">课件 7</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>我们讲到热力学，P、V、T 三个参数是最先遇到的。无论英文还是中文，都把压强叫做压力。一个大气压是多少呢？101325帕斯卡，这是严格定义——科学家名字进入单位是一种荣誉。比如说，今后王子妍成名了，可以用一种单位命名——几个王子妍？2.5个王子妍。同学们会有那么一天的，只要你们好好干。在地质上我们用巴作为单位，巴的定义是10万帕斯卡，比大气压低1.1%。另外在仪表和地质上都会用到兆帕，1兆帕是10巴。对深部我们会用到吉帕，吉帕就是10千巴，即10000巴的意思。</p><p>根据压强定义，你觉得最应该用什么单位代表压强？杜一才同学，你坐下说。压强是单位面积上受到的作用力，因此用牛顿每平方米对不对？天经地义。那么我们在地质上，因为面对的都是比较高压的，因此用的基本单位是千帕或者兆帕。体积，国际单位制用的是立方米。在热力学上有个非常邪门的换算：1立方厘米就是1ml，等于0.1J每克——你看，这不是焦耳除以8，这是什么东西？太邪门了。唯有在热力学角度你才会碰到这样的单位。温度我们用摄氏度，更多的用绝对温标开尔文。物质的数量用摩尔为单位，1摩尔是6.02×10²³个。能量功热量，它的单位有焦耳或者千焦。</p><p>我们看一看常见的物品，它的温度、压力有多高。高压锅一般不到2个大气压的压力，内部的温度100多度出头——哪位同学在家里用高压锅做过饭或者炖过菜的？男生有没有？女孩子谁做过？好，你们都属于寄生虫，都是你们妈妈给你做好然后你坐着吃，要干家务。低压的工业锅炉，内部11个大气压、183℃——十一个大气压足可以打死人了。有的同学会换轮胎，小轿车2个多大气压，中型车3~4个大气压，重载卡车轮胎压力是6~8个大气压，行驶中若轮胎放炮非常可怕。常规潜艇下潜深度一般300多米，壳体承受海水压力约30多个大气压；攻击型核潜艇能下潜500~600米深，经受压力50~60个大气压。为什么列出这些数据？我国核潜艇现全球最先进——马伟明院士被誉为第二个钱学森，他抛弃油动力、采用自发电力，传动轴无噪声，我国潜艇噪音水平最低。</p><p>另外 PPT 涉及尺度概念：普朗克尺度和普朗克时间，这不属于课程内容也不考试，仅找来给大家拓展知识。普朗克长度1.6×10⁻³⁵米，质子直径10⁻¹⁵米——它比质子小20个数量级。光走过普朗克长度耗时叫普朗克时间，即5×10⁻⁴⁴秒，时间低于该数值将无意义：低于此时间，现有热力学物理规律失效。回想以前说物质无限可分——切一半再切一半无限切下去，是这样吗？不是。切到基本粒子时就切不下去了。时间也不是无限可小的，小到普朗克时间就没有意义了。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>科学家名字进入单位是一种荣誉。</p><p>1立方厘米就是1ml，等于0.1J每克——太邪门了。</p><p>潜艇兵与空军飞行员伙食最好。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-abs-zero">
+  <div class="slides"><figure class="slide" id="slide-08">
+<img src="slides/slide_08.png" alt="课件第8页 绝对零度的发现（1787年法国物理学家雅克·查理）：保持约1个大气压，0℃附近温度每升高1℃气体体积膨胀1/273.15；因此体积不小于0意味着气体温度不能低于−273.15℃">
+<figcaption><span class="sno">08</span><span class="stitle">绝对零度的发现（1787年法国物理学家雅克·查理）：保持约1个大气压，0℃附近温度每升高1℃气体体积膨胀1/273.15；因此体积不小于0意味着气体温度不能低于−273.15℃</span></figcaption>
+</figure>
+<figure class="slide" id="slide-09">
+<img src="slides/slide_09.png" alt="课件第9页 固体、液体的体积膨胀系数小于理想气体的(1/273.15)（钢轨线性热膨胀系数约…），所以固体和液体最低温度同样是−273.15℃">
+<figcaption><span class="sno">09</span><span class="stitle">固体、液体的体积膨胀系数小于理想气体的(1/273.15)（钢轨线性热膨胀系数约…），所以固体和液体最低温度同样是−273.15℃</span></figcaption>
+</figure>
+<figure class="slide" id="slide-16">
+<img src="slides/slide_16.png" alt="课件第16页 PV=nRT、PVm=RT；理想气体常数 R=8.3145 J/(K·mol)：不同气体（CO₂、O₂、Ne）在0℃的PV乘积并不固定，只有气压趋近于零时PV乘积才归到同一常数（273.15）——理想气体方程严格上只在稀薄、低压气体时成立">
+<figcaption><span class="sno">16</span><span class="stitle">PV=nRT、PVm=RT；理想气体常数 R=8.3145 J/(K·mol)：不同气体（CO₂、O₂、Ne）在0℃的PV乘积并不固定，只有气压趋近于零时PV乘积才归到同一常数（273.15）——理想气体方程严格上只在稀薄、低压气体时成立</span></figcaption>
+</figure>
+<figure class="slide" id="slide-18">
+<img src="slides/slide_18.png" alt="课件第18页 MH370航班段子（2014年10月10日，太平洋消失至今未找到）：有海军少将称我国潜艇能探测到零下700℃的物体——众所周知绝对零度为−273.15℃；提醒：成为专家或院士后发言要谨慎，勿信口开河">
+<figcaption><span class="sno">18</span><span class="stitle">MH370航班段子（2014年10月10日，太平洋消失至今未找到）：有海军少将称我国潜艇能探测到零下700℃的物体——众所周知绝对零度为−273.15℃；提醒：成为专家或院士后发言要谨慎，勿信口开河</span></figcaption>
+</figure>
+<figure class="slide" id="slide-19">
+<img src="slides/slide_19.png" alt="课件第19页 温度的本质：大量微观粒子无规则热运动平均动能的宏观体现；必须是大量粒子，单个粒子谈不上温度">
+<figcaption><span class="sno">19</span><span class="stitle">温度的本质：大量微观粒子无规则热运动平均动能的宏观体现；必须是大量粒子，单个粒子谈不上温度</span></figcaption>
+</figure>
+<figure class="slide" id="slide-20">
+<img src="slides/slide_20.png" alt="课件第20页 热力学温标（1848年英国物理学家威廉·汤姆逊，即开尔文勋爵）：基于绝对零度，起点就是−273.15℃；开氏度与摄氏度的间隔相同，但开氏温标衡量温度没有负值">
+<figcaption><span class="sno">20</span><span class="stitle">热力学温标（1848年英国物理学家威廉·汤姆逊，即开尔文勋爵）：基于绝对零度，起点就是−273.15℃；开氏度与摄氏度的间隔相同，但开氏温标衡量温度没有负值</span></figcaption>
+</figure>
+<figure class="slide" id="slide-21">
+<img src="slides/slide_21.png" alt="课件第21页 热力学温标（绝对温标）：0 K=−273.15℃；H₂O三相点0.01℃/0.0060373大气压=273.16 K；1开氏度是水的三相点的1/273.16；摄氏零度是1大气压下冰水敞口平衡温度，三相点是冰水汽密闭宏观平衡">
+<figcaption><span class="sno">21</span><span class="stitle">热力学温标（绝对温标）：0 K=−273.15℃；H₂O三相点0.01℃/0.0060373大气压=273.16 K；1开氏度是水的三相点的1/273.16；摄氏零度是1大气压下冰水敞口平衡温度，三相点是冰水汽密闭宏观平衡</span></figcaption>
+</figure>
+<figure class="slide" id="slide-22">
+<img src="slides/slide_22.png" alt="课件第22页 中科院理化所液氦温区大型低温制冷系统（2017年10月30日）：液态制冷系统制出的温度−268.65℃，已很接近绝对零度">
+<figcaption><span class="sno">22</span><span class="stitle">中科院理化所液氦温区大型低温制冷系统（2017年10月30日）：液态制冷系统制出的温度−268.65℃，已很接近绝对零度</span></figcaption>
+</figure>
+<figure class="slide" id="slide-23">
+<img src="slides/slide_23.png" alt="课件第23页 中国科学院大学苏刚教授实现超低温：94毫开（−273.056℃），Nature 2024, 625:270；将材料放入磁场后退磁降温——国科大副校长，大家说他可能拿诺奖：预测了富勒烯（碳足球）之外的第四种碳物质形态，文章发表后外国人在太空发现">
+<figcaption><span class="sno">23</span><span class="stitle">中国科学院大学苏刚教授实现超低温：94毫开（−273.056℃），Nature 2024, 625:270；将材料放入磁场后退磁降温——国科大副校长，大家说他可能拿诺奖：预测了富勒烯（碳足球）之外的第四种碳物质形态，文章发表后外国人在太空发现</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>绝对零度与热力学温标</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 8</span><span class="chip">课件 9</span><span class="chip">课件 16</span><span class="chip">课件 18</span><span class="chip">课件 19</span><span class="chip">课件 20</span><span class="chip">课件 21</span><span class="chip">课件 22</span><span class="chip">课件 23</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>在自然界温度是有下限的。1787年法国物理学家查理在研究理想气体时发现：保持差不多一个大气压状态，在0℃附近，温度升高1℃，气体体积会膨胀1/273；如果在0℃附近让气体降温1℃，它的体积相应收缩1/273。后来更精确地发现这个膨胀系数是1/273.15。很容易写出气体体积随温度变化的关系式。气体的体积或者任何物体的体积能不能小于0？不能吧，小于0就没有意义。任何一个物体它的体积改变量可以小于0——变小可以，但绝对体积不能小于0。因此自然而然地得出：气体的温度不能低于−273.15℃。根据查理的实验结论推知，温度降到−273.15℃时理想气体的体积会变为零——这是从关系式里推出来的，实际上我们永远达不到。</p><p>由于固体和液体的膨胀系数比气体还要小，因此推出来自然界固体和液体最低温度也是−273.15℃。现在这个问题来了：温度是不是可以无限制地低下去？不会了，从这一刻起你就知道了。从理想气体状态方程也可以推出这个：给它变个形写成 V=nRT/P 这种形式，N和R固定，各等压线在VT图上都交到一个点上——这个点就是−273.15°，代表气体体积为0。大家看这条线再往左下方延还能不能延了？不能，数学上可以无限延，但物理上再减就没有意义了。</p><p>这里插一个段子。大家记不记得2014年10月10日，马航飞往北京的航班在太平洋消失，至今未找到。有人接受央视采访称，我国核潜艇能探测零下700度以上的物体——众所周知绝对零度为−273.15℃，“零下700度”违背常识。这提醒我们勿信口开河：若成为专家或院士，发言需谨慎，以免闹笑话。</p><p>温度的本质：大量微观粒子无规则热运动平均动能的宏观体现。必须是大量粒子，单个粒子谈不上温度。1848年，英国物理学家威廉·汤姆森提出了热力学温标。这个人最著名的是大家都尊称他叫开尔文勋爵——开尔文是个地名，Lord 是爵士。英国的国王有给著名科学家封爵的传统。这个爵位什么意思呢？大家看过隋唐演义吧，北平王是罗成的爹罗艺，还有个昌平王邱瑞——就是今天的昌平。比如说给杜一才封为昌平王，大家总不能见面叫你杜一才吧，叫你王爷。开尔文爵士也是一样的含义。</p><p>基于−273.15℃这个自然界最低温的发现，开尔文爵士用另一种温标来描述温度。它只有一个起点，就是绝对零度。0℃等于273.15开氏度，0开氏度等于−273.15℃。温标只用一个点就能固定；为了方便使用，把摄氏温度的刻度移到开氏温度上，即1摄氏度的间隔和1开氏度的间隔是一样的。但两者有本质不同：摄氏温度计不能告诉你自然界最低温度，而开氏温标起点是绝对零度、没有更低，所以用开氏温标衡量温度没有负值。如果张召忠少将说潜艇能耐−300开度的温度，你就叫他胡说八道。</p><p>这里会讲到水的三相点：H₂O三相点意思是冰、水、蒸汽三相共生，条件是0.01℃、6‰（0.0060373）的大气压。大家注意，它不是1个大气压，也不是0℃，有必要多次强调。摄氏零度是在1个大气压下冰水的平衡温度，是冰水敞开口向大气排放的。三相点什么意思呢？设想一种实验：假定造一个大钢罐，罐子厚度好几米，为了不导热不传气压在里面加个内衬；把冰和水放进去，迅速抽成真空然后盖紧——之后冰和水都蒸发，让冰水汽达到宏观平衡、谁也不增多也不减少，这时的温度压力条件就是三相共生：0.01℃、0.0060373大气压。因此开氏温标和三相点扯上，273.16开氏度=0.01℃；1开氏度有多宽呢，是水的三相点的1/273.16。这个很绕，大家就知道开氏度比摄氏度数值上高了273.15就是了。</p><p>我们知道了自然界最低温是−273.15℃，能不能通过人工制冷达到？这是2017年10月30号科学院理化所液态制冷系统制出来的温度−268.65℃，离273号（−273.15）多远了？很近了。把人放在−268℃有什么后果？当场就死了。国科大的苏刚教授团队前年在《Nature》发表文章实现了超低温——90毫开，这是多少呢？−273.0564℃。他怎么实现低温的呢？把他研究的材料放到磁场里面、给它退磁，退掉磁场的过程中温度在下降。苏刚教授很长时间是我们的副校长，他的学问做得非常棒，大家都说他是有可能拿诺贝尔奖的——不是这项工作，这项工作拿不了。哪一项工作？大家知道富勒烯就是碳足球，60个碳原子构成一个足球，此类碳的三种物质形态都拿了诺贝尔奖；苏刚教授预测了第四种，是通过计算预测出来的，而且这种碳物质是在拉张状态下才能形成——地球上没有拉张的环境，他预测在太空里。他文章发表之后，外国人在太空发现的，所以这项工作是有可能拿诺贝尔奖。我希望赶快拿来，给我们国科大鼓鼓劲儿。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>体积无论有多大，它不能小于零。因此自然而然地得出，气体的温度不能低于-273.15°C。</p><p>大家看这个线，我再往左下方再延，还能不能延了？不能。数学上可以无限延，单从物理上再减就没有意义了。</p><p>如果张召忠少将说潜艇能耐-300开度的温度，你就叫他胡说八道。</p><p>他文章发表之后，外国人在太空发现的，所以这项工作是有可能拿诺贝尔奖。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-ideal-gas">
+  <div class="slides"><figure class="slide" id="slide-10">
+<img src="slides/slide_10.png" alt="课件第10页 理想气体状态方程（ideal gas, perfect gas）：从17世纪开始，波义尔（R. Boyle, 1662）、查理与盖·吕萨克研究气体PVT系统发现基本规律；阿伏伽德罗定律：温压不变时体积与摩尔数成正比">
+<figcaption><span class="sno">10</span><span class="stitle">理想气体状态方程（ideal gas, perfect gas）：从17世纪开始，波义尔（R. Boyle, 1662）、查理与盖·吕萨克研究气体PVT系统发现基本规律；阿伏伽德罗定律：温压不变时体积与摩尔数成正比</span></figcaption>
+</figure>
+<figure class="slide" id="slide-11">
+<img src="slides/slide_11.png" alt="课件第11页 状态方程也可写成 f(P,V,T,n)=0、V=V(P,T,n)；理想气体的体积是三个变量的函数；对函数微分：dV=(∂V/∂P)dP+(∂V/∂T)dT+(∂V/∂n)dn">
+<figcaption><span class="sno">11</span><span class="stitle">状态方程也可写成 f(P,V,T,n)=0、V=V(P,T,n)；理想气体的体积是三个变量的函数；对函数微分：dV=(∂V/∂P)dP+(∂V/∂T)dT+(∂V/∂n)dn</span></figcaption>
+</figure>
+<figure class="slide" id="slide-12">
+<img src="slides/slide_12.png" alt="课件第12页 三大经验定律：波义尔定律 PV=C1（n、T恒定）、盖·吕萨克定律 V/T=C2（n、P恒定）、阿伏伽德罗定律 V/n=C3（P、T恒定）——它们都是普适状态方程的特例">
+<figcaption><span class="sno">12</span><span class="stitle">三大经验定律：波义尔定律 PV=C1（n、T恒定）、盖·吕萨克定律 V/T=C2（n、P恒定）、阿伏伽德罗定律 V/n=C3（P、T恒定）——它们都是普适状态方程的特例</span></figcaption>
+</figure>
+<figure class="slide" id="slide-13">
+<img src="slides/slide_13.png" alt="课件第13页 微分推导：体积对压力的偏导 −V/P、对温度 V/T、对数量 V/N，代入并两侧同除以V，得 dV/V=−dP/P+dT/T+dn/n，即 PV/(nT)=常数=理想气体常数R → PV=nRT">
+<figcaption><span class="sno">13</span><span class="stitle">微分推导：体积对压力的偏导 −V/P、对温度 V/T、对数量 V/N，代入并两侧同除以V，得 dV/V=−dP/P+dT/T+dn/n，即 PV/(nT)=常数=理想气体常数R → PV=nRT</span></figcaption>
+</figure>
+<figure class="slide" id="slide-14">
+<img src="slides/slide_14.png" alt="课件第14页 马德堡半球实验（1654年德国物理学家奥托·冯·格里克，也是抽气机发明者）：铜球抽成接近真空合拢，16匹马才拉开；大气压力 P×πr²，半径0.5米算得约8吨力">
+<figcaption><span class="sno">14</span><span class="stitle">马德堡半球实验（1654年德国物理学家奥托·冯·格里克，也是抽气机发明者）：铜球抽成接近真空合拢，16匹马才拉开；大气压力 P×πr²，半径0.5米算得约8吨力</span></figcaption>
+</figure>
+<figure class="slide" id="slide-15">
+<img src="slides/slide_15.png" alt="课件第15页 保温饭盒降温后打不开：主流2.0L直筒保温饭盒内胆半径R=7cm，装入约2/3深度；凉后粥上蒸汽压不到1个大气压、外部大气直接压在盖上；用理想气体方程算压差约0.2kg/cm²，作用在盖子上的压力差达32kg">
+<figcaption><span class="sno">15</span><span class="stitle">保温饭盒降温后打不开：主流2.0L直筒保温饭盒内胆半径R=7cm，装入约2/3深度；凉后粥上蒸汽压不到1个大气压、外部大气直接压在盖上；用理想气体方程算压差约0.2kg/cm²，作用在盖子上的压力差达32kg</span></figcaption>
+</figure>
+<figure class="slide" id="slide-17">
+<img src="slides/slide_17.png" alt="课件第17页 根据实测的气体P、V、T数据外推的绝对零度：V=(nR/P)T≥0，各等压线在VT图上交于一点，即体积为0处、温度−273.15℃；数学上可无限延长，物理上再无意义">
+<figcaption><span class="sno">17</span><span class="stitle">根据实测的气体P、V、T数据外推的绝对零度：V=(nR/P)T≥0，各等压线在VT图上交于一点，即体积为0处、温度−273.15℃；数学上可无限延长，物理上再无意义</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>理想气体状态方程的推导与应用</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 10</span><span class="chip">课件 11</span><span class="chip">课件 12</span><span class="chip">课件 13</span><span class="chip">课件 14</span><span class="chip">课件 15</span><span class="chip">课件 17</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>接下来推导理想气体状态方程。17世纪，波义耳、查理和盖·吕萨克研究了气体PVT系统，发现基本规律。初中可能学过：温度不变时，气压与体积成反比；气压不变时，体积与温度成正比，热胀冷缩。阿伏伽德罗定律指出：温压不变时，体积与摩尔数成正比。P、V、T、N四参数间存在函数关系，我们要找出这个关系式——这三个定律是普适状态方程的特例。设隐函数 f(P,V,T,N)=0，或以V为因变量表示为 V(P,T,N)。</p><p>对函数微分：体积对压力的偏导乘压力变化量，加体积对温度的偏导乘温度变化量，加体积对数量的偏导乘数量变化量。求出三个偏微分即可：对波义耳定律取微分，在N、T固定下变形，得当P、N不变时体积对压力的偏导数为−V/P；对查理定律和阿伏伽德罗定律求微分很简单，体积对温度求微分是V/T、体积对数量求微分是V/N。将这三个微分代入式子，两侧同除以V，得到简洁式子：前项是体积自然对数的微分，后三项分别是压力、温度和数量的自然对数微分。经恒等变形，若某函数微分为零则其为常数，即 PV/NT 为常数，命名为理想气体常数R。故 PV=NRT——这是初中熟知的规律。</p><p>回顾著名的马德堡半球实验：1654年，德国物理学家格利克在马德堡市将铜球抽成接近真空并合拢，他用16匹马才将球拉开，当时民众误以为是魔术——因为球内无气压，外部大气压将两半球紧紧压合。计算大气压作用力为P乘以πr²：若半径0.5米，算得压力约8.12吨。若是篮球大小的钢球抽真空，也可能被压扁。你觉得用8匹或16匹马拉动费劲吗？8吨。</p><p>还有一个我一定要给大家看一下，原因是我当年丢过一次人。我儿子小时候，我们去一个饭店吃饭，冬天，老板给了个气球，小孩子都爱玩气球。吃了饭出来，我把气球扁了，我说这商家真黑心，给个球还不给个好的。出租车司机告诉我，这叫热胀冷缩。我当时惭愧得——在屋里头有暖气，外面温度一降了。后来我又碰到一件事，这一次没有丢人。大家用过保温饭盒没有？有的饭盒特讲究，有很多层，可以放馒头、米饭、菜粥什么之类的。我把这个饭盒打开之后往里边灌上热粥，盖上再把外边盖拧紧，都差不多100度。这个饭盒保温不行，但是不漏气，等它凉了之后我打不开了。那时候我都四十好几了，我说这玩意儿它咋会打不开呢？当然想把它打开也容易，拿个钳子夹起来，但可能破坏了。</p><p>终于想明白了：灌粥的时候没有灌满，残留的有空气。降温之后，饭盒里的粥凉了，上面蒸汽压不到一个大气压，外边大气直接压在盖子上——打不开的原因在于内外有压差。这个压差有多大呢？可以用理想气体状态方程算一下：研究保温饭盒里的空气，高温时P1V1=nRT1、低温时规律仍存在，V1和V2相等都是饭盒体积，两式相除——T1是100℃，T2冷到25℃，发现压差每平方厘米是0.2kg。若饭盒直径7cm，算出来力的差是32kg。这是我随意取的直径，一般没这么小。即便小了点，作用在盖子上的压力差也达32kg——男生拿起来吃力，女生一般拿不起来。紫妍，你考虑一下，我碰到这个问题了，又不能弄坏，怎么把盖子打开？她说给它加热。你很聪明：把这个饭盒放在热水盆里面加热里边的空气，它里边空气压力增长，增长之后很难和外面一样，接近就好打开。我说，我学了一辈子科学，就这一次没有办坏事，跟紫妍说的一样，我给它加热，终于发现知识是有用的。</p><p>那么PV=nRT，理想气体常数很简单。但是我们发现实际上不是——大家盯着这个式子看：温度固定的时候PV的乘积是不是固定值？我们看固定温度0摄氏度，用不同的气体来看——二氧化碳、氧气、氖气——发现它们的PV乘积不是固定的；而是当气压特别低、气压趋近于零的时候，不同的气体PV乘积才归到一块儿。这个点是多少呢？0摄氏度时候是273.15。此时此刻的PV乘积除以温度得到理想气体常数，它是8.3145焦耳每开氏度每摩尔，这个数据希望大家记住。如果你记不住也没关系，到处能查到。所以理想气体状态方程预言的“温度不变时PV乘积是常数”并不是这样的——换句话说，理想气体状态方程一般情况下并不成立，什么时候成立呢？稀薄气体、低压气体，就是气压特别低的时候才成立。那个大夫说，好嘛，费了半天劲儿弄出个理想气体状态方程，还不管用。</p><p>那我们用来干啥呢？我问大家一个问题，大家不需要做理性思考，凭感觉答复我：我们教室的空气符合不符合理想气体状态方程？徐仁志，你坐下说吧不用站，你就猜吧。他说不太符合。无论你们怎么回答都是正确的，为什么呢？这里边教这门课的，一直是理论和误差之间的较量——只要你容忍能容忍这个误差，我就可以认为这个理论对。比如我估计关汉林的年龄是22±50岁，你能容忍这个±50吗？不能。我如果说你的年龄是22±1岁，可不可以？就是这个意思，容忍的误差。好，我们回过头来再看这个纵坐标差了多少：2271和2255差了0.7%，你们觉得差得很厉害吗？我们说100kPa是多少——101325帕斯卡是一个大气压，100kPa不正好是一个大气量吗？所以回到刚才的问题，你们说理想气体状态方程不能用在这个教室的空气——从严格的角度看不等，粗略的是可以用的，如果你要求精度不高的话，还可以用到几十个大气压。第一次作业就让你尝试一下。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>理想气体状态方程一般情况下并不成立，什么时候成立呢？稀薄气体，低压气体。</p><p>只要你容忍能容忍这个误差，我就可以认为这个理论对。</p><p>我说，我学了一辈子科学，就这一次没有办坏事，终于发现知识是有用的。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-micro-model">
+  <div class="slides"><figure class="slide" id="slide-24">
+<img src="slides/slide_24.png" alt="课件第24页 理想气体的定义及其微观模型：分子本身必定不占有体积；分子间无相互作用力（既不吸引也不排斥）——PVm=RT、Vm=RT/P，压力无限大时摩尔体积趋近于0">
+<figcaption><span class="sno">24</span><span class="stitle">理想气体的定义及其微观模型：分子本身必定不占有体积；分子间无相互作用力（既不吸引也不排斥）——PVm=RT、Vm=RT/P，压力无限大时摩尔体积趋近于0</span></figcaption>
+</figure>
+<figure class="slide" id="slide-25">
+<img src="slides/slide_25.png" alt="课件第25页 道尔顿（Dalton）分压定律（19世纪初）：混合气体的总压力等于各组分气体分压之和（仅适用于低压混合气体）——教室空气约1个大气压，由氮气（约0.7大气压）、氧气（约0.21大气压）等贡献">
+<figcaption><span class="sno">25</span><span class="stitle">道尔顿（Dalton）分压定律（19世纪初）：混合气体的总压力等于各组分气体分压之和（仅适用于低压混合气体）——教室空气约1个大气压，由氮气（约0.7大气压）、氧气（约0.21大气压）等贡献</span></figcaption>
+</figure>
+<figure class="slide" id="slide-26">
+<img src="slides/slide_26.png" alt="课件第26页 实际气体往往难以符合理想气体状态方程：定义压缩系数 Z=PVm/RT（T=constant）；Z>1难压缩（H₂、He），Z<1易压缩；图中甲烷低压阶段随压力升高Z减小、之后上升">
+<figcaption><span class="sno">26</span><span class="stitle">实际气体往往难以符合理想气体状态方程：定义压缩系数 Z=PVm/RT（T=constant）；Z>1难压缩（H₂、He），Z<1易压缩；图中甲烷低压阶段随压力升高Z减小、之后上升</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>理想气体微观模型与经验定律</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）</span><span class="chip">课件 24</span><span class="chip">课件 25</span><span class="chip">课件 26</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>大家从小就知道PV=nRT这个方程。把体积除以摩尔数得到摩尔体积Vm，状态方程可写成PVm=RT，变形后摩尔体积等于RT/P。温度固定时RT/P是常数，压力无限大时摩尔体积趋近于0——这意味着理想气体分子本身无体积。分子间也无相互作用力，既不排斥也不吸引：若分子互相吸引，气压会下降；若互相排斥，则造成气压上升。理想气体两大特点：分子无体积，分子间无作用力。</p><p>19世纪初还有两个经验规律，一个是道尔顿分压定律，另一个是阿马加分体积定律。道尔顿分压定律指混合气体的总压力由各组分气体分压之和构成。如教室空气中的氧气、氮气等，这些气体各自贡献压力，总和即为总压。不要忘了我们就说这三种气体：我们的气体压力是一个大气压，是由这三种气体的气压贡献的，其中氮气占到多少？氮气贡献了0.7个大气压，氧气呢？21还是22？它贡献了0.21个大气压。这就是分压定律，计算时要用到——这指理想气体。道尔顿是个贵族，年轻时是浪荡公子无所事事，他追求纺织女工，女工说宁愿烂掉也要嫁给他。他受打击，发奋学科学，提出了道尔顿分压定律——这在当时是全新发现。相应地有阿马格分体积定律：混合气体在相同压强下，各组分体积之和等于总体积。</p><p>理想气体有两大特点：分子本身无体积、分子间无相互作用力。看干冰——固态二氧化碳有体积，说明实际气体不符合理想模型。因此人们用更复杂的状态方程描述实际气体。首先定义压缩系数Z=PV/RT：若PV=RT即为理想气体，若PV≠RT则不是理想气体。图中横坐标是压力、纵坐标是压缩系数：甲烷在低压阶段随压力升高压缩系数减小，过某点后压力加大压缩系数上升、越来越难压缩。再看氢气，氢气和氦气难以压缩——因压缩因子大于1表示难压缩，小于1表示易压缩。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>理想气体两大特点：分子无体积，分子间无作用力。</p><p>他追求纺织女工，女工说宁愿烂掉也要嫁给他。他受打击，发奋学科学。</p><p>压缩因子大于1表示难压缩，小于1表示易压缩。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-critical">
+  <div class="slides"><figure class="slide" id="slide-27">
+<img src="slides/slide_27.png" alt="课件第27页 实际气体的液化、H₂O临界点：水蒸气温度越高、液化所需压力越高；液化开始点与完毕点连线向中间靠拢交于临界点——水临界性质373.995℃/220.4 bar，高于此温度无法液化、气体与液体性质不再有区别，即超临界流体">
+<figcaption><span class="sno">27</span><span class="stitle">实际气体的液化、H₂O临界点：水蒸气温度越高、液化所需压力越高；液化开始点与完毕点连线向中间靠拢交于临界点——水临界性质373.995℃/220.4 bar，高于此温度无法液化、气体与液体性质不再有区别，即超临界流体</span></figcaption>
+</figure>
+<figure class="slide" id="slide-28">
+<img src="slides/slide_28.png" alt="课件第28页 CO₂临界点：31.05℃/73.7 bar（Roedder）——夏天温度一般超过31℃，因此夏季无法把二氧化碳气体液化">
+<figcaption><span class="sno">28</span><span class="stitle">CO₂临界点：31.05℃/73.7 bar（Roedder）——夏天温度一般超过31℃，因此夏季无法把二氧化碳气体液化</span></figcaption>
+</figure>
+<figure class="slide" id="slide-29">
+<img src="slides/slide_29.png" alt="课件第29页 超临界流体（气体、液体的物理性质不再有区别）：饱和蒸汽压随温度升高而增大；在T<Tc范围内等温线有水平段（液化区），T>Tc进入超临界区">
+<figcaption><span class="sno">29</span><span class="stitle">超临界流体（气体、液体的物理性质不再有区别）：饱和蒸汽压随温度升高而增大；在T<Tc范围内等温线有水平段（液化区），T>Tc进入超临界区</span></figcaption>
+</figure>
+<figure class="slide" id="slide-30">
+<img src="slides/slide_30.png" alt="课件第30页 H₂O的相图：三相点温度0.01℃、压力0.00604 atm；固相区、气相区、液相区、超临界区——自然界超临界水直到2008年才在大西洋中脊热液附近发现（464℃热水超过临界点）">
+<figcaption><span class="sno">30</span><span class="stitle">H₂O的相图：三相点温度0.01℃、压力0.00604 atm；固相区、气相区、液相区、超临界区——自然界超临界水直到2008年才在大西洋中脊热液附近发现（464℃热水超过临界点）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-31">
+<img src="slides/slide_31.png" alt="课件第31页 CO₂的相图：三相点温度−56.57℃、压力518.5 MPa；夏天看到的干冰并不稳定，正在逐步升华——眼见的不见得为实">
+<figcaption><span class="sno">31</span><span class="stitle">CO₂的相图：三相点温度−56.57℃、压力518.5 MPa；夏天看到的干冰并不稳定，正在逐步升华——眼见的不见得为实</span></figcaption>
+</figure>
+<figure class="slide" id="slide-32">
+<img src="slides/slide_32.png" alt="课件第32页 对应态理论（对比状态原理，1873年van der Waals）：任何实际气体的状态方程都与其临界点有关；各种实际气体若Pr、Tr彼此相等，其Vr几乎就相同——常见地质流体临界压缩系数都在0.27~0.29之间（氟化氢0.12例外）">
+<figcaption><span class="sno">32</span><span class="stitle">对应态理论（对比状态原理，1873年van der Waals）：任何实际气体的状态方程都与其临界点有关；各种实际气体若Pr、Tr彼此相等，其Vr几乎就相同——常见地质流体临界压缩系数都在0.27~0.29之间（氟化氢0.12例外）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>实际气体的液化、临界点、超临界流体与相图</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）</span><span class="chip">课件 27</span><span class="chip">课件 28</span><span class="chip">课件 29</span><span class="chip">课件 30</span><span class="chip">课件 31</span><span class="chip">课件 32</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>人们早研究过实际气体的液化现象：蒸汽加压后变成液体，这叫液化。图中展示了不同温度水蒸气的液化过程——大家跟着光标看，这是1000℃、500℃和400℃的水蒸气。一般蒸馒头的水蒸气温度约100℃多，碰到400℃水蒸气得赶紧跑。这些虽是气态热气，但加压可液化。以360℃水蒸气为例：放入带活塞的容器中，缓慢推动活塞加压、体积缩小、气压升高，到达某点后继续缓慢加压压力却不增——这是因为部分蒸汽逐渐变成液体，液体体积远小于水蒸气，这就是液化过程。完全液化后因液体难压缩，活塞推不动，稍加推动压力便急剧上升。300℃的等温线也是同样规律。</p><p>最终发现存在一个临界温度374℃：若水蒸气温度超过373.995℃，即374℃，无论怎么加压都无法液化——此时气体与液体的性质区分不开，这种流体叫超临界流体。实验发现水蒸气温度越高，液化所需压力也越高。因此热水蒸气的液化曲线中，开始液化点与液化完毕点的连线呈现特定形状、向中间靠拢，一直到这个点——这个点叫临界点，比这个点更高的温度就进入了超临界流体。跟这个点对应的温度叫临界温度，压力叫临界压力，体积叫临界体积。对于纯水而言，临界温度374度、220个大气压。</p><p>不同的流体它的临界点参数是不一样的：比如二氧化碳的临界点31.05摄氏度、73.7个大气压。我们在这个夏天，夏天的温度一般会超过31度——也就是那时候你碰到了二氧化碳气体，能不能给它液化？不能。那么我再问一个相关的问题：夏天你看到干冰了，是不是意味着干冰在30多度的条件下还是稳定的？为什么不说？对，你们理解的对——不意味着它是稳定存在，它正在逐步地气化，叫升华。过一阵子都会升华完的，这干冰都没了。所以我们学这门课，脑子里一定要注意：眼见的不见得为实，思辨性非常强。</p><p>我们看水的相图：这是固相区、气相区、液相区，这个区是超临界区。注意超临界区的形状就是这个样子的——温度高过这个温度的就是超临界温度，同时压力有个要求。二氧化碳的超临界区的形象也一样。水的临界温度374℃早就知道，但自然界超临界水2008年才发现：在大西洋中脊热液附近看到464℃热水，超过临界点——这是人类首次在自然界观察到超临界水。这个邪门的现象很多：比如最近人们在海底热泉附近、海水温度100多度的地方，居然有虾之类的东西——我们煮虾是不是100℃就煮熟了？人家100℃还活得好好的呢。</p><p>我们用下标critical来表示临界。任何一种流体它临界点P、T、V三个参数都有，分别叫做临界压力、临界温度、临界体积。在临界点 Pc·Vc/(R·Tc) 就是它的临界压缩系数。二氧化碳、甲烷等等等等地质上常见的流体，它的临界压缩系数大家看：除了氟化氢——这玩意儿老可怕了，氢氟酸——除了它比较特殊是0.12之外，其他的都在0.27~0.29之间。0.27和0.29差别大不大？这个问题怎么回答都对，看精度要求，粗略讲0.27~0.29可视为一样，我取中间值0.28。这暗含什么规律？临界状态时压缩系数常见地质流体都差不多——因此人们发现了对应态原理。留给大家看：各种实际气体若Pr、Tr彼此相等，其Vr几乎就相同。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>眼见的不见得为实。思辨性非常强，后边就会碰到。</p><p>我们煮虾是不是100℃就煮熟了？人家100℃还活得好好的呢。</p><p>临界状态时压缩系数，常见地质流体都差不多。因此人们发现了对应态原理。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-van-der-waals">
+  <div class="slides"><figure class="slide" id="slide-33">
+<img src="slides/slide_33.png" alt="课件第33页 实际气体状态方程谱系：范德华方程、维里方程、Redlich-Kwong方程、殷辉安方程等——从100多年前到现在人们都在模拟更好的流体状态方程">
+<figcaption><span class="sno">33</span><span class="stitle">实际气体状态方程谱系：范德华方程、维里方程、Redlich-Kwong方程、殷辉安方程等——从100多年前到现在人们都在模拟更好的流体状态方程</span></figcaption>
+</figure>
+<figure class="slide" id="slide-34">
+<img src="slides/slide_34.png" alt="课件第34页 范德华方程（van der Waals）：V=Vm=RT/P+b（分子有体积）+ 气压修正 −a/Vm²（分子间吸引力使气压降低）；a、b为不同气体的经验常数——1905年诺贝尔物理学奖，因为是打开一扇门的原创工作">
+<figcaption><span class="sno">34</span><span class="stitle">范德华方程（van der Waals）：V=Vm=RT/P+b（分子有体积）+ 气压修正 −a/Vm²（分子间吸引力使气压降低）；a、b为不同气体的经验常数——1905年诺贝尔物理学奖，因为是打开一扇门的原创工作</span></figcaption>
+</figure>
+<figure class="slide" id="slide-35">
+<img src="slides/slide_35.png" alt="课件第35页 范德华常数：某些常用纯气体的范德华常数表（CO₂、CH₄等的a、b值）；稀薄气体（气压→0）时a/Vm²→0、b可忽略，范德华方程还原为理想气体状态方程">
+<figcaption><span class="sno">35</span><span class="stitle">范德华常数：某些常用纯气体的范德华常数表（CO₂、CH₄等的a、b值）；稀薄气体（气压→0）时a/Vm²→0、b可忽略，范德华方程还原为理想气体状态方程</span></figcaption>
+</figure>
+<figure class="slide" id="slide-36">
+<img src="slides/slide_36.png" alt="课件第36页 不同压力下CH₄（203 K）的摩尔体积对比：1个大气压实测16.56、范德华16.56、理想气体16.66；10个大气压实测1.561、范德华1.569、理想气体1.696；30个大气压实测0.4402、范德华0.4458、理想气体0.553——实测值为准，范德华方程更好">
+<figcaption><span class="sno">36</span><span class="stitle">不同压力下CH₄（203 K）的摩尔体积对比：1个大气压实测16.56、范德华16.56、理想气体16.66；10个大气压实测1.561、范德华1.569、理想气体1.696；30个大气压实测0.4402、范德华0.4458、理想气体0.553——实测值为准，范德华方程更好</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div class="sec-tt">
+        <h2>状态方程谱系与范德华方程</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）</span><span class="chip">课件 33</span><span class="chip">课件 34</span><span class="chip">课件 35</span><span class="chip">课件 36</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>人们很早就发现，理想气体状态方程用来模拟常见气体的P、V、T这三个参数的时候总是有误差，所以理想气体状态方程并不是理想的工具。人们对此进行了巨大的努力——从100多年前开始到现在，人们都在模拟更好的流体状态方程，今天更好，由高性能计算机算起来更好。历史上曾经出现过的方程有：范德华方程、维里方程、Redlich-Kwong方程，还有我们国家的学者提出的方程，段正鳌（段振豪）方程。</p><p>我们先看范德华方程。刚才我们看到干冰了——理想气体两个条件：分子本身没有体积、分子之间的相互作用力忽略不计。但是干冰的出现表明气体分子是有体积的。所以范德华把理想气体状态方程做了一个变换：V=RT/P，然后加上一个b，b这个参数就是气体的摩尔体积——假定把气体分子收集到一块儿看占多大的份额，就是干冰的摩尔体积。然后我把这个方程再做一个恒等变形。考虑什么呢？气体逐渐在液化的过程中，分子之间是不是有吸引力？有吸引力，吸引力就使得整个气压减小了。要把这个因素考虑修订：气压那一部分也就没有那么大。那么怎么修订呢？他考虑把气体切成两半，这两半之间一定是相互吸引的，吸引力和分子数密度成正比。在液化过程中气体分子之间吸引力一定有，它导致气压降低的比例是这个比例，因此气压这一块儿要减掉这一部分A——A是个常数。A和B根据具体气体的不同是不一样的：二氧化碳B是多少、甲烷是多少都不一样，这就是范德华方程的思路。</p><p>你今天看起来简单不简单？不复杂吧。他获得了1905年的诺贝尔物理学奖——为什么？他是个原创的工作。柴玉成老师曾经跟美国基金会的人聊了很多，他说诺贝尔奖授予什么人，也总结一个字：诺贝尔奖授予的工作是open——我正在研究一个什么问题，撞到墙了干不下去了，这时候有人打开一扇门打开一扇窗，这种工作才能得到人（诺奖）。那么这个范德华方程就是这样，它就是这样的特点。后来的方程复杂得不得了，但是不可能再拿到诺贝尔奖——为什么？都是修修补补的功夫，锦上添花啊。我们看范德华方程里边这些不同的参数A和B，不同的气体是不一样的。大家注意它的单位——这门课最讨厌的就是单位之间的换算，搞不好的话你陷入困境，我自己常常就会陷入困境。</p><p>我们把范德华方程用到稀薄气体上，也就是气压几乎为零的情况下：这一项（a/Vm²）——气压几乎为零的时候，体积是不是无限的大？倒过来它在分母上几乎为0了，这一项就为0了；体积无限大，那么单个气体占的体积（b）还不用考虑了吧？所以它就等于P×V——在稀薄气体的情况下，范德华方程又还原为理想气体状态方程。我们还可以反过来理解：理想气体状态方程是实际气体在稀薄的情况下、在压力几乎为零的情况下的描述。</p><p>看一下203个开氏度（203K）时甲烷的摩尔体积：1个大气压的时候实测值16.56、范德华方程计算值16.56、理想气体状态方程算出来的16.66；10个大气压的时候实测值1.561、范德华1.569、理想气体1.696；20个大气压、30个大气压时，30个大气压时实测值0.4402、范德华0.4458、理想气体0.553。这三个参数里面你信哪个？是哪一个在能精确测试的情况下——记着自然科学只有一个标准，实测值，以它为准。谁和不同压力下哪个方程的实测值最接近呢？范德华方程。因此从这儿来讲，范德华方程就比理想气体状态方程要好。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>诺贝尔奖授予的工作是open——撞到墙了干不下去了，这时候有人打开一扇门，这种工作才能拿到。</p><p>后来的方程复杂得不得了，但是不可能再拿到诺贝尔奖。都是修修补补的功夫，锦上添花。</p><p>记着自然科学只有一个标准实测值，以它为准。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（岩石热力学）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>
