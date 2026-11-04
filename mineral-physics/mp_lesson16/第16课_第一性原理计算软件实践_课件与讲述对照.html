@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>矿物物理学 · 第16课 第一性原理计算软件实践（5.2）——VASP实操｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.videos{margin-top:14px;border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.video + .video{border-top:1px solid #e4e9f0;}
+.videos h4{font-size:12.5px;font-weight:700;color:#0a1f38;background:#f2f5f9;padding:8px 12px;border-bottom:1px solid #e4e9f0;}
+.videos video{display:block;width:100%;max-height:460px;background:#0b0f14;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>矿物物理学 · 第16课 第一性原理计算软件实践（5.2）——VASP实操</h1>
+    <div class="sub">第16课 第一性原理计算软件实践（5.2）——VASP实操 ｜ 2026-11-03 ｜ 张志刚（矿物物理学）</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 18 页 · 整理 8 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-survey-review">01 问卷反馈与课程衔接</option>
+<option value="sec-modeling-problem">02 建模：把科学问题与研究方法对接</option>
+<option value="sec-problem-330gpa">03 科学问题：330 GPa 单质铁的密度</option>
+<option value="sec-vasp-input-files">04 VASP 流程与输入文件：POSCAR / POTCAR / INCAR</option>
+<option value="sec-run-parameters">05 计算参数与运行：330 GPa hcp-Fe</option>
+<option value="sec-output-files">06 输出文件：OSZICAR 与 OUTCAR</option>
+<option value="sec-complex-modeling">07 更复杂晶体的建模：晶体数据库与练习</option>
+<option value="sec-homework">08 课后任务</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 矿物物理2026-5.2.pdf 逐页渲染，转写原文见 record_20261103.txt。</div>
+<section class="sec" id="sec-survey-review">
+  <div class="slides"><figure class="slide" id="slide-01">
+<img src="slides/slide_01.png" alt="课件第1页 2026《矿物物理学》课程——第一性原理计算（授课人：张志刚，中国科学院地质与地球物理研究所）">
+<figcaption><span class="sno">01</span><span class="stitle">2026《矿物物理学》课程——第一性原理计算（授课人：张志刚，中国科学院地质与地球物理研究所）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-02">
+<img src="slides/slide_02.png" alt="课件第2页 问卷反馈">
+<figcaption><span class="sno">02</span><span class="stitle">问卷反馈</span></figcaption>
+</figure>
+<figure class="slide" id="slide-03">
+<img src="slides/slide_03.png" alt="课件第3页 问卷反馈（选课动机、对地球行星演化的基本认识等）">
+<figcaption><span class="sno">03</span><span class="stitle">问卷反馈（选课动机、对地球行星演化的基本认识等）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-04">
+<img src="slides/slide_04.png" alt="课件第4页 第一性原理计算：四次课安排——1. 第一性原理方法（10月29日）；2. 计算软件实践（11月3日）；3. 应用：状态方程与相图计算（11月5日）；4. 应用：矿物弹性性质计算（11月10日）">
+<figcaption><span class="sno">04</span><span class="stitle">第一性原理计算：四次课安排——1. 第一性原理方法（10月29日）；2. 计算软件实践（11月3日）；3. 应用：状态方程与相图计算（11月5日）；4. 应用：矿物弹性性质计算（11月10日）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>问卷反馈与课程衔接</h2>
+        <div class="sec-meta"><span class="time">00:00:00–00:04:00</span><span class="chip">课件 1</span><span class="chip">课件 2</span><span class="chip">课件 3</span><span class="chip">课件 4</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>大家只要花几分钟就能把问卷填完，大概有15位同学填了。以后作业希望所有同学都能交，因为计入平时成绩，郭老师也说了平时成绩占比比较大。题目不难，包括这些调查，是希望大家增进了解。第一节课大家做了自我介绍，有些内容跟流体、成化关系比较多，还有同学做深部研究。结课后如果有具体问题，可以提出来私下讨论或者课间交流。特地去问大家为什么选这门课、有什么愿望——每年的情况看着都差不多：有少量同学一点兴趣都没有，也有少数同学满足于通过这门课，还有些同学比较感兴趣。大家希望能在这段不短的时间里像去旅游一样获得新体验。问到对地球行星演化的基本认识，很多同学是用PPT或大模型贴上去的回答——那没关系，这些问题不一定是未来真正要做的研究，但相关研究的思路基本类似，可以参考借鉴。</p><p>第五章主要是带大家把第一性原理这个方法用起来。第一节课已经讲了基本原理，这节课结合原理方法，用具体软件来实现，带着大家做一些操作。后边两节课我们还是会结合具体问题，对这个软件的输入输出有更深入的理解。不管是在矿物物理课里，还是在很多同学要做的物质元素分配、物质迁移、成核过程里，都可能涉及到最底层的物理原理——比如传质、相变、物质变化、物质反应。从底层来说，这种方法是通过一套原理，实现地球物理和化学在理论上的统一。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>以后作业希望所有同学都能交，因为计入平时成绩。</p><p>从底层来说，这种方法是通过一套原理，实现地球物理和化学在理论上的统一。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-modeling-problem">
+  <div class="slides"><figure class="slide" id="slide-05">
+<img src="slides/slide_05.png" alt="课件第5页 建模：将问题与研究方法（观测/实验/计算）对接——能否在技术和数据积累的基础上走得更远？依托理论、建立模型、引申意义、拓展认知；导师把握、模仿复刻、自主思考">
+<figcaption><span class="sno">05</span><span class="stitle">建模：将问题与研究方法（观测/实验/计算）对接——能否在技术和数据积累的基础上走得更远？依托理论、建立模型、引申意义、拓展认知；导师把握、模仿复刻、自主思考</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>建模：把科学问题与研究方法对接</h2>
+        <div class="sec-meta"><span class="time">00:04:00–00:19:30</span><span class="chip">课件 5</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第四章最后一点，主要是带大家了解一种思路：我们真正能拿到样品的深度，可能也就十几公里，比较幸运能拿到一些俯冲带折返回来的样品；但总体来说，我们对地球深部内部的了解很大程度上来自于地球物理数据。大家可以看到，如何通过正演和反演的结合、通过矿物的数据，为这个问题提供重要约束。这里每个问题都对应着第一性原理方法的应用。建模的核心，就是能否在技术和数据积累的基础上走得更远——依托理论、建立模型、引申意义、拓展认知。这个过程中有导师把握、模仿复刻、自主思考三条路径。</p><p>上课前先回忆一下上节课的内容：我们讲了第一性原理的方法，还回顾了郭老师那边的经典分子动力学方法——分子动力学模拟的关键逻辑思路在哪几个地方？有同学回答得很好：准备参数文件、设置好组件后选择合适的立场（力场）和路由、提出一个好问题、合理安排核显及CPU计算资源、多任务用脚本批量化处理、可视化部分多角度观察选择关键帧。说明郭老师教得很细。</p><p>但问这些问题的目的，是希望大家知道一个更大的东西在里面。这不是具体的操作——你用A软件，换了B软件操作就不一样；现在AI这么厉害，我们需要从更高的level看问题。把刚才那些具体的流程化描述抽象出来，分子动力学里边实际上有两个关键问题：第一，这个物理系统通过什么样的规则去产生一个一个的样品，再做统计；第二，参数——包括选什么系综、各种控制变量（温度压力）等输入参数，还有一个就是力场——怎么样去规定这个相互作用的规则，它也是一种规则。所以分子动力学模拟从更抽象的角度说，是在人为地、符合一种物理定律地产生一条轨迹、相当于做了很多样品出来，然后把所有样品统计平均，就得到我们需要的性质；单独从动画角度也可以观察每个元素在体系里怎么分配、运动、扩散，这些都可以从更高的角度得到约束。</p><p>有点题外话：这门课大多数同学以后不会用第一性原理，但希望通过郭老师和我的讲解，给大家心里种下一颗种子。这颗种子要生根发芽，需要跟已有知识体系对接起来，恰恰是这种抽象的东西更容易跟大家以后的研究、科研甚至生活中的问题对接。做第一性原理的方法跟郭老师的方法最关键的差别就在于力场这一块：郭老师那边用了人工智能的模型，比如电荷都是参数，这些参数有适用范围；第一性原理把力的相互作用从原子进一步带到底层电子层面——电子最根本的是用薛定谔方程描述，知道电子结构后，所有原子相互作用都可以通过电子能量投影到原子核上得到。这样就实现了一个什么？把所有参数都可以通过电子进行预测，原则上不需要通过实验数据去获得这些参数，所以它可以做很多适用于极端温压条件、极端极限条件下物质的预测。</p><p>上节课没时间展开那篇经典的第一性原理模拟文章（Stixrude 范文），原想让大家看它的基本思路及需要交代的计算细节和参数。这属技术方法类，现在可以借助AI帮助掌握具体操作；你们更需要了解方法思路。这项工作研究后钙钛矿（post-perovskite，录音里说的“助理奇幻石/杠杆矿”就是它）——下地幔的主要矿物，关注它在高温高压下的熔点，25年前数据非常缺乏。文中用了好的方法获取能量数据，这对地球演化制约很重要。图中虚线代表用低温低压实验数据外推的模型，可以看到它严重高于实际曲线。这个研究里边涉及做火成岩的边界问题。所以实际上，我们要把一个科学问题转化成矿物物理能够解决的问题——最重要的是在这个方法的基础上提出一个问题，这个问题能够被这种方法解决。很多同学可能会依赖导师去做方案，但我希望通过第六章、第七章里的一些具体问题，大家更多增强自主思考——怎么样把一个看起来很复杂的问题，最后抽象成一个第一性原理或矿物物理能够解决的问题。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我们对地球深部内部的了解，很大程度上来自于地球物理数据。</p><p>希望给大家心里种下一颗种子，这颗种子要生根发芽，需要跟已有知识体系对接起来。</p><p>把所有参数都可以通过电子进行预测，原则上不需要通过实验数据去获得这些参数。</p><p>最重要的是提出一个问题，这个问题能够被这种方法解决。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-problem-330gpa">
+  <div class="slides"><figure class="slide" id="slide-06">
+<img src="slides/slide_06.png" alt="课件第6页 330GPa单质铁的密度是多少？（Komabayashi, 2021, Crystals）——地球内外核边界的压力，约相当于地表压力的330万倍">
+<figcaption><span class="sno">06</span><span class="stitle">330GPa单质铁的密度是多少？（Komabayashi, 2021, Crystals）——地球内外核边界的压力，约相当于地表压力的330万倍</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>科学问题：330 GPa 单质铁的密度</h2>
+        <div class="sec-meta"><span class="time">00:19:30–00:27:00</span><span class="chip">课件 6</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>这节课我们结合一个非常具体的问题来了解这个方法：330GPa单质铁的密度是多少？330GPa对应地球内外核边界的压力，大概相当于地表压力的330万倍，是高温高压极端条件下的问题。看到这样一个问题，在矿物物理里面应该怎么思考？它里面隐含了什么条件？我们问一个物质它的密度是多少，第一个隐含条件是化学成分——这里给了“单质铁”，体系就确定了元素。第二个条件是什么？铁有不同的组织方式（晶体结构）。就像水，换一个角度说“多少个压力条件下冰的密度是多少”，高压下冰的形式有大概10到20种。所以单质铁是一个化学元素体系，但还要考虑它是什么样的晶体结构——fcc、bcc、hcp 等等。第三个条件：真实的实验隐含条件是什么？温度。这里说330GPa，如果换一种说法——“地球内外核边界处的单质铁密度是多少”，还需要一个温度。实际上大家在后边的课程里可以看到，所有问题的控制变量都是温度、压力和成分：成分决定结构，结构决定各种性质。这样就把各种科学问题转化成物理问题。</p><p>在这个问题之下，铁到底是什么结构？可以看图：这是铁的相图，各种结构用不同的符号表示——这几个都是密堆积结构（fcc、bcc、hcp），给人的感觉像玻璃弹珠连在一起，不同的垒法代表不同的结构；边界线代表相与相的共存，就是相变曲线。我们在日常生活中能看到的一个相图就是水的相图——液相、固相、气相，还有三相点；高压下还有各种各样的边，六方形的边、立方形的边。所以超过一定的温度和压力，水就会变成气体沸腾，这大家都能理解。在矿物物理里一个很重要的基础就是这种相图。铁的单质相图，在高温高压条件下——比如超过100GPa、295GPa——目前实验数据中高的和低的交织在一起，有很多实验问题。回到330GPa这个问题：如果把温度效应去掉，相当于在绝对零度这个地方往下走。在这个项目里，我们进行第一性原理计算。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>330GPa对应着我们地球内外核边界的压力，大概相当于地表压力的330万倍。</p><p>成分决定结构，结构决定各种性质，这样就把各种科学问题转化成物理问题。</p><p>所有问题的控制变量都是温度、压力和成分。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-vasp-input-files">
+  <div class="slides"><figure class="slide" id="slide-07">
+<img src="slides/slide_07.png" alt="课件第7页 VASP的一般计算流程（VASP流程&输入文件.pdf）">
+<figcaption><span class="sno">07</span><span class="stitle">VASP的一般计算流程（VASP流程&输入文件.pdf）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-08">
+<img src="slides/slide_08.png" alt="课件第8页 1. 设置结构：POSCAR（Hexagonal Close Packed, HCP）——vasp.at/wiki/index.php/POSCAR">
+<figcaption><span class="sno">08</span><span class="stitle">1. 设置结构：POSCAR（Hexagonal Close Packed, HCP）——vasp.at/wiki/index.php/POSCAR</span></figcaption>
+</figure>
+<figure class="slide" id="slide-09">
+<img src="slides/slide_09.png" alt="课件第9页 2. 选择赝势：POTCAR（vasp5.4.4.potpaw.zip）——vasp.at/wiki/index.php/POTCAR">
+<figcaption><span class="sno">09</span><span class="stitle">2. 选择赝势：POTCAR（vasp5.4.4.potpaw.zip）——vasp.at/wiki/index.php/POTCAR</span></figcaption>
+</figure>
+<figure class="slide" id="slide-10">
+<img src="slides/slide_10.png" alt="课件第10页 INCAR 3. 设置运行参数——试试空文件：touch INCAR；sbatch task.slurm">
+<figcaption><span class="sno">10</span><span class="stitle">INCAR 3. 设置运行参数——试试空文件：touch INCAR；sbatch task.slurm</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>VASP 流程与输入文件：POSCAR / POTCAR / INCAR</h2>
+        <div class="sec-meta"><span class="time">00:27:00–01:05:40</span><span class="chip">课件 7</span><span class="chip">课件 8</span><span class="chip">课件 9</span><span class="chip">课件 10</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>在物理计算中，首先需描述结构。有同学学过晶体结构或晶体化学吗？如何表征晶体结构？后续将带大家用软件实现 hcp 铁的晶体结构并具象化，观察原子排列。结合上节课内容，输入文件仅需3到4个文本文件：POSCAR 定义原子位置、POTCAR 定义元素（赝势）、INCAR 设置参数，再加上任务调度脚本。这与郭老师讲的类似，需要选择参数。</p><p>先手搓 POSCAR 文件。我们知道晶体就是一个重复的周期性结构——绿线代表最小重复单元（晶胞），沿XYZ方向重复可构建无限晶体结构。在POSCAR中，先定义最小结构单元并用向量表达。文件第一行写任意名称作为说明，便于回忆记录；第二行写系数1.0，代表后面三行定义的平行六面体结构——如果定义2.0，下面三行每一个数字都要乘以2；它也可以是负数，比如做状态方程时我们知道体系的体积，可以用负数来表示体积缩放。接着三行定义平行六面体（晶格向量）：比如 hcp 铁的晶格常数 a=2.23Å，一般 hcp 的 c/a 比大概1.5左右（2.23乘以√3/2 得到约2.16）；所以三行可以写成（2.0、0、0）、（-2.16、2.16√3/2…）这样的直角坐标投影——具体数字大家可以用计算器算，保留多位有效数字，因为做晶体结构对称性判断时默认保留四位有效数字，如果位数不够，本来一个 hcp 结构可能被判断成别的结构。</p><p>写完晶格向量，第六行代表体系中的元素：铁就写“Fe”——但程序并不理解，Fe只是一个符号，你甚至把它写成V或A都可以；它对该元素所有相互作用及化学行为的了解都来自赝势文件。但对我们来说，最好写出对应元素的符号。紧接着第七行（2），代表平行六面体中有两个原子：一个在原点（0,0,0），另一个在平行六面体中间——hcp 结构投影在XY平面是三角形，Z方向走了一半（0.5），X方向1/3、2/3。这两行用平行六面体坐标系表征每个原子的位置。最小重复单元就是原点的一个铁原子加上平行六面体中间的一个原子。保存文件后，文件夹里就只有一个结构定义文件。</p><p>然后需要让VASP知道我们在做铁：把下载的赝势文件解压（tar -xzvf），会有两个不同的文件——LDA和PBE两个目录。教大家一个方法：用Tab键补全文件名，节省输入时间且不易出错。进入每个目录后解压，目录下会产生很多文件夹——有的未加任何参数、有的加了7z、pd（部分占据）或2s1s1+7z等。这些代表定义铁这个元素时不同的表征方法：不是元素不一样，而是对于这个元素表征方法不一样——比如价电子数，PBE 的 Fe 取8个价电子，有的取14、16个价电子，代表着不同的取法；在不同的条件下需要取不同的赝势。这些是代表赝势的不同假设，我们在课里用最简单的8价电子就可以。</p><p>把赝势文件（POTCAR）拷到工作目录。打开来看，它是文本文件，信息量很多（总共2656行），程序就是通过这个文件了解体系的基本信息：它定义了这个文件是铁（8个价电子），还记录了产生这个赝势文件时采用的参数——铁的质量、价电子数、截断半径等。我们写文章时经常用到这些。底下是一堆数字，这有点像现在大家看到的AI大模型——用各种各样的数字去定义出我们这样一个元素。把所有程序看来都是数字，这个数字如果是照着铁来构建的，那么它后面所有的预测，都会跟我们人类理解的铁这种物质对应起来。注意这里体系只有一种元素，所以只需把赝势文件拷过来；一会儿介绍硅酸盐体系的话，可能有镁、硅、氧，需要把多个元素的赝势文件拼合成一个长文件，下一课讲多元素体系时会有例子。</p><p>然后缺什么？各种输入参数的文件——INCAR。如果课后去看软件公司的培训材料和官网，可以看到好几百个参数。我们是不是要一个一个测？这时做个最简单的实验：touch INCAR 创建空文件，里面啥都没有——所有设置都用默认值。它有两百个参数，每个参数都是默认值。这时就可以做一次第一性原理的计算了。课程网站上有一个任务脚本（README.txt），下载下来改名1.txt，目录下就有4个文件：3个输入文件加1个任务调度文件。直接试一试 sbatch task.slurm，看程序能不能在1.5秒内算完。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>程序并不知道铁是什么，它看到的只是数字。</p><p>POTCAR 底下是一堆数字，有点像AI大模型用各种各样的数字去定义出我们这样一个元素。</p><p>INCAR 空文件，所有设置都是默认值，就可以做一次第一性原理的计算。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-run-parameters">
+  <div class="slides"><figure class="slide" id="slide-11">
+<img src="slides/slide_11.png" alt="课件第11页 330GPa单质铁的密度是多少？——变化体积，回归V-P关系；结构优化/弛豫">
+<figcaption><span class="sno">11</span><span class="stitle">330GPa单质铁的密度是多少？——变化体积，回归V-P关系；结构优化/弛豫</span></figcaption>
+</figure>
+<figure class="slide" id="slide-12">
+<img src="slides/slide_12.png" alt="课件第12页 问题：330 GPa，hcp-Fe的密度如何？INCAR 参数：ISTART=0、NPAR=4、ENCUT=500、KSPACING=0.3、IBRION=2、NSW=100、PSTRESS=3300、ISYM=2、ISIF=3；对比CONTCAR和POSCAR">
+<figcaption><span class="sno">12</span><span class="stitle">问题：330 GPa，hcp-Fe的密度如何？INCAR 参数：ISTART=0、NPAR=4、ENCUT=500、KSPACING=0.3、IBRION=2、NSW=100、PSTRESS=3300、ISYM=2、ISIF=3；对比CONTCAR和POSCAR</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>计算参数与运行：330 GPa hcp-Fe</h2>
+        <div class="sec-meta"><span class="time">01:05:40–01:07:00</span><span class="chip">课件 11</span><span class="chip">课件 12</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>有了输入文件之后，通过上节课讲的迭代循环不断迭代，得到收敛的电子结构，再通过力的计算看原子核怎么运动——这是嵌套型的循环：内循环是电子，外循环是原子核。整个逻辑就是：给定原子的结构、成分和参数之后，用第一性原理密度泛函的方法算出电子的结构和能量，得到原子的结构和能量及各种受力，再用类似于经典动力学的方法改变原子位置得到一条轨迹。课程网站上传了更细致的文件，大家之后可以再看。</p><p>330GPa 单质铁密度的计算怎么做？一是变化体积、回归V-P关系；二是做结构优化/弛豫。INCAR 里写：ISTART=0（从零开始）、NPAR=4（并行参数）、ENCUT=500（平面波截断能量500eV）、KSPACING=0.3（倒空间k点间距）、IBRION=2（共轭梯度结构优化）、NSW=100（最多100步）、PSTRESS=3300（施加3300 kbar=330GPa的压力）、ISYM=2（对称性）、ISIF=3（优化晶胞形状和体积）。算完之后对比CONTCAR和POSCAR，看结构是否收敛。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>PSTRESS=3300，施加330GPa的压力。</p><p>变化体积，回归V-P关系；结构优化/弛豫。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-output-files">
+  <div class="slides"><figure class="slide" id="slide-13">
+<img src="slides/slide_13.png" alt="课件第13页 OSZICAR：每次迭代的信息">
+<figcaption><span class="sno">13</span><span class="stitle">OSZICAR：每次迭代的信息</span></figcaption>
+</figure>
+<figure class="slide" id="slide-14">
+<img src="slides/slide_14.png" alt="课件第14页 OUTCAR：最主要的输出文件——grep “external pressure” OUTCAR；grep “in kB” OUTCAR；grep “volume of cell” OUTCAR；grep “TOTEN” OUTCAR">
+<figcaption><span class="sno">14</span><span class="stitle">OUTCAR：最主要的输出文件——grep “external pressure” OUTCAR；grep “in kB” OUTCAR；grep “volume of cell” OUTCAR；grep “TOTEN” OUTCAR</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>输出文件：OSZICAR 与 OUTCAR</h2>
+        <div class="sec-meta"><span class="time">01:07:00–01:08:30</span><span class="chip">课件 13</span><span class="chip">课件 14</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>输出文件方面：OSZICAR 记录每次迭代的信息——每一步的能量、受力收敛情况，可以实时看它迭代到哪一步；OUTCAR 是最主要的输出文件，几乎所有结果都在里面。常用命令：grep "external pressure" OUTCAR 看外部压力；grep "in kB" OUTCAR 看压力（单位kbar）；grep "volume of cell" OUTCAR 看晶胞体积；grep "TOTEN" OUTCAR 看总能。有了压力、体积和总能，就可以做状态方程了——这是下节课的内容。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>OUTCAR是最主要的输出文件，几乎所有结果都在里面。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-complex-modeling">
+  <div class="slides"><figure class="slide" id="slide-15">
+<img src="slides/slide_15.png" alt="课件第15页 更复杂晶体的建模：利用晶体数据库——VESTA（jp-minerals.org/vesta/en）；Bridgemanite 布里奇曼石">
+<figcaption><span class="sno">15</span><span class="stitle">更复杂晶体的建模：利用晶体数据库——VESTA（jp-minerals.org/vesta/en）；Bridgemanite 布里奇曼石</span></figcaption>
+</figure>
+<figure class="slide" id="slide-16">
+<img src="slides/slide_16.png" alt="课件第16页 晶体数据库：Space Group、Lattice Parameters、Wyckoff Positions（database.iem.ac.ru；rruff.geo.arizona.edu/AMS/amcsd.php）">
+<figcaption><span class="sno">16</span><span class="stitle">晶体数据库：Space Group、Lattice Parameters、Wyckoff Positions（database.iem.ac.ru；rruff.geo.arizona.edu/AMS/amcsd.php）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-17">
+<img src="slides/slide_17.png" alt="课件第17页 练习：构建典型地幔矿物的POSCAR文件——Forsterite/Wadsleyite/Ringwoodite（Mg2SiO4）、Enstatite/Diopside/Bridgmanite/Post-Perovskite（MgSiO3）、Pyrope（Mg3Al2Si3O12）、Majorite、Periclase（MgO）、CaSiO3钙硅钙钛矿（Oganov & Ono, 2004, Nature: post-perovskite in D'' layer）">
+<figcaption><span class="sno">17</span><span class="stitle">练习：构建典型地幔矿物的POSCAR文件——Forsterite/Wadsleyite/Ringwoodite（Mg2SiO4）、Enstatite/Diopside/Bridgmanite/Post-Perovskite（MgSiO3）、Pyrope（Mg3Al2Si3O12）、Majorite、Periclase（MgO）、CaSiO3钙硅钙钛矿（Oganov & Ono, 2004, Nature: post-perovskite in D'' layer）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div class="sec-tt">
+        <h2>更复杂晶体的建模：晶体数据库与练习</h2>
+        <div class="sec-meta"><span class="time">01:08:30–01:10:00</span><span class="chip">课件 15</span><span class="chip">课件 16</span><span class="chip">课件 17</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>更复杂晶体的建模，可以利用晶体数据库：比如布里奇曼石（Bridgemanite，地幔最重要的矿物之一），从数据库里可以查到它的空间群（Space Group）、晶格参数（Lattice Parameters）、威科夫位置（Wyckoff Positions），用VESTA软件可视化，再导出POSCAR。常用的数据库有 Mineral Crystal Structure Database（database.iem.ac.ru）和 American Mineralogist Crystal Structure Database（rruff.geo.arizona.edu/AMS/amcsd.php）。</p><p>课上的练习：构建典型地幔矿物的POSCAR文件——Forsterite（镁橄榄石）、Wadsleyite（瓦兹利石）、Ringwoodite（林伍德石），都是 Mg2SiO4；Enstatite（顽火辉石）、Diopside（透辉石）、Bridgmanite（布里奇曼石）、Post-Perovskite（后钙钛矿），都是 MgSiO3；Pyrope（镁铝榴石）Mg3Al2Si3O12；Majorite（镁铁榴石）；Periclase（方镁石）MgO；CaSiO3 钙硅钙钛矿。后钙钛矿是 Oganov & Ono 2004 在 Nature 上从理论上预测、并经实验证实的 MgSiO3 高压相，存在于地球D''层——这就是把科学问题与方法对接的典型例子。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>后钙钛矿，理论上预测并经实验证实，存在于地球D''层。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-homework">
+  <div class="slides"><figure class="slide" id="slide-18">
+<img src="slides/slide_18.png" alt="课件第18页 课后：1. 继续熟悉VASP的输入输出；2. 构建典型地幔矿物的POSCAR文件（11.4周三晚20:00截止，send2me.cn）">
+<figcaption><span class="sno">18</span><span class="stitle">课后：1. 继续熟悉VASP的输入输出；2. 构建典型地幔矿物的POSCAR文件（11.4周三晚20:00截止，send2me.cn）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">08</span>
+      <div class="sec-tt">
+        <h2>课后任务</h2>
+        <div class="sec-meta"><span class="time">01:10:00–结束</span><span class="chip">课件 18</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>课后两件事：1. 继续熟悉VASP的输入输出；2. 构建典型地幔矿物的POSCAR文件（11.4周三晚20:00截止，文件在 send2me.cn 链接）。大家手搓一遍POSCAR，虽然比较费劲，但搓一遍之后就会觉得印象很深刻——以后再遇到新的结构，就知道怎么从数据库拿信息、怎么建模、怎么算。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>手搓虽然比较费劲，但搓了一遍之后大家就会觉得印象很深刻。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（矿物物理学）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>

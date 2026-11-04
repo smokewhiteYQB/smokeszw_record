@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>生成式模型与科学智能应用 · 第13节 Lecture 11 Diffusion Models I：扩散模型背景与前向/反向过程、最大似然与 ELBO 推导、三项损失、高斯后验与均值参数化｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.videos{margin-top:14px;border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.video + .video{border-top:1px solid #e4e9f0;}
+.videos h4{font-size:12.5px;font-weight:700;color:#0a1f38;background:#f2f5f9;padding:8px 12px;border-bottom:1px solid #e4e9f0;}
+.videos video{display:block;width:100%;max-height:460px;background:#0b0f14;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>生成式模型与科学智能应用 · 第13节 Lecture 11 Diffusion Models I：扩散模型背景与前向/反向过程、最大似然与 ELBO 推导、三项损失、高斯后验与均值参数化</h1>
+    <div class="sub">第13节 Lecture 11 Diffusion Models I：扩散模型背景与前向/反向过程、最大似然与 ELBO 推导、三项损失、高斯后验与均值参数化 ｜ 2026-10-22 ｜ 刘云帆</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 53 页 · 整理 5 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-bg">01 课程安排与扩散模型背景</option>
+<option value="sec-setup">02 扩散模型的基本设置：前向加噪与反向去噪</option>
+<option value="sec-elbo">03 学习扩散模型：最大似然与 ELBO 推导</option>
+<option value="sec-loss">04 目标函数：Prior / Trajectory / Reconstruction 三项损失</option>
+<option value="sec-meanparam">05 可解析的高斯后验与均值参数化</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 Lecture11_Diffusion_Models_upd.pdf 逐页渲染，转写原文见 record_20261022.txt。</div>
+<section class="sec" id="sec-bg">
+  <div class="slides"><figure class="slide" id="slide-01">
+<img src="slides/slide_01.png" alt="课件第1页 封面：Generative Models & AI4S Applications，Lecture 11 Diffusion Models（刘云帆）">
+<figcaption><span class="sno">01</span><span class="stitle">封面：Generative Models & AI4S Applications，Lecture 11 Diffusion Models（刘云帆）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-02">
+<img src="slides/slide_02.png" alt="课件第2页 Announcements：作业 1 于 10 月 25 日截止；作业 2 已发布、11 月 22 日截止；本课件可能后续更新">
+<figcaption><span class="sno">02</span><span class="stitle">Announcements：作业 1 于 10 月 25 日截止；作业 2 已发布、11 月 22 日截止；本课件可能后续更新</span></figcaption>
+</figure>
+<figure class="slide" id="slide-03">
+<img src="slides/slide_03.png" alt="课件第3页 Recap：基于最大似然学习的生成模型——自回归（链式分解）、VAE（边缘似然积分）、Normalizing Flow（变量变换），都能显式写出或近似密度">
+<figcaption><span class="sno">03</span><span class="stitle">Recap：基于最大似然学习的生成模型——自回归（链式分解）、VAE（边缘似然积分）、Normalizing Flow（变量变换），都能显式写出或近似密度</span></figcaption>
+</figure>
+<figure class="slide" id="slide-04">
+<img src="slides/slide_04.png" alt="课件第4页 Recap：似然不可写出的 GAN——双人极小极大博弈隐式诱导分布；优点：高质量生成、目标与架构灵活；缺点：训练不稳定、模式坍塌">
+<figcaption><span class="sno">04</span><span class="stitle">Recap：似然不可写出的 GAN——双人极小极大博弈隐式诱导分布；优点：高质量生成、目标与架构灵活；缺点：训练不稳定、模式坍塌</span></figcaption>
+</figure>
+<figure class="slide" id="slide-05">
+<img src="slides/slide_05.png" alt="课件第5页 Roadmap：课程路线图——Latent Variable / Normalizing Flow / GAN 之后进入 Diffusion、Score-based、Flow Models，再到 Guided Generation 与 Evaluation">
+<figcaption><span class="sno">05</span><span class="stitle">Roadmap：课程路线图——Latent Variable / Normalizing Flow / GAN 之后进入 Diffusion、Score-based、Flow Models，再到 Guided Generation 与 Evaluation</span></figcaption>
+</figure>
+<figure class="slide" id="slide-06">
+<img src="slides/slide_06.png" alt="课件第6页 Plan for the Following Lectures：扩散/流模型材料众多、引入逻辑各异——斯坦福 CS236 / 康奈尔 CS6785 走「能量模型→Score 模型→扩散模型」的传统理论路径">
+<figcaption><span class="sno">06</span><span class="stitle">Plan for the Following Lectures：扩散/流模型材料众多、引入逻辑各异——斯坦福 CS236 / 康奈尔 CS6785 走「能量模型→Score 模型→扩散模型」的传统理论路径</span></figcaption>
+</figure>
+<figure class="slide" id="slide-07">
+<img src="slides/slide_07.png" alt="课件第7页 Plan for the Following Lectures：MIT 6.S184 从 ODE/SDE 统一视角切入；CMU 10.799 按选题逐个专题讲——本节课采用 CMU 式专题讲法，数学背景可参考 MIT">
+<figcaption><span class="sno">07</span><span class="stitle">Plan for the Following Lectures：MIT 6.S184 从 ODE/SDE 统一视角切入；CMU 10.799 按选题逐个专题讲——本节课采用 CMU 式专题讲法，数学背景可参考 MIT</span></figcaption>
+</figure>
+<figure class="slide" id="slide-08">
+<img src="slides/slide_08.png" alt="课件第8页 The Origin of Diffusion：扩散模型常被视为始于 DDPM（Ho et al., NeurIPS 2020）">
+<figcaption><span class="sno">08</span><span class="stitle">The Origin of Diffusion：扩散模型常被视为始于 DDPM（Ho et al., NeurIPS 2020）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-09">
+<img src="slides/slide_09.png" alt="课件第9页 The True Origin of Diffusion：真正的起源是 Sohl-Dickstein et al.，ICML 2015《Deep Unsupervised Learning using Nonequilibrium Thermodynamics》">
+<figcaption><span class="sno">09</span><span class="stitle">The True Origin of Diffusion：真正的起源是 Sohl-Dickstein et al.，ICML 2015《Deep Unsupervised Learning using Nonequilibrium Thermodynamics》</span></figcaption>
+</figure>
+<figure class="slide" id="slide-10">
+<img src="slides/slide_10.png" alt="课件第10页 The True Origin：2015 年提出后长期被忽视（到 2026 年 10 月引用已超 13,900），直到 2021 年 DALL-E 之后做生成的人才开始关注">
+<figcaption><span class="sno">10</span><span class="stitle">The True Origin：2015 年提出后长期被忽视（到 2026 年 10 月引用已超 13,900），直到 2021 年 DALL-E 之后做生成的人才开始关注</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>课程安排与扩散模型背景</h2>
+        <div class="sec-meta"><span class="time">录音：前半段（休息前）</span><span class="chip">课件 1</span><span class="chip">课件 2</span><span class="chip">课件 3</span><span class="chip">课件 4</span><span class="chip">课件 5</span><span class="chip">课件 6</span><span class="chip">课件 7</span><span class="chip">课件 8</span><span class="chip">课件 9</span><span class="chip">课件 10</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>正式讲课之前先说一下作业：第一次作业 25 号截止（这周五）；第二次作业已经发布，给大家充分的时间去做一个 GAN 的训练；到这门课 11 月快截止的时候，会再放最后一个让大家去训练扩散生成模型的作业。作业一共 5 道题，每题一分。今天这个课件应该讲不完，讲多少算多少，之后可能会有更新。</p><p>先回顾之前学的几类模型：自回归模型、变分自编码器、规范化流模型，它们都是基于最大似然训练的——可以把似然写出来、最大化相应参数，这是一类模型。前两节课讲的 GAN 是比较例外的情况：用生成器对抗式地隐式诱导数据分布，分布写不出来但依然能表示出来、通过对抗训练形成生成网络。GAN 的优点是可以得到很高质量的生成结果，目标和网络结构的设计都有很大灵活度；问题是非常难训练，需要很好的经验和训练方法。</p><p>课程安排：已经上了 12 次 lecture，一共 24 课，最后还剩 8 次课——最后一节课考试、倒数第二节做答疑课，剩下 6 节课尽量把最后这部分讲明白，有时间再讲一下下一部分内容。这部分内容在原理和设计上都有关系，很多参考课程从不同角度讲：这节课主要参考斯坦福和康奈尔的课，它们从能量模型再到底层扩散模型、是比较传统理论化的讲法——如果按这个顺序讲，可能讲一半大家就听懵了。所以采取比较新颖的方法，比如 MIT 和 CMU：MIT 直接从 ODE/SDE 的统一视角出发，没接触过的话可能不太适应；最后选取了 CMU 的课程来讲，把每个部分单独拿出来一个 topic。感兴趣可以主要参考 CMU 的材料，想深入了解数学背景可以看 MIT 的资料。</p><p>今天的课堂安排：先总体介绍扩散模型的基本背景、模型怎么表示；之后讲怎么学习这个模型、学习目标是什么；再讨论学习目标里一些细节的设计，它有哪些内容；如果有时间再讲一个 discussion。</p><p>扩散模型的背景：大家可能在 2022 年 OpenAI 推出 DALL-E 2 之后才逐渐认识它，但之前 2020 年的 DDPM（UCB 上的文章）一般被视为扩散模型的起源，现在已有很多分支。更早的 2015 年，斯坦福博士后 Sohl-Dickstein 提出了受物理热动力学启发的深度无监督学习方法，提供了扩散模型的基础——这其实是 Normalizing Flow 模型的前身，他在 2015 年就提出了扩散概念。但 2015 年提出后从 2016 到 2020 一直没什么人关注和引用、被很大程度上忽略，直到 2021 年 DALL-E 提出后做生成学习的人才开始关注；2023、2024 年不断爆款，到现在引用已超过一万（13,900 多）。这是它的提出点。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>第二次作业已经发往我们9月22号左右，给大家充分的时间去做一个GAN的训练。</p><p>如果我们按这个顺序给大家讲的话，可能讲一半大家都听懵了是吧。所以说还是采取一个比较新颖的方法。</p><p>我最后选取了CMU的这个课程来讲，就是把每个部分单独拿出来一个topic给大家讲。</p><p>2015年提出后，从2016年到2020年一直没什么人关注和引用，被很大程度上忽略。直到2021年DALL-E提出后，做生成学习的人才开始关注。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-setup">
+  <div class="slides"><figure class="slide" id="slide-11">
+<img src="slides/slide_11.png" alt="课件第11页 The Idea of Diffusion Process：前向过程摧毁数据结构（加噪），反向过程恢复数据结构——这本身就是一个生成模型">
+<figcaption><span class="sno">11</span><span class="stitle">The Idea of Diffusion Process：前向过程摧毁数据结构（加噪），反向过程恢复数据结构——这本身就是一个生成模型</span></figcaption>
+</figure>
+<figure class="slide" id="slide-12">
+<img src="slides/slide_12.png" alt="课件第12页 Diffusion Models in a Nutshell：动机——逐渐把数据变成噪声、学习逆过程；前向过程 q(x_t|x_{t-1}) 是用户自定义的加噪过程（纯噪声 → 干净数据）">
+<figcaption><span class="sno">12</span><span class="stitle">Diffusion Models in a Nutshell：动机——逐渐把数据变成噪声、学习逆过程；前向过程 q(x_t|x_{t-1}) 是用户自定义的加噪过程（纯噪声 → 干净数据）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-13">
+<img src="slides/slide_13.png" alt="课件第13页 Diffusion Models in a Nutshell：反向过程 p_θ(x_{t-1}|x_t) 是学习的去噪过程——从纯噪声迭代地、由粗到细地生成数据">
+<figcaption><span class="sno">13</span><span class="stitle">Diffusion Models in a Nutshell：反向过程 p_θ(x_{t-1}|x_t) 是学习的去噪过程——从纯噪声迭代地、由粗到细地生成数据</span></figcaption>
+</figure>
+<figure class="slide" id="slide-14">
+<img src="slides/slide_14.png" alt="课件第14页 Diffusion Models in a Nutshell：前向轨迹 q(x_0:T)——干净数据分布逐步扩散到纯噪声分布">
+<figcaption><span class="sno">14</span><span class="stitle">Diffusion Models in a Nutshell：前向轨迹 q(x_0:T)——干净数据分布逐步扩散到纯噪声分布</span></figcaption>
+</figure>
+<figure class="slide" id="slide-15">
+<img src="slides/slide_15.png" alt="课件第15页 Diffusion Models in a Nutshell：反向轨迹 p_θ(x_0:T)——从纯噪声分布逐步恢复干净数据分布">
+<figcaption><span class="sno">15</span><span class="stitle">Diffusion Models in a Nutshell：反向轨迹 p_θ(x_0:T)——从纯噪声分布逐步恢复干净数据分布</span></figcaption>
+</figure>
+<figure class="slide" id="slide-16">
+<img src="slides/slide_16.png" alt="课件第16页 Forward Process：数据样本 x_0∼q(x_0)，跑一条逐渐加噪的马尔可夫链得到 x_1,…,x_T；单步加噪 q(x_t|x_{t-1})=𝒩(x_t; √α_t x_{t-1}, (1−α_t)I)，t 是时间步、α_t 是调度参数（0 到 1 之间），T 足够大时 x_T 趋于标准高斯">
+<figcaption><span class="sno">16</span><span class="stitle">Forward Process：数据样本 x_0∼q(x_0)，跑一条逐渐加噪的马尔可夫链得到 x_1,…,x_T；单步加噪 q(x_t|x_{t-1})=𝒩(x_t; √α_t x_{t-1}, (1−α_t)I)，t 是时间步、α_t 是调度参数（0 到 1 之间），T 足够大时 x_T 趋于标准高斯</span></figcaption>
+</figure>
+<figure class="slide" id="slide-17">
+<img src="slides/slide_17.png" alt="课件第17页 Forward Process：q(x_1,…,x_T|x_0) 的边际可以解析计算——给定 x_0 时 x_t 的分布直接写成 𝒩(x_t; √ᾱ_t x_0, (1−ᾱ_t)I)，ᾱ_t 是 α_1 到 α_t 的累乘；无需逐步模拟、可以一步采样任意时刻的 x_t">
+<figcaption><span class="sno">17</span><span class="stitle">Forward Process：q(x_1,…,x_T|x_0) 的边际可以解析计算——给定 x_0 时 x_t 的分布直接写成 𝒩(x_t; √ᾱ_t x_0, (1−ᾱ_t)I)，ᾱ_t 是 α_1 到 α_t 的累乘；无需逐步模拟、可以一步采样任意时刻的 x_t</span></figcaption>
+</figure>
+<figure class="slide" id="slide-18">
+<img src="slides/slide_18.png" alt="课件第18页 Forward Process：噪声调度——线性 α_t 下信号衰减很快、到 0.6 时原信号已很少；cos 衰减的 α_t 对应更均匀近线性的累积衰减，真实信号随 t 的保留过程更可控">
+<figcaption><span class="sno">18</span><span class="stitle">Forward Process：噪声调度——线性 α_t 下信号衰减很快、到 0.6 时原信号已很少；cos 衰减的 α_t 对应更均匀近线性的累积衰减，真实信号随 t 的保留过程更可控</span></figcaption>
+</figure>
+<figure class="slide" id="slide-19">
+<img src="slides/slide_19.png" alt="课件第19页 Reverse Process：理想去噪过程 q(x_{t-1}|x_t) 未知，学习一个参数化的模型 p_θ 逆转马尔可夫加噪过程；p_θ(x_0:T)=p(x_T)∏p_θ(x_{t-1}|x_t)，条件分布建模为高斯 𝒩(x_{t-1}; μ_θ(x_t,t), Σ_θ(x_t,t))，适用于加噪步足够小（α_t 趋于 1）的情形；采样：①采噪声 x_T ②从 p_θ(x_{t-1}|x_t) 迭代采样">
+<figcaption><span class="sno">19</span><span class="stitle">Reverse Process：理想去噪过程 q(x_{t-1}|x_t) 未知，学习一个参数化的模型 p_θ 逆转马尔可夫加噪过程；p_θ(x_0:T)=p(x_T)∏p_θ(x_{t-1}|x_t)，条件分布建模为高斯 𝒩(x_{t-1}; μ_θ(x_t,t), Σ_θ(x_t,t))，适用于加噪步足够小（α_t 趋于 1）的情形；采样：①采噪声 x_T ②从 p_θ(x_{t-1}|x_t) 迭代采样</span></figcaption>
+</figure>
+<figure class="slide" id="slide-20">
+<img src="slides/slide_20.png" alt="课件第20页 Diffusion 模型设置汇总——前向：预定义马尔可夫加噪 q(x_t|x_{t-1})=𝒩(x_t; √α_t x_{t-1}, (1−α_t)I)，且 x_t 可由 x_0 一步写出；反向：学习的去噪模型 p_θ(x_{t-1}|x_t)=𝒩(x_{t-1}; μ_θ(x_t,t), Σ_θ(x_t,t))">
+<figcaption><span class="sno">20</span><span class="stitle">Diffusion 模型设置汇总——前向：预定义马尔可夫加噪 q(x_t|x_{t-1})=𝒩(x_t; √α_t x_{t-1}, (1−α_t)I)，且 x_t 可由 x_0 一步写出；反向：学习的去噪模型 p_θ(x_{t-1}|x_t)=𝒩(x_{t-1}; μ_θ(x_t,t), Σ_θ(x_t,t))</span></figcaption>
+</figure>
+<figure class="slide" id="slide-21">
+<img src="slides/slide_21.png" alt="课件第21页 α 与 β 的关系：α_t=1−β_t——α_t 是信号保留系数，β_t 对应加噪/方差项；β_t=1−α_t 代入即得方差系数的常见写法；部分文章用 β̄_t 等参数改写，列出供查阅">
+<figcaption><span class="sno">21</span><span class="stitle">α 与 β 的关系：α_t=1−β_t——α_t 是信号保留系数，β_t 对应加噪/方差项；β_t=1−α_t 代入即得方差系数的常见写法；部分文章用 β̄_t 等参数改写，列出供查阅</span></figcaption>
+</figure>
+<figure class="slide" id="slide-22">
+<img src="slides/slide_22.png" alt="课件第22页 Noise Scheduling Parameters：ᾱ_t=∏α_s=∏(1−β_s)，β̄_t=1−ᾱ_t=1−∏(1−β_s)；ᾱ_t=α_t·ᾱ_{t−1}，α_t=ᾱ_t/ᾱ_{t−1}，β_t=1−ᾱ_t/ᾱ_{t−1}——纯代数运算，方便后续查询">
+<figcaption><span class="sno">22</span><span class="stitle">Noise Scheduling Parameters：ᾱ_t=∏α_s=∏(1−β_s)，β̄_t=1−ᾱ_t=1−∏(1−β_s)；ᾱ_t=α_t·ᾱ_{t−1}，α_t=ᾱ_t/ᾱ_{t−1}，β_t=1−ᾱ_t/ᾱ_{t−1}——纯代数运算，方便后续查询</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>扩散模型的基本设置：前向加噪与反向去噪</h2>
+        <div class="sec-meta"><span class="time">录音：前半段（休息前）</span><span class="chip">课件 11</span><span class="chip">课件 12</span><span class="chip">课件 13</span><span class="chip">课件 14</span><span class="chip">课件 15</span><span class="chip">课件 16</span><span class="chip">课件 17</span><span class="chip">课件 18</span><span class="chip">课件 19</span><span class="chip">课件 20</span><span class="chip">课件 21</span><span class="chip">课件 22</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>扩散模型具体是什么？从原文的高层认识来看，它包含两个过程：前向过程 forward process 和反向过程 reverse process。原文想系统、缓慢地把数据分布摧毁——通过一个迭代前向的扩散过程。我当时刚接触生成模型时看到这篇文章也很奇怪：为什么要把它好端端的数据分布摧毁？希望大家学完这门课后，能从「数据分布或从先验分布到数据分布的映射」这个角度理解，而不是简单地理解为通过网络从噪声生成图像。前向过程是摧毁数据结构的过程，反向过程则是学习一个反向过程把数据结构恢复出来，最后得到一个灵活且可计算的生成数据模型——我们在恢复数据结构的过程中进行学习。</p><p>直观地讲：我们有一个干净、清晰、没有经过噪声破坏的数据 X0（第零步加噪之前的 clean data），然后不断往数据里加噪声，一直加到 T−1、小 t、最终到一个足够大的大 T——T 足够大的话最终会得到一个纯噪声。前向加噪过程定义的是中间每一步单步加噪的分布：给定某一步加噪之前的数据为条件，定义它加噪后下一个 x_t 的条件分布。这是我们定义好的、不用去学习、我们去设置的一个任务。这里展示的是高斯加噪，其实对于离散数据结构可以加伯努利加噪或其他形态，这个以后有时间再说，这一环节主要考虑高斯。</p><p>我们现在想学习的是反向过程：从 X_T（纯噪声）不断恢复，一步一步恢复到 X0 纯粹的数据。我们用一个神经网络参数化的网络去建模反向的去噪分布——以中间加噪后的 x_t 为条件，建模减去一步噪后得到 x_{t−1} 数据的单步分布。从生成角度看，整个生成过程是 T 次迭代、从粗糙到精细的过程，这和之前学的模型不一样：GAN 用生成器直接输出，VAE、NF 也是一步生成；AR 模型虽然一步步生成，但它是逐维生成，而去噪过程的每一步输出的是完整数据（可能是含噪数据，不一定是纯数据）。</p><p>看 SML 原始论文中的前向加噪轨迹：T=0 时是无噪的纯粹数据分布（二维螺旋形多模态分布），不断加噪，一直加到最后就是一个纯高斯噪声；加到中间时还能看到一些螺旋形分布、每个数据点从原来的分布中逐渐扩散。反过来，扩散模型学习到的反向过程从纯高斯噪声开始，逐渐去噪，数据分布逐渐显现，一直去噪到 T=0 就能恢复出大部分数据（个别样本点还没完全恢复）。注意这不是对画好的图像加噪，而是对每个样本点进行扰动。</p><p>用形式化语言描述：前向过程是一个马尔可夫链。马尔可夫链的最大性质是当前结果只取决于前一状态、与更早状态无关——P(x_t|x_{t−1},…,x_0) 等于 P(x_t|x_{t−1})。每一步的中间条件分布呈高斯形式：均值是根号 α_t 乘 x_{t−1}（均值与上一步数据相关），后面带方差项。α_t 表示信号保留了多少，是加噪系数，不同 t 下可能不同、一般在 0 到 1 之间；β_t 是调度参数、用于控制加噪过程，这是非常重要的参数，后面会详细讨论。</p><p>加噪过程看似简单但有良好性质：x_1 到 x_T 的联合分布可以解析计算、每个变量的边缘分布可以直接求出。利用递推式不断代入，可以把 x_t 与 x_0 的关系直接写出来——x_t 的系数变成 √ᾱ_t（α_t 与 α_{t−1} 的累积乘积），后面是累积的噪声项。这是前向加噪过程最关键的性质：虽然建立加噪过程是一步一步迭代的，但 x_t 可以直接从 x_0 一步算出来，不用真的去逐步模拟。若 t 足够大，√ᾱ_t 越来越小，x_0 在 x_t 中的占比越来越少、噪声占比越来越大，t 趋于无穷时 x_t 就符合标准高斯分布。</p><p>看信号衰减：如果 α_t 线性地从 1 降到 0（比如加 1000 步线性递减），对应的累积信号衰减并不是线性的，而是很快衰减、到 0.6 时原来的信号就很少了——直接控制 α_t 没法控制整个训练过程的信号保留。如果把 α_t 设成 cos 衰减的形式（一开始比较高、最后下降比较快），对应的累积信号衰减反而更均匀、更接近线性。α_t 的调度对训练效率影响很大。</p><p>反向过程最大的问题是：真实的反向分布 q(x_{t−1}|x_t) 未知、无法直接计算，我们需要学习一个去噪模型 p_θ 来逆转这个马尔可夫加噪过程，这和 VAE 学习近似分布很像。形式化表达：p(x_T|x_0)（加噪到最终时刻的噪声先验）乘以每一步的去噪条件分布 p_θ，连乘得到 p(x_0:T)；每个中间条件分布写成高斯形式——为什么是高斯？因为前向加噪是高斯噪声且满足马尔可夫性；严格说，当 T 足够大、每步加噪足够小时，真实反向分布才近似高斯。若 T 不够大，建模假设不成立——但实际训练中发现 T 过大时中间很多步骤其实是无效的，这也是一些高阶加速扩散模型的观察。</p><p>采样方式跟 AR 模型很像：从 x_T 的噪声分布采样一个 x_T，然后不断从条件分布中迭代采样，从 x_T 采到 x_0，就是我们最终恢复的数据。总结一下模型设置：前向过程是确定的加噪过程，去噪过程是学习的参数化扩散模型；前向单步高斯均值 √α_t x_{t−1}，且可以通过递推得到从 x_0 直接计算 x_t 的闭式；反向也是高斯，均值和方差都可以用模型从 t 学习。另外提醒大家：看扩散模型相关文章时很可能不是用 1−α_t 表示，而是用 β_t 表示加噪过程——α_t 与 β_t 满足 α_t=1−β_t，α_t 是信号保留系数、β_t 对应信号消失或加噪大小；部分文章定义 β̄_t 等参数方便改写，这里列出来供后续查询参考。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>前向过程是摧毁数据结构的过程，反向过程则是去恢复完整结构。我们在恢复数据结构的过程中进行学习。</p><p>虽然我们建立这个加噪过程是一步一步迭代的，但实际上关系可以直接一步写出来。</p><p>如果对一个linear的α_t，比如加上1000步线性递减……它对应的累积衰减效果并不是线性，它是一个很快就会衰减。</p><p>已知x_{t-1}时，x_t的分布是高斯分布。……但我们不知道每一步反向过程该如何进行，因为只知道前向过程。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-elbo">
+  <div class="slides"><figure class="slide" id="slide-23">
+<img src="slides/slide_23.png" alt="课件第23页 Learning Diffusion Models：目标——用最大似然学习 p_θ(x_{t-1}|x_t)；log p_θ(x_0)=log∫p_θ(x_0:T)dx_{1:T}，引入 q(x_{1:T}|x_0) 写成期望，用 Jensen 不等式得到 ELBO">
+<figcaption><span class="sno">23</span><span class="stitle">Learning Diffusion Models：目标——用最大似然学习 p_θ(x_{t-1}|x_t)；log p_θ(x_0)=log∫p_θ(x_0:T)dx_{1:T}，引入 q(x_{1:T}|x_0) 写成期望，用 Jensen 不等式得到 ELBO</span></figcaption>
+</figure>
+<figure class="slide" id="slide-24">
+<img src="slides/slide_24.png" alt="课件第24页 Learning Diffusion Models：ELBO 的另一视角——最小化两个过程的 KL 散度 D_KL(q(x_{1:T}|x_0)‖p_θ(x_{1:T}|x_0))，学习与 x_0 诱导的前向加噪轨迹相匹配的去噪过程；与 VAE 目标相似，但 q 是固定、手工构造的">
+<figcaption><span class="sno">24</span><span class="stitle">Learning Diffusion Models：ELBO 的另一视角——最小化两个过程的 KL 散度 D_KL(q(x_{1:T}|x_0)‖p_θ(x_{1:T}|x_0))，学习与 x_0 诱导的前向加噪轨迹相匹配的去噪过程；与 VAE 目标相似，但 q 是固定、手工构造的</span></figcaption>
+</figure>
+<figure class="slide" id="slide-25">
+<img src="slides/slide_25.png" alt="课件第25页 From ELBO to the Objective Function：从扩散模型的 ELBO 出发（DDPM 附录推导）">
+<figcaption><span class="sno">25</span><span class="stitle">From ELBO to the Objective Function：从扩散模型的 ELBO 出发（DDPM 附录推导）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-26">
+<img src="slides/slide_26.png" alt="课件第26页 From ELBO：把 q(x_{1:T}|x_0)=∏q(x_t|x_{t-1}) 与 p_θ(x_0:T)=p(x_T)∏p_θ(x_{t-1}|x_t) 展开代入（马尔可夫性质）">
+<figcaption><span class="sno">26</span><span class="stitle">From ELBO：把 q(x_{1:T}|x_0)=∏q(x_t|x_{t-1}) 与 p_θ(x_0:T)=p(x_T)∏p_θ(x_{t-1}|x_t) 展开代入（马尔可夫性质）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-27">
+<img src="slides/slide_27.png" alt="课件第27页 From ELBO：把 t=1 这一项单独拿出来处理——x_0 是真实数据，q(x_1|x_0) 与中间隐变量间的关系意义不同">
+<figcaption><span class="sno">27</span><span class="stitle">From ELBO：把 t=1 这一项单独拿出来处理——x_0 是真实数据，q(x_1|x_0) 与中间隐变量间的关系意义不同</span></figcaption>
+</figure>
+<figure class="slide" id="slide-28">
+<img src="slides/slide_28.png" alt="课件第28页 From ELBO：对中间项用贝叶斯公式">
+<figcaption><span class="sno">28</span><span class="stitle">From ELBO：对中间项用贝叶斯公式</span></figcaption>
+</figure>
+<figure class="slide" id="slide-29">
+<img src="slides/slide_29.png" alt="课件第29页 From ELBO：贝叶斯公式 + 马尔可夫性质——q(x_{t-1}|x_t,x_0)=q(x_t|x_{t-1})q(x_{t-1}|x_0)/q(x_t|x_0)">
+<figcaption><span class="sno">29</span><span class="stitle">From ELBO：贝叶斯公式 + 马尔可夫性质——q(x_{t-1}|x_t,x_0)=q(x_t|x_{t-1})q(x_{t-1}|x_0)/q(x_t|x_0)</span></figcaption>
+</figure>
+<figure class="slide" id="slide-30">
+<img src="slides/slide_30.png" alt="课件第30页 From ELBO：继续用贝叶斯公式把 q(x_t|x_{t-1}) 翻成 q(x_{t-1}|x_t,x_0)q(x_t|x_0)/q(x_{t-1}|x_0)">
+<figcaption><span class="sno">30</span><span class="stitle">From ELBO：继续用贝叶斯公式把 q(x_t|x_{t-1}) 翻成 q(x_{t-1}|x_t,x_0)q(x_t|x_0)/q(x_{t-1}|x_0)</span></figcaption>
+</figure>
+<figure class="slide" id="slide-31">
+<img src="slides/slide_31.png" alt="课件第31页 From ELBO：为什么要把一项拆成两项？——分子分母原本关于不同变量（x_{t-1}|x_t 对 x_t|x_{t-1}，不对齐），拆开后可以统一成关于 x_{t-1} 的分布、写成 KL 散度">
+<figcaption><span class="sno">31</span><span class="stitle">From ELBO：为什么要把一项拆成两项？——分子分母原本关于不同变量（x_{t-1}|x_t 对 x_t|x_{t-1}，不对齐），拆开后可以统一成关于 x_{t-1} 的分布、写成 KL 散度</span></figcaption>
+</figure>
+<figure class="slide" id="slide-32">
+<img src="slides/slide_32.png" alt="课件第32页 From ELBO：Mis-aligned Variables（x_{t-1}|x_t 对 x_t|x_{t-1}）">
+<figcaption><span class="sno">32</span><span class="stitle">From ELBO：Mis-aligned Variables（x_{t-1}|x_t 对 x_t|x_{t-1}）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-33">
+<img src="slides/slide_33.png" alt="课件第33页 From ELBO：经过变换后变量对齐（x_{t-1}|x_t 对 x_{t-1}|x_t,x_0），KL 散度可以计算">
+<figcaption><span class="sno">33</span><span class="stitle">From ELBO：经过变换后变量对齐（x_{t-1}|x_t 对 x_{t-1}|x_t,x_0），KL 散度可以计算</span></figcaption>
+</figure>
+<figure class="slide" id="slide-34">
+<img src="slides/slide_34.png" alt="课件第34页 From ELBO：telescoping 逐项消元——∏q(x_{t-1}|x_0)/q(x_t|x_0) 展开后中间项全部抵消，只剩 q(x_1|x_0)/q(x_T|x_0)">
+<figcaption><span class="sno">34</span><span class="stitle">From ELBO：telescoping 逐项消元——∏q(x_{t-1}|x_0)/q(x_t|x_0) 展开后中间项全部抵消，只剩 q(x_1|x_0)/q(x_T|x_0)</span></figcaption>
+</figure>
+<figure class="slide" id="slide-35">
+<img src="slides/slide_35.png" alt="课件第35页 From ELBO：剩余项再经简单的代数运算合并化简">
+<figcaption><span class="sno">35</span><span class="stitle">From ELBO：剩余项再经简单的代数运算合并化简</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>学习扩散模型：最大似然与 ELBO 推导</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（前）</span><span class="chip">课件 23</span><span class="chip">课件 24</span><span class="chip">课件 25</span><span class="chip">课件 26</span><span class="chip">课件 27</span><span class="chip">课件 28</span><span class="chip">课件 29</span><span class="chip">课件 30</span><span class="chip">课件 31</span><span class="chip">课件 32</span><span class="chip">课件 33</span><span class="chip">课件 34</span><span class="chip">课件 35</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>模型已经有了，接下来看怎么学习、怎么训练，这部分可能是最重要的。和 VAE 一样，我们还是想通过基于似然的方法去学习——学习 x_0 的条件分布来最大化似然。要把给定样本的似然表达出来：把模型看作隐变量模型，对数似然 log p(x_0) 可以通过积分把所有可能的 x_1 到 x_T 积分掉，保留 p(x_0) 这个边缘分布的意义——x_1 到 x_T 这些含噪信号就是隐变量，相当于 VAE 里的 Z。</p><p>下一步处理和 VAE 那章几乎一样：引入一个 q 的分布——q 通过给定 x_0、即当前 x_0 产生中间含噪信号的过程，类似于 VAE 中给定可观测数据 X 可能得到不同的 Z。写成该形式后转化为期望形式；想处理训练中的这层，可以用 Jensen 不等式把 log 和期望交换、把等号变成大于等于号，移项后得到证据下界 ELBO。扩散模型其实是层级形式的 VAE，中间每步信号都是一串隐变量轨迹——如果看不太明白，可以把它跟之前 VAE 里 S_1 到 T 类似于选择 Z 对比，表达形式是完全一样的。</p><p>从另一个角度也可以得到同样的目标：我们建模的去噪模型要逆转加噪过程，所以可以构造这样一项——用 KL 散度看我们模型去噪的每一步分布与加噪过程中的真实分布是否匹配、差距多大。KL 散度作为距离度量非负；如果 KL=0，把这一项从对数似然里减去，结果肯定更大。展开来看：把 KL 按定义写成期望的形式，用条件分布定义和数学变换把 P(x) 的一项拿出来、消掉，最后只剩下 E_q 的负项——和第一种推断方法只差一个负号，本质上是同一个 L。</p><p>总结：扩散模型学习的目标就是最优化对数似然，和 VAE 差不多；只不过在扩散模型里，这个 q 从数据加噪映射到隐变量的过程是固定、已知、手动构造的，我们想从这个加噪过程中学习它的反向过程（从 X_T 恢复 X_0）。把之前 VAE 里的变量和今天推导的放一起对比，几乎完全一样、只差一个符号。</p><p>这个 Loss 的形式还是一个中间过程，我们没有办法直接从 L 里看出怎么训练扩散模型、找不到目标函数的实现方法。接下来看怎么从最大似然/最小化散度的形式推导出一个可训练的形式——这一串过程是 DDPM 原始文章附录里的推导，我把细节补充一下。推导的起点就是这个 L 的形式。第一步把它展开：把 p_θ(x_0:T)=p(x_T)∏p_θ(x_{t−1}|x_t) 和 q(x_{1:T}|x_0)=∏q(x_t|x_{t−1}) 带进去，因为满足马尔可夫性质，x_t 的条件只和 x_{t−1} 有关。</p><p>下一步把 t=1 这一项单独拿出来处理：x_0 虽然可以给 x_1 写下标，但它其实是真实数据——给真实数据的分布意义和前一项（隐变量之间）不太一样，所以单独处理。接下来是整个扩散模型推导中最重要的一步：把 T 大于 1 的中间项拆成两项相乘。为什么本来挺好的一项非得拆成两项相同的形式？最直接的原因是：原来的分子分母涉及两个不同变量的分布（x_{t−1}|x_t 对 x_t|x_{t−1}，不对齐），没法直接写成统一的 KL 散度形式；我们要把分母中的 x_{t−1} 反过来变成关于 x_t 的形式。</p><p>怎么把分布中的变量和条件反过来？用贝叶斯公式：q(x_{t−1}|x_t,x_0) 按定义写成 q(x_t,x_{t−1}|x_0)/q(x_t|x_0)，再用贝叶斯公式交换 x_t 和 x_{t−1} 的顺序、乘以 q(x_{t−1})/q(x_t)；因为给定 t−1 和 x_0 时下一步的 x_t 与 x_0 无关（马尔可夫性），可以把 x_0 消掉。经过变换，分子分母都变成关于 x_{t−1} 这个变量的分布——虽然条件不一样，但都是关于同一个变量，就可以用 KL 散度定义写成一个散度的形式。这就是为什么要做这一步。</p><p>后面的项就是代数运算：把 log 相加展开、逐项消元（telescoping cancellation）。∏q(x_{t−1}|x_0)/q(x_t|x_0) 展开后中间项全部抵消，只剩 q(x_1|x_0)/q(x_T|x_0)；剩余项再经简单的代数运算合并化简。没有任何其他的运算，完全就是代数运算——DDPM 原文里这些中间处理都没有讲，这里给大家详细讲一下，这是非常重要的推导过程。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>对于这样一个模型，其实和VAE模型一样，还是想通过基于似然的方法去学习。</p><p>扩散模型其实是层级形式的VAE，中间每步信号都可看作一串隐变量轨迹。</p><p>为什么本来挺好的一项，非得拆成两项相同的形式？……经过变换，都可以变成关于x_{t-1}这个变量。</p><p>没有任何其他的运算，它完全就是代数运算。这为中间的像DDPM中间这些处理的话，DDPM其实都没有讲，就给大家详细地讲一下，这是非常重要的一个推导的过程。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-loss">
+  <div class="slides"><figure class="slide" id="slide-36">
+<img src="slides/slide_36.png" alt="课件第36页 From ELBO：最终得到三项——Prior Matching L_T、Trajectory Matching L_t、Reconstruction Matching L_0">
+<figcaption><span class="sno">36</span><span class="stitle">From ELBO：最终得到三项——Prior Matching L_T、Trajectory Matching L_t、Reconstruction Matching L_0</span></figcaption>
+</figure>
+<figure class="slide" id="slide-37">
+<img src="slides/slide_37.png" alt="课件第37页 Prior Loss L_T=D_KL(q(x_T|x_0)‖p(x_T))：比较两个过程中加噪数据 x_T 的分布，可通过构造（如让 ᾱ_T 足够小）化为 0">
+<figcaption><span class="sno">37</span><span class="stitle">Prior Loss L_T=D_KL(q(x_T|x_0)‖p(x_T))：比较两个过程中加噪数据 x_T 的分布，可通过构造（如让 ᾱ_T 足够小）化为 0</span></figcaption>
+</figure>
+<figure class="slide" id="slide-38">
+<img src="slides/slide_38.png" alt="课件第38页 Prior Loss + Reconstruction Loss L_0=−log p_θ(x_0|x_1)：在最近（含噪最少的）隐状态 x_1 下恢复干净数据 x_0，与 VAE 的重构损失类似">
+<figcaption><span class="sno">38</span><span class="stitle">Prior Loss + Reconstruction Loss L_0=−log p_θ(x_0|x_1)：在最近（含噪最少的）隐状态 x_1 下恢复干净数据 x_0，与 VAE 的重构损失类似</span></figcaption>
+</figure>
+<figure class="slide" id="slide-39">
+<img src="slides/slide_39.png" alt="课件第39页 Diffusion Loss L_t=D_KL(q(x_{t-1}|x_t,x_0)‖p_θ(x_{t-1}|x_t))：对 1 小于 t 小于等于 T，衡量学习的反向转移与真实前向后验的匹配程度">
+<figcaption><span class="sno">39</span><span class="stitle">Diffusion Loss L_t=D_KL(q(x_{t-1}|x_t,x_0)‖p_θ(x_{t-1}|x_t))：对 1 小于 t 小于等于 T，衡量学习的反向转移与真实前向后验的匹配程度</span></figcaption>
+</figure>
+<figure class="slide" id="slide-40">
+<img src="slides/slide_40.png" alt="课件第40页 Why not using q(x_{t-1}|x_t)？——理想的反向分布 q(x_{t-1}|x_t) 无法表达、算不出来；加上 x_0 条件后 q(x_{t-1}|x_t,x_0) 可解析表达，训练时 x_0 和 x_t 都能同时拿到">
+<figcaption><span class="sno">40</span><span class="stitle">Why not using q(x_{t-1}|x_t)？——理想的反向分布 q(x_{t-1}|x_t) 无法表达、算不出来；加上 x_0 条件后 q(x_{t-1}|x_t,x_0) 可解析表达，训练时 x_0 和 x_t 都能同时拿到</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>目标函数：Prior / Trajectory / Reconstruction 三项损失</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（中）</span><span class="chip">课件 36</span><span class="chip">课件 37</span><span class="chip">课件 38</span><span class="chip">课件 39</span><span class="chip">课件 40</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>把最后得到的结果拿过来：第一项 q(x_1|x_0) 和 p(x_t) 的分布写成 KL 散度形式，中间项写成加和再对所有的 T 项相加。这就是大家在很多扩散模型文章里可以看到的表达形式。每一项是什么意思？第一项 q(x_T|x_0) 与 p(x_T) 的差距——p(x_T) 就是我们模型里构造的扩散模型生成过程中 x_T 这个变量纯噪声的先验分布，q(x_T|x_0) 是给定真实数据情况下前向加噪过程里 x_T 最终噪声的分布：它比较两个过程的加噪/先验噪声是否相似。</p><p>中间这一项是 p_θ(x_{t−1}|x_t) 与 q(x_{t−1}|x_t,x_0) 的 KL——p_θ 是参数化模型下去噪的条件分布，q 是真实加噪过程中引导出的去噪分布（前向后验），它衡量我们学习到的反向转移和真实去噪分布的差距，这就是模型要学到的 reverse 过程。后面这一项是 −log p_θ(x_0|x_1)：从含噪信息最少（最接近真实）的 x_1 恢复用户生成的图像，最终恢复的效果要尽量高，这跟 VAE 里的 reconstruction 项差不多。</p><p>把三项合起来：第一项是 Prior loss（先验匹配），让加噪过程最后的噪声温度和我们去噪过程先验采样的噪声温度尽量相似；中间是 Trajectory matching，让加噪过程对应的去噪分布和我们真正想学习到的去噪过程尽量匹配；最后是 reconstruction，从 x_1 恢复 x_0 的图像质量。</p><p>逐项看：Prior loss 可以通过构造让它趋于 0——加噪过程中是高斯，先验分布可以自己设置，通过一些构造的方法让这一项接近 0。最后一项 reconstruction loss 的意义就是从最接近真实图像的最少含噪的 x_1 恢复 x_0、让真实图像的概率尽量大，和 VAE 的重构项类似。</p><p>扩散模型与 VAE 最大的不同就在于中间这一项 diffusion loss：它衡量我们学习得到的反向变化过程 p_θ(x_{t−1}|x_t) 与正向过程所对应的后验分布 q(x_{t−1}|x_t,x_0) 的匹配。但这里有个问题：为什么这一项非要用 x_0 条件、按理说应该直接用 q(x_{t−1}|x_t)？最大的原因就是：我们已知的是正向过程，它对应的反向分布 q(x_{t−1}|x_t) 表达不出来、算不出来；而加上 x_0 条件之后的 q(x_{t−1}|x_t,x_0) 是可以写出来、可以解析表达的，能带进去优化这个目标。这也是扩散模型里比较难理解的一个点，下面给大家解释。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这就是大家可能在很多扩散模型，如果大家看的话可以看到的一个表达形式。</p><p>这一项它衡量了我们学习得到的这个反向的变化模式……和我们正向的过程所对应的这个后验的一个分布。</p><p>按理说你应该坚持这一种。按理说你就是这个QX-1跟X相当于反向一活。人家为什么非要用X0这一条？最大的问题就是这个。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-meanparam">
+  <div class="slides"><figure class="slide" id="slide-41">
+<img src="slides/slide_41.png" alt="课件第41页 Diffusion Loss and Noise Parameterization：高斯噪声下的扩散模型——前向过程">
+<figcaption><span class="sno">41</span><span class="stitle">Diffusion Loss and Noise Parameterization：高斯噪声下的扩散模型——前向过程</span></figcaption>
+</figure>
+<figure class="slide" id="slide-42">
+<img src="slides/slide_42.png" alt="课件第42页 Diffusion Loss：已知的 q(x_t|x_{t-1})——是已知过程，但不是我们要学的目标">
+<figcaption><span class="sno">42</span><span class="stitle">Diffusion Loss：已知的 q(x_t|x_{t-1})——是已知过程，但不是我们要学的目标</span></figcaption>
+</figure>
+<figure class="slide" id="slide-43">
+<img src="slides/slide_43.png" alt="课件第43页 Diffusion Loss：我们的目标 q(x_{t-1}|x_t)——反向条件分布未知，需要从数据集学习">
+<figcaption><span class="sno">43</span><span class="stitle">Diffusion Loss：我们的目标 q(x_{t-1}|x_t)——反向条件分布未知，需要从数据集学习</span></figcaption>
+</figure>
+<figure class="slide" id="slide-44">
+<img src="slides/slide_44.png" alt="课件第44页 Visualization: Forward Process——前向条件分布已知（高斯）">
+<figcaption><span class="sno">44</span><span class="stitle">Visualization: Forward Process——前向条件分布已知（高斯）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-45">
+<img src="slides/slide_45.png" alt="课件第45页 Visualization: Reverse Process——反向条件分布 q(x_{t-1}|x_t) 未知，需要从数据集中学习">
+<figcaption><span class="sno">45</span><span class="stitle">Visualization: Reverse Process——反向条件分布 q(x_{t-1}|x_t) 未知，需要从数据集中学习</span></figcaption>
+</figure>
+<figure class="slide" id="slide-46">
+<img src="slides/slide_46.png" alt="课件第46页 Posterior Conditioned on x_0：q(x_{t-1}|x_t,x_0)——已知、仍是高斯">
+<figcaption><span class="sno">46</span><span class="stitle">Posterior Conditioned on x_0：q(x_{t-1}|x_t,x_0)——已知、仍是高斯</span></figcaption>
+</figure>
+<figure class="slide" id="slide-47">
+<img src="slides/slide_47.png" alt="课件第47页 Posterior Conditioned on x_0：q(x_{t-1}|x_t,x_0)=q(x_t,x_{t-1}|x_0)/q(x_t|x_0)=q(x_t|x_{t-1},x_0)q(x_{t-1}|x_0)/q(x_t|x_0)——所有分量都可解析（可算）">
+<figcaption><span class="sno">47</span><span class="stitle">Posterior Conditioned on x_0：q(x_{t-1}|x_t,x_0)=q(x_t,x_{t-1}|x_0)/q(x_t|x_0)=q(x_t|x_{t-1},x_0)q(x_{t-1}|x_0)/q(x_t|x_0)——所有分量都可解析（可算）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-48">
+<img src="slides/slide_48.png" alt="课件第48页 Re-visit the Diffusion Loss：L_t=D_KL(q(x_{t-1}|x_t,x_0)‖p_θ(x_{t-1}|x_t))——在高斯噪声下如何实现？">
+<figcaption><span class="sno">48</span><span class="stitle">Re-visit the Diffusion Loss：L_t=D_KL(q(x_{t-1}|x_t,x_0)‖p_θ(x_{t-1}|x_t))——在高斯噪声下如何实现？</span></figcaption>
+</figure>
+<figure class="slide" id="slide-49">
+<img src="slides/slide_49.png" alt="课件第49页 Re-visit the Diffusion Loss：前向过程诱导的后验 q(x_{t-1}|x_t,x_0)=𝒩(x_{t-1}; μ̄(x_t,x_0), β̄_t I)，所有分量都是高斯、可以解析表达">
+<figcaption><span class="sno">49</span><span class="stitle">Re-visit the Diffusion Loss：前向过程诱导的后验 q(x_{t-1}|x_t,x_0)=𝒩(x_{t-1}; μ̄(x_t,x_0), β̄_t I)，所有分量都是高斯、可以解析表达</span></figcaption>
+</figure>
+<figure class="slide" id="slide-50">
+<img src="slides/slide_50.png" alt="课件第50页 Re-visit：后验诱导（forward process）对后验参数化（neural network）——q 侧高斯可算，p_θ 侧用神经网络参数化高斯">
+<figcaption><span class="sno">50</span><span class="stitle">Re-visit：后验诱导（forward process）对后验参数化（neural network）——q 侧高斯可算，p_θ 侧用神经网络参数化高斯</span></figcaption>
+</figure>
+<figure class="slide" id="slide-51">
+<img src="slides/slide_51.png" alt="课件第51页 Re-visit：Mean-parameterization with fixed variance——先固定方差、只学均值（其他分布建模方式也有效）">
+<figcaption><span class="sno">51</span><span class="stitle">Re-visit：Mean-parameterization with fixed variance——先固定方差、只学均值（其他分布建模方式也有效）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-52">
+<img src="slides/slide_52.png" alt="课件第52页 Re-visit：最小化 L_t 等价于拟合均值——让 μ_θ(x_t,t) 逼近 μ̄(x_t,x_0)">
+<figcaption><span class="sno">52</span><span class="stitle">Re-visit：最小化 L_t 等价于拟合均值——让 μ_θ(x_t,t) 逼近 μ̄(x_t,x_0)</span></figcaption>
+</figure>
+<figure class="slide" id="slide-53">
+<img src="slides/slide_53.png" alt="课件第53页 Re-visit：后验方差只依赖噪声调度 β_t 和时间步 t——β̄_t=(1−ᾱ_{t−1})/(1−ᾱ_t)·(1−α_t)，训练中不需要学习方差">
+<figcaption><span class="sno">53</span><span class="stitle">Re-visit：后验方差只依赖噪声调度 β_t 和时间步 t——β̄_t=(1−ᾱ_{t−1})/(1−ᾱ_t)·(1−α_t)，训练中不需要学习方差</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>可解析的高斯后验与均值参数化</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（中后）</span><span class="chip">课件 41</span><span class="chip">课件 42</span><span class="chip">课件 43</span><span class="chip">课件 44</span><span class="chip">课件 45</span><span class="chip">课件 46</span><span class="chip">课件 47</span><span class="chip">课件 48</span><span class="chip">课件 49</span><span class="chip">课件 50</span><span class="chip">课件 51</span><span class="chip">课件 52</span><span class="chip">课件 53</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>假设考虑一个含高斯噪声的扩散模型：底线表示前向的加噪过程曲线，直线表示反向的去噪过程。我们想学习中间的直线路径——若能学会这条路径，从 x_T 采样后逐步去噪就能得到 x_0。但前向过程 q(x_t|x_{t−1}) 是已知的加噪过程、不是学习目标；我们要学的是反向过程。图中黑色曲线代表已知的前向加噪过程，红色曲线是我们想拟合的反向去噪过程。</p><p>反向过程的问题：知道 x_t 是得到的含噪样本，但 x_t 对应的 x_{t−1} 是哪个分布？采样时我们不知道它是从哪个分布采样加噪得到当前的——给定系统里这样一个点，你不知道原来的 x_{t−1} 分布，就没法再进行下去。所以其实要从数据中去学习，这跟隐变量和 VAE 是很类似的。</p><p>通过一系列变换，我们构建了给定含噪变量 x_t 和真实数据 x_0 的分布 q(x_{t−1}|x_t,x_0)，它反而是可以算出来的——它跟 q(x_{t−1}|x_t) 只差一个 KL 散度。这个分布符合我们的要求、可以表达、可以计算，所以它是高斯分布。为什么知道 x_0 作为条件以后它就可以表达？因为在训练时可以同时得到 x_t 和 x_0：从训练集拿一个 x_0，随便选一个图像加噪一步就可以得到 x_t，有了 x_0 和 x_t 就可以计算 x_{t−1} 的分布；而在生成过程中就不需要用 x_0 了。这就是为什么我们可以用 x_0，因为训练过程中会知道它。</p><p>具体推导这个分布为什么可以解析表达：用条件分布公式把 q(x_{t−1}|x_t,x_0) 写成联合分布除以边际的形式，再应用一次条件分布变换。它和 q(x_{t−1}|x_t) 的差别就是那一项 P(x_0|…)——给定 x_{t−1} 以后 x_0 与 x_t 无关、可以把 P(x_0|x_t) 消掉。剩下的所有分布都是可以表示的：给定 x_{t−1} 和 x_t 的分布（一步加噪）是高斯，给定 x_0 和 x_t 的分布（累积加噪）也是高斯——三个变量都是高斯分布，乘起来除以一个高斯，对应的分布还是一个高斯，而且每个分母都可以解析表达。所以在已知 x_0 的情况下，这一步的去噪分布是可以知道的。</p><p>带回我们的目标：这一整项 KL 可以写出来，因为前向诱导的后验是高斯、可以解析表达——p_θ 的模型就可以训练了。具体在高斯噪声下：后验 q(x_{t−1}|x_t,x_0) 可以写成两个高斯分布相乘除以一个高斯分布，所以它也是高斯分布；它的均值跟 x_t 和 x_0 相关、可以直接算出来（表达式很复杂就不写了），而它的方差我们在此设置成一个不用学习的常量——这是我们接下来要讲的 DDPM 的设置，你也可以选择学习方差，但为了简单体现，我们不学，这是我们的选择。</p><p>正因为我们知道想拟合的后验是一个高斯，所以假设要学习的 p_θ(x_{t−1}|x_t) 也建模为高斯。用参数化式子从 x_t 去学习它的均值——原始目标里方差固定、只有均值需要学习，这就是 Mean parameterization（均值参数化）。最终实现中，其实是让去噪模型从含噪变量去预测 x_{t−1} 对应分布的真值、最小化两者差距。为什么不参数化方差？你也可以参数化，但根据 EPS 论文的观察，方差可学习时效果提升不大；去噪后 x_{t−1} 的分布主要由均值决定，后验方差设为固定、只取决于 α_t 和 x_t、可以直接计算。</p><p>均值参数化之后，接下来就是 DDPM 的工作：从均值参数化进阶到噪声参数化——把拟合均值变成拟合噪声。时间差不多了，今天先讲到这里，下节课具体介绍 DDPM 如何做噪声预测。谢谢大家。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>图中黑色曲线代表已知的前向加噪过程，而红色曲线是我们想拟合的反向去噪过程，即学习目标。</p><p>给定系统里这样一个点，你不知道原来是哪，不知道X_{t-1}的分布的话，就没法再进行。所以其实我们要从数据中去学习一下这个。</p><p>因为我们的这个KL散度这一项也是可以写出来的……你可以得到这个XT这一项，一个过程一个去造。</p><p>所以我们就把这个方差设置成一个常量，不用学习……这是DDPM的一个设置，你也可以学习这个方法，但为了简单体现，我们不学这个方法。</p><p>它从均值参数化进阶到噪声参数化，即将拟合均值变为拟合噪声。时间差不多了，今天先讲到这里，下节课具体介绍DDPM如何做噪声预测。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（生成式模型与科学智能应用）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>

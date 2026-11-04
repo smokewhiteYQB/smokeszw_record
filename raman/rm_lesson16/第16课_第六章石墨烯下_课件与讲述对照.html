@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>显微共焦拉曼光谱学 · 第16节 第六章（下）：多层石墨烯LB模与表面增强、转角多层、CVD鉴别、Fano共振与层数表征国家标准｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.videos{margin-top:14px;border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.video + .video{border-top:1px solid #e4e9f0;}
+.videos h4{font-size:12.5px;font-weight:700;color:#0a1f38;background:#f2f5f9;padding:8px 12px;border-bottom:1px solid #e4e9f0;}
+.videos video{display:block;width:100%;max-height:460px;background:#0b0f14;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>显微共焦拉曼光谱学 · 第16节 第六章（下）：多层石墨烯LB模与表面增强、转角多层、CVD鉴别、Fano共振与层数表征国家标准</h1>
+    <div class="sub">第16节 第六章（下）：多层石墨烯LB模与表面增强、转角多层、CVD鉴别、Fano共振与层数表征国家标准 ｜ 2026-11-03 ｜ 谭平恒</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 78 页 · 整理 7 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-lb-surf">01 LB 模与等离激元表面增强</option>
+<option value="sec-twist">02 转角多层石墨烯的 C 和 LB 模</option>
+<option value="sec-reso">03 tMLG 的共振拉曼光谱</option>
+<option value="sec-cvd">04 CVD-MLG 堆垛方式的拉曼鉴别</option>
+<option value="sec-fano">05 MLG 中 C 模的 Fano 共振</option>
+<option value="sec-std">06 国家标准：石墨烯薄片层数表征</option>
+<option value="sec-ending">07 结语与作业点评</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 Ch6-石墨烯材料拉曼光谱研究进展-2026秋.pdf 逐页渲染，转写原文见 record_20261103.txt。</div>
+<section class="sec" id="sec-lb-surf">
+  <div class="slides"><figure class="slide" id="slide-742">
+<img src="slides/slide_742.png" alt="课件第742页 3.5 多层石墨烯的LB模：AB-MLG的层间呼吸模——N-1 个 LB 模 ω_LB(N,N-j)=ω_LBbulk·sin(jπ/2N)；2LG LB2,1 90.5cm⁻¹ R-inactive、3LG LB3,1 ~110cm⁻¹ R-inactive；由于弱 EPC 在 MLG 中不可见（JB Wu/W Ji/PH Tan, ACS Nano 9, 7440 (2015)）">
+<figcaption><span class="sno">742</span><span class="stitle">3.5 多层石墨烯的LB模：AB-MLG的层间呼吸模——N-1 个 LB 模 ω_LB(N,N-j)=ω_LBbulk·sin(jπ/2N)；2LG LB2,1 90.5cm⁻¹ R-inactive、3LG LB3,1 ~110cm⁻¹ R-inactive；由于弱 EPC 在 MLG 中不可见（JB Wu/W Ji/PH Tan, ACS Nano 9, 7440 (2015)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-743">
+<img src="slides/slide_743.png" alt="课件第743页 3.5 多层石墨烯的LB模：PERS增强二维材料层内振动模——面内电场选择性增强层内声子模、面外电场增强层间声子模；层间声子的位移场与等离激元场在面外方向可比拟（SP Zhang&HX Xu, Nat. Commun. 15, 8803 (2024)）">
+<figcaption><span class="sno">743</span><span class="stitle">3.5 多层石墨烯的LB模：PERS增强二维材料层内振动模——面内电场选择性增强层内声子模、面外电场增强层间声子模；层间声子的位移场与等离激元场在面外方向可比拟（SP Zhang&HX Xu, Nat. Commun. 15, 8803 (2024)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-744">
+<img src="slides/slide_744.png" alt="课件第744页 3.5 多层石墨烯的LB模：金纳米腔-多层石墨烯结构的基本表征——简单热蒸镀方法制备金纳米结构-二维材料耦合体系；等离激元共振范围包括波长633nm（H Wu/ML Lin/PH Tan, Light: Sci. & Appl. 15, 109 (2026)）">
+<figcaption><span class="sno">744</span><span class="stitle">3.5 多层石墨烯的LB模：金纳米腔-多层石墨烯结构的基本表征——简单热蒸镀方法制备金纳米结构-二维材料耦合体系；等离激元共振范围包括波长633nm（H Wu/ML Lin/PH Tan, Light: Sci. & Appl. 15, 109 (2026)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-745">
+<img src="slides/slide_745.png" alt="课件第745页 3.5 多层石墨烯的LB模：金纳米腔-多层石墨烯中增强的拉曼模——共振激发下可探测拉曼禁戒模；频率越高的模拉曼强度越弱（H Wu/ML Lin/PH Tan, Light: Sci. & Appl. 15, 109 (2026)）">
+<figcaption><span class="sno">745</span><span class="stitle">3.5 多层石墨烯的LB模：金纳米腔-多层石墨烯中增强的拉曼模——共振激发下可探测拉曼禁戒模；频率越高的模拉曼强度越弱（H Wu/ML Lin/PH Tan, Light: Sci. & Appl. 15, 109 (2026)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-746">
+<img src="slides/slide_746.png" alt="课件第746页 3.5 多层石墨烯的LB模：金纳米腔-多层石墨烯中增强的拉曼模——共振激发增强对所有层数普适、选择定则驰豫（H Wu/ML Lin/PH Tan, Light: Sci. & Appl. 15, 109 (2026)）">
+<figcaption><span class="sno">746</span><span class="stitle">3.5 多层石墨烯的LB模：金纳米腔-多层石墨烯中增强的拉曼模——共振激发增强对所有层数普适、选择定则驰豫（H Wu/ML Lin/PH Tan, Light: Sci. & Appl. 15, 109 (2026)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-747">
+<img src="slides/slide_747.png" alt="课件第747页 3.5 多层石墨烯的LB模：金纳米腔增强多层石墨烯的呼吸模——低频模的线性链模型；界面模 IM 源于多层石墨烯与金纳米腔及衬底的强耦合、IM 是特殊的 LB 模；增强的层间模：LB 模和 IM（H Wu/ML Lin/PH Tan, Light: Sci. & Appl. 15, 109 (2026)）">
+<figcaption><span class="sno">747</span><span class="stitle">3.5 多层石墨烯的LB模：金纳米腔增强多层石墨烯的呼吸模——低频模的线性链模型；界面模 IM 源于多层石墨烯与金纳米腔及衬底的强耦合、IM 是特殊的 LB 模；增强的层间模：LB 模和 IM（H Wu/ML Lin/PH Tan, Light: Sci. & Appl. 15, 109 (2026)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-748">
+<img src="slides/slide_748.png" alt="课件第748页 3.5 多层石墨烯的LB模：LBM强度分布：电场调制的层间键极化率模型（E-IBPM）——PERS强度的半经典计算公式、拉曼偶极矩 p=Δαj·ELoc、辐射场 ER=G·p、格林函数 G≈|ELoc|/|E0|；仅金纳米腔和衬底相邻石墨烯层贡献极化率改变量（H Wu/ML Lin/PH Tan, Light: Sci. & Appl. 15, 109 (2026)）">
+<figcaption><span class="sno">748</span><span class="stitle">3.5 多层石墨烯的LB模：LBM强度分布：电场调制的层间键极化率模型（E-IBPM）——PERS强度的半经典计算公式、拉曼偶极矩 p=Δαj·ELoc、辐射场 ER=G·p、格林函数 G≈|ELoc|/|E0|；仅金纳米腔和衬底相邻石墨烯层贡献极化率改变量（H Wu/ML Lin/PH Tan, Light: Sci. & Appl. 15, 109 (2026)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-749">
+<img src="slides/slide_749.png" alt="课件第749页 3.5 多层石墨烯的LB模：金纳米腔-多层石墨烯的LBM强度分布——相对强度 Ij∝nj+(1/ωj²)|(ηAu/Gr−ηGr)Δzj,1·ELoc,1|²+|Δzj,N·ELoc,N|²；N 较大时 ELoc,1≫ELoc,N；不涉及层间键参数的 LBM 强度计算公式（H Wu/ML Lin/PH Tan, Light: Sci. & Appl. 15, 109 (2026)）">
+<figcaption><span class="sno">749</span><span class="stitle">3.5 多层石墨烯的LB模：金纳米腔-多层石墨烯的LBM强度分布——相对强度 Ij∝nj+(1/ωj²)|(ηAu/Gr−ηGr)Δzj,1·ELoc,1|²+|Δzj,N·ELoc,N|²；N 较大时 ELoc,1≫ELoc,N；不涉及层间键参数的 LBM 强度计算公式（H Wu/ML Lin/PH Tan, Light: Sci. & Appl. 15, 109 (2026)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-750">
+<img src="slides/slide_750.png" alt="课件第750页 3.5 多层石墨烯的LB模：等离激元纳米腔-多层石墨烯的LBM强度分布（H Wu/ML Lin/PH Tan, Light: Sci. & Appl. 15, 109 (2026)）">
+<figcaption><span class="sno">750</span><span class="stitle">3.5 多层石墨烯的LB模：等离激元纳米腔-多层石墨烯的LBM强度分布（H Wu/ML Lin/PH Tan, Light: Sci. & Appl. 15, 109 (2026)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-751">
+<img src="slides/slide_751.png" alt="课件第751页 3.5 多层石墨烯的LB模：等离激元增强多层石墨烯呼吸模的通用检测——AuNCs/AgNCs 退火 200℃/400℃/600℃ 对比；等离激元增强 LB 模与 E-IBPM 适用于不同二维材料耦合不同大小形状的 Au(Ag)NCs（H Wu/ML Lin/PH Tan, Light: Sci. & Appl. 15, 109 (2026)）">
+<figcaption><span class="sno">751</span><span class="stitle">3.5 多层石墨烯的LB模：等离激元增强多层石墨烯呼吸模的通用检测——AuNCs/AgNCs 退火 200℃/400℃/600℃ 对比；等离激元增强 LB 模与 E-IBPM 适用于不同二维材料耦合不同大小形状的 Au(Ag)NCs（H Wu/ML Lin/PH Tan, Light: Sci. & Appl. 15, 109 (2026)）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>LB 模与等离激元表面增强</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 742</span><span class="chip">课件 743</span><span class="chip">课件 744</span><span class="chip">课件 745</span><span class="chip">课件 746</span><span class="chip">课件 747</span><span class="chip">课件 748</span><span class="chip">课件 749</span><span class="chip">课件 750</span><span class="chip">课件 751</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>前面我们说的是多层石墨烯，就是说它的呼吸模看不到。这个跟电声子耦合相关可能比较多，但也不是说都看不到，肯定要借助一些实际的情况。最直接的就是前面所说的等离子体纳米腔，它能够对层内的拉曼模有一个增强作用，不管是平面内的还是垂直平面的振动，这是层内的模。那么对层间的模式究竟怎么样？我们上次是在二维材料上面镀了金，做完之后它是一个纳米颗粒。纳米颗粒这里有一个比较强的散射峰，那就意味着它形成了一个局域纳米腔。</p><p>我们在共振范围之内，选择激发光 633 去看它。这里面只能看到剪切模，其他的模式看不到。但是我们把金纳米颗粒镀在多层石墨烯上面的时候，就能够看得到其他的一些拉曼模。而且我们看到这一系列的拉曼模，原则上可以看到强度最高的，那就是 42 个波数。但是这里面超过后面多了一系列尾巴，是超过 42 个波数的。所以说原则上它肯定不是单层情况。如果说大家看一下在非共振的情况下，这个地方还是存在一个剪切模的。而且我们可以看得到，这一模式如果跟理论计算的呼吸模和剪切模直接去比较的话，发现它更高的这些范围就是在呼吸模的范围之内。所以我们认为它是一个呼吸模。</p><p>既然是呼吸模，原则上就可以用线偏振和圆偏振去鉴别它。你看这是 VV 和 HV。VV 和 HV 提供了一个普通的情况，你看这个不是转角石墨烯。转角石墨烯里面你看 VV 和 HV 都能看得到剪切模。但是呼吸模呢，只在一种配置下才能够看得到。但是实验结果你看这些大瓣膜在两种偏振配置下都能看到。所以说原则上来说它的偏振特性也看不出来，原来它是更偏向于剪切系统。然后我们再看一下它的圆偏，一个就是正负和那个正正。如果说对圆偏来说，剪切模是在正负的圆偏下能看得到，而呼吸模是在正正的圆偏下能看得到。但是我们这个等离子体增强的纳米膜的话，这两种都能够看到。那两者都能看得到，我们刚才说从这里面看它像剪切模，从这里面看它的选择定则在线偏和圆偏下都与普通情况不同。</p><p>那我们怎么办呢？不管是剪切模还是呼吸模，都要通过建模来指认。建模指认时，层数是事先通过拉曼光栅确定的。我们甚至能在二氧化硅上鉴别到 110 层。这种情况下，需考虑多层石墨烯与衬底及上方金颗粒的相互作用。原则上引出了两个未知数。你会发现只有最低的一支上升为剪切模。只要定下力常数，就能计算原子振动模式及其频率。图中显示 6 层石墨烯包裹金原子在振动。这就是由界面导致的剪切模，若无界面该模式不存在。</p><p>但是金的存在对其他模式也会产生影响。仔细对比计算中六层石墨烯与独立六层石墨烯的移动方式及幅度大小，基本一致。但频率仍有差异，前者为 122.5 和 44.6，后者为 122.7 和 37.2。频率越低受影响越大。该系统可用两个力常数拟合所有数据，证明其为保守系统。我们也可用间接还原模型计算强度。因金纳米颗粒附近电场极强且随距离减弱，需将其纳入极化模型。结果显示，与衬底相邻的最底层对拉曼强度改变量贡献最大。其中 delta Z 是 Z 轴方向移动大小，其平方代表局部电子层大小。由于靠近金表面远大于靠近衬底处，最终结果与靠近石墨烯层及金纳米颗粒层的原子位移大小有关。这是实验的结果，而这边是拟合结果。大家看拟合效果非常好。原则上解释该结果非常重要。</p><p>事实上我们也计算了其他模型：假设这是金纳米颗粒，这是金圆盘，这是金条带。我们计算了它们下方石墨烯随层数变化时的电场改变，以及对应的呼吸模谱峰。可以看出，不管是什么形状，都表现出相似的状态。因为前面说过，只有被金覆盖的地方才对呼吸模有贡献，未覆盖处看不到。因此得到的电场分布也是相似的结果，这是可预期的。除了金，我们还制备了银并进行了退火，测试了散射图。理论结果与实验结果比较吻合。这是我们做的表面增强的第一个工作。</p><p>国内表面增强课题很多，一年可能有一两千篇。但我们一直没做这方面工作，因为是从物理角度研究的。表面增强的定量性比较差。包括大家所说的能够鉴别 10 的 -15 次方摩尔，但实际究竟怎么样谁也不知道。二维材料上覆盖金或银颗粒，提供了很好的研究范例。我们正好也在研究二维材料的激子化模型。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>最直接的就是前面所说的等离子体纳米腔，它能够对层内的拉曼模有一个增强作用。</p><p>只有被金覆盖的地方才对呼吸模有贡献，未覆盖处看不到。</p><p>表面增强的定量性比较差。包括大家所说的能够鉴别10的-15次方摩尔，但实际究竟怎么样谁也不知道。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-twist">
+  <div class="slides"><figure class="slide" id="slide-752">
+<img src="slides/slide_752.png" alt="课件第752页 3.6 转角多层石墨烯的C和LB模：MLG的堆垛方式——AB stacking、ABC stacking、AA stacking、Mixed stacking (ABCB)；转角矢量和 AA 堆垛转角 21.8°/38.2°、转角双层 t(1+1)LG θt=10.6°">
+<figcaption><span class="sno">752</span><span class="stitle">3.6 转角多层石墨烯的C和LB模：MLG的堆垛方式——AB stacking、ABC stacking、AA stacking、Mixed stacking (ABCB)；转角矢量和 AA 堆垛转角 21.8°/38.2°、转角双层 t(1+1)LG θt=10.6°</span></figcaption>
+</figure>
+<figure class="slide" id="slide-753">
+<img src="slides/slide_753.png" alt="课件第753页 3.6 转角多层石墨烯的C和LB模：转角MLG及其对称性——mLG+nLG→t(m+n)LG, N=m+n；m,n>1 时 mLG 和 nLG 为 AB 堆垛；每个+代表一个转角界面；t(m+n)LG (m≠n) C3 对称性 Γ=A+E，A 拉曼活性 LB 模、E 拉曼活性 C 模；t(n+n)LG (n≥2) D3 对称性 Γ=A1+A2+E（JB Wu/W Ji/PH Tan, ACS Nano 9, 7440 (2015)）">
+<figcaption><span class="sno">753</span><span class="stitle">3.6 转角多层石墨烯的C和LB模：转角MLG及其对称性——mLG+nLG→t(m+n)LG, N=m+n；m,n>1 时 mLG 和 nLG 为 AB 堆垛；每个+代表一个转角界面；t(m+n)LG (m≠n) C3 对称性 Γ=A+E，A 拉曼活性 LB 模、E 拉曼活性 C 模；t(n+n)LG (n≥2) D3 对称性 Γ=A1+A2+E（JB Wu/W Ji/PH Tan, ACS Nano 9, 7440 (2015)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-754">
+<img src="slides/slide_754.png" alt="课件第754页 3.6 转角多层石墨烯的C和LB模：转角MLG的光学表征——θt=10.6° 的 t(1+1)LG 和 t(1+3)LG 光学衬度、R/R′ 模（JB Wu, PH Tan, Nat. Commun. 5, 5309 (2014)）">
+<figcaption><span class="sno">754</span><span class="stitle">3.6 转角多层石墨烯的C和LB模：转角MLG的光学表征——θt=10.6° 的 t(1+1)LG 和 t(1+3)LG 光学衬度、R/R′ 模（JB Wu, PH Tan, Nat. Commun. 5, 5309 (2014)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-755">
+<img src="slides/slide_755.png" alt="课件第755页 3.6 转角多层石墨烯的C和LB模：t(1+3)LG层间剪切的拉曼光谱——1.96eV 激发；2LG/3LG/4LG/t4LG 剪切模对比；在 t(1+3)LG 中观察到 3LG 的 C 模（C32、C31、C41-43）（JB Wu/PH Tan, Nat. Commun. 5, 5309 (2014)）">
+<figcaption><span class="sno">755</span><span class="stitle">3.6 转角多层石墨烯的C和LB模：t(1+3)LG层间剪切的拉曼光谱——1.96eV 激发；2LG/3LG/4LG/t4LG 剪切模对比；在 t(1+3)LG 中观察到 3LG 的 C 模（C32、C31、C41-43）（JB Wu/PH Tan, Nat. Commun. 5, 5309 (2014)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-756">
+<img src="slides/slide_756.png" alt="课件第756页 3.6 转角多层石墨烯的C和LB模：t(m+n)LG层间剪切模的拉曼光谱——90%/20% 归一化对比；剪切模局域在组分内部（Localized C mode in constituents）（JB Wu/PH Tan, Nat. Commun. 5, 5309 (2014)）">
+<figcaption><span class="sno">756</span><span class="stitle">3.6 转角多层石墨烯的C和LB模：t(m+n)LG层间剪切模的拉曼光谱——90%/20% 归一化对比；剪切模局域在组分内部（Localized C mode in constituents）（JB Wu/PH Tan, Nat. Commun. 5, 5309 (2014)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-757">
+<img src="slides/slide_757.png" alt="课件第757页 3.6 转角多层石墨烯的C和LB模：t(1+3)LG层间呼吸模的拉曼光谱——LBM31=110.8、LBM32=64.0、LBM41=118.2、LBM42=90.5cm⁻¹；t(1+3)LG 中 3LG 的 C 模不可见但 4LG 的 LB 模可见；LB 模来自整个 t(m+n)LG 而非组分（JB Wu/W Ji/PH Tan, ACS Nano 9, 7440 (2015)）">
+<figcaption><span class="sno">757</span><span class="stitle">3.6 转角多层石墨烯的C和LB模：t(1+3)LG层间呼吸模的拉曼光谱——LBM31=110.8、LBM32=64.0、LBM41=118.2、LBM42=90.5cm⁻¹；t(1+3)LG 中 3LG 的 C 模不可见但 4LG 的 LB 模可见；LB 模来自整个 t(m+n)LG 而非组分（JB Wu/W Ji/PH Tan, ACS Nano 9, 7440 (2015)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-758">
+<img src="slides/slide_758.png" alt="课件第758页 3.6 转角多层石墨烯的C和LB模：t(m+n)LG层间剪切模和呼吸模的拉曼光谱——观察到子系统的剪切模和整个系统的呼吸模；LCM 不足以解释 LBM42 和 LBM52（JB Wu/W Ji/PH Tan, ACS Nano 9, 7440 (2015)）">
+<figcaption><span class="sno">758</span><span class="stitle">3.6 转角多层石墨烯的C和LB模：t(m+n)LG层间剪切模和呼吸模的拉曼光谱——观察到子系统的剪切模和整个系统的呼吸模；LCM 不足以解释 LBM42 和 LBM52（JB Wu/W Ji/PH Tan, ACS Nano 9, 7440 (2015)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-759">
+<img src="slides/slide_759.png" alt="课件第759页 3.6 转角多层石墨烯的C和LB模：t(m+n)LG层间剪切模和呼吸模的拉曼光谱——2LCM 次近邻层间耦合 β0⊥≈0.09α0 对 t(m+n)LG 中 Pos(LBm+n,2) 是必要的（JB Wu/W Ji/PH Tan, ACS Nano 9, 7440 (2015)）">
+<figcaption><span class="sno">759</span><span class="stitle">3.6 转角多层石墨烯的C和LB模：t(m+n)LG层间剪切模和呼吸模的拉曼光谱——2LCM 次近邻层间耦合 β0⊥≈0.09α0 对 t(m+n)LG 中 Pos(LBm+n,2) 是必要的（JB Wu/W Ji/PH Tan, ACS Nano 9, 7440 (2015)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-760">
+<img src="slides/slide_760.png" alt="课件第760页 3.6 转角多层石墨烯的C和LB模：t(m+n)LG中层间剪切耦合的起源——层间相互作用强度与电荷密度正相关；t(1+2)LG θt=21.8° 俯视图；两转角层周期失配导致层间剪切耦合强度下降（JB Wu/W Ji/PH Tan, ACS Nano 9, 7440 (2015)）">
+<figcaption><span class="sno">760</span><span class="stitle">3.6 转角多层石墨烯的C和LB模：t(m+n)LG中层间剪切耦合的起源——层间相互作用强度与电荷密度正相关；t(1+2)LG θt=21.8° 俯视图；两转角层周期失配导致层间剪切耦合强度下降（JB Wu/W Ji/PH Tan, ACS Nano 9, 7440 (2015)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-761">
+<img src="slides/slide_761.png" alt="课件第761页 3.6 转角多层石墨烯的C和LB模：t(m+n)LG中层间呼吸耦合的起源——t(1+2)LG θt=21.8° 侧视图；转角界面与 AB 堆垛界面的层间距差很小；从侧面看两个界面的电荷密度几乎相同，故层间呼吸耦合几乎不变（JB Wu/W Ji/PH Tan, ACS Nano 9, 7440 (2015)）">
+<figcaption><span class="sno">761</span><span class="stitle">3.6 转角多层石墨烯的C和LB模：t(m+n)LG中层间呼吸耦合的起源——t(1+2)LG θt=21.8° 侧视图；转角界面与 AB 堆垛界面的层间距差很小；从侧面看两个界面的电荷密度几乎相同，故层间呼吸耦合几乎不变（JB Wu/W Ji/PH Tan, ACS Nano 9, 7440 (2015)）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>转角多层石墨烯的 C 和 LB 模</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 752</span><span class="chip">课件 753</span><span class="chip">课件 754</span><span class="chip">课件 755</span><span class="chip">课件 756</span><span class="chip">课件 757</span><span class="chip">课件 758</span><span class="chip">课件 759</span><span class="chip">课件 760</span><span class="chip">课件 761</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>前面讲的是 AB 堆叠石墨烯及其拉曼谱。从基模、2D 模到涉及 1D 和 2D 模的双共振，再讲剪切模和呼吸模。我们都是按照这个逻辑来的。除了 AB 堆叠石墨烯外，还有转角多层石墨烯。转角多层石墨烯是怎么形成的？其实很简单。假如这是单层石墨烯，把原点定在这里，每个原子位置就是一个晶格。我们可以对它进行标记，给它一个坐标。比如朝一个方向移动 1，朝另一个方向移动 2，标为 (1,2)。除 (1,2) 外，还会形成 (2,1)。除非 N 和 M 一样，如 (5,5) 或 (6,6)，那就重合了。但只要 N 和 M 不相等，就会有不同的原子位置。这两个矢量长度是一样的，这意味着什么？</p><p>你就上下两层石墨烯，把它对齐很齐。我把上面这个 NM 的晶格，转到下面那个 MN 给它对齐了。你看这个就是对齐的情况。一旦对齐了，你看这个地方是不是显得比较空，而这个地方就显得比较实。我从上面往下看，再把它缩小。这个是 21.8°，我们看一下 10.6° 的情况，大家是不是疏密相间。能够从这里就看得出来了。那这个疏密相间的话，我从纵向来看，它实际上就是一个周期性的结构。好吧，这就是一个周期性的结果。但是呢，我 N 一旦有个 N 的时候，我就会对应出一个角度，就对应一个转角。但是呢，我们也会存在着某些转角，它不对应做一个莫尔常数。</p><p>有些时候它只是一个数位象限，它本身来说不是严格的定估。你想一下，说我这个地方我平移，平移了之后基本上是一模一样。但是有一些晶格它就是疏密相间。但是怎么平移过去、平移过来，它所有的原子重复不了。所以说对于这种情况来说，它是严格的超晶格。对吧，但是对刚才我说的不能重复的那一个，那么它不是严格的周期。但是呢，它的疏密相间这个本身来说，它是一个构成的晶格。那个镜这个镜子呢，就是我们通常所说的莫尔条纹。我们假如把两个纱窗叠在一起，就会有这种情况。大家很多时候用啥呢？用手机去照你们这个屏幕，对吧？用手手机去照屏幕，有些时候感觉有一些花纹在跳动，对吧？为什么有个花纹在跳动呢？大家可能也得想一想。它事实上就是类似于这个结果。我们的计算机屏幕它是有一个一系列的点在，我们手机上是一系列点阵，CCD 成像也有类似效果。</p><p>那么如何标记转角石墨烯？前面说过多层石墨烯的边界标记。这是 M 层和 N 层，M 小于等于 N。写出来后大家就明白意思。转角石墨烯也一样，需说明堆垛方式。石墨烯堆垛有 AB、ABC 等及无序态。常见 AB 堆垛占 85%~90%。天然或实验室石墨烯堆垛约 90% 为 AB 型。因此记作转角 t，即 M+N 层结构。若 M、N 大于 1，则为 AB 堆垛。举例 7 层的 2+1 结构，即两层 ABC 加一层转角渐变式。也可表示为 2+1+3+1，含两个界面。加号代表界面。两层 ABC 与 ABA 石墨烯间转角任意。有了标记后研究更便利。</p><p>发生转角后会改变对称性。改变对称性后，若 M≠N，所有拉曼模都是拉曼活性的。若 M=N，一半的振动模式具拉曼活性，其余无活性。但即使具拉曼活性，也可能因电声耦合强度弱而观测不到。下面画个示意图。转角石墨烯可通过 CVD 或机械剥离获得。此样品由学生偶然获得。此处有一层、三层及两层石墨烯。衬度上两层与一层差异不大，稍黑但不明显。此处折叠后形成 1+1 和 1+3 结构。这已很巧合。若再巧些，会有 1+2 等组合。上下均为同层石墨烯。这意味着 1+1 和 1+3 转角相同，测得两者衬度差别基本类似。而这个衬度是由什么决定的？由它的折射率，当然还有多层干涉效率。</p><p>我们的 1+1 都是四层石墨烯，这个 1+3 也是四层石墨烯，对吧？原则上来说，他们的衬度应该是一模一样的，但是他们的衬度跟 AB 堆叠的有差别。那就意味着他们的折射率有很大的改变。那你折射率有很大的改变，那意味着它们的层间结构有很大的改变，对吧？那层间结构有很大的改变，我们只要在这个范围之内，我们挑选激发光，去做它的拉曼光谱，那就会发生共振拉曼。所以说大家可以看得到，我们后面做的很多结构非常漂亮，是因为我们去选择了相应的激发光，去获得最大的增强。除了这个增强效应以外，另外一个就是我们既能够看得到 R5，还能够看得到 R1′。就是跟本征的相比，这儿多了两个模，这两个模是怎么来的？就是因为我们形成了超晶格，那么这个不能区分非中心对称的声子，它会折叠到布里渊区。那么折叠完了，它就会变折叠的布里渊区中心，那么它就可以被拉曼激活了。被拉曼激活了之后呢，因为我们拉曼探测的就是布里渊区中心对称的声子。这样呢就能够看得到新的 R1′。这个 R1′ 这个模式的话，它会随着你的转角的改变而发生改变，它不是一成不变的。</p><p>那么我们再去看它的拉曼光谱。我们用 633 去测它的一个拉曼峰。原来我们在低频下，对一层石墨烯我们看不到剪切模；对三层石墨烯，我们看到的剪切模比较弱。转角石墨烯剪切模非常强。1+3 层结构原则上是 4 层，预计观测到 3 个剪切模，对应 C41、C42、C43。实际只观察到两个剪切模，与 3 层石墨烯一致。这意味着在转角石墨烯中，无法看到 1+3 整体声子模式，仅看到 3 层子系统信号。这表明界面耦合常数基本为 0。对于 2+3 结构，既能看到 2 层也能看到 3 层的呼吸模。大家看这两个峰位是否一样。2+2 结构也能看到 2 层呼吸模，峰位与 1+2 结构一致。转角系统层间耦合极弱，只能观测到子系统剪切模，且信号增强。</p><p>除剪切模外，还能观测到呼吸模。通过偏振拉曼光谱，可确认其为呼吸模。刚才我们看到的是 1+3 结构中三层石墨烯的呼吸模。做呼吸模分析时，也能看到三层石墨烯的峰。那你看三层石墨烯的呼吸模在哪儿？一个在这个地方，还有一个在这个地方。也就是 68 个波数，我大致是一百零八个波数左右。但实际上看到的拉曼模没在这个地方。而看到的拉曼模更多的是 4 层石墨烯的拉曼模。那意味着啥？那意味着说我们这个地方界面耦合非常强。界面的呼吸耦合非常强。界面的剪切耦合基本上没有意义。所以说这样一来的话，我的四层石墨烯和 1+3 的四层石墨烯，基本上它的呼吸模基本上是一样的。</p><p>好吧。你看我们这里面也是，你看我们这儿有一个 1+1+1 三层石墨烯。我们看不到剪切模，但我们能看到它的呼吸模。而它的呼吸模跟 1+2 的这个位置的呼吸模一模一样。那这个就说明刚才我说的情况。所以说呼吸模它是由整个石墨烯的层数决定的。转角石墨烯的总层数，而剪切模只是由它的子系统的层数决定的。而且呢，我们在拟合这些结构的时候，我们会发现我们必须得考虑层间相互作用。我们才能够解释理解我们观察到的其他拉曼模的位置。</p><p>所以说我们通常那个二维材料里面，通常的话我们求最低的模，我们只考虑最基本的相互作用。但是在石墨烯里面我们必须得考虑次近邻的相互作用。好吧。这个是比较奇特的地方。我们曾经因为可以想象它是单原子层。那么单原子层的话，是不是原子上同弹也应该能够看得到，对不对。但是膨润土的石墨烯我可以做成转角石墨烯。但是膨润土的话它是那个超宽带隙。转角石墨烯改变不了能带结构。我们讨论不同判断，将膨胀材料与其他制成异质结，未发现刺激冥想作用。</p><p>石墨烯除最近邻外，还有层间呼吸相互作用。考虑该作用后，实验结果解释良好。剪切模无强耦合，而呼吸模有强耦合。这源于转角后电荷密度分布变化所致。对剪切耦合，移动位置使增强减弱相互抵消，总体差别不大。但呼吸耦合则不同。前者为剪切耦合，后者为呼吸耦合。在 AB 堆垛石墨体系中，剪切模信号多。但在转角石墨烯特定激发下，呼吸与剪切耦合均强。这涉及共振拉曼光谱的重要性。用 2.54eV 激发可见信号，用 1.96eV 则不可见。2+3 层模式既非三层 2D 峰，也非双层 2D 峰。2+3 层在此处更像双层的 G 峰。为何呈现双层特征？因为两层的二极管它比较强。第三层的 2D 要强一些。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我们假如把两个纱窗叠在一起，就会有这种情况。大家很多时候用手机去照你们这个屏幕，有些时候感觉有一些花纹在跳动。</p><p>呼吸模它是由整个石墨烯的层数决定的，而剪切模只是由它的子系统的层数决定的。</p><p>在石墨烯里面我们必须得考虑次近邻的相互作用。这个是比较奇特的地方。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-reso">
+  <div class="slides"><figure class="slide" id="slide-762">
+<img src="slides/slide_762.png" alt="课件第762页 3.7 转角多层石墨烯的共振拉曼光谱：t(m+n)LG中层间剪切模的共振拉曼光谱——(1,9) θt=10.6°；拉曼活性的剪切模强度很弱，在 t(m+n)LG 中须共振才能观察到（JB Wu, PH Tan, Nat. Commun. 5, 5309 (2014)）">
+<figcaption><span class="sno">762</span><span class="stitle">3.7 转角多层石墨烯的共振拉曼光谱：t(m+n)LG中层间剪切模的共振拉曼光谱——(1,9) θt=10.6°；拉曼活性的剪切模强度很弱，在 t(m+n)LG 中须共振才能观察到（JB Wu, PH Tan, Nat. Commun. 5, 5309 (2014)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-763">
+<img src="slides/slide_763.png" alt="课件第763页 3.7 转角多层石墨烯的共振拉曼光谱：t(m+n)LG共振拉曼散射轮廓的简化模型——I∝∑∑|Mij(eR,ρk)·Mij(e-ph)·Mij(eR,σk)|²/((Eex−Eijk−iγ)(Eex−Eph−Eijk−iγ))；入射/出射共振、联合态密度 JDOS、van Hove 奇点 M1/M2/M3（JB Wu, PH Tan, Nat. Commun. 5, 5309 (2014)）">
+<figcaption><span class="sno">763</span><span class="stitle">3.7 转角多层石墨烯的共振拉曼光谱：t(m+n)LG共振拉曼散射轮廓的简化模型——I∝∑∑|Mij(eR,ρk)·Mij(e-ph)·Mij(eR,σk)|²/((Eex−Eijk−iγ)(Eex−Eph−Eijk−iγ))；入射/出射共振、联合态密度 JDOS、van Hove 奇点 M1/M2/M3（JB Wu, PH Tan, Nat. Commun. 5, 5309 (2014)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-764">
+<img src="slides/slide_764.png" alt="课件第764页 3.7 转角多层石墨烯的共振拉曼光谱：t(1+1)LG和t(1+3)LG剪切模和呼吸模的共振拉曼强度轮廓（JB Wu, PH Tan, Nat. Commun. 5, 5309 (2014)）">
+<figcaption><span class="sno">764</span><span class="stitle">3.7 转角多层石墨烯的共振拉曼光谱：t(1+1)LG和t(1+3)LG剪切模和呼吸模的共振拉曼强度轮廓（JB Wu, PH Tan, Nat. Commun. 5, 5309 (2014)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-765">
+<img src="slides/slide_765.png" alt="课件第765页 3.7 转角多层石墨烯的共振拉曼光谱：金属纳腔共振增强转角多层石墨烯的LB模——转角多层石墨烯层间模；相对强度轮廓可由 E-IBPM 复现（H Wu/ML Lin/PH Tan, Light: Sci. & Appl. 15, 109 (2026)）">
+<figcaption><span class="sno">765</span><span class="stitle">3.7 转角多层石墨烯的共振拉曼光谱：金属纳腔共振增强转角多层石墨烯的LB模——转角多层石墨烯层间模；相对强度轮廓可由 E-IBPM 复现（H Wu/ML Lin/PH Tan, Light: Sci. & Appl. 15, 109 (2026)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-766">
+<img src="slides/slide_766.png" alt="课件第766页 3.7 转角多层石墨烯的共振拉曼光谱：多层石墨烯体系层间呼吸模的等离激元纳腔共振增强通用检测——普通低波数探测技术 vs 等离激元纳米腔增强通用探测技术；633nm 激发下 6LG 的 C6,1、LB6,5~LB6,1、IM、G 模对比；构建金属纳米腔/二维材料对称性破缺体系，共振激发等离激元成功激活层间声子（H Wu/ML Lin/PH Tan, Light: Sci. & Appl. 15, 109 (2026)）">
+<figcaption><span class="sno">766</span><span class="stitle">3.7 转角多层石墨烯的共振拉曼光谱：多层石墨烯体系层间呼吸模的等离激元纳腔共振增强通用检测——普通低波数探测技术 vs 等离激元纳米腔增强通用探测技术；633nm 激发下 6LG 的 C6,1、LB6,5~LB6,1、IM、G 模对比；构建金属纳米腔/二维材料对称性破缺体系，共振激发等离激元成功激活层间声子（H Wu/ML Lin/PH Tan, Light: Sci. & Appl. 15, 109 (2026)）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>tMLG 的共振拉曼光谱</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中后）</span><span class="chip">课件 762</span><span class="chip">课件 763</span><span class="chip">课件 764</span><span class="chip">课件 765</span><span class="chip">课件 766</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>那么我们就对于 1+1 这个石墨烯，我们改变激发光的能量，我们可以看一下中间在 785、522、2.66。就这两个上最上面和最下面归一化了过后，因为我们一旦要测共振拉曼，我们要去分析它，我们就得要对不同的激发过程，我们要归一化。你要归一化的话没有任何意义。但是归一化了过后，你看这两个地方的强度就基本上一样。但是中间这个呢是乘了 0.03。对吧，为了显示相同的强度是乘了 0.03，那表示什么意思？表示 2.09 这个地方它的拉曼强度比最上面的强了 33 倍。对吧，但是大家去算一下 2.09，大家算一下它的波长等于多少。593 或者 594。这个激光是什么激光？氦氖激光。大家大家都知道氦氖光是 633 对吧。这个激光也是氦氖激光，它的功率是多大？我告诉大家不到一个毫瓦。激光器输出的功率达到 1 个毫瓦。</p><p>但是你看你把我们做的这个实验结果跟其他的去比，你看它的性价比有多高。在特定的情况下，很多时候拉曼信号跟你的激发光，因为我们现在有 CCD 嘛，对不对？我 CCD 我的积分时间可以是 20 分钟都非常正常。所以说激光功率对拉曼光谱仪来说不是一个大的问题。就只要我们如果说在共振的情况下，你可以得到很好的一个拉曼信号。大家看这里增加了 33 倍，我们这儿增加多少倍？这是一层 6.7 膜三层的。基模这边是 1，里面是 3。但这地方乘了 10 或 1/10，中间差 30 倍。我的 31 剪切模至少差 6 倍。30 倍乘 6 是 200 倍，即增加 200 倍。C32 上面一点都没有，比 4C31 还强。这是共振拉曼的结果，跟这边类似。</p><p>为解决共振问题，需考虑入射出射共振、激发符合电声耦合及矩阵元。还需对能带和 K 波矢求和。每个地方都要考虑，不同能带间跃迁也要考虑。但最重要的是发生共振的地方。共振更多出现在联合态密度处。即光学跃迁允许的联合态密度区域。你看这儿到这儿是不是平行的带隙？只要是平行带隙，光跃迁概率就很高。因为能带平坦意味着相同能量态很多。强度不强是因为必须满足守恒律。另外，此处是平的，彼处是斜的。从这点到那点，跃迁能量一样。覆盖这么大区域，透明度也很高。这叫联合态密度。这样总能找到联合态密度里的能量极值点。能量极值点某种意义上代表某个特殊跃迁。代入某一些特殊的跃迁之后，就可以把上面看成一个常数。这样一来的话，我们针对 5 个不同的临界点进行求和就完了。</p><p>这是我们测得的一系列实验结果。你看这个灰色的图片，就是刚才所说的激光允许的联合跃迁密度。这儿总共有 6 个峰，用 6 个峰去组合，可以组合得很好。这里面除了这个一下子变得很强，然后又变得更弱，到这个地方又变得很强。所以说这就是一个共振的原因。另外一个是前面讲过的等离子体激元，这也是一个共振。通过这个，我们也能够增强它的呼吸模。这一面的呼吸模只是增加这么几个波长。它总共有那么一四层的话，原状有 3 个剪切模。但我们只看第一个是最强，后面的很弱，第三个看不到了。但是这一个不一样，你看我们这个是转角的 3+3 的。这个本身的 3+3 呢，我只能看到一个两个模式。这边呢，基本上一个两个三个四个五个。基本上 3+3 的总共有 5 个呼吸模，就基本上 5 个都能看。所以这个是我们用电子耦合模型去预测一下。3+3 被等离激元大大增强的呼吸模模式情况。</p><p>这两个机制不一样。机制是共振增强，分母很重要。分布就是这三项也很重要。不同的拉曼模，电声耦合模式不一样。它从根本上改变了振动模型。根本上改变一个地方，很多低波数模都能看见，统更能看到差别。等离激元腔提供了通用呼吸模探测手段。休息 5 分钟，下面讲怎么鉴别。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>表示2.09这个地方它的拉曼强度比最上面的强了33倍。这个激光也是氦氖激光，它的功率不到一个毫瓦。</p><p>30倍乘6是200倍，即增加200倍。</p><p>3+3的总共有5个呼吸模，就基本上5个都能看。</p><p>等离激元腔提供了通用呼吸模探测手段。休息5分钟，下面讲怎么鉴别。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-cvd">
+  <div class="slides"><figure class="slide" id="slide-767">
+<img src="slides/slide_767.png" alt="课件第767页 3.8 CVD-MLG堆垛方式的拉曼鉴别：转角CVD-MLG的标记及堆垛方式关键参数——转角堆垛、范霍夫奇点与光学衬度谱；标记符号 t(m+n)LG、N=m+n、每个+代表一转角界面；CVD-MLG 堆垛方式三参数：1)总层数N 2)堆垛次序 3)各界面之间的转角（J.-B. Wu, Nat. Commun. 5, 5309 (2014)）">
+<figcaption><span class="sno">767</span><span class="stitle">3.8 CVD-MLG堆垛方式的拉曼鉴别：转角CVD-MLG的标记及堆垛方式关键参数——转角堆垛、范霍夫奇点与光学衬度谱；标记符号 t(m+n)LG、N=m+n、每个+代表一转角界面；CVD-MLG 堆垛方式三参数：1)总层数N 2)堆垛次序 3)各界面之间的转角（J.-B. Wu, Nat. Commun. 5, 5309 (2014)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-768">
+<img src="slides/slide_768.png" alt="课件第768页 3.8 CVD-MLG堆垛方式的拉曼鉴别：转角CVD-NLG可能的堆垛方式——AB-3LG、t(2+1)LG、t(1+2)LG、t(1+1+1)LG；4LG 的 t(3+1)/t(2+2)/t(2+1+1)/t(1+3)/t(1+2+1)/t(1+1+2)/t(1+1+1+1)LG；对于 N 层石墨烯，共有 2^(N-1) 种可能的堆垛次序（ML Lin/PH Tan, J Raman Spectrosc 49, 46 (2018)）">
+<figcaption><span class="sno">768</span><span class="stitle">3.8 CVD-MLG堆垛方式的拉曼鉴别：转角CVD-NLG可能的堆垛方式——AB-3LG、t(2+1)LG、t(1+2)LG、t(1+1+1)LG；4LG 的 t(3+1)/t(2+2)/t(2+1+1)/t(1+3)/t(1+2+1)/t(1+1+2)/t(1+1+1+1)LG；对于 N 层石墨烯，共有 2^(N-1) 种可能的堆垛次序（ML Lin/PH Tan, J Raman Spectrosc 49, 46 (2018)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-769">
+<img src="slides/slide_769.png" alt="课件第769页 3.8 CVD-MLG堆垛方式的拉曼鉴别：CVD-MLG中单层石墨烯的拉曼光谱鉴别——CVD 生长单层石墨烯的鉴定：1.光学衬度；2.比较相同衬底上 CVD 生长石墨烯与机械剥离单层石墨烯的 G 模强度（X.-L. Li, Nanoscale 7, 8135 (2015)）">
+<figcaption><span class="sno">769</span><span class="stitle">3.8 CVD-MLG堆垛方式的拉曼鉴别：CVD-MLG中单层石墨烯的拉曼光谱鉴别——CVD 生长单层石墨烯的鉴定：1.光学衬度；2.比较相同衬底上 CVD 生长石墨烯与机械剥离单层石墨烯的 G 模强度（X.-L. Li, Nanoscale 7, 8135 (2015)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-770">
+<img src="slides/slide_770.png" alt="课件第770页 3.8 CVD-MLG堆垛方式的拉曼鉴别：CVD-MLG堆垛方式和层数的拉曼光谱鉴别方法——AB-stacked 5LG、Twist stacking t(2+3)LG、Uncoupled 2LG+3LG 三种情况对比；C 模识别子系统层数、LB 模识别总层数（ML Lin/PH Tan, J Raman Spectrosc. 49, 19 (2018)）">
+<figcaption><span class="sno">770</span><span class="stitle">3.8 CVD-MLG堆垛方式的拉曼鉴别：CVD-MLG堆垛方式和层数的拉曼光谱鉴别方法——AB-stacked 5LG、Twist stacking t(2+3)LG、Uncoupled 2LG+3LG 三种情况对比；C 模识别子系统层数、LB 模识别总层数（ML Lin/PH Tan, J Raman Spectrosc. 49, 19 (2018)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-771">
+<img src="slides/slide_771.png" alt="课件第771页 3.8 CVD-MLG堆垛方式的拉曼鉴别：CVD-MLG总层数和子系统层数的拉曼光谱鉴别——通过光学衬度确定范霍夫奇点能量范围；选择光能量靠近范霍夫奇点的激光来共振激发 C 和 LB 模的拉曼谱；剪切模→子系统层数，呼吸模→总层数（J.-B. Wu, Nat. Commun. 5, 5309 (2014); ACS Nano 9, 7440 (2015)）">
+<figcaption><span class="sno">771</span><span class="stitle">3.8 CVD-MLG堆垛方式的拉曼鉴别：CVD-MLG总层数和子系统层数的拉曼光谱鉴别——通过光学衬度确定范霍夫奇点能量范围；选择光能量靠近范霍夫奇点的激光来共振激发 C 和 LB 模的拉曼谱；剪切模→子系统层数，呼吸模→总层数（J.-B. Wu, Nat. Commun. 5, 5309 (2014); ACS Nano 9, 7440 (2015)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-772">
+<img src="slides/slide_772.png" alt="课件第772页 3.8 CVD-MLG堆垛方式的拉曼鉴别：CVD-MLG总层数和子系统层数的拉曼光谱鉴别——C 模：组分层数、LB 模：tMLG 总层数；Layer by layer 逐层生长（ML Lin/PH Tan, J Raman Spectrosc. 49, 46 (2018)）">
+<figcaption><span class="sno">772</span><span class="stitle">3.8 CVD-MLG堆垛方式的拉曼鉴别：CVD-MLG总层数和子系统层数的拉曼光谱鉴别——C 模：组分层数、LB 模：tMLG 总层数；Layer by layer 逐层生长（ML Lin/PH Tan, J Raman Spectrosc. 49, 46 (2018)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-773">
+<img src="slides/slide_773.png" alt="课件第773页 3.8 CVD-MLG堆垛方式的拉曼鉴别：根据LO/TO对应moiré声子的频率确定CVD-MLG界面转角——18°/16.2°/24°/13.2°/15.2° 示例；q(θ)=8π/3a·sin(θ/2)（M.-L. Lin, J. Raman Spectrosc. 49, 46 (2018)）">
+<figcaption><span class="sno">773</span><span class="stitle">3.8 CVD-MLG堆垛方式的拉曼鉴别：根据LO/TO对应moiré声子的频率确定CVD-MLG界面转角——18°/16.2°/24°/13.2°/15.2° 示例；q(θ)=8π/3a·sin(θ/2)（M.-L. Lin, J. Raman Spectrosc. 49, 46 (2018)）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>CVD-MLG 堆垛方式的拉曼鉴别</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（前）</span><span class="chip">课件 767</span><span class="chip">课件 768</span><span class="chip">课件 769</span><span class="chip">课件 770</span><span class="chip">课件 771</span><span class="chip">课件 772</span><span class="chip">课件 773</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>如何确定堆垛方式？通常考虑 CVD 制备石墨烯。若为自生长单层，往往覆盖整个衬底系统。因此，核心是建立单层鉴别机制。以往通过光学表征鉴别，但若衬底被全覆盖，光学法便无法区分。也可比较 2D 峰，但许多转角石墨烯仅显现一个强 2D 峰，掩盖了其他信号。故光学衬度和 2D 峰均非唯一判据。解决方案是将 CVD 生长的石墨烯转移至相同二氧化硅衬底上。同时在同衬底上转移机械剥离的单层石墨烯。因衬底一致，可比较两者拉曼强度。在层数较少时，拉曼强度与层数呈线性关系。若强度基本一致，则判定为单层。这是最直接的解决方案。</p><p>单层鉴别完成后，多层石墨烯如何处理？必然涉及有无转角的问题。以五层石墨烯为例，若为 AB 堆叠，能测得较弱的拉曼信号。只能测到一个且很弱，呼吸模根本就测不到。但若用两层和三层石墨烯耦合，共振激发会怎样？两层石墨烯的剪切模很强，三层的剪切模也很强。同时，五层石墨烯的呼吸模也很强。但若两层和三层石墨烯通过机械剥离转移上去，没有耦合，结果会怎样？结果会发现，两层或三层石墨烯的剪切模很弱，其他什么都看不到。所以我们比较了五层、2+3 和两层加三层这三种情况。</p><p>其他的也很类似。那怎么办呢？我们就以这个结果为例。由于剪切模只跟子系统有关，而呼吸模跟总系统有关，我们通过光学衬度确定共振范围。然后选择与这些共振范围相近的激光来激发剪切模或者呼吸模。最后，剪切模鉴定子系统的层数，呼吸模鉴定总系统的层数。明白吗？是这么一个逻辑关系。那我们就看一下，这是自制备 CVD 制备的样品。边上的我们已经确定出来，最边上的是一层，然后沿着边上往中间走。你看这个是一层。走到两层的时候，能看到它的呼吸模，看不到剪切模，说明是 1+1。如果我们再加一层，还是看不到剪切模，说明是 1+1+1。但如果能够看得到两层的剪切模，那就说明它是 1+2。明白吗？</p><p>因为石墨烯从底部靠近衬底处生长，层数自下而上叠加。第一至三层均为红色，表明其从下方生长。若再长一层，在四层中观察到三层剪切模，即为 1+3 结构。若增加一层时看到两层剪切模，则是 1+1+2 结构。CVD 石墨烯通常逐层生长，沿边缘向中间可确定堆叠方式。但直接鉴别八层石墨烯的堆叠顺序较难。原则上可鉴别界面数和子系统层数，但六层的具体排列顺序难定。若是 CVD 逐层生长系统，则容易通过翘曲确定。</p><p>转角主要通过 R 模体现并确定。利用低频拉曼光谱，可确定 CVD 制备多层石墨烯的总层数。还能确定每个子系统的层数、转角及堆垛方式。这是拉曼光谱的独特魅力，其他手段难以实现。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>剪切模鉴定子系统的层数，呼吸模鉴定总系统的层数。明白吗？是这么一个逻辑关系。</p><p>利用低频拉曼光谱，可确定CVD制备多层石墨烯的总层数。还能确定每个子系统的层数、转角及堆垛方式。这是拉曼光谱的独特魅力，其他手段难以实现。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-fano">
+  <div class="slides"><figure class="slide" id="slide-774">
+<img src="slides/slide_774.png" alt="课件第774页 3.9 多层石墨烯中C模的Fano共振：MLG狄拉克点附近电子能带结构——Dirac 点附近低能激发 ~10meV；E2g C 模 44cm⁻¹；角分辨光电子谱/红外透射/光导实验（T. Ohta, PRL 2007; Heinz, PNAS 2010; Wang, Nature 2009）">
+<figcaption><span class="sno">774</span><span class="stitle">3.9 多层石墨烯中C模的Fano共振：MLG狄拉克点附近电子能带结构——Dirac 点附近低能激发 ~10meV；E2g C 模 44cm⁻¹；角分辨光电子谱/红外透射/光导实验（T. Ohta, PRL 2007; Heinz, PNAS 2010; Wang, Nature 2009）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-775">
+<img src="slides/slide_775.png" alt="课件第775页 3.9 多层石墨烯中C模的Fano共振：MLG剪切模的实验探测——双层石墨烯的 C 模更对称更接近洛伦兹线型；洛伦兹对称线型 vs Fano 非对称线型 BWF（PH Tan/AC Ferrari, Nat. Mater. 11, 294 (2012)）">
+<figcaption><span class="sno">775</span><span class="stitle">3.9 多层石墨烯中C模的Fano共振：MLG剪切模的实验探测——双层石墨烯的 C 模更对称更接近洛伦兹线型；洛伦兹对称线型 vs Fano 非对称线型 BWF（PH Tan/AC Ferrari, Nat. Mater. 11, 294 (2012)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-776">
+<img src="slides/slide_776.png" alt="课件第776页 3.9 多层石墨烯中C模的Fano共振：MLG剪切模的Fano线型——Breit-Wagner-Fano（非对称）线型 I(ω)=I0(1+2(ω−ω0)/qΓ)²/(1+4(ω−ω0)²/Γ²)；1/|q| 耦合系数、ωmax=ω0+Γ/2q、FWHM=Γ(q²+1)/|q²−1|（Scott, RMP 1974）">
+<figcaption><span class="sno">776</span><span class="stitle">3.9 多层石墨烯中C模的Fano共振：MLG剪切模的Fano线型——Breit-Wagner-Fano（非对称）线型 I(ω)=I0(1+2(ω−ω0)/qΓ)²/(1+4(ω−ω0)²/Γ²)；1/|q| 耦合系数、ωmax=ω0+Γ/2q、FWHM=Γ(q²+1)/|q²−1|（Scott, RMP 1974）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-777">
+<img src="slides/slide_777.png" alt="课件第777页 3.9 多层石墨烯中C模的Fano共振：MLG剪切模Fano线型的物理根源——本征 AB 堆垛 NLG 的 4LG：EF=0 与 |EF|>Eph/2 对比；本征效应来自能带结构；探测石墨烯 K 点附近低能跃迁的好方法；基于格林函数的计算谱形（PH Tan/AC Ferrari, Nat. Mater. 11, 294 (2012)）">
+<figcaption><span class="sno">777</span><span class="stitle">3.9 多层石墨烯中C模的Fano共振：MLG剪切模Fano线型的物理根源——本征 AB 堆垛 NLG 的 4LG：EF=0 与 |EF|>Eph/2 对比；本征效应来自能带结构；探测石墨烯 K 点附近低能跃迁的好方法；基于格林函数的计算谱形（PH Tan/AC Ferrari, Nat. Mater. 11, 294 (2012)）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>MLG 中 C 模的 Fano 共振</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（中）</span><span class="chip">课件 774</span><span class="chip">课件 775</span><span class="chip">课件 776</span><span class="chip">课件 777</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>另外，前面提到的六层石墨烯模式，我已给出示例。事实上，我之所以展示给大家，就是因为该模式拟合先行。大家拟合时常用高斯线或洛伦兹线组合，但其中只有一个学生用了 8 号线拟合。因此，在多层石墨烯中 C 峰究竟会怎样？你看，这就是我们当时的结果。要测出漂亮的结果挺难的。若不做悬浮，石墨烯就是大背景。原则上，激光打到硅上会产生光生载流子。这些电子形成强电子拉曼效应，覆盖了剪切模。所以必须做成悬浮样品，效果才漂亮。</p><p>这是无悬浮与悬浮的对比。悬浮情况下，基模基本呈多能直线体。但剪切模不是洛伦兹线形，而是 Fano 线形。Fano 线形表明 Q 因子代表了耦合强度。孤立态与连续态（电子激发）之间产生干涉。这导致出现 Fano 陷阱，且耦合因子随层数改变。我们可以计算出 Fano 线形。四层石墨烯呈 Fano 线形。一旦移动，能带移动使电子激发消失，系统变为无耦合系统。至此，多层石墨烯讲解完毕。我们讲了 2D、G 模、2D 模、D 模、C 模及 LB 模。转角的话，主要讲 C 模和 LB 模。高频部分也有，但讲起来不容易。剩下讲了共振、堆垛方式及 Fano 线形。下面讲国家标准，后面仅有 41 页，可以讲快一点。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>若不悬浮，石墨烯就是大背景。激光打到硅上会产生光生载流子，这些电子形成强电子拉曼效应，覆盖了剪切模。所以必须做成悬浮样品，效果才漂亮。</p><p>Fano线形表明Q因子代表了耦合强度。孤立态与连续态（电子激发）之间产生干涉。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-std">
+  <div class="slides"><figure class="slide" id="slide-778">
+<img src="slides/slide_778.png" alt="课件第778页 主要内容：2.单层石墨烯的拉曼光谱（①晶体结构和拉曼张量②三朵乌云③共振拉曼 D/D′/2D④S和AS⑤声学声子色散⑥角分辨偏振⑦重掺杂——费米能级/量子干涉/温度效应）；3.多层石墨烯的拉曼光谱（①电子能带②G模③2D模和D模④C模⑤LB模⑥转角多层C和LB模⑦tMLG共振⑧CVD-MLG堆垛鉴别⑨MLG中C模的Fano共振）；4.国家标准-层数表征">
+<figcaption><span class="sno">778</span><span class="stitle">主要内容：2.单层石墨烯的拉曼光谱（①晶体结构和拉曼张量②三朵乌云③共振拉曼 D/D′/2D④S和AS⑤声学声子色散⑥角分辨偏振⑦重掺杂——费米能级/量子干涉/温度效应）；3.多层石墨烯的拉曼光谱（①电子能带②G模③2D模和D模④C模⑤LB模⑥转角多层C和LB模⑦tMLG共振⑧CVD-MLG堆垛鉴别⑨MLG中C模的Fano共振）；4.国家标准-层数表征</span></figcaption>
+</figure>
+<figure class="slide" id="slide-779">
+<img src="slides/slide_779.png" alt="课件第779页 4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：二维材料性质会随着其层数改变而改变——石墨烯半金属、MoS2 等半导体/导体；光学性质、热学性质、电子迁移率随层数/厚度改变；快速准确表征二维材料层数对生产制备和产品开发有指导意义（K.S. Novoselov, Science 2004; Q. H. Wang, Nat Nano 2012）">
+<figcaption><span class="sno">779</span><span class="stitle">4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：二维材料性质会随着其层数改变而改变——石墨烯半金属、MoS2 等半导体/导体；光学性质、热学性质、电子迁移率随层数/厚度改变；快速准确表征二维材料层数对生产制备和产品开发有指导意义（K.S. Novoselov, Science 2004; Q. H. Wang, Nat Nano 2012）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-780">
+<img src="slides/slide_780.png" alt="课件第780页 4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：纳米技术领域的国际标准化工作——IEC 电工产品纳米技术标准化委员会、ISO 纳米技术委员会 TC 113、全国纳米技术标准化技术委员会；石墨烯相关材料及碳纳米管材料工作组；我国与世界同步参与并主导部分纳米技术标准">
+<figcaption><span class="sno">780</span><span class="stitle">4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：纳米技术领域的国际标准化工作——IEC 电工产品纳米技术标准化委员会、ISO 纳米技术委员会 TC 113、全国纳米技术标准化技术委员会；石墨烯相关材料及碳纳米管材料工作组；我国与世界同步参与并主导部分纳米技术标准</span></figcaption>
+</figure>
+<figure class="slide" id="slide-781">
+<img src="slides/slide_781.png" alt="课件第781页 4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：国内外二维材料标准化工作正逐步展开——二维材料术语 GB/T 30544.13-2018、ISO/TS 80004-13:2017；石墨烯特性及表征 GB/T 40066-2021 厚度AFM法、GB/T 40069-2021 层数拉曼光谱法、GB/T 40071-2021 层数光学对比度法、GB/T 43341-2023 缺陷浓度拉曼法；IEC TS 62607-6 系列层数/缺陷/电阻标准；标准不足需要更多研究和国际合作">
+<figcaption><span class="sno">781</span><span class="stitle">4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：国内外二维材料标准化工作正逐步展开——二维材料术语 GB/T 30544.13-2018、ISO/TS 80004-13:2017；石墨烯特性及表征 GB/T 40066-2021 厚度AFM法、GB/T 40069-2021 层数拉曼光谱法、GB/T 40071-2021 层数光学对比度法、GB/T 43341-2023 缺陷浓度拉曼法；IEC TS 62607-6 系列层数/缺陷/电阻标准；标准不足需要更多研究和国际合作</span></figcaption>
+</figure>
+<figure class="slide" id="slide-782">
+<img src="slides/slide_782.png" alt="课件第782页 4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：常见二维材料层数的表征方法——光学对比度（控制变量建立数据库）、原子力显微镜（厚度精度高但受表面杂质影响）、透射电子显微镜、扫描隧道显微镜、非线性光谱（制样要求高、耗时）、拉曼光谱（快速！无损！设备普及率高！适合标准建立和推广）（WJ Zhao/PH Tan, PRB 82, 245423 (2010)）">
+<figcaption><span class="sno">782</span><span class="stitle">4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：常见二维材料层数的表征方法——光学对比度（控制变量建立数据库）、原子力显微镜（厚度精度高但受表面杂质影响）、透射电子显微镜、扫描隧道显微镜、非线性光谱（制样要求高、耗时）、拉曼光谱（快速！无损！设备普及率高！适合标准建立和推广）（WJ Zhao/PH Tan, PRB 82, 245423 (2010)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-783">
+<img src="slides/slide_783.png" alt="课件第783页 4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：国内外石墨烯产业发展的规划和现状——早期基础研究期（2004-2012）：2004 分离出单层石墨烯、2010 诺贝尔奖；战略布局与产业化启动期（2013-2018）：超 80 个国家布局、一核两带多点格局、规模化生产线投产">
+<figcaption><span class="sno">783</span><span class="stitle">4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：国内外石墨烯产业发展的规划和现状——早期基础研究期（2004-2012）：2004 分离出单层石墨烯、2010 诺贝尔奖；战略布局与产业化启动期（2013-2018）：超 80 个国家布局、一核两带多点格局、规模化生产线投产</span></figcaption>
+</figure>
+<figure class="slide" id="slide-784">
+<img src="slides/slide_784.png" alt="课件第784页 4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：国内外石墨烯产业发展的规划和现状——应用攻坚与产能扩张期（2019-2023）：粉体产量 2022 年突破 3800 吨、2023 年达 6500 吨、薄膜产量 231 万平方米；东旭光电/广汽快充电池/墨睿石墨烯均温板小米MIX4/北京冬奥会热管理；2022.11 工信部批复国家石墨烯创新中心">
+<figcaption><span class="sno">784</span><span class="stitle">4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：国内外石墨烯产业发展的规划和现状——应用攻坚与产能扩张期（2019-2023）：粉体产量 2022 年突破 3800 吨、2023 年达 6500 吨、薄膜产量 231 万平方米；东旭光电/广汽快充电池/墨睿石墨烯均温板小米MIX4/北京冬奥会热管理；2022.11 工信部批复国家石墨烯创新中心</span></figcaption>
+</figure>
+<figure class="slide" id="slide-785">
+<img src="slides/slide_785.png" alt="课件第785页 4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：国内外石墨烯产业发展的规划和现状——规模化应用与全球竞争深化期（2024至今）：中国产能超 1.5 万吨/年约占全球 53%；2025 市场规模约 460 亿元，新能源领域占比最高 51%；石墨烯功能半导体、8 英寸晶圆、AI 算力热管理、脑机接口临床植入；中国主导首个 ISO/IEC 国际标准">
+<figcaption><span class="sno">785</span><span class="stitle">4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：国内外石墨烯产业发展的规划和现状——规模化应用与全球竞争深化期（2024至今）：中国产能超 1.5 万吨/年约占全球 53%；2025 市场规模约 460 亿元，新能源领域占比最高 51%；石墨烯功能半导体、8 英寸晶圆、AI 算力热管理、脑机接口临床植入；中国主导首个 ISO/IEC 国际标准</span></figcaption>
+</figure>
+<figure class="slide" id="slide-786">
+<img src="slides/slide_786.png" alt="课件第786页 4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：国内石墨烯相关产品（石墨烯暖宝、披肩、导热膜等产品图片）">
+<figcaption><span class="sno">786</span><span class="stitle">4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：国内石墨烯相关产品（石墨烯暖宝、披肩、导热膜等产品图片）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-787">
+<img src="slides/slide_787.png" alt="课件第787页 4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：标准化的表征和测试方法是相关产业链中的重要一环——全球 80 多国家地区布局石墨烯产业、欧盟石墨烯旗舰路线图；市面产品众多质量参差不齐、尺寸层数不均匀；材料特性指标验证比对需要科学统一的测试标准">
+<figcaption><span class="sno">787</span><span class="stitle">4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：标准化的表征和测试方法是相关产业链中的重要一环——全球 80 多国家地区布局石墨烯产业、欧盟石墨烯旗舰路线图；市面产品众多质量参差不齐、尺寸层数不均匀；材料特性指标验证比对需要科学统一的测试标准</span></figcaption>
+</figure>
+<figure class="slide" id="slide-788">
+<img src="slides/slide_788.png" alt="课件第788页 4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：石墨烯薄片层数表征国家标准制定的必要性——样品形态、表征手段原理和表征值不尽相同；很多研究人员和企业技术人员对层数鉴别不熟悉；市场上石墨烯纳米片产品众多缺乏明确标准；尽早制定标准对提高我国石墨烯产业国际竞争力有重要意义">
+<figcaption><span class="sno">788</span><span class="stitle">4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：石墨烯薄片层数表征国家标准制定的必要性——样品形态、表征手段原理和表征值不尽相同；很多研究人员和企业技术人员对层数鉴别不熟悉；市场上石墨烯纳米片产品众多缺乏明确标准；尽早制定标准对提高我国石墨烯产业国际竞争力有重要意义</span></figcaption>
+</figure>
+<figure class="slide" id="slide-789">
+<img src="slides/slide_789.png" alt="课件第789页 4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：网络常见的石墨烯相关二维材料拉曼光谱：G模——错误公式 ωG=1581.6+11/(1+n^1.6)；本征 AB-MLG 的 G 模与层数基本无关、√(1582²+44²)=1582.5cm⁻¹（PH Tan/AC Ferrari, Nat. Mater. 11, 294 (2012)）">
+<figcaption><span class="sno">789</span><span class="stitle">4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：网络常见的石墨烯相关二维材料拉曼光谱：G模——错误公式 ωG=1581.6+11/(1+n^1.6)；本征 AB-MLG 的 G 模与层数基本无关、√(1582²+44²)=1582.5cm⁻¹（PH Tan/AC Ferrari, Nat. Mater. 11, 294 (2012)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-790">
+<img src="slides/slide_790.png" alt="课件第790页 4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：网络常见的石墨烯相关二维材料拉曼光谱：G模——1-10 层石墨烯的拉曼光谱对比；本征 AB-MLG 的 G 模与层数基本无关">
+<figcaption><span class="sno">790</span><span class="stitle">4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：网络常见的石墨烯相关二维材料拉曼光谱：G模——1-10 层石墨烯的拉曼光谱对比；本征 AB-MLG 的 G 模与层数基本无关</span></figcaption>
+</figure>
+<figure class="slide" id="slide-791">
+<img src="slides/slide_791.png" alt="课件第791页 4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：网络常见的石墨烯相关二维材料拉曼光谱：G模——1-4 层石墨烯的拉曼光谱；G 峰的强度随层数增加近似线性增加，多层中更多碳原子被检测到（XL Li/PH Tan, Nanoscale 7, 8135 (2015)）">
+<figcaption><span class="sno">791</span><span class="stitle">4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：网络常见的石墨烯相关二维材料拉曼光谱：G模——1-4 层石墨烯的拉曼光谱；G 峰的强度随层数增加近似线性增加，多层中更多碳原子被检测到（XL Li/PH Tan, Nanoscale 7, 8135 (2015)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-792">
+<img src="slides/slide_792.png" alt="课件第792页 4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：网络常见的石墨烯相关二维材料拉曼光谱：2D模——L. Malard Phys. Rep. 2009、L. G. Cancado CARBON 2019（WJ Zhao/PH Tan, PRB 82, 245423 (2010)）">
+<figcaption><span class="sno">792</span><span class="stitle">4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：网络常见的石墨烯相关二维材料拉曼光谱：2D模——L. Malard Phys. Rep. 2009、L. G. Cancado CARBON 2019（WJ Zhao/PH Tan, PRB 82, 245423 (2010)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-793">
+<img src="slides/slide_793.png" alt="课件第793页 4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：网络常见的石墨烯相关二维材料拉曼光谱：G+2D模——出现多个原则性错误！">
+<figcaption><span class="sno">793</span><span class="stitle">4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：网络常见的石墨烯相关二维材料拉曼光谱：G+2D模——出现多个原则性错误！</span></figcaption>
+</figure>
+<figure class="slide" id="slide-794">
+<img src="slides/slide_794.png" alt="课件第794页 4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：GR2DMs拉曼光谱的丰富拉曼峰——完整拉曼谱（JB Wu/PH Tan, Chem. Soc. Rev. 47, 1822 (2018)）">
+<figcaption><span class="sno">794</span><span class="stitle">4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：GR2DMs拉曼光谱的丰富拉曼峰——完整拉曼谱（JB Wu/PH Tan, Chem. Soc. Rev. 47, 1822 (2018)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-795">
+<img src="slides/slide_795.png" alt="课件第795页 4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：GR2DMs拉曼光谱非本征因素：缺陷——拉曼峰强度与缺陷浓度有一定关系（XL Li/PH Tan, Nanoscale 7, 8135 (2015)）">
+<figcaption><span class="sno">795</span><span class="stitle">4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：GR2DMs拉曼光谱非本征因素：缺陷——拉曼峰强度与缺陷浓度有一定关系（XL Li/PH Tan, Nanoscale 7, 8135 (2015)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-796">
+<img src="slides/slide_796.png" alt="课件第796页 4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：GR2DMs拉曼光谱非本征因素：物镜数值孔径——I(SiG) 被 NLG 覆盖的衬底 Si 拉曼强度、I(Si0) 未被覆盖的强度（XL Li/PH Tan, Nanoscale 7, 8135 (2015)）">
+<figcaption><span class="sno">796</span><span class="stitle">4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：GR2DMs拉曼光谱非本征因素：物镜数值孔径——I(SiG) 被 NLG 覆盖的衬底 Si 拉曼强度、I(Si0) 未被覆盖的强度（XL Li/PH Tan, Nanoscale 7, 8135 (2015)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-797">
+<img src="slides/slide_797.png" alt="课件第797页 4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：GR2DMs拉曼光谱非本征因素：衬底SiO2厚度——h(SiO2)~300nm 与 ~90nm 对比（Y. Wang, APL 2008; XL Li/PH Tan, Nanoscale 7, 8135 (2015)）">
+<figcaption><span class="sno">797</span><span class="stitle">4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：GR2DMs拉曼光谱非本征因素：衬底SiO2厚度——h(SiO2)~300nm 与 ~90nm 对比（Y. Wang, APL 2008; XL Li/PH Tan, Nanoscale 7, 8135 (2015)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-798">
+<img src="slides/slide_798.png" alt="课件第798页 4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：GR2DMs拉曼光谱非本征因素：衬底SiO2厚度（XL Li/PH Tan, Nanoscale 7, 8135 (2015)）">
+<figcaption><span class="sno">798</span><span class="stitle">4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：GR2DMs拉曼光谱非本征因素：衬底SiO2厚度（XL Li/PH Tan, Nanoscale 7, 8135 (2015)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-799">
+<img src="slides/slide_799.png" alt="课件第799页 4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：GR2DMs拉曼光谱非本征因素：掺杂程度——石墨烯的掺杂会使得强度比依赖于激发光能量和费米能级，不适合做标准（WJ Zhao/PH Tan, JACS 133, 5941 (2011)）">
+<figcaption><span class="sno">799</span><span class="stitle">4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：GR2DMs拉曼光谱非本征因素：掺杂程度——石墨烯的掺杂会使得强度比依赖于激发光能量和费米能级，不适合做标准（WJ Zhao/PH Tan, JACS 133, 5941 (2011)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-800">
+<img src="slides/slide_800.png" alt="课件第800页 4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：GR2DMs拉曼光谱非本征因素：衬底取向——I(G)/I(SiG) 强烈依赖于硅衬底取向，不适合做标准（XL Li/PH Tan, Nanoscale 7, 8135 (2015)）">
+<figcaption><span class="sno">800</span><span class="stitle">4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：GR2DMs拉曼光谱非本征因素：衬底取向——I(G)/I(SiG) 强烈依赖于硅衬底取向，不适合做标准（XL Li/PH Tan, Nanoscale 7, 8135 (2015)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-801">
+<img src="slides/slide_801.png" alt="课件第801页 4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：部分标准的制定">
+<figcaption><span class="sno">801</span><span class="stitle">4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：部分标准的制定</span></figcaption>
+</figure>
+<figure class="slide" id="slide-802">
+<img src="slides/slide_802.png" alt="课件第802页 4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：部分标准的制定">
+<figcaption><span class="sno">802</span><span class="stitle">4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：部分标准的制定</span></figcaption>
+</figure>
+<figure class="slide" id="slide-803">
+<img src="slides/slide_803.png" alt="课件第803页 4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：部分标准的制定">
+<figcaption><span class="sno">803</span><span class="stitle">4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：部分标准的制定</span></figcaption>
+</figure>
+<figure class="slide" id="slide-804">
+<img src="slides/slide_804.png" alt="课件第804页 4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：石墨烯相关二维材料层数表征的准则——1）从本征材料研究出发再扩展到特殊样品：机械剥离→CVD；2）考虑到比对样品或标准物质，提供几种相互印证的表征方式；3）操作容易、无损的检测方法，光学方法优先；4）需要科学家的积极参与，来源于研究第一线、服务于产业界">
+<figcaption><span class="sno">804</span><span class="stitle">4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：石墨烯相关二维材料层数表征的准则——1）从本征材料研究出发再扩展到特殊样品：机械剥离→CVD；2）考虑到比对样品或标准物质，提供几种相互印证的表征方式；3）操作容易、无损的检测方法，光学方法优先；4）需要科学家的积极参与，来源于研究第一线、服务于产业界</span></figcaption>
+</figure>
+<figure class="slide" id="slide-805">
+<img src="slides/slide_805.png" alt="课件第805页 4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：拉曼法表征什么样的石墨烯样品？——CVD 样品堆垛序列多、拉曼线型复杂、比对困难；首选标准样品：机械剥离石墨烯（多数 AB 堆垛、2D 模易区分 AB/ABC、可大批量提供各层数高质量样品、拉曼特征光谱明确、易取得一致性意见）">
+<figcaption><span class="sno">805</span><span class="stitle">4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：拉曼法表征什么样的石墨烯样品？——CVD 样品堆垛序列多、拉曼线型复杂、比对困难；首选标准样品：机械剥离石墨烯（多数 AB 堆垛、2D 模易区分 AB/ABC、可大批量提供各层数高质量样品、拉曼特征光谱明确、易取得一致性意见）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-806">
+<img src="slides/slide_806.png" alt="课件第806页 4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：对测量仪器的要求——633nm 氦氖激光或 532nm 固态泵浦激光；到达样品表面激光功率小于 0.5mW；测试前用标准激光线或标准物质对光谱仪波数自校准；2D 模用 100 倍或 50 倍物镜、G 模和硅 520cm⁻¹ 用数值孔径小于 0.55 的 50 倍长工作距离物镜；横向（XY）空间分辨率不大于 2 微米">
+<figcaption><span class="sno">806</span><span class="stitle">4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：对测量仪器的要求——633nm 氦氖激光或 532nm 固态泵浦激光；到达样品表面激光功率小于 0.5mW；测试前用标准激光线或标准物质对光谱仪波数自校准；2D 模用 100 倍或 50 倍物镜、G 模和硅 520cm⁻¹ 用数值孔径小于 0.55 的 50 倍长工作距离物镜；横向（XY）空间分辨率不大于 2 微米</span></figcaption>
+</figure>
+<figure class="slide" id="slide-807">
+<img src="slides/slide_807.png" alt="课件第807页 4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：石墨烯相关二维材料适于标准的拉曼峰——G 模特征（1582cm⁻¹）、C 模特征（44cm⁻¹）、2D 模特征、D 模特征；声子色散曲线 Γ-K（PH Tan, PRB 89, 235404 (2014)）">
+<figcaption><span class="sno">807</span><span class="stitle">4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：石墨烯相关二维材料适于标准的拉曼峰——G 模特征（1582cm⁻¹）、C 模特征（44cm⁻¹）、2D 模特征、D 模特征；声子色散曲线 Γ-K（PH Tan, PRB 89, 235404 (2014)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-808">
+<img src="slides/slide_808.png" alt="课件第808页 4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：石墨烯相关二维材料适于标准的拉曼峰——方法对比表：2D 模线型适合做标准（AB 堆垛 1-4 层）、I(G)/I(SiG) 强烈依赖衬底取向、I(SiG)/I(Si0) 理论与实验吻合且不受缺陷影响适合做标准、2D/G 强度易受掺杂影响、剪切模/呼吸模对仪器要求较高；标准制定原则：专业、普适、易操作">
+<figcaption><span class="sno">808</span><span class="stitle">4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：石墨烯相关二维材料适于标准的拉曼峰——方法对比表：2D 模线型适合做标准（AB 堆垛 1-4 层）、I(G)/I(SiG) 强烈依赖衬底取向、I(SiG)/I(Si0) 理论与实验吻合且不受缺陷影响适合做标准、2D/G 强度易受掺杂影响、剪切模/呼吸模对仪器要求较高；标准制定原则：专业、普适、易操作</span></figcaption>
+</figure>
+<figure class="slide" id="slide-809">
+<img src="slides/slide_809.png" alt="课件第809页 4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：标准的主要技术内容——方法一：石墨烯样品的 2D 模：机械剥离单层石墨烯（ME-1LG）2D 模为单个洛伦兹线型拉曼峰，不受衬底选择影响，可作为表征 1LG 的特征峰（图1）">
+<figcaption><span class="sno">809</span><span class="stitle">4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：标准的主要技术内容——方法一：石墨烯样品的 2D 模：机械剥离单层石墨烯（ME-1LG）2D 模为单个洛伦兹线型拉曼峰，不受衬底选择影响，可作为表征 1LG 的特征峰（图1）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-810">
+<img src="slides/slide_810.png" alt="课件第810页 4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：标准的主要技术内容——方法一（续）：AB 堆垛多层 2D 模线型与层数相关（图2 633nm 激发 1-4 层）；单层：单个峰宽约 24cm⁻¹ 的 2D 峰；双层：四个洛伦兹峰拟合且左边峰位~2600cm⁻¹；三层：左边两个肩膀 2575/2612cm⁻¹；四层：左边三个肩膀 2543/2586/2621cm⁻¹；对 ABC 方式堆垛的 3LG 和 4LG 无效（WJ Zhao/PH Tan, PRB 82, 245423 (2010)）">
+<figcaption><span class="sno">810</span><span class="stitle">4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：标准的主要技术内容——方法一（续）：AB 堆垛多层 2D 模线型与层数相关（图2 633nm 激发 1-4 层）；单层：单个峰宽约 24cm⁻¹ 的 2D 峰；双层：四个洛伦兹峰拟合且左边峰位~2600cm⁻¹；三层：左边两个肩膀 2575/2612cm⁻¹；四层：左边三个肩膀 2543/2586/2621cm⁻¹；对 ABC 方式堆垛的 3LG 和 4LG 无效（WJ Zhao/PH Tan, PRB 82, 245423 (2010)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-811">
+<img src="slides/slide_811.png" alt="课件第811页 4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：标准的主要技术内容——方法二：SiO2/Si 衬底的硅拉曼模强度比：532nm、数值孔径小于 0.55 的 50X 长工作距离物镜；IG(Si)/I0(Si) 与石墨烯层数成单调变化关系，可定出 1-10 层，四舍五入精度优于 10%；先在 NLG 附近聚焦获得最佳 Si 强度 I0(Si)，再平移至 NLG 区域直接测 IG(Si)，不能再次聚焦（XL Li/PH Tan, Nanoscale 7, 8135 (2015)）">
+<figcaption><span class="sno">811</span><span class="stitle">4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：标准的主要技术内容——方法二：SiO2/Si 衬底的硅拉曼模强度比：532nm、数值孔径小于 0.55 的 50X 长工作距离物镜；IG(Si)/I0(Si) 与石墨烯层数成单调变化关系，可定出 1-10 层，四舍五入精度优于 10%；先在 NLG 附近聚焦获得最佳 Si 强度 I0(Si)，再平移至 NLG 区域直接测 IG(Si)，不能再次聚焦（XL Li/PH Tan, Nanoscale 7, 8135 (2015)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-812">
+<img src="slides/slide_812.png" alt="课件第812页 4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：标准的主要技术内容——方法三（参考）：石墨烯片样品的 G 模强度比：IG(Si)/I0(Si)>0.45 时，拟合得到 INLG(G) 和 I1LG(G)，由比值定层数，精确度可达 10%；同样先在 NLG 和 1LG 附近聚焦获得最佳 I0(Si)，再平移测量，不能再次聚焦（XL Li/PH Tan, Nanoscale 7, 8135 (2015)）">
+<figcaption><span class="sno">812</span><span class="stitle">4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：标准的主要技术内容——方法三（参考）：石墨烯片样品的 G 模强度比：IG(Si)/I0(Si)>0.45 时，拟合得到 INLG(G) 和 I1LG(G)，由比值定层数，精确度可达 10%；同样先在 NLG 和 1LG 附近聚焦获得最佳 I0(Si)，再平移测量，不能再次聚焦（XL Li/PH Tan, Nanoscale 7, 8135 (2015)）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-813">
+<img src="slides/slide_813.png" alt="课件第813页 4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：样品适用范围——晶体质量高、片径为微米级的石墨烯薄片（机械剥离制备）；CVD 法可参照执行；不适用于结构缺陷多、晶体质量差的材料（如氧化石墨烯）和横向尺寸小于 2 微米的材料；衬底：表面覆盖 90nm 或 300nm SiO2 的硅片">
+<figcaption><span class="sno">813</span><span class="stitle">4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：样品适用范围——晶体质量高、片径为微米级的石墨烯薄片（机械剥离制备）；CVD 法可参照执行；不适用于结构缺陷多、晶体质量差的材料（如氧化石墨烯）和横向尺寸小于 2 微米的材料；衬底：表面覆盖 90nm 或 300nm SiO2 的硅片</span></figcaption>
+</figure>
+<figure class="slide" id="slide-814">
+<img src="slides/slide_814.png" alt="课件第814页 4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：比对实验情况——2019 年征集比对单位，共 14 个单位参与；标准起草单位中科院半导体研究所用同一块标准物料机械剥离制备 1-10 层样品（每块至少 3 种层数）；8 个单位参与方法 1、9 个参与方法 2、10 个参与方法 3 的比对实验">
+<figcaption><span class="sno">814</span><span class="stitle">4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：比对实验情况——2019 年征集比对单位，共 14 个单位参与；标准起草单位中科院半导体研究所用同一块标准物料机械剥离制备 1-10 层样品（每块至少 3 种层数）；8 个单位参与方法 1、9 个参与方法 2、10 个参与方法 3 的比对实验</span></figcaption>
+</figure>
+<figure class="slide" id="slide-815">
+<img src="slides/slide_815.png" alt="课件第815页 4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：比对实验报告样本">
+<figcaption><span class="sno">815</span><span class="stitle">4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：比对实验报告样本</span></figcaption>
+</figure>
+<figure class="slide" id="slide-816">
+<img src="slides/slide_816.png" alt="课件第816页 4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：拉曼光谱法表征石墨烯薄片层数方法概要一览表——2D 模线型：1-4 层 AB 堆垛、光谱单色器优于 1.0cm⁻¹、CCD 阵元覆盖范围不大于 4.0cm⁻¹、判定依据 2D 模线型、零误差；硅拉曼模强度比：1-10 层 AB 和 ABC、实验比值与理论结果比较四舍五入取整、6 层及以内零误差、6 层以上有可能负误差一层">
+<figcaption><span class="sno">816</span><span class="stitle">4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：拉曼光谱法表征石墨烯薄片层数方法概要一览表——2D 模线型：1-4 层 AB 堆垛、光谱单色器优于 1.0cm⁻¹、CCD 阵元覆盖范围不大于 4.0cm⁻¹、判定依据 2D 模线型、零误差；硅拉曼模强度比：1-10 层 AB 和 ABC、实验比值与理论结果比较四舍五入取整、6 层及以内零误差、6 层以上有可能负误差一层</span></figcaption>
+</figure>
+<figure class="slide" id="slide-817">
+<img src="slides/slide_817.png" alt="课件第817页 4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：《拉曼光谱法表征石墨烯层数》国家标准（2021年12月实施）——http://std.samr.gov.cn 标准详情链接；Scientific reliable method、Easy to operate、Two independent methods、Widely accessible instrument、Highly accurate、Only by Raman technique">
+<figcaption><span class="sno">817</span><span class="stitle">4. 国家标准-石墨烯薄片的层数表征：拉曼光谱法：《拉曼光谱法表征石墨烯层数》国家标准（2021年12月实施）——http://std.samr.gov.cn 标准详情链接；Scientific reliable method、Easy to operate、Two independent methods、Widely accessible instrument、Highly accurate、Only by Raman technique</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>国家标准：石墨烯薄片层数表征</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（中后）</span><span class="chip">课件 778</span><span class="chip">课件 779</span><span class="chip">课件 780</span><span class="chip">课件 781</span><span class="chip">课件 782</span><span class="chip">课件 783</span><span class="chip">课件 784</span><span class="chip">课件 785</span><span class="chip">课件 786</span><span class="chip">课件 787</span><span class="chip">课件 788</span><span class="chip">课件 789</span><span class="chip">课件 790</span><span class="chip">课件 791</span><span class="chip">课件 792</span><span class="chip">课件 793</span><span class="chip">课件 794</span><span class="chip">课件 795</span><span class="chip">课件 796</span><span class="chip">课件 797</span><span class="chip">课件 798</span><span class="chip">课件 799</span><span class="chip">课件 800</span><span class="chip">课件 801</span><span class="chip">课件 802</span><span class="chip">课件 803</span><span class="chip">课件 804</span><span class="chip">课件 805</span><span class="chip">课件 806</span><span class="chip">课件 807</span><span class="chip">课件 808</span><span class="chip">课件 809</span><span class="chip">课件 810</span><span class="chip">课件 811</span><span class="chip">课件 812</span><span class="chip">课件 813</span><span class="chip">课件 814</span><span class="chip">课件 815</span><span class="chip">课件 816</span><span class="chip">课件 817</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>国家标准主要是测定石墨烯的层数。为何测层数？因为二维材料随层数改变，性质会发生变化。国际标准化工作中，ISO 和 IEC 都有石墨烯相关工作组。国内也有全国标准。事实上，制备前很多二维材料术语已有 ISO 统一标准。但国内和国际的国家标准都非常少。后面也会展示，很多国际标准做得也不怎么样。</p><p>常见二维材料层数的表征方法有光学衬度、相位成像、原子力、透射电镜、扫描隧道显微镜、非线性光谱及拉曼。说实话，若不告知是什么烯，只给一个二维材料，其他方式能否知道它是什么烯？不知道。虽知厚度，但不代表知道层数。若已知物质，可由厚度推知层数。但若不知物质，仅测出厚度，也不知是多少层。但拉曼光谱有个好处，它能够检测物质。同时还要鉴别层数，包括堆垛转角等信息。</p><p>这是国内外石墨烯产业现状。早期是基础研究；中期是战略布局与产业化启动；19 至 23 年是应用与产业扩张期，国内市场增多。24 年涉及规模化应用。但真正应用到单层石墨烯的很少。如石墨烯暖宝、披肩等多非单层，仅利用其导热性。若石墨烯性能太好，加热后电流大但电阻小，发热效果反而不佳。我已将包含国内相关产品的 PPT 发给大家。虽有石墨烯场效应晶体管等应用，但难度较大。如石墨烯耳机，其具体作用尚不明确。光调制器等应用也未实现规模化。</p><p>若因「什么是石墨烯」产生商业纠纷，打官司时会存在认定问题。为什么要卖产品？你得告诉大家石墨烯究竟怎么样。如果宣传与实际不符，可能构成误导；若自身判断不严，将非石墨烯当作石墨烯售卖，也存在问题。因此需要标准，尤其是国家标准，能为判断提供事实依据。接下来介绍网络上常见的石墨烯相关知识。</p><p>前面讲了很多，大家已是半个专家。但看下面的结构，你可能会觉得可笑。为何不去更正？我曾尝试在 B 站维权。有人未经同意上传我的报告获利。我申请投诉却需注册，发信还需 B 站币，获取耗时久。最终我放弃维权，因为没精力应对广泛传播的错误信息。你真的是没法更正好吧。那我们更多的呢，就是说我们发一些更严谨的科研论文，让真正关心这事的人去看，对吧？</p><p>那么我前面跟大家说了，你看这些结果显示我的基模上是跟层数不相关的。能那样说，但是看左边它能列出公式来了，就是 1581.6 加上一个 11÷(1+N) 的 1.6 次方。它不是 1.5 次方，它是 1.6 次方对吧？那这个呢，实际上原则上来说，大家以前都说过我们的石墨烯。它会存在掺杂引起的峰移，另外一个呢，我测拉曼光谱的时候，激光强度测得很大。激光强度很大的时候，会产生热效应。对吧，那你这样一来的话，某个人测了 3 个样本，他就给你发表了。发表以后，最后就成为规律了。那这个就是一个很麻烦的问题，但是你看左边的你看它有峰移，但是你看它是同一个网站同一篇文章。这个一层二层三层跟他没有关系。它的层数，它的峰位，跟层数没有关系。对吧，所以说呢很多呢，因为大家可能现在公众号有些也希望发文增加流量，提高个人的影响力，也可能就是这些方面。</p><p>另外一个你看这里面还有是石墨烯，他们都很详细，这里面倒是有这么一篇文章，我也知道这么一篇文章。这篇文章更多的是把石墨烯用这个膜，用那个锈来对它进行养护，就是说把锈掺在里面过后，那么这个石墨烯就被掺杂了。好吧，掺杂过后呢，你看单层石墨烯，因为它都移动到 1612 去了，对吧？单层的那就是因为它没掺杂嘛，你掺杂了它就不是本征的了嘛，对不对？但是，你从题目来看，石墨烯拉曼光谱测试芯片给人的感觉是本征的。所以说你以后测出来跟他的图不一样，你还不知道自己测的对不对，甚至不知道测的是不是石墨烯。</p><p>另外，如果说大家去看一下这个图，这里面可能有一层、两层、三层、四层。大家以前我跟大家讲过三层和四层石墨烯的拉曼，我一定要告诉大家，这里面的三层是 ABC 的三层，不是 AB 堆垛的三层。但是这个是最早期一个巴西科学家发表出来的结果，很有名。但是你要去跟他测出来一模一样的三层石墨烯，你很难测出来。所以我跟大家说过，你可能还是要鉴别发表的这些结果。</p><p>另外，当然你看就有一些鉴别质量和层数的方法了。很多人的鉴别呢，都是靠峰位。你看这个就是看 2D 峰形，这里面上实际上是看不出来的。但是我们这里面你没有选择特殊的激发光，而且你得选择高分辨的光谱仪，你就能够看得到这些详细的信息。但如果你们学用 532 不用其他的，那你看不出来。机械剥离就不用做了。你看原子上大家都知道石墨烯有 6 个光学模对吧，因为它有两个原子嘛。两个原子的话，原则上它应该是 3 个声学模，3 个光学模。但是呢，它是石墨烯的布里渊区中心还有 6 个光学模。那吧，大家学过这个，都知道这个不知道在哪抄的。然后而且抄错了。</p><p>G 峰位通常由 B5 的两倍表示为 2B 峰，但它与缺陷无关。它并非低一阶的对频信号，原则上是二阶信号。很多时候文献提供了拉曼谱，但未详细说明。我们列出了石墨类石墨烯最完整的拉曼谱。所有石墨烯的拉曼光谱都可通过单共振、双共振、三共振来解释。另外，结果涉及缺陷。这是带缺陷样品的测试，有缺陷和没缺陷的结果不同。结果还与数值孔径相关。测层数时专门测了不同数值孔径，发现收集的光不同。收集光如同数值孔径小孔，孔径不同则强度不同。因此，我们要用 0.35 或不超过 0.5 的数值孔径。若超过，实验结构与理论结果会有差别。硅基底膜强度还与二氧化硅厚度有关。这与 532nm、633nm 光子激发过程及掺杂有关，也与衬底取向有关。若用衬底拉曼峰归一化石墨烯拉曼峰，衬底取向会导致无法归一化。</p><p>基于此建立了部分团体标准，但网上信息不全。即使是 IEC 国际标准，从图中也无法判断 1 至 5 层。即使联合使用 AFM 和拉曼也判别不出，如图中两层和四层的情况。这个是两层吗？我看不出来它是两层。两层的基膜原厂只有两层的 2D 模，原筒只有 15 的 1/2 对吧？差不多 310。所以说这个多多少少都会有很大的问题。所以说我们需要制定相应的国家标准。由于刚才提到的 CVD 有无穷多个状态，包括不同厚度的情况。所以要做鉴别石墨烯的标准，还是得先做机械剥离的石墨烯。然后我们再扩展到 CVD 的石墨烯。</p><p>这样的话，我们首选机械剥离的样品。对测试要求你看，我们对激光有要求，对它的功率有要求。然后需要自校准，对硅的表征激发和数值孔径有要求。对它的放大倍数也有一定的要求。同时，我们也需要它对拉曼分辨率，甚至对空间分辨率也有要求。那这个就是我们最后所有的拉曼峰里面。你看有剪切模、有 G 模、有 2D 模，而这三个模式原则上来说都可以用于鉴定。但是这个剪切模，它的强度太低。另外一个就是它容易受到衬底的影响。刚才我们说了，放在衬底上，不做悬浮的话，背景一下子就把剪切模给掩盖了。那这个就有问题，所以我们最终更多的是依赖于啥呢？依赖于一个是衬底的拉曼峰，一个是也就是 G 峰的拉曼峰。然后再加上一个 2D 峰。原来我们选择了这两种方法。</p><p>所以说这样一来的话就是表征 2D 峰。这里面是一层，这里是两层。然后这是 3、4、5 层。所以说原则上来说，我们更多是表征 1 到 4 层。通过 G 峰和衬底硅的拉曼图，能表征到 100 层。但石墨烯太厚时表征意义不大，且需明确数值精度。假设 110 层，精准度难定，故局限于 1~10 层。1~4 层用不同激发方式，效果各异。做拉曼测试需聚焦，但每人手感与判断不同。若直接测样品强度，全班结果差异可能不大。制定标准不能依赖个人经验，否则很麻烦。</p><p>我们提出方案：衬底上有 N 层石墨烯。激光先照此处测硅强度，求取最强值。因判断差异，最强值未必准确。确定最强值最简单的方法是延长测量时间。微调后各测 15 秒，比每秒测更精准。尽管每人聚焦状态有别，但这不重要。我们将激发框移至此，不再调节或移动样品。我再测衬底硅的强度，衬底硅的强度。因为你 10 个小时，你 10 层也就 3.5，对吧，10 层也就 3 万。所以说你都聚焦的尽管不是太好，但是这两个之间它是以可比拟的。我们用这种方法之后，我们最后去做团队实验，你会发现效果非常好。</p><p>至少这个我们怎么去比对它？我们自己的制备出样品，我们自己得测出来它是 125 层对吧？然后再到这个我别人不知道的样品是多少层，我就告诉大家，你就测这三个地方，你告诉我是多少层。然后拿回来我自己来比较。一比较完了之后发现 60 来种跟我去对比，我发现基本上都能够用了，我们的方法基本上都能够对得上，好吧。那么呢，这个呢就是说第 3 个嘛就是基膜的强度，基膜的强度就要结合衬度，原则上来说好吧，就要结合衬度，所以说第三种方法目前是一种参考。这后面的话就有比对时间了好吧，然后就五，你看这个比对的样品怎么去比对的，所以说就有样品的报告，然后有方法的一览表好吧。</p><p>然后我们这个标准呢，实际上也是在那个 2021 年 12 月份，然后就开始实施了。所以说呢，这个呢就是我们讲的这个结果好吧。这个讲的比较比较快一点，就是这一章那我们把标准大致讲了一下，说标准的话大家可以看一下，不管是国内标准还是国际标准，或者还有网上的信息。很多都会有很大的问题，都会有很大的问题，所以说大家去在读文献也是一样的，不是说发表出来都是对的，不是发表出来都是对的。这里切记切记好吧。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>说实话，若不告知是什么烯，只给一个二维材料，其他方式能否知道它是什么烯？不知道。</p><p>我曾尝试在B站维权。有人未经同意上传我的报告获利。我申请投诉却需注册，发信还需B站币，获取耗时久。最终我放弃维权。</p><p>制定标准不能依赖个人经验，否则很麻烦。</p><p>一比较完了之后发现60来种跟我去对比，我发现基本上都能够用了，我们的方法基本上都能够对得上。</p><p>不是说发表出来都是对的，不是发表出来都是对的。这里切记切记。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-ending">
+  <div class="slides"><figure class="slide" id="slide-818">
+<img src="slides/slide_818.png" alt="课件第818页 主要内容：2.单层石墨烯的拉曼光谱（①晶体结构和拉曼张量②三朵乌云③共振拉曼 D/D′/2D④S和AS⑤声学声子色散⑥角分辨偏振⑦重掺杂——费米能级/量子干涉/温度效应）；3.多层石墨烯的拉曼光谱（①电子能带②G模③2D模和D模④C模⑤LB模⑥转角多层C和LB模⑦tMLG共振⑧CVD-MLG堆垛鉴别⑨MLG中C模的Fano共振）；4.国家标准-层数表征">
+<figcaption><span class="sno">818</span><span class="stitle">主要内容：2.单层石墨烯的拉曼光谱（①晶体结构和拉曼张量②三朵乌云③共振拉曼 D/D′/2D④S和AS⑤声学声子色散⑥角分辨偏振⑦重掺杂——费米能级/量子干涉/温度效应）；3.多层石墨烯的拉曼光谱（①电子能带②G模③2D模和D模④C模⑤LB模⑥转角多层C和LB模⑦tMLG共振⑧CVD-MLG堆垛鉴别⑨MLG中C模的Fano共振）；4.国家标准-层数表征</span></figcaption>
+</figure>
+<figure class="slide" id="slide-819">
+<img src="slides/slide_819.png" alt="课件第819页 结语：Raman spectroscopy: the prime nondestructive characterization tool for graphene materials! Thanks for your attention. Email: phtan@semi.ac.cn；课题组论文下载 http://raman.semi.cas.cn">
+<figcaption><span class="sno">819</span><span class="stitle">结语：Raman spectroscopy: the prime nondestructive characterization tool for graphene materials! Thanks for your attention. Email: phtan@semi.ac.cn；课题组论文下载 http://raman.semi.cas.cn</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div class="sec-tt">
+        <h2>结语与作业点评</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（后）</span><span class="chip">课件 818</span><span class="chip">课件 819</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>那么我呢？我来再跟大家。我们就把我们作业大家做的那个说完了就算了，好吧。561 有 19 个人是吧。这里面是拟合谱，但效果不太好。这是一层石墨烯边界和两层石墨烯边界混合标记，峰位可能有差别。不同时间测光谱仪不一定准确，甚至本底就有移动。同学直接把两个叠加起来，这肯定有问题。这个是拟合曲线，没受太多干扰。到 5 个波数往下跌很自然，但这边的拟合原来用洛伦兹线拟合。因为比较短，这边拟合得不太好，画得太短了。</p><p>这里背景是 0，但背景不应小于 0，这有问题。原样是个大的洛伦兹峰，但里面有很多细节。它不会有那么宽的洛伦兹峰，这也是个问题。大家不要有反应，有反应就知道是谁做的了。第三个你看一下，这是不是高斯线？高斯是很陡，洛伦兹底下是很宽的。前面你和第格峰都用了高斯线型，为什么这个用高斯线型呢？我不太明白，而且关键是有个小鼓包。这个地方有个小弯曲，是不得不考虑的地方。</p><p>这个图跟刚才那个图论点一样。你可正自己没考虑到左右的移动，现在可以考虑到左右的移动。这个图务反正这个道理用得挺好。它是对当时分别 S1、S2、S3，跟我们的样品不一样。它是一层边界、二层边界，这个是混合边界。这个就不用说了，这个有很多理由。第三个这里面画的图我是能打开的。你看这个究竟是高斯还是未知？好像有好几个人说高斯，如果有一个人说的话，肯定就是他的多。第四个好像有点像高斯对吧？后面这个拟合好像也是刚刚才直接这么去拟合。所以说他就做了一个 S1 的结果。第四呢，不好意思，但我们没有做前面的。这里面把背景考虑得太宽，把这儿看成一个空了。好吧，我们再看一眼，有点冒犯了。</p><p>行，除非这是一个不清晰的信号。你内心一明白。所以大家要要要要要要要。一开教室一是可以的。一。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这里背景是0，但背景不应小于0，这有问题。</p><p>高斯是很陡，洛伦兹底下是很宽的。前面你拟合峰都用了高斯线型，为什么这个用高斯线型呢？我不太明白，而且关键是有个小鼓包。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（显微共焦拉曼光谱学）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>

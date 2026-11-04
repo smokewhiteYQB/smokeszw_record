@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>显微共焦拉曼光谱学 · 第13节 第五章（下）：材料相变、偏振拉曼、共振拉曼、温度效应与应力应变｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.videos{margin-top:14px;border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.video + .video{border-top:1px solid #e4e9f0;}
+.videos h4{font-size:12.5px;font-weight:700;color:#0a1f38;background:#f2f5f9;padding:8px 12px;border-bottom:1px solid #e4e9f0;}
+.videos video{display:block;width:100%;max-height:460px;background:#0b0f14;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>显微共焦拉曼光谱学 · 第13节 第五章（下）：材料相变、偏振拉曼、共振拉曼、温度效应与应力应变</h1>
+    <div class="sub">第13节 第五章（下）：材料相变、偏振拉曼、共振拉曼、温度效应与应力应变 ｜ 2026-10-22 ｜ 谭平恒</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 67 页 · 整理 5 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-phase">01 材料相变</option>
+<option value="sec-polarization">02 偏振拉曼光谱</option>
+<option value="sec-resonance">03 共振拉曼光谱</option>
+<option value="sec-temperature">04 温度效应</option>
+<option value="sec-stress">05 应力和应变</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 Ch5-材料物性的拉曼光谱研究-2026秋.pdf 逐页渲染，转写原文见 record_20261022.txt。</div>
+<section class="sec" id="sec-phase">
+  <div class="slides"><figure class="slide" id="slide-589">
+<img src="slides/slide_589.png" alt="课件第589页 主要内容目录：10 材料相变 / 11 偏振拉曼光谱 / 12 共振拉曼光谱 / 13 温度效应 / 14 应力和应变 / 15 拉曼光谱数据处理">
+<figcaption><span class="sno">589</span><span class="stitle">主要内容目录：10 材料相变 / 11 偏振拉曼光谱 / 12 共振拉曼光谱 / 13 温度效应 / 14 应力和应变 / 15 拉曼光谱数据处理</span></figcaption>
+</figure>
+<figure class="slide" id="slide-590">
+<img src="slides/slide_590.png" alt="课件第590页 10. 材料相变：什么是相变？一级相变（化学势相等、偏微分不等，伴随结构对称性改变、体积变化与吸放热）与二级相变（化学势及一阶偏微分相等、二阶不等，无体积变化不伴能量吸收，如液氦超流/超导/顺磁铁磁转变）">
+<figcaption><span class="sno">590</span><span class="stitle">10. 材料相变：什么是相变？一级相变（化学势相等、偏微分不等，伴随结构对称性改变、体积变化与吸放热）与二级相变（化学势及一阶偏微分相等、二阶不等，无体积变化不伴能量吸收，如液氦超流/超导/顺磁铁磁转变）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-591">
+<img src="slides/slide_591.png" alt="课件第591页 10. 材料相变：一级相变——变温引起的 bulk MoTe2 结构相变（Td 相不透明 ↔ 1T' 相半透明，A 峰与 D 峰强度随变温变化，相变前后拉曼峰消失与新生；Kenan Zhang, Nat. Commun. 2016）">
+<figcaption><span class="sno">591</span><span class="stitle">10. 材料相变：一级相变——变温引起的 bulk MoTe2 结构相变（Td 相不透明 ↔ 1T' 相半透明，A 峰与 D 峰强度随变温变化，相变前后拉曼峰消失与新生；Kenan Zhang, Nat. Commun. 2016）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-592">
+<img src="slides/slide_592.png" alt="课件第592页 10. 材料相变：一级相变——静电掺杂引起的单层 MoTe2 结构相变（常温 2H 相，离子液体静电掺杂转 1T' 相；强度比 1T'(Ag)/[2H(A1)+1T'(Ag)] 随电压回滞；Ying Wang, Nature 2017）">
+<figcaption><span class="sno">592</span><span class="stitle">10. 材料相变：一级相变——静电掺杂引起的单层 MoTe2 结构相变（常温 2H 相，离子液体静电掺杂转 1T' 相；强度比 1T'(Ag)/[2H(A1)+1T'(Ag)] 随电压回滞；Ying Wang, Nature 2017）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-593">
+<img src="slides/slide_593.png" alt="课件第593页 10. 材料相变：磁性分类-转变温度-磁滞回线——FePS3 降至 Néel 温度以下由顺磁相转反铁磁相，晶格对称结构不变但磁有序使晶胞扩大、布里渊区折叠，部分拉曼峰劈裂（Jae-Ung Lee, NanoLett. 2016）">
+<figcaption><span class="sno">593</span><span class="stitle">10. 材料相变：磁性分类-转变温度-磁滞回线——FePS3 降至 Néel 温度以下由顺磁相转反铁磁相，晶格对称结构不变但磁有序使晶胞扩大、布里渊区折叠，部分拉曼峰劈裂（Jae-Ung Lee, NanoLett. 2016）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>材料相变</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 589</span><span class="chip">课件 590</span><span class="chip">课件 591</span><span class="chip">课件 592</span><span class="chip">课件 593</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>前面讲了典型的材料体系，下面讲原计划（元激发等）。看拉曼光谱可能还不够，还要考虑材料本身、外界探测手段或环境改变涉及的物理问题及分析方法。首先讲相图，它表示性质、组分及不均匀性——前面讲过相分离概念，即纯相变成两种相，或几种相放在一起融合在一个体系内。比如合金中各相共存，表示物质内部不均匀，不同相之间发生相互作用。但很多时候受温度、应力等外界影响，材料会从一种相转变到另一种相，这个过程就是相变。</p><p>相变涉及一级和二级相变。一级相变中两边化学势相等，这是针对物质性质而言的。一般来说，结构是相的一部分、即性质的一部分；若发生相变，结构通常也会发生变化。一级相变通常会伴随体积变化、热量吸收或释放，如冰融化。二级相变中两相化学势及其一阶偏微分相等，但二阶偏微分不等，过程不引起体积改变、也不伴随能量吸收或释放。典型例子包括正常液氦与超流氦、正常导体与超导体、顺磁体与铁磁体等。</p><p>温度改变会引起体材料 MoTe2 的结构相变，用拉曼光谱研究最为简单。我们观察加热和冷却过程以验证其可重复性：加热过程中原有拉曼模强度发生变化直至消失，降温后拉曼模重新出现——这表明其对称性发生了改变，变成了非拉曼活性的。我们通常通过拉曼光谱考虑结构参数改变，如强度、半宽、线形及偏振特性等特征。这里举例强度的改变，记录升温或降温过程中的变化，可以看到急剧变化，表明从一相变到另一相。实际上涉及低频模和高频模，A 模和 D 模都有类似性质，反映晶体结构有改变。</p><p>除了温度改变，静电掺杂也会引起结构变化。将单层材料用离子液体覆盖并施加电压，起到静电掺杂作用。随着电压改变，一个拉曼峰消失、另一个 A2g 峰也消失，同时出现新的 Ag 峰。简单看 A1g 峰和 A2g 峰强度，用的是某组分强度比上总组分强度，事实上这是相对强度——若除以 1T' 撇 2，强度相当于 1/(A1+AG+1)。我们在施加增压、中压降低过程中，中间有一个回滞曲线。相变可从一种相转变成另一种相，但转回来时并非完全可逆，这反映出前后能观察到拉曼光谱的消失与新谱线的出现。</p><p>这里讲的是拉曼强度，另外半宽和峰位也会发生改变。以 FePS3 为例，该材料在临界温度附近发生磁相变，从顺磁转到反铁磁（或铁磁转反铁磁）。做变温拉曼光谱时会发现：反铁磁时拉曼峰多且线宽窄，变为顺磁时范围变宽且峰位不同；随温度降低能看到拉曼峰产生劈裂，一个峰变成四个峰。这是常见情况。若在变温光谱、加偏压等条件下拉曼峰的半宽、强度或峰位产生急剧改变，那么往往意味着有一个相变的过程。</p><p>那大家说，我怎么知道它究竟是哪个相变成哪个相？你肯定不能单纯靠拉曼光谱来看。如果你要从一个相变成另外一个相，用 X 射线——当然这个射线不一定能够做到那么小。更多的，假如我们可以去测，首先从结构的演变通过理论计算去预测它这个相怎么改变；基于这些理论预测的结构改变，我们再看它的原子怎么排布，然后再去看它的偏振特性，再去计算它的拉曼活性和拉曼峰位。所以说你要真的去做的话，可能要去做很多方面的验证工作，不只是简单的从一个相变到另外一个相。</p><p>我打个比方：有些样品在加温过程中本来就不稳定，温度稍微高一点点，它就有可能变成另外一种物质了——比如前面讲的某些物体，温度比较高的话材料可能就分解了，出现一些 Ti 的 cluster，甚至出现一些氧化物，再加上气体。这种改变某种意义上结构也变了、拉曼谱峰也变了，但是这种变化是相变吗？肯定不是。所以要真正确定一个新发现的东西，中间还是需要做一定努力的。这是一个关于相变的拓展讲解。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那我怎么知道它究竟是哪个相变成哪个相？那你肯定就不能单纯地靠拉曼光谱来看。</p><p>首先从结构的演变，通过理论计算也可以预测出来它这个相怎么改变。然后基于这些理论的预测它的结构的改变，我们再去看看它的原子怎么排布。</p><p>那你的温度一高稍微一高一点点，它有可能就变成另外一种物质了……这种改变是相变吗？肯定不是。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-polarization">
+  <div class="slides"><figure class="slide" id="slide-594">
+<img src="slides/slide_594.png" alt="课件第594页 主要内容目录：11 偏振拉曼光谱 / 12 共振拉曼光谱 / 13 温度效应 / 14 应力和应变 / 15 拉曼光谱数据处理">
+<figcaption><span class="sno">594</span><span class="stitle">主要内容目录：11 偏振拉曼光谱 / 12 共振拉曼光谱 / 13 温度效应 / 14 应力和应变 / 15 拉曼光谱数据处理</span></figcaption>
+</figure>
+<figure class="slide" id="slide-595">
+<img src="slides/slide_595.png" alt="课件第595页 11. 偏振拉曼光谱：偏振光学——线偏振/椭圆偏振/线偏振横电磁波；线偏振片、四分之一波片、旋转器等光学元件用 2×2 琼斯矩阵表示（Ẽt = M·Ẽi，可处理多个光学元件）">
+<figcaption><span class="sno">595</span><span class="stitle">11. 偏振拉曼光谱：偏振光学——线偏振/椭圆偏振/线偏振横电磁波；线偏振片、四分之一波片、旋转器等光学元件用 2×2 琼斯矩阵表示（Ẽt = M·Ẽi，可处理多个光学元件）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-596">
+<img src="slides/slide_596.png" alt="课件第596页 11. 偏振拉曼光谱：拉曼强度 I ∝ |es†·Rj·eL|² 求和；晶体硅的三个拉曼张量（520/521cm⁻¹ 三重简并）；Porto 标记法（Z(XY)Z̄：入射光偏振/方向·散射光偏振/方向），背散射配置与 90° 散射配置">
+<figcaption><span class="sno">596</span><span class="stitle">11. 偏振拉曼光谱：拉曼强度 I ∝ |es†·Rj·eL|² 求和；晶体硅的三个拉曼张量（520/521cm⁻¹ 三重简并）；Porto 标记法（Z(XY)Z̄：入射光偏振/方向·散射光偏振/方向），背散射配置与 90° 散射配置</span></figcaption>
+</figure>
+<figure class="slide" id="slide-597">
+<img src="slides/slide_597.png" alt="课件第597页 11. 偏振拉曼光谱：由拉曼张量形式可预测拉曼模式的偏振响应，由偏振响应可实验确定拉曼张量——Rutile 型 MnF2 的 D4h 对称性与不可约表示（A1g/B1g/B2g/Eg 拉曼张量表）">
+<figcaption><span class="sno">597</span><span class="stitle">11. 偏振拉曼光谱：由拉曼张量形式可预测拉曼模式的偏振响应，由偏振响应可实验确定拉曼张量——Rutile 型 MnF2 的 D4h 对称性与不可约表示（A1g/B1g/B2g/Eg 拉曼张量表）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-598">
+<img src="slides/slide_598.png" alt="课件第598页 11. 偏振拉曼光谱：平行/垂直偏振拉曼探测分子取向与振动对称性（模式指认、区分位置相近的峰，如 MoS2）；角分辨偏振拉曼探测偏振各向异性材料的晶向指认（单根碳纳米管 RBM 与 G1 模）">
+<figcaption><span class="sno">598</span><span class="stitle">11. 偏振拉曼光谱：平行/垂直偏振拉曼探测分子取向与振动对称性（模式指认、区分位置相近的峰，如 MoS2）；角分辨偏振拉曼探测偏振各向异性材料的晶向指认（单根碳纳米管 RBM 与 G1 模）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-599">
+<img src="slides/slide_599.png" alt="课件第599页 11. 偏振拉曼光谱：角分辨偏振拉曼光谱（ARPR）——入射光偏振旋转 θ：I ∝ a²cos²θ；散射光偏振旋转 θ 同理；D6h、A1g 张量 z̄(xy)z 配置；晶体对称性给定后 ARPR 强度即确定（XL Liu/PH Tan, Chin. Phys. B 2017）">
+<figcaption><span class="sno">599</span><span class="stitle">11. 偏振拉曼光谱：角分辨偏振拉曼光谱（ARPR）——入射光偏振旋转 θ：I ∝ a²cos²θ；散射光偏振旋转 θ 同理；D6h、A1g 张量 z̄(xy)z 配置；晶体对称性给定后 ARPR 强度即确定（XL Liu/PH Tan, Chin. Phys. B 2017）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-600">
+<img src="slides/slide_600.png" alt="课件第600页 11. 偏振拉曼光谱：常见背散射角分辨偏振拉曼配置——①改变入射激光偏振方向、②固定入射与散射偏振旋转样品、③在公共光路上旋转半波片；αLVR/αLHR、VLVR/VLHR、θLVR/θLHR 三套强度公式">
+<figcaption><span class="sno">600</span><span class="stitle">11. 偏振拉曼光谱：常见背散射角分辨偏振拉曼配置——①改变入射激光偏振方向、②固定入射与散射偏振旋转样品、③在公共光路上旋转半波片；αLVR/αLHR、VLVR/VLHR、θLVR/θLHR 三套强度公式</span></figcaption>
+</figure>
+<figure class="slide" id="slide-601">
+<img src="slides/slide_601.png" alt="课件第601页 11. 偏振拉曼光谱：三种配置的等价性（旋转样品 vs 旋转半波片，E2g 双拉曼张量；旋转样品结构简单但显微样品不易复位，半波片法可应用于 μm 尺寸样品、原位测量、节省时间）">
+<figcaption><span class="sno">601</span><span class="stitle">11. 偏振拉曼光谱：三种配置的等价性（旋转样品 vs 旋转半波片，E2g 双拉曼张量；旋转样品结构简单但显微样品不易复位，半波片法可应用于 μm 尺寸样品、原位测量、节省时间）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-602">
+<img src="slides/slide_602.png" alt="课件第602页 11. 偏振拉曼光谱：利用角分辨偏振拉曼光谱确定晶体取向——体石墨侧面与氧化还原多层石墨烯片；IGeαLVR/IGeαLHR = cot²β0 可唯一确定取向角 β0（XL Liu/PH Tan, Chin. Phys. B 2017；YQ Chen, RSC Adv. 2018）">
+<figcaption><span class="sno">602</span><span class="stitle">11. 偏振拉曼光谱：利用角分辨偏振拉曼光谱确定晶体取向——体石墨侧面与氧化还原多层石墨烯片；IGeαLVR/IGeαLHR = cot²β0 可唯一确定取向角 β0（XL Liu/PH Tan, Chin. Phys. B 2017；YQ Chen, RSC Adv. 2018）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-603">
+<img src="slides/slide_603.png" alt="课件第603页 11. 偏振拉曼光谱：十年前发现的 ALM 薄片中异常 ARPR 强度——黑磷 Ag 模的 ARPR 强度无法用实拉曼张量拟合，需复拉曼张量元素（相位 φa/φb/φc），且随激发波长（633/532/488nm）变化（H. B. Ribeiro, ACS Nano 2015）">
+<figcaption><span class="sno">603</span><span class="stitle">11. 偏振拉曼光谱：十年前发现的 ALM 薄片中异常 ARPR 强度——黑磷 Ag 模的 ARPR 强度无法用实拉曼张量拟合，需复拉曼张量元素（相位 φa/φb/φc），且随激发波长（633/532/488nm）变化（H. B. Ribeiro, ACS Nano 2015）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-604">
+<img src="slides/slide_604.png" alt="课件第604页 11. 偏振拉曼光谱：各向异性材料拉曼散射的独特机制——各向同性晶体体散射与表面散射；各向异性晶体中 ei'/es' 随深度变化，需积分（IL Xie/ML Lin/PH Tan, Adv. Mater. 2025）">
+<figcaption><span class="sno">604</span><span class="stitle">11. 偏振拉曼光谱：各向异性材料拉曼散射的独特机制——各向同性晶体体散射与表面散射；各向异性晶体中 ei'/es' 随深度变化，需积分（IL Xie/ML Lin/PH Tan, Adv. Mater. 2025）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-605">
+<img src="slides/slide_605.png" alt="课件第605页 11. 偏振拉曼光谱：各向异性材料拉曼散射的独特机制——双折射、线性二色性与多层膜干涉（κAC≠κZZ、nAC≠nZZ）共同调制散射强度">
+<figcaption><span class="sno">605</span><span class="stitle">11. 偏振拉曼光谱：各向异性材料拉曼散射的独特机制——双折射、线性二色性与多层膜干涉（κAC≠κZZ、nAC≠nZZ）共同调制散射强度</span></figcaption>
+</figure>
+<figure class="slide" id="slide-606">
+<img src="slides/slide_606.png" alt="课件第606页 11. 偏振拉曼光谱：天然 ALM 腔的多层膜干涉——ALM on substrate 构成天然腔，转移矩阵法（TMM）计算增强因子 Fi/s(y)，强度为对深度的积分">
+<figcaption><span class="sno">606</span><span class="stitle">11. 偏振拉曼光谱：天然 ALM 腔的多层膜干涉——ALM on substrate 构成天然腔，转移矩阵法（TMM）计算增强因子 Fi/s(y)，强度为对深度的积分</span></figcaption>
+</figure>
+<figure class="slide" id="slide-607">
+<img src="slides/slide_607.png" alt="课件第607页 11. 偏振拉曼光谱：本征拉曼张量幅度和相位的实验确定——黑磷 Ag 模 |cint|/|aint| 平均 1.48、相位差 φacint 约 -68.8°，本征张量与厚度 dBP 无关">
+<figcaption><span class="sno">607</span><span class="stitle">11. 偏振拉曼光谱：本征拉曼张量幅度和相位的实验确定——黑磷 Ag 模 |cint|/|aint| 平均 1.48、相位差 φacint 约 -68.8°，本征张量与厚度 dBP 无关</span></figcaption>
+</figure>
+<figure class="slide" id="slide-608">
+<img src="slides/slide_608.png" alt="课件第608页 11. 偏振拉曼光谱：定量预测不同厚度黑磷薄片的 ARPR 强度（BP Ag2 模，633nm 与 488nm 激发）">
+<figcaption><span class="sno">608</span><span class="stitle">11. 偏振拉曼光谱：定量预测不同厚度黑磷薄片的 ARPR 强度（BP Ag2 模，633nm 与 488nm 激发）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>偏振拉曼光谱</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）</span><span class="chip">课件 594</span><span class="chip">课件 595</span><span class="chip">课件 596</span><span class="chip">课件 597</span><span class="chip">课件 598</span><span class="chip">课件 599</span><span class="chip">课件 600</span><span class="chip">课件 601</span><span class="chip">课件 602</span><span class="chip">课件 603</span><span class="chip">课件 604</span><span class="chip">课件 605</span><span class="chip">课件 606</span><span class="chip">课件 607</span><span class="chip">课件 608</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>下面讲偏振拉曼光谱。前面讲的拉曼理论和对称性决定拉曼谱，都涉及其本质；但拉曼光谱更多是用不同激发光或散射光的偏振态测试材料。通常有 HV、VV、VH 等偏振配置，大致能看到四种配置。事实上，由于拉曼张量沿对角线对称，VH 与 HV 的拉曼可能完全一样。一般写拉曼张量为 A 至 G，但受对称性要求，12 与 21、13 与 31、23 与 32 相同，因此 HV 和 VH 实际上一样。但实测可能不同，原因何在？</p><p>这涉及上节课内容：测拉曼光谱时有起偏器确定激发光偏振方向，散射光方向还有检偏器——两者英文虽同（都指偏振片），但作用不同。事实上，光栅对偏振方向的效率有选择性，这点要记住：若不注意，H 和 V 散射光测出的强度会不同，甚至 V 和 H 的反射效率可能差数倍，5 倍、7 倍都有可能。所以真正做实验时需注意：这边是起偏器，拉曼信号从这儿打进来进入样品，我可以改变它的偏振方向，但要让结果可信，就采用 HV、VH 四次测量，使结果总是一个方向，这就可信了。事实上在检偏器后面可能要加一个 1/2 波片：若入射是 V，不动则测出 A；若是 H，需转动波片让偏振方向转 90 度。当然还有其他方法，比如不管 H 还是 V，后面都加个消光器。很多特殊情况，拉曼光谱还是讲究技巧和技术的。</p><p>在这里拓展一下思路：光是一个电磁波，都具有偏振态——有可能是线偏振。线偏与圆偏有关系：两个线偏、两个轴上加一个（相位）就合成一个椭圆偏。这里面往往会有琼斯矩阵：每一个光学元件（线偏振片、椭圆偏振、旋转器、1/4 波片）都有一个相应的琼斯矩阵，这样我们简简单单把它用起来就行。一般来说大家只要知道这个事就行，真要去用的时候参考参考就 OK 了。</p><p>实际来看拉曼强度等于啥？它等于入射光的偏振矢量、散射光的偏振矢量，再加上拉曼张量：I ∝ |es†·Rj·eL|²，对 j 求和。为什么这个拉曼张量有个求和？有些论文里没有求和——因为有些拉曼模的拉曼张量有 3 个，有些只有 2 个，但绝大部分拉曼模的拉曼张量只有 1 个。大家要注意到拉曼张量有可能会超过一个：像晶体硅，它的拉曼张量就是三个——为什么晶体硅的拉曼峰在 520？若不精准说它有 3 个，因是 520/521cm⁻¹ 模，属三重简并。再看石墨烯 G 模，有 2 个张量——因是二重简并，平面内两方向相同。严格来说，中间需对每个张量求强度再叠加；求和需在绝对值外，若在内部则涉及干涉，但此处不存在。</p><p>如何记忆？原则上写为 Porto 标记法，元素如 Z(XY)Z̄。也有 XYZX 或 XYZY 等，现在多为 Z(XY)Z̄。因多数实验在背散射下进行，Z 与 Z̄ 固定；这表示入射/散射光的偏振及传播方向。若写 Z(Z)Z̄ 就表示背散射，可变的是偏振方向，如 XY、XX 等。更普遍的情况是非背散射，如 90° 散射：激光从此入射、散射光从此出；或 180° 透射散射：激光从下打入、收集穿透样品的散射光。不管是 90° 还是 180° 散射配置，对实验仪器都有要求，可能需要自己搭光路、而且得搭得很好；但一般来说，大家现在使用的都是背散射。</p><p>刚才写了 VH、HV，这表示什么意思？一般用 V、H 分别表示竖直或水平偏振面，S 对应光谱仪入口处的方向。究竟是 V 还是 H，在平面上往往不好界定：打个比方，这是拉曼信号光和谱仪入口，若定义某方向为 V，沿斜向则为 H。要把信号传入图中需经反射镜向下打，此处放置样品，需注意 V 和 H 在样品平面下的变化——它要么沿 X 方向要么沿 Y 方向。这取决于我的反射镜怎么放：一般来说谱仪是补一个狭缝，反射镜可以是这么长也可以是那么长，就变成不同的光。这儿我不详细讲了，你们感兴趣肯定会下去讨论。</p><p>这样一来，我们把拉曼张量和入射光、散射光的偏振方向对应起来，结果就很简单了。针对某一个材料，它有拉曼模，它的 Γ 点有一些不可约表示，对应着不同拉曼模的振动。究竟是拉曼活性还是红外活性，可根据不可约表示里奇函数含 X 的一次项还是二次项来判断，但我们只要去查拉曼张量的文献就能查到。查到了过后你看，每个模有些模就有相应的拉曼张量：A1g 模、B1g、B2g、Eg 模——有的模有两个拉曼张量。这样一来的话，不同的配置能够把这些模选择出来：YYXZZ 能够把 A1g 选择出来，这个能够把 B1g 模选择出来，那个能把 B2g 模选择出来，还有配置把 Eg 选择出来。</p><p>确认这一点很重要：我们常不知道振动模的具体位置，若单独测试或能测得多个拉曼峰，但其对称性未知、指认亦未知，该如何处理？需进行偏振拉曼实验以定夺。一旦确定，对力常数模型分析材料便有帮助。并非仅此：再看某片拉曼谱，若在两种配置下均可见一模，此处感觉得到、上方却不可见——事实上该模埋于其中，若忽略信道比，可能漏检该模，导致性价比低。通过偏振拉曼，可准确确定其值。</p><p>拉曼光谱能识别拉曼峰。在背散射配置中通常沿 X、Y 或 Z 方向，但前文提及，半波片可改变偏振方向——这意味着测量拉曼光谱时，入射光或散射光的偏振方向可变，只需加入一个半波片。在这种情况下，得到的拉曼强度与 θ 相关，也与偏振矢量的偏振角有关。我们将拉曼光强度随入射光和散射光偏振矢量角度改变而变化的谱图，称为角分辨偏振拉曼光谱。可以看到，无论改变散射光还是入射光的偏振矢量方向，计算结果都是 cos²θ 的关系；若画出该关系曲线，呈现为八字形。通过角分辨拉曼强度，可进一步确认样品的对称性。</p><p>关于如何进行角分辨偏振拉曼光谱测量，原则上有多种散射配置。一种是将 1/2 波片放在激发光起偏器后面：起偏器用于纯化激光，使其偏振方向沿特定方向，然后改变半波片的角度——半波片转动 α 角，偏振矢量会转动 2α 角。信号打到样品上后，在单色仪里加了个检偏器，注意此处偏振方向是固定的。原则上根据拉曼张量，只有这几部分是不动的。起偏器可以沿着水平或竖直方向：阿尔法 LVR 中，阿尔法 L 表示激光的角度、其偏振矢量可变，拉曼信号沿竖直方向，仪器给出的是 B 和 D 的信息；如果我在光谱仪前采用水平方向，就能得到 D 和 A1 的信息——这意味着只要改变检偏器的方向，就能得到拉曼张量里面三个独立分量的矩阵元信息。</p><p>另外还有一种情况，就是转动波片。前面说过，当激发光转动到一个波片的情况下，如果波片跟激发光不垂直，光路可能会发生偏移，导致激光在样品上的位置改变——若样品只有几微米，位置变了后测的可能就不是同一个物质了。所以真正去做实验时，如果样品过小，可能会带来很大误差，甚至我们都不知道。那怎么办？就旋转样品。当然旋转样品也有问题：因为激光固定，样品的旋转轴不可能与激光照射点重合，旋转后测试点会偏出光斑，需将其平移至光斑中心，这很不方便。另一种方法是将二分之一波片移到公共光路上，这样能保持光路与半波片垂直，打到样品上的点基本不变。这两种方式是等价的，大家可以计算验证：在两种线偏配置下，一种是 BDA，另一种是 DBA，三个拉曼矩阵元都涉及了。</p><p>这项工作还有其他方面，我们总结了利弊及使用方法。这篇论文 2017 年发表，至今约 10 年，引用已近 200 次——只要对学界有贡献，大家都会承认这项工作。再看两个进阶例子：一是十年前发现的 ALM（黑磷）薄片中异常 ARPR 强度，Ag 模的角分辨强度无法用实拉曼张量拟合，需引入复拉曼张量元素（|a|eiφa 等），且随激发波长（633/532/488nm）变化；二是我们 2025 年发表在 Adv. Mater. 的工作：各向异性材料拉曼散射的独特机制——在各向异性晶体中，入射和散射光在材料内部的偏振矢量随深度旋转（双折射）、强度随深度衰减（线性二色性），再叠加多层膜干涉，需要积分或转移矩阵法（TMM）计算；利用天然 ALM 腔还可实验确定本征拉曼张量的幅度和相位（|c|/|a|≈1.48、相位差约 -68.8°），并定量预测不同厚度黑磷薄片的 ARPR 强度。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>事实上，我前面说过，光栅对偏振方向的效率有选择性。记住这点：若不注意，H和V散射光测出的强度会不同。甚至V和H的反射效率可能差数倍，5倍、7倍都有可能。</p><p>有些拉曼模的拉曼张量是有3个，有些拉曼模的拉曼张量只有两个，但是绝大部分这个拉曼模的拉曼张量只有1个。</p><p>如果我们旋转样品，因为激光固定，样品的旋转轴不可能与激光照射点重合。所以旋转后，测试点会偏出光斑，需将其平移至光斑中心，这很不方便。</p><p>这篇论文17年发表，至今约10年，引用已近200次。只要对学界有贡献，大家都会承认这项工作。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-resonance">
+  <div class="slides"><figure class="slide" id="slide-609">
+<img src="slides/slide_609.png" alt="课件第609页 主要内容目录：12 共振拉曼光谱 / 13 温度效应 / 14 应力和应变 / 15 拉曼光谱数据处理">
+<figcaption><span class="sno">609</span><span class="stitle">主要内容目录：12 共振拉曼光谱 / 13 温度效应 / 14 应力和应变 / 15 拉曼光谱数据处理</span></figcaption>
+</figure>
+<figure class="slide" id="slide-610">
+<img src="slides/slide_610.png" alt="课件第610页 12. 共振拉曼光谱：共振拉曼效应——激发频率接近或重合电子能级吸收峰时，特定拉曼带强度急剧增加（可达百万倍），并出现强度可与基频相比拟的倍频及和频声子模">
+<figcaption><span class="sno">610</span><span class="stitle">12. 共振拉曼光谱：共振拉曼效应——激发频率接近或重合电子能级吸收峰时，特定拉曼带强度急剧增加（可达百万倍），并出现强度可与基频相比拟的倍频及和频声子模</span></figcaption>
+</figure>
+<figure class="slide" id="slide-611">
+<img src="slides/slide_611.png" alt="课件第611页 12. 共振拉曼光谱：单共振拉曼效应——入射光子激发到中间态（产生电子-空穴对/激子）→发射声子散射到另一态→辐射复合；Fermi golden rule 公式（入射共振/出射共振）；态密度大的地方共振更强（如带边共振）">
+<figcaption><span class="sno">611</span><span class="stitle">12. 共振拉曼光谱：单共振拉曼效应——入射光子激发到中间态（产生电子-空穴对/激子）→发射声子散射到另一态→辐射复合；Fermi golden rule 公式（入射共振/出射共振）；态密度大的地方共振更强（如带边共振）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-612">
+<img src="slides/slide_612.png" alt="课件第612页 12. 共振拉曼光谱：单共振拉曼效应——只要激发光能量大于带隙，单共振拉曼总存在；带间跃迁光学允许性重要（q≈0）；范霍夫奇点（van Hove singularity）处态密度大">
+<figcaption><span class="sno">612</span><span class="stitle">12. 共振拉曼光谱：单共振拉曼效应——只要激发光能量大于带隙，单共振拉曼总存在；带间跃迁光学允许性重要（q≈0）；范霍夫奇点（van Hove singularity）处态密度大</span></figcaption>
+</figure>
+<figure class="slide" id="slide-613">
+<img src="slides/slide_613.png" alt="课件第613页 12. 共振拉曼光谱：双共振拉曼效应——入射双共振/出射双共振/三共振；只要激发光大于带隙双共振总存在；拉曼总强度取决于对所有共振态求和（有效态密度）；共振增强非布里渊区中心声子过程、激活中心对称晶体中禁戒的奇对称声子">
+<figcaption><span class="sno">613</span><span class="stitle">12. 共振拉曼光谱：双共振拉曼效应——入射双共振/出射双共振/三共振；只要激发光大于带隙双共振总存在；拉曼总强度取决于对所有共振态求和（有效态密度）；共振增强非布里渊区中心声子过程、激活中心对称晶体中禁戒的奇对称声子</span></figcaption>
+</figure>
+<figure class="slide" id="slide-614">
+<img src="slides/slide_614.png" alt="课件第614页 12. 共振拉曼光谱：本征石墨烯中的独特拉曼特征——单共振与双共振过程（PH Tan, PRB 2001；Thomsen, PRL 2000；Saito, PRL 2002），本征石墨烯全部拉曼特征可由共振拉曼理论理解">
+<figcaption><span class="sno">614</span><span class="stitle">12. 共振拉曼光谱：本征石墨烯中的独特拉曼特征——单共振与双共振过程（PH Tan, PRB 2001；Thomsen, PRL 2000；Saito, PRL 2002），本征石墨烯全部拉曼特征可由共振拉曼理论理解</span></figcaption>
+</figure>
+<figure class="slide" id="slide-615">
+<img src="slides/slide_615.png" alt="课件第615页 12. 共振拉曼光谱：GaAs:N(0.1%) 的共振拉曼光谱——入射共振与出射共振（1.848eV/1.959eV/2.089eV/2.621eV 激发），局域声子、布里渊区边界声子（LO(L)/TO(X)/LA 等）与带边荧光；PH Tan/Y Zhang, APL 2006">
+<figcaption><span class="sno">615</span><span class="stitle">12. 共振拉曼光谱：GaAs:N(0.1%) 的共振拉曼光谱——入射共振与出射共振（1.848eV/1.959eV/2.089eV/2.621eV 激发），局域声子、布里渊区边界声子（LO(L)/TO(X)/LA 等）与带边荧光；PH Tan/Y Zhang, APL 2006</span></figcaption>
+</figure>
+<figure class="slide" id="slide-616">
+<img src="slides/slide_616.png" alt="课件第616页 12. 共振拉曼光谱：带边电子态是共振拉曼散射的理想中间态——带边附近态密度高但强 PL 使拉曼难测；纳米线中弱 PL 使带隙附近共振拉曼信号可测（S Reich, PRB 2014）">
+<figcaption><span class="sno">616</span><span class="stitle">12. 共振拉曼光谱：带边电子态是共振拉曼散射的理想中间态——带边附近态密度高但强 PL 使拉曼难测；纳米线中弱 PL 使带隙附近共振拉曼信号可测（S Reich, PRB 2014）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-617">
+<img src="slides/slide_617.png" alt="课件第617页 12. 共振拉曼光谱：转角双层石墨烯的共振拉曼散射——G 模拉曼共振线型随激发能量演变（WX Luo, Rev. Sci. Instrum. 2021）">
+<figcaption><span class="sno">617</span><span class="stitle">12. 共振拉曼光谱：转角双层石墨烯的共振拉曼散射——G 模拉曼共振线型随激发能量演变（WX Luo, Rev. Sci. Instrum. 2021）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-618">
+<img src="slides/slide_618.png" alt="课件第618页 12. 共振拉曼光谱：Stokes 和 anti-Stokes 拉曼信号测定单壁碳纳米管共振能级——(9,0)/(10,0) 手性管的共振能级表（E11M/E22S/E33S，IS/IaS 比值），Bandow, PRL；P. H. Tan, PRB 2000">
+<figcaption><span class="sno">618</span><span class="stitle">12. 共振拉曼光谱：Stokes 和 anti-Stokes 拉曼信号测定单壁碳纳米管共振能级——(9,0)/(10,0) 手性管的共振能级表（E11M/E22S/E33S，IS/IaS 比值），Bandow, PRL；P. H. Tan, PRB 2000</span></figcaption>
+</figure>
+<figure class="slide" id="slide-619">
+<img src="slides/slide_619.png" alt="课件第619页 12. 共振拉曼光谱：Fano 线型及其向洛伦兹线型的转变——束缚态与连续态耦合（Ugo Fano 1912-2001）；ω0 中心频率、Γ 半高宽、q 耦合参数，q 很大时趋近洛伦兹线型">
+<figcaption><span class="sno">619</span><span class="stitle">12. 共振拉曼光谱：Fano 线型及其向洛伦兹线型的转变——束缚态与连续态耦合（Ugo Fano 1912-2001）；ω0 中心频率、Γ 半高宽、q 耦合参数，q 很大时趋近洛伦兹线型</span></figcaption>
+</figure>
+<figure class="slide" id="slide-620">
+<img src="slides/slide_620.png" alt="课件第620页 12. 共振拉曼光谱：拟合线型——洛伦兹线型的形式：I(ω)~1/((ω-ω0)²+Γ²/4)；Fano 线型 I(ε)~(q+ε)²/(1+ε²)；q=0→0.1→…→1→…→∞ 从倒置洛伦兹经非对称 Fano 回归洛伦兹，Γ 变大展宽">
+<figcaption><span class="sno">620</span><span class="stitle">12. 共振拉曼光谱：拟合线型——洛伦兹线型的形式：I(ω)~1/((ω-ω0)²+Γ²/4)；Fano 线型 I(ε)~(q+ε)²/(1+ε²)；q=0→0.1→…→1→…→∞ 从倒置洛伦兹经非对称 Fano 回归洛伦兹，Γ 变大展宽</span></figcaption>
+</figure>
+<figure class="slide" id="slide-621">
+<img src="slides/slide_621.png" alt="课件第621页 12. 共振拉曼光谱：少层 WS2 中布里渊区边界声学声子的 Fano 共振——4K 下 612nm(2.026eV) 激发；Γ 点 S 模大幅增强呈 Fano 线型，LB 模弱洛伦兹；M 点 TA(M) 洛伦兹、ZA(M) Fano 与 Fano 凹陷(2L)、LA(M) Fano（PH Tan/J Zhang, Nat. Commun. 2023）">
+<figcaption><span class="sno">621</span><span class="stitle">12. 共振拉曼光谱：少层 WS2 中布里渊区边界声学声子的 Fano 共振——4K 下 612nm(2.026eV) 激发；Γ 点 S 模大幅增强呈 Fano 线型，LB 模弱洛伦兹；M 点 TA(M) 洛伦兹、ZA(M) Fano 与 Fano 凹陷(2L)、LA(M) Fano（PH Tan/J Zhang, Nat. Commun. 2023）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-622">
+<img src="slides/slide_622.png" alt="课件第622页 12. 共振拉曼光谱：少层 WS2 中 Fano 共振的本质——准连续态（K 谷束缚的暗激子 D1、Q 谷 D2）与分立态（区边声学声子）耦合，产生丰富的 Fano 线型">
+<figcaption><span class="sno">622</span><span class="stitle">12. 共振拉曼光谱：少层 WS2 中 Fano 共振的本质——准连续态（K 谷束缚的暗激子 D1、Q 谷 D2）与分立态（区边声学声子）耦合，产生丰富的 Fano 线型</span></figcaption>
+</figure>
+<figure class="slide" id="slide-623">
+<img src="slides/slide_623.png" alt="课件第623页 12. 共振拉曼光谱：固体中的激子——带间跃迁图像与强电子-空穴相互作用的激子图像；Wannier-Mott 激子（类氢，结合能 μRyd/(m0ε²n²)~10⁻²-10⁻³ eV、玻尔半径~10⁰-10¹nm）；77K 下 Cu2O 吸收谱激子线">
+<figcaption><span class="sno">623</span><span class="stitle">12. 共振拉曼光谱：固体中的激子——带间跃迁图像与强电子-空穴相互作用的激子图像；Wannier-Mott 激子（类氢，结合能 μRyd/(m0ε²n²)~10⁻²-10⁻³ eV、玻尔半径~10⁰-10¹nm）；77K 下 Cu2O 吸收谱激子线</span></figcaption>
+</figure>
+<figure class="slide" id="slide-624">
+<img src="slides/slide_624.png" alt="课件第624页 12. 共振拉曼光谱：二维过渡金属硫属化合物的激子——WS2 中 A、B、C 激子能量；自旋轨道耦合导致 A、B 激子（均来自 K 点）劈裂的两个价带到导带底跃迁">
+<figcaption><span class="sno">624</span><span class="stitle">12. 共振拉曼光谱：二维过渡金属硫属化合物的激子——WS2 中 A、B、C 激子能量；自旋轨道耦合导致 A、B 激子（均来自 K 点）劈裂的两个价带到导带底跃迁</span></figcaption>
+</figure>
+<figure class="slide" id="slide-625">
+<img src="slides/slide_625.png" alt="课件第625页 12. 共振拉曼光谱：WS2 中 A、B 激子共振的拉曼谱——二层 WS2 在不同能量激发光下的超低波数拉曼谱（QH Tan/J Zhang/PH Tan, 2D Mater. 2017）">
+<figcaption><span class="sno">625</span><span class="stitle">12. 共振拉曼光谱：WS2 中 A、B 激子共振的拉曼谱——二层 WS2 在不同能量激发光下的超低波数拉曼谱（QH Tan/J Zhang/PH Tan, 2D Mater. 2017）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-626">
+<img src="slides/slide_626.png" alt="课件第626页 12. 共振拉曼光谱：激子共振拉曼散射：自由激子——GaSe 在 80K 下 255cm⁻¹ LO 声子散射截面随激发光能量在激子共振处巨增强，一阶乃至高阶谐波明显增强">
+<figcaption><span class="sno">626</span><span class="stitle">12. 共振拉曼光谱：激子共振拉曼散射：自由激子——GaSe 在 80K 下 255cm⁻¹ LO 声子散射截面随激发光能量在激子共振处巨增强，一阶乃至高阶谐波明显增强</span></figcaption>
+</figure>
+<figure class="slide" id="slide-627">
+<img src="slides/slide_627.png" alt="课件第627页 12. 共振拉曼光谱：激子共振拉曼散射与热荧光（Hot luminescence）过程——CdS 激子共振高阶声子谐波；多声子级联与激子能级出射共振的级联模型；HL 与拉曼共振相似但谱线更宽，可用瞬态时间分辨实验区分（Leite PRL 1969；Klein PRB 1973；Shen PRB 1974）">
+<figcaption><span class="sno">627</span><span class="stitle">12. 共振拉曼光谱：激子共振拉曼散射与热荧光（Hot luminescence）过程——CdS 激子共振高阶声子谐波；多声子级联与激子能级出射共振的级联模型；HL 与拉曼共振相似但谱线更宽，可用瞬态时间分辨实验区分（Leite PRL 1969；Klein PRB 1973；Shen PRB 1974）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-628">
+<img src="slides/slide_628.png" alt="课件第628页 12. 共振拉曼光谱：能带填充效应导致的超薄 MoS2 中共振拉曼散射的异常强度淬灭——A/B/C 激子；1L MoS2 与 MoS2 异质结的 A/E 模强度显著差异（R Mei/ML Lin/PH Tan, Laser Photonics Rev. 2025）">
+<figcaption><span class="sno">628</span><span class="stitle">12. 共振拉曼光谱：能带填充效应导致的超薄 MoS2 中共振拉曼散射的异常强度淬灭——A/B/C 激子；1L MoS2 与 MoS2 异质结的 A/E 模强度显著差异（R Mei/ML Lin/PH Tan, Laser Photonics Rev. 2025）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-629">
+<img src="slides/slide_629.png" alt="课件第629页 12. 共振拉曼光谱：能带填充效应——高激发功率下 Pauli blocking 占据终态、非辐射弛豫通道激活；1LM 与 1LM/4LG 异质结具有不同的共振激发轮廓">
+<figcaption><span class="sno">629</span><span class="stitle">12. 共振拉曼光谱：能带填充效应——高激发功率下 Pauli blocking 占据终态、非辐射弛豫通道激活；1LM 与 1LM/4LG 异质结具有不同的共振激发轮廓</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>共振拉曼光谱</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段</span><span class="chip">课件 609</span><span class="chip">课件 610</span><span class="chip">课件 611</span><span class="chip">课件 612</span><span class="chip">课件 613</span><span class="chip">课件 614</span><span class="chip">课件 615</span><span class="chip">课件 616</span><span class="chip">课件 617</span><span class="chip">课件 618</span><span class="chip">课件 619</span><span class="chip">课件 620</span><span class="chip">课件 621</span><span class="chip">课件 622</span><span class="chip">课件 623</span><span class="chip">课件 624</span><span class="chip">课件 625</span><span class="chip">课件 626</span><span class="chip">课件 627</span><span class="chip">课件 628</span><span class="chip">课件 629</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>共振拉曼效应：当激发频率接近或重合于晶体材料的电子能级吸收峰时，某一个或几个特定的拉曼带强度会急剧增加，甚至达到正常拉曼带强度的百万倍，并出现正常拉曼效应中所观察不到的、强度可与基频相比拟的倍频及和频声子模。非共振时拉曼强度低于检测阈值，而共振强度远高于此，可能强几千倍或几百倍。</p><p>从微观过程看，激发与发射（复合）最终形成散射过程，但光子能量很小，激发符合电光过程，原则上统一处理。该过程由散射矩阵元决定：若光学跃迁允许，矩阵元不为零。为简化计算，可用范霍夫奇点估算允许的光学跃迁率；若有三个峰可将其简化，电子激子储能视为常数、随波长变化不大，每个能区用常数近似。前文讨论的是单共振过程——入射光子把电子从初态激发到中间态 m，产生电子-空穴对；这个电子-空穴对通过电子-声子相互作用发射一个声子、散射到另一个态 m′；最后电子-空穴对辐射复合发射散射光子。</p><p>实际上还存在双共振过程：我们前面说过激发、散射和复合，双共振可能是激发跟散射都共振，或散射跟复合都共振。例如把电子从初态激发到 M 态、散射一个声子到 M′ 态、再散射回到 M″ 态，最后复合——这里激发和散射都是共振的、都在实态之间，所以是双共振。还会存在三共振：激发、两个散射和最后复合都是共振的，这种情况极其罕见，但不是看不到，下一章会跟大家讲。</p><p>共振效应会带来什么特性？只要激发光能量大于带隙，双共振拉曼过程总是存在的。拉曼总强度取决于对所有共振态的求和，即有效态密度。共振增强某些特定的拉曼产生过程，比如非布里渊区中心声子参与的过程：在单声子过程中 q 等于 0、满足动量守恒，电子散射前后位置不变；而在双共振中 q 不等于 0、发生在布里渊区非中心的地方，这可以激活某些禁戒模式——比如在中心对称晶体中，奇对称声子（基频声子）原来应该是禁戒的，但实际上在共振情况下它也能够被观察到。所以说共振拉曼光谱可以用来研究材料的晶体结构，甚至研究材料的电子-声子相互作用。</p><p>共振拉曼光谱应用最明显的材料是石墨烯，我们下一章就讲石墨烯。这里是一个典型的类石墨烯材料：单层材料原胞含有两个原子，总共有 6 个振动模——3 个声学模、3 个光学模；三个光学模中有两个是简并的，有一个是拉曼非活性的。既然简并，那就只能观察到一个拉曼峰。但你看我们实际上观察到的拉曼峰，多恐怖——我告诉大家是所有这些拉曼峰我们都能够解释它。我们编了一本石墨烯基材料的拉曼光谱研究，还有一个二维材料的拉曼光谱（英文版和中文版，2021、2022 年左右出版）。我们后面在石墨烯方面又做了很多工作、现在还在做；但若真的要把所有性质都去做，你能做一辈子都做不完。</p><p>再讲一个半导体共振的例子：砷化镓里面掺氮，通常叫 GaAsN 材料。氮的占比有多少？0.1%，是千分之一，掺得很少。但即使掺得那么少，如果用高能量去激发，能看到一个共振荧光峰。带边在 1.43eV 左右，看得到的是荧光峰；但这个荧光峰大家看一下，这个尖峰是拉曼峰——也就是说这个荧光峰比拉曼峰还要弱。为什么？因为载流子激发到带边以上会快速向带边弛豫，像一个漏斗一样，它在那儿都待不住，跟下面的空穴复合的几率就会减少，所以荧光比拉曼信号还弱。但这个荧光峰意味着我们知道了材料的能级在哪里。</p><p>用 1.959eV 激发还是 2.621eV 激发，荧光峰的位置基本上是一样的，只是相对强度发生变化；拟合的话能拟合得很好。这边这个峰是不对称的、那个峰基本上是对称的，前面说过要怎么拟合不对称峰。我到了这里后，由于激光与电子能级接近，荧光峰变得很强、拉曼信号也会变强，从信噪比可以看出来。将下面的图对换 1000 多个波数，把 2.089 和 1.959 对比——两者差值约 0.13 个电子伏特，乘以 8065，大致就是 1000 多个波数。这样一来，从绝对能量来说，不同的拉曼峰其实是一样的：激发光远离体系能级时只能看到一阶、二阶拉曼模；靠近散射能级发生色散共振时，能看到四阶拉曼模；继续往里靠，四声子完全跟色散共振，这时能看到五声子的拉曼峰——五声子是很不容易看到的，意味着它的共振非常强。</p><p>再来看带边电子态：带边态密度很高，态密度高则共振更强，所以带边共振信号变强。带边共振虽然信号增强，但受荧光干扰大——材料长得越好荧光越强，越不适合做共振拉曼。大家所在的课题组有没有做钙钛矿的？钙钛矿的荧光非常非常强，金属离子很容易在材料里面穿来穿去，所以几乎所有钙钛矿的拉曼光谱在带隙以上激发都非常难做，绝大部分是在带隙以下做的（就像金刚石也是在带隙以下做，信号也很强）。如果在带隙以上激发，荧光背景都有可能把拉曼信号掩盖得差不多。</p><p>还有一种共振叫 Fano 共振。它取决于孤立态与连续态之间的耦合，某种意义上是它们的干涉。孤立态一般对应束缚能级，连续态可以是电子激发或声子本身。原则上 Fano 线型是由洛伦兹线型转换而来的：看公式中的 q——q 是耦合常数，q 从 0 到 1、再从 1 变到无穷大，从倒置的洛伦兹线型逐渐转变为非对称的 Fano 线型、再回归对称的洛伦兹线型，中间处于连续变化状态。这里乘了 1.2，意味着若强度在 q 为 0~1 之间强度应该很强，q 再增大强度反而减弱。</p><p>举个例子：二硫化钨是三层结构，两个能量挨得很近、存在连续激发，这涉及带 q 的声子，正好与色散关系对应、能量波矢靠近。若声子是孤立的且存在连续激发，二者之间能产生 Fröhlich（弗罗利希）共振。观察此处形状及其反转，情况非常丰富且有趣。除了电子-声子耦合，事实上也可能是激子耦合。再看碳纳米管：通常考虑电子与声子作用，但因纳米管尺寸极小，电子和空穴被束缚在极小空间内、激子束缚能力极强，其光学性质全由激子态决定——一旦激发光与激子态能级匹配也会发生共振，分为 A、B、C 激子，包含亮激子和暗激子。</p><p>传统半导体如硫化镉（CdS）中存在剧烈的增强效应：本来强度大致是 1，到这儿是 10 的四五次方——中间增加了上千倍，这就是激子共振研究有多显著。最早期的工作是 1965 年的：拉曼峰多得不得了。共振拉曼里面除了双声子以外当然还有一个是荧光，中间有些是可以进行区分的。这里还有个重要问题：在带隙附近激发，拉曼散射过程一定会增强吗？以单层二硫化钼和二硫化钨为例：若入射和出射共振均乘 1/200、而非共振为 1，这意味着带隙边的入射和出射比非共振情况至少增强了 200 倍。但在二硫化钼中，入射、出射与非共振强度可比拟——为何二硫化钨中带边共振强，而二硫化钼中基本不存在？这是 2025 年发表的工作。</p><p>为何会这样？我将激光电子从某处激发到彼处导致增强效应。既然共振减弱，我们将二硫化钼与石墨烯放在一起（做成异质结）后强度恢复，原来很弱现在变强。单纯二硫化钼的激发光依赖关系通常与强度成正比，但二硫化钼随激发光增强出现饱和、降低拉曼强度；而在异质结中，强度与激发光谱强度成正比。这究竟是何原因？后来我们发现，二硫化钼中存在亮激子和暗激子且靠得很近：激发光增强时，由于能级填充，电子从下往上累积，上方已被占据、下方电子无法激发，共振过程受阻、信号减弱——原本应增强的强度反而下降。但制成异质结后，累积的载流子快速转移到石墨烯中，剩余载流子能正常共振、散射通道畅通，因此共振拉曼谱线在该范围内得到增强。所以共振拉曼效应在某些情况下强度会减弱，并非一定增强。下一章将介绍更有趣的共振能量效应。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>非共振强度低于检测阈值，而共振强度远高于此，可能强几千倍或几百倍。</p><p>大家看一下，你看这个尖峰是啥？尖锐的峰是拉曼峰。也就是说我这个荧光峰比拉曼峰还要弱，对吧？</p><p>0.13个电子伏特对应多少波数？乘以8065，大致就是1000多个波数。</p><p>我们看到了五声子，那这个是很不容易的。明白吧，我们看到了五声子。</p><p>钙钛矿的荧光非常非常强……所有的钙钛矿的拉曼光谱，你要在带隙以上去激发，非常非常难做。</p><p>既然共振减弱，我们将二硫化物与石墨烯放在一起。放入后强度恢复，原来很弱现在变强。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-temperature">
+  <div class="slides"><figure class="slide" id="slide-630">
+<img src="slides/slide_630.png" alt="课件第630页 主要内容目录：13 温度效应 / 14 应力和应变 / 15 拉曼光谱数据处理">
+<figcaption><span class="sno">630</span><span class="stitle">主要内容目录：13 温度效应 / 14 应力和应变 / 15 拉曼光谱数据处理</span></figcaption>
+</figure>
+<figure class="slide" id="slide-631">
+<img src="slides/slide_631.png" alt="课件第631页 13. 温度效应：温度效应对拉曼谱的影响——①热胀冷缩改变晶格常数→模式峰位移动；②改变微观粒子分布→散射截面与声子寿命变化→半高宽及 Stokes/anti-Stokes 强度比变化；随温度升高线宽 Γ 增加、声子寿命 τ=1/Γ 变短、峰位红移">
+<figcaption><span class="sno">631</span><span class="stitle">13. 温度效应：温度效应对拉曼谱的影响——①热胀冷缩改变晶格常数→模式峰位移动；②改变微观粒子分布→散射截面与声子寿命变化→半高宽及 Stokes/anti-Stokes 强度比变化；随温度升高线宽 Γ 增加、声子寿命 τ=1/Γ 变短、峰位红移</span></figcaption>
+</figure>
+<figure class="slide" id="slide-632">
+<img src="slides/slide_632.png" alt="课件第632页 13. 温度效应：拉曼峰位的温度依赖关系——热膨胀效应与晶格非简谐效应导致的声子弛豫共同贡献红移；纯温度效应 χT 与纯体积效应 χV 分开考虑；体积效应由 Grüneisen 常数模型决定（HOPG 中纯温度效应；PH Tan, APL 1999）">
+<figcaption><span class="sno">632</span><span class="stitle">13. 温度效应：拉曼峰位的温度依赖关系——热膨胀效应与晶格非简谐效应导致的声子弛豫共同贡献红移；纯温度效应 χT 与纯体积效应 χV 分开考虑；体积效应由 Grüneisen 常数模型决定（HOPG 中纯温度效应；PH Tan, APL 1999）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-633">
+<img src="slides/slide_633.png" alt="课件第633页 13. 温度效应：拉曼峰位温度依赖关系的本质——除热膨胀外主要源于晶格非简谐效应的声子弛豫：三声子过程（ω1+ω2=ω0，低温主导）与四声子过程（ω1+ω2+ω3=ω0，高温重要），须满足能量与动量守恒">
+<figcaption><span class="sno">633</span><span class="stitle">13. 温度效应：拉曼峰位温度依赖关系的本质——除热膨胀外主要源于晶格非简谐效应的声子弛豫：三声子过程（ω1+ω2=ω0，低温主导）与四声子过程（ω1+ω2+ω3=ω0，高温重要），须满足能量与动量守恒</span></figcaption>
+</figure>
+<figure class="slide" id="slide-634">
+<img src="slides/slide_634.png" alt="课件第634页 13. 温度效应：三声子与四声子过程——Δω3ph(T)=1+2f(anx/2)、Δω4ph(T)=1+3f(anx/3)+3f²(anx/3)；峰位温度依赖 ω(T)=ω0+Δωthermal(T)+A·Δω3ph(T)+B·Δω4ph(T)（X Chen/PH Tan, Carbon 2021）">
+<figcaption><span class="sno">634</span><span class="stitle">13. 温度效应：三声子与四声子过程——Δω3ph(T)=1+2f(anx/2)、Δω4ph(T)=1+3f(anx/3)+3f²(anx/3)；峰位温度依赖 ω(T)=ω0+Δωthermal(T)+A·Δω3ph(T)+B·Δω4ph(T)（X Chen/PH Tan, Carbon 2021）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-635">
+<img src="slides/slide_635.png" alt="课件第635页 13. 温度效应：拉曼峰半高全宽（FWHM）的温度依赖关系——Γ(T)=ΓEPC(T)+Γan(T)；Klemens 对称衰变（光学声子衰变为两个能量相等波矢相反的声学声子）与 Balkanski 非对称衰变；四声子过程高温近似线性增长">
+<figcaption><span class="sno">635</span><span class="stitle">13. 温度效应：拉曼峰半高全宽（FWHM）的温度依赖关系——Γ(T)=ΓEPC(T)+Γan(T)；Klemens 对称衰变（光学声子衰变为两个能量相等波矢相反的声学声子）与 Balkanski 非对称衰变；四声子过程高温近似线性增长</span></figcaption>
+</figure>
+<figure class="slide" id="slide-636">
+<img src="slides/slide_636.png" alt="课件第636页 13. 温度效应：FWHM 温度依赖（续）——电子-声子相互作用（窄禁带半导体/高表面电子密度材料，声子激发电子-空穴对衰变）；残余线宽 Γdefect（同位素、杂质、缺陷）温度无关，极低温下声子衰变冻结时 FWHM 趋于 Γdefect、直接反映晶体质量">
+<figcaption><span class="sno">636</span><span class="stitle">13. 温度效应：FWHM 温度依赖（续）——电子-声子相互作用（窄禁带半导体/高表面电子密度材料，声子激发电子-空穴对衰变）；残余线宽 Γdefect（同位素、杂质、缺陷）温度无关，极低温下声子衰变冻结时 FWHM 趋于 Γdefect、直接反映晶体质量</span></figcaption>
+</figure>
+<figure class="slide" id="slide-637">
+<img src="slides/slide_637.png" alt="课件第637页 13. 温度效应：理想晶体与实际晶体比较——hBN 包裹 1LM 与未包裹 1LM：包裹后窄线宽、无缺陷相关发射（低缺陷密度、极小结构无序与表面褶皱）">
+<figcaption><span class="sno">637</span><span class="stitle">13. 温度效应：理想晶体与实际晶体比较——hBN 包裹 1LM 与未包裹 1LM：包裹后窄线宽、无缺陷相关发射（低缺陷密度、极小结构无序与表面褶皱）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-638">
+<img src="slides/slide_638.png" alt="课件第638页 13. 温度效应：hBN 包裹 1LM 拉曼光谱的温度效应——峰位红移（非简谐+热膨胀）；A1' 模展宽由非简谐声子-声子相互作用主导；3ph 六条主要衰变通道（op→ac+op、op→ac+ac，最高概率 ZO2→ZA+LO1）">
+<figcaption><span class="sno">638</span><span class="stitle">13. 温度效应：hBN 包裹 1LM 拉曼光谱的温度效应——峰位红移（非简谐+热膨胀）；A1' 模展宽由非简谐声子-声子相互作用主导；3ph 六条主要衰变通道（op→ac+op、op→ac+ac，最高概率 ZO2→ZA+LO1）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-639">
+<img src="slides/slide_639.png" alt="课件第639页 13. 温度效应：hBN 包裹 1LM 温度效应（续）——理想半导体 Γ~Γan=Γ3ph+Γ4ph；实际半导体 Γ=Γiso+Γ3ph+Γ4ph；同位素效应（Mo: g=5.98×10⁻⁴、S: g=1.68×10⁻⁴）破坏平移对称性充当散射中心；Γiso=1.20cm⁻¹、Γ0=1.42cm⁻¹ 温度无关，3ph 主导">
+<figcaption><span class="sno">639</span><span class="stitle">13. 温度效应：hBN 包裹 1LM 温度效应（续）——理想半导体 Γ~Γan=Γ3ph+Γ4ph；实际半导体 Γ=Γiso+Γ3ph+Γ4ph；同位素效应（Mo: g=5.98×10⁻⁴、S: g=1.68×10⁻⁴）破坏平移对称性充当散射中心；Γiso=1.20cm⁻¹、Γ0=1.42cm⁻¹ 温度无关，3ph 主导</span></figcaption>
+</figure>
+<figure class="slide" id="slide-640">
+<img src="slides/slide_640.png" alt="课件第640页 13. 温度效应：对缺陷敏感且与温度无关的非简谐贡献 Γdefect——离子注入引入空位缺陷浓度增加→PL 展宽、淬灭、缺陷束缚激子→拉曼峰展宽加剧（Imperfection↑ → Γdefect 增大）">
+<figcaption><span class="sno">640</span><span class="stitle">13. 温度效应：对缺陷敏感且与温度无关的非简谐贡献 Γdefect——离子注入引入空位缺陷浓度增加→PL 展宽、淬灭、缺陷束缚激子→拉曼峰展宽加剧（Imperfection↑ → Γdefect 增大）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-641">
+<img src="slides/slide_641.png" alt="课件第641页 13. 温度效应：Stokes 和 anti-Stokes 散射强度与样品温度——anti-Stokes 依赖声子热布居（Bose-Einstein 因子）；比值 IS/IaS = (σS/σaS)·(n(ωph,T)+1)/n(ωph,T)，σS/σaS=(ωLas+ωph)⁴/(ωLas-ωph)⁴，ℏωph/kBT=1.438795ωph/T">
+<figcaption><span class="sno">641</span><span class="stitle">13. 温度效应：Stokes 和 anti-Stokes 散射强度与样品温度——anti-Stokes 依赖声子热布居（Bose-Einstein 因子）；比值 IS/IaS = (σS/σaS)·(n(ωph,T)+1)/n(ωph,T)，σS/σaS=(ωLas+ωph)⁴/(ωLas-ωph)⁴，ℏωph/kBT=1.438795ωph/T</span></figcaption>
+</figure>
+<figure class="slide" id="slide-642">
+<img src="slides/slide_642.png" alt="课件第642页 13. 温度效应：Stokes/anti-Stokes 强度比特点——随温度升高增大；声子能量越大 anti-Stokes 越弱、比值对温度越敏感；低温极限只剩 Stokes；高温极限趋近 1。反斯托克斯测温用于半导体器件/微纳热输运/生物非接触测温/燃烧场；需注意仪器响应、激光加热、共振、声子寿命、多声子背景、偏振等偏差因素">
+<figcaption><span class="sno">642</span><span class="stitle">13. 温度效应：Stokes/anti-Stokes 强度比特点——随温度升高增大；声子能量越大 anti-Stokes 越弱、比值对温度越敏感；低温极限只剩 Stokes；高温极限趋近 1。反斯托克斯测温用于半导体器件/微纳热输运/生物非接触测温/燃烧场；需注意仪器响应、激光加热、共振、声子寿命、多声子背景、偏振等偏差因素</span></figcaption>
+</figure>
+<figure class="slide" id="slide-643">
+<img src="slides/slide_643.png" alt="课件第643页 13. 温度效应：反斯托克斯测温原理——由 ±ωph 处 Stokes/anti-Stokes 强度比求样品温度（含谱仪响应校正因子 ηS/aS）；声子频率较大时（如石墨烯 1580cm⁻¹）需考虑谱仪响应差异（PH Tan, PRB 2001）">
+<figcaption><span class="sno">643</span><span class="stitle">13. 温度效应：反斯托克斯测温原理——由 ±ωph 处 Stokes/anti-Stokes 强度比求样品温度（含谱仪响应校正因子 ηS/aS）；声子频率较大时（如石墨烯 1580cm⁻¹）需考虑谱仪响应差异（PH Tan, PRB 2001）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>温度效应</h2>
+        <div class="sec-meta"><span class="time">录音：第 3 段（前）</span><span class="chip">课件 630</span><span class="chip">课件 631</span><span class="chip">课件 632</span><span class="chip">课件 633</span><span class="chip">课件 634</span><span class="chip">课件 635</span><span class="chip">课件 636</span><span class="chip">课件 637</span><span class="chip">课件 638</span><span class="chip">课件 639</span><span class="chip">课件 640</span><span class="chip">课件 641</span><span class="chip">课件 642</span><span class="chip">课件 643</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>下面讲温度效应。随温度升高，拉曼峰位移动、半高宽通常增加；通过半高宽可确定声子寿命 τ=1/Γ。温度效应对拉曼谱的影响主要体现在两个方面：一是温度变化产生膨胀或收缩，对晶格常数产生影响，晶格常数的微小变动在拉曼谱中通过模式峰位的变化显现出来；二是温度对微观粒子的分布形式产生影响，对应散射截面和声子寿命的变化，对半高宽以及 Stokes 与 anti-Stokes 峰强比值产生影响。</p><p>拉曼位移主要有体积效应和温度效应两个贡献：观察波数移动可知，变温过程中温度和体积变化共同导致峰位移动——一个对应纯温度效应 χT，一个对应声子体积效应 χV，但两者通常难以区分。体积效应由格林爱森（Grüneisen）常数模型决定。但在石墨材料中我们能将其区分开：因为石墨在常温以下具有负热膨胀特性，在特定温度范围内，负热膨胀与热膨胀相互抵消，反映出的峰位移动即为纯温度效应。若是本征石墨烯，峰位移动很小、拉曼频移基本不变；若是有缺陷的石墨，峰位移动则很大。这实际上是我博士期间的工作之一：我在 2000 年左右共发表 6 篇相关论文，其中一篇获全国优秀博士学位论文奖——当时这很罕见，但现在很多学生都能在正刊发表论文。</p><p>前面仅讲解了微扰情况，若要深入本质，需真正考虑声子的散射过程，包括三声子和四声子散射。例如一个声子散射成两个声子，这些过程均需满足能量和动量守恒，而且这些声子散射过程是可以进行理论计算的。三声子过程：一个光学声子衰变成另外两个声子，另外两个声子的能量可以不一样（对称衰变时能量相等）；四声子过程：一个声子衰变成能量相等的 3 个声子，当然它也都满足动量守恒，这些公式的温度依赖关系都是这个样子。所以这些我们都可以去解释我们的实验结果。但事实上，我们往往现在的研究局限于根据这个简单的模型去拟合实验结果——原则上它能体现材料的一些特性，但它是非常有限的。</p><p>另外，半宽一般来说也会随着温度的增加而增加。但是这里面有一个特殊的情况，就是电子-声子相互作用：它表示我有一个能隙很小（半金属）的材料，我的声子就可以激发出电子和空穴，就有这种散射过程。这种散射过程随着温度的增加，它的半宽是降低的——这与一般情况相反。另外当然也有一个三声子过程和四声子过程。课件上这里应该是一个错误：刚才你写的 3 这儿应该是 4——这是四声子过程，这个地方 1 是 4。（口误纠正：课件 p135 的“三声子”应为四声子过程相关表述。）</p><p>那么究竟这个常数项（Γ 随温度改变有没有常数效应）？最早的理论都没有，但最近大家也有，只是没给出太多实验证据——我们给出了一个实验证明。二维材料原则上是不稳定的、不存在的，但现在我们都在做石墨烯和二硫化钼：因为表面会形成很小的褶皱，这让它们热力学稳定了，这意味着二维材料可能存在不可避免的杂质。另外晶格质量可能不够好，还存在同位素效应：前面说过理想晶体应无杂质，但天然硅含有 28 和 29 等同位素，本身就不纯。</p><p>我们把单层二硫化钼放在多层铜带上（顶部非常平），再盖一层氮化硼——这样单层材料就非常平整。大家看：这是没盖的情况，峰位很宽；盖层后峰形锐利。对比 300K 和 4K 下包裹与未包裹情况：未包裹 4K 值 2.23，加盖后 2.02 变为 1.95、3.1 变为 2.74——半宽变小，说明含缺陷且广泛存在。进行温度效应 Mapping 及理论计算：李果老师计算的三声子和四声子结果原则上应很准确，但理论值解释不了实验结果，加入常数项后则能解释——该常数项由同位素、表面不平及杂质导致。</p><p>对一层二硫化钼进行离子注入引入缺陷：随剂量增大，半宽增加、温度效应曲线上移；对本征数据拟合上移仍无法解释。这意味着缺陷导致的展宽数值不小：同位素展宽约 2.11（cm⁻¹），与其他叠加后接近图示展宽；更高处因涉及三声子、四声子反射，结果不可信。通过对比包铜与不包铜、离子注入的实验，证实存在不小的常数项。通常直接用三声子或四声子去拟合，效果可能好，但未反映本质——这个结果是今年才发表的。</p><p>关于 Stokes 和 anti-Stokes 散射强度与样品温度：anti-Stokes 过程要求声子在散射前已经处于激发态，因此其强度直接依赖于该声子模式的热布居（Bose-Einstein 因子）。比值 IS/IaS 有一系列特点：随温度升高而增大；对声子频率有依赖（声子能量越大 anti-Stokes 越弱、比值对温度越敏感）；低温极限下 anti-Stokes 强度趋于零、只剩 Stokes 散射；高温极限下比值趋近 1。反斯托克斯测温广泛用于半导体器件局部温度测量、微纳尺度热输运、生物样品非接触测温、燃烧场测温。但简单套用公式往往导致偏差：仪器响应差异、激光加热效应、共振拉曼效应、声子寿命与阻尼、多声子过程与背景、偏振与选择定则——这些都需要注意。</p><p>若用于测温，需注意共振效应：设 4 的 5 是键（激发能量），线的比值不反映温度情况。以单壁碳纳米管为例，它完全不遵守前述规律——某些位置质量或反射面增强，若单纯比强度求温，误差很大。这是更正后的反射谱线，可见强度很接近。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这实际上是我博士期间的工作之一。我在2000年左右共发表6篇相关论文，其中一篇获全国优秀博士学位论文奖。</p><p>课件上这里应该是一个错误应该是。刚才你写的3这儿应该是4，这是四声子过程，有这个地方1是4。</p><p>二维材料原则上是不稳定的、不存在的。但现在我们都在做石墨烯和二硫化钼。因为表面会形成很小的褶皱，这让它们热力学稳定了。</p><p>通常直接用3层或4层去拟合，虽效果可能好，但未反映本质。此结果是今年才发表的。</p><p>以单壁碳纳米管为例，它完全不遵守前述规律。某些位置质量或反射面增强，若单纯比强度求温，误差很大。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-stress">
+  <div class="slides"><figure class="slide" id="slide-644">
+<img src="slides/slide_644.png" alt="课件第644页 主要内容目录：14 应力和应变 / 15 拉曼光谱数据处理">
+<figcaption><span class="sno">644</span><span class="stitle">主要内容目录：14 应力和应变 / 15 拉曼光谱数据处理</span></figcaption>
+</figure>
+<figure class="slide" id="slide-645">
+<img src="slides/slide_645.png" alt="课件第645页 14. 应力和应变：简介——应变（拉伸/压缩、剪切，无量纲）与应力（单位面积内力，Pa）；胡克定律 σ=E·ε、广义胡克定律（泊松比 ν）；核心机制为声子形变势：应力改变原子间距与键角→晶格振动频率改变；Δωm=ωm-ωm0≈Σij Kijm·σij；拉伸应变红移、压缩应变蓝移">
+<figcaption><span class="sno">645</span><span class="stitle">14. 应力和应变：简介——应变（拉伸/压缩、剪切，无量纲）与应力（单位面积内力，Pa）；胡克定律 σ=E·ε、广义胡克定律（泊松比 ν）；核心机制为声子形变势：应力改变原子间距与键角→晶格振动频率改变；Δωm=ωm-ωm0≈Σij Kijm·σij；拉伸应变红移、压缩应变蓝移</span></figcaption>
+</figure>
+<figure class="slide" id="slide-646">
+<img src="slides/slide_646.png" alt="课件第646页 14. 应力和应变：简介（续）——峰形：应变梯度展宽、各向异性应力使简并声子分裂（硅 ~520cm⁻¹ 三重简并在单轴应力下分裂为两个或三个峰）；偏振特性：应力改变拉曼张量对称性→选择定则变化可区分应力方向；强度：电子-声子耦合/共振条件/相变影响。应用：微电子残余应力、薄膜涂层、金刚石压腔高压相变、二维材料应变工程">
+<figcaption><span class="sno">646</span><span class="stitle">14. 应力和应变：简介（续）——峰形：应变梯度展宽、各向异性应力使简并声子分裂（硅 ~520cm⁻¹ 三重简并在单轴应力下分裂为两个或三个峰）；偏振特性：应力改变拉曼张量对称性→选择定则变化可区分应力方向；强度：电子-声子耦合/共振条件/相变影响。应用：微电子残余应力、薄膜涂层、金刚石压腔高压相变、二维材料应变工程</span></figcaption>
+</figure>
+<figure class="slide" id="slide-647">
+<img src="slides/slide_647.png" alt="课件第647页 14. 应力和应变：外延材料的应力和应变——晶格不匹配衬底上外延承受面内双轴应变；面内压应变（外延层晶格常数大于衬底）蓝移、张应变红移；关键特征面内各向同性、面外各向异性（εxx=εyy≠εzz），与静水压（只频移不劈裂）形成对比；金刚石/闪锌矿结构三重简并声子劈裂为单态+二重态，劈裂大小与应变和形变势有关、偏振依赖">
+<figcaption><span class="sno">647</span><span class="stitle">14. 应力和应变：外延材料的应力和应变——晶格不匹配衬底上外延承受面内双轴应变；面内压应变（外延层晶格常数大于衬底）蓝移、张应变红移；关键特征面内各向同性、面外各向异性（εxx=εyy≠εzz），与静水压（只频移不劈裂）形成对比；金刚石/闪锌矿结构三重简并声子劈裂为单态+二重态，劈裂大小与应变和形变势有关、偏振依赖</span></figcaption>
+</figure>
+<figure class="slide" id="slide-648">
+<img src="slides/slide_648.png" alt="课件第648页 14. 应力和应变：外延材料的应力应变（续）——应变随厚度弛豫：薄层（低于临界厚度）完全共格、厚层部分弛豫（位错）；由拉曼频移反推残余应变与弛豫程度；衬底夹持作用；合金无序展宽需与成分效应解耦；超薄层声子 confinement 效应不对称展宽、界面化学键重组引入额外特征">
+<figcaption><span class="sno">648</span><span class="stitle">14. 应力和应变：外延材料的应力应变（续）——应变随厚度弛豫：薄层（低于临界厚度）完全共格、厚层部分弛豫（位错）；由拉曼频移反推残余应变与弛豫程度；衬底夹持作用；合金无序展宽需与成分效应解耦；超薄层声子 confinement 效应不对称展宽、界面化学键重组引入额外特征</span></figcaption>
+</figure>
+<figure class="slide" id="slide-649">
+<img src="slides/slide_649.png" alt="课件第649页 14. 应力和应变：纳米结构中不可避免或随意的应变效应——外延应变薄膜（lattice mismatch）与二维材料应变工程（InfoMat 2021）">
+<figcaption><span class="sno">649</span><span class="stitle">14. 应力和应变：纳米结构中不可避免或随意的应变效应——外延应变薄膜（lattice mismatch）与二维材料应变工程（InfoMat 2021）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-650">
+<img src="slides/slide_650.png" alt="课件第650页 14. 应力和应变：Ge/Si 量子点中的结构、应变与成分——MBE 生长（衬底 510°C、8ML Ge、80 周期超晶格），高密度（2×10¹¹cm⁻²）均一的小尺寸量子点 12nm×25nm×2nm（PH Tan/K Brunner, PRB 2003）">
+<figcaption><span class="sno">650</span><span class="stitle">14. 应力和应变：Ge/Si 量子点中的结构、应变与成分——MBE 生长（衬底 510°C、8ML Ge、80 周期超晶格），高密度（2×10¹¹cm⁻²）均一的小尺寸量子点 12nm×25nm×2nm（PH Tan/K Brunner, PRB 2003）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-651">
+<img src="slides/slide_651.png" alt="课件第651页 14. 应力和应变：Ge/Si 量子点拉曼光谱——Ge-Ge（307.5cm⁻¹）/Si-Ge/Si-Si 峰与 2TA、2nd Ge-Ge；D(Ge-Ge)=15cm⁻¹、D(Ge-Si)=9cm⁻¹；量子限制、应变与组分共同作用；尖锐界面、信号主要来自量子点核心区">
+<figcaption><span class="sno">651</span><span class="stitle">14. 应力和应变：Ge/Si 量子点拉曼光谱——Ge-Ge（307.5cm⁻¹）/Si-Ge/Si-Si 峰与 2TA、2nd Ge-Ge；D(Ge-Ge)=15cm⁻¹、D(Ge-Si)=9cm⁻¹；量子限制、应变与组分共同作用；尖锐界面、信号主要来自量子点核心区</span></figcaption>
+</figure>
+<figure class="slide" id="slide-652">
+<img src="slides/slide_652.png" alt="课件第652页 14. 应力和应变：Ge/Si 量子点应变诱导频移公式——双轴应变 εxx=-3.4%、Δω(LO)=[2qεxx+pεzz]/2ω0；δωsplit=(q-p)εxx/2ω0≈-122εxx cm⁻¹；LO(Ge-Ge)-TO(Ge-Ge)=4.2cm⁻¹；选择定则 y'(x'x')y'、z(x'x')z、y'(x'z')y'、z(x'y')z">
+<figcaption><span class="sno">652</span><span class="stitle">14. 应力和应变：Ge/Si 量子点应变诱导频移公式——双轴应变 εxx=-3.4%、Δω(LO)=[2qεxx+pεzz]/2ω0；δωsplit=(q-p)εxx/2ω0≈-122εxx cm⁻¹；LO(Ge-Ge)-TO(Ge-Ge)=4.2cm⁻¹；选择定则 y'(x'x')y'、z(x'x')z、y'(x'z')y'、z(x'y')z</span></figcaption>
+</figure>
+<figure class="slide" id="slide-653">
+<img src="slides/slide_653.png" alt="课件第653页 14. 应力和应变：Ge/Si 量子点总频移分解——应变 εxx=-3.4% 贡献 14.5cm⁻¹、量子限制 confinement -1cm⁻¹、成分 -6.8cm⁻¹（未应变 Si1-xGex 合金 Δω(xGe)=-37(1-xGe)cm⁻¹，xGe=0.82）；无浸润层（WL）拉曼贡献">
+<figcaption><span class="sno">653</span><span class="stitle">14. 应力和应变：Ge/Si 量子点总频移分解——应变 εxx=-3.4% 贡献 14.5cm⁻¹、量子限制 confinement -1cm⁻¹、成分 -6.8cm⁻¹（未应变 Si1-xGex 合金 Δω(xGe)=-37(1-xGe)cm⁻¹，xGe=0.82）；无浸润层（WL）拉曼贡献</span></figcaption>
+</figure>
+<figure class="slide" id="slide-654">
+<img src="slides/slide_654.png" alt="课件第654页 14. 应力和应变：Ge/Si 量子点退火研究——退火温度升高 Si 扩散进入量子点：Ge-Ge 频移减小、应变弛豫（as-grown 应变 -3.4%、700°C 退火 -2.3%…800°C -1.2%）、组分降低（xGe 0.82→0.57→0.40→0.28）；εxx=-0.042xGe 应变模型（PH Tan, APL 2004）">
+<figcaption><span class="sno">654</span><span class="stitle">14. 应力和应变：Ge/Si 量子点退火研究——退火温度升高 Si 扩散进入量子点：Ge-Ge 频移减小、应变弛豫（as-grown 应变 -3.4%、700°C 退火 -2.3%…800°C -1.2%）、组分降低（xGe 0.82→0.57→0.40→0.28）；εxx=-0.042xGe 应变模型（PH Tan, APL 2004）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-655">
+<img src="slides/slide_655.png" alt="课件第655页 14. 应力和应变：简介（拉曼扫描）——Si 衬底 [001] 面上的 Ge 量子点，沿 [110] 方向拉曼扫描（应变与组分空间分布测量）">
+<figcaption><span class="sno">655</span><span class="stitle">14. 应力和应变：简介（拉曼扫描）——Si 衬底 [001] 面上的 Ge 量子点，沿 [110] 方向拉曼扫描（应变与组分空间分布测量）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>应力和应变</h2>
+        <div class="sec-meta"><span class="time">录音：第 3 段（后）</span><span class="chip">课件 644</span><span class="chip">课件 645</span><span class="chip">课件 646</span><span class="chip">课件 647</span><span class="chip">课件 648</span><span class="chip">课件 649</span><span class="chip">课件 650</span><span class="chip">课件 651</span><span class="chip">课件 652</span><span class="chip">课件 653</span><span class="chip">课件 654</span><span class="chip">课件 655</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>下面介绍应力和应变。应力指材料被拉伸或压缩。应变是材料在外力作用下发生的几何形变（无量纲），分为正应变（拉伸/压缩）和切应变（剪切）；应力是使材料发生几何形变时其内部单位面积上所感受的内力，单位为 Pa。在弹性范围内，应力与应变遵从线性关系（胡克定律 σ=E·ε，E 为杨氏模量），三维情况下推广为广义胡克定律（含泊松比 ν）。拉曼光谱对晶格振动（声子）敏感，而应力/应变会改变原子间距离和键角，从而改变晶格振动频率——核心机制是声子形变势。应力/应变导致峰位移动是最直接、最常用的效应：在拉伸应变下键长增大、键力常数减小，声子频率通常红移；在压缩应变下键长缩短、键力常数增大，声子频率通常蓝移。比例系数（拉曼位移系数）取决于材料、声子模式对称性和应力方向。</p><p>在应力/应变下，拉曼峰形会变化——峰展宽或峰分裂：峰形展宽主要因为应变梯度（非均匀应变）导致不同微区声子频率不同；各向异性应力会降低晶格对称性、使简并声子模式分裂（如硅 ~520cm⁻¹ 三重简并在单轴应力下分裂为两个或三个峰，金刚石、GaAs 也有类似行为）。拉曼模的偏振特性会变化：应力改变晶格对称性进而改变拉曼张量的对称性、导致偏振选择定则变化，可用于区分应力方向。拉曼模的强度也会变化：应力可能改变电子-声子耦合强度、影响共振增强条件，或相变/应力诱导的结构变化导致某些峰消失或新峰出现。拉曼光谱是基于应力对晶格振动声子的调制来研究材料应力/应变状态的高灵敏度、无损的指纹式工具。典型应用：微电子测量硅芯片残余应力评估器件可靠性、薄膜与涂层表征残余应力、地质与高压科学用金刚石压腔测高压相变和应力状态、二维材料通过拉曼峰位和分裂研究石墨烯/MoS2 的应变工程。</p><p>另一种应力情况是材料外延生长时会有应力。为什么？因为外延材料与衬底材料的晶格常数不一样，外延层为了与衬底晶格匹配，通常会承受面内双轴应变。如果上面材料的晶格常数比衬底小，就有拉伸效应；如果大，就有压应力效应。面内压应变导致拉曼峰蓝移，面内张应变导致红移。外延双轴应变的关键特征是面内各向同性、面外各向异性（εxx=εyy≠εzz）——这与纯静水压应变（只引起频移、不劈裂）形成鲜明对比，是区分外延双轴应变与静水压应变的重要光谱标志。这种非静水压应变状态会降低晶体对称性：对金刚石结构（Si、Ge）或闪锌矿结构（GaAs、ZnSe 等），原本三重简并的光学声子会劈裂为单态和二重态，劈裂的大小与应变量和声子形变势有关，劈裂模式具有偏振依赖性。</p><p>外延材料应变会随厚度弛豫：当外延层厚度超过临界厚度时，应变会通过位错等机制部分弛豫——薄外延层（低于临界厚度）应变完全共格、拉曼频移与理论值吻合；厚外延层应变部分弛豫、拉曼频移小于完全应变预期值；通过拉曼频移可以反推残余应变、评估弛豫程度。外延层与衬底紧密结合，衬底对外延层有夹持作用（衬底刚度影响实际应变分布，衬底较薄时可能弯曲）。如果外延层是合金，除了应变效应外还有合金无序导致的拉曼峰展宽和额外频移，需要将应变效应与成分效应分离。超薄外延层中声子 confinement 效应会导致拉曼峰不对称展宽和频移，界面处的化学键重组也可能引入额外的拉曼特征。</p><p>另外，我们有时可以人为改变材料的应力。对硅等体材料来说改变特别难，但二维材料很薄，往往放在柔软衬底上直接去挤或拉它：通过柔性衬底拉伸，应力约 0.5%，大者达 1%～2%——但硅材料实现 1%～2% 极难，可通过数百大气压高压实现改变。纳米结构中，外延生长时的晶格失配应变不可避免，也会有意利用应变工程二维材料。</p><p>这里涉及锗硅（Ge/Si）量子点能位：其拉曼峰含 Ge-Ge、Si-Ge 及 Si-Si 峰，Ge-Ge 峰频率受量子限制效应、应力及组分影响。因为在硅上长锗硅并非纯锗，高温生长时衬底硅会扩散进入。通过偏振拉曼光谱观察峰位移动，可大致确定应变为 -3.4%；考虑合金及量子线效率后，标定应变为 -3.4%。已知应变与量子限制效应，即可推算出组分：若知道组分导致的拉曼峰移动量就能求出组分，此处组分为 0.82——即在硅上生长的锗量子点中锗占 82%、硅占 18%，因为高温下硅会扩散进量子点，这是平均效果。</p><p>课件上给出了定量分解：Ge 量子点相对体材料的总频移中，应变 εxx=-3.4% 的贡献约 14.5cm⁻¹（Δω(TO)=[p+q]εxx+qεzz/2ω0，δωsplit=(q-p)εxx/2ω0≈-122εxx cm⁻¹），量子限制 confinement 贡献 -1cm⁻¹，成分贡献 -6.8cm⁻¹（未应变的 Si1-xGex 合金 Δω(xGe)=-37(1-xGe)cm⁻¹，xGe=0.82）；LO(Ge-Ge)-TO(Ge-Ge)=4.2cm⁻¹。大家可看退火数据：不同温度下拉曼峰产生移动，通过微分拟合能确定组分和应变——退火温度升高，Si 扩散进量子点，应变从 -3.4%（as-grown）松弛到 800°C 的 -1.2%，组分 xGe 从 0.82 降到 0.28（700°C 0.57、800°C 0.40 附近），应变模型 εxx=-0.042xGe。前面讲过电子拉曼，其信号随组分改变而变化：将样品横向抛光后，可测量沿生长方向的分布，样品厚约 2 微米，可测得锗组分和应变的变化规律，这些都能推导出来。</p><p>关于拉曼光谱数据处理，下节课再讲——后续内容不多，仅一两页。下节课将讲解如何处理数据。再说也无益，大家下课。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>讨论强度真的不容易，这在拉曼里面是最难的。</p><p>通过柔性衬底拉伸，应力约0.5%，大者达1%～2%。但硅材料实现1%～2%极难。</p><p>即在硅上生长锗量子点，但非纯锗。其中锗占82%，硅占18%。因高温下硅会扩散进量子点，这是平均效果。</p><p>关于拉曼数据处理，下节课再讲。后续内容不多，仅一两页。下节课将讲解如何处理数据。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（显微共焦拉曼光谱学）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>

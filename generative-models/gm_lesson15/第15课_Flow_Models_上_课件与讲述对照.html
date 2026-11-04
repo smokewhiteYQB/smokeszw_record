@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>生成式模型与科学智能应用 · 第15节 Lecture 13 Flow Models（上）：Score 模型复习与朗之万采样、噪声多层级 NCSN、连续时间前向过程与随机微分方程｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.videos{margin-top:14px;border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.video + .video{border-top:1px solid #e4e9f0;}
+.videos h4{font-size:12.5px;font-weight:700;color:#0a1f38;background:#f2f5f9;padding:8px 12px;border-bottom:1px solid #e4e9f0;}
+.videos video{display:block;width:100%;max-height:460px;background:#0b0f14;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>生成式模型与科学智能应用 · 第15节 Lecture 13 Flow Models（上）：Score 模型复习与朗之万采样、噪声多层级 NCSN、连续时间前向过程与随机微分方程</h1>
+    <div class="sub">第15节 Lecture 13 Flow Models（上）：Score 模型复习与朗之万采样、噪声多层级 NCSN、连续时间前向过程与随机微分方程 ｜ 2026-10-29 ｜ 刘云帆</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 18 页 · 整理 5 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-recap">01 上一课回顾，Score 模型与朗之万采样</option>
+<option value="sec-ncsn">02 噪声多层级与 NCSN</option>
+<option value="sec-compare">03 DDPM 与 NCSN 对比</option>
+<option value="sec-cont">04 连续时间前向过程与 SDE</option>
+<option value="sec-sde">05 随机过程与 SDE</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 Lecture13_Flow_Models.pdf 逐页渲染，转写原文见 record_20261029.txt。</div>
+<section class="sec" id="sec-recap">
+  <div class="slides"><figure class="slide" id="slide-01">
+<img src="slides/slide_01.png" alt="课件第1页 封面：Lecture 13 Flow Models，Generative Models & AI4S Applications（刘云帆，Fall 2026）">
+<figcaption><span class="sno">01</span><span class="stitle">封面：Lecture 13 Flow Models，Generative Models & AI4S Applications（刘云帆，Fall 2026）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-02">
+<img src="slides/slide_02.png" alt="课件第2页 Recap：扩散模型——前向预定义马尔可夫加噪 q(x_t|x_{t−1})=𝒩(√α_t x_{t−1},(1−α_t)I)，反向学习去噪 p_θ(x_{t−1}|x_t)=𝒩(μ_θ,Σ_θ)">
+<figcaption><span class="sno">02</span><span class="stitle">Recap：扩散模型——前向预定义马尔可夫加噪 q(x_t|x_{t−1})=𝒩(√α_t x_{t−1},(1−α_t)I)，反向学习去噪 p_θ(x_{t−1}|x_t)=𝒩(μ_θ,Σ_θ)</span></figcaption>
+</figure>
+<figure class="slide" id="slide-03">
+<img src="slides/slide_03.png" alt="课件第3页 Recap：Score-based 模型采样——学 s_θ(x)≈∇_x log p_data，从样本出发用朗之万动力学生成新样本（score matching 到 Langevin dynamics 到 new samples）">
+<figcaption><span class="sno">03</span><span class="stitle">Recap：Score-based 模型采样——学 s_θ(x)≈∇_x log p_data，从样本出发用朗之万动力学生成新样本（score matching 到 Langevin dynamics 到 new samples）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>上一课回顾，Score 模型与朗之万采样</h2>
+        <div class="sec-meta"><span class="time">录音：前半（复习，休息前）</span><span class="chip">课件 1</span><span class="chip">课件 2</span><span class="chip">课件 3</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>上课先按惯例把上节课内容稍微复习一下。能量模型是很早提出的、用任意神经网络建模概率分布的通用方法，生成模型和判别模型都能用。</p><p>建模方法一般通过指数幂形式恢复分布，再归一化；归一化参数就是对所有 x 积分的配分函数。</p><p>优点是灵活，任意网络都能这样运算；最大问题是归一化常数无法直接计算。</p><p>为解决这个问题有很多方法，Score Function 就是其中一种。定义是对任意概率分布取对数后对 x 求梯度。</p><p>对能量模型计算 Score 函数，代入其密度表达式，消去与 x 无关的 log Z 项，即可解决配分函数问题。</p><p>Score-based Model 的核心思想是不直接表示密度或生成模型，而是学习数据的梯度形式，呈向量场。</p><p>以往用参数化分布拟合真实分布，如同匹配两个概率质量曲面；引入 Score 后相当于匹配两个概率分布的向量场。</p><p>最原始的建模方法是直接计算真实数据分布上的向量场距离并最小化，但真实密度未知，目标项无法直接计算。</p><p>有文章给出等价优化目标，虽含未知项但可用蒙特卡洛处理；最终对 score 向量场求关于 x 的梯度，雅可比矩阵复杂度极高。</p><p>上节课讲了 Score Matching 与得分函数；这节课引入去噪概念，因为后续要用的模型都基于此。</p><p>去噪目标要先构造加噪数据：给定真实数据，加噪数据的分布以干净数据为均值、加一个各向同性方差。</p><p>这个加噪分布与扩散模型里的加噪不同：扩散把原信号乘以根号系数缩小后加扰动，这里直接在原信号上加噪声。</p><p>用参数化模型去拟合加噪后数据的梯度（score），就是去噪 Score Matching 的目标。</p><p>这个目标与之前的一样有问题：加噪分布依然未知，因为它是从真实数据分布加噪出来的。</p><p>2021 年一篇文章给出等价优化目标：拟合加噪分布的 score，等价于拟合条件分布，即给定干净图像时加噪过程的分布。</p><p>加噪过程是自己构造的，条件分布可以直接求取。对高斯加噪过程，贝叶斯公式对 x_t 积分得到简单表达式。</p><p>高斯噪声下条件 score 就是减去均值再除以方差，训练就是让网络给定加噪图像预测噪声。</p><p>训练方法：给定噪声水平 sigma，先采样先验数据，对每个数据加 sigma 噪声，得到干净样本与加噪样本对。</p><p>按等价目标函数计算损失，对参数求梯度、不断更新参数，收敛后给定加噪图像即可预测噪声。</p><p>采样：假设 score 已知，从噪声分布出发沿分数函数的梯度采样迭代，把样本推向概率密度更高的区域。</p><p>形式化就是朗之万动力学：不断迭代的随机过程，从噪声分布采样初始 x，每步沿 score 梯度上升并加随机噪声项。</p><p>加随机噪声是为了让 x_t 始终属于某种数据分布状态，而不是所有点都收敛到均值点。</p><p>步长参数随迭代减小，一开始步长大，收敛过程中逐渐变小。</p><p>有了学习到的 score 网络，生成时就用朗之万动力学采样迭代得到新样本。</p><p>但实际存在很大问题：数据通常满足流形假设，分布在低维子空间结构上，流形以外区域概率密度近乎为零。</p><p>在流形外区域计算 score 没有意义；即使在流形上，样本有限导致低密度区域估计不准确。</p><p>很难从样本中估计高维数据的 score，要么没有定义、要么没法准确估计，这就是上节课结尾的问题。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>在正式讲这节课的内容之前，我们还是按照惯例把上节课的一些内容复习一下。</p><p>能量模型是一种很早以前提出来的、用任意的一个神经网络FC来建模概率分布的通用方法。</p><p>Score-based Model的核心思想是：不直接表示密度或生成模型，而是求数据的梯度形式。</p><p>引入Score方程后，相当于匹配两个概率分布的向量场，使其一致即可。</p><p>最终，对S向量场求关于X的梯度，其雅可比矩阵计算复杂度极高。</p><p>那怎么从这样一个Score Function去采样得到新的样本呢？</p><p>直观来看，我们从噪声分布出发，沿着分数函数的梯度进行采样和迭代变化。</p><p>数据通常满足流形假设，在流形以外的区域，概率密度近乎为零。</p><p>所以我们很难从样本中估计一个高维数据对应的score方程，要么没有意义，要么没法准确地估计。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-ncsn">
+  <div class="slides"><figure class="slide" id="slide-04">
+<img src="slides/slide_04.png" alt="课件第4页 Recap：退火朗之万动力学与 NCSN——训练单个 score 模型 s_θ(x,σ) 以噪声 σ 为条件，多层级 σ_1..σ_L 的 DSM 目标，噪声条件得分网络 NCSN">
+<figcaption><span class="sno">04</span><span class="stitle">Recap：退火朗之万动力学与 NCSN——训练单个 score 模型 s_θ(x,σ) 以噪声 σ 为条件，多层级 σ_1..σ_L 的 DSM 目标，噪声条件得分网络 NCSN</span></figcaption>
+</figure>
+<figure class="slide" id="slide-05">
+<img src="slides/slide_05.png" alt="课件第5页 Recap：扩散模型与 Score-based 模型对比——它们看起来相似吗？在哪些方面相似？（DDPM 与 NCSN）">
+<figcaption><span class="sno">05</span><span class="stitle">Recap：扩散模型与 Score-based 模型对比——它们看起来相似吗？在哪些方面相似？（DDPM 与 NCSN）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>噪声多层级与 NCSN</h2>
+        <div class="sec-meta"><span class="time">录音：后半（休息后）</span><span class="chip">课件 4</span><span class="chip">课件 5</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>为解决这个问题，在扩散过程中加噪声。加噪让数据分布变厚变平滑，低密度区域也有概率质量。</p><p>加噪水平 sigma 控制两个目标的折中：加噪分布与真实分布的 Wasserstein 距离，以及 score 估计的难度。</p><p>噪声大时分布离目标更远，但每个位置概率密度变大、估计更简单；噪声小时更接近目标但估计更难。</p><p>这促使设计多层级噪声架构：从干净数据逐步加噪到大噪声，再逐级估计 score、逐级返回。</p><p>实验演示：随着噪声强度增大，加噪分布与目标分布差距变大，但 score 估计越来越准。</p><p>学习时先从加较多噪声的层级开始估计对应 score，再在基础上逐级估计更准的 score。</p><p>把多层级噪声用到朗之万动力学：用一系列 sigma 递减的噪声层级，从大噪声层级采样，结果作为下一层级初始值。</p><p>网络需要以噪声水平 sigma 为条件，称为噪声条件得分网络（NCSN），即普通网络加 sigma 作为调节器。</p><p>多层级去噪算法的目标函数以 sigma 为条件，共用一个网络对不同噪声层级做去噪预测。</p><p>还可以设计权重：不同噪声层级权重不同，初始层级权重多一些、后面层级少一些。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>为了真正解决这个问题，我们需要去引入noise这个事。</p><p>对于数据空间中定义很稀薄、很多地方都没有定义的情况，加上噪声后起到变厚、更加平滑的效果。</p><p>加这个噪声的大小，比如这个噪声水平sigma，它控制着两个部分的一个折中。</p><p>这让我们设计多层级架构组合。</p><p>现在可训练多层级网络，采用多层级结构。</p><p>这是以sigma为条件的标准条件网络，方法中称为Noise Conditional Score Network（NCSN）。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-compare">
+  <div class="slides"><figure class="slide" id="slide-06">
+<img src="slides/slide_06.png" alt="课件第6页 Recap：找出差异——NCSN 直接扰动干净数据，DDPM 定义马尔可夫加噪链（Perturbs clean data directly vs. Defines a Markov noising chain）">
+<figcaption><span class="sno">06</span><span class="stitle">Recap：找出差异——NCSN 直接扰动干净数据，DDPM 定义马尔可夫加噪链（Perturbs clean data directly vs. Defines a Markov noising chain）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-07">
+<img src="slides/slide_07.png" alt="课件第7页 Recap：找出差异——相似的去噪风格目标，但预测目标不同（Similar denoising-style objectives, different prediction targets）">
+<figcaption><span class="sno">07</span><span class="stitle">Recap：找出差异——相似的去噪风格目标，但预测目标不同（Similar denoising-style objectives, different prediction targets）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-08">
+<img src="slides/slide_08.png" alt="课件第8页 Recap：统一表示 x_t=λ_t x_0+σ_t ε——噪声参数化：NCSN 取 λ_t=1、σ_t=σ_t，DDPM 取 λ_t=√ᾱ_t、σ_t=√(1−ᾱ_t)；损失函数：NCSN 与去噪 score 相关、DDPM 预测噪声">
+<figcaption><span class="sno">08</span><span class="stitle">Recap：统一表示 x_t=λ_t x_0+σ_t ε——噪声参数化：NCSN 取 λ_t=1、σ_t=σ_t，DDPM 取 λ_t=√ᾱ_t、σ_t=√(1−ᾱ_t)；损失函数：NCSN 与去噪 score 相关、DDPM 预测噪声</span></figcaption>
+</figure>
+<figure class="slide" id="slide-09">
+<img src="slides/slide_09.png" alt="课件第9页 Recap：DDPM 与 NCSN 都用有限、离散的噪声水平——如果有无限多个噪声水平会怎样？（引出连续时间）">
+<figcaption><span class="sno">09</span><span class="stitle">Recap：DDPM 与 NCSN 都用有限、离散的噪声水平——如果有无限多个噪声水平会怎样？（引出连续时间）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>DDPM 与 NCSN 对比</h2>
+        <div class="sec-meta"><span class="time">录音：后半（休息后）</span><span class="chip">课件 6</span><span class="chip">课件 7</span><span class="chip">课件 8</span><span class="chip">课件 9</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>NCSN 是 Song 和 Ermon 提出的工作，效果不错，还能在高分辨率图像上生成，与当时 GAN 结果比较匹配。</p><p>把带噪模型 NCSN 与扩散模型 DPM 对比，会发现它们在很多方面相似：都有加噪去噪过程、都多步采样、都训练去噪目标。</p><p>课程推荐的《Principles of Deep Learning》书里有一个表，很好地比较了分数模型与扩散模型的区别与联系。</p><p>加噪过程：DDPM 定义马尔可夫加噪链、NCSN 直接扰动干净数据；一个是递推定义、一个是直接定义通向过程。</p><p>统一表示 x_t=λ_t x_0+σ_t ε：NCSN 取 λ_t 等于 1、σ_t 为噪声水平；DDPM 取 λ_t=√ᾱ_t、σ_t=√(1−ᾱ_t)。</p><p>损失函数：DDPM 预测噪声，NCSN 的预测目标与去噪 score 相关，两者都是去噪风格目标、预测目标不同。</p><p>两者都用有限、离散的噪声水平。如果有无穷多个噪声水平会怎样？这就引出连续时间。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>刚才提到的NCSN是Song Yang提出的，就是在扩散模型上的一个工作。</p><p>如果把刚才的带噪模型称为NCSN，用NCSN代替并与DPM对比，会发现它们在很多方面相似。</p><p>其实我们在课程推荐的《Principles of Deep Learning》教科书中，有一个表很好地比较了分数模型和扩散模型的区别与联系。</p><p>比如第一行给出的是2+1变成3，这个过程应该是在扩散模型语境下，在时间维度上增加一维。</p><p>然后呢？这个表格还有两个其他的合同。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-cont">
+  <div class="slides"><figure class="slide" id="slide-10">
+<img src="slides/slide_10.png" alt="课件第10页 连续时间前向过程：考虑小时间步 Δt 加噪（ε∼𝒩(0,I)）——NCSN：x_{t+Δt}=x_t+√(σ²_{t+Δt}−σ²_t)ε 近似 x_t+√(dσ²(t)/dt 乘 Δt)ε">
+<figcaption><span class="sno">10</span><span class="stitle">连续时间前向过程：考虑小时间步 Δt 加噪（ε∼𝒩(0,I)）——NCSN：x_{t+Δt}=x_t+√(σ²_{t+Δt}−σ²_t)ε 近似 x_t+√(dσ²(t)/dt 乘 Δt)ε</span></figcaption>
+</figure>
+<figure class="slide" id="slide-11">
+<img src="slides/slide_11.png" alt="课件第11页 连续时间前向过程：泰勒展开 σ²(t+Δt)=σ²(t)+(dσ²/dt)Δt+o(Δt)，Δt 很小时 σ²(t+Δt)−σ²(t) 近似等于导数乘 Δt">
+<figcaption><span class="sno">11</span><span class="stitle">连续时间前向过程：泰勒展开 σ²(t+Δt)=σ²(t)+(dσ²/dt)Δt+o(Δt)，Δt 很小时 σ²(t+Δt)−σ²(t) 近似等于导数乘 Δt</span></figcaption>
+</figure>
+<figure class="slide" id="slide-12">
+<img src="slides/slide_12.png" alt="课件第12页 连续时间前向过程：DDPM——x_{t+Δt}=√(1−β_t Δt)x_t+√(β_t Δt)ε 近似 x_t−(1/2)β_t x_t Δt+√(β_t Δt)ε">
+<figcaption><span class="sno">12</span><span class="stitle">连续时间前向过程：DDPM——x_{t+Δt}=√(1−β_t Δt)x_t+√(β_t Δt)ε 近似 x_t−(1/2)β_t x_t Δt+√(β_t Δt)ε</span></figcaption>
+</figure>
+<figure class="slide" id="slide-13">
+<img src="slides/slide_13.png" alt="课件第13页 连续时间前向过程：泰勒展开 √(1−u)=1−(1/2)u+O(u²)（u 接近 0 时），化简根号项与噪声项">
+<figcaption><span class="sno">13</span><span class="stitle">连续时间前向过程：泰勒展开 √(1−u)=1−(1/2)u+O(u²)（u 接近 0 时），化简根号项与噪声项</span></figcaption>
+</figure>
+<figure class="slide" id="slide-14">
+<img src="slides/slide_14.png" alt="课件第14页 连续时间前向过程：两个模型的前向可写成统一形式 x_{t+Δt}=x_t+f(x_t,t)Δt+g(t)√Δt ε——漂移系数（Drift Coefficient）与扩散系数（Diffusion Coefficient）">
+<figcaption><span class="sno">14</span><span class="stitle">连续时间前向过程：两个模型的前向可写成统一形式 x_{t+Δt}=x_t+f(x_t,t)Δt+g(t)√Δt ε——漂移系数（Drift Coefficient）与扩散系数（Diffusion Coefficient）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-15">
+<img src="slides/slide_15.png" alt="课件第15页 连续时间前向过程：DDPM 取 f(x_t,t)=−(1/2)β_t x_t、g(t)=√β_t；NCSN 取 f(x_t,t)=0、g(t)=√(dσ²(t)/dt)">
+<figcaption><span class="sno">15</span><span class="stitle">连续时间前向过程：DDPM 取 f(x_t,t)=−(1/2)β_t x_t、g(t)=√β_t；NCSN 取 f(x_t,t)=0、g(t)=√(dσ²(t)/dt)</span></figcaption>
+</figure>
+<figure class="slide" id="slide-16">
+<img src="slides/slide_16.png" alt="课件第16页 连续时间前向过程：取无穷小极限 Δt 到 dt、√Δt ε 到 dw_t，得到前向 SDE——dx_t=f(x_t,t)dt+g(t)dw_t">
+<figcaption><span class="sno">16</span><span class="stitle">连续时间前向过程：取无穷小极限 Δt 到 dt、√Δt ε 到 dw_t，得到前向 SDE——dx_t=f(x_t,t)dt+g(t)dw_t</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>连续时间前向过程与 SDE</h2>
+        <div class="sec-meta"><span class="time">录音：后半（课末）</span><span class="chip">课件 10</span><span class="chip">课件 11</span><span class="chip">课件 12</span><span class="chip">课件 13</span><span class="chip">课件 14</span><span class="chip">课件 15</span><span class="chip">课件 16</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>现在把加噪过程从离散推广到连续：考虑一个很小的时间步 Δt 加噪。</p><p>NCSN 前向：x_{t+Δt}=x_t+√(σ²_{t+Δt}−σ²_t)ε，近似为 x_t+√(dσ²(t)/dt 乘 Δt)ε。</p><p>用泰勒展开 σ²(t+Δt)=σ²(t)+(dσ²/dt)Δt+o(Δt)，Δt 很小时 σ² 差近似等于导数乘 Δt。</p><p>DDPM 前向：x_{t+Δt}=√(1−β_t Δt)x_t+√(β_t Δt)ε，近似为 x_t−(1/2)β_t x_t Δt+√(β_t Δt)ε。</p><p>泰勒展开 √(1−u)=1−u/2+O(u²)，u 很小时把根号项展开化简。</p><p>两个模型的前向过程可以写成统一形式：x_{t+Δt}=x_t+f(x_t,t)Δt+g(t)√Δt ε，f 是漂移系数、g 是扩散系数。</p><p>DDPM 取 f 为负二分之一 β_t x_t、g 为根号 β_t；NCSN 取 f 等于 0、g 为根号 dσ²/dt。</p><p>漂移项是确定性的、与样本和时间相关；扩散项与当前样本无关，对应随机噪声项。</p><p>取无穷小极限 Δt 到 dt、√Δt ε 到 dw_t，就得到前向 SDE：dx_t=f(x_t,t)dt+g(t)dw_t。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>现在我先考虑一个很小时间步的加法来近似这个高度。</p><p>本来一般是不展开的，但我还是给大家说一下怎么算。这个地方为什么能从这一项推出后面这一项？它就是对f(t)这个函数进行泰勒展开。</p><p>对根号下1减epsilon的形式，做泰勒展开。</p><p>那这样的形式可以把它们统一写成这样一个表达式：X(T加DeltaT)就等于XT加上后面这一大堆组合。</p><p>那这两项呢，我们一般叫一项叫漂移项，后一项叫扩散项。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-sde">
+  <div class="slides"><figure class="slide" id="slide-17">
+<img src="slides/slide_17.png" alt="课件第17页 连续时间随机过程，许多可以用随机微分方程（SDE）表示：dx_t=f(x_t,t)dt+g(t)dw_t（斯坦福 CS236 参考）">
+<figcaption><span class="sno">17</span><span class="stitle">连续时间随机过程，许多可以用随机微分方程（SDE）表示：dx_t=f(x_t,t)dt+g(t)dw_t（斯坦福 CS236 参考）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-18">
+<img src="slides/slide_18.png" alt="课件第18页 随机过程与随机微分方程：确定性漂移（Deterministic drift）+ 无穷小噪声（Infinitesimal noise），概率密度随时间演化">
+<figcaption><span class="sno">18</span><span class="stitle">随机过程与随机微分方程：确定性漂移（Deterministic drift）+ 无穷小噪声（Infinitesimal noise），概率密度随时间演化</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>随机过程与 SDE</h2>
+        <div class="sec-meta"><span class="time">录音：后半（课末）</span><span class="chip">课件 17</span><span class="chip">课件 18</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>连续时间随机过程，许多可以用随机微分方程（SDE）表示：dx_t=f(x_t,t)dt+g(t)dw_t。</p><p>随机过程与 SDE：确定性漂移项加无穷小噪声（扩散项），描述连续时间下样本如何随动力学演化。</p><p>从离散到连续，把加噪步数变多、每步变很小，就变成连续时间过程，这是接下来要讨论的方向。</p><p>下节课预告：如果加噪过程无限、时间间隔无限小，就涉及 Flow Matching；下一章节讲 Flow。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这个就是做Forward SDE，这个就是一个随机微分方程。它描述了我们这个前向加上在连续时间。</p><p>它实际讲的是什么事呢？它是讲连续时间下很小的一个时间段内，样本X_t它是怎么动的，它描述动力学的一个过程。</p><p>还有一个漂移的意象，有一个随机扰动的意象。</p><p>阿尔法是在加噪过程中信号的保持量，贝塔就是这个噪声的加入相。</p><p>那咱们时间也差不多了，后面的内容下次再讲，好，咱们今天先到这里。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（生成式模型与科学智能应用）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>

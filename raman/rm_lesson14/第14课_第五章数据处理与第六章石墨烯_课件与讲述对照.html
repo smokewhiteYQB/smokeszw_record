@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>显微共焦拉曼光谱学 · 第14节 第五章（下）：拉曼光谱数据处理 与 第六章（上）：石墨烯材料拉曼光谱研究进展｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.videos{margin-top:14px;border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.video + .video{border-top:1px solid #e4e9f0;}
+.videos h4{font-size:12.5px;font-weight:700;color:#0a1f38;background:#f2f5f9;padding:8px 12px;border-bottom:1px solid #e4e9f0;}
+.videos video{display:block;width:100%;max-height:460px;background:#0b0f14;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>显微共焦拉曼光谱学 · 第14节 第五章（下）：拉曼光谱数据处理 与 第六章（上）：石墨烯材料拉曼光谱研究进展</h1>
+    <div class="sub">第14节 第五章（下）：拉曼光谱数据处理 与 第六章（上）：石墨烯材料拉曼光谱研究进展 ｜ 2026-10-27 ｜ 谭平恒</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 40 页 · 整理 5 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-data">01 拉曼光谱数据处理</option>
+<option value="sec-intro">02 第六章引言：石墨烯是什么</option>
+<option value="sec-crystal">03 单层石墨烯：晶体结构与声子</option>
+<option value="sec-clouds">04 三朵乌云与低频剪切模</option>
+<option value="sec-double-res">05 共振拉曼与双共振理论</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 Ch5-材料物性的拉曼光谱研究-2026秋.pdf + Ch6-石墨烯材料拉曼光谱研究进展-2026秋.pdf 逐页渲染，转写原文见 record_20261027.txt。</div>
+<section class="sec" id="sec-data">
+  <div class="slides"><figure class="slide" id="slide-656">
+<img src="slides/slide_656.png" alt="课件第656页 主要内容目录：15 拉曼光谱数据处理（数据处理），另见 10 材料相变/11 偏振拉曼/12 共振拉曼/13 温度效应/14 应力和应变">
+<figcaption><span class="sno">656</span><span class="stitle">主要内容目录：15 拉曼光谱数据处理（数据处理），另见 10 材料相变/11 偏振拉曼/12 共振拉曼/13 温度效应/14 应力和应变</span></figcaption>
+</figure>
+<figure class="slide" id="slide-657">
+<img src="slides/slide_657.png" alt="课件第657页 15. 拉曼光谱数据处理：光谱数据的处理——减背景（噪声、材料荧光等因素带来背景信号，影响拉曼峰拟合结果，用 Labspec5 软件演示减背景）">
+<figcaption><span class="sno">657</span><span class="stitle">15. 拉曼光谱数据处理：光谱数据的处理——减背景（噪声、材料荧光等因素带来背景信号，影响拉曼峰拟合结果，用 Labspec5 软件演示减背景）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-658">
+<img src="slides/slide_658.png" alt="课件第658页 15. 拉曼光谱数据处理：减背景操作——①载入光谱数据②点击按钮弹出对话框③选择合适的线型和阶数④点击 Fit 出现基线形状⑤反复调整至最合适⑥点击 Sub 得到去除基线后的数据">
+<figcaption><span class="sno">658</span><span class="stitle">15. 拉曼光谱数据处理：减背景操作——①载入光谱数据②点击按钮弹出对话框③选择合适的线型和阶数④点击 Fit 出现基线形状⑤反复调整至最合适⑥点击 Sub 得到去除基线后的数据</span></figcaption>
+</figure>
+<figure class="slide" id="slide-659">
+<img src="slides/slide_659.png" alt="课件第659页 15. 拉曼光谱数据处理：光谱数据的处理——平滑（非必要步骤）：①载入光谱②点击按钮弹出对话框③选择合适的参数④点击 Smooth">
+<figcaption><span class="sno">659</span><span class="stitle">15. 拉曼光谱数据处理：光谱数据的处理——平滑（非必要步骤）：①载入光谱②点击按钮弹出对话框③选择合适的参数④点击 Smooth</span></figcaption>
+</figure>
+<figure class="slide" id="slide-660">
+<img src="slides/slide_660.png" alt="课件第660页 15. 拉曼光谱数据处理：光谱数据的处理——峰位拟合：自动寻峰/手动增加、调整、删除峰，选择拟合线型，Search 自动寻峰后反复拟合，点击获得拟合参数">
+<figcaption><span class="sno">660</span><span class="stitle">15. 拉曼光谱数据处理：光谱数据的处理——峰位拟合：自动寻峰/手动增加、调整、删除峰，选择拟合线型，Search 自动寻峰后反复拟合，点击获得拟合参数</span></figcaption>
+</figure>
+<figure class="slide" id="slide-661">
+<img src="slides/slide_661.png" alt="课件第661页 15. 拉曼光谱数据处理：Fano 线型拟合——不宜减背景，需要带背景一起拟合（洛伦兹线型 vs 法诺 BWF 线型；PH Tan, Nat. Mater. 2012）">
+<figcaption><span class="sno">661</span><span class="stitle">15. 拉曼光谱数据处理：Fano 线型拟合——不宜减背景，需要带背景一起拟合（洛伦兹线型 vs 法诺 BWF 线型；PH Tan, Nat. Mater. 2012）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-662">
+<img src="slides/slide_662.png" alt="课件第662页 15. 拉曼光谱数据处理：光谱数据的处理——弱拉曼峰的拟合（log 坐标下弱峰与背景的判别；ML Lin/PH Tan, ACS Nano 2018）">
+<figcaption><span class="sno">662</span><span class="stitle">15. 拉曼光谱数据处理：光谱数据的处理——弱拉曼峰的拟合（log 坐标下弱峰与背景的判别；ML Lin/PH Tan, ACS Nano 2018）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-663">
+<img src="slides/slide_663.png" alt="课件第663页 15. 拉曼光谱数据处理：光谱数据的处理——衬底拉曼信号的去除（测量带衬底薄层样品时衬底信号易混入；Si 衬底上样品信号与 Si 衬底信号）">
+<figcaption><span class="sno">663</span><span class="stitle">15. 拉曼光谱数据处理：光谱数据的处理——衬底拉曼信号的去除（测量带衬底薄层样品时衬底信号易混入；Si 衬底上样品信号与 Si 衬底信号）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-664">
+<img src="slides/slide_664.png" alt="课件第664页 15. 拉曼光谱数据处理：衬底信号去除操作——①同时打开样品光谱与衬底光谱并选中前者②点击按钮弹出对话框③输入“x-y”并点击 go 得到去除衬底信号后的光谱">
+<figcaption><span class="sno">664</span><span class="stitle">15. 拉曼光谱数据处理：衬底信号去除操作——①同时打开样品光谱与衬底光谱并选中前者②点击按钮弹出对话框③输入“x-y”并点击 go 得到去除衬底信号后的光谱</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>拉曼光谱数据处理</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 656</span><span class="chip">课件 657</span><span class="chip">课件 658</span><span class="chip">课件 659</span><span class="chip">课件 660</span><span class="chip">课件 661</span><span class="chip">课件 662</span><span class="chip">课件 663</span><span class="chip">课件 664</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>最后讲一下拉曼光谱的数据处理。数据处理原则上来说，除了最简单地对谱峰进行拟合——假如我有一个峰，那就用洛伦兹去拟合，或者用高斯去拟合，一般来说是洛伦兹。若是二维体系一般用洛伦兹，如果是在连续体系里面，一般可以用高斯；再有可能的话，可以用洛伦兹跟高斯的组合来进行拟合。如果只是对单独的一个拉曼峰进行拟合，包括我们的软件（Origin 或者其他，可能大家用微信用的更多一点）都能做。你去拟合单个峰都没问题；更关键的是，我们拟合完了拉曼峰过后，怎么能把这些数据组合成一个比较好看、或者说能说明问题的图。</p><p>另外，有些谱图你直接拟合不出来，如何去除背景信号也是个问题。数据处理中，拉曼峰多少都有背景。我之前讲过信噪比的定义，主要取决于信号强度和噪声强度。即使拉曼软件能扣除背景，只要不做平滑，噪声就无法改变——噪声遵循根号 N 规律：若计数 1 万，不确定度就是 100，这是很多人无法改变的。当然，如果做平滑处理就没办法了。我们更多关注的是峰和背景的关系：单独的拉曼峰没问题，能拟合出来；但如果是多个拉曼峰叠加，把它们加起来的时候情况可能不太一样——两个峰叠加起来，背景应该怎么建、怎么减，就要根据实际情况去判断了。特别是假如拉曼峰存在洛伦兹线型，有些人还可能是一个倒着的洛伦兹峰（Fano 反洛伦兹），那怎么建背景呢？所以减背景不能想当然，不是说什么背景都能这么去减。</p><p>具体操作以 Labspec5 为例：载入光谱数据后，点击按钮弹出对话框，选择合适的线型和阶数，点击 Fit 出现基线形状，反复调整至最合适，最后点击 Sub 得到去除基线后的数据。平滑是非必要步骤：载入数据后选择合适的参数点击 Smooth 即可。原则上平滑不会大幅改变数据信息，除信噪比外，峰位和半高宽基本不变。但要注意：有些背景看似平庸，实则已处理过，而论文中未说明；若仔细看图，用洛伦兹线型拟合未必理想，可能将信号误作背景扣除，这种情况是存在的。原始数据需满足物理规律，每次测量的信号及噪声均不同，若过度平滑，可能导致两次测量结果差异巨大。</p><p>峰位拟合时，可以用自动寻峰、手动增加/调整/删除峰，选择拟合线型后按 Search 自动寻峰，反复点击多次拟合，最后点击获得拟合参数。参数里面一般来说就是强度和半宽、峰位，还有它的峰值强度和面积强度。但说实话，大家可能没有细致地考虑这个问题：你强度不管是峰值还是面积，多多少少都是和半宽联系起来的——假设我的分辨率高，那它的总强度会降低；分辨率低，强度就变高了。为什么呢？因为它总的强度是一样的，就像一壶水倒在格子里面：格子少的位置就比较高，格子多的高度就比较低（这就是谱仪展宽与积分强度的关系）。所以一般来说展宽连续变化不会改变太多物理意义，但在某些时候很重要——比如量子限制效应：如果你不去考虑、不除去谱仪带宽，就得不出 N 分之一（层数依赖）那样的物理关系。所以什么时候需要考虑、什么时候不需要考虑，大家心里要有一根弦。</p><p>另外一个需要注意的：Fano 线型不宜减背景，需要带背景一起拟合。因为一旦你找到信息它有负信号，把背景给它减掉，有可能背景里面的信号就是你要的信号——减完背景，以后拟合出来的参数就不准确了。弱拉曼峰的拟合也一样，这里是 log 坐标：你觉得这儿有个峰、那儿也有个峰，但这两个峰的位置究竟在哪就不好说了，不能因为觉得某处平就断定峰位只在那儿。</p><p>衬底拉曼信号的去除是很自然的事：测得的拉曼信号是所有被激光辐照过的材料产生的，若一种材料拉曼效应弱、另一种强，弱的就可能体现不出来；如果各处情况差不多，如何把某种材料的信号完全取出来？比如硅衬底上的样品，一种简单方法是去除硅的信号，因为硅信号本身是可以测的。但测了硅信号再去减的时候要注意：信号是 A、背景是 B，原则上它们测试的条件是不一样的——即使激光和积分时间一样，也不能直接相减，因为拉曼信号与激光强度有关，且存在多次干涉效应。一般来说我们减的是 A 减去 αB，α 是可以从 0 调到一定数值的，原则是改变 α 的数值让我们在 A 中看不到 B 的信号。但有时候也会遇到问题：比如单独测衬底时有了热效应导致峰位不一样，此时 A 中的 B 信号与衬底的 B 信号峰位有差别，怎么都减不干净，就得改变 B 的峰位、整体移动；同时 A 减 B 的噪声是 A 的噪声加上 B 的噪声，信号本就弱、若衬底噪声大就很麻烦。另一种方法是对信号进行拟合，用拟合结果去减。原则上去除背景就是两个谱的数据运算，需要根据实际情况判断。</p><p>最后怎么画出来展示可能更重要：比如一页图里可以有实际数据、拟合数据、灰色数据和理论数据。像同位素导致的展宽，理论上得到 4/3 分子加同位素，跟实验结果相比中间就差一个常数——相当于额外有一个展宽。还有前面说过的共振，为什么可以把它叠起来：绝对能量位置是一样的，这样能明显显示哪种情况功能最强、哪种共振最显著；还要把荧光峰位画在下面。这些都是表现形式，通过这些形式让大家更明白我们究竟在做啥、想表达什么意思——这些只能在工作中慢慢积累，有些时候只可意会不可言传。</p><p>顺带讲一个学术道德的问题：物理实验具有可重复性且成本低，一般不存在争议，但曾发现有人挑选数据。比如二维材料有 1 到 9 层，中间可不是随便能变化的；但有人为了满足他的实验结果，采用某一特定方法，把 1 层、8 层、20 层、50 层、100 层这些数据映射到 1、2、3、4、5 层——数据很漂亮，但另外一个人做了相同的工作，就会发现数据差别非常大。我们试样品不可能只撕出 1 层、5 层、20 层、30 层，其他中间试不出来，那也就是说他测了一大堆数据、把很多数据都不要了，只是为反映他的结果。这种数据是别人重复不了的，因为你是挑出来的。这种情况会触及职业道德。反过来，假如我做一个器件电极接错了，把错误的数据扔掉，因为它没有规律、跟挑选数据不一样——一个是仪器问题，一个是人为筛选，性质不同。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>噪声遵循根号N规律，若计数1万，不确定度就是100，这是很多人无法改变的。</p><p>它的总的强度是一样的，就像一壶水，中间有多少个格，把它倒在格子里面。少的可能位置就比较高，多的可能高度比较低。</p><p>Fano线型不宜减背景，需要带背景一起拟合。你简单减背景，那你以后的参数就出问题。</p><p>一般来说我们减的是A减去阿尔法B。阿尔法是可以从0调到一定数值的，原则是改变阿尔法的数值，让我们在A中看不到B的信号。</p><p>他为了满足他的实验结果，把1层、8层、20层、50层、100层映射到12345层。那你想一想，他测了一大堆数据，把很多数据都没有要……这种数据是别人重复不了的，因为你挑出来的数据。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-intro">
+  <div class="slides"><figure class="slide" id="slide-665">
+<img src="slides/slide_665.png" alt="课件第665页 回顾：第五章——对称性决定拉曼光谱（本质）、本征范德华晶体材料/范德华合金/二维范德华异质结（材料体系）、表面声子/折叠声子和莫尔声子/受限声子/声子-等离子体极化激元/电子拉曼散射（元激发）、材料相变/偏振/共振/温度效应/应力应变/数据处理（变化）">
+<figcaption><span class="sno">665</span><span class="stitle">回顾：第五章——对称性决定拉曼光谱（本质）、本征范德华晶体材料/范德华合金/二维范德华异质结（材料体系）、表面声子/折叠声子和莫尔声子/受限声子/声子-等离子体极化激元/电子拉曼散射（元激发）、材料相变/偏振/共振/温度效应/应力应变/数据处理（变化）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-666">
+<img src="slides/slide_666.png" alt="课件第666页 第六章：石墨烯材料拉曼光谱研究进展——谭平恒，中国科学院半导体研究所">
+<figcaption><span class="sno">666</span><span class="stitle">第六章：石墨烯材料拉曼光谱研究进展——谭平恒，中国科学院半导体研究所</span></figcaption>
+</figure>
+<figure class="slide" id="slide-667">
+<img src="slides/slide_667.png" alt="课件第667页 参考文献：石墨烯相关二维材料拉曼光谱综述、编著和专利（含层数测定、CVD 多层石墨烯堆垛次序确定等专利，均已形成国家标准）">
+<figcaption><span class="sno">667</span><span class="stitle">参考文献：石墨烯相关二维材料拉曼光谱综述、编著和专利（含层数测定、CVD 多层石墨烯堆垛次序确定等专利，均已形成国家标准）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-668">
+<img src="slides/slide_668.png" alt="课件第668页 第六章主要内容：1.引言；2.单层石墨烯的拉曼光谱（晶体结构与拉曼张量/声子色散/电子能带结构、三朵乌云、共振拉曼 D·D′·2D、S 与 AS、声学声子色散、角分辨偏振、重掺杂）；3.多层石墨烯的拉曼光谱（电子能带/G 模/2D·D 模/C 模/LB 模/转角/共振/堆垛鉴别/Fano）；4.国家标准——石墨烯薄片的层数表征：拉曼光谱法">
+<figcaption><span class="sno">668</span><span class="stitle">第六章主要内容：1.引言；2.单层石墨烯的拉曼光谱（晶体结构与拉曼张量/声子色散/电子能带结构、三朵乌云、共振拉曼 D·D′·2D、S 与 AS、声学声子色散、角分辨偏振、重掺杂）；3.多层石墨烯的拉曼光谱（电子能带/G 模/2D·D 模/C 模/LB 模/转角/共振/堆垛鉴别/Fano）；4.国家标准——石墨烯薄片的层数表征：拉曼光谱法</span></figcaption>
+</figure>
+<figure class="slide" id="slide-669">
+<img src="slides/slide_669.png" alt="课件第669页 1. 引言：二维超薄晶体材料简介——石墨烯（半金属，K.S. Novoselov Science 2004）、MX2 半导体、h-BN 绝缘体、α-FeSe 超导体、Bi2Se3/Bi2Te3 拓扑绝缘体、纳米片异质结构；2LG/3LG 堆垛与转角多层">
+<figcaption><span class="sno">669</span><span class="stitle">1. 引言：二维超薄晶体材料简介——石墨烯（半金属，K.S. Novoselov Science 2004）、MX2 半导体、h-BN 绝缘体、α-FeSe 超导体、Bi2Se3/Bi2Te3 拓扑绝缘体、纳米片异质结构；2LG/3LG 堆垛与转角多层</span></figcaption>
+</figure>
+<figure class="slide" id="slide-670">
+<img src="slides/slide_670.png" alt="课件第670页 1. 引言：不同维度碳材料——3D 金刚石/石墨、2D 石墨烯（2010 诺贝尔奖 Novoselov/Geim）、1D 碳纳米管（1991 Iijima 多壁、1993 单壁）、0D 富勒烯（1996 诺贝尔奖 Kroto/Curl/Smalley）；AB 堆垛、范德华异质结、转角堆垛">
+<figcaption><span class="sno">670</span><span class="stitle">1. 引言：不同维度碳材料——3D 金刚石/石墨、2D 石墨烯（2010 诺贝尔奖 Novoselov/Geim）、1D 碳纳米管（1991 Iijima 多壁、1993 单壁）、0D 富勒烯（1996 诺贝尔奖 Kroto/Curl/Smalley）；AB 堆垛、范德华异质结、转角堆垛</span></figcaption>
+</figure>
+<figure class="slide" id="slide-671">
+<img src="slides/slide_671.png" alt="课件第671页 1. 引言：石墨烯为什么特殊？——Truely 2D system（衬底上可见！单层光学衬度可观）；线性能量色散、低温弹道输运、室温量子霍尔效应、高迁移率与高热导率、纳米带开隙">
+<figcaption><span class="sno">671</span><span class="stitle">1. 引言：石墨烯为什么特殊？——Truely 2D system（衬底上可见！单层光学衬度可观）；线性能量色散、低温弹道输运、室温量子霍尔效应、高迁移率与高热导率、纳米带开隙</span></figcaption>
+</figure>
+<figure class="slide" id="slide-672">
+<img src="slides/slide_672.png" alt="课件第672页 1. 引言：石墨烯的合成方法——机械剥离法、热裂解法、氧化石墨烯还原法、金属衬底 CVD 合成法、插层剥离石墨法（Berger Science 2006；Kim Nature 2009）">
+<figcaption><span class="sno">672</span><span class="stitle">1. 引言：石墨烯的合成方法——机械剥离法、热裂解法、氧化石墨烯还原法、金属衬底 CVD 合成法、插层剥离石墨法（Berger Science 2006；Kim Nature 2009）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-673">
+<img src="slides/slide_673.png" alt="课件第673页 1. 引言：石墨烯基器件的应用——欧盟石墨烯旗舰项目产业路线图（2023 以前/2023-2029/2030 以后）；光电器件、复合材料、能源、数据通讯、电子器件、传感器与成像、生物技术">
+<figcaption><span class="sno">673</span><span class="stitle">1. 引言：石墨烯基器件的应用——欧盟石墨烯旗舰项目产业路线图（2023 以前/2023-2029/2030 以后）；光电器件、复合材料、能源、数据通讯、电子器件、传感器与成像、生物技术</span></figcaption>
+</figure>
+<figure class="slide" id="slide-674">
+<img src="slides/slide_674.png" alt="课件第674页 1. 引言：表征石墨烯/二维材料的实验技术——光学图像与衬度（JB Wu/PH Tan, Nat. Commun. 2014）、AFM、拉曼、瑞利图像（WJ Zhao/PH Tan, PRB 2010）">
+<figcaption><span class="sno">674</span><span class="stitle">1. 引言：表征石墨烯/二维材料的实验技术——光学图像与衬度（JB Wu/PH Tan, Nat. Commun. 2014）、AFM、拉曼、瑞利图像（WJ Zhao/PH Tan, PRB 2010）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-675">
+<img src="slides/slide_675.png" alt="课件第675页 第六章主要内容（同 p668 目录）：2.单层石墨烯的拉曼光谱——①晶体结构与拉曼张量/声子色散/电子能带②三朵乌云③共振拉曼 D·D′·2D④S 和 AS⑤声学声子色散⑥角分辨偏振⑦重掺杂">
+<figcaption><span class="sno">675</span><span class="stitle">第六章主要内容（同 p668 目录）：2.单层石墨烯的拉曼光谱——①晶体结构与拉曼张量/声子色散/电子能带②三朵乌云③共振拉曼 D·D′·2D④S 和 AS⑤声学声子色散⑥角分辨偏振⑦重掺杂</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>第六章引言：石墨烯是什么</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）～第 2 段（前）</span><span class="chip">课件 665</span><span class="chip">课件 666</span><span class="chip">课件 667</span><span class="chip">课件 668</span><span class="chip">课件 669</span><span class="chip">课件 670</span><span class="chip">课件 671</span><span class="chip">课件 672</span><span class="chip">课件 673</span><span class="chip">课件 674</span><span class="chip">课件 675</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第五章刚讲了拉曼光谱怎么去研究材料、怎么去表征物性，那么第六章专门针对某一种材料——石墨烯，让大家看一看拉曼光谱在研究中所起的重要作用。石墨烯材料从上世纪 1960 年左右研究到现在，碳材料现在还在研究。前面讲了不同的类型：第五章讲拉曼光谱怎么研究典型材料体系，这里我专门针对一种材料，给大家展示一下拉曼光谱在其中的作用。这里面我们也有一系列综述，除了论文以外，还有我们编的英文专著和中文专著，当然也有一些申请的专利，而且我们的专利最后都形成了国家标准。但形成国家标准有一个问题：只要涉及到国家标准，你就得放弃专利的权利，否则国家标准就起不到标准的作用。所以一旦涉及专利和国家标准，中间都有一条——申请者放弃该专利在本标准中应用的相关权利。另外我们的综述（石墨烯材料的拉曼光谱及其在相关器件中的应用）已被引用接近 2000 次。</p><p>石墨烯怎么讲呢？比较典型的是按层数来讲：先讲单层石墨烯的拉曼光谱，按不同的模去讲；再讲多层石墨烯的拉曼光谱，也按它的模去讲；讲完模，最后讲一些耦合的情况——转角、共振、堆垛以及 Fano 共振；讲多层体系时会讲每个模的层数依赖关系及层间关系；最后讲它在国家标准里的应用。石墨烯实际上是一种二维材料，这类材料的种类非常多。深入讲它与传统半导体体材料、量子阱、纳米线、量子点的区别，更多是按维度去讲。在维度里，除了量子限制效应和应变，可讲的东西非常少；但石墨烯不一样，它可以存在不同层数、不同堆垛，一层放另一层上面会有转角，还可以转好几次，研究对象就很广泛，还可以跟氮化硼、TMD 及其他二维材料组合制备。</p><p>以前研究半导体时，MBE（分子束外延）设备非常少，那时经常是师兄做了师弟接着做，师弟的师弟接着做，可以做几代；其他人没有设备就无法研究。但二维材料不一样，用胶带就可以撕下来，任何人到我实验室一两天就能学会制备，门槛比较低，谁都可以取得这些材料去做。以前是没有药品着急，现在是谁都可以做也很着急——因为做了以后别人可能已经做完了，谁都在抢。这是现在和以前不同的情况。</p><p>这就是不同维度的碳材料：三维的金刚石、石墨，二维的石墨烯，以及由它延伸出来的转角材料、异质结，还有一维的碳纳米管、零维的富勒烯。富勒烯得了诺贝尔奖（1996 年，Kroto/Curl/Smalley），石墨烯也得了诺贝尔奖（2010 年，Novoselov/Geim）。碳纳米管：1991 年 Iijima 发现多壁碳管，1993 年发现单壁碳管，随后发现手性特征——手性碳管既有金属性又有半导体性、会发荧光，应用很广泛；但它的局限性在于很难得到手性一致的材料，很多时候为了得到手性一致的材料还得用表面活性剂把纳米管束分开，分开后要去掉表面活性剂又不好去。这里面还有个小故事：Endo 通过电镜研究碳纤维时，早在一九七几年就发现了碳纳米管——碳纤维一般是微米级的，用电镜看它的微结构时往往会经过它的轴心，轴心中间有个空洞，外面一层一层往外掉，不可避免地会发现很多只有几层的碳纤维。但他没有把它跟管状结构联系起来。也就是说 1991 年 Iijima 并不是第一个发现的，大家可以去评价评价，究竟这种情况下能争前三四吗？课堂上面就不展开了。</p><p>为什么石墨烯那么特殊？首先，石墨烯是一个真正的二维系统，但它被认为是不稳定的。既然不稳定为何存在？在于其表面并非完全平整（微观褶皱），另外它还有支撑物——放在硅衬底上（硅氧化成一定厚度的二氧化硅层）。未氧化的硅在显微镜下呈白色，氧化后变为天蓝色或偏黄色，单层石墨烯与衬底的差别清晰可见。单原子层难以想象，但单层石墨烯对光的吸收率约为 3%，若光往返一次吸收率约为 6%；还要考虑下方的干涉效应，因为是多层膜结构——这会导致层间衬度差异。衬度定义为 (A-B)/(A+B)，白光照射衬底和样品产生不同强度，单层石墨烯在某波段的衬度可达 20% 左右，非常显著，层数越多现象越明显。若将单层石墨烯悬空放置可能什么都看不到，但放在基底上，光靠裸眼就能看得到，在显微镜下就可以做器件、做表征。所以早期石墨烯研究中，很多人研究如何看到和识别样品——这也是最早期最重要的工作之一。</p><p>石墨烯当然有非常特别的物理性质：第一个是线性的能带结构，还有低温下的弹道输运、室温下的量子霍尔效应、很高的迁移率和热导率；如果把石墨烯做成条带变成一维结构，就可以把带隙打开，这跟碳纳米管一样。国家领导人也曾专程考察过石墨烯（南京、哈尔滨及英国曼彻斯特大学石墨烯研究中心）。石墨烯的合成方法：一是机械剥离法——现在到我实验室两天就能学会，但我第一个学生从零开始花了两个多月，最后试出来的样品不超过 5 微米，我们第一个石墨烯工作的样品非常小、器件也非常小；所以说科研是站在巨人的肩膀上，现在拿到一种材料只要知道对称性，马上就知道哪个拉曼模是活性的、哪个是非活性的，因为前面已经做过了。二是 CVD 法：碳化硅去掉硅后表面留一层石墨烯；石墨烯发现者从未做过 CVD，而是用胶带撕出来的。胶带法麻烦且量上不去，所以大家想到用金属催化 CVD 合成，现在在玻璃、光纤里都能做。三是氧化石墨烯还原法：加入化学试剂与石墨烯结合形成分散结构，最后通过高温还原变成一片一片的石墨烯。四是插层剥离法：石墨插层化合物在 1980 年代研究非常热，对石墨进行插层后机械剥离，就能得到重掺杂石墨烯——一般调节石墨烯费米能级需加偏压、调节幅度有限，而插层法可以把费米能级调节到 1.0 电子伏特，这是其他方法做不到的巨大优势。</p><p>石墨烯应用广泛：欧盟石墨烯旗舰计划涵盖复合材料、能源、电子器件等领域，全球年产值达 2000 多亿美元。但严格来说，很多市售产品并非真正石墨烯——石墨烯指单层六角网状结构碳原子、具线性能带结构；双层或多层结构无线性能带，原则上不叫石墨烯，就像不能把熊猫称为猫。虽非纯石墨烯，但其应用确实重要，制定标准很关键。很多时候说是石墨烯微晶、说它可以加热，它加热用的肯定不是单纯石墨烯，而是石墨薄片进行加工。</p><p>石墨烯制备出来后怎么表征？一个是刚才所说的光学衬度：一层石墨烯、三层石墨烯、1+1、1+3，从光学图像就可以看出差别；白光照上去可以把衬度测出来，两层石墨烯转一个角度，其反射度原则上由折射率决定，而折射率又由能带结构决定——一旦把石墨烯叠在一起转一个角度，它的能量就马上不一样了。另外还有 AFM、瑞利图像（这也是衬度）、拉曼光谱，以及光学表征实验（荧光、吸收、衬度、瑞利散射、拉曼光谱、二次谐波产生等）。在石墨烯里荧光用得非常少，但在 TMD 材料、其他二维材料、半导体二维材料里就用得很多。有些实验方法仅与材料的某种性质相关：AFM 测的是厚度，但你知道它是什么材料吗？不知道——换一种材料也能得到同样结果。但拉曼光谱不一样：一层、二层、三层、四层是完全不一样的；只要出现 G 模，我就知道它是碳材料；只要出现这种形状的 2D 模，我就知道它是石墨烯。因为碳材料范围很广，活性炭、煤都是碳材料。所以拉曼光谱有好处：它不仅鉴别物理性质，还要鉴别它是不是石墨烯——这是一个双重的鉴别方法。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>一旦涉及到了专利的国家标准，中间都有一条，比如说申请者放弃该专利在本标准中应用的相关权利。</p><p>以前是没有药品着急，现在是谁都可以做，也很着急。因为你做了以后，可能别人已经做完了，谁都在抢嘛。</p><p>多壁碳管是91年发现的，到93年再发现单壁碳管。手性这一发现过后，既有金属性又有半导体性，又会发荧光。</p><p>Endo早在一九七几年研究碳纤维的时候就发现了碳纳米管……他没有把它跟管状结构联系起来。也就是说91年他不是第一个发现的。</p><p>单层石墨烯对光的吸收率约为3%。若光往返一次，吸收率约为6%。放在基底上，光靠裸眼就能看得到。</p><p>严格来说很多市售产品并非真正石墨烯……双层或多层结构无线性能带，原则上不叫石墨烯，类似不能把熊猫称为猫。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-crystal">
+  <div class="slides"><figure class="slide" id="slide-676">
+<img src="slides/slide_676.png" alt="课件第676页 2.1 晶体结构、对称性和声子、能带结构：单层石墨烯晶格、倒空间和布里渊区——二维六方晶格及晶胞（aC-C=1.421Å、a=2.46Å、Armchair/Zigzag 方向）、魏格纳原胞、倒空间；D6h 点群；Γvib,2D = A2u⊕B2g⊕E1u⊕E2g；布里渊区 Γ-K-M-K′ 高对称点">
+<figcaption><span class="sno">676</span><span class="stitle">2.1 晶体结构、对称性和声子、能带结构：单层石墨烯晶格、倒空间和布里渊区——二维六方晶格及晶胞（aC-C=1.421Å、a=2.46Å、Armchair/Zigzag 方向）、魏格纳原胞、倒空间；D6h 点群；Γvib,2D = A2u⊕B2g⊕E1u⊕E2g；布里渊区 Γ-K-M-K′ 高对称点</span></figcaption>
+</figure>
+<figure class="slide" id="slide-677">
+<img src="slides/slide_677.png" alt="课件第677页 2.1 晶体结构、对称性和声子、能带结构：单层石墨烯的声子色散关系和拉曼谱——E2g 两个拉曼张量（二重简并）；G 模 1582cm⁻¹、2D 模 2650cm⁻¹ 比基模强、晶体硅 521cm⁻¹ 与 930-980cm⁻¹ 二级谱（PH Tan, PRB 2001）">
+<figcaption><span class="sno">677</span><span class="stitle">2.1 晶体结构、对称性和声子、能带结构：单层石墨烯的声子色散关系和拉曼谱——E2g 两个拉曼张量（二重简并）；G 模 1582cm⁻¹、2D 模 2650cm⁻¹ 比基模强、晶体硅 521cm⁻¹ 与 930-980cm⁻¹ 二级谱（PH Tan, PRB 2001）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-678">
+<img src="slides/slide_678.png" alt="课件第678页 2.1 晶体结构、对称性和声子、能带结构：体石墨的对称性、振动模和声子色散关系——石墨晶格 D6h（原胞含 4 个碳原子，AB 堆垛）；3 个光学模和 3 个声学模到石墨 9 个光学模的演变；低频剪切模 44/127cm⁻¹（E2g2/B2g）与 LB 模、C 模 868cm⁻¹、G 模 1582cm⁻¹">
+<figcaption><span class="sno">678</span><span class="stitle">2.1 晶体结构、对称性和声子、能带结构：体石墨的对称性、振动模和声子色散关系——石墨晶格 D6h（原胞含 4 个碳原子，AB 堆垛）；3 个光学模和 3 个声学模到石墨 9 个光学模的演变；低频剪切模 44/127cm⁻¹（E2g2/B2g）与 LB 模、C 模 868cm⁻¹、G 模 1582cm⁻¹</span></figcaption>
+</figure>
+<figure class="slide" id="slide-679">
+<img src="slides/slide_679.png" alt="课件第679页 2.1 晶体结构、对称性和声子、能带结构：紧束缚近似计算方法——碳原子 σ 和 π 轨道；最近邻近似 εk = ±t√(3+f(k))，t 为最近邻跃迁能；石墨烯与体石墨的电子能量结构">
+<figcaption><span class="sno">679</span><span class="stitle">2.1 晶体结构、对称性和声子、能带结构：紧束缚近似计算方法——碳原子 σ 和 π 轨道；最近邻近似 εk = ±t√(3+f(k))，t 为最近邻跃迁能；石墨烯与体石墨的电子能量结构</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>单层石墨烯：晶体结构与声子</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（中）</span><span class="chip">课件 676</span><span class="chip">课件 677</span><span class="chip">课件 678</span><span class="chip">课件 679</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>要讲石墨烯的拉曼光谱，首先就得讲它的晶格结构、电子能量结构，然后一步一步往下讲。它的晶格结构是一个六角网格，这个六角网格里它的原胞含有两个碳原子，两个碳原子之间可以产生平移，平移了过后可以覆盖整个晶格；单个原子就不行，因为晶格具有平移对称性，单个原子沿 XY 轴平移会改变整个晶格。它含有两个子晶格，点群为 D6h。参数表示碳原子键长（aC-C=1.421Å）及晶格常数（a=2.46Å），有 Armchair 和 Zigzag 两个方向。倒空间里是一个维格纳原胞，原则上旋转了 30 度；给定 a1、a2 计算倒格矢即得此结果，正空间与倒空间的关系已在前两章列出。大家要厘清倒空间是否真实存在——若能清晰回答，说明学习到位了。</p><p>D6h 点群在忽略中心时有不可约表示，通过奇偶函数可判断拉曼或红外活性。中间最小的是布里渊区，内有高对称点：最中间是 Γ 点，角落是 K 和 K′（它们不全同），K 和 K′ 之间是 M 点，还有 T、T′ 等特殊对称点。通常关注 Γ-M-K 构成的三角形。物理性质在高对称点及轴附近非常显著，能隙打开后态密度会很高；能带色散关系显示绝大部分变化发生在高对称点附近。但振动的参与度不一定出现在高对称点，很多在非高对称处——此处参与度最高，拉曼光谱中的峰常被误认为来自高对称性，其实参与度源于晶格无序状态，且会随之改变。</p><p>拉曼张量：G 模是二重简并，所以有两个拉曼张量；若是三重简并则有三个。如果有两个拉曼张量，怎么计算拉曼谱强度？需把这两个分量加起来：用入射偏振点乘拉曼张量、再点乘散射偏振，取绝对值平方后求和。从这个图可以看到：布里渊区中心最高点就在 1600 多波数（大致 1620 左右），但去测拉曼谱会发现 1600 波数处真的有个峰（G 模），而 2650 左右还有一个比基模还强的峰——这个峰位比布里渊区中心最高的频率还要高，原则上就有两个来源：要不是倍频模（背屏膜），要不是和频模，而背屏膜的几率比和频要高。那 G 模除以 2 大概 1300 多波数，为什么我们的背屏膜（2D 模）我看得到、而它的基模（D 模）我看不到？对比晶体硅：基模 521，背屏膜 1042 从未被观察到，反而在 930-980 观察到的模是平膜加背景膜（来自其他高对称点），不是 521 的倍频。怎么理解 2D 模比基模强那么多？这就是共振拉曼的范畴，后面会讲。</p><p>为什么叫 G 模？因为在本征石墨材料中能观察到它，所以用 graphite 的首字母命名——就像姓氏源于分封国名。G 一般表示基模。现在大家都知道指 1582cm⁻¹ 这个模；否则还得说位于 1582 的模。G 模很明确，不管跑到哪。2D 模的命名后面再说。体石墨与单层石墨烯的差别：原胞多一层原子，叫 AB 堆垛——石墨烯有 2 个原子，体石墨有 4 个，布里渊区一模一样，但在 Z 轴方向还有一个空间区（Γ 到 A）。原来 2 个原子有 6 个振动模（3 个声学模、3 个光学模），现在 4 个原子就有 12 个振动模，比 6 个扩大了一倍——一个模式分成两个（相邻原子同向或反向），所以最终光学支变成 9 个、声学支还是 3 个。体石墨的声子色散曲线跟石墨烯基本上一模一样，唯一不一样的是多了 Γ-A 方向，另外低频处有一系列低频拉曼模——比如 44/127cm⁻¹ 的剪切模（层间剪切振动），这些是单层石墨烯没有的。这个就是从单层石墨烯的 3 个光学模、3 个声学模演化到体石墨的 9 个光学模的过程；声子色散曲线基本上不变化，意味着拉曼光谱有相似之处。</p><p>电子能带结构：碳原子有 π 键和 σ 键，σ 键组成得非常紧密，而 π 键是离域的（共有化电子）。用紧束缚近似的方法计算电子能量结构，能够把每一步计算得非常好，可以算出石墨烯和体石墨的电子能量结构。石墨烯的电子能量结构很早就计算出来了，但因为大家认为单层石墨烯是不存在的、只作为理论模型，所以并没有引起多少关注。既然测拉曼谱，Γ 点这里是拉曼活性的能看到拉曼峰，这里也是拉曼活性的也能看到——但峰位在 40 多波数的低频模，要在靠近激光线 40 多个波数里去测非常困难。我们发展了超低波数拉曼光谱测试技术（把布拉格光栅集成到单光栅光谱仪中，这是世界上最早的），技术发展一两年后拉曼公司才把超快激光器配件商业化；我们的文章发表两年后商业配件才出来，因此不存在谁依赖谁。低频模的结果最难测，我们把它测出来了，后面其他二维材料都不是事——12 年发表多层石墨烯的剪切模，14 年测了一个全谱：剪切模、G 模、2D 模、D 模都放在一起。在剪切模里面，2D 模一般只有 G 模的 1/2，剪切模又很弱；这页上还有一些很弱的模就是 D 模。体石墨的低频模，全世界一直到 2010 年左右发表的屈指可数，因为太靠近激光线了。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>布里渊区中间最小的是布里渊区，里面有高对称点。最中间是伽马点，角落是K和K撇，它们不全同。</p><p>为什么叫G模？因在本征石墨材料中能观察到它，故用graphite首字母命名。就像姓氏源于分封国名。</p><p>原来两个原子有6个拉曼模，3个声学模、3个光频模。现在4个原子就有12个振动模。</p><p>我们把布拉格光栅集成到单个光栅的纳目光谱仪中，这在世界上是最早的。</p><p>在剪切模里面，2D模一般只有G模的1/2。碱性模糊又很弱，大家还看到这个地方还有一些拉曼模，这些很弱的就是D模。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-clouds">
+  <div class="slides"><figure class="slide" id="slide-680">
+<img src="slides/slide_680.png" alt="课件第680页 2.2 石墨拉曼光谱的三朵乌云：体石墨的拉曼光谱——布拉格体光栅、单光栅光谱仪（PH Tan, PRB 2014）">
+<figcaption><span class="sno">680</span><span class="stitle">2.2 石墨拉曼光谱的三朵乌云：体石墨的拉曼光谱——布拉格体光栅、单光栅光谱仪（PH Tan, PRB 2014）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-681">
+<img src="slides/slide_681.png" alt="课件第681页 2.2 石墨拉曼光谱的三朵乌云：I(D)/I(G) 与缺陷浓度关系——本征石墨与缺陷石墨（F Tuinstra, J.Chem.Phys. 1970；S. Reich, Phil. Trans. R. Soc. A 2004）">
+<figcaption><span class="sno">681</span><span class="stitle">2.2 石墨拉曼光谱的三朵乌云：I(D)/I(G) 与缺陷浓度关系——本征石墨与缺陷石墨（F Tuinstra, J.Chem.Phys. 1970；S. Reich, Phil. Trans. R. Soc. A 2004）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-682">
+<img src="slides/slide_682.png" alt="课件第682页 2.2 石墨拉曼光谱的三朵乌云：激发光能量依赖性和 S-AS 非对称性——D 和 2D 模频率与激发波长关系、D 和 2D 模 Stokes 与 anti-Stokes 线非对称关系（Vidano 1981；PH Tan, PRB 1998）">
+<figcaption><span class="sno">682</span><span class="stitle">2.2 石墨拉曼光谱的三朵乌云：激发光能量依赖性和 S-AS 非对称性——D 和 2D 模频率与激发波长关系、D 和 2D 模 Stokes 与 anti-Stokes 线非对称关系（Vidano 1981；PH Tan, PRB 1998）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>三朵乌云与低频剪切模</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（后）</span><span class="chip">课件 680</span><span class="chip">课件 681</span><span class="chip">课件 682</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>石墨拉曼光谱的‘三朵乌云’，第一朵：我们在本征石墨里面就能看得到 G 模，但随着缺陷的增加，另外一个拉曼模（D 模，1300 多波数，正好是 2D 模的一半）就出来了，而且这个模的强度跟晶体尺寸成反比。晶粒尺寸怎么确定？一般可用 X 射线的半高宽——X 射线一旦无序了，半高宽就会变宽；拉曼光谱的展宽也一样，但拉曼的展宽要跟晶粒尺寸比对的话得去做标定，而 X 射线的标定是很明确的，对多种材料都比较类似。拉曼的半高宽包含非弹性散射过程、包括石墨烯中电子相关活动的贡献，所以用 X 射线测半宽来测晶粒尺寸更常用。</p><p>第二朵乌云：早期对 G 模和 D 模的指认不统一——原则上 D 模是 G 模的一半，但事实上差别很大；基模指认是统一的，而 2D 模和 D 模指认存在争议。石墨拉曼谱强度与缺陷浓度有关，但这很难解释。后来发现，改变激发光波长时基模位置基本不动，但 2D 模和 D 模位置会随激发光波长改变而改变——这在金刚石或硅中很少见（它们的峰位不随激发光变化），也是早先无法解释的现象。</p><p>第三朵乌云：Stokes 和 anti-Stokes 的非对称性，这是我这博士工作之一。金刚石和碳材料（体石墨）的 G 模透射谱线与反射谱线位置基本一样，中间差了一个波数（1577/1576，属误差范围）；但 2D 模透射谱线 2731、反射谱线 2756，差了二十几个波数——这可不是小数。上面是透射谱线、下面是反射谱线，透射射线和反射射线对称分布在激光两侧，为了显示差别我用正坐标和负坐标对起来画。金刚石是 1332，这里是 1372 和 1379，差了 7 个波数——这意味着结果是真实的，不是谱仪未校正导致的。透射射线频率比反射线低。这个实验结构和结果被称为石墨拉曼、石墨光学性质研究中的重要实验。</p><p>这里还涉及实验可靠性：测透射谱线和反射谱线，如果是常温下测几天都不一定测得出来（G 模 1577 意味着用强激光把样品加热了）。样品被加热后位置可能变动、甚至会往下掉，那我怎么确保实验可信？它的散射截面很强，我就先测 10 秒的反斯托克斯线，然后再测 100 秒、200 秒的反斯托克斯线得到更高的信噪比；再测几个小时的反射谱线；测完了再回来测反斯托克斯线，如果发现跟原来的比例一样，就表明样品还没变；如果发现样品效果变弱了，就意味着样品下降了、散了。散掉的情况下只能重新对光、把样品锁紧再测。也就是说，一旦发现一个反常的结果，就要想办法验证它是真实的：一个要找到标准（它肯定是该一样的），另一个要确认在测试过程中状态有没有改变。这个很重要。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我们测出来的D模强度是跟晶体尺寸成反比的。晶粒尺寸一般可用X射线的半宽来测定。</p><p>改变激发光波长，基模位置基本不动。但2D模和D模位置会随激发光波长改变而改变。这在金刚石或硅中很少见。</p><p>透射谱线是24044，反射谱线是222425。透射射线比反射线低。</p><p>我就先测10秒的反斯托克斯线，再测100秒200秒得到更高信噪比；测完几个小时的反射谱线，再回来测反斯托克斯线，如果比例一样就表明样品还没变。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-double-res">
+  <div class="slides"><figure class="slide" id="slide-683">
+<img src="slides/slide_683.png" alt="课件第683页 2.3 石墨烯的共振拉曼光谱：几种典型共振过程——I = Σ|Ck|²/[(Eex-Ek-iγ)(Eex-ℏΩph-Ek-iγ)]；Stokes 过程（入射光子激发 e-h 对、发射声子、复合发射光子）、anti-Stokes 过程（吸收声子）、瑞利/共振与非共振">
+<figcaption><span class="sno">683</span><span class="stitle">2.3 石墨烯的共振拉曼光谱：几种典型共振过程——I = Σ|Ck|²/[(Eex-Ek-iγ)(Eex-ℏΩph-Ek-iγ)]；Stokes 过程（入射光子激发 e-h 对、发射声子、复合发射光子）、anti-Stokes 过程（吸收声子）、瑞利/共振与非共振</span></figcaption>
+</figure>
+<figure class="slide" id="slide-684">
+<img src="slides/slide_684.png" alt="课件第684页 2.3 石墨烯的共振拉曼光谱：声子与电子能级的单共振过程——GaAs:N 0.1% 能带结构与电子能级单共振；1.848/1.959/2.621eV 激发下的入射共振与出射共振（PH Tan, APL 2006）">
+<figcaption><span class="sno">684</span><span class="stitle">2.3 石墨烯的共振拉曼光谱：声子与电子能级的单共振过程——GaAs:N 0.1% 能带结构与电子能级单共振；1.848/1.959/2.621eV 激发下的入射共振与出射共振（PH Tan, APL 2006）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-685">
+<img src="slides/slide_685.png" alt="课件第685页 2.3 石墨烯的共振拉曼光谱：单共振过程和可能的双共振过程——q=0 单共振（Iph(Stokes) 公式，对能带跃迁 i,j 与电子态 k 求和）；q≠0 可能的双共振（入射+出射均共振；Thomsen PRL 2000）">
+<figcaption><span class="sno">685</span><span class="stitle">2.3 石墨烯的共振拉曼光谱：单共振过程和可能的双共振过程——q=0 单共振（Iph(Stokes) 公式，对能带跃迁 i,j 与电子态 k 求和）；q≠0 可能的双共振（入射+出射均共振；Thomsen PRL 2000）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-686">
+<img src="slides/slide_686.png" alt="课件第686页 2.3 石墨烯的共振拉曼光谱：q≠0 非布里渊区中心模的共振机制（D 模）——能量守恒条件：Ek=E_laser/2、Ek+q=Ek-ℏωph(q)；入射共振/出射共振的波矢选择 q=qK±2Δk0-δq（Cancado PRB 2002；Reich 2004）">
+<figcaption><span class="sno">686</span><span class="stitle">2.3 石墨烯的共振拉曼光谱：q≠0 非布里渊区中心模的共振机制（D 模）——能量守恒条件：Ek=E_laser/2、Ek+q=Ek-ℏωph(q)；入射共振/出射共振的波矢选择 q=qK±2Δk0-δq（Cancado PRB 2002；Reich 2004）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-687">
+<img src="slides/slide_687.png" alt="课件第687页 2.3 石墨烯的共振拉曼光谱：D 模四通道两两简并，只有两个独立的双共振散射过程；D 模需要缺陷激活——缺陷种类：边界、注入原子、空位、晶界、sp2→sp3 杂化改变（R Saito PRL 2002；D 模与 SLG 氟化时间关系）">
+<figcaption><span class="sno">687</span><span class="stitle">2.3 石墨烯的共振拉曼光谱：D 模四通道两两简并，只有两个独立的双共振散射过程；D 模需要缺陷激活——缺陷种类：边界、注入原子、空位、晶界、sp2→sp3 杂化改变（R Saito PRL 2002；D 模与 SLG 氟化时间关系）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-688">
+<img src="slides/slide_688.png" alt="课件第688页 2.3 石墨烯的共振拉曼光谱：2D 模——D 模四个共振过程对 2D 模简并成一个共振过程（SLG 三共振拉曼散射过程）；Stokes 与 anti-Stokes 会激发不同远近 K 点的声子（短波长激光激发远离 K 点声子）">
+<figcaption><span class="sno">688</span><span class="stitle">2.3 石墨烯的共振拉曼光谱：2D 模——D 模四个共振过程对 2D 模简并成一个共振过程（SLG 三共振拉曼散射过程）；Stokes 与 anti-Stokes 会激发不同远近 K 点的声子（短波长激光激发远离 K 点声子）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-689">
+<img src="slides/slide_689.png" alt="课件第689页 2.3 石墨烯的共振拉曼光谱：2D 模（续）——iTO 声子远离 K 点的色散性决定了不同激发光能量和 S/aS 过程选择的声子波矢大小和声子频率（X Cong/PH Tan, Nanoscale 2018）">
+<figcaption><span class="sno">689</span><span class="stitle">2.3 石墨烯的共振拉曼光谱：2D 模（续）——iTO 声子远离 K 点的色散性决定了不同激发光能量和 S/aS 过程选择的声子波矢大小和声子频率（X Cong/PH Tan, Nanoscale 2018）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-690">
+<img src="slides/slide_690.png" alt="课件第690页 2.3 石墨烯的共振拉曼光谱：D′ 模——谷内双共振拉曼过程 q=2Δk0-δq（Cancado PRB 2002；Reich 2004）">
+<figcaption><span class="sno">690</span><span class="stitle">2.3 石墨烯的共振拉曼光谱：D′ 模——谷内双共振拉曼过程 q=2Δk0-δq（Cancado PRB 2002；Reich 2004）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-691">
+<img src="slides/slide_691.png" alt="课件第691页 2.3 石墨烯的共振拉曼光谱：石墨烯材料中的双共振拉曼散射过程——所有拉曼特征均可由共振拉曼散射理论完全理解（JB Wu/PH Tan, Chem. Soc. Rev. 2018）">
+<figcaption><span class="sno">691</span><span class="stitle">2.3 石墨烯的共振拉曼光谱：石墨烯材料中的双共振拉曼散射过程——所有拉曼特征均可由共振拉曼散射理论完全理解（JB Wu/PH Tan, Chem. Soc. Rev. 2018）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-692">
+<img src="slides/slide_692.png" alt="课件第692页 2.3 石墨烯的共振拉曼光谱：通过 Stokes 与 anti-Stokes 拉曼模研究多壁碳纳米管的声子色散曲线——不同 εL 下 S/AS 选择不同 q 的声子；Δ(2ω)(εL)=4Δω(εL)、ωAS(εL)=ωS(εL+ℏωS)（PH Tan, PRB 2002）">
+<figcaption><span class="sno">692</span><span class="stitle">2.3 石墨烯的共振拉曼光谱：通过 Stokes 与 anti-Stokes 拉曼模研究多壁碳纳米管的声子色散曲线——不同 εL 下 S/AS 选择不同 q 的声子；Δ(2ω)(εL)=4Δω(εL)、ωAS(εL)=ωS(εL+ℏωS)（PH Tan, PRB 2002）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-693">
+<img src="slides/slide_693.png" alt="课件第693页 2.3 石墨烯的共振拉曼光谱：单层石墨烯 D 模在边界的局域特性——Armchair 边界（R≠0）对 D 模有贡献、Zigzag 边界（R=0）不贡献；边界电子-空穴自由程 hc~3.5nm（Cancado PRL 2008；Casiraghi NanoLett 2009）">
+<figcaption><span class="sno">693</span><span class="stitle">2.3 石墨烯的共振拉曼光谱：单层石墨烯 D 模在边界的局域特性——Armchair 边界（R≠0）对 D 模有贡献、Zigzag 边界（R=0）不贡献；边界电子-空穴自由程 hc~3.5nm（Cancado PRL 2008；Casiraghi NanoLett 2009）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-694">
+<img src="slides/slide_694.png" alt="课件第694页 2.3 石墨烯的共振拉曼光谱：D 模强度和峰宽的点缺陷和线缺陷模型（Tuinstra 1970；Cançado 2D Mater. 2017）">
+<figcaption><span class="sno">694</span><span class="stitle">2.3 石墨烯的共振拉曼光谱：D 模强度和峰宽的点缺陷和线缺陷模型（Tuinstra 1970；Cançado 2D Mater. 2017）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-695">
+<img src="slides/slide_695.png" alt="课件第695页 2.3 石墨烯的共振拉曼光谱：错误地认为 D 模是杂质/缺陷的拉曼峰——不同碳材料的拉曼光谱、氟化石墨烯的拉曼光谱、D 和 D′ 强度与缺陷类型关系（JB Wu/PH Tan, Chem. Soc. Rev. 2018）">
+<figcaption><span class="sno">695</span><span class="stitle">2.3 石墨烯的共振拉曼光谱：错误地认为 D 模是杂质/缺陷的拉曼峰——不同碳材料的拉曼光谱、氟化石墨烯的拉曼光谱、D 和 D′ 强度与缺陷类型关系（JB Wu/PH Tan, Chem. Soc. Rev. 2018）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>共振拉曼与双共振理论</h2>
+        <div class="sec-meta"><span class="time">录音：第 3 段</span><span class="chip">课件 683</span><span class="chip">课件 684</span><span class="chip">课件 685</span><span class="chip">课件 686</span><span class="chip">课件 687</span><span class="chip">课件 688</span><span class="chip">课件 689</span><span class="chip">课件 690</span><span class="chip">课件 691</span><span class="chip">课件 692</span><span class="chip">课件 693</span><span class="chip">课件 694</span><span class="chip">课件 695</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>‘三朵乌云’的现象可从 1970 年看至 1998 年，跨越 20 多年，此前缺乏好的解释，如今已能清晰说明——理解这些现象需要涉及共振拉曼过程。深入拉曼光谱研究，多少都会涉及共振。首先需对 K 求和：对不同 K 值的过程求和，包含激发光能量、减去声子能量及电子态能量；这里电子态为实数，拉曼散射中均如此。过程涉及 Stokes 与 anti-Stokes 反射，共振过程也包含一系列相关机制。从图上看，基态即电子态，电子态包含共振与振动态两种情况；非共振部分含 Stokes 与 anti-Stokes，共振部分同样含 Stokes 与 anti-Stokes。</p><p>最常见的是单共振过程：入射光子把电子从初态激发到中间态（产生电子-空穴对），这个电子-空穴对通过电子-声子相互作用发射一个声子、散射到另一个态，最后辐射复合发射散射光子。激发光与散射光均可与电子态共振；若电子态固定，两者因能量相同无法同时发生，但实际电子能级非固定，可能在某些 K 区域满足入射共振、另一些区域满足出射共振——以连续变化的能级为例，相同激发光在不同位置可分别满足入射或出射共振，这取决于能带结构随 K 值的变化。单独一个 K 若不共振，还有其他非共振信号，不一定能显示出来；但若共振发生在带边，概率密度很高那就不一样了。这是电子能级、对应荧光峰：激发光靠近或不靠近激光线，拉曼强度变化很大。要实现入射或出射共振，就得改变激发光的能量。拉曼强度既要对价带求和，也要对导带求和，还要对 K 点求和。</p><p>这里面的声子散射过程画的是垂直线，表示 q=0。那 q 可不可以不等于 0？如果我把电子从价带激发到导带，发射一个声子后要再有一个跃迁回到原处，这基本上不成立，因为电子复合时动量守恒。但有没有可能先激发到导带、反射一个 q≠0 的声子到别处，再吸收一个声子回来，最后复合？这样过程就完整了——此时激发和散射都在两个能级之间，不能用单共振过程描述，因为涉及双共振（严格说是三过程、即三共振）。增加分母项后：从一处激发至另一处并散射一个声子，可能经缺陷散射回来再复合，此时入射与散射声子均为共振态；另一过程中，激发与反射声子虽非共振，但缺陷散射与复合为共振态。故这也是双共振过程。</p><p>图中展示的是截面图：线性能带结构实际上是锥形的，等频面从上往下看是从一侧反射至另一侧，将所有散射点平移至此，最终形成大圈套小圈的形态。沿线观察该区域的态密度最高——态密度高意味着该点参与散射的几率更大，所以我们最后选择出来的 q 波矢就是这两个虚线对应的波矢，都满足能量守恒条件；其他波矢虽然也满足，但态密度比较低。这样一来的话，只要通过线性能量结构选择合适的波长，就能有入射共振和出射共振，把相应波矢的声子选择出来。这就是双共振过程。</p><p>这个双共振过程对于 D 模来说就是 1320～1335 波数附近。如果说没有缺陷，这个散射过程就不存在了——因为它没有杂质、没有缺陷，散射不了嘛，强度就等于 0。这就解释了为什么在本征石墨里面看不到 D 模、但在缺陷的情况下能看到 D 模。究竟散射过程有多少个？显示一个声子、再显示一个缺陷，原则上是有四个过程：入射共振声子散射、入射共振缺陷散射、缺陷共振然后出射、声子共振然后出射。但这四个过程中有两个是相似的过程、是简并的——把这两条线合并、往上挪一下，就变成另外一个过程了。所以 D 模的共振散射通道有 4 个、其中两两简并，D 模就有两个共振产生过程——实验上确实观察到两个 D 模。缺陷种类很多：边界、离子注入原子、空位、畴边界，还涉及碳杂化从 sp2 到 sp3 的改变。</p><p>有人问 D 模是不是就来自缺陷？不对：我们观察到的是石墨烯本身的分支——D 模变成了拉曼活性，但它本身是石墨烯的，不是缺陷的。说看到 D 模表明材料有缺陷，这是对的；但不能说 D 模就是缺陷。它是缺陷诱导的拉曼活性模式，并非来源于缺陷本身。对 2D 模来说：散射一个声子、最后再散射回来，这两个过程是同一个过程；同时散射两个声子的两个过程也简并了。所以对 D 模有两个独立过程、能看到两个峰；对 2D 模来说四个过程全简并，只能看到一个 2D 模。</p><p>还要解释一个问题：改变激发光，为什么看到的 2D 模频率不一样？对于较小的激发光能量，散射声子反射到这儿是一个波数；如果我有较大的激发光能量，因为声子能量基本一致，从这一点到另一点间隔就是两个声子能量。由于线性能量结构，激发光能量越大就越往这边走、反射到的波程越来越小，波数越来越小；但声子色散曲线朝这个方向是增大的——这意味着激光能量越大，选择的波数越小、声子能量越大。原则上用较小的激光能量激发，比用大的激发光能量激发的波数要低。再看反射（anti-Stokes）过程：激发能量是一样的，原来是往下走、反射过程往上走，选择的波数更短更小——这对应大斯托克斯激发过程，所以反射线的频率肯定比斯托克斯线的频率要高，两者不一样。这个模是合频模：2400 大致对应 1400+1000，来自一个声子和另一个声子的合频；改变激发能量让它变大，选择的波数变小，而且它更陡——一个往上走、一个往下走但往下走得更快，合起来频率就变小了，这就导致观察到的结果。所有的现象都能基于这个模型解释。</p><p>看实验结果：单层石墨烯的 G 模、2D 模，用 2.54、2.33、1.96、1.58 eV 激发，随着激发光能量增加频率是增加的；而反斯托克斯线的频率比斯托克斯线频率要高，跟刚才的结果一样。这里面没有归一化，反射线（反斯托克斯）乘了 1500 信号还那么弱——要达到这个漂亮结果大概需要很长时间（G 模 1577 意味着温度很高，荧光风味基本还在 1582，测出的信噪比没那么高，因为温度变化没那么大）。</p><p>刚才说的是谷间散射：我是在 K′ 处进行散射声子；如果我在这儿激发，除了往这边散射声子，也能往这儿散射声子——往这儿散射就是谷内散射。谷内散射最后取出 2Δk0-δq 的波矢，在大圈内选出一个小圈（靠近 Γ 点）；而谷间散射是在离 K 点相同大小的地方选择出一个声子。所以靠近 Γ 点的就是谷内散射，靠近 K 点的就是谷间散射——D 模是谷间的，D′ 模就是谷内的。通过双共振过程改变激发光的能量，就能把声子色散曲线给定下来：谷内过程会选择出 D′ 模、选择出 LA、TA；谷间反射可以选择出 D 模、D2′ 模、TAK 模等。每一个拉曼模式都可以通过双共振及其倍频模和合频模进行完美的解释。石墨烯里很多模式你看不到，但这种特殊材料里我们最早测出了这个图，并对它进行了一系列解释——后续所有模式都可以通过双共振解释。</p><p>这一新理论是如何建立的呢？我们在 1998 年看到提示后，于 2000 年和 2002 年先后撰写两篇理论文章，从而建立了该理论。以多壁碳纳米管为例，我们观察到其第一倍频模，顺着声子曲线即可将其确定，甚至三区间也能定下来：低频模在 L1 和 L2 处能看到两个模式，四置线和 A22 模也各有两个模式；再看石墨烯的 2D 模，能看到一个光反射射线，若将第一模的四分线反射直线除以 2，可得两个拉曼峰功率相同——实验观察到的第一模四分线反射频线间距仅为 2D 模的 1/4，包括其色散关系（斜率与四分线反射直线的比例），我们都能够对它进行定量的解释。</p><p>前面讨论了双共振，一旦讨论了双共振，就有了 D 模、2D 模的解释。后面就得解释 D 模的边界局域特性：如果在石墨烯中间注入离子，能把靠近 K 点的声子激活，能看到 D 模；边界它也是一个缺陷，那原则上也能看到 D。看实验：单层石墨烯中间看不到 D 模，边界就看到 D 模了。那边界对 D 模的贡献究竟有多大？是这条线的原则对它有贡献，还是从边儿上到中心 2 微米的地方都有贡献？肯定不是后者。要看微观过程：激光打到这个地方产生一个电子和一个空穴，电子和空穴不会在原地方待着不动，会分别朝不同的地方跑——电子跑到边界散射回来，空穴被声子散射回来，最后到这儿相遇并复合。在 K 空间必须动量守恒、在实空间必须空间相遇才能发生复合（复合后会发射光子）；若不相遇，无法产生光子及复合过程，这个拉曼过程就不存在。这与边界有关：Zigzag 边界通过边界散射会反射回来（R=0），对 D 模没有贡献；Armchair 边界散射到别处（R≠0），对 D 模有拉曼强度。但实验制备的石墨烯边界一段是 Armchair、一段是 Zigzag 且很短，激光斑照上去总有 Armchair 的地方，所以绝大部分多多少少能看到部分 D 模。若电子被边界散射还能与空穴复合；离边界越远复合几率越低。电子在石墨烯中有自由程，约 3.5 纳米——电子运动一定距离后停止，据此可估算载流子寿命及电子速度（高达光速的 1/3）。在 3.5 纳米内可见拉曼信号，超出则不可见。拉曼峰强度反映缺陷情况。</p><p>缺陷分为点缺陷和线缺陷，二者对拉曼谱的贡献模式不同。许多人误以为一阶模（D 模）源于杂质或缺陷，实则是缺陷激活了远离 K 点的声子；缺陷既激活一阶模也激活二阶模，包括边界、空位等多种类型。原则上，可通过 D 峰与 G 峰的强度比值判断缺陷类型。那么这样的话，我们今天就讲到这个地方——下一次我们从 232 页开始讲，跟前面完全不一样了。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>如果我没有缺陷，是不是这个散射过程就不存在了？因为它没有杂质、没有缺陷嘛，它散射不了嘛。那这个拉曼过程就不存在了，它的强度就等于0。</p><p>说低模有缺陷就有低模，或看到低模表明材料有缺陷，这是对的。但不能说低模就是缺陷。它是缺陷诱导的拉曼活性模式，并非来源于缺陷本身。</p><p>靠近伽马点的就是谷内散射，靠近K点的就是谷间散射。所以说D模是谷间的，D'模就是谷内的。</p><p>激光能量越大，选择的波数越小，但声子能量越大。反斯托克斯线的频率肯定比斯托克斯线的频率要高，它是不一样的。</p><p>电子在石墨烯中有自由程，约3.5纳米。据此可估算载流子寿命及电子速度，后者高达光速的1/3。</p><p>今天我们讲到这里，下一次我们从232页开始讲，跟前面完全不一样了。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（显微共焦拉曼光谱学）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>

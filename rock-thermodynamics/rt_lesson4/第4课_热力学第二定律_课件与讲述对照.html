@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>岩石热力学 · 第4课 热力学第二定律：第一定律与第二定律之别、卡诺循环与卡诺热机效率、卡诺定理与克劳修斯不等式、熵与熵增原理、玻尔兹曼熵公式与混乱度｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.videos{margin-top:14px;border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.video + .video{border-top:1px solid #e4e9f0;}
+.videos h4{font-size:12.5px;font-weight:700;color:#0a1f38;background:#f2f5f9;padding:8px 12px;border-bottom:1px solid #e4e9f0;}
+.videos video{display:block;width:100%;max-height:460px;background:#0b0f14;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>岩石热力学 · 第4课 热力学第二定律：第一定律与第二定律之别、卡诺循环与卡诺热机效率、卡诺定理与克劳修斯不等式、熵与熵增原理、玻尔兹曼熵公式与混乱度</h1>
+    <div class="sub">第4课 热力学第二定律：第一定律与第二定律之别、卡诺循环与卡诺热机效率、卡诺定理与克劳修斯不等式、熵与熵增原理、玻尔兹曼熵公式与混乱度 ｜ 2026-10-22 ｜ 吴老师（岩石热力学）</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 38 页 · 整理 7 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-intro">01 开场：第一定律与第二定律之别</option>
+<option value="sec-carnot">02 卡诺热机：效率瓶颈与四步循环</option>
+<option value="sec-derivation">03 绝热过程与效率公式推导</option>
+<option value="sec-theorem">04 卡诺定理、热温商与克劳修斯不等式</option>
+<option value="sec-entropy">05 熵增原理与“100%”之问</option>
+<option value="sec-boltzmann">06 熵与混乱度：玻尔兹曼公式</option>
+<option value="sec-diffusion">07 气体自由扩散的熵增与熵不守恒</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 第1章 地质流体状态方程与热力学基本函数.pdf 逐页渲染，转写原文见 record_20261022.txt。</div>
+<section class="sec" id="sec-intro">
+  <div class="slides"><figure class="slide" id="slide-01">
+<img src="slides/slide_01.png" alt="课件第1页 热力学第二定律的表述（1）Clausius——1850 年，28 岁的德国物理学家克劳修斯总结出：热量可以自发地由高温物体传给低温物体，但不可能由低温物体自动传到高温物体而不引起其它变化（传热方向）；表述（2）Kelvin：从单一热源取出热使之完全变为功而不发生其它变化，是不可能的（热功转换）">
+<figcaption><span class="sno">01</span><span class="stitle">热力学第二定律的表述（1）Clausius——1850 年，28 岁的德国物理学家克劳修斯总结出：热量可以自发地由高温物体传给低温物体，但不可能由低温物体自动传到高温物体而不引起其它变化（传热方向）；表述（2）Kelvin：从单一热源取出热使之完全变为功而不发生其它变化，是不可能的（热功转换）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>开场：第一定律与第二定律之别</h2>
+        <div class="sec-meta"><span class="time">录音：开场（00:00-00:10）</span><span class="chip">课件 1</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>开场吴老师点名提问：“人往高处走，水往低处流”是不是热力学第二定律？王子妍先答不是，被我一问又动摇。这句话一半是对的、一半是错的：水往低处流是自然行为、热力学自发过程；人往高处走是受大脑支配的，热力学只描述自然界，不管人。你立场不坚定，本来答复是对的，被我一说就动摇。</p><p>热力学第二定律使人们对自然界的了解深入一步。物理学中时间可正可负、自然过程可逆，但在牛顿力学体系里，第二定律告诉你是单向的、不会倒流。后边我们要强调第二定律和第一定律的区别。</p><p>区别之一（传热方向）：第一定律不区分热量流向；第二定律指出热量只能自发由高温流向低温。</p><p>区别之二（转换效率）：第一定律认为 1 万焦耳功和热等价；第二定律指出，功可百分之百变为热，热不可能百分之百变成功，转换是不对称的。</p><p>区别之三（热量品质）：在第一定律看来，无论来自什么热源，1000 焦耳的热都是等价的，无分高低，就像无分黑人和白人；第二定律指出，来自高温热源的 1000 焦耳热量，做功能力比低温热源的强——同样是 1000 焦耳，品质不同、做工能力有差异。第二定律带给人们对自然界的认识更深刻。</p><p>那么第二定律从哪儿来呢？最初克劳修斯和开尔文爵士在讲热力学第二定律时，还并没有熵这个概念，是后来出现的熵解释了这一切。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>水往低处流是自然行为。人往高处走，但热力学只描述自然界。人受大脑支配。</p><p>第一定律认为1万焦耳功和热等价。第二定律指出，功可百分之百变为热，热不可能百分之百变成功。</p><p>来自高温热源的1000焦耳热量，做功能力比低温热源的强。同样是1000焦耳，品质不同。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-carnot">
+  <div class="slides"><figure class="slide" id="slide-02">
+<img src="slides/slide_02.png" alt="课件第2页 发现熵的前奏——卡诺热机（概念热机）与卡诺循环：法国军工工程师卡诺，36 岁英年早逝，从热机效率问题出发构思理想热机">
+<figcaption><span class="sno">02</span><span class="stitle">发现熵的前奏——卡诺热机（概念热机）与卡诺循环：法国军工工程师卡诺，36 岁英年早逝，从热机效率问题出发构思理想热机</span></figcaption>
+</figure>
+<figure class="slide" id="slide-03">
+<img src="slides/slide_03.png" alt="课件第3页 热机的效率：18 世纪末到 19 世纪初蒸汽机效率很低，只有 3%~5%，95% 的热量都浪费掉了；中国自主制造的第一台重型燃气轮机 R0110，预期输出功率 114500 千瓦、热效率 36%，可以作为中型常规航空母舰的主动力">
+<figcaption><span class="sno">03</span><span class="stitle">热机的效率：18 世纪末到 19 世纪初蒸汽机效率很低，只有 3%~5%，95% 的热量都浪费掉了；中国自主制造的第一台重型燃气轮机 R0110，预期输出功率 114500 千瓦、热效率 36%，可以作为中型常规航空母舰的主动力</span></figcaption>
+</figure>
+<figure class="slide" id="slide-04">
+<img src="slides/slide_04.png" alt="课件第4页 卡诺循环：卡诺设计的概念热机，去除了摩擦，每一步都是可逆的，一共有四个过程">
+<figcaption><span class="sno">04</span><span class="stitle">卡诺循环：卡诺设计的概念热机，去除了摩擦，每一步都是可逆的，一共有四个过程</span></figcaption>
+</figure>
+<figure class="slide" id="slide-05">
+<img src="slides/slide_05.png" alt="课件第5页 四冲程发动机：由进气行程、压缩行程、做功行程、排气行程 4 个活塞行程组成，与卡诺循环的四个过程对应">
+<figcaption><span class="sno">05</span><span class="stitle">四冲程发动机：由进气行程、压缩行程、做功行程、排气行程 4 个活塞行程组成，与卡诺循环的四个过程对应</span></figcaption>
+</figure>
+<figure class="slide" id="slide-06">
+<img src="slides/slide_06.png" alt="课件第6页 等温可逆膨胀（a）A→B：工作物质（理想气体）与高温热库 T1 接触吸热 Q1，对外做功 W(ab)；等温过程 ΔU(ab)=0，Q1=−W(ab)，吸收的热量全部转化为气体对环境所做的功">
+<figcaption><span class="sno">06</span><span class="stitle">等温可逆膨胀（a）A→B：工作物质（理想气体）与高温热库 T1 接触吸热 Q1，对外做功 W(ab)；等温过程 ΔU(ab)=0，Q1=−W(ab)，吸收的热量全部转化为气体对环境所做的功</span></figcaption>
+</figure>
+<figure class="slide" id="slide-07">
+<img src="slides/slide_07.png" alt="课件第7页 绝热可逆膨胀（b）B→C：将系统从高温热库移开，绝热膨胀到状态 C(P3,V3,T2)；气体膨胀做功但不吸热 [Q(bc)=0]，消耗内能，温度从 T1 下降到 T2">
+<figcaption><span class="sno">07</span><span class="stitle">绝热可逆膨胀（b）B→C：将系统从高温热库移开，绝热膨胀到状态 C(P3,V3,T2)；气体膨胀做功但不吸热 [Q(bc)=0]，消耗内能，温度从 T1 下降到 T2</span></figcaption>
+</figure>
+<figure class="slide" id="slide-08">
+<img src="slides/slide_08.png" alt="课件第8页 等温可逆压缩（c）C→D：将系统与低温热库 T2 接触，等温压缩到 D(P4,V4,T2)，D 与 A 在同一绝热过程曲线上；外界对系统做功 W(cd)，系统向低温热源放热 Q2，Q2=−W(cd)">
+<figcaption><span class="sno">08</span><span class="stitle">等温可逆压缩（c）C→D：将系统与低温热库 T2 接触，等温压缩到 D(P4,V4,T2)，D 与 A 在同一绝热过程曲线上；外界对系统做功 W(cd)，系统向低温热源放热 Q2，Q2=−W(cd)</span></figcaption>
+</figure>
+<figure class="slide" id="slide-09">
+<img src="slides/slide_09.png" alt="课件第9页 绝热可逆压缩（d）D→A：将系统从低温热库移开，绝热压缩使温度从 T2 回升到 T1，回到状态 A 完成一个循环；系统受压得功而不放热 [Q(da)=0]，功全部转化为热">
+<figcaption><span class="sno">09</span><span class="stitle">绝热可逆压缩（d）D→A：将系统从低温热库移开，绝热压缩使温度从 T2 回升到 T1，回到状态 A 完成一个循环；系统受压得功而不放热 [Q(da)=0]，功全部转化为热</span></figcaption>
+</figure>
+<figure class="slide" id="slide-10">
+<img src="slides/slide_10.png" alt="课件第10页 一次循环中既有系统对环境做功，也有环境对系统做功；完成一次循环后系统对环境所作的净功，为卡诺循环曲线所围面积 ΣW=W(ab)+W(bc)+W(cd)+W(da)">
+<figcaption><span class="sno">10</span><span class="stitle">一次循环中既有系统对环境做功，也有环境对系统做功；完成一次循环后系统对环境所作的净功，为卡诺循环曲线所围面积 ΣW=W(ab)+W(bc)+W(cd)+W(da)</span></figcaption>
+</figure>
+<figure class="slide" id="slide-11">
+<img src="slides/slide_11.png" alt="课件第11页 整个循环完成后气体回到原来的状态，作为状态函数的内能并未发生变化 ΔU=0；气体对环境所做的净功等于循环中吸收的净热量 |Q1|−|Q2|，W=Q1+Q2=−W(ab)−W(cd)">
+<figcaption><span class="sno">11</span><span class="stitle">整个循环完成后气体回到原来的状态，作为状态函数的内能并未发生变化 ΔU=0；气体对环境所做的净功等于循环中吸收的净热量 |Q1|−|Q2|，W=Q1+Q2=−W(ab)−W(cd)</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>卡诺热机：效率瓶颈与四步循环</h2>
+        <div class="sec-meta"><span class="time">录音：前半（00:10-00:32）</span><span class="chip">课件 2</span><span class="chip">课件 3</span><span class="chip">课件 4</span><span class="chip">课件 5</span><span class="chip">课件 6</span><span class="chip">课件 7</span><span class="chip">课件 8</span><span class="chip">课件 9</span><span class="chip">课件 10</span><span class="chip">课件 11</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>卡诺是法国军工工程师，才活了 36 岁。他提出了一个概念设计，叫卡诺热机。他从卡诺循环这个角度，论述了热机就是发动机、发动机的热转变功的效率：从哪儿找出问题、从哪儿开出药方，提高发动机的效率。</p><p>背景：18 世纪末到 19 世纪初，热机的效率能利用的只有 3%~5%，95% 的热量都浪费掉，这是生产的迫切需求。当年西方海盗开着船去抢别人东西的时候，船的运力是有限的——拉了 100 吨煤，没走多远就烧光了，那肯定不合算。他们想尽办法提高热机的效率，这项实践到今天还在进行。</p><p>科学院有个工程热物理研究所，就是搞发动机的。大概 10 年前，我在重庆商报上看到：我们国家自主研制的 R0110 重型燃气轮机，输出功率 114500 千瓦，它的热效率已经提高到 36%，可以作为中型航母的动力。</p><p>插一个小故事：当年我们国家把苏联船壳子瓦良格号拖到天津，要改装成我们的航母，就是现在的山东舰。有个老师和我辩论说我们干不成，他说那个阻拦索我都造不出来。阻拦索就是个钢绳，放在航母的尾部，飞机飞下来落舰之后还要勾住飞机，不勾住它会被冲走。我说不可能，不就是条钢绳吗？我采用最笨的办法，添加不同微量元素和比例，试了几千次，要是还试不出来就怪了。大概过了两三年，航母开始服役、舰载机可以飞了。后来军方解密，大家都知道是我们自己的阻拦索，而且是河北一家民营钢铁公司造的。当时我们没有航母，交给俄罗斯海军测试，俄方反馈比他们的还要好。海军请该钢铁公司过来问知不知道用途，对方说不知道，是美国民营公司采购的钢绳，说是美国军方需要、用于美国航母——这么一说才明白，原来我们早就造出来了。</p><p>还有一个故事，真假未知：老专家退休时痛哭，说干了一辈子没做成一件事。当年美国海军向中国公司要求造耐零下 70 摄氏度的钢板，问干啥用，说是造潜艇。美国钢铁公司很快公布技术参数，咱们给他加钱吧，老专家带领年轻人干了 20 多年，终于造出能耐零下 40 摄氏度的钢板，老人家退休时痛哭流涕——我跟美国还是有差距。又过了几年，美国负责这个项目的是女总工程师，她说美国海军就是放屁：零下 70 度的潜艇在什么地方游？它还能游吗？他给了一个假参数，他根本就没走。一夜之间，我们的钢板成为最耐低温的。所以有时候在重压之下，技术能突破的。</p><p>回到当初，卡诺研究热机的时候，他脑子里想象的热机是什么样子的？他把液体大大简化一步：热机吸收的净热量能全部转化为功，这是极限。就是说从高温热源吸热，使气体膨胀，然后气体在回复时向低温热源放热——所以它吸收的热不能全部用来做功，还要放出一部分。不放行不行？待会儿大家就知道了。</p><p>整个热力学里我们定义得到能量为正、失去能量为负。Q1 是从高温热源吸的热，Q2 是向低温热源放热，Q2 本身是负值。热机效率的直观定义：真正对环境做功除以吸收的总热量。卡诺设计的概念里去除了摩擦，进行的每一步都是可逆的，一共有四个过程，跟现在发动机的 4 个冲程一模一样。</p><p>第一步是等温可逆膨胀：在 PV 图上从 A 点开始，气缸和高温热源接触，吸收 Q1 的热量、温度达到 T1，然后让它脱离热源的情况下膨胀，气缸膨胀推着活塞和连杆向外运动、对外做功，从 A 点到 B 点。它丢失能量但丢多少补多少，维持温度不变、体积膨胀。</p><p>第二步是绝热可逆膨胀：膨胀到 B 点后与热源脱离，因内部气压大继续膨胀对外做功，此过程向环境做功丢失能量，温度必然降低，气压降低、体积增大。</p><p>第三步是等温可逆压缩：若不搭理它让它继续膨胀，气压与环境一致后便停止、回不来了，这不叫热机；需让它回到原点并重复过程。压缩时不放热，它得到功、内能和温度升高，所以我设计这一步：让它把得到的热量放出去，温度不变，体积缩小、气压增高，从 C 到 D 叫等温可逆压缩。</p><p>第四步是绝热可逆压缩：脱离热源，环境持续对它做功，它的内能增加、温度升高，体积持续减小、气压增高，最终回到原点，完成一个卡诺循环。</p><p>所以膨胀的两步是向外界环境做功的，被压缩的两步是环境对它做功的。每一步都用热力学第一定律分析：AB 等温膨胀，从 P1V1 等温膨胀到 P2V2，内能没有变化，吸的热全部用来做功；BC 绝热膨胀，对外做功不吸热，内能下降多少就做多少功；CD 等温压缩，环境给它做功、同时让它放出多少热保持温度不变，功加热等于 0，环境对它做的功生成的热全部放给低温热源；DA 绝热压缩，得到的功全部转化为自身内能、温度升高，状态回到原点。</p><p>在 P-V 图上，内燃机气体对环境做的功，就是 4 段曲线所围成的面积。整个卡诺循环完成之后，气体回到原点，P、V、T 都复原了，内能也复原了。假定它的气缸体积转一圈之后增大了，第二圈继续膨胀，机器就嘣的一下没了，所以必须回到原点。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>卡诺，法国军工工程师。他才活了36岁。</p><p>当年西方海盗开着船去抢别人东西的时候，船的运力是有限的。我拉了100吨煤，没走多远就烧光了。</p><p>我用最笨的办法，添加不同微量元素和比例。试了几千次，要是还试不出来就怪了。</p><p>零下70度的潜艇在什么地方游？它还能游吗？他根本就没走，我给了一个假参数。</p><p>膨胀的两步是向外界环境做功的。被压缩的两步，是环境对它做功的。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-derivation">
+  <div class="slides"><figure class="slide" id="slide-12">
+<img src="slides/slide_12.png" alt="课件第12页 系统是理想气体，服从理想气体状态方程 PV=nRT；可逆过程的体积功 W=−∫PdV=−∫(nRT/V)dV，等温过程积分为 −nRT ln(V2/V1)；卡诺循环中气体所做总功=−nRT1 ln(V2/V1)−nRT2 ln(V4/V3)">
+<figcaption><span class="sno">12</span><span class="stitle">系统是理想气体，服从理想气体状态方程 PV=nRT；可逆过程的体积功 W=−∫PdV=−∫(nRT/V)dV，等温过程积分为 −nRT ln(V2/V1)；卡诺循环中气体所做总功=−nRT1 ln(V2/V1)−nRT2 ln(V4/V3)</span></figcaption>
+</figure>
+<figure class="slide" id="slide-13">
+<img src="slides/slide_13.png" alt="课件第13页 卡诺热机的效率：η=W/Q1=(Q1+Q2)/Q1，代入等温过程功的表达式，得 η=1+[T2 ln(V4/V3)]/[T1 ln(V2/V1)]——需要一个普遍意义上的表达式">
+<figcaption><span class="sno">13</span><span class="stitle">卡诺热机的效率：η=W/Q1=(Q1+Q2)/Q1，代入等温过程功的表达式，得 η=1+[T2 ln(V4/V3)]/[T1 ln(V2/V1)]——需要一个普遍意义上的表达式</span></figcaption>
+</figure>
+<figure class="slide" id="slide-14">
+<img src="slides/slide_14.png" alt="课件第14页 此处论证绝热过程中理想气体内能表达为 dU=nCV,mdT；绝热过程（A→B）可分解为等容过程（A→C）加等温过程（C→B）；dUAB=dUAC+dUCB=nCVdT">
+<figcaption><span class="sno">14</span><span class="stitle">此处论证绝热过程中理想气体内能表达为 dU=nCV,mdT；绝热过程（A→B）可分解为等容过程（A→C）加等温过程（C→B）；dUAB=dUAC+dUCB=nCVdT</span></figcaption>
+</figure>
+<figure class="slide" id="slide-15">
+<img src="slides/slide_15.png" alt="课件第15页 理想气体绝热系数 γ=CP,m/CV,m；绝热过程中 đQ=0，热力学第一定律 dU=đW=−PdV；由 nCV,mdT=−nRTdV/V 及 CP,m−CV,m=R 推出 dlnT=(1−γ)dlnV">
+<figcaption><span class="sno">15</span><span class="stitle">理想气体绝热系数 γ=CP,m/CV,m；绝热过程中 đQ=0，热力学第一定律 dU=đW=−PdV；由 nCV,mdT=−nRTdV/V 及 CP,m−CV,m=R 推出 dlnT=(1−γ)dlnV</span></figcaption>
+</figure>
+<figure class="slide" id="slide-16">
+<img src="slides/slide_16.png" alt="课件第16页 理想气体绝热过程：TV^(γ−1)=constant、PV^γ=constant、TP^(1−γ)/γ=constant；用于 B→C 与 D→A 两段绝热过程，比较得 V2/V1=V3/V4">
+<figcaption><span class="sno">16</span><span class="stitle">理想气体绝热过程：TV^(γ−1)=constant、PV^γ=constant、TP^(1−γ)/γ=constant；用于 B→C 与 D→A 两段绝热过程，比较得 V2/V1=V3/V4</span></figcaption>
+</figure>
+<figure class="slide" id="slide-17">
+<img src="slides/slide_17.png" alt="课件第17页 卡诺热机效率：代入绝热关系 V2/V1=V3/V4，η=1−T2/T1——脱离了体积参数，仅与高低温热源温度有关">
+<figcaption><span class="sno">17</span><span class="stitle">卡诺热机效率：代入绝热关系 V2/V1=V3/V4，η=1−T2/T1——脱离了体积参数，仅与高低温热源温度有关</span></figcaption>
+</figure>
+<figure class="slide" id="slide-18">
+<img src="slides/slide_18.png" alt="课件第18页 卡诺热机效率（Q 式）：η=1−|Q2|/Q1，恒等变换得 Q1/T1+Q2/T2=0——在卡诺循环中，可逆热温商之和等于零，这暗示热量与温度的比是状态函数">
+<figcaption><span class="sno">18</span><span class="stitle">卡诺热机效率（Q 式）：η=1−|Q2|/Q1，恒等变换得 Q1/T1+Q2/T2=0——在卡诺循环中，可逆热温商之和等于零，这暗示热量与温度的比是状态函数</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>绝热过程与效率公式推导</h2>
+        <div class="sec-meta"><span class="time">录音：休息后（00:33-00:43）</span><span class="chip">课件 12</span><span class="chip">课件 13</span><span class="chip">课件 14</span><span class="chip">课件 15</span><span class="chip">课件 16</span><span class="chip">课件 17</span><span class="chip">课件 18</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>卡诺热机效率怎么算？直接拿 AB 到 BC 段的功来算的话很难，不知道怎么算。我们拿热量的转换关系：刚才分析的四个阶段过程中，AB 段 Q1 和功的和为 0，CD 段等温可逆压缩 Q2 和 CD 段的功等于 0。因此对环境做的功，转化为求 AB 段和 CD 段的功。理想气体做功怎么做？我们有微功的定义，就从这出发给它积分，把理想气体状态方程 pV=nRT 代进来，对两个等温过程积分，发现等温过程做的功跟始末态体积的比值有关——应用到 AB 段和 CD 段，得到卡诺热机中理想气体对外做功的表达式，和 4 个端点的体积都有关系。</p><p>这个式子能不能拿来直接用？我点名宋泽伟、郑博文：能不能用来计算这个热机对环境做的功？他们说可以，因为所有的已知量都在上面了——我这个热机气缸大小我是知道的，每一步体积有多少我是知道的，没问题，不是不可以。只是说这个不同的热机，4 个端点的气体体积我必须知道，我就能算。但它还是没有到了一个非常普遍的地步。所以他们进一步的、研究下去：把这个式子带到热机效率的公式里面，消掉 N 和 2，就得到这样一个系统，一目了然——它的效率怎么算，就是和气缸里边 4 个冲程的气体的体积有关系。</p><p>休息。我们遵循卡诺的这个论证步骤，它是非常天才的论证。首先论证绝热过程，气体体积怎么表示？注意，气体是发动机气缸里的气体。在 PV 图上，AB 是绝热线，绝热意思是不吸热也不放热。PV 是不是都是状态函数？我可以把 AB 绝热线人为划分为两个阶段：AC 段和 CB 段——AC 是等容过程、气体体积不变，到了 C 点之后是等温过程，我用 AC 等容和 CB 等温这两个过程加起来实现 AB 段的绝热过程。</p><p>等容过程 A 到 C：气体的内能改变量我用微分表示，应用热力学第一定律，是它和环境交换的热和功。等容过程中体积不变，它对环境做功吗？环境对它做功吗？不做，因此这个功是不存在的，只有和环境交换的热——按照恒容热容的定义，就是 nCVdT 这一项。等温过程 C 到 B：大家回忆那个实验，在一个水浴槽里边理想气体向真空膨胀，这个过程温度发生过变化吗？没有，内能也没变。所以整个绝热过程 AB 段，气体内能的改变量是等容过程内能改变量加等温过程内能改变量，最终等于 nCVdT。</p><p>与此同时，直接应用热力学第一定律分析绝热过程：内能的改变量仅仅是和环境交换的功，因为它和环境不交换热量；而微功的定义是负的 PdV。两个表达式形式上不一样，但论证的都是同一个气体绝热过程中内能的改变量，数值应该一样——不应该有第二种结果，所以这两个式子相等。</p><p>我们又引用理想气体状态方程，把 nRT/V 代换这个 P，得到 nCVdT=−nRTdV/V。大家一眼就能看到，给它变形：两边同除以 T，左边就是温度的自然对数的微分，右边是体积自然对数的微分。同时，理想气体恒压热容与恒容热容之差为理想气体常数，此处略过，将该式代入得到新表达式。定义理想气体恒压摩尔热容与恒容摩尔热容之比为绝热指数，则式子简化成 dlnT=(1−γ)dlnV。这是最简单的微分方程，对其求解，从 T0 到 T1、V0 到 V 积分，得到结果。</p><p>注意该过程中存在不确定因素：伽马。我们将伽马视为常数，但它非常数，故数学上不严谨，工程上将其作为近似处理，这是当年的论证结果。结合理想气体状态方程，易推导出最终结果 TV^(γ−1)=constant，以及 PV^γ=constant、TP^(1−γ)/γ=constant。此结果可直接用于 BC 段和 DA 段两段绝热过程：比较这两个式子，V4/V3=V1/V2，只是分子分母倒置。</p><p>把这个式子代入卡诺热机效率公式，得到效率的最终表达式：η=1−T2/T1。它脱离了体积参数，仅与高低热源温度有关——这是卡诺热机的效率公式，是了不起的进步，抓住了提高热机效率的本质：要使效率接近 1，只需提高 T1 数值、缩小 T2 数值。</p><p>能否将 T2 设为绝对零度？若向绝对零度物体放热，效率不就为 1 了吗？关键是造不出来，而且很不实用。我们的汽车发动机也要向低温放热，它放的热去哪儿了？开车的小伙子都知道，不就是冷却水吗？你要把冷却水的温度干到绝对零度，那得有点儿本事，这个车你造不出来的。努力的方向是尽可能提高 T1 的温度、降低 T2 的温度，这是卡诺循环的效果。</p><p>单单从这个式子上看，不可能造出来百分之百的。我们从另外一个式子上看：这个 Q2 是向低温热源放热，我有另一种让它效率达到百分之百的办法——把 Q2 设为 0，就是说不放热，难道不可以吗？你们看到一些小饭店老有一个像癞蛤蟆一样的东西叫貔貅，是龙生九子中的一个，貔貅有个特点：每个老板都想，我只有收入就是不往外放。我不放热不行吗？这个留给大家课下广泛讨论，注意开动大家的智慧，不要用 AI 或者什么去搜，一搜它立马就告诉你答案无比正确。我想训练大家的思维，你们至少先忍住个两三天。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>宋泽伟：因为所有的已知量都在上面了。郑博文：我觉得可以。</p><p>这是非常天才的论证。</p><p>我们将伽马视为常数，但它非常数，故数学上不严谨。工程上将其作为近似处理。</p><p>要使效率接近1，只需提高T1数值，缩小T2数值。</p><p>我不放热不行吗？留给大家课下广泛讨论。不要用AI去搜，一搜它立马就告诉你答案无比正确。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-theorem">
+  <div class="slides"><figure class="slide" id="slide-19">
+<img src="slides/slide_19.png" alt="课件第19页 卡诺（热机）定理：工作于同样温度的高温热库与低温热库之间的不可逆热机的效率，不可能大于可逆热机的效率；所有工作于同样温度热库之间的可逆热机，效率相等">
+<figcaption><span class="sno">19</span><span class="stitle">卡诺（热机）定理：工作于同样温度的高温热库与低温热库之间的不可逆热机的效率，不可能大于可逆热机的效率；所有工作于同样温度热库之间的可逆热机，效率相等</span></figcaption>
+</figure>
+<figure class="slide" id="slide-20">
+<img src="slides/slide_20.png" alt="课件第20页 可逆过程：系统进行一个热力学过程后，能够沿原路径逆向回复到初态，不引起环境变化；条件是内部可逆加外部可逆；不可逆因素为摩擦、温差传热">
+<figcaption><span class="sno">20</span><span class="stitle">可逆过程：系统进行一个热力学过程后，能够沿原路径逆向回复到初态，不引起环境变化；条件是内部可逆加外部可逆；不可逆因素为摩擦、温差传热</span></figcaption>
+</figure>
+<figure class="slide" id="slide-21">
+<img src="slides/slide_21.png" alt="课件第21页 可逆热机、不可逆热机的效率 η≤(Q1−|Q2|)/Q1；可逆（卡诺）热机的效率 η=1−T2/T1；等于号对应可逆循环、小于号对应不可逆循环——克劳修斯不等式">
+<figcaption><span class="sno">21</span><span class="stitle">可逆热机、不可逆热机的效率 η≤(Q1−|Q2|)/Q1；可逆（卡诺）热机的效率 η=1−T2/T1；等于号对应可逆循环、小于号对应不可逆循环——克劳修斯不等式</span></figcaption>
+</figure>
+<figure class="slide" id="slide-22">
+<img src="slides/slide_22.png" alt="课件第22页 任意可逆循环的微分分割：把任意可逆循环切成无数微循环，每个微循环由两条绝热线夹两条等温线构成，热温商代数和为零">
+<figcaption><span class="sno">22</span><span class="stitle">任意可逆循环的微分分割：把任意可逆循环切成无数微循环，每个微循环由两条绝热线夹两条等温线构成，热温商代数和为零</span></figcaption>
+</figure>
+<figure class="slide" id="slide-23">
+<img src="slides/slide_23.png" alt="课件第23页 任意可逆循环的微分分割：每一条绝热线既是前一个微循环的绝热压缩线、又是紧邻后一个微循环的绝热膨胀线，所做功互相抵消；实线所围限的面积即总功；Σ(đQ/T)=0">
+<figcaption><span class="sno">23</span><span class="stitle">任意可逆循环的微分分割：每一条绝热线既是前一个微循环的绝热压缩线、又是紧邻后一个微循环的绝热膨胀线，所做功互相抵消；实线所围限的面积即总功；Σ(đQ/T)=0</span></figcaption>
+</figure>
+<figure class="slide" id="slide-24">
+<img src="slides/slide_24.png" alt="课件第24页 任意可逆循环的微分分割：∮(đQ/T)=0，所积变量 đQ/T 应当是某函数的全微分，积分值只取决于始态和末态——这是状态函数；1865 年克劳修斯命名为熵（entropy），符号 S，dS=đQ(reversible)/T">
+<figcaption><span class="sno">24</span><span class="stitle">任意可逆循环的微分分割：∮(đQ/T)=0，所积变量 đQ/T 应当是某函数的全微分，积分值只取决于始态和末态——这是状态函数；1865 年克劳修斯命名为熵（entropy），符号 S，dS=đQ(reversible)/T</span></figcaption>
+</figure>
+<figure class="slide" id="slide-25">
+<img src="slides/slide_25.png" alt="课件第25页 任意（不）可逆循环的微分分割：可逆循环热温商代数和等于零；不可逆循环热温商代数和小于零；但 ΔS(irreversible)=ΔS(reversible)——熵是状态函数，与路径无关">
+<figcaption><span class="sno">25</span><span class="stitle">任意（不）可逆循环的微分分割：可逆循环热温商代数和等于零；不可逆循环热温商代数和小于零；但 ΔS(irreversible)=ΔS(reversible)——熵是状态函数，与路径无关</span></figcaption>
+</figure>
+<figure class="slide" id="slide-26">
+<img src="slides/slide_26.png" alt="课件第26页 热力学第二定律的数学表达【克劳修斯不等式】：只有可逆过程的 đQ/T 才等于 dS；不可逆过程的熵变大于 đQ/T；dS≥đQ/T，ΔS≥ΣđQ_i/T_i">
+<figcaption><span class="sno">26</span><span class="stitle">热力学第二定律的数学表达【克劳修斯不等式】：只有可逆过程的 đQ/T 才等于 dS；不可逆过程的熵变大于 đQ/T；dS≥đQ/T，ΔS≥ΣđQ_i/T_i</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>卡诺定理、热温商与克劳修斯不等式</h2>
+        <div class="sec-meta"><span class="time">录音：前半后段（00:43-00:58）</span><span class="chip">课件 19</span><span class="chip">课件 20</span><span class="chip">课件 21</span><span class="chip">课件 22</span><span class="chip">课件 23</span><span class="chip">课件 24</span><span class="chip">课件 25</span><span class="chip">课件 26</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>所以，卡诺热机呢，我们看它的效率定义，给它做个恒等变换。因为 Q2 是小于 0 的，所以得出来一个结论：卡诺循环里边可逆过程的热温商——热量和温度的比值——的代数和等于 0。于是有了卡诺定理第一条：两种热机，它的高低温热源是一样的，一种是可逆热机、一种是不可逆热机，可逆热机的效率是最大的，一定大过不可逆热机。第二条：如果都是可逆热机的话，只要咱们工作的高低温热源一样，它的效率就一样。</p><p>第二条给了人们很大的启示，怎么造发动机？当然，卡诺热机是一种理想热机、可逆热机，它是没有摩擦力的。无论是可逆热机也好、不可逆热机也好，它的效率都可以这样定义。大家注意这个小于等于号：如果是等于号的话，它是可逆热机、卡诺热机；如果是小于号的话，它是不可逆热机。而可逆热机的效率我们刚才推出来是这个，所以有这样一个事：如果是可逆热机的话，它等于它；不可逆热机呢，小于它，给它做个恒等变换，得到这一项。</p><p>这个结论是什么呢？对于可逆热机循环而言，理想气体热温商的代数和等于 0；对于不可逆循环，热温商的代数和小于 0。这个式子叫克劳修斯不等式，知道就行，不需要刻意记住。</p><p>我们看任意一个循环，比如理想气体从 A 经 B、C、D 回到 A。把它切成无数个微循环，斜虚线都是绝热线，整个做功就是曲线围成的面积。看不同微循环的特点：蓝色和红色循环相邻，共用一条线——红线段是绝热可逆膨胀，气体对环境做功；蓝线段是绝热可逆压缩，环境对气体做功。红蓝效果相反，抵消掉了。划分无限多个微循环，相邻线都消掉，最后剩下沿边界与环境交换热的过程，围成的面积就是做功过程。</p><p>根据推导，这些微循环都有这特点：刚才推出可逆过程热温商代数和为 0，用无数个可逆微循环处理，最终结果是代数和为 0——也就是说，该函数的闭路积分为 0。想起状态函数的定义了吗？状态函数在数学上要求是全微分。因此 đQ/T 一定是某个状态函数的全微分。</p><p>它是什么呢？命名为熵，1865 年。因为环积分为 0，它一定是状态函数。Entropy 这个词，记不清是希腊语还是拉丁语。熵的出现代表热力学基本走向成熟。</p><p>1923 年，中央大学胡刚复教授接待西方科学家普朗克，这不是量子力学家普朗克，是另一位。胡先生很传神地现场造了一个字：中文字“熵”。中央大学大家有印象吗？就是今天的南京大学。在民国时代，中央大学是最受政府优待的，蒋介石兼任过校长，最多时兼任了 80 多个职务，自己都忘了。</p><p>这个“熵”字很传神：大家看右边是“商”，有笔直的意思，左边带个火字旁，说明跟热力学有关。我就佩服这位老先生的文学素养。我们不是要求讲课程思政吗？顺带讲一个科学家科技报国的故事：刚刚改革开放，科学院派出一个科学家代表团去访问西方。华罗庚先生大家都知道，大数学家，我们都说他数学好——谁说语文不好？他语文就好。他在飞机上给大家出了个对联，上联是“三强韩赵魏”，韩赵魏是战国的三个强国，这里面有钱三强。让大家对下联，谁都对不出来，还是华先生自己对的：“九章勾股弦”，这里面有赵九章，赵九章先生是大气物理学家。这是三个国家，这是数学的三个名词。</p><p>顺带说翻译笑话：80 年代学习热潮中，有人把孟子英语 Mengzi 误译为“门修斯”，称中国古代有位先贤叫门修斯；把 Milky Way 译成“牛奶路”，其实应是银河；清华有位历史老师编纪念抗战的书时，把蒋介石译成“常凯申”，满篇写常凯申如何领导中国抗战——若真有此人领导抗战，为何史书无记载？后来该书被收回。咱们不能犯这种错误。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>可逆热机的效率是最大的，一定大过不可逆热机。</p><p>如果是可逆热机的话，它等于它。不可逆热机呢？小于它。</p><p>这个式子叫克劳修斯不等式，知道就行，不需要刻意记住。</p><p>该函数的闭路积分为0。状态函数在数学上要求是全微分。因此RQ/T一定是某个状态函数的全微分。</p><p>华罗庚在飞机上给大家出了个对联：三强韩赵魏，谁都对不出来，还是华先生自己说的。下联九章勾股弦，这里面有赵九章。</p><p>把孟子英语Mengzi误译为门修斯。把Milky Way译成牛奶路，其实应是银河。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-entropy">
+  <div class="slides"><figure class="slide" id="slide-27">
+<img src="slides/slide_27.png" alt="课件第27页 熵增原理：由克劳修斯不等式很容易得出——任意系统的不可逆绝热过程中熵必然增加（đQ=0 时 ΔS≥0）；孤立系统的熵只增不减">
+<figcaption><span class="sno">27</span><span class="stitle">熵增原理：由克劳修斯不等式很容易得出——任意系统的不可逆绝热过程中熵必然增加（đQ=0 时 ΔS≥0）；孤立系统的熵只增不减</span></figcaption>
+</figure>
+<figure class="slide" id="slide-28">
+<img src="slides/slide_28.png" alt="课件第28页 可逆过程的熵等于可逆过程的热温比（=0），不可逆过程的熵大于不可逆过程的热温比（小于 0）；沿 1a2（不可逆）与 1b2（可逆）两条路径的热温比积分不相等，但熵变相等">
+<figcaption><span class="sno">28</span><span class="stitle">可逆过程的熵等于可逆过程的热温比（=0），不可逆过程的熵大于不可逆过程的热温比（小于 0）；沿 1a2（不可逆）与 1b2（可逆）两条路径的热温比积分不相等，但熵变相等</span></figcaption>
+</figure>
+<figure class="slide" id="slide-29">
+<img src="slides/slide_29.png" alt="课件第29页 卡诺热机的效率达到 100% 了吗？η=1−T2/T1——把 T2 设为绝对零度，或让 Q2=0 不放热，都不现实；第二类永动机不可行">
+<figcaption><span class="sno">29</span><span class="stitle">卡诺热机的效率达到 100% 了吗？η=1−T2/T1——把 T2 设为绝对零度，或让 Q2=0 不放热，都不现实；第二类永动机不可行</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>熵增原理与“100%”之问</h2>
+        <div class="sec-meta"><span class="time">录音：01:00-01:13</span><span class="chip">课件 27</span><span class="chip">课件 28</span><span class="chip">课件 29</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>在熵的定义中，大家注意一定要是可逆过程。我们很快就会看看熵到底是什么东西：计算熵的时候，只有可逆过程的热温比才能用来计算；如果是不可逆过程，是不能拿热温比来计算的。这个课件做得很啰嗦：不可逆过程我们知道热温比代数和小于 0，但是熵它是状态函数，无论是可逆过程也好、不可逆过程也好，只要起点一样、终点一样，它的熵的改变量是一样的。不可逆过程的熵的改变量要比热温比的环积分要大——为什么？因为熵变没变，而这一项是负的。所以这个式子：熵的微分大于等于微分的微量热量和温度的比值。这可以作为热力学第二定律的数学表达式，这是一个宏观的尺度、这是一个微分的尺度。</p><p>有了熵之后，人们通过脑子里的演绎，发现了熵增原理。第一条：热力系统的不可逆绝热过程的熵必然增加。由于有了这个式子，熵的改变量大于等于热量和温度的比值，而绝热过程热量改变量为零，所以熵一定是增加的。孤立系统的熵只增不减——由于和环境也会交换热，一样的道理，这就是熵增原理。</p><p>这个熵增原理出现之后，曾经在英国引起过一阵子自杀潮。自杀的是什么人？都是有文化的人、有科学素养的人——把宇宙当成孤立系统，宇宙的熵是不是一直在增加？后边我们马上会知道，熵代表混乱程度，越混乱熵越大。对宇宙而言，什么叫越混乱？就是说有机分子、无机分子都没有区分了，就是啥都灭亡了，那是混乱程度最大。那些人想，既然逃不脱这一天，那干脆还不如早死。大家都算出来过：再有 10 亿年，太阳的爆发达到最剧烈，地球表面的平均温度是 50 度，液态的水是不能存在的、都蒸发了，一个演绎的结果是所有的生物都会死掉。我一想，反正都要灭亡了，我还不如现在就灭亡——这么想就不合适了，也许到时候还有其他的招，不能太悲观了。</p><p>我们下一步看一下，可逆过程的热温比和不可逆过程的热温比。在 P-V 图上，有两种途径能从 2 点到达 1 点：一种是沿着可逆过程 2B1 这个路径过来，另一种是沿着不可逆过程 2A1 过来。但是我们知道，无论你用什么途径，从 1 点到 2 点这个过程中，熵的改变量是一样的，无论它是可逆过程也好、不可逆过程也好。对于可逆过程，我们可以用热温比来计算熵的改变量；对于不可逆过程，我们知道，熵的改变量比热温比大。</p><p>同时我们知道按照这个积分的方向，2B1 和 1B2 倒过来是符号相反的。所以在 1A2B1 这个循环过程中，由于 1A2 这一段是不可逆的、2B1 这一段是可逆的，所以整个这个过程它是不可逆的，就因为其中一段不可逆。从积分的角度看，热温比的环积分 1A2+2B1 分成两段，而 2B1 是负的 1B2 这样的积分，对于不可逆过程而言热温比的环积分一定小于 0——这是从克劳修斯不等式里面推出来的。这个结果直接导致把这个式子做恒等变换，我们就发现 1B2 热温比大于 1A2。如果 1A2 这一段也是可逆的话，那么 1B2、1A2 它的热温比的积分是相等的。</p><p>另一个问题：卡诺热机效率是不是它把能吸来的热量全部变为功？远远没有。那就是刚才提到的两个问题：一个是从温度推出来的——我把 T2 低温热源设为绝对零度，就可以实现效率 100%，我根本造不成，别说绝对零度了，我给你造个汽车，不要负 273.15 摄氏度，就负 50 摄氏度吧，你觉得这车能造出来吗？你造不出来，另外需要的成本大，难道还得装个冰箱？另一个是从热量角度看——我让热机不向低温源放热，这不就行了吗？这就是刚才说的不放热行不行，留个待议先讨论两三天。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>在熵的定义中，大家注意一定要是可逆过程。如果是不可逆过程，是不能拿热温比来计算。</p><p>不可逆过程的熵的改变量要比热温比的环积分要大。</p><p>有科学素养的人把宇宙当成孤立系统，宇宙的熵是不是一直在增加？</p><p>别说不放热了，我给你造个汽车，不要负273.15摄氏度，就负50摄氏度吧，你觉得这车能造出来吗？</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-boltzmann">
+  <div class="slides"><figure class="slide" id="slide-30">
+<img src="slides/slide_30.png" alt="课件第30页 熵与混乱度：设想一块铁或一杯水开始时处于 0 K，有确定熵值 S1，分子规则地、有秩序地、近于停滞地处在平衡位置上；注入热量 đQ 后分子被热弄得激动、热震动加剧、运动更混乱无序，S2 大于 S1">
+<figcaption><span class="sno">30</span><span class="stitle">熵与混乱度：设想一块铁或一杯水开始时处于 0 K，有确定熵值 S1，分子规则地、有秩序地、近于停滞地处在平衡位置上；注入热量 đQ 后分子被热弄得激动、热震动加剧、运动更混乱无序，S2 大于 S1</span></figcaption>
+</figure>
+<figure class="slide" id="slide-31">
+<img src="slides/slide_31.png" alt="课件第31页 熵与混乱度：进一步吸热，固体变成液体乃至气体，系统熵进一步增长，分子运动更为混乱无序——熵代表了系统内部混乱的程度，微观意义是系统内分子热运动无序性的量度">
+<figcaption><span class="sno">31</span><span class="stitle">熵与混乱度：进一步吸热，固体变成液体乃至气体，系统熵进一步增长，分子运动更为混乱无序——熵代表了系统内部混乱的程度，微观意义是系统内分子热运动无序性的量度</span></figcaption>
+</figure>
+<figure class="slide" id="slide-32">
+<img src="slides/slide_32.png" alt="课件第32页 熵公式、熵增原理 Boltzmann：系统的任一宏观状态所对应的微观状态数目，称为系统的热力学概率、状态概率，记做 W；W 越大说明系统内分子运动的无序性越大；1877 年玻尔兹曼建立 S∝lnW（Boltzmann 定理），但他从未明确写出熵公式">
+<figcaption><span class="sno">32</span><span class="stitle">熵公式、熵增原理 Boltzmann：系统的任一宏观状态所对应的微观状态数目，称为系统的热力学概率、状态概率，记做 W；W 越大说明系统内分子运动的无序性越大；1877 年玻尔兹曼建立 S∝lnW（Boltzmann 定理），但他从未明确写出熵公式</span></figcaption>
+</figure>
+<figure class="slide" id="slide-33">
+<img src="slides/slide_33.png" alt="课件第33页 熵公式、熵增原理 Boltzmann：普朗克将玻尔兹曼定理改写为 S=k lnW（或 S=k lnΩ），k 为玻尔兹曼常数——称为玻尔兹曼定理、玻尔兹曼熵公式；标志熵理论成熟完善，为统计力学奠定基础">
+<figcaption><span class="sno">33</span><span class="stitle">熵公式、熵增原理 Boltzmann：普朗克将玻尔兹曼定理改写为 S=k lnW（或 S=k lnΩ），k 为玻尔兹曼常数——称为玻尔兹曼定理、玻尔兹曼熵公式；标志熵理论成熟完善，为统计力学奠定基础</span></figcaption>
+</figure>
+<figure class="slide" id="slide-34">
+<img src="slides/slide_34.png" alt="课件第34页 熵公式、熵增原理 Boltzmann：路德维希·玻尔兹曼在维也纳中央公园的墓碑">
+<figcaption><span class="sno">34</span><span class="stitle">熵公式、熵增原理 Boltzmann：路德维希·玻尔兹曼在维也纳中央公园的墓碑</span></figcaption>
+</figure>
+<figure class="slide" id="slide-35">
+<img src="slides/slide_35.png" alt="课件第35页 陈景润墓碑，标注“1+2”：大偶数等于一个素数乘以不超过两个素数的乘积之和（陈氏定理）；素数又称质数">
+<figcaption><span class="sno">35</span><span class="stitle">陈景润墓碑，标注“1+2”：大偶数等于一个素数乘以不超过两个素数的乘积之和（陈氏定理）；素数又称质数</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>熵与混乱度：玻尔兹曼公式</h2>
+        <div class="sec-meta"><span class="time">录音：01:13-01:24</span><span class="chip">课件 30</span><span class="chip">课件 31</span><span class="chip">课件 32</span><span class="chip">课件 33</span><span class="chip">课件 34</span><span class="chip">课件 35</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>熵最开始的定义是对可逆过程而言，热温比就是熵；对于不可逆过程而言的话，熵的改变量要大于热温比。那么它到底是什么东西？通过一个思想实验，我们来看看熵到底怎么回事。</p><p>设计一个极致的情景：比如一个铁块刚开始的时候，给它放到绝对 0 度。这个时候在一个大气压下 0 开氏度以下，它有一个熵值。绝对 0 度的定义就是分子停止了振动——这个东西不敢再往下究了，原子核也停止震动、电子停止了环绕，这太可怕了。电子停止环绕之后有什么后果？电子和质子会落在原子核里，电子是负电、质子正电，它俩碰到之后，这不就是核爆炸吗？所以绝对 0 度我们只说到分子停止运动，再往下不敢说了。</p><p>现在呢，我给它注入一点点热量，这时候它会脱离绝对零度、会比绝对零度高一点点。这个过程中的吸热，我们拿热力学第二定律，在这个过程中吸微量的热，熵变除以温度对它积分，得到这样一个式子。因为它吸热，熵增效果一定是大于 0——在绝对零度的时候我给它一点点热量，它的熵率增加，分子开始振动。原来静悄悄的，后来开始震动，说明它比较混乱。</p><p>打个比方：你们已经是这个大孩子了，坐着乖乖的不动；一年级的小朋友可不这样，他听着听着就说我去找他玩去，完全没有学生的概念，那是无意识的，小朋友就乱起来了。那么熵到底怎么度量呢？我们知道了对于可逆过程的话，可以用热温比来度量。</p><p>玻尔兹曼从宏观混乱程度的角度，引入了热力学概率的概念：系统任意一个宏观状态所对应的微观状态数目，称为系统的热力学概率或状态概率，一般用 W 或 Ω 表示。以咱们教室为例，大家跟着我的思路走：现在每个同学坐在这个位置上是一种状态，任何一个同学换个位置，我们就有了第二个状态。如果每个人都是无意识的小朋友到处乱窜，有多少种状态呢？那是有限的，不是无限的。我们有 60 个座位，假定在没有人和你抢座位的情况下，每个同学都有 60 个选择——对某个同学而言，你的状态数就是 60。我们有 29 个同学，可能性就是 60 的 29 次方，这就是我们可能的热力学概率数，因为每个同学选座位是独立随机的。</p><p>1877 年，玻尔兹曼认为熵和任一概率的自然对数之间有一个正比例关系。但是他从来没有写出来这个公式，只是写出来一个正比例关系。后来普朗克把玻尔兹曼公式写成这样：S=k lnW，k 就是玻尔兹曼常数，这个式子叫做玻尔兹曼定理或者玻尔兹曼熵公式。有的把这个热力学概率写为 Ω，都是一样的。这是普朗克帮他完善了他的论述，所以后来在维也纳中央公园他们家族的墓地里面，在他的墓碑上刻下了玻尔兹曼熵定律。</p><p>玻尔兹曼家族是个科学家家族，出了很多大科学家。给大家看看另外一个科学家的墓碑，这是在门头沟有个万佛陵园，这是陈景润的墓碑——大家看到那个红色的 2 和白色的 1 了吧。在我小时候，我们特别崇拜陈景润，在民间都说陈景润一辈子研究证明的就是 1+1=2，我觉得特别无语，这怎么证明？原来他的 1+2 是个形象的说法：一个大偶数等于一个素数加不超过两个素数的乘积，这叫陈氏定理。这在数论方面，到今天为止就进步到这儿，再没有新的进步了。</p><p>所以一个科学家，判断你盖棺论定，最终你有没有什么东西可刻在墓碑上，这是个标志。假定我写了一辈子文章，最后发现没有任何东西可刻在墓碑上，这就说明很失败。自然界的规律都是高度简洁的：如果你发现谁给你说一个成果模式极为复杂，我差不多敢打赌他一定错了。比如牛顿定律、相对论、遗传规律、元素周期表、板块构造等等都是这样。我们在变质岩里，常用到的变质矿物不就那么几种吗？年代学常用定年副矿物就几种，自然界筛选后没那么复杂。若有人说金属矿床由大气降水、岩浆水、变质水混合及断裂等无数因素促成成矿，那他没抓住主要矛盾。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>绝对0度的定义就是分子停止了振动。这个东西不敢再往下究了，再往下不敢说了。</p><p>一年级的小朋友可不这样，他听着听着就说我去找他玩去。那是无意识的，小朋友就乱起来了。</p><p>我们有60个座位，每个同学都有60个选择。我们有29个同学，可能性就是60的29次方。</p><p>玻尔兹曼从来没有写出来这个公式，只是写出来一个正比例关系。后来普朗克把它写成S=k lnW。</p><p>假定我写了一辈子文章，最后发现没有任何东西可刻在墓碑上，这就说明很失败。</p><p>若有人说金属矿床由大气降水、岩浆水、变质水混合及断裂等无数因素促成成矿，那他没抓住主要矛盾。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-diffusion">
+  <div class="slides"><figure class="slide" id="slide-36">
+<img src="slides/slide_36.png" alt="课件第36页 气体自由扩散过程的熵增：n mol 理想气体（分子总数 N=nNA）绝热自由膨胀，体积从 V1 到 V2，温度不变；一个分子在体积 V 中的微观状态数 w 与 V 成正比，w=CV；nNA 个分子在体积 V 中分布的微观状态总数为 W=w^(nNA)=(CV)^(nNA)">
+<figcaption><span class="sno">36</span><span class="stitle">气体自由扩散过程的熵增：n mol 理想气体（分子总数 N=nNA）绝热自由膨胀，体积从 V1 到 V2，温度不变；一个分子在体积 V 中的微观状态数 w 与 V 成正比，w=CV；nNA 个分子在体积 V 中分布的微观状态总数为 W=w^(nNA)=(CV)^(nNA)</span></figcaption>
+</figure>
+<figure class="slide" id="slide-37">
+<img src="slides/slide_37.png" alt="课件第37页 气体自由扩散过程的熵增：体积从 V1 变到 V2 时热力学概率增大，W2/W1=(V2/V1)^(nNA)；ΔS=S2−S1=k ln(W2/W1)=nNA·k ln(V2/V1)=nR ln(V2/V1)大于 0——绝热自由膨胀只能由体积小向体积大的方向自动扩散，熵增加了">
+<figcaption><span class="sno">37</span><span class="stitle">气体自由扩散过程的熵增：体积从 V1 变到 V2 时热力学概率增大，W2/W1=(V2/V1)^(nNA)；ΔS=S2−S1=k ln(W2/W1)=nNA·k ln(V2/V1)=nR ln(V2/V1)大于 0——绝热自由膨胀只能由体积小向体积大的方向自动扩散，熵增加了</span></figcaption>
+</figure>
+<figure class="slide" id="slide-38">
+<img src="slides/slide_38.png" alt="课件第38页 熵不守恒！——熵不是守恒量，自发过程熵增加，热量发生贬值">
+<figcaption><span class="sno">38</span><span class="stitle">熵不守恒！——熵不是守恒量，自发过程熵增加，热量发生贬值</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div class="sec-tt">
+        <h2>气体自由扩散的熵增与熵不守恒</h2>
+        <div class="sec-meta"><span class="time">录音：01:24-01:27</span><span class="chip">课件 36</span><span class="chip">课件 37</span><span class="chip">课件 38</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>看气体自由扩散中熵如何量化。箱内左侧气体、右侧真空，抽掉隔板，气体必自发向真空扩散。气体分子主动回左边留右边真空？不可能，违背热力学第二定律。</p><p>膨胀中，体积 V 容器内微观状态数与体积成正比。N 摩尔气体在容器内分布独立，如自由坐座位，状态数众多。原来一半时微观状态数对应 V1，充满后 V1 变 2V1。扩散后与扩散前微观状态数比值为此数。引用玻尔兹曼定律，气体扩散后熵改变量为此数：V2/V1 比 1 大，此处恰为两倍，也可非两倍但 V2 大于 V1，该式一定大于 0——气体向真空自由扩散后，熵增加了。</p><p>扩散前混乱程度大，还是扩散后大？有同学答扩散之前——它就那么点个范围对吧；扩散之后每个分子能活动的空间又增大，所以扩散之后它更加混乱。所以气体向真空自由扩散过程，造成它更加混乱：无秩序程度加大、有序程度减少，熵增加。</p><p>接着问下去：气体扩散之后，体积增加了对吧？气压呢？减小了。温度呢？不变——因为它没有做功，也没吸热或放热。熵怎么加了？你跟着问熵守恒吗？不守恒，熵不是个守恒量。</p><p>同时在物理学上，论证了阿伏伽德罗常数乘上玻尔兹曼常数等于理想气体常数，这是物理学上的证据。这里面我们用的气体的扩散：很多男同学喝白酒，乙醇和水是不是能互溶的？你把乙醇和水扩散到一块儿之后，它的熵增加了。那是液体，算它的熵的时候，你会发现也有一个理想气体常数。我算液体，怎么都出现个理想气体常数，就从这儿来的。</p><p>我把这个气体分子换一下，换成实心的球，可不可以？可以啊。所以后边我们整个这门课就要和理想气体常数打交道——包括在完全没有任何流体的系统里面，纯矿物相你老是会看到它。就是这样来的：阿伏伽德罗常数乘以玻尔兹曼常数等于理想气体常数。</p><p>最后说“熵”这个词儿发明得好也不好。好的话呢，还给我们带来了崭新的理解，我指的是汉字；不好的话呢，它老引导你往那个热温比上去。当时如果胡先生用另外的词儿可能要好一些，但是我也不知道用什么词更合适。如果是现代人翻译的话，entropy 会翻译成什么样的汉字呢？最可恶的就是 80 年代有个词：Robots 是吧，它的名字实际上是稳定性，谁给它翻译成鲁棒？有很多半吊子在报纸上发表文章，这个鲁棒那个鲁棒，我当时在初中到高中那一段儿，被这个词给蒙死了，我都不知道啥意思，所以不能随意翻译词。</p><p>好，咱们课时到这儿结束了。上节课有个同学课后问了一个很好的问题，应该是我讲得匆忙就过去了，我们这里边看一下，待会儿大家再提问。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>气体分子主动回左边留右边真空？不可能，违背热力学第二定律。</p><p>温度不变，因为它没有做功，也没吸热或放热。你跟着问熵守恒吗？不守恒，熵不是个守恒量。</p><p>阿伏伽德罗常数乘以玻尔兹曼常数等于理想气体常数，是从这儿来的。</p><p>Robots，它的名字实际上是稳定性，谁给它翻译成鲁棒？我被这个词给蒙死了，我都不知道啥意思。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（岩石热力学）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>

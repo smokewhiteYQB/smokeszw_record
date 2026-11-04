@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>矿物物理学 · 第15课 第一性原理计算（5.1）｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.videos{margin-top:14px;border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.video + .video{border-top:1px solid #e4e9f0;}
+.videos h4{font-size:12.5px;font-weight:700;color:#0a1f38;background:#f2f5f9;padding:8px 12px;border-bottom:1px solid #e4e9f0;}
+.videos video{display:block;width:100%;max-height:460px;background:#0b0f14;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>矿物物理学 · 第15课 第一性原理计算（5.1）</h1>
+    <div class="sub">第15课 第一性原理计算（5.1） ｜ 2026-10-29 ｜ 张志刚（矿物物理学）</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 35 页 · 整理 11 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-course-plan">01 课程安排、考试与大作业</option>
+<option value="sec-method-overview">02 方法总览：先成为一名“司机”</option>
+<option value="sec-classical-md-review">03 回顾分子动力学：经典模型的屏障</option>
+<option value="sec-what-is-abinitio">04 什么是第一性原理</option>
+<option value="sec-history-schrodinger">05 发展史与薛定谔方程</option>
+<option value="sec-three-approximations">06 三大近似：绝热、平均场与赝势</option>
+<option value="sec-dft-two-theorems">07 密度泛函理论：从波函数到电子密度</option>
+<option value="sec-software-steps">08 软件、一般步骤与数值要点</option>
+<option value="sec-warnings">09 忠告：收敛与时空局限</option>
+<option value="sec-model-paper">10 第一性原理计算范文（Stixrude）</option>
+<option value="sec-homework">11 课后任务</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 矿物物理2026-5.1.pdf 逐页渲染，转写原文见 record_20261029.txt。</div>
+<section class="sec" id="sec-course-plan">
+  <div class="slides"><figure class="slide" id="slide-01">
+<img src="slides/slide_01.png" alt="课件第1页 2026《矿物物理学》课程——第一性原理计算（授课人：张志刚，中国科学院地质与地球物理研究所）">
+<figcaption><span class="sno">01</span><span class="stitle">2026《矿物物理学》课程——第一性原理计算（授课人：张志刚，中国科学院地质与地球物理研究所）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-02">
+<img src="slides/slide_02.png" alt="课件第2页 课程安排：11次课、12月3日结束、考试12月17日（课件第2页为过渡页）">
+<figcaption><span class="sno">02</span><span class="stitle">课程安排：11次课、12月3日结束、考试12月17日（课件第2页为过渡页）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-03">
+<img src="slides/slide_03.png" alt="课件第3页 课程安排勾选项：讲解要点、练习、文献讨论（课件勾选页）">
+<figcaption><span class="sno">03</span><span class="stitle">课程安排勾选项：讲解要点、练习、文献讨论（课件勾选页）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-04">
+<img src="slides/slide_04.png" alt="课件第4页 过渡页">
+<figcaption><span class="sno">04</span><span class="stitle">过渡页</span></figcaption>
+</figure>
+<figure class="slide" id="slide-05">
+<img src="slides/slide_05.png" alt="课件第5页 知识点与能力对照表：密度泛函理论关键思想、简单晶体结构、典型地幔矿物、状态方程、自由能、弹性性质、地幔矿物学模型、热传导、质量作用定律、铁合金热导率与地核新悖论；能力：POSCAR、VASP结构优化、EOSFit拟合状态方程、高压相变、弹性性质、地幔成分模型、phonopy晶格动力学">
+<figcaption><span class="sno">05</span><span class="stitle">知识点与能力对照表：密度泛函理论关键思想、简单晶体结构、典型地幔矿物、状态方程、自由能、弹性性质、地幔矿物学模型、热传导、质量作用定律、铁合金热导率与地核新悖论；能力：POSCAR、VASP结构优化、EOSFit拟合状态方程、高压相变、弹性性质、地幔成分模型、phonopy晶格动力学</span></figcaption>
+</figure>
+<figure class="slide" id="slide-06">
+<img src="slides/slide_06.png" alt="课件第6页 大作业：XX矿物的性质：对YY问题的启示——阐述科学问题并与矿物关联、用第一性原理方法计算某种性质、论述科学意义；分组、报告、书面总结，12月3日">
+<figcaption><span class="sno">06</span><span class="stitle">大作业：XX矿物的性质：对YY问题的启示——阐述科学问题并与矿物关联、用第一性原理方法计算某种性质、论述科学意义；分组、报告、书面总结，12月3日</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>课程安排、考试与大作业</h2>
+        <div class="sec-meta"><span class="time">00:00:00–00:07:40</span><span class="chip">课件 1</span><span class="chip">课件 2</span><span class="chip">课件 3</span><span class="chip">课件 4</span><span class="chip">课件 5</span><span class="chip">课件 6</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>从今天开始到12月3号结束，咱们课的考试在12月17号，大概一个多月的时间。课程网站上我放了一些讲解要点：每次课会有一些讲解、一些练习，还有一些文献的讨论。总的来看内容比较偏地球内部，但里面的逻辑和思路对大家自己的研究也会有帮助。张老师负责前面的1到4章，我是从第5章开始到第7章，会用4节课的时间带大家把所谓的原理模拟方法了解并做最基本的操作和计算。第6章虽然还会用到一些原来学过的东西，但希望大家带着具体的问题去做。最后这一章我们有三节，合在一起。原来郭老师主要讲相对浅部——地幔浅部、地壳或者流体问题；我们的分工主要讲深部。特别是有同学做行星科学或深空探测，也会涉及月球、火星这些星体的深部，我们可以用比较行星学的思维去理解地球这个星球。</p><p>大家上任何一门课都会关心怎么考试，我先把考试放在前面讲——这就是考试大纲。11节课里面，期中考试一般分两种题型：简答和计算，基本的内容都在左边（课件知识点表）。但考试肯定不是目的，只是一种形式，让大家最后结课有一个成绩。我们更希望的是能力这一部分。上了这门课之后，大家至少能用一个软件把晶体可视化，比如从一种模型转化成我们眼睛能看见的晶体排布；遇到钙钛矿、矿物，甚至闭壳层电子系统结构，至少有一些了解。后面涉及到相变过程或者结晶过程，要用到工具的时候，可以选择一些框架、方程来用。所以后续听课过程中走神没关系，大家带着放松的心情来听。</p><p>我和郭老师商议过，这门课有一个大作业：XX矿物的性质：对YY问题的启示。要求各组深入合作，考验协作及对科学问题的把握能力，大家现在就可以着手准备。后续不限方向——做流体、做换床、做化学化工的思维都可以，只要你能说出一个科学问题，把它跟我们课上讲的矿物物理的方法思路结合起来，最后落在一个点上，再用我们用到的方法去解决它，或者至少是探讨这个问题。每个组大概最后一次课有十几分钟时间做报告，汇报大家的心得和进展。既然选择了读研，甚至以后读博，在这个行业圈子里，更重要的是如何选题、论述、调研和报告。我们这边不是单兵作战，希望每个组通过一个有挑战的问题来促进合作。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我们更希望的是能力这一部分更重要，在我看来。</p><p>大作业是希望各组深入合作，考验协作及对科学问题的把握能力。</p><p>咱们的考试是在12月17号。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-method-overview">
+  <div class="slides"><figure class="slide" id="slide-07">
+<img src="slides/slide_07.png" alt="课件第7页 第一性原理计算：四次课安排——1. 第一性原理方法（10月29日）；2. 计算软件实践（11月3日）；3. 应用：状态方程与相图计算（11月5日）；4. 应用：矿物弹性性质计算（11月10日）">
+<figcaption><span class="sno">07</span><span class="stitle">第一性原理计算：四次课安排——1. 第一性原理方法（10月29日）；2. 计算软件实践（11月3日）；3. 应用：状态方程与相图计算（11月5日）；4. 应用：矿物弹性性质计算（11月10日）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-08">
+<img src="slides/slide_08.png" alt="课件第8页 司机、汽车工程师、汽车发明家（D.S. Sholl and J. A. Steckel, 2009, DFT: A practical introduction）——目标：理解基本概念和物理原理，先成为一名“司机”">
+<figcaption><span class="sno">08</span><span class="stitle">司机、汽车工程师、汽车发明家（D.S. Sholl and J. A. Steckel, 2009, DFT: A practical introduction）——目标：理解基本概念和物理原理，先成为一名“司机”</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>方法总览：先成为一名“司机”</h2>
+        <div class="sec-meta"><span class="time">00:07:40–00:11:10</span><span class="chip">课件 7</span><span class="chip">课件 8</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>今天主要是现场讲解第一性原理的方法，更多是大家跟着我的思路去思考。真正专门讲这个方法的课程，可能得40个课时；我们只有一节课，前面还花了半小时做铺垫，能用的时间只有一个小时，所以要把最关键的东西讲给大家，让大家知道这个方法的基本原理。后面三节课我们会反复回到基本原理上来，结合一些操作加深理解，特别是后面两次课会提出一些问题，提升大家的认识。</p><p>大家选这门课、进入新方法的学习，目的都不一样。就像有同学很喜欢车，是驾驶、工程师还是发明家的目的可能都不一样。至少从专业背景来说，目前阶段我们要学会用一些原理或动力学的方法体验一下，有的同学坐上这辆车就爱上了，有了热情再往下。现在AI很厉害，我们可以试着编代码，把工具用自己的方式组合成新的脚本或功能；有的同学在具体研究中会发现现有方法完全不好用，甚至可以在里面做一些研究、涉及方法的改变——那就更好了。所以这门课还是教大家去理解方法本身的思路。课后大家可以找一本从实用角度讲密度泛函理论的书（Sholl & Steckel, 2009），它的语言非常平易近人，从初学者的角度把关键点讲得很接地气，不是堆砌名词；因为涉及版权我没有放到课程网站里，感兴趣的同学可以私下找我。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>有同学很喜欢车，是驾驶、工程师还是发明家的目的，可能都不一样。</p><p>先成为一名司机。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-classical-md-review">
+  <div class="slides"><figure class="slide" id="slide-09">
+<img src="slides/slide_09.png" alt="课件第9页 回顾本课程第一阶段：分子动力学模拟——核心问题：分子/原子间相互作用模型">
+<figcaption><span class="sno">09</span><span class="stitle">回顾本课程第一阶段：分子动力学模拟——核心问题：分子/原子间相互作用模型</span></figcaption>
+</figure>
+<figure class="slide" id="slide-10">
+<img src="slides/slide_10.png" alt="课件第10页 第一性原理计算：突破经典模型屏障，发现新世界（Manning, 2013, PNAS；Pan et al., 2013, PNAS）">
+<figcaption><span class="sno">10</span><span class="stitle">第一性原理计算：突破经典模型屏障，发现新世界（Manning, 2013, PNAS；Pan et al., 2013, PNAS）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-11">
+<img src="slides/slide_11.png" alt="课件第11页 第一性原理计算：突破经典模型屏障，发现新世界（Pan and Galli, 2016, SA）">
+<figcaption><span class="sno">11</span><span class="stitle">第一性原理计算：突破经典模型屏障，发现新世界（Pan and Galli, 2016, SA）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-12">
+<img src="slides/slide_12.png" alt="课件第12页 第一性原理计算发现的新世界：NaCl3、Na3Cl；XeO、XeO2、XeO3；MgO2、Mg3O2（Artem R. Oganov）">
+<figcaption><span class="sno">12</span><span class="stitle">第一性原理计算发现的新世界：NaCl3、Na3Cl；XeO、XeO2、XeO3；MgO2、Mg3O2（Artem R. Oganov）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-13">
+<img src="slides/slide_13.png" alt="课件第13页 第一性原理计算在地球与行星内部研究中大有作为：微观结构、热力学性质（密度、热容、溶解度、分配系数、分馏系数）；地震波传输性质（弹性系数、波速、泊松比、各向异性）；动力学性质（电导率、热导率、粘滞度、扩散系数）">
+<figcaption><span class="sno">13</span><span class="stitle">第一性原理计算在地球与行星内部研究中大有作为：微观结构、热力学性质（密度、热容、溶解度、分配系数、分馏系数）；地震波传输性质（弹性系数、波速、泊松比、各向异性）；动力学性质（电导率、热导率、粘滞度、扩散系数）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>回顾分子动力学：经典模型的屏障</h2>
+        <div class="sec-meta"><span class="time">00:11:10–00:29:00</span><span class="chip">课件 9</span><span class="chip">课件 10</span><span class="chip">课件 11</span><span class="chip">课件 12</span><span class="chip">课件 13</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>先回顾郭老师那边的课。这张片子代表纯分子动力学模拟里很关键的地方：我们学会了用GROMACS做数据模拟，但如果把所有操作都丢掉，这个方法最关键的要点有哪些？有同学说：在给定的约束、即力场条件下，预测一个体系在一定时间内每一步的变化。如果类比大家更熟悉的实验——我们要量这张桌子的长度，就反复量很多次取平均。分子动力学模拟实际上也是在产生很多样本：每一个动画相当于拍了一张照片，用统计力学的方法可以算出整个能量，再放到热力学关系里推导出各种其他性质。所以让分子动起来，就是让它不断产生样本，最后经过统计平均得到我们关心的性质——比如特定温度压力下水的密度是多少。分子动力学不仅是漂亮的动画，它实际上是在微小空间内产生样本并返回给你。</p><p>分子动力学的要点：一是运动规律，即牛顿第二定律——已知受力算加速度，进而预测下一时刻的位置，一段段预测出长轨迹；二是势能函数，即相互作用规则——关系好的人靠得再近也不会排斥，两个仇人在一起可能离很远就走开了，体系不一样、问题不一样，选择的性能函数也不一样。除了表达式，这些函数还有各种参数。参数一定程度上方便了计算，但也约束了体系的运转——每个参数都有适用范围。郭老师的课里更多是常温常压或不太高的温压；但如果讲地幔地核或行星内部，温压上来后相互作用趋势相同，但我们在做定量计算，参数肯定要变化，超过范围再做预测只能说趋势对，结果不一定对。</p><p>举几个例子说明参数适用性的问题。第一个例子回到水：为什么血液里、细胞里水会成为非常好的溶液？食盐氯化钠为什么能溶在水里？固体盐以晶格晶体结构存在，溶到水里就拆成离子了。这里的关键是介电常数——真空中两个电荷的静电场相互作用是1/4πε0，而水或金属这些介质要除以相对介电常数εr；水的介电常数大约是78，这是个相当大的值，它把静电力大大地减小，所以带电物质或电解质溶到水里很容易被隔开，溶解性大大增强。水的这个特性和氢键作用有很大关系。郭老师带大家用的经典分子模拟模型，参数是固定的；用这个模型做分子动力学，蓝色点代表经典模拟预测的热量场数——总体趋势是高温下溶解性变差，因为温度升高使介电常数降低很多；而提高压力又会反过来让介电强度增加。所以经典分子动力学模拟的趋势是对的，但如果考虑参数变化、分子构型变化——用第一性原理模拟方法，就没有这些约束了：分子结构不是固定的，原子相关参数也不是固定的，甚至电荷都可以发生变化，是分数电荷。</p><p>用第一性原理算出来的值更接近实验，而且趋势上随着压力升高而增加、随着温度升高而下降——它预测的溶解性比经典分子动力学模拟的结果要大，意味着物质在水里的溶解能力更强。这篇文章发表在顶级刊物上（Manning, 2013, PNAS），还配发了评论文章：俯冲带地幔新出的流体，介电常数比基于低温低压实验和分子动力学模拟预测的结果溶解能力大大增强，实际情况比预期大很多。带来的后果是图中各种碳酸盐物质在水里的溶解情况发生改变：方解石、文石、白云石这些常见碳酸盐矿物在普通钙质静脉里的溶解度一般，密度这么高的流体里边携带矿物离子的能力大大降低了——用第一性原理方法得到更准确的物理化学性质，导致我们对生物流体（地质流体）的作用有了全新的认识。2013年前后这方面的文章特别多，Nature、Science都有。长期用经典动力学模拟之后，随着软硬件计算能力提升，那个时代兴起了第一性原理模拟，这个工具一起来，当然会突破原来很多认识。</p><p>第二个例子，碳酸盐岩在流体中存在的形式。电子流体和成化流体里水是主要成分，还有二氧化碳、甲烷、氯化钠等。以往研究把二氧化碳跟喝的汽水类比，但用分子动力学模拟轨迹、切片分析模拟盒子里的物种——二氧化碳分子形式的物种占比接近零，平均可忽略；高温高压下它主要以离子形式存在。流体的物理化学性质——溶解度、分配系数等——与物种存在形式密切相关，如果它是以离子而非分子形式存在，基于中学化学知识的认知就不再适用了。再进一步增加能量，到下地幔、超级地球甚至更大的行星，会出现很奇怪的化学计量比：氯化钠在以前的化学里是典型的1:1配比，但用第一性原理方法可以预测出 NaCl3、Na3Cl 这些新结构，而且妙在同时用高压实验验证了这样的新晶体结构。当年这些文章都发在大家能想到的期刊上，突破了原来对常规晶体化学、材料学、物质的预期。</p><p>与这个相联系，2024年诺贝尔物理学奖和化学奖里有做蛋白质折叠预测的——这几年用上机器学习方法把计算速度大大提升，但真正的核心在于用了第一性原理的方法作为训练数据，才使得预测能力大大增强。现在可以通过第一性原理模拟预测很多结构材料，包括与生命有关的蛋白质结构，预测出的新结构大大突破了多年实验积累的数据。以后涉及到极限条件下地球行星演化、复杂成分的工况，这种方法会有很大的用武之地。我们各种讨论里实际上都在讨论化学性质——这些性质置于地球内部高温高压、宽温压范围的场景中，物质发生诸多变化，决定其演化和动力学的关键参数都可以用原理方法预测，这也是为什么许多老师做高压实验能获得地球行星演化的新认知。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>让分子动起来，就是让它不断产生样本。</p><p>每个参数都有适用范围，超过范围再做预测，只能说趋势对，但结果不一定对。</p><p>水的介电常数大约是78，这是个相当大的值，它把静电力大大地减小。</p><p>分子结构不是固定的，原子相关参数也不是固定的，甚至它的电荷都可以发生变化，是一个分数的电荷。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-what-is-abinitio">
+  <div class="slides"><figure class="slide" id="slide-14">
+<img src="slides/slide_14.png" alt="课件第14页 “第一性原理”：first-principles、ab initio、quantum mechanics">
+<figcaption><span class="sno">14</span><span class="stitle">“第一性原理”：first-principles、ab initio、quantum mechanics</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>什么是第一性原理</h2>
+        <div class="sec-meta"><span class="time">00:35:20–00:39:40</span><span class="chip">课件 14</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>大家看到“第一性原理”这个词可能觉得奇怪。若常刷视频网站，会提到马斯克的第一性原理——是不是相同？first-principles，包括与其等价的另一个词 ab initio，这是拉丁词，很多同学都不知道怎么读，包括我自己早年也不知道。First principle，现在媒体里面说的第一性原理，指的是用物理的原理去对各种事物、或者你想做的事业进行推断：把一些不利的因素从物理的角度看清楚，它到底是固化为不可克服的，还是可以通过努力克服。马斯克说我们要移民火星，看起来是不可能的，但他用机械原理的思维去推导，算了成本、算了各种物理先决条件能不能满足，最后的结论是可以——他现在也正式这么做，包括无人电动车、可回收火箭，这些在以前的认知里完全不能想象；把火箭回收二次利用降低成本，这是他登陆火星计划的一部分，成本降下来就可以实现商业星际旅行。</p><p>在这个领域里，真正的“第一性原理”是什么呢？它可以把状态方程、更高层次的物理定律都从底层推导出来。把所有物理原理排序，很多原理都可以通过底层原理预测出来。第一性原理的意思就是：在我们这个方法里边，原则上不需要任何实验参数——我们可以在模拟盒子中设定原子类型，或从元素周期表中选取原子放入其中，原则上就可以预测其最终状态、物理性质及化学性质。第一性原理指最底层的物理定律，其他规律通过统计等方法得出，预测性即源于此。它不像经典分子模拟那样依赖大量参数，避免了参数适用性难以界定的问题。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>真正的第一性原理，原则上是不需要任何的实验参数。</p><p>它不像经典分子模拟那样依赖大量参数，避免了参数适用性难以界定的问题。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-history-schrodinger">
+  <div class="slides"><figure class="slide" id="slide-15">
+<img src="slides/slide_15.png" alt="课件第15页 第一性原理方法发展史：提出基本方程、寻求解法">
+<figcaption><span class="sno">15</span><span class="stitle">第一性原理方法发展史：提出基本方程、寻求解法</span></figcaption>
+</figure>
+<figure class="slide" id="slide-16">
+<img src="slides/slide_16.png" alt="课件第16页 薛定谔方程（附波函数可视化）">
+<figcaption><span class="sno">16</span><span class="stitle">薛定谔方程（附波函数可视化）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>发展史与薛定谔方程</h2>
+        <div class="sec-meta"><span class="time">00:39:40–00:56:20</span><span class="chip">课件 15</span><span class="chip">课件 16</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>整体思路梳理一下。自1910年起，微观电子理论不断发展，从普朗克提出的量子概念出发，这一有违直觉的理论逐步演进；德布罗意提出物质也有波长，即物质波——他凭这个概念写的一页博士论文拿了诺贝尔奖，大家可以羡慕一下。1998年诺贝尔化学奖授予了两位科学家，他们用不同方式实现了同一目标：把看似无用甚至哲学的理论发展为实用方法，到那时这个领域框架已基本搭建完成。后续针对不同物质和问题仍有新技术发展。这个方程提出来之后，当时是一个 Mission Impossible，是不可能解决的问题；后面的发展思路就是从提出理论到最后寻求数字解法、最后落地实现的过程。从人工智能兴起开始，行业进入了更大程度的爆发，它已成为材料学、物理学、化学的核心引擎。在我们那个年代，解决一个问题换一个体系可能就遇到计算问题；现在硬件加速很快、软件也是，特别是人工智能——也许有的同学以后要用到国家超算的资源，以后第一性原理计算不再需要记各种超级计算的命令，你就拿着手机跟他说“请你给我算一个什么东西”，智能体就提交到超算上，吃完饭它就给你返回结果。现在正好是大家充分利用这种红利的时候。</p><p>核心的方程是薛定谔方程：Ĥψ=Eψ。这个哈密顿量是什么意思？它的意思就是对这个波函数进行操作，操作完之后波函数的形式不变，但前面可以带一个常数——我们要找的就是这样的波函数。举几个例子就清楚了：做微分算不算操作？对x²求偏导得2x，函数从二次变一次，所以这不满足波函数问题；指数形式是对的；再假设ψ=sin(px)，先做一次偏导，ψ变了——再做一次，就得到本征方程了。波函数可以看作蕴含了物质研究体系的所有性质：假如有一双上帝之眼能完全掌握波函数，就可以去“算命”，预测体系在时空范围内如何演化；我们只能无限逼近对波函数的认识。小写r代表电子，大写R代表原子核。一个铁原子有26个电子，若体系中有100个铁原子，每个铁原子26个电子，波函数就有2600维的巨大的自由度——早年只能求解单个氢原子或氦原子，否则无法解决。有了能量这个核心量，后面所有的物理化学性质都可以通过统计力学方法推出来。波函数比较难理解，课后可以去B站看看介绍、动画和解说，理解波函数的样子。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>德布罗意凭一页博士论文拿了诺贝尔奖，大家可以羡慕一下。</p><p>假如有一双上帝之眼能完全掌握波函数，那就可以去算命了。</p><p>以后的第一性原理计算不再需要记各种超级计算的命令，拿着手机说请你给我算一个什么东西。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-three-approximations">
+  <div class="slides"><figure class="slide" id="slide-17">
+<img src="slides/slide_17.png" alt="课件第17页 绝热近似：分离原子核与电子的计算（1927）">
+<figcaption><span class="sno">17</span><span class="stitle">绝热近似：分离原子核与电子的计算（1927）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-18">
+<img src="slides/slide_18.png" alt="课件第18页 绝热近似：分离原子核与电子的计算（展开示意）">
+<figcaption><span class="sno">18</span><span class="stitle">绝热近似：分离原子核与电子的计算（展开示意）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-19">
+<img src="slides/slide_19.png" alt="课件第19页 平均场近似：处理复杂多体问题">
+<figcaption><span class="sno">19</span><span class="stitle">平均场近似：处理复杂多体问题</span></figcaption>
+</figure>
+<figure class="slide" id="slide-20">
+<img src="slides/slide_20.png" alt="课件第20页 赝势近似：分离离子实和价电子">
+<figcaption><span class="sno">20</span><span class="stitle">赝势近似：分离离子实和价电子</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>三大近似：绝热、平均场与赝势</h2>
+        <div class="sec-meta"><span class="time">00:56:20–01:08:00</span><span class="chip">课件 17</span><span class="chip">课件 18</span><span class="chip">课件 19</span><span class="chip">课件 20</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>把电子和原子核一起处理，是很大的自由度，但这两个是有差别的——就好像大家在地球上生活，我们不需要把地球的活动和每个人的活动放在一起考虑；这是两个时空尺度相差非常大的物理对象。原子核质量是电子质量的多少倍？氢原子核和一个电子质量差1836倍。相当于在一个很重的物体上面有一个很轻的东西在运动，这是一个非常自然的物理直觉——由此提出玻恩-奥本海默（绝热）近似（1927）：原子核原来和电子一起考虑，但原子核运动的频率或速度比电子小很多，所以我们可以在每个构型里认为原子核是固定背景，电子在其中运动，最后找到位置或统计平均概率。这样做分子动力学时，我们挪动原子核得到构型，但需计算该位置下电子的作用——此时固定原子核、求解电子平衡态；也可以人为产生其他非物理直接得到的构型。问题分解为两个循环：外循环是原子核，内层是电子。这称为绝热近似。期中考试问答题可能涉及这类问题——比如在第一性原理计算或求解量子力学方程时，有哪些关键假设和近似。这种近似是有边界的：对某些体系，如氢或氦原子，绝热近似可能不存在，需考虑电子和原子核间的相互作用。</p><p>除了原子核固定，电子还有很多。以铁原子为例，核固定后26个电子；若有100个原子核则有2600个电子在不断相互作用，同样是很大的计算量。这里类似于屋里7个人：算受力时，得考虑每个同学对我的影响——这是郭光军老师做分子动力学时能量和力的循环。可不可以这样：我站在这个位置，假设能感知到一个场，这个场可能来自于大家的频率，我觉得不舒服，可能是某种能量发射过来，这时可能得有一个力把我推到另一个位置——每个人不都能感觉到这样一个平均场吗？那就意味着每个人只需要考虑自己的感受往哪边走，不需要再跟这几位同学一一算一遍。这样就把2600个电子两两相互作用的多体问题，变成每个电子只考虑自己与平均场相互作用的单体问题。但这里有个小小的悖论：我要感受到大家的能量，是不是得知道能量对我的作用？所以需要一个迭代机制——我预设一个自己比较舒服的状态，算出整个体系的情况，再反馈给我，最后迭代几次达到平衡。这就是平均场近似（Hartree近似），通过绝热近似降低了自由度，现在通过平均场近似进一步把多体问题的计算复杂度降低了。</p><p>接着看，一个铁原子周围26个电子怎么排布？1s² 2s² 2p⁶ 3s² 3p⁶ 4s² 3d⁶。我们很少会真正去关心1s、2s这些最里层电子——最里层的电子非常懒惰，不参与很多过程；所谓价电子会跟很多化学性质发生关联。这样区分后有一个好处：如果26个电子全部考虑，在离原子核中心较近的地方会出现非常大的波动，计算量非常大。如果我们把里边——这是离子实的半径——用原子式的赝势来表达，外边近似得到的结果到了原子半径之外几乎与真实值重合：计算结果一样，但计算量大大降低。这就是赝势近似：把“赝”（不是真的，是人造出来的）势能，将里边的原子核部分统一做成假势能，外边的电子相当于真实电子在那相互作用。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>原子核质量是电子质量的1836倍，相当于在一个很重的物体上面有一个很轻的东西在运动。</p><p>每个人只需要考虑自己的感受，把一个多体问题变成一个单体问题。</p><p>赝势，就是把人造的势能将里边原子核部分统一做成假势能。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-dft-two-theorems">
+  <div class="slides"><figure class="slide" id="slide-21">
+<img src="slides/slide_21.png" alt="课件第21页 求解薛定谔方程的两种思路：HF波函数理论、密度泛函理论">
+<figcaption><span class="sno">21</span><span class="stitle">求解薛定谔方程的两种思路：HF波函数理论、密度泛函理论</span></figcaption>
+</figure>
+<figure class="slide" id="slide-22">
+<img src="slides/slide_22.png" alt="课件第22页 密度泛函理论的基石：Hohenberg-Kohn定理——基态能量是电子密度的唯一泛函；使总泛函能量最小的电子密度即真实电子密度（1964, PR）；100个Fe原子全电子波函数7800维，电子密度只有3维">
+<figcaption><span class="sno">22</span><span class="stitle">密度泛函理论的基石：Hohenberg-Kohn定理——基态能量是电子密度的唯一泛函；使总泛函能量最小的电子密度即真实电子密度（1964, PR）；100个Fe原子全电子波函数7800维，电子密度只有3维</span></figcaption>
+</figure>
+<figure class="slide" id="slide-23">
+<img src="slides/slide_23.png" alt="课件第23页 密度泛函理论的实现：Kohn-Sham方程（1965, PR）——多粒子系统薛定谔方程→科恩-沈方程">
+<figcaption><span class="sno">23</span><span class="stitle">密度泛函理论的实现：Kohn-Sham方程（1965, PR）——多粒子系统薛定谔方程→科恩-沈方程</span></figcaption>
+</figure>
+<figure class="slide" id="slide-24">
+<img src="slides/slide_24.png" alt="课件第24页 密度泛函理论的“遗憾”：交换-关联能的确切形式未知">
+<figcaption><span class="sno">24</span><span class="stitle">密度泛函理论的“遗憾”：交换-关联能的确切形式未知</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div class="sec-tt">
+        <h2>密度泛函理论：从波函数到电子密度</h2>
+        <div class="sec-meta"><span class="time">01:08:00–01:11:10</span><span class="chip">课件 21</span><span class="chip">课件 22</span><span class="chip">课件 23</span><span class="chip">课件 24</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>求解薛定谔方程有两条思路：一条是HF波函数理论（Hartree-Fock），另一条是密度泛函理论。刚才说到各种近似都是在求解波函数ψ，这是一个很大自由度的东西。但在1950年代末、60年代初，科恩（Kohn）教授他们提出一种新思路：波函数的一种解释是它的平方，即电子密度。以前教材里看到的电子云，有的地方点密一点、有的地方点疏一点，像云一样。实际上我们并不需要去求那个高维函数，只需要考虑电子密度就可以了。</p><p>霍恩伯格-科恩（Hohenberg-Kohn）定理奠定了整个密度泛函理论的基础，就是两个定理：第一个定理说，薛定谔方程得到的基态能量是电子密度的唯一泛函——也就是说电子密度可以替代波函数，实现效果跟波函数一样；第二个定理说，使总泛函能量最小的电子密度就是真实电子密度——第一个定理告诉你有宝、这个世界上有这么一个宝，第二个定理告诉大家通过什么方式能找到这个宝。用电子密度一出来，就把高维度的波函数降维了：100个Fe原子、每个26个电子，全电子波函数是7800维；而电子密度只有3维！它把计算量从不可能变成了可能。</p><p>然后他们把薛定谔方程转化成所谓的科恩-沈（Kohn-Sham）方程——沈（沈吕九）是香港的——这个方程就是我们后边课程里要求解的。里面有一些技术问题就不再讲了，包括一些进一步的近似，比如交换-关联能的确切形式未知，这是密度泛函理论的一个“遗憾”，需要做近似处理（如局域密度近似、广义梯度近似等）。所有这些思路了解之后，我们后边课程会用到VASP这个软件——它在材料科学里经过很多验证，准确度很好，使用社区也很大。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>100个铁原子，全电子波函数为7800维，电子密度为3维。</p><p>第一个定理告诉你有宝，第二个定理告诉大家通过什么方式能找到这个宝。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-software-steps">
+  <div class="slides"><figure class="slide" id="slide-25">
+<img src="slides/slide_25.png" alt="课件第25页 第一性原理计算软件（基于密度泛函理论）：VASP（Jürgen Hafner、Georg Kresse）">
+<figcaption><span class="sno">25</span><span class="stitle">第一性原理计算软件（基于密度泛函理论）：VASP（Jürgen Hafner、Georg Kresse）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-26">
+<img src="slides/slide_26.png" alt="课件第26页 第一性原理计算的一般步骤：建模→设置参数→等待结果→分析结果">
+<figcaption><span class="sno">26</span><span class="stitle">第一性原理计算的一般步骤：建模→设置参数→等待结果→分析结果</span></figcaption>
+</figure>
+<figure class="slide" id="slide-27">
+<img src="slides/slide_27.png" alt="课件第27页 第一性原理数值计算的要点：基组的选择（平面波、局域轨道）；积分算法（倒空间K点选取）；收敛精度（能量截断半径）等（Sholl & Steckel, 2009）">
+<figcaption><span class="sno">27</span><span class="stitle">第一性原理数值计算的要点：基组的选择（平面波、局域轨道）；积分算法（倒空间K点选取）；收敛精度（能量截断半径）等（Sholl & Steckel, 2009）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">08</span>
+      <div class="sec-tt">
+        <h2>软件、一般步骤与数值要点</h2>
+        <div class="sec-meta"><span class="time">01:11:10–01:12:30</span><span class="chip">课件 25</span><span class="chip">课件 26</span><span class="chip">课件 27</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第一性原理计算看起来跟做实验一样，不需要自己求解里面的各种方程，需要做的就是设计：建模、设置参数、提交到计算机、等结果、分析结果——这跟大家做其他研究的思路一样。第一性原理计算软件，基于密度泛函理论的最常用的是VASP（维也纳大学 Hafner、Kresse 开发）。数值计算有几个要点：基组的选择——平面波、局域轨道；积分算法——倒空间K点选取；收敛精度——能量截断半径等等。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>建模、设置参数、等待结果、分析结果，这跟大家做其他研究的思路一样。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-warnings">
+  <div class="slides"><figure class="slide" id="slide-28">
+<img src="slides/slide_28.png" alt="课件第28页 忠告：不要盲目相信、不要傻瓜式操作（Joppa et al., 2013, Science；Martin et al., 2009, JCC）">
+<figcaption><span class="sno">28</span><span class="stitle">忠告：不要盲目相信、不要傻瓜式操作（Joppa et al., 2013, Science；Martin et al., 2009, JCC）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-29">
+<img src="slides/slide_29.png" alt="课件第29页 时常保持警惕：计算结果是否收敛？举例：fcc-Cu的能量随倒空间k点数目的变化">
+<figcaption><span class="sno">29</span><span class="stitle">时常保持警惕：计算结果是否收敛？举例：fcc-Cu的能量随倒空间k点数目的变化</span></figcaption>
+</figure>
+<figure class="slide" id="slide-30">
+<img src="slides/slide_30.png" alt="课件第30页 谨记在心：第一性原理计算本身有其时空局限性——新的解决方案？量子力学计算→机器学习模型（2020 GCA; 2022 GRL; 2025 GRL）">
+<figcaption><span class="sno">30</span><span class="stitle">谨记在心：第一性原理计算本身有其时空局限性——新的解决方案？量子力学计算→机器学习模型（2020 GCA; 2022 GRL; 2025 GRL）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">09</span>
+      <div class="sec-tt">
+        <h2>忠告：收敛与时空局限</h2>
+        <div class="sec-meta"><span class="time">01:12:30–01:14:20</span><span class="chip">课件 28</span><span class="chip">课件 29</span><span class="chip">课件 30</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>这里要特别注意，第一性原理计算有很多参数要调节，这些参数不是傻瓜式能调好的，我们需要有一些规范，明白每个参数的意思，同时有些参数需要去测试。如果参数取得不合适，算出来的结果跟最后收敛的结果相差很多——这也是国外很多期刊比较诟病的地方：很多中国学者发文章，参数一看就是买了软件、软件出结果直接出文章。所以在研究当中要注意：不要盲目相信、不要傻瓜式操作。举例：fcc-Cu的能量随倒空间k点数目的变化——k点取少了结果不收敛。</p><p>还有一个情况：第一性原理计算本身涉及的时空尺度是受限的。但我们反复提到一个概念，通过机器学习的方法可以大大突破这个时空尺度——把求解电子的量子力学方程转化成一个计算速度提升3个数量级以上的替代方法（机器学习模型）。时间到了，后边留给大家：我在课程网站里留了一篇文章，大家可以去翻一翻，不一定要仔细读，大概了解一下类似这种研究的规范——比如各种模拟参数的选择需要有所交代，后边别人要去重复实验的时候，计算结果值才有基础。后面我们结合具体问题会回到他这篇文章为何发在Science上——包括地球行星演化的一些关键内容，实际上idea比真正做模拟计算更重要。这也是大家以后做相关研究需要注意的。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>参数取得不合适，算出来的结果跟最后收敛的结果相差很多。</p><p>不要盲目相信、不要傻瓜式操作。</p><p>idea比真正做模拟计算更重要。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-model-paper">
+  <div class="slides"><figure class="slide" id="slide-31">
+<img src="slides/slide_31.png" alt="课件第31页 第一性原理计算范文（Lars Stixrude）">
+<figcaption><span class="sno">31</span><span class="stitle">第一性原理计算范文（Lars Stixrude）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-32">
+<img src="slides/slide_32.png" alt="课件第32页 计算细节要点：软件（版本）、研究体系结构/初始条件、温压条件、赝势、截断能量、积分K点选择、结构优化迭代精度、模拟时长、参数收敛测试、其它必要要点">
+<figcaption><span class="sno">32</span><span class="stitle">计算细节要点：软件（版本）、研究体系结构/初始条件、温压条件、赝势、截断能量、积分K点选择、结构优化迭代精度、模拟时长、参数收敛测试、其它必要要点</span></figcaption>
+</figure>
+<figure class="slide" id="slide-33">
+<img src="slides/slide_33.png" alt="课件第33页 计算结果：结构、状态方程、固液对比">
+<figcaption><span class="sno">33</span><span class="stitle">计算结果：结构、状态方程、固液对比</span></figcaption>
+</figure>
+<figure class="slide" id="slide-34">
+<img src="slides/slide_34.png" alt="课件第34页 科学启示：地幔底部的熔体，观测与演化">
+<figcaption><span class="sno">34</span><span class="stitle">科学启示：地幔底部的熔体，观测与演化</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">10</span>
+      <div class="sec-tt">
+        <h2>第一性原理计算范文（Stixrude）</h2>
+        <div class="sec-meta"><span class="time">01:14:20–01:15:00</span><span class="chip">课件 31</span><span class="chip">课件 32</span><span class="chip">课件 33</span><span class="chip">课件 34</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>最后看一篇第一性原理计算的范文（Lars Stixrude 的工作）：计算细节要点——软件（版本）、研究体系结构/初始条件、温压条件、赝势、截断能量、积分K点选择、结构优化迭代精度、模拟时长、参数收敛测试，以及其它必要的要点；计算结果包括结构、状态方程、固液对比；科学启示是地幔底部的熔体，观测与演化。这个就是大家做研究时可以参考的规范：把计算细节交代清楚，别人才能重复你的结果。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>各种模拟参数的选择需要有所交代，后边别人要去重复实验的时候，计算结果值才有基础。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-homework">
+  <div class="slides"><figure class="slide" id="slide-35">
+<img src="slides/slide_35.png" alt="课件第35页 课后：1. 填一份问卷（周五晚上12:00前，v.wjx.cn）；2. 了解两个软件（VASP手册、VESTA）；3. 记得下次课带笔记本电脑">
+<figcaption><span class="sno">35</span><span class="stitle">课后：1. 填一份问卷（周五晚上12:00前，v.wjx.cn）；2. 了解两个软件（VASP手册、VESTA）；3. 记得下次课带笔记本电脑</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">11</span>
+      <div class="sec-tt">
+        <h2>课后任务</h2>
+        <div class="sec-meta"><span class="time">01:15:00–结束</span><span class="chip">课件 35</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>课后三件事：1. 填一份问卷（本周五晚上12:00前完成，https://v.wjx.cn/vm/YqnGfNT.aspx），我想大概了解一下大家的背景；2. 了解两个软件——VASP手册（vasp.at/wiki）和VESTA（jp-minerals.org）；3. 记得下次课带笔记本电脑，课上做一些建模实践。现在大家有AI大模型，可以去问一问它的架构之类的东西，花几分钟就可以完成。今天的课就到这里，有问题的话同学可以出来交流。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>下节课希望大家带上笔记本电脑，课上做一些建模实践。</p><p>请在明天晚上之前每位同学填一下问卷，我想大概了解一下大家的背景。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（矿物物理学）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>

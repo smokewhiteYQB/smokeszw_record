@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>生成式模型与科学智能应用 · 第16节 Lecture 13 Flow Models（下）：反向 SDE 与 Score SDE 训练采样、从 SDE 到 ODE、Flow 模型引入与线性插值、CNF 与连续性方程、变分公式与 Flow Matching 动机｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.videos{margin-top:14px;border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.video + .video{border-top:1px solid #e4e9f0;}
+.videos h4{font-size:12.5px;font-weight:700;color:#0a1f38;background:#f2f5f9;padding:8px 12px;border-bottom:1px solid #e4e9f0;}
+.videos video{display:block;width:100%;max-height:460px;background:#0b0f14;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>生成式模型与科学智能应用 · 第16节 Lecture 13 Flow Models（下）：反向 SDE 与 Score SDE 训练采样、从 SDE 到 ODE、Flow 模型引入与线性插值、CNF 与连续性方程、变分公式与 Flow Matching 动机</h1>
+    <div class="sub">第16节 Lecture 13 Flow Models（下）：反向 SDE 与 Score SDE 训练采样、从 SDE 到 ODE、Flow 模型引入与线性插值、CNF 与连续性方程、变分公式与 Flow Matching 动机 ｜ 2026-11-03 ｜ 刘云帆</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 30 页 · 整理 6 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-reverse">01 反向过程与 Score SDE</option>
+<option value="sec-ode">02 从 SDE 到 ODE</option>
+<option value="sec-flow">03 Flow 引入与线性插值</option>
+<option value="sec-cnf">04 CNF 与连续性方程</option>
+<option value="sec-icov">05 变分公式与似然</option>
+<option value="sec-fm">06 Flow Matching 动机与对比</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 Lecture13_Flow_Models.pdf 逐页渲染，转写原文见 record_20261103.txt。</div>
+<section class="sec" id="sec-reverse">
+  <div class="slides"><figure class="slide" id="slide-01">
+<img src="slides/slide_01.png" alt="课件第1页 连续时间反向过程：给定前向 SDE dx_t=f(x_t,t)dt+g(t)dw_t，其边际分布记为 p_t(x)（Anderson 1982 反向时间扩散方程）">
+<figcaption><span class="sno">01</span><span class="stitle">连续时间反向过程：给定前向 SDE dx_t=f(x_t,t)dt+g(t)dw_t，其边际分布记为 p_t(x)（Anderson 1982 反向时间扩散方程）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-02">
+<img src="slides/slide_02.png" alt="课件第2页 连续时间反向过程：反向过程（t 从 T 到 0）也可写成 SDE——dx_t=(f(x_t,t)−g²(t)∇_x log p_t(x_t))dt+g(t)dw̄_t，其中 ∇_x log p_t(x_t) 是 p_t(x) 的 score 函数；反向过程等于移向高密度区域加随机性">
+<figcaption><span class="sno">02</span><span class="stitle">连续时间反向过程：反向过程（t 从 T 到 0）也可写成 SDE——dx_t=(f(x_t,t)−g²(t)∇_x log p_t(x_t))dt+g(t)dw̄_t，其中 ∇_x log p_t(x_t) 是 p_t(x) 的 score 函数；反向过程等于移向高密度区域加随机性</span></figcaption>
+</figure>
+<figure class="slide" id="slide-03">
+<img src="slides/slide_03.png" alt="课件第3页 连续时间反向过程：前向 SDE（t 从 0 到 T）与反向 SDE（t 从 T 到 0）对照——反向多了 Score 函数项，用 score 才能把噪声数据恢复成数据分布">
+<figcaption><span class="sno">03</span><span class="stitle">连续时间反向过程：前向 SDE（t 从 0 到 T）与反向 SDE（t 从 T 到 0）对照——反向多了 Score 函数项，用 score 才能把噪声数据恢复成数据分布</span></figcaption>
+</figure>
+<figure class="slide" id="slide-04">
+<img src="slides/slide_04.png" alt="课件第4页 Score SDE：前向与反向过程在连续时间的整体框架（Song et al. ICLR 2021）——前向加噪、反向用 score 去噪">
+<figcaption><span class="sno">04</span><span class="stitle">Score SDE：前向与反向过程在连续时间的整体框架（Song et al. ICLR 2021）——前向加噪、反向用 score 去噪</span></figcaption>
+</figure>
+<figure class="slide" id="slide-05">
+<img src="slides/slide_05.png" alt="课件第5页 Score SDE：训练——字面上就是连续时间下的 score matching：时间依赖的 score 模型 s_θ(x_t,t) 近似 ∇_x log p_t(x)；训练目标对 t 在 0 到 T 均匀采样加权，去噪形式用条件分布的目标">
+<figcaption><span class="sno">05</span><span class="stitle">Score SDE：训练——字面上就是连续时间下的 score matching：时间依赖的 score 模型 s_θ(x_t,t) 近似 ∇_x log p_t(x)；训练目标对 t 在 0 到 T 均匀采样加权，去噪形式用条件分布的目标</span></figcaption>
+</figure>
+<figure class="slide" id="slide-06">
+<img src="slides/slide_06.png" alt="课件第6页 Score SDE：采样——字面上就是解反向 SDE（t 从 T 到 0）：从先验 π(x) 采样 x_T，对 t=T,T−Δt,…,0 用欧拉-丸山求解器迭代 Δx 并更新 x">
+<figcaption><span class="sno">06</span><span class="stitle">Score SDE：采样——字面上就是解反向 SDE（t 从 T 到 0）：从先验 π(x) 采样 x_T，对 t=T,T−Δt,…,0 用欧拉-丸山求解器迭代 Δx 并更新 x</span></figcaption>
+</figure>
+<figure class="slide" id="slide-07">
+<img src="slides/slide_07.png" alt="课件第7页 Score SDE：高保真图像生成结果（Song et al. 2021）——采样生成效果非常好，与当时大模型及扩散模型相匹配">
+<figcaption><span class="sno">07</span><span class="stitle">Score SDE：高保真图像生成结果（Song et al. 2021）——采样生成效果非常好，与当时大模型及扩散模型相匹配</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>反向过程与 Score SDE</h2>
+        <div class="sec-meta"><span class="time">录音：前半（休息前）</span><span class="chip">课件 1</span><span class="chip">课件 2</span><span class="chip">课件 3</span><span class="chip">课件 4</span><span class="chip">课件 5</span><span class="chip">课件 6</span><span class="chip">课件 7</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>前面考虑的是连续时间下前向加噪过程 Forward SDE；有前向的过程，那就有反向的过程。</p><p>反向过程：从先验高斯噪声中采样一个样本，靠中间步骤递归地把样本推到双峰分布边。</p><p>从左往右是加噪组合；从右往左就得知道 P(X) 是什么样的，而且知道它随着时间和数据怎么变化，才能推回去。</p><p>需要有一个信号告诉我 X 哪些位置概率比较高——用 Score 方程描述概率分布随 X 的变化。</p><p>Anderson 1982 那篇文章直接给出了前向加噪过程对应的反向 SDE（Reverse SDE）。</p><p>与正向 SDE 相比，最大的区别就是多了 Score 项；因为有了 p_t 的 score，才能把噪声数据恢复成数据分布。</p><p>加噪直接加噪声即可，去噪涉及具体表达式；该表达式推导不展开，可参考 1982 年的统计学原文。</p><p>反向 SDE 过程让数据向高概率位置移动，这是一个采样过程。</p><p>正向过程有 dW_t，是符合标准高斯分布的随机量；反向过程也有虚拟随机量，但两者不同。</p><p>用四张图展示反向过程：从高斯分布回到数据分布，先验替代组合噪声，随时间推移集中到高能模式。</p><p>正向和反向两个方向的 SDE 集中起来，像一个同样的加噪和去噪系统，连续时间下都可以用 SDE 解释。</p><p>去噪过程中数据应该按照方程在概率高的地方获取信息；沿密度高的方向移动，梯度是正的，应当是梯度上升过程。</p><p>写出反向 SDE 以后，它其实也就是连续时间情况下我们的扩散模型。</p><p>既然是 SDE，怎么训练？其实跟之前一样，用上一节课讲的方法训练，只不过不再是离散加噪过程而是连续时间过程。</p><p>之前的 Score 函数预测给定加噪数据和当前时刻的梯度向量，这时需要引入连续时间 T，但训练目标跟之前一样。</p><p>采样就是直接解反向 SDE，因为 SDE 描述了如何去噪；给出基于 SDE 对应的欧拉方法的采样策略。</p><p>先从先验分布采样一个噪声 x_T；虽然 SDE 是连续时间情况，但实际只能处理离散时间样本，所以用离散时间来模拟 SDE。</p><p>把 T 从大 T 一直到小步长，每一步把 T 带入公式算出对应的 Δx，用这个更新量去更新样本，不断迭代直到时间近零。</p><p>整个采样过程其实就是用离散时间的一个求解器去采样；Song 等人在 2021 年提出的方法，采样生成结果非常好。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那我们现在考虑一个反向的过程。之前说的是前向过程描述，对应的是一个离散的过程。</p><p>那你从右往左的话，是不是得知道P(X)是什么样的？你得知道P是什么样的，而且得知道它随着时间和你的数据到底是怎么变化，你才能把它推导起来。</p><p>跟它的SDE相比，它最大的一个区别就是多了这个刚才我说的这个Score项。</p><p>这个表达式推导不展开，可参考1982年的统计学原文。</p><p>其实跟之前一样，还是用上一节课讲的方法去训练。只不过它不再是离散加噪过程，而是一个连续时间的过程。</p><p>给定SDE求解后，采样过程是先从先验分布中采样一个噪声XT。虽然SDE是连续时间情况，但实际只能解决离散时间的样本，因此我们用离散时间来模拟SDE。</p><p>换句话说，整个采样过程，其实就是用离散时间的一个求解器去采样。Song等人在2021年提出的这个方法，采样生成结果是非常好的。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-ode">
+  <div class="slides"><figure class="slide" id="slide-08">
+<img src="slides/slide_08.png" alt="课件第8页 SDE vs ODE：前向过程——同样的边际分布 p_t(x)，不同的轨迹；左边 SDE 随机曲折，右边 ODE 由 score 引导">
+<figcaption><span class="sno">08</span><span class="stitle">SDE vs ODE：前向过程——同样的边际分布 p_t(x)，不同的轨迹；左边 SDE 随机曲折，右边 ODE 由 score 引导</span></figcaption>
+</figure>
+<figure class="slide" id="slide-09">
+<img src="slides/slide_09.png" alt="课件第9页 SDE vs ODE：前向过程——SDE 是随机轨迹、噪声自然地扩散 p_0(x)；ODE 是光滑确定性轨迹、score 引导概率流">
+<figcaption><span class="sno">09</span><span class="stitle">SDE vs ODE：前向过程——SDE 是随机轨迹、噪声自然地扩散 p_0(x)；ODE 是光滑确定性轨迹、score 引导概率流</span></figcaption>
+</figure>
+<figure class="slide" id="slide-10">
+<img src="slides/slide_10.png" alt="课件第10页 SDE vs ODE：ODE 可看作连续时间上的 normalizing flow——解唯一则 t=0 与 T 之间是可逆映射；同一 ODE 可正向或反向求解；连续时间近似于无限多个小变换">
+<figcaption><span class="sno">10</span><span class="stitle">SDE vs ODE：ODE 可看作连续时间上的 normalizing flow——解唯一则 t=0 与 T 之间是可逆映射；同一 ODE 可正向或反向求解；连续时间近似于无限多个小变换</span></figcaption>
+</figure>
+<figure class="slide" id="slide-11">
+<img src="slides/slide_11.png" alt="课件第11页 SDE vs ODE：反向过程——用变分公式（change of variables）计算概率密度：无偏估计、多项式时间可算、配合 ODE 求解器；一个 ODE 就定义了一个 Flow Model">
+<figcaption><span class="sno">11</span><span class="stitle">SDE vs ODE：反向过程——用变分公式（change of variables）计算概率密度：无偏估计、多项式时间可算、配合 ODE 求解器；一个 ODE 就定义了一个 Flow Model</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>从 SDE 到 ODE</h2>
+        <div class="sec-meta"><span class="time">录音：前半（休息前）</span><span class="chip">课件 8</span><span class="chip">课件 9</span><span class="chip">课件 10</span><span class="chip">课件 11</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>刚才讲了第一部分，生成模型如何在连续时间内建模，用 SDE 求解；接下来看另一种表示方法，从 SDE 转换到 ODE。</p><p>前向加噪 SDE 的路径比较曲折，每个时刻都有一个随机的噪声流量 dw_t。</p><p>事实上对应刚才的 SDE，我们也可以定义一个 ODE：没有随机变量项，过程是光滑曲线，没有波动。</p><p>SDE 和 ODE 之间是什么关系？以简单的 SDE 为例，前向过程是漂移项加噪声，描述曲折的生成过程。</p><p>对应的 ODE 形式可写为 dx/dt=v(X,t)，即 t 时刻的速度等于右侧增量；与 SDE 的区别是没有 Wiener 过程引起的随机量。</p><p>为什么说它们是对应的？因为二者等价于在任一时刻 T，样本的边际分布相同。</p><p>同时采样时，沿 SDE 的动力学加噪声比较波动；沿 ODE 得到的是确定性过程；虽然构造路径不同，任意时刻分布一致，这就是二者等价的意义。</p><p>左边是随机过程，通过加入噪声把原来两个集中分布的数据打散；右边 ODE 描述的是连续光滑且确定性的过程。</p><p>用 Score Matching 引导概率从数据分布最终流向噪声分布：score 是负的说明数据分布高的地方，正的就是数据分布低的地方。</p><p>为什么要讲这个 ODE？它是光滑且确定性的过程。我们之前讲了 Normalizing Flow 模型，结论是 ODE 可以看作连续时间上的 NF。</p><p>NF 模型最大的特点是采用可逆、确定的映射 f，可以从 z 代入 f 得到 x，也可以得到反向映射得到 z。</p><p>图中白色的线实现了类似功能：取一个数据点沿白线走到下一个 z，从那个 z 沿白线回来也可以得到对应的 x。</p><p>这个逆向过程就是用 ODE 描述，每个点的负梯度随时间变化，只能用 ODE 来描述。</p><p>ODE 定义了数据分布和噪声分布之间一个可逆的过程，实现了我们之前说的连续 NF。</p><p>前提是 ODE 有唯一解，它才有这种一一映射的关系；这个要求还是比较宽的。</p><p>NF 用一层一层可逆的映射构造，定义一个小的可逆单元不断叠加，用嵌套得到大的可逆映射。</p><p>如果 NF 有无限多个小的可逆映射，相当于一个无限深的网络结构，对应一个连续的确定性系统。</p><p>在扩散模型下，无限的加噪步骤推导成连续时间的 SDE 系统；在 ODE 下，无限多的小 NF 构成一个大的 NF。</p><p>NF 模型有两个特点：一是演变模型，从 z 得到对应的 x；二是可以采样，把样本带入模型直接计算。</p><p>对连续时间 ODE 系统，任意采样一个样本 X，通过 ODE 找到对应的 Z，从 P(X) 读出对应位置的值，再用路径上的变分公式修正。</p><p>在 NF 里任意样本的似然可以从 Z 推出：从 P(Z) 采样，乘上雅可比行列式修正 P(X)；这里是同一个意思。</p><p>连续时间下的小修正项是一个积分，可以用 ODE 求解器来算。</p><p>为什么从 SDE 讲到 ODE？因为 ODE 定义的整个传输过程其实是一个 flow 模型，这是接下来课程一直要讲的内容。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>接下来看另一种表示方法，就是从SDE转换到ODE的方法。看看用常微分方程怎么样来表达同一个概率集合。</p><p>但事实上，对应刚才的SDE，我们也可以定义一个ODE。ODE即常微分方程，没有随机变量项，其过程是光滑曲线，没有波动。</p><p>为何说它们是对应的？因为二者等价于在任一时刻T，样本的边际分布相同。</p><p>我们之前讲了Normalizing Flow模型，这里给一个结论：我们的ODE可以看作是在连续时间上的NF。</p><p>前提是ODE有唯一解，它才有这种一一映射的关系。有唯一解的话，其实这个要求还是比较宽的。</p><p>无限多小的可逆层相当于一个无限深的网络结构。这样的话，在我们这个框架下，就对应这样一个连续的确定性系统。</p><p>在这里，我们可以从P(X)读出对应位置的值，再用路径上的Change of Variable公式修正对应的X。</p><p>为什么我从SDE非要讲到ODE这个过程呢？因为ODE它定义的这个整个的传输的这个过程，其实是一个flow模型，这是接下来这个课我们一直讲。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-flow">
+  <div class="slides"><figure class="slide" id="slide-12">
+<img src="slides/slide_12.png" alt="课件第12页 Flow Model 引入：数据翻译为流——给定一个数据点 x_0，构造从噪声到 x_0 的最简单轨迹是什么？">
+<figcaption><span class="sno">12</span><span class="stitle">Flow Model 引入：数据翻译为流——给定一个数据点 x_0，构造从噪声到 x_0 的最简单轨迹是什么？</span></figcaption>
+</figure>
+<figure class="slide" id="slide-13">
+<img src="slides/slide_13.png" alt="课件第13页 Flow Model 引入：线性插值——从噪声到数据沿直线插值，X_t=tX_1+(1−t)X_0">
+<figcaption><span class="sno">13</span><span class="stitle">Flow Model 引入：线性插值——从噪声到数据沿直线插值，X_t=tX_1+(1−t)X_0</span></figcaption>
+</figure>
+<figure class="slide" id="slide-14">
+<img src="slides/slide_14.png" alt="课件第14页 Flow Model 引入：学习这条轨迹上的变换——X_0.5=X_0.25+0.25(X_1−X_0)，这就是速度（velocity）">
+<figcaption><span class="sno">14</span><span class="stitle">Flow Model 引入：学习这条轨迹上的变换——X_0.5=X_0.25+0.25(X_1−X_0)，这就是速度（velocity）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-15">
+<img src="slides/slide_15.png" alt="课件第15页 Flow Model 引入：转成连续时间模型——X_{t+Δt}=X_t+Δt(X_1−X_0)，Δt 到 0 时 dx/dt=X_1−X_0，即样本移动的速度，这就是一个 ODE">
+<figcaption><span class="sno">15</span><span class="stitle">Flow Model 引入：转成连续时间模型——X_{t+Δt}=X_t+Δt(X_1−X_0)，Δt 到 0 时 dx/dt=X_1−X_0，即样本移动的速度，这就是一个 ODE</span></figcaption>
+</figure>
+<figure class="slide" id="slide-16">
+<img src="slides/slide_16.png" alt="课件第16页 把噪声直线变换到数据：训练与采样——训练：采样噪声 x_0、采样数据 x_1、计算速度 v=x_1−x_0、采样均匀时间步 t、构造 x_t=t x_1+(1−t)x_0、学习预测速度 v_θ；采样：从 t=0 起按 Δx=v_θ(x_t,t)Δt 迭代到 t=1 输出 x_1——这就是最简单的 Flow Matching 算法">
+<figcaption><span class="sno">16</span><span class="stitle">把噪声直线变换到数据：训练与采样——训练：采样噪声 x_0、采样数据 x_1、计算速度 v=x_1−x_0、采样均匀时间步 t、构造 x_t=t x_1+(1−t)x_0、学习预测速度 v_θ；采样：从 t=0 起按 Δx=v_θ(x_t,t)Δt 迭代到 t=1 输出 x_1——这就是最简单的 Flow Matching 算法</span></figcaption>
+</figure>
+<figure class="slide" id="slide-17">
+<img src="slides/slide_17.png" alt="课件第17页 把噪声直线变换到数据：这样直观定义的过程，是一个合法的概率生成模型吗？为什么？（引向理论推导）">
+<figcaption><span class="sno">17</span><span class="stitle">把噪声直线变换到数据：这样直观定义的过程，是一个合法的概率生成模型吗？为什么？（引向理论推导）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>Flow 引入与线性插值</h2>
+        <div class="sec-meta"><span class="time">录音：后半（休息后）</span><span class="chip">课件 12</span><span class="chip">课件 13</span><span class="chip">课件 14</span><span class="chip">课件 15</span><span class="chip">课件 16</span><span class="chip">课件 17</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>休息后讲 Flow：比如从噪声分布采样一个噪声，再给一个干净图像，构造从噪声到数据的路径，即两点间的连接。</p><p>最直接的想法是线性插值：在 50% 处由 50% 噪声和 50% 数据构成，25% 处由 75% 噪声和 25% 数据构成，图像逐渐清晰。</p><p>这与扩散模型不同：扩散描述的是分布思想，这里描述的是路径差异思想；中间每个位置对应同一个噪声和数据点。</p><p>考虑中间时刻 X_0.5，等于 0.75 的前一时刻加上 0.25 的目标数据，再减去 0.25 的初始噪声。</p><p>稍微处理一下就得到：X_0.5 等于 X_0.25 加上 0.25 倍的 X_1−X_0；X_1−X_0 是一个向量，乘 0.25 相当于拉出一个速度。</p><p>写成抽象通式：任意时刻 X_t 在 Δt 内的变化等于 Δt 乘以 X_1−X_0 对应的速度。</p><p>让 Δt 趋近于 0，就写成 dt 的形式：模型定义的 dx/dt 就是样本移动的速度。</p><p>样本移动的速度在我们构造的线性插值过程中就是 X_1−X_0；右边是常数，这就是一个 ODE。</p><p>定义这个过程以后，就可以通过 Flow Matching 或 Flow 的算法去训练，其实这就是一个 Flow。</p><p>算法怎么做？每次先采样一个噪声固定在上面，再从真实数据分布采样一个对应的 X_1。</p><p>有了 X_1 和 X_0 后计算方向向量 X_1−X_0；插值时在 0 到 1 之间取时间步 t，构造中间项 X_t=tX_1+(1−t)X_0。</p><p>模型任务是从给定 X_t 构造的图像及对应时间 T，预测速度，最小化损失；扩散模型通常预测均值或噪声，这里预测构造速度。</p><p>训练完成后，对任意中间差值和参照图像，可以预测运动轨迹。</p><p>采样就是离散化模拟 ODE 求解过程，从 t=0 开始：求此时的噪声分布，去采样，不断预测此刻的速度 V。</p><p>得到 V 后乘以 Δt，即在 X_t 时刻移动距离 Δx，更新到下一时刻；这是沿模型定义速度线不断运行的迭代过程。</p><p>最终从 t=0 运行到 t=1，输出 X_1，得到符合真实数据分布的结果——这就是最简单的 Flow Matching 算法。</p><p>问题是，这样直观定义的过程，是否是一个合法的概率生成模型？为什么？接下来从理论角度推导其合理性。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>比如从噪声分布采样一个噪声，再给一个干净图像，如猫的图像。设这是X0，那是X1。我们构造从噪声到数据的路径，即两点间的连接。</p><p>最直接的想法是用线性插值。比如在50%处，由50%噪声和50%数据构成。</p><p>这与扩散模型不同。它描述的不是分布思想，而是路径差异思想。</p><p>X1-X0就是一个简单的减去一个向量，这个向量如果再乘1.25，就相当于是说拉一个速度。</p><p>那我们这个模型定义的其实就是dx/dt，就是样本移动的速度。样本移动的速度在我们构造的线性插值过程中，就是X1减X0，一定是这个速度线。这就是一个ODE对吗？</p><p>我们是怎么做的呢？就是不断做以下这些事。比如说每一次都先去采样一个噪声，固定在上面，再从真实数据分布中采样一个对应的X1。</p><p>模型任务是从给定XT构造的图像及对应时间T，预测速度以最小化损失。扩散模型通常预测均值或噪声，此处预测构造速度。</p><p>采样即离散化模拟ODE求解过程，从T=0开始。最终从T=0运行到T=1，输出X1得到符合真实数据分布的结果。这就是最简单的Flow Matching算法。</p><p>问题是：这样直观定义的过程，是否是一个合法的概率生成模型？为什么？</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-cnf">
+  <div class="slides"><figure class="slide" id="slide-18">
+<img src="slides/slide_18.png" alt="课件第18页 连续型正规化流（CNF）定义：把数据从初始分布 p_0 传输到目标分布 p_1 的生成模型——dx_t/dt=v_θ(x_t,t) 是向量场；给定 x_0 解 ODE 得到轨迹 x_t=x_0+∫v dτ；温和正则条件下 ODE 轨迹唯一不交叉、定义 p_0 与 p_1 之间可逆映射（Picard-Lindelöf）">
+<figcaption><span class="sno">18</span><span class="stitle">连续型正规化流（CNF）定义：把数据从初始分布 p_0 传输到目标分布 p_1 的生成模型——dx_t/dt=v_θ(x_t,t) 是向量场；给定 x_0 解 ODE 得到轨迹 x_t=x_0+∫v dτ；温和正则条件下 ODE 轨迹唯一不交叉、定义 p_0 与 p_1 之间可逆映射（Picard-Lindelöf）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-19">
+<img src="slides/slide_19.png" alt="课件第19页 CNF：密度如何演化——ODE 告诉我们每个数据点怎么动；但目标是学 v_θ 使 p_1 拟合 p_data，概率密度 p_t 如何演化？">
+<figcaption><span class="sno">19</span><span class="stitle">CNF：密度如何演化——ODE 告诉我们每个数据点怎么动；但目标是学 v_θ 使 p_1 拟合 p_data，概率密度 p_t 如何演化？</span></figcaption>
+</figure>
+<figure class="slide" id="slide-20">
+<img src="slides/slide_20.png" alt="课件第20页 CNF：密度演化需满足两点——质量守恒：概率质量不创造不消灭，任意 t 的概率积分恒为 1；局部连续性：概率质量不瞬移，只能连续移动变化">
+<figcaption><span class="sno">20</span><span class="stitle">CNF：密度演化需满足两点——质量守恒：概率质量不创造不消灭，任意 t 的概率积分恒为 1；局部连续性：概率质量不瞬移，只能连续移动变化</span></figcaption>
+</figure>
+<figure class="slide" id="slide-21">
+<img src="slides/slide_21.png" alt="课件第21页 CNF：这两个假设怎么用数学表达？（引出连续性方程）">
+<figcaption><span class="sno">21</span><span class="stitle">CNF：这两个假设怎么用数学表达？（引出连续性方程）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-22">
+<img src="slides/slide_22.png" alt="课件第22页 连续性方程：通量（Flux）——单位时间内通过单位截面的流量；概率通量等于密度乘以速度（有多少概率、往哪流、流多快）">
+<figcaption><span class="sno">22</span><span class="stitle">连续性方程：通量（Flux）——单位时间内通过单位截面的流量；概率通量等于密度乘以速度（有多少概率、往哪流、流多快）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-23">
+<img src="slides/slide_23.png" alt="课件第23页 连续性方程：概率密度随时间的变化率等于负的散度——∂p_t(x)/∂t=−div(p_t(x)v(x,t))；左边是概率密度随时间的变化率，右边是概率通量的散度即局部净流出率；流出多此处概率下降、流入多则上升">
+<figcaption><span class="sno">23</span><span class="stitle">连续性方程：概率密度随时间的变化率等于负的散度——∂p_t(x)/∂t=−div(p_t(x)v(x,t))；左边是概率密度随时间的变化率，右边是概率通量的散度即局部净流出率；流出多此处概率下降、流入多则上升</span></figcaption>
+</figure>
+<figure class="slide" id="slide-24">
+<img src="slides/slide_24.png" alt="课件第24页 连续性方程：图示——小区域 X 内概率变化等于流入减流出，描述概率质量的传输；与 score 向量场不同，这里描述概率随时间的流动">
+<figcaption><span class="sno">24</span><span class="stitle">连续性方程：图示——小区域 X 内概率变化等于流入减流出，描述概率质量的传输；与 score 向量场不同，这里描述概率随时间的流动</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>CNF 与连续性方程</h2>
+        <div class="sec-meta"><span class="time">录音：后半（休息后）</span><span class="chip">课件 18</span><span class="chip">课件 19</span><span class="chip">课件 20</span><span class="chip">课件 21</span><span class="chip">课件 22</span><span class="chip">课件 23</span><span class="chip">课件 24</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>我们的 ODE 可写成常规形式：对样本微分后，得到的结果与 X_t 相关，这是流的定义。</p><p>白线描述了从初始分布 P_0 到目标分布 P_1 的运动过程；通过求解 ODE 积分，从 0 到 1 积分可以得到任意时刻 X_t 的状态。</p><p>给定 X_0，对右侧项从 0 到 t 积分即可得到任意时刻的值；确定速度场后就能找到移动路径。</p><p>在较宽松的条件下，ODE 定义的路径是唯一且可逆的，中间没有交叉，定义了从噪声到数据之间可逆的映射。</p><p>如果把它视为生成模型，不能随意传输：需要从初始样本分布出发，时间从 0 到 1 时，确保最终的数据分布等于真实的分布。</p><p>怎么保证？把视角从样本点转换到 ODE 定义的过程：关注概率分布 P_t(X) 在 t 从 0 到 1 时到底怎么变化。</p><p>这跟流体力学中的向量场关系类似；P_t 从 t=0 到 t=1 的流动过程肯定符合两个约束。</p><p>第一个约束是质量守恒：任意时刻 t 都是一个合理合法的分布，概率积分都是 1，概率质量不能减少。</p><p>第二个约束是局部连续性：概率质量除了在传输过程中守恒以外，任意局部的概率变化，在两个时刻之间不能跳跃传送，只能连续地移动变化。</p><p>这两个约束是我们直观建立的对 P_t 的约束，接下来要用数学的方法表达，从而导出 P_t 应该符合的形式化表达。</p><p>要推导连续性方程，先介绍通量（Flux）：表达的是一个向量场或流场在单位时间内通过单位截面的流量。</p><p>通量等于概率密度乘以速度：单位时间乘单位面积内，这一段体积内的概率质量。</p><p>考虑一个面积，在 dt 时刻内凝聚了多少概率质量：速度乘单位时间，高维体积这么大的区域内，垂直一个截面。</p><p>连续性方程：概率密度随时间的变化率等于负的散度，散度作用在密度和速度的乘积上，即通量的散度代表净流量。</p><p>整体意思：在 X 处概率的变化，和流出的概率质量与冲量之间是相反关系；概率流出多，此处概率随时间就下降，流入多则上升。</p><p>用图来看：纵向是随时间 T 向上的结构，向量场表达了任一时刻的速度，概率流描述了流动方向。</p><p>对任意小区域 X，概率变动与时间变动相关：若流出减流入为正，该处概率变化为负；反之则为正。</p><p>这与 score 方式有本质区别。score 是 log P 对 X 求梯度，描述样本空间；而这里描述样本分布随时间的变化，概率从时间低处流向高处。</p><p>虽然都用向量场表示，但物理意义不同：这里一个方向是 X、一个是时间，而前者都是 X。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>在较宽松的条件下，ODE定义的路径是唯一且可逆的，中间没有交叉。它定义了从噪声到数据之间任意可逆的映射。</p><p>我们需要从初始样本分布出发，当时间从0到1时，确保最终的数据分布等于真实的分布。</p><p>从直观视角解释，PDST从T=0直到T=1的流动过程肯定符合两个约束。第一个约束是质量守恒，即概率质量也得是守恒的。</p><p>除了概率质量在运动过程中要守恒以外，任意局部的概率变化，在归一化那两个时刻之间，还不能去跳跃传送，还就是连续。</p><p>那Plus通量它表达的是什么？它表达的就是一个向量场或者一个流物，它在单位时间内通过单位截面的这个物程能量或者流的这个流量。</p><p>它的通量就是等于我们的概率密度乘以一个速度值。因为你是单位时间单位以及面积的话，那这一段体积之内，你的这个概率质量是多少？</p><p>左边这一项是概率密度随时间的变化率。右边是散度，对吧？这个是密度和速度。刚才说了，就是通量，单位时间单位体积内流过的概率质量。</p><p>概率流出多，此处概率随时间就下降。如果说这个是负的，概率是流入的话，那此处X对时间的增长。</p><p>之前讲过score方式，也用向量箭头表示。它涉及速度和概率变化。但两者有本质区别：Score方式是log P对X求梯度，描述样本空间。而图中展示的是样本分布随时间的变化。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-icov">
+  <div class="slides"><figure class="slide" id="slide-25">
+<img src="slides/slide_25.png" alt="课件第25页 瞬时变分公式（Instantaneous Change of Variables）：两个视角融合——ODE 轨迹（样本怎么动）与连续性方程（密度场怎么变）；d/dt log p_t(x_t)=−div v(x_t,t)；局部扩张降密度、局部收缩升密度">
+<figcaption><span class="sno">25</span><span class="stitle">瞬时变分公式（Instantaneous Change of Variables）：两个视角融合——ODE 轨迹（样本怎么动）与连续性方程（密度场怎么变）；d/dt log p_t(x_t)=−div v(x_t,t)；局部扩张降密度、局部收缩升密度</span></figcaption>
+</figure>
+<figure class="slide" id="slide-26">
+<img src="slides/slide_26.png" alt="课件第26页 基于 CNF 的似然计算：log p_t(x_t)=log p_0(x_0)−∫_0^t div v(x_τ,τ)dτ——对数似然沿轨迹积分">
+<figcaption><span class="sno">26</span><span class="stitle">基于 CNF 的似然计算：log p_t(x_t)=log p_0(x_0)−∫_0^t div v(x_τ,τ)dτ——对数似然沿轨迹积分</span></figcaption>
+</figure>
+<figure class="slide" id="slide-27">
+<img src="slides/slide_27.png" alt="课件第27页 基于 CNF 的似然计算：t=1 时 log p_1(x_1;θ)=log p_0(x_0)−∫_0^1 div v_θ dτ——可用最大似然训练">
+<figcaption><span class="sno">27</span><span class="stitle">基于 CNF 的似然计算：t=1 时 log p_1(x_1;θ)=log p_0(x_0)−∫_0^1 div v_θ dτ——可用最大似然训练</span></figcaption>
+</figure>
+<figure class="slide" id="slide-28">
+<img src="slides/slide_28.png" alt="课件第28页 CNF 训练：最大似然——θ* 最大化 E_{x_1∼p_data} log p_1(x_1;θ)，精确但昂贵（要解 ODE 两遍：从 x_1 回溯找 x_0 再积分），实际不采用">
+<figcaption><span class="sno">28</span><span class="stitle">CNF 训练：最大似然——θ* 最大化 E_{x_1∼p_data} log p_1(x_1;θ)，精确但昂贵（要解 ODE 两遍：从 x_1 回溯找 x_0 再积分），实际不采用</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>变分公式与似然</h2>
+        <div class="sec-meta"><span class="time">录音：后半（休息后）</span><span class="chip">课件 25</span><span class="chip">课件 26</span><span class="chip">课件 27</span><span class="chip">课件 28</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>现在对整个 ODE 系统有两个视角：一个是 ODE 的路径，定义样本怎么变动，用速度描述它在当前现实中的变化。</p><p>另一个是分布随着时间推移怎么变化，针对整个样本；接下来要把这两件事情融合到一块儿。</p><p>具体怎么融合不展开，比较低阶的推导也不展开，可以看原推导；如果把这两个视角融合起来，可以得到一个结果。</p><p>左边是 P(X_t|t) 概率密度分布取对数，对 t 求导：意思是在 X(t) 这个样本的视角下，此处的密度随着时间怎么变化。</p><p>沿着轨迹走，整个路径上 log P(X_t) 怎么变，是由速度场在 X_t 处的散度决定的：扩张时概率降低、收缩时概率升高。</p><p>从物理角度解释：沿着 ODE 的路径走，如果速度场逐渐收缩，概率应该增加；概率流向的地方概率质量增加。</p><p>总结：沿着 ODE 轨迹，样本不断扩散则概率密度降低；速度场收缩则概率密度升高。</p><p>从 ODE 出发，可以把 P_t(X_t) 解出来：通过积分的形式，从 0 到 t 控制积分，就可以任意时刻从噪声求得样本。</p><p>这个值就是上一课直接展示出来的特别长的公式，其实它就是我们做最大似然定义的一个似然函数。</p><p>有了样本似然以后，按照生成模型的学习过程，还是做最大化似然，在数据集上训练，优化速度场。</p><p>任意真实样本 x_1 的对数似然：从样本集找一个样本点，找到对应的 X_0，得不断沿着 ODE 定义的路径回溯。</p><p>得到对应 X_0 后，再从 0 积分到 1，算两遍；这个计算难度非常高，不用在实际过程中解。</p><p>那不用最大似然怎么算？与 Score SDE 的思想非常一致：不去直接建模 P_t，而是转而求速度场 V。</p><p>最后的目标是让模型对任意 X、t 在 0 到 1 之间的样本，预测对应的速度，让它尽量趋近 ground truth。</p><p>这就是 Flow Matching 的思想：训练过程中，强制要求方向是我们随便定义的直线插值方向。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>现在，我们对于整个OTD系统有两个视角。一个是ODE的路径。它相当于描述整体应该怎么变动，用速度来描述它在当前现实中的变化量化。</p><p>如果把这两个视角融合起来，可以得到这样一个结果。这个意思就是在X(T)这个样本的视角下，此处的密度随着时间是怎么去变化的。</p><p>可以想一想，如果我们沿着一个ODE的路径走，我们的速度场逐渐的去收缩的话，那我们这个概率应该增加。</p><p>其实这个值就是我们在上一课，直接给大家展示出来一个特别长的公式，它其实就是我们这个做MLE定义的一个似然函数。</p><p>那怎么从真实数据X1找到对应的X0？你就得不断沿着ODE定义的路径。可以想象左边是X1，从采样出的X1不断去从ODE回溯。这个计算难度是非常高的，不用在实际过程中解。</p><p>因为Score SDE或者跟Model它的思想非常一致的一点就是，我们可以不去直接建模这个，直接不去直接求这个XT。而是转而求这个VC的。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-fm">
+  <div class="slides"><figure class="slide" id="slide-29">
+<img src="slides/slide_29.png" alt="课件第29页 CNF 训练：Flow Matching——采样只需要拟合速度场：L_FM(θ)=E_{t∼U(0,1),x_t∼p_t}||v_θ(x_t,t)−u_t(x_t)||²，u_t 是 ground-truth 速度">
+<figcaption><span class="sno">29</span><span class="stitle">CNF 训练：Flow Matching——采样只需要拟合速度场：L_FM(θ)=E_{t∼U(0,1),x_t∼p_t}||v_θ(x_t,t)−u_t(x_t)||²，u_t 是 ground-truth 速度</span></figcaption>
+</figure>
+<figure class="slide" id="slide-30">
+<img src="slides/slide_30.png" alt="课件第30页 采样动力学对比：Score-based Models 与 Flow Models——学习目标分别是 score 场 s_θ(x,t) 近似 ∇_x log p_t(x) 与速度场 v_θ(x,t) 近似 u_t(x)；score 场诱导一个 ODE dx/dt=f(x,t)−(1/2)g²(t)s_θ(x,t)，速度场直接定义 ODE dx/dt=v_θ(x,t)">
+<figcaption><span class="sno">30</span><span class="stitle">采样动力学对比：Score-based Models 与 Flow Models——学习目标分别是 score 场 s_θ(x,t) 近似 ∇_x log p_t(x) 与速度场 v_θ(x,t) 近似 u_t(x)；score 场诱导一个 ODE dx/dt=f(x,t)−(1/2)g²(t)s_θ(x,t)，速度场直接定义 ODE dx/dt=v_θ(x,t)</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>Flow Matching 动机与对比</h2>
+        <div class="sec-meta"><span class="time">录音：后半（课末）</span><span class="chip">课件 29</span><span class="chip">课件 30</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>把 Flow Matching 与 Score 模型联系起来，看它们的联系和区别，总结三个维度。</p><p>第一个维度是学习目标，score 模型学习 score 场，相对于 X 求导；flow 模型用网络拟合速度场。</p><p>第二个维度是动力学：两个模型定义的样本运动过程不太一样。</p><p>score 模型不直接描述样本具体怎么变，而是描述分布相对时间的变化，只能间接得到样本变化，通过反向 SDE 及其等价的 ODE。</p><p>flow 模型直接用速度场定义 ODE，样本沿速度场移动。</p><p>第三个维度是采样过程：都从初始分布出发，沿时间不断迭代移动，最终得到服从真实数据分布的样本。</p><p>区别在于：score 模型沿 score 定义的动力学移动，flow 模型沿速度场定义的拉格朗日速度线移动。</p><p>为什么要继续讨论 Flow？因为实际求解过程中，你不知道真实速度场是多少：收集了训练数据，怎么知道对应的真实速度值？</p><p>为了解决这个问题，引入条件化处理：给定真实样本后，条件化的速度场；这与加噪噪声的思想类似。</p><p>通过一系列推导，条件化的目标与原目标是等价的，整个算法很简单；具体内容下一课再讲。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>最后把match和匹配联系起来，看它们有什么联系和区别。可以看到它一共三个，我们总结了三个维度。</p><p>第一个维度是学习的目标。在score里，你的学习目标是这个。我们想用下一个随便网络去需求你的，就是这个词方式。</p><p>而这个地方，我们想用这个模型去拟合此时此刻的这个速度。他们这个学习的这个不太一样。</p><p>然后这两个模型定义的样本，其运动的动力学过程不太一样。右边的这个是我们之前说的分光网络定义的过程。</p><p>然后我们的采样过程其实也非常相似。我们就从初始的分布，从主体中沿着不断去移动。可以找到一个服从知识数据分布的子集。</p><p>那这个地方就是我们最后得到的一个标数。如果大家稍微想象一下，在实际求解过程中，你不知道这个东西怎么做。</p><p>类似于给定真实样子后，条件化的速度场。其实它的文章一标来说是等价的，这样整个算法很简单。OK，那最后的过程我们就下一课再讲，可能会稍微有点复杂，这课就不讲了。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（生成式模型与科学智能应用）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>

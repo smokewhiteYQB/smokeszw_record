@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>岩石热力学 · 第5课 传热熵增与热量贬值、热力学基本方程与第三定律、过程熵变的计算、亥姆霍兹与吉布斯自由能、克拉伯龙方程｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>岩石热力学 · 第5课 传热熵增与热量贬值、热力学基本方程与第三定律、过程熵变的计算、亥姆霍兹与吉布斯自由能、克拉伯龙方程</h1>
+    <div class="sub">第5课 传热熵增与热量贬值、热力学基本方程与第三定律、过程熵变的计算、亥姆霍兹与吉布斯自由能、克拉伯龙方程 ｜ 2026-10-27 ｜ 吴老师（岩石热力学）</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 30 页 · 整理 7 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+<option value="sec-s1">01 传热熵增与热量贬值</option>
+<option value="sec-s2">02 热量的品位与第二定律表述</option>
+<option value="sec-s3">03 热力学基本方程与第三定律</option>
+<option value="sec-s4">04 过程熵变的计算与冻雨作业</option>
+<option value="sec-s5">05 亥姆霍兹与吉布斯自由能</option>
+<option value="sec-s6">06 吉布斯亥姆霍兹方程与思考题</option>
+<option value="sec-s7">07 克拉伯龙方程与结课</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 第1章 地质流体状态方程与热力学基本函数.pdf 逐页渲染，转写原文见 record_20261027.txt。</div>
+<section class="sec" id="sec-s1">
+  <div class="slides"><figure class="slide" id="slide-01">
+<img src="slides/slide_01.png" alt="课件第1页 传热过程的熵增：高温热库 T1 与低温热库 T2 之间会发生热传导，传导热量 Q（此处设 Q 为正值）；高温热库熵变为 ΔS1 大于 −Q/T1，低温热库熵变为 ΔS2 大于 Q/T2；高温热库、低温热库构成一个孤立系统，它的总熵变 ΔS=ΔS1+ΔS2 大于 Q(1/T2−1/T1)=Q(T1−T2)/(T1T2) 大于 0——高温向低温的热传导是一个自发的不可逆过程，熵增加">
+<figcaption><span class="sno">01</span><span class="stitle">传热过程的熵增：高温热库 T1 与低温热库 T2 之间会发生热传导，传导热量 Q（此处设 Q 为正值）；高温热库熵变为 ΔS1 大于 −Q/T1，低温热库熵变为 ΔS2 大于 Q/T2；高温热库、低温热库构成一个孤立系统，它的总熵变 ΔS=ΔS1+ΔS2 大于 Q(1/T2−1/T1)=Q(T1−T2)/(T1T2) 大于 0——高温向低温的热传导是一个自发的不可逆过程，熵增加</span></figcaption>
+</figure>
+<figure class="slide" id="slide-02">
+<img src="slides/slide_02.png" alt="课件第2页 传热过程熵增→热量的“贬值”：A、B 两卡诺热机效率分别为 ηA=1−T0/T1、ηB=1−T0/T2；A 热机直接从高温热源吸热 Q 做功，B 热机从中温热源吸热做功；A 热机比 B 热机对环境多做的功 WA−WB=T0ΔS 大于 0——由于传热导致的熵增，使一部分热能丧失了转变成功的能力">
+<figcaption><span class="sno">02</span><span class="stitle">传热过程熵增→热量的“贬值”：A、B 两卡诺热机效率分别为 ηA=1−T0/T1、ηB=1−T0/T2；A 热机直接从高温热源吸热 Q 做功，B 热机从中温热源吸热做功；A 热机比 B 热机对环境多做的功 WA−WB=T0ΔS 大于 0——由于传热导致的熵增，使一部分热能丧失了转变成功的能力</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>传热熵增与热量贬值</h2>
+        <div class="sec-meta"><span class="time">录音：开场（00:00-00:09）</span><span class="chip">课件 1-2</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>开场回顾上节课：理想气体向真空自由膨胀，膨胀之后气体的熵增加了，但温度没变、内能也没变；环境熵没有改变、没受到任何影响。从这看，熵是一个守恒的量吗？不是。在同等温度条件下，气体自由活动的空间扩大，无秩序程度、混乱程度加大，有序程度降低。</p><p>再看一个传热过程：假设两个铁块，一个 T1 温度的高温铁块、一个 T2 温度的低温铁块，它们挨在一起。凭经验我们知道，高温物体要加热低温物体，让低温物体传热。这个传热的传导有三种方式——传导、对流、辐射。</p><p>就这个传热过程而言：高温铁块丢失了热量，它的熵是增加还是减少？应该是减少。低温铁块获得热量，它的熵是增加还是减少？增加了。这两个铁块加在一块儿，它们的熵整体上仍然是增加的。</p><p>高温热源的熵改变量注意：由于这个传热是不可逆过程，我用的是大于号。这里边我们假设丢失了 Q 的热量，按照通常的法则，丢失的热量我们给它负号。我用大于号，就意味着我算不出它具体的数值，但是我可以算出它的极限值、最低值——高温热块最低丢掉了多少熵，低温这块最低获得了多少熵。</p><p>这两个铁块的熵改变量相加，把这两个式子带进来整理之后得到这样一个式子。K 又是正值，T1、T2 都是正数——我们用的这个绝对温标又叫热力学温标，里边没有负温度，最小是零度。T1 大于 T2，就意味着这个算式算出来之后是大于零的。就这么一个传热过程，整个系统两个铁块熵增加了。</p><p>再看热机：这两个热体都是可逆热体，也就是卡诺循环。我让它们吸收同样的热量，看看做功有没有什么差别。A 热机直接从高温热源吸收 Q0 的热、向低温热源放热；B 热机呢，它的热来自高温热源，经过一个中温热源再流向热机，然后再向低温热源放热、对外做功。都是卡诺循环、都吸收了同样的热量，不同的在哪？A 热机直接从高温热源吸热，B 热机从中温热源吸热。</p><p>算一下效率：按照卡诺定理，T0 是低温热源、T1 是高温热源，A 热机做的功就是它的效率乘以它吸收的净热量；B 热机低温热源温度 T0、高温热源温度 T2。A 热机的功减去 B 热机的功等于这一项——A 热机比 B 热机多做功。</p><p>问题来了：它们都吸收了同样的热量、都向低温热源放热，做功却不一样，为什么？是由于 A 热机的热量从高温热源流到中温热源，然后 B 热机从中温热源吸热，做功就做不了那么多，做功的能力下降了。A 热机的热经历一个传导过程，这是一个不可逆的过程，刚才我们算过，在传热的时候造成了熵增加——这个热量丧失了一部分做功能力。</p><p>现在看到同样的热量，一个来自高温热源、一个来自中温热源，它们的做功能力不一样。就从热的品味、品质、质量上讲，来自高温热源的热做功能力更强。</p><p>煤的例子：你们现在家里烧煤你见过吧？你见过烟煤和无烟煤吗？我们小时候烧的煤，一种叫无烟煤、民间叫明煤，变质程度高一些，无烟煤贵且耐烧、热值高；一种叫烟煤，粉末状不发亮、结晶程度低，差一些。大概 70 年代，我家从河南平顶山拉煤，无烟煤一吨 10 元、烟煤大概 5 块或 8 块——老百姓不用学热力学第二定律，就知道哪些东西好。无烟煤发热品质高，烟煤低。</p><p>开尔文爵士说：从单一热源吸热并全部转化为功，且不附加其他条件，是做不到的。这前后有人设想造永动机：第一类永动机不给油电就转，违背热力学第一定律，它向外输出能量却不吸收，无法做功；第二类永动机想把热全转为动能，热力学第二定律说不行。</p><p>回到上节课题目：不放热会怎样？答案是不放热连一次循环都完不成。所以放热是必须的，不能把吸来的热全转化为功，这种机器不存在，叫第二类永动机。向自然界放热，形象称为纳税，不交税不行。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>高温铁块丢失了热量，它的熵是增加了还是减少？应该是减少。低温铁块获得的热量，它的熵是增加还是减少？增加了。这两个铁块加在一块儿，它们的熵整体上仍然是增加的。</p><p>我用的是大于号，就意味着我算不出它具体的数值。但是我可以算出它的极限值，就是最低值。</p><p>它们都吸收了同样的热量，都向低温热源放热，做功却不一样。就是热量丧失了一部分做功能力。</p><p>无烟煤贵且耐烧，热值高；烟煤差一些。老百姓不用学热力学第二定律，就知道哪些东西好。</p><p>答案是不放热连一次循环都完不成。所以放热是必须的。向自然界放热，形象称为纳税，不交税不行。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s2">
+  <div class="slides"><figure class="slide" id="slide-03">
+<img src="slides/slide_03.png" alt="课件第3页 熵、能“质”（热量的“品位”）：能量类型与每焦耳热量携带的熵值（J/K·mol）——宏观物体的动能 0、引力势能 0、电势能 0、来自核反应的热能 10 的负 11 次方、来自太阳的光能 10 的负 5 次方、来自化学反应的热能 10 的负 4 次方、来自沸水的热能 0.0027、来自海水的热能 0.0036、来自宇宙背景辐射的热能 0.3——“能趋疲”，造成热量“贬值”、能“质”衰退">
+<figcaption><span class="sno">03</span><span class="stitle">熵、能“质”（热量的“品位”）：能量类型与每焦耳热量携带的熵值（J/K·mol）——宏观物体的动能 0、引力势能 0、电势能 0、来自核反应的热能 10 的负 11 次方、来自太阳的光能 10 的负 5 次方、来自化学反应的热能 10 的负 4 次方、来自沸水的热能 0.0027、来自海水的热能 0.0036、来自宇宙背景辐射的热能 0.3——“能趋疲”，造成热量“贬值”、能“质”衰退</span></figcaption>
+</figure>
+<figure class="slide" id="slide-04">
+<img src="slides/slide_04.png" alt="课件第4页 热力学第二定律其它的表述方法：“一定条件下，任何体系都自发地趋向平衡”“孤立体系中自发过程趋向于熵增大”“一切自发过程是不可逆的”“第二类永动机是不能制成的”——这些表述都是等效的；自发过程中随着体系做功本领的降低，能量变为分散、更无序的形式，但能量的“品质”（做功能力）下降了，这就是自发过程的方向">
+<figcaption><span class="sno">04</span><span class="stitle">热力学第二定律其它的表述方法：“一定条件下，任何体系都自发地趋向平衡”“孤立体系中自发过程趋向于熵增大”“一切自发过程是不可逆的”“第二类永动机是不能制成的”——这些表述都是等效的；自发过程中随着体系做功本领的降低，能量变为分散、更无序的形式，但能量的“品质”（做功能力）下降了，这就是自发过程的方向</span></figcaption>
+</figure>
+<figure class="slide" id="slide-05">
+<img src="slides/slide_05.png" alt="课件第5页 熵的类型：量热熵（克劳修斯根据卡诺循环显示的特点定义熵，变化值用可逆过程的热温商表示）；统计熵即光谱熵，用统计学原理计算，计算时要用到分子光谱数据；残余熵是统计熵与量热熵之间的差值，许多物质的残余熵很小；构型熵分为取向构型熵、混合构型熵——不对称分子在 0K 时由于取向不同产生的微观态数的贡献，称为取向构型熵">
+<figcaption><span class="sno">05</span><span class="stitle">熵的类型：量热熵（克劳修斯根据卡诺循环显示的特点定义熵，变化值用可逆过程的热温商表示）；统计熵即光谱熵，用统计学原理计算，计算时要用到分子光谱数据；残余熵是统计熵与量热熵之间的差值，许多物质的残余熵很小；构型熵分为取向构型熵、混合构型熵——不对称分子在 0K 时由于取向不同产生的微观态数的贡献，称为取向构型熵</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>热量的品位与第二定律表述</h2>
+        <div class="sec-meta"><span class="time">录音：前半（00:09-00:22）</span><span class="chip">课件 3-5</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>已知熵不是守恒量。人们深入研究不同能量携带的熵值：发现宏观物体的动能、引力势能、电势能不携带熵；核反应热能携带的熵值非常低，有用度比例高。</p><p>数据对比：太阳光能携带的熵不算小，为 10 的负 5 次方焦耳每开每摩尔；化学反应热能携带的熵为 10 的负 4 次方，即万分之一；沸水为 0.0027；海水为 0.0036，数据相当大。</p><p>我们曾学过利用潮汐或海水温差发电：既然海水热能携带的熵较高，温差会有多大？这注定其发电效率非常低。宇宙背景辐射热量携带的熵是 0.3，已相当可观了。</p><p>宇宙大爆炸假说：宇宙从一个起点开始，嘣一下爆炸。爆炸前没有宇宙、只有能量，能量转化为物质后开始膨胀，膨胀速率远超光速——从爆炸声开始，才有了宇宙、物质和时间。这是个连物理学家都需接受的假说。还要一直膨胀吗？有人提出补丁假说：宇宙膨胀到一定程度后收缩回起点，再开启下一个循环。</p><p>BigBang 是象声词，由记者起名，原含讽刺意味，后被物理学家采用。大爆炸初期温度极高，大家见过烧火后的灰烬吗？灰烬由红变暗红、最后成白灰，即使成为白灰仍有余温，看不见但手能感觉到。大爆炸也有灰烬，这是形象说法，也有熵污染。</p><p>目前宇宙空间温度是绝对零度吗？不是，是 2.67 开尔文。这是宇宙空间真空中大爆炸的余温，现在说的宇宙背景辐射热能指的就是这个——残存温度携带的熵是 0.3，很正常。</p><p>Entropy 这个词，有人从译音角度译成「能去皮」：由于熵的存在，能量慢慢疲惫、做功能力下降，造成热量贬值——能量、质量、做功能力、品味的衰退，这就是熵的存在引起的。</p><p>热力学第二定律有很多说法：一定条件下，自然界任何体系都自发趋向平衡；物理系统中自发过程的熵趋于增大；一切自发过程不可逆；第二类永动机造不成。其中「一切自发过程都是不可逆的」被认为是最精确概括热力学第二定律的。</p><p>熵的类型：量热熵——克劳修斯根据卡诺循环显示的特点定义了熵，变化值用可逆过程的热温商表示；统计熵即光谱熵，用统计学原理计算，计算时要用到分子光谱数据；残余熵是统计熵与量热熵之间的差值，许多物质的残余熵很小；构型熵分为取向构型熵、混合构型熵——不对称分子在 0 开尔文时由于取向不同产生的微观态数的贡献，称为取向构型熵；混合构型熵是由于非全同粒子的可辨性，引起微观态数量增加而产生的。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>发现宏观物体动能、引力势能、电势能不携带熵。核反应热能携带的熵值非常低。宇宙背景辐射热量携带的熵是0.3，已相当可观了。</p><p>大爆炸也有灰烬，这是形象说法，也有熵污染。目前宇宙空间温度不是绝对零度，是2.67开尔文。</p><p>由于熵的存在，能量慢慢疲惫，做功能力下降，造成热量贬值。</p><p>其中“一切自发过程都是不可逆的”，被认为是最精确概括热力学第二定律的。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s3">
+  <div class="slides"><figure class="slide" id="slide-06">
+<img src="slides/slide_06.png" alt="课件第6页 热力学基本方程：热力学第一定律 dU=đQ+đW（đW=−PdV）；热力学第二定律 đQ≤TdS，可逆过程的热 đQ=TdS；对于可逆过程 dU=TdS−PdV——热力学基本方程（Clausius 微分方程），是热力学第一定律、第二定律相结合的表达式">
+<figcaption><span class="sno">06</span><span class="stitle">热力学基本方程：热力学第一定律 dU=đQ+đW（đW=−PdV）；热力学第二定律 đQ≤TdS，可逆过程的热 đQ=TdS；对于可逆过程 dU=TdS−PdV——热力学基本方程（Clausius 微分方程），是热力学第一定律、第二定律相结合的表达式</span></figcaption>
+</figure>
+<figure class="slide" id="slide-07">
+<img src="slides/slide_07.png" alt="课件第7页 热力学第三定律（a）Nernst 热定理：20 世纪初，人们从低温化学反应、电池电动势测定中发现，随温度的下降，恒温过程的熵变越来越小；在此基础上给出假定（1906）：凝聚系统在恒温过程中的熵变随温度趋于 0K 而趋于零——此假定被称为 Nernst 热定理，奠定了热力学第三定律的基础，也可以认为是第三定律的原始形式">
+<figcaption><span class="sno">07</span><span class="stitle">热力学第三定律（a）Nernst 热定理：20 世纪初，人们从低温化学反应、电池电动势测定中发现，随温度的下降，恒温过程的熵变越来越小；在此基础上给出假定（1906）：凝聚系统在恒温过程中的熵变随温度趋于 0K 而趋于零——此假定被称为 Nernst 热定理，奠定了热力学第三定律的基础，也可以认为是第三定律的原始形式</span></figcaption>
+</figure>
+<figure class="slide" id="slide-08">
+<img src="slides/slide_08.png" alt="课件第8页 热力学第三定律的 Planck 说法：任何物质在 0K 的熵值无论怎么选择，均不会影响化学反应熵变的数值，最简单的选择是假定 0K 时任一物质熵为零；Planck（1911）进一步给出表述形式：“0K 时纯物质凝聚相的熵为零”——因为不同的物质混合后熵将增大，所以明确指出必须是纯物质，0K 时熵才有可能为零；Planck 说法包含了 Nernst 说法">
+<figcaption><span class="sno">08</span><span class="stitle">热力学第三定律的 Planck 说法：任何物质在 0K 的熵值无论怎么选择，均不会影响化学反应熵变的数值，最简单的选择是假定 0K 时任一物质熵为零；Planck（1911）进一步给出表述形式：“0K 时纯物质凝聚相的熵为零”——因为不同的物质混合后熵将增大，所以明确指出必须是纯物质，0K 时熵才有可能为零；Planck 说法包含了 Nernst 说法</span></figcaption>
+</figure>
+<figure class="slide" id="slide-09">
+<img src="slides/slide_09.png" alt="课件第9页 “0K 时为零”修正的 Planck 说法：纯物质完美晶体的熵 S*(0K, 完美晶体)=0——此说法的实质是以“纯物质完美晶体”（无晶体缺陷）为基础；0K 时在完美晶体中所有分子、原子、电子的运动均处于最低能级，空间排布只有一种方式，从微观上看只有一种状态，熵值定为零，可算得是有序之“极”了；以此为起点计算的熵值曾经称为“绝对熵”">
+<figcaption><span class="sno">09</span><span class="stitle">“0K 时为零”修正的 Planck 说法：纯物质完美晶体的熵 S*(0K, 完美晶体)=0——此说法的实质是以“纯物质完美晶体”（无晶体缺陷）为基础；0K 时在完美晶体中所有分子、原子、电子的运动均处于最低能级，空间排布只有一种方式，从微观上看只有一种状态，熵值定为零，可算得是有序之“极”了；以此为起点计算的熵值曾经称为“绝对熵”</span></figcaption>
+</figure>
+<figure class="slide" id="slide-10">
+<img src="slides/slide_10.png" alt="课件第10页 规定熵、标准熵、第三定律熵：以 S*(0K, 完美晶体)=0 为始态、以温度 T 时的指定状态为末态，所算出的 1 mol 物质的熵变，为该物质在指定状态下的摩尔规定熵 S(T)；由于规定熵以第三定律为基础，故亦称为第三定律熵，亦称为规定熵、标准熵；大多数矿物热力学数据库中都载有各种矿物的标准熵；示例：ΔfS(O2)=0.0、ΔfS(H2)=0.0、ΔfS(CO2)=213.7、ΔfS(H2O)=188.8（J/K·mol）">
+<figcaption><span class="sno">10</span><span class="stitle">规定熵、标准熵、第三定律熵：以 S*(0K, 完美晶体)=0 为始态、以温度 T 时的指定状态为末态，所算出的 1 mol 物质的熵变，为该物质在指定状态下的摩尔规定熵 S(T)；由于规定熵以第三定律为基础，故亦称为第三定律熵，亦称为规定熵、标准熵；大多数矿物热力学数据库中都载有各种矿物的标准熵；示例：ΔfS(O2)=0.0、ΔfS(H2)=0.0、ΔfS(CO2)=213.7、ΔfS(H2O)=188.8（J/K·mol）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>热力学基本方程与第三定律</h2>
+        <div class="sec-meta"><span class="time">录音：前半后段（00:22-00:28）</span><span class="chip">课件 6-10</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>回来看卡诺循环：A 到 B 是等温可逆膨胀、对外做功；B 到 C 绝热可逆膨胀，不吸热也不放热但对外做功；C 到 D 是等温可逆压缩，温度不变、环境对它做功、它放热；D 到 A 是绝热可逆压缩，环境对它做功，气压增大、体积缩小、温度升高，回到原点。</p><p>再看 C 到 D 这一段，它是要放热。如果不放热有什么后果？会造成温度急速升高，以至于再也回不到原点。若造出这样一辆汽车，你还买不买？它连一圈都转不了，那你肯定不买。所以放热是必须的，不放就不行。</p><p>理想气体回到原点后，所有参数都恢复原来状态，P、V、T 都复原了。现在我们问一下环境的 PVT 是不是也要复原？假定你开的是一台真实的汽车，发动机转了一圈回到原点，气缸内的气体复原了，环境复原了吗？没有。汽车发动机转一圈，活塞连杆做功、推动轮子前后运动，熵复原了吗？没有。</p><p>熵有不同分类，如量热熵、统计熵等，均度量系统混乱度增加，暂不深究分类，后续再遇。对封闭系统，热力学第一定律形式如此，微功定义亦然；第二定律表达式为熵大于等于热温商，这是等价形式，可逆过程中取等号。结合第一、第二定律得到的式子，叫热力学基本方程，又称克劳修斯微分方程。</p><p>最后是热力学第三定律，定义了熵。如何度量熵？我们计算熵变而非绝对值。20 世纪初，通过低温化学反应和电池电动势测定发现：随温度下降，恒温过程的熵变减小——即化学反应的熵变在低温下测定时，温度越低、熵变越小。</p><p>1906 年，能斯特假定：凝聚系统（指固体和液体）在恒温过程中的熵变，随温度趋于 0 开尔文而趋于零。任意热力学过程的熵变，随系统温度趋近 0 开尔文而趋近 0。当时这仅是假说，称为能斯特热定理，是热力学第三定律的原始形式。</p><p>1911 年，普朗克进一步对第三定律推进了一步。他武断地说：零度时纯物质凝聚相的熵为零。既然规定零度时物质凝聚相的熵从零开始，那么化学反应在零度时的熵变自然也是零了。</p><p>但后来发现普朗克说法还不完美。比如矿物基本上是化合物晶体，而矿物中是有晶格缺陷的。如果矿物晶格非常完美、高度有序，这没问题；但发现有的有晶格缺陷，比如在某个节点上什么元素都没有——你说它是最有秩序还是略微没秩序？略微没秩序，那么它的熵能是零吗？不能。</p><p>所以对普朗克说法进一步限定：规定纯物质完美晶体在 0 开尔文时熵为 0，即热力学第三定律。文献中「规定熵」「标准熵」常作为同义词，均指纯物质完美晶体在零开尔文时的熵。</p><p>热力学数据库中，氧气与氢气在绝对零度时规定熵为零，但二氧化碳和水却不为零——因二氧化碳由碳和氧合成、水由氢和氧合成，混合导致混乱度增加，故不为零。同种元素合成的化合物，其熵在绝对零度规定为 0。数据库常以 1 大气压、25 摄氏度（298.15 开尔文）为标准状态，该状态贴近生活，常温常压下物质的焓、熵、体积等均有具体数据，后续章节详述。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>环境复原了吗？没有。汽车发动机转一圈，活塞连杆做功，推动轮子前后运动。熵复原了吗？没有。</p><p>1906年，能斯特假定：凝聚系统在恒温过程中的熵变，随温度趋于0开尔文而趋于0。当时这仅是假说，称为能斯特热定理。</p><p>1911年，普朗克进一步对第三定律推进了一步。他武断地说，零度时纯物质凝聚相的熵为零。</p><p>规定纯物质完美晶体在0开尔文时熵为0，即热力学第三定律。氧气与氢气在绝对零度时规定熵为零，但二氧化碳和水却不为零。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s4">
+  <div class="slides"><figure class="slide" id="slide-11">
+<img src="slides/slide_11.png" alt="课件第11页 过程熵变的计算：熵变仅决定于始、末态，只要始、末态一定，任一可逆过程的热温商都相等、都等于二态间的熵变；计算熵变的出发点是可逆过程熵的定义式 dS=đQ(reversible)/T 或 ΔS=∫(đQ(reversible)/T)；求不可逆过程的熵变，也可在始末态间设计适当的可逆过程进行计算">
+<figcaption><span class="sno">11</span><span class="stitle">过程熵变的计算：熵变仅决定于始、末态，只要始、末态一定，任一可逆过程的热温商都相等、都等于二态间的熵变；计算熵变的出发点是可逆过程熵的定义式 dS=đQ(reversible)/T 或 ΔS=∫(đQ(reversible)/T)；求不可逆过程的熵变，也可在始末态间设计适当的可逆过程进行计算</span></figcaption>
+</figure>
+<figure class="slide" id="slide-12">
+<img src="slides/slide_12.png" alt="课件第12页 过程熵变的计算（标准反应熵）：反应 aA+bB=lL+mM 的熵（变），等于产物的总熵与反应物总熵的差值；单纯 PVT 变化时的熵变，由 dU=đQ+đW、đW=−PdV 出发，đQ(reversible)=dU+PdV，ΔS=∫(dU+PdV)/T">
+<figcaption><span class="sno">12</span><span class="stitle">过程熵变的计算（标准反应熵）：反应 aA+bB=lL+mM 的熵（变），等于产物的总熵与反应物总熵的差值；单纯 PVT 变化时的熵变，由 dU=đQ+đW、đW=−PdV 出发，đQ(reversible)=dU+PdV，ΔS=∫(dU+PdV)/T</span></figcaption>
+</figure>
+<figure class="slide" id="slide-13">
+<img src="slides/slide_13.png" alt="课件第13页 热力学过程熵变的计算：单纯 PVT 变化 ΔS=∫(dU+PdV)/T；恒温过程纯固相 ΔS 约等于 0、理想气体 ΔS=∫(PdV)/T=nR∫dlnV；恒容过程 dvS=đvQ(reversible)/T=nCV,mdT/T；恒压过程 dpS=đpQ(reversible)/T=nCP,m dT/T">
+<figcaption><span class="sno">13</span><span class="stitle">热力学过程熵变的计算：单纯 PVT 变化 ΔS=∫(dU+PdV)/T；恒温过程纯固相 ΔS 约等于 0、理想气体 ΔS=∫(PdV)/T=nR∫dlnV；恒容过程 dvS=đvQ(reversible)/T=nCV,mdT/T；恒压过程 dpS=đpQ(reversible)/T=nCP,m dT/T</span></figcaption>
+</figure>
+<figure class="slide" id="slide-14">
+<img src="slides/slide_14.png" alt="课件第14页 过程熵变的计算（PVT 同时变化）：三个变量中，指定成分恒定的均匀系统，P、V、T 任意两个即可确定系统的状态，确定了始、末态就能计算熵变；选择 T 和 V 为确定状态的变量，始、末态为状态 1(T1,V1) 到状态 2(T2,V2)；计算熵变可分为两步：第一步可先变 T 和 V 中的任一个，第二步再变另一个">
+<figcaption><span class="sno">14</span><span class="stitle">过程熵变的计算（PVT 同时变化）：三个变量中，指定成分恒定的均匀系统，P、V、T 任意两个即可确定系统的状态，确定了始、末态就能计算熵变；选择 T 和 V 为确定状态的变量，始、末态为状态 1(T1,V1) 到状态 2(T2,V2)；计算熵变可分为两步：第一步可先变 T 和 V 中的任一个，第二步再变另一个</span></figcaption>
+</figure>
+<figure class="slide" id="slide-15">
+<img src="slides/slide_15.png" alt="课件第15页 过程熵变的计算（PVT 同时变化例）：例如先恒容变温、再恒温变容，总熵变为两步相加；ΔvS=∫(nCV,m/T)dT（从 T1 到 T2）、ΔTS=∫(P/T)dV（从 V1 到 V2）；ΔS=ΔvS+ΔTS">
+<figcaption><span class="sno">15</span><span class="stitle">过程熵变的计算（PVT 同时变化例）：例如先恒容变温、再恒温变容，总熵变为两步相加；ΔvS=∫(nCV,m/T)dT（从 T1 到 T2）、ΔTS=∫(P/T)dV（从 V1 到 V2）；ΔS=ΔvS+ΔTS</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>过程熵变的计算与冻雨作业</h2>
+        <div class="sec-meta"><span class="time">录音：00:28-00:53</span><span class="chip">课件 11-15</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>计算熵变时，可逆过程直接用热温比计算；遇不可逆过程，需设计一系列等效的连续可逆子过程，用热温比的代数和计算；若无法设计，则依据热力学第二定律，宏观过程的熵是热温比微商的积分。熵变仅决定于始、末态，只要始末态一定，任一可逆过程的热温商都相等、都等于二态间的熵变。</p><p>化学反应的熵变，等于产物熵总量减去反应物熵总量：反应 aA+bB=lL+mM 的熵变，等于产物的总熵与反应物总熵的差值。</p><p>单纯 PVT 变化的熵变，从第一定律出发推导：利用可逆过程的热量改变量，对热温比进行积分来实现。注意，用到热温比时只能是可逆过程。</p><p>恒温过程：可以近似认为物质的体积不发生变化、这一项为 0，恒温过程内能不发生变化、这一项为 0——对于恒温过程的纯固相而言，可以近似认为熵不发生改变。说太不讲理了，他要发生改变怎么办？我们有办法，后边我们会提到怎么具体计算。对于理想气体，恒温过程内能这一项为零，把这一项代入理想气体状态方程，很容易实现这个积分。</p><p>恒容过程用恒容热容积分、恒压过程用恒压热容积分——对任意物质而言，对恒容过程、恒压过程，只要是可逆的，就能实现。</p><p>对 P、T 同时变化的熵变：熵是状态函数，可以拆成两步——P、T 里面先确定一个变量积分，然后再固定另一个变量积分，比如先恒容变温、再恒温变容，两步积分加一块儿，就求出来 P、T 同时变化时熵的总改变量。</p><p>第三次作业（前面作业留得非常密集）：2008 年你们经历过痛苦的一段南方大雪灾，冰把高压线都给拧成麻花了，南方整个缺电。这个电路经历了极度的考验，但是恢复得非常快。冻雨指温度低于 0 度仍呈液态的水，因反应动力学原因空中未结冰，落地接触物体瞬间结冰，如树、车、电线。若突遇冻雨在身上瞬间结冰会窒息致命，唯一办法是让人把冰打碎，否则性命难保——这就是冻雨的特点。</p><p>水的效果图：图中有三根线，看似简单但我们会多次碰到。该区域是蒸汽稳定区、这里是液态水稳定区、那里是固态冰稳定区。在一个大气压下，冰水平衡温度是 0 摄氏度。注意这个点是 0.01 摄氏度、6 千分之一个大气压——三相点。</p><p>冻雨远低于 0 摄氏度，南方冻雨最低温达零下 15 摄氏度仍为液态水，落地瞬间转变成冰。结冰时不在这根平衡线上，而是远离了平行线，这属于非平衡状态下的相变，也可视为特殊的化学反应。</p><p>对这根线而言，线上是冰和水平衡，意味着宏观上谁也不多不少。这个图要看成动态的图：若对冰水平衡系统加压，平衡温度会比 0 摄氏度低；水和它的蒸汽平衡的时候，随着压力的升高、平衡温度在增加——高压锅蒸汽的气压可以很高，水和蒸汽的平衡温度可以远超 100 摄氏度，这就是高压锅做东西容易熟的原因。</p><p>在一个大气压下把水烧开是 100 摄氏度，水和 100 摄氏度的气平衡；现在降低压力，水烧开的温度低于 100——这就是在高原上，水 80 摄氏度可能就开了，不容易煮熟东西。所谓水和蒸汽平衡，就是水的蒸汽压力和大气压一样。</p><p>在这根平衡线上，水和它的蒸汽平衡，水也不多、水也不少，但是我们不能排除有个别分子的冰融化为水、同时有个别分子的水固化为冰——这就是可逆的，宏观上没反应。</p><p>现在问：过冷水零下 10 摄氏度转变为零下 10 摄氏度的冰，熵变是多少？注意有 15 摩尔，需乘以 15。这是非平衡状态、不可逆，不能用热温比。先凭直觉：零下 10 摄氏度的水混乱程度大，还是零下 10 摄氏度的冰混乱程度大？从混乱度高的到混乱度低的——熵减少了。</p><p>有人问：这直接违背了熵增原理？没有。熵增原理针对的是绝热系统或者孤立系统，孤立系统的熵一直增加；现在零下 10 摄氏度的水转变成零下 10 摄氏度的冰，它是不是孤立系统？它向外界放热还是吸热？放热。所以并没有违背熵增原理。</p><p>非平衡、不可逆怎么计算？设计可逆路径：先让水升温到 0 摄氏度（恒压热容积分），再让 0 摄氏度的水可逆相变为 0 摄氏度的冰，再让 0 摄氏度的冰降温到零下 10 摄氏度——总的过程的熵和焓的改变量由这三步的熵加起来。</p><p>这里有个重要的问题：非平衡态下相变的焓、熵，与可逆过程的是不是一样？它们都是状态函数，不依赖于具体的这一过程，所以我们才可以这样去做。假定有人告诉了你零下 10 度的冰的焓、熵，零下 10 度的水的焓、熵，你就用不着绕这个圈，直接一减就省了；假定考试题里给你那么多参数、再告诉你它的焓、熵，你如果再这么来一遍那就多余了。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>遇不可逆过程，需设计一系列等效的连续可逆子过程，用热温比的代数和计算。</p><p>冻雨落地接触物体瞬间结冰。若突遇冻雨在身上瞬间结冰，会窒息致命，唯一办法是让人把冰打碎。</p><p>在一个大气压下，冰水平衡温度是0摄氏度。注意这个点是0.01摄氏度、6千分之一个大气压。</p><p>高压锅蒸汽的气压可以很高，水和蒸汽的平衡温度可以远超100摄氏度。在高原上，水80摄氏度可能就开了。</p><p>零下10度的水混乱程度大，还是零下10度的冰混乱程度大？从混乱度高的到混乱度低的，到底是增加了还是减少了？</p><p>并没有违背熵增原理，针对的是绝热系统或者孤立系统。现在这个水变成冰，它是不是孤立系统？它向外界放热。</p><p>设计这三个过程，总的过程的熵和焓的改变量由这三步加起来。它们都是状态函数，不依赖于具体的这一过程，所以我们才可以这样去做。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s5">
+  <div class="slides"><figure class="slide" id="slide-16">
+<img src="slides/slide_16.png" alt="课件第16页 环境熵变：利用热力学第二定律的熵判据，即孤立系统的熵增原理，可以判断过程的可逆与不可逆——将所研究的系统和环境加起来，作为新的“孤立系统”，其熵变就等于原“系统”和原“环境”的熵变总和；判断过程的可能性，不但要计算系统熵变，还要计算环境熵变；đQ(surroundings)+đQ(system)=0">
+<figcaption><span class="sno">16</span><span class="stitle">环境熵变：利用热力学第二定律的熵判据，即孤立系统的熵增原理，可以判断过程的可逆与不可逆——将所研究的系统和环境加起来，作为新的“孤立系统”，其熵变就等于原“系统”和原“环境”的熵变总和；判断过程的可能性，不但要计算系统熵变，还要计算环境熵变；đQ(surroundings)+đQ(system)=0</span></figcaption>
+</figure>
+<figure class="slide" id="slide-17">
+<img src="slides/slide_17.png" alt="课件第17页 自由能 Helmholtz（T、V 不变，没有非体积功）：环境内部以及系统与环境间可逆，T(system)=T(surroundings)；ΔS(surroundings)=−Qv(system)/T(surroundings)；dS(isolated)=dS(system)+dS(surroundings)=dS(system)−đQv(system)/T(system)=dS(system)−dU(system)/T(system) 大于等于 0（熵增原理）">
+<figcaption><span class="sno">17</span><span class="stitle">自由能 Helmholtz（T、V 不变，没有非体积功）：环境内部以及系统与环境间可逆，T(system)=T(surroundings)；ΔS(surroundings)=−Qv(system)/T(surroundings)；dS(isolated)=dS(system)+dS(surroundings)=dS(system)−đQv(system)/T(system)=dS(system)−dU(system)/T(system) 大于等于 0（熵增原理）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-18">
+<img src="slides/slide_18.png" alt="课件第18页 自由能 Helmholtz（T、V 不变，没有非体积功）：系统内部、环境内部、系统与环境间可逆；−TdS(isolated)=d(U−TS) 小于等于 0；定义 A=U−TS（Helmholtz free energy）——孤立系统的熵增原理，等价地转换为系统的 Helmholtz 自由能降低原理；在恒温恒容、不涉及非体积功时，系统的热力学过程只能自发地向 Helmholtz 自由能减小的方向进行">
+<figcaption><span class="sno">18</span><span class="stitle">自由能 Helmholtz（T、V 不变，没有非体积功）：系统内部、环境内部、系统与环境间可逆；−TdS(isolated)=d(U−TS) 小于等于 0；定义 A=U−TS（Helmholtz free energy）——孤立系统的熵增原理，等价地转换为系统的 Helmholtz 自由能降低原理；在恒温恒容、不涉及非体积功时，系统的热力学过程只能自发地向 Helmholtz 自由能减小的方向进行</span></figcaption>
+</figure>
+<figure class="slide" id="slide-19">
+<img src="slides/slide_19.png" alt="课件第19页 自由能 Helmholtz（T、V 不变，没有非体积功）：实际上，系统在恒温恒容条件下不存在非体积功时，恒容热 Qv=ΔU，根据热力学第二定律 δQv/T 恒等变换此式得 d(U−TS) 小于等于 0，即 dA 小于等于 0（等式代表可逆，大于号代表不可逆）">
+<figcaption><span class="sno">19</span><span class="stitle">自由能 Helmholtz（T、V 不变，没有非体积功）：实际上，系统在恒温恒容条件下不存在非体积功时，恒容热 Qv=ΔU，根据热力学第二定律 δQv/T 恒等变换此式得 d(U−TS) 小于等于 0，即 dA 小于等于 0（等式代表可逆，大于号代表不可逆）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-20">
+<img src="slides/slide_20.png" alt="课件第20页 自由能 Gibbs（P、T 不变，没有非体积功）：系统内部、环境内部、系统与环境间可逆，T(system)=T(surroundings)；đQ(surroundings)=−đQ(system)=−dH(system)；dS(isolated)=dS(system)+dS(surroundings)=dS(system)−dH(system)/T(system) 大于等于 0（熵增原理）；−TdS(isolated)=dH−TdS 小于等于 0">
+<figcaption><span class="sno">20</span><span class="stitle">自由能 Gibbs（P、T 不变，没有非体积功）：系统内部、环境内部、系统与环境间可逆，T(system)=T(surroundings)；đQ(surroundings)=−đQ(system)=−dH(system)；dS(isolated)=dS(system)+dS(surroundings)=dS(system)−dH(system)/T(system) 大于等于 0（熵增原理）；−TdS(isolated)=dH−TdS 小于等于 0</span></figcaption>
+</figure>
+<figure class="slide" id="slide-21">
+<img src="slides/slide_21.png" alt="课件第21页 自由能 Gibbs（P、T 不变，没有非体积功）：定义 G=H−TS（Gibbs free energy / Gibbs function），dG 小于等于 0——孤立系统的熵增原理，等价地转换为系统的 Gibbs 自由能降低原理；在恒温恒压、不涉及非体积功时，系统的热力学过程只能自发地向 Gibbs 自由能减小的方向进行，这成为封闭系统判断恒温恒压条件下任一过程可能性的依据">
+<figcaption><span class="sno">21</span><span class="stitle">自由能 Gibbs（P、T 不变，没有非体积功）：定义 G=H−TS（Gibbs free energy / Gibbs function），dG 小于等于 0——孤立系统的熵增原理，等价地转换为系统的 Gibbs 自由能降低原理；在恒温恒压、不涉及非体积功时，系统的热力学过程只能自发地向 Gibbs 自由能减小的方向进行，这成为封闭系统判断恒温恒压条件下任一过程可能性的依据</span></figcaption>
+</figure>
+<figure class="slide" id="slide-22">
+<img src="slides/slide_22.png" alt="课件第22页 自由能 Gibbs（P、T 不变，没有非体积功）：实际上，系统在恒温恒压条件下，恒压热 Qp=ΔH，根据热力学第二定律 δQp/T 变换此式得 d(H−TS) 小于等于 0，即 dG 小于等于 0（等式代表可逆，大于号代表不可逆）">
+<figcaption><span class="sno">22</span><span class="stitle">自由能 Gibbs（P、T 不变，没有非体积功）：实际上，系统在恒温恒压条件下，恒压热 Qp=ΔH，根据热力学第二定律 δQp/T 变换此式得 d(H−TS) 小于等于 0，即 dG 小于等于 0（等式代表可逆，大于号代表不可逆）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>亥姆霍兹与吉布斯自由能</h2>
+        <div class="sec-meta"><span class="time">录音：00:53-01:17</span><span class="chip">课件 16-22</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>环境熵变：利用热力学第二定律的熵判据，即孤立系统的熵增原理，可以判断过程的可逆与不可逆——将所研究的系统和环境加起来，作为新的「孤立系统」，其熵变就等于原「系统」和原「环境」的熵变总和。判断过程的可能性，不但要计算系统熵变，还要计算环境熵变；系统和环境同是「新孤立系统」的组成部分，计算熵变的原则是一致的，二者都要从熵的定义式出发，而系统和环境的热量改变量代数和为零。</p><p>为了判断这个过程能不能自发进行，我们人为地造成一个新的物理系统：计算出来系统的熵变，也计算出来环境的熵变，新的物理系统的熵必然是增加的——我人为地构成了个孤立系统，这是必然的，我指的是正向过程。比如教室里某个同学起床晚了、买了个羊肉馅儿的包子特别膻，坐在后排吃一会儿你都会闻到膻味儿——气体自发扩散。这个气体是我们研究的对象，它的正向过程是自发扩散，我可以肯定，这个气体的熵加上环境的熵一定是在增加，否则呢？扩散不出来。</p><p>系统和环境的热此消彼长：我给环境放热，环境得到 1；我从环境吸热，环境里失去这个热量。它们的变化代数和为零——这是没有谈判空间的，谁要是不同意、又能论证的话，我告诉你，你研究生没毕业你就会拿到诺贝尔奖，你会超越所有历史上的科学家，包括牛顿、爱因斯坦，成为引领世界的第一号人物，因为你直接打破了热力学第一定律。</p><p>回归分析：从最开始研究儿童的身高来的。人们发现父亲高母亲高、孩子他就高；那照这样下去，姚明的孩子他姚明都过 2 米了，他孩子还不能长到 2.5 米、他孙子不能长到 3 米。大量研究之后发现孩子的身高居然是一个平均数差不多——回归到平均值，有的父母个子没那么高、孩子长得也倍儿高，就这个意思。</p><p>假定研究的系统可任意设定，如矿物、气体或膻味山羊肉包的气体。在温度 T 和体积不变的情况下，假定系统内部及与环境间的过程均为可逆。在等容过程中，系统与环境的热量改变量代数和为 0；环境的熵用热温比计算——因环境热量改变量是系统热量改变量的负值，且环境温度与系统温度相等，故将环境的熵变转化为系统的熵变。</p><p>新物理系统的熵变等于系统熵变加环境熵变。应用热力学第一定律：等容过程中功为 0，内能改变量等于热量改变量。我们将新物理系统的熵变全用系统的熵、内能、温度等参数代替；系统的熵、内能、温度均为状态函数，其组合仍是状态函数——定义亥姆霍兹自由能 A=U−TS，从而将物理系统的熵增原理等价转化为亥姆霍兹自由能降低原理。</p><p>在 T、V 不变时，只要熵变扩散，气体的亥姆霍兹自由能必不停降低。这是基于系统和环境过程均可逆的假定、应用熵增原理及热温比推导得出的。直接引用热力学第一定律：在 V 不变的情况下，这个矿物的内能的改变量就等于它的热量改变量，因为它不做功；直接引用热力学第二定律 S 大于等于 Q/T，而 Q 是等容热、也就是内能的微小改变，对这个式子做恒等变换，得到这样一个式子。</p><p>我定义亥姆霍兹自由能就是内能减去温度乘以熵。所以这个矿物进行了任意的等温等容过程，正向进行的时候必须要求它的亥姆霍兹自由能要降低。它是不是一直降低呢？也不是，降到它不能再降为止。亥姆霍兹自由能在 T、V 固定的情况下，在地质上应用得很少，只有极少数的文献来运用这个自由能。</p><p>于是人们又找 P 不变的情况，这种特殊情况下的吉布斯自由能。我们还是从熵增原理的角度来构建：在 P、T 不变的情况下，系统和环境的温度相等、系统和环境的热代数和为 0，这个热加下标 p 指的是等压情况下的热。</p><p>我们知道环境的热从这儿看就是系统热的负值，而系统的等压热就是焓的改变量，因此环境的熵在可逆的情况下就是热温比——环境的热是系统焓变的负值，环境温度即系统温度。孤立系统熵变等于系统与环境熵变之和，必然增加；正向进行时，该式可等价转化——定义吉布斯自由能 G=H−TS，这将熵增原理转化为吉布斯自由能降低判据。</p><p>等温等压下，过程正向进行则吉布斯自由能降低。实际上，系统在恒温恒压条件下，恒压热 Qp=ΔH，根据热力学第二定律得 dS 大于等于 δQp/T，变换此式得 d(H−TS) 小于等于 0，即 dG 小于等于 0（等式代表可逆，大于号代表不可逆）。</p><p>推导亥姆霍兹与吉布斯自由能时用了特定前提，但二者均为状态函数，适用范围可扩展：等温等容过程可用亥姆霍兹自由能降低判断，等温等压过程用吉布斯自由能判断。区分一下：恒温恒压指整个过程中温度、压力都不变；等温等压是两个端点——开始和终了时温度压力一样即可，中间过程可以变化。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>判断过程的可能性，不但要计算系统熵变，还要计算环境熵变。系统和环境同是“新孤立系统”的组成部分。</p><p>我人为地构成了个孤立系统，对吧？这是必然的。这个气体的熵加上环境的熵，一定是在增加。否则呢？扩散不出来。</p><p>谁要是不同意、又能论证的话，你研究生没毕业你就会拿到诺贝尔奖。你直接打破了热力学第一定律。</p><p>定义亥姆霍兹自由能就是内能减去温度乘以熵。这个矿物进行了任意的等温等容过程，正向进行的时候，必须要求它的亥姆霍兹自由能要降低。</p><p>定义吉布斯自由能为焓减温度乘熵。这将熵增原理转化为吉布斯自由能降低判据。</p><p>恒温恒压指整个过程中温度压力都不变。等温等压是两个端点，开始和终了时温度压力一样即可，中间过程可以变化。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s6">
+  <div class="slides"><figure class="slide" id="slide-23">
+<img src="slides/slide_23.png" alt="课件第23页 Gibbs–Helmholtz 方程与化学反应的 Gibbs 自由能：设任一系统末态、始态的 Gibbs 自由能分别为 G2、G1，根据定义式 G=H−TS，得该系统等温状态下的 Gibbs 自由能变化 ΔG=G2−G1=(H2−TS2)−(H1−TS1)=(H2−H1)−T(S2−S1)=ΔH−T·ΔS——Gibbs–Helmholtz 方程 ΔG=ΔH−T·ΔS">
+<figcaption><span class="sno">23</span><span class="stitle">Gibbs–Helmholtz 方程与化学反应的 Gibbs 自由能：设任一系统末态、始态的 Gibbs 自由能分别为 G2、G1，根据定义式 G=H−TS，得该系统等温状态下的 Gibbs 自由能变化 ΔG=G2−G1=(H2−TS2)−(H1−TS1)=(H2−H1)−T(S2−S1)=ΔH−T·ΔS——Gibbs–Helmholtz 方程 ΔG=ΔH−T·ΔS</span></figcaption>
+</figure>
+<figure class="slide" id="slide-24">
+<img src="slides/slide_24.png" alt="课件第24页 P、T 变化时的 Gibbs 自由能改变量：G=H−TS、H=U+PV，故 G=U+PV−TS；dG=dU+PdV+VdP−TdS−SdT；代入热力学第一定律 dU=đQ−PdV 与可逆过程的熵 đQ=TdS，得 dU=TdS−PdV（热力学基本方程），于是 dG=VdP−SdT，ΔG=ΔVdP−ΔSdT">
+<figcaption><span class="sno">24</span><span class="stitle">P、T 变化时的 Gibbs 自由能改变量：G=H−TS、H=U+PV，故 G=U+PV−TS；dG=dU+PdV+VdP−TdS−SdT；代入热力学第一定律 dU=đQ−PdV 与可逆过程的熵 đQ=TdS，得 dU=TdS−PdV（热力学基本方程），于是 dG=VdP−SdT，ΔG=ΔVdP−ΔSdT</span></figcaption>
+</figure>
+<figure class="slide" id="slide-25">
+<img src="slides/slide_25.png" alt="课件第25页 自由能，Gibbs 不守恒！">
+<figcaption><span class="sno">25</span><span class="stitle">自由能，Gibbs 不守恒！</span></figcaption>
+</figure>
+<figure class="slide" id="slide-26">
+<img src="slides/slide_26.png" alt="课件第26页 热力学几个基本关系式">
+<figcaption><span class="sno">26</span><span class="stitle">热力学几个基本关系式</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>吉布斯亥姆霍兹方程与思考题</h2>
+        <div class="sec-meta"><span class="time">录音：01:17-01:25</span><span class="chip">课件 23-26</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>针对任意认知过程，用山南后包子的气味扩散来说，扩散结束后吉布斯自由能改变量是终了减起始状态自由能。根据定义 G=H−TS，经恒等变换得到吉布斯亥姆霍兹方程 ΔG=ΔH−T·ΔS。不需要死记硬背这个名字，能推出来就行。</p><p>我们推出亥姆霍兹自由能和吉布斯自由能，分别适用于等温等容和等温等压过程。只要知道热力学第一和第二定律，在对应情况下推导热量来源很容易。这门课没几个必须记住的，但四大定律必须牢固记忆。还要记住：亥姆霍兹自由能适用等温等容，吉布斯自由能适用等温等压。有没有「王龙夫自由能」？留给大家去发明，人为复杂其实很简单。</p><p>下一步推导 P、T 变化时吉布斯自由能的变化：结合吉布斯自由能定义式 G=H−TS 和焓的定义式 H=U+PV，微分得到 dG=dU+PdV+VdP−TdS−SdT；代入热力学第一定律 dU=đQ−PdV 与可逆过程的熵 đQ=TdS，得到热力学基本方程 dU=TdS−PdV，于是 dG=VdP−SdT。</p><p>最后两个式子没有本质差别：我可以把倒数第二个式子看成一个纯矿物，它的自由能随着温度、压力变化的情况；我可以把最后一个式子看成一个化学反应，它的自由能随着温度和压力而变化的情况——或者也可以认为这两个式子没有差别，都可以。</p><p>有的学者写文章非常规范，老用单位；有的学者不讲究，把单位给扔掉，都可以——所以这就是为什么大家讨厌热力学。首先，所有的热力学教科书都有这样或者那样的错误；第二，大家对符号使用不统一；第三，单位不统一，这个单位不统一能把人耗死；第四，有人加单位、还有人不加。它本来很简单的一门课，绕到最后，我不跟你玩了行吧？我不学了。</p><p>思考题（每一届学生我都留这个题）：北方的同学，尤其是河北的，肯定吃过炒饼。我去租个柜台卖炒饼，今天中午想卖出去 150 份、结果只卖出了 100 份，还剩 50 份——降价卖，晚上接着卖；晚上我计划卖出去 80 份，剩了 50 份、再做 50 份共 100 份，真卖不出去 80、还剩 20，第二天接着卖。</p><p>一般炒饼温度大概有 80 摄氏度，明天中午我把炒饼加热卖给你，炒饼的熵增加了没？注意，这个问题没有一个唯一的答案，是个开放问题，你们讨论。大家要习惯于开放问题，尤其是经过中小学培养后我们习惯于只有一个答案，但在研究生学习和科研中一定要善于跳出框框，不要局限于一个答案。</p><p>很多同学不习惯于没有教科书，其实我觉得真没有教科书——教科书一编出来它就是落后过时的，然后一届又一届的同学学一学、考个高分就完了，所以我倒希望没有教科书的状态。因为我们这门课特殊，自始至终都在计算，所以也没有给大家布置什么阅读材料。</p><p>逻辑训练的例子：因为我做变质岩研究，你在野外看到绿片岩和麻粒岩待在一块儿，你会有什么本能的想法？绿片岩变质程度很低、吸的热很少，麻粒岩吸的热很多，他俩待在一块儿，你想想会是啥现象？就像你在街上看见李嘉诚和一个乞丐坐在一块儿吃饭，什么样的社会才会有这种事情？战乱、极为异常的情况下才会有这种现象。所以逻辑训练过程非常重要。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>根据定义G等于H减TS，经恒等变换得到吉布斯亥姆霍兹方程，德尔塔G等于德尔塔H减去T德尔塔S。</p><p>这门课没几个必须记住的，但四大定律必须牢固记忆。还要记住：亥姆霍兹自由能适用等温等容，吉布斯自由能适用等温等压。</p><p>有没有“王龙夫自由能”？留给大家去发明。人为复杂其实很简单。</p><p>思考题：炒饼一般温度大概有80摄氏度，明天中午我把炒饼加热卖给你，炒饼的熵增加了没？没有一个唯一的答案，是个开放问题。</p><p>绿片岩变质程度很低、吸的热很少，麻粒岩吸的热很多，他俩待在一块儿，就像你在街上看见李嘉诚和一个乞丐坐在一块儿吃饭。战乱、极为异常的情况下才会有这种现象。所以逻辑训练过程非常重要。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-s7">
+  <div class="slides"><figure class="slide" id="slide-27">
+<img src="slides/slide_27.png" alt="课件第27页 Claperon 方程：若 α、β 分别表示纯物质的两种不同的相（气、液、固、同质多相晶型），在某 P-T 条件下相达到平衡时，其 α 相、β 相的 Gibbs 自由能必然相等，即相变反应的 Gibbs 自由能 ΔP,TG=0；若 P、T 有微小的改变（P 到 P+dP，T 到 T+dT）时依然保持平衡，代入 dΔG=VdP−SdT，得 V(α)dP−S(α)dT=V(β)dP−S(β)dT">
+<figcaption><span class="sno">27</span><span class="stitle">Claperon 方程：若 α、β 分别表示纯物质的两种不同的相（气、液、固、同质多相晶型），在某 P-T 条件下相达到平衡时，其 α 相、β 相的 Gibbs 自由能必然相等，即相变反应的 Gibbs 自由能 ΔP,TG=0；若 P、T 有微小的改变（P 到 P+dP，T 到 T+dT）时依然保持平衡，代入 dΔG=VdP−SdT，得 V(α)dP−S(α)dT=V(β)dP−S(β)dT</span></figcaption>
+</figure>
+<figure class="slide" id="slide-28">
+<img src="slides/slide_28.png" alt="课件第28页 Claperon 方程：dP/dT=(S(α)−S(β))/(V(α)−V(β))=ΔS_m/ΔV_m——方程又称为 Clapeyron–Clausius 方程；它表示纯物质两相平衡时温度、压力之间必须满足上述的函数关系；此方程适用于纯物质的任意两相平衡，例如蒸发、融化、升华、晶型转变等过程，实际上适用于所有的热力学过程">
+<figcaption><span class="sno">28</span><span class="stitle">Claperon 方程：dP/dT=(S(α)−S(β))/(V(α)−V(β))=ΔS_m/ΔV_m——方程又称为 Clapeyron–Clausius 方程；它表示纯物质两相平衡时温度、压力之间必须满足上述的函数关系；此方程适用于纯物质的任意两相平衡，例如蒸发、融化、升华、晶型转变等过程，实际上适用于所有的热力学过程</span></figcaption>
+</figure>
+<figure class="slide" id="slide-29">
+<img src="slides/slide_29.png" alt="课件第29页 石英相变 Claperon 方程计算：ΔG=0=ΔH−TΔS，ΔS=ΔH/T；dP/dT=ΔS_m/ΔV_m=ΔH_m/(TΔV_m)；α-石英、β-石英在（1 bar / 846 K）时发生平衡相转变，这时 ΔVm=0.2 cm3/mol=0.02 J/bar、ΔHm=627.6 J/mol；假设在一定的 P-T 范围内该反应的 ΔS、ΔV 不发生改变，由 Clapeyron 方程得到 dP/dT=37.1 bar/K，在温度由 846K 到 T、压力由 1bar 到 P 积分此式，得到 α-石英到 β-石英平衡相转变方程为 P=37.1(T−846)">
+<figcaption><span class="sno">29</span><span class="stitle">石英相变 Claperon 方程计算：ΔG=0=ΔH−TΔS，ΔS=ΔH/T；dP/dT=ΔS_m/ΔV_m=ΔH_m/(TΔV_m)；α-石英、β-石英在（1 bar / 846 K）时发生平衡相转变，这时 ΔVm=0.2 cm3/mol=0.02 J/bar、ΔHm=627.6 J/mol；假设在一定的 P-T 范围内该反应的 ΔS、ΔV 不发生改变，由 Clapeyron 方程得到 dP/dT=37.1 bar/K，在温度由 846K 到 T、压力由 1bar 到 P 积分此式，得到 α-石英到 β-石英平衡相转变方程为 P=37.1(T−846)</span></figcaption>
+</figure>
+<figure class="slide" id="slide-30">
+<img src="slides/slide_30.png" alt="课件第30页 含流体、不含流体系统的 Claperon 方程：纯固相系统，近似直线；含流体相系统，曲线">
+<figcaption><span class="sno">30</span><span class="stitle">含流体、不含流体系统的 Claperon 方程：纯固相系统，近似直线；含流体相系统，曲线</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div class="sec-tt">
+        <h2>克拉伯龙方程与结课</h2>
+        <div class="sec-meta"><span class="time">录音：01:25-01:38</span><span class="chip">课件 27-30</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>最后讲克拉伯龙方程。有些大学开地质热力学，终点就是该方程，课也就讲完了——但这只是我们的开头，我无法容忍这种浅尝辄止。</p><p>推导：若 α、β 分别表示纯物质的两种不同的相（气、液、固、同质多相晶型），在某 P-T 条件下相达到平衡时，其 α 相、β 相的吉布斯自由能必然相等，即相变反应的吉布斯自由能 ΔP,TG=0，两相 α(P,T)=β(P,T) 的平衡表达为 ΔGm(α,P,T)=ΔGm(β,P,T)。若 P、T 有微小的改变时依然保持平衡，代入 dΔG=VdP−SdT，得 V(α)dP−S(α)dT=V(β)dP−S(β)dT。</p><p>于是得到克拉伯龙方程（又称 Clapeyron–Clausius 方程）：dP/dT=(S(α)−S(β))/(V(α)−V(β))=ΔS_m/ΔV_m。它表示纯物质两相平衡时温度、压力之间必须满足的函数关系，适用于纯物质的任意两相平衡——蒸发、融化、升华、晶型转变等过程，实际上适用于所有的热力学过程。</p><p>石英相变计算：α-石英、β-石英在 1 bar、846 开尔文时发生平衡相转变，这时 ΔVm=0.2 cm3/mol=0.02 J/bar、ΔHm=627.6 J/mol。假设在一定的 P-T 范围内该反应的 ΔS、ΔV 不发生改变，由克拉伯龙方程得到 dP/dT=37.1 bar/K；在温度由 846K 到 T、压力由 1bar 到 P 积分此式，得到 α-石英到 β-石英平衡相转变方程为 P=37.1(T−846)。</p><p>含流体、不含流体系统的克拉伯龙方程：纯固相系统近似直线，含流体相系统为曲线。</p><p>结尾总结：热力学第二定律带来了对自然界本质的认识，它比第一定律更深刻，归结为一句话——任何自然过程都是不可逆的。我曾画过霍金的假说，时间像竹子，虫子爬行违背了第二定律，既不能提前到未来、也不能回到过去，时间之箭只能向前。中国成语「开弓没有回头箭」无意中描述了热力学第二定律，这是对自然界最本质的解释。</p><p>气体扩散、传热做功都发现熵不守恒，而且会莫名其妙增大——最难把握的参数就是熵。因名字限制常使人想起热容比，但熵是个状态函数，的确有点儿看不见摸不着，我们简单地把它想成混乱程度（无秩序）就好理解。只有在可逆过程的情况下，热温比才等于熵变；非可逆过程熵仍然有改变，但不能用热温比来计算——如果你非要用热温比计算的话，只能算出来它的极小值，它一定比这个数大，但它本身是多大？给不了你确切的数据。</p><p>经典的热力学到这儿为止就这么多。我说这是热力学，我们学的是热力学里边幼儿园小班的内容，但是它的基础知识也就这么多了，就到这儿为止。剩下的从下一章开始我们就进入应用。热力学四大定律没有一个是经历严密数学论证的——不仅我没这个能力，世界上所有的物理学家、化学家都没这个能力，它成为一个论证不了的、不讲理的、强词夺理的理由，逼得不得已的时候你可以用反证法来算。但总而言之，大家都认为它正确，因为到目前为止没有发现任何一种自然现象是热力学解释不了的，它直接指导了人类的化工生产——就像纯数学里边自然数 1 加自然数 1 等于自然数 2 一样，没法论证了。</p><p>好了，咱们课时正式结束了，咱们提问。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>有些大学开地质热力学，终点就是该方程，课也就讲完了。但这只是我们的开头，我无法容忍这种浅尝辄止。</p><p>若阿尔法、贝塔分别表示纯物质的两种不同的相，在某P-T条件下相达到平衡时，其阿尔法相、贝塔相的吉布斯自由能必然相等。</p><p>克拉伯龙方程表示纯物质两相平衡时温度、压力之间必须满足的函数关系。适用于纯物质的任意两相平衡，实际上适用于所有的热力学过程。</p><p>阿尔法石英、贝塔石英在1巴、846开尔文时发生平衡相转变。德尔塔Vm等于0.2立方厘米每摩尔，德尔塔Hm等于627.6焦耳每摩尔。</p><p>热力学第二定律归结为一句话，任何自然过程都是不可逆的。中国成语“开弓没有回头箭”无意中描述了热力学第二定律。</p><p>只有在可逆过程的情况下，热温比才等于熵变。非可逆过程如果你非要用热温比计算的话，只能算出来它的极小值。</p><p>热力学四大定律没有一个是经历严密数学论证的。但大家都认为它正确，因为到目前为止没有发现任何一种自然现象是热力学解释不了的。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>岩石热力学 · 第5课 传热熵增与热量贬值、热力学基本方程与第三定律、过程熵变的计算、亥姆霍兹与吉布斯自由能、克拉伯龙方程 · 左课件右讲述对照页 · 整理稿依据课件自行纠错，原声转写仅供参考</footer>
+
+</body>
+</html>

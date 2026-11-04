@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>矿物物理学 · 第13课 专题：天然气水合物（4.3）——分子模拟在熔流体研究中的应用｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.videos{margin-top:14px;border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.video + .video{border-top:1px solid #e4e9f0;}
+.videos h4{font-size:12.5px;font-weight:700;color:#0a1f38;background:#f2f5f9;padding:8px 12px;border-bottom:1px solid #e4e9f0;}
+.videos video{display:block;width:100%;max-height:460px;background:#0b0f14;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>矿物物理学 · 第13课 专题：天然气水合物（4.3）——分子模拟在熔流体研究中的应用</h1>
+    <div class="sub">第13课 专题：天然气水合物（4.3）——分子模拟在熔流体研究中的应用 ｜ 2026-10-22 ｜ 郭光军（矿物物理学）</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 67 页 · 整理 12 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-what-is-hydrate">01 认识天然气水合物：笼中之火</option>
+<option value="sec-phase-map-distribution">02 相图与分布：水合物在哪里</option>
+<option value="sec-significance">03 用途与意义：能源、输运、灾害与化工</option>
+<option value="sec-formation-hypotheses">04 水合物怎么形成：两个经典假说</option>
+<option value="sec-cage-lifetime">05 笼子能活多久：首篇论文的验证</option>
+<option value="sec-cage-adsorption">06 笼子能吸附甲烷：寿命延长与诱导成笼</option>
+<option value="sec-pmf-why-adsorb">07 为什么能吸附：平均力势能 PMF</option>
+<option value="sec-critical-concentration">08 临界浓度验证与 Science 成核轨迹</option>
+<option value="sec-fsica-cage-identification">09 笼子识别：面饱和笼子分析（FSICA）</option>
+<option value="sec-nve-direct-crystallization">10 从非晶相到直接结晶：NVE 模拟的突破</option>
+<option value="sec-kinetics-roadmap">11 客体动力学与成核路线图</option>
+<option value="sec-summary-homework">12 小结与作业提示</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 矿物物理学-4.3-天然气水合物.pdf 逐页渲染，转写原文见 record_20261022.txt。</div>
+<section class="sec" id="sec-what-is-hydrate">
+  <div class="slides"><figure class="slide" id="slide-01">
+<img src="slides/slide_01.png" alt="课件第1页 矿物物理学课程页：分子模拟在熔流体研究中的应用——天然气水合物（授课人：郭光军）">
+<figcaption><span class="sno">01</span><span class="stitle">矿物物理学课程页：分子模拟在熔流体研究中的应用——天然气水合物（授课人：郭光军）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-02">
+<img src="slides/slide_02.png" alt="课件第2页 天然气水合物：可燃冰、气冰、固体瓦斯、笼形水合物、天然气水合物、甲烷水合物、gas hydrates">
+<figcaption><span class="sno">02</span><span class="stitle">天然气水合物：可燃冰、气冰、固体瓦斯、笼形水合物、天然气水合物、甲烷水合物、gas hydrates</span></figcaption>
+</figure>
+<figure class="slide" id="slide-03">
+<img src="slides/slide_03.png" alt="课件第3页 气体分子充填在水笼子中（包含化合物）——笼中之火，冰火相容；水为主体分子，甲烷为客体分子">
+<figcaption><span class="sno">03</span><span class="stitle">气体分子充填在水笼子中（包含化合物）——笼中之火，冰火相容；水为主体分子，甲烷为客体分子</span></figcaption>
+</figure>
+<figure class="slide" id="slide-04">
+<img src="slides/slide_04.png" alt="课件第4页 一般意义上：可燃冰=甲烷水合物=天然气水合物；细分：天然气水合物与其他气体水合物（H2S、CO2、N2、O2、Cl2、H2、Ne、Xe…）">
+<figcaption><span class="sno">04</span><span class="stitle">一般意义上：可燃冰=甲烷水合物=天然气水合物；细分：天然气水合物与其他气体水合物（H2S、CO2、N2、O2、Cl2、H2、Ne、Xe…）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-05">
+<img src="slides/slide_05.png" alt="课件第5页 天然气水合物的晶体结构：五种笼子（512、51262、51264、435663、51268）配对镶嵌成 sI/sII/sH 三种结构（Sloan, 2003, Nature）">
+<figcaption><span class="sno">05</span><span class="stitle">天然气水合物的晶体结构：五种笼子（512、51262、51264、435663、51268）配对镶嵌成 sI/sII/sH 三种结构（Sloan, 2003, Nature）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-06">
+<img src="slides/slide_06.png" alt="课件第6页 甲烷水合物的组成：2(CH4)·6(CH4)·46H2O，即 8CH4·46H2O，简写 CH4·5.75H2O；sI 单位晶胞边长 12Å=1.2nm">
+<figcaption><span class="sno">06</span><span class="stitle">甲烷水合物的组成：2(CH4)·6(CH4)·46H2O，即 8CH4·46H2O，简写 CH4·5.75H2O；sI 单位晶胞边长 12Å=1.2nm</span></figcaption>
+</figure>
+<figure class="slide" id="slide-07">
+<img src="slides/slide_07.png" alt="课件第7页 甲烷水合物的含气量：1体积水合物在标准状态（0℃、1atm）分解为 0.8 体积水 + 172 体积甲烷气体">
+<figcaption><span class="sno">07</span><span class="stitle">甲烷水合物的含气量：1体积水合物在标准状态（0℃、1atm）分解为 0.8 体积水 + 172 体积甲烷气体</span></figcaption>
+</figure>
+<figure class="slide" id="slide-08">
+<img src="slides/slide_08.png" alt="课件第8页 天然气水合物是非化学计量的：笼子占有率小于1、位置随机；网上资料164体积对应充填率0.953、水合数6.03">
+<figcaption><span class="sno">08</span><span class="stitle">天然气水合物是非化学计量的：笼子占有率小于1、位置随机；网上资料164体积对应充填率0.953、水合数6.03</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>认识天然气水合物：笼中之火</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段</span><span class="chip">课件 1</span><span class="chip">课件 2</span><span class="chip">课件 3</span><span class="chip">课件 4</span><span class="chip">课件 5</span><span class="chip">课件 6</span><span class="chip">课件 7</span><span class="chip">课件 8</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>这节课是分子模拟在熔流体研究中的应用这个专题里的最后一讲，讲天然气水合物。大家可以当作一个报告来听——天然气水合物是我这二十年一直在研究的东西。它有很多名字：可燃冰、气冰、固体瓦斯、笼形水合物、天然气水合物、甲烷水合物，英文叫 gas hydrates。这些东西说的都是同一样东西，看着像冰，但是一点火它就着了——为什么？因为里头有甲烷。</p><p>它的结构就是水分子围成了笼子的形状，这种笼子在空间无限镶嵌，中间封闭着一个甲烷分子——这就是课件上说的“笼中之火、冰火相容”。大家想这个资源，就是想把它挖出来之后水化了，甲烷释放出来，就可以烧火做饭了。大体分类：气体水合物最大分成天然气水合物和其他气体水合物；天然气里经常是甲烷、乙烷、丙烷，再高一点儿的烷烃、硫化氢、二氧化碳——大多是可燃的，所以又叫可燃冰。可燃冰、甲烷水合物、天然气水合物这三个词经常通用，但细分不一样：天然气是自然界存在的混合物。</p><p>结构主要有三类：sI 结构由两个五角十二面体加六个 51262 面体构成；还有 sII 结构和 sH 结构。三种笼子凑在一起，在空间上无限延展。你想，墙外的砖和地上的地砖四四方方很容易延展，但笼子这种形状很难无缝拼接，除非两种或三种笼子搭配——就像 sI 型结构那样。总结起来：有 5 种基本笼子，配对相间形成 3 种结构；小笼子充甲烷、乙烷，大一点儿的充丙烷，再大的笼子充新戊烷、庚烷等。</p><p>组成分子式写全就是 2 个小笼子加 6 个大笼子配 46 个结晶水，若笼内充填甲烷，简写 8CH4·46H2O，再简写为 1 个甲烷配 5.75 个水，这就是 sI 型结构，单位晶胞边长 1.2 纳米。这个晶体结构是我做的——把笼子画成展开图打印在 A4 纸上，剪下来像做手工一样折叠出笼子，两种不同笼子一拼就成了，挺好玩的。</p><p>好处在于里头憋了很多甲烷气体：1 体积天然气水合物化开，变成 1 大气压、0℃ 状态，可以释放 172 体积的甲烷。还有一个特点：标准理想晶体是一个笼子里头充填一个甲烷，但自然界取到的样品不一定都充满，充填率可能 98%、95%、90%——所以它是非化学计量的，5.75 是最理想的，一般可能到 6 左右。这个比例不固定，就是它的重要特点。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>看着就像冰，但是你一点火它就着了。那为啥会着呢？因为里头有甲烷。</p><p>相当于笼中之虎。</p><p>这晶体结构是我做的，把笼子画成展开图打印在A4纸上，剪下后像做手工一样折叠出笼子。</p><p>要充填的少的话，那结晶水的比例就高。所以呢，这个5.75是最小的，最理想的是5.75。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-phase-map-distribution">
+  <div class="slides"><figure class="slide" id="slide-09">
+<img src="slides/slide_09.png" alt="课件第9页 北极、青藏高原——冰的存在条件：水的相图；要在地球上找冰先看相图">
+<figcaption><span class="sno">09</span><span class="stitle">北极、青藏高原——冰的存在条件：水的相图；要在地球上找冰先看相图</span></figcaption>
+</figure>
+<figure class="slide" id="slide-10">
+<img src="slides/slide_10.png" alt="课件第10页 可燃冰的存在条件：甲烷水合物在低温<10℃、高压>7MPa下稳定存在（甲烷+水二元系统相图，Katz et al, 1959）">
+<figcaption><span class="sno">10</span><span class="stitle">可燃冰的存在条件：甲烷水合物在低温<10℃、高压>7MPa下稳定存在（甲烷+水二元系统相图，Katz et al, 1959）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-11">
+<img src="slides/slide_11.png" alt="课件第11页 甲烷+水，可燃冰在自然界的分布：低温+高压——海底沉积物、冻土区">
+<figcaption><span class="sno">11</span><span class="stitle">甲烷+水，可燃冰在自然界的分布：低温+高压——海底沉积物、冻土区</span></figcaption>
+</figure>
+<figure class="slide" id="slide-12">
+<img src="slides/slide_12.png" alt="课件第12页 太阳系也有水合物存在：土卫六（Nature 2001）、土卫二（Science 2006）、冥王星结构（Kamata et al, 2019, NG）">
+<figcaption><span class="sno">12</span><span class="stitle">太阳系也有水合物存在：土卫六（Nature 2001）、土卫二（Science 2006）、冥王星结构（Kamata et al, 2019, NG）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>相图与分布：水合物在哪里</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段</span><span class="chip">课件 9</span><span class="chip">课件 10</span><span class="chip">课件 11</span><span class="chip">课件 12</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>说到这儿你肯定要问：天然气水合物地球上有没有？有。那怎么找呢？看相图。你看这是冰的相图——想象火星人坐着飞船到地球上，他要想找冰，只要知道相图就行：温度低于 0 度、压力在相区里头，就能找到。地球上哪儿凉？南极有、北极有，青藏高原海拔高也冷。那水合物也一样，要知道地球上有没有，就查水合物的相图。</p><p>这个水合物的相图，横轴是温度，纵轴是压力，压力按水深标定。甲烷水合物能稳定存在的就是黄色区域——注意它存在的温度比冰高，十多度的时候都能存在：水深 1400 多米的地方，压力够大，甲烷水合物就能存在。温度低于 273K 时甲烷水合物还可以与冰混合存在。水深 1000 多米压力就达几十个兆帕，海底正好符合——海水密度大，海底温度只有 4 度，水深可达 6 千米；冻土地带土层厚几百米、压力也够。所以地球上的大陆边缘海底和永久冻土带都有分布，西伯利亚、阿拉斯加，中国也有。</p><p>自然界的水合物存在于海底沉积物中，伴有嗜甲烷菌。海底沉积物掰开能看到白色如冰的可燃冰；冻土样品放进水里会嘶嘶冒气，释放甲烷。形成条件很简单：低温、高压、有水、有甲烷等气体——具备这些条件的地方就能找到。这样的条件地球上能找到，宇宙中更多：目前知道土卫六、土卫二上面都有水合物；最近推测冥王星结构，其底下有液态水海洋，上头覆盖了几十公里厚的水合物层，冥王星里头也有。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>你就想象火星人坐着飞船到地球上，他要想找冰的话，他去哪儿找？他只要知道相图就知道。</p><p>具备这些条件的地方，就能找到天然气水合物。这样的条件地球上都能找到，宇宙中符合的地方更多。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-significance">
+  <div class="slides"><figure class="slide" id="slide-13">
+<img src="slides/slide_13.png" alt="课件第13页 天然气水合物的用途及意义（1-潜在能源）：水合物中有机碳含量是石油煤炭等化石燃料有机碳总和的两倍">
+<figcaption><span class="sno">13</span><span class="stitle">天然气水合物的用途及意义（1-潜在能源）：水合物中有机碳含量是石油煤炭等化石燃料有机碳总和的两倍</span></figcaption>
+</figure>
+<figure class="slide" id="slide-14">
+<img src="slides/slide_14.png" alt="课件第14页 中国天然气水合物分布：2007年南海神狐海域钻获样品；2008年青藏高原祁连山冻土区钻获样品（据国土部2016）">
+<figcaption><span class="sno">14</span><span class="stitle">中国天然气水合物分布：2007年南海神狐海域钻获样品；2008年青藏高原祁连山冻土区钻获样品（据国土部2016）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-15">
+<img src="slides/slide_15.png" alt="课件第15页 2-油气安全输运：1934年美国人Hammerschmidt研究输气管道冰点以上堵塞现象，发现是水合物，成为现代气体水合物研究开端">
+<figcaption><span class="sno">15</span><span class="stitle">2-油气安全输运：1934年美国人Hammerschmidt研究输气管道冰点以上堵塞现象，发现是水合物，成为现代气体水合物研究开端</span></figcaption>
+</figure>
+<figure class="slide" id="slide-16">
+<img src="slides/slide_16.png" alt="课件第16页 3-环境、灾害：甲烷温室效应是CO2的20多倍，地质历史多次水合物释放甲烷致全球变暖（瓦斯枪理论）">
+<figcaption><span class="sno">16</span><span class="stitle">3-环境、灾害：甲烷温室效应是CO2的20多倍，地质历史多次水合物释放甲烷致全球变暖（瓦斯枪理论）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-17">
+<img src="slides/slide_17.png" alt="课件第17页 4-化工技术：用天然气水合物储运天然气大幅降低成本；水合物排盐效应海水淡化；气体分离；储氢材料">
+<figcaption><span class="sno">17</span><span class="stitle">4-化工技术：用天然气水合物储运天然气大幅降低成本；水合物排盐效应海水淡化；气体分离；储氢材料</span></figcaption>
+</figure>
+<figure class="slide" id="slide-18">
+<img src="slides/slide_18.png" alt="课件第18页 社会一旦有技术上的需要，就会比十所大学更能把科学推向前进（恩格斯）；2017年可燃冰被国务院批准为第173个新矿种；2020年位列国际地学前沿Top3">
+<figcaption><span class="sno">18</span><span class="stitle">社会一旦有技术上的需要，就会比十所大学更能把科学推向前进（恩格斯）；2017年可燃冰被国务院批准为第173个新矿种；2020年位列国际地学前沿Top3</span></figcaption>
+</figure>
+<figure class="slide" id="slide-19">
+<img src="slides/slide_19.png" alt="课件第19页 中国可燃冰试采：2017年南海神狐第一次试采成功（探索性试采）；2020年第二次试采成功（试验性试采），每天产气2.87万方持续30天——历史性突破">
+<figcaption><span class="sno">19</span><span class="stitle">中国可燃冰试采：2017年南海神狐第一次试采成功（探索性试采）；2020年第二次试采成功（试验性试采），每天产气2.87万方持续30天——历史性突破</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>用途与意义：能源、输运、灾害与化工</h2>
+        <div class="sec-meta"><span class="time">录音：第 3 段</span><span class="chip">课件 13</span><span class="chip">课件 14</span><span class="chip">课件 15</span><span class="chip">课件 16</span><span class="chip">课件 17</span><span class="chip">课件 18</span><span class="chip">课件 19</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>水合物的意义不小。第一个意义，它是潜在能源：水合物中有机碳含量达到 10 的 15 次方克，是石油、煤炭等化石燃料有机碳总和的两倍——化石燃料加一起才 5000，它能到 1 万，是一种很有希望的资源，等待后续开发。中国的水合物分布主要在南海北部神狐地区、琼东南、台西南，陆域有祁连山、羌塘、漠河盆地。神狐取的样品肉眼看不见，但能看见星星点点的白点儿——那小白点儿就是水合物；有的产状是裂隙状，有的是浸染状。把这一块东西往水里一扔就一直在冒气——为什么？你拿上来了压力降低、温度升高，它不在水合相区了，就分解把气跑出来了。</p><p>第二个意义，它是油气安全输运的重要对象。水合物形成的时候会把输油输气管道堵住——输气管道里很难避免有一点水分，天然气加上水汽，经过温度低的地方就有条件形成水合物，跟水垢一样，今天生成一点儿明天生成一点儿，时间长了全堵死。最开始意识到这个事是 1934 年，一个美国人叫 Hammerschmidt：那条输气管道经过的区域没有低于零度的，他们不相信会结冰，但管道还是堵了，最后研究才发现是水合物——水合物可以在 0 度以上存在，只要压力够大。从那时起人们才知道水合物还有危害，这标志着现代气体水合物研究的开端。其实实验室 19 世纪就知道这东西，但只当它是合成物；1934 年发现它堵管道才开始重视，20 世纪 60 年代在海底和冻土带找到样本，证实自然界广泛存在。</p><p>第三个意义在环境和地质灾害方面。地质历史时期海平面波动导致压力变小，水合物不稳定分解、释放甲烷——甲烷温室效应是二氧化碳的 20 多倍，大量释放导致全球变暖，历史上至少三次由水合物分解造成全球变暖，这叫“瓦斯枪理论”。水合物分解还会引发海底滑坡——水合物形成时像冰一样封紧沉积物，一旦分解失稳，海底滑坡规模比陆地上厉害得多，滑坡一路上井架、光缆全被一锅端；水合物分解冒出的气泡还会造成局部海域密度降低，船到那儿会栽下去；甲烷上升到空气层形成低氧区域，飞机飞过去可能熄火。当然这些有些是推测。</p><p>再有就是化工技术。水合物可以储存 100 多体积的气体：大家运输天然气除了管道，海洋上运的是 LNG 液化天然气，要造压力很大的罐子、降温度；用水合物运输温度和压力都比较温和，因为靠水笼子把甲烷封住。除了甲烷，二氧化碳也可以形成水合物来运输二氧化碳，别的气体形成水合物就运输别的气体；还可以做储氢材料、海水淡化——海水淡化的道理很简单，水合物形成时是排盐的，形成之后把水合物捞出来一化，出来的水都是淡水。正因为它在能源、化工、环境灾害等领域有广泛用途，对人类生存意义重大，国际竞争异常激烈。2017 年底可燃冰被国务院批准为第 173 个新矿种（第 172 个是页岩气）；2020 年可燃冰的勘探开采位列国际地球科学研究前沿 Top3。中国煤多、气少油少，可燃冰能量跟油气比各占三成左右，开发它迫在眉睫。2017 年中国在南海神狐第一次试采成功，2020 年第二次试采每天产气 2.87 万方、持续 30 天——但这也仅仅是试采，目前全球还没有成熟的可燃冰开采技术，也没有成功先例；2017 年试采成功是历史性突破和标志性成就。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>它形成的时候呢，就把那个输油管道或那个输气管道就堵住了。</p><p>1934年发现它堵塞了管道，这才开始重视。</p><p>甲烷温室效应是二氧化碳的20多倍，大量释放会导致全球变暖。历史上至少有三次由水合物分解造成全球气温变暖。</p><p>社会上一旦有技术上的需要。那这种需要就会比10所大学更能把科学推向前进。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-formation-hypotheses">
+  <div class="slides"><figure class="slide" id="slide-20">
+<img src="slides/slide_20.png" alt="课件第20页 天然气水合物怎样形成：CH4(气)+H2O(液)→加压降温→甲烷水合物(固)；M:W=1:1000→172:1000；迷人之处（溶解度陡增、无化学键、sII→sI转变、非化学计量、记忆效应）；困难之处（成核尺度）">
+<figcaption><span class="sno">20</span><span class="stitle">天然气水合物怎样形成：CH4(气)+H2O(液)→加压降温→甲烷水合物(固)；M:W=1:1000→172:1000；迷人之处（溶解度陡增、无化学键、sII→sI转变、非化学计量、记忆效应）；困难之处（成核尺度）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-21">
+<img src="slides/slide_21.png" alt="课件第21页 笼子结合假说（Labile cluster hypothesis）：水分子围绕气体分子形成笼形水簇，通过共享面结合聚集，直至产生临界晶核（Sloan et al., 1991）">
+<figcaption><span class="sno">21</span><span class="stitle">笼子结合假说（Labile cluster hypothesis）：水分子围绕气体分子形成笼形水簇，通过共享面结合聚集，直至产生临界晶核（Sloan et al., 1991）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-22">
+<img src="slides/slide_22.png" alt="课件第22页 局部结构假说（Local structuring hypothesis）：气体分子因系统热波动发生局部有序排列，引起周围水分子调整定向，逐渐形成笼子集合体（Radhakrishnan and Trout, 2002）">
+<figcaption><span class="sno">22</span><span class="stitle">局部结构假说（Local structuring hypothesis）：气体分子因系统热波动发生局部有序排列，引起周围水分子调整定向，逐渐形成笼子集合体（Radhakrishnan and Trout, 2002）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>水合物怎么形成：两个经典假说</h2>
+        <div class="sec-meta"><span class="time">录音：第 4 段</span><span class="chip">课件 20</span><span class="chip">课件 21</span><span class="chip">课件 22</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>水合物怎么形成？甲烷气体加液态水，加压降温，变成像冰一样的固体。甲烷在水中的溶解度很小——沼气生成时气体从水里冒出，比例约千分之一；但在水合物里比例达到 172 比 1000，增加了 100 多倍。形成过程中没有化学键的断裂或合成，只是结构发生变化，而且是高度非化学计量的。它还有个很有意思的效应叫记忆效应：你在实验室里把甲烷和水放进体系，降压降温都到位了，该形成水合物了吧？它就在那儿等着，等几个小时甚至一天还是那样；忽然间一下就形成水合物了。为啥？因为没形成之前有一段很长的诱导期，水和甲烷处于亚稳态——它该变成水合物却迟迟不变，因为没有成核、没有晶核。但你要是把这个体系形成水合物之后再化掉，第二次做实验几分钟就形成了——就好像它记住了原来发生过什么事。这就是记忆效应，很促使大家思考。</p><p>1991 年，斯隆（Sloan）——水合物研究的鼻祖，写了《天然气笼形水合物》这本书，做水合物的人必读的专著。他提出了笼子集合假说：水里最开始是这样，加入甲烷之后可能形成这种笼子；笼子拼接在一起形成一大坨，等超过晶核的临界半径就开始生长。结果过了 10 年，麻省理工学院一个团队说不对，提出了局部结构假说：气体分子因系统热波动发生局部有序排列，排列好了之后水分子就围绕着甲烷分子调整自己的定向，逐渐把水笼结构调整出来，实现聚结。他们认为是局部结构加速。</p><p>理论的发展，前身都是假说：假说只要有道理就提出来，供后人验证；证明了，慢慢就变成理论；证明不了就证否它。我当时看完这些东西就想，干脆去验证验证这个笼子结合假说对不对。我当时的想法是：这个笼子在水里面能不能待得住？能待得住才有希望——甲烷进去之后形成一个水笼子在那儿待着，待都待不住，这假说就不成立了。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>它为啥没有？因为它没有成核。没有晶核，它就在那儿放着。</p><p>第二次做这个实验才几分钟就形成了。这就好像它记住了原来发生了什么事儿。</p><p>假说嘛，就是你只要有道理你就说出来，说出来之后供后人验证这个假说。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-cage-lifetime">
+  <div class="slides"><figure class="slide" id="slide-23">
+<img src="slides/slide_23.png" alt="课件第23页 笼子能够生存多久？——把笼子放入水中，观察它何时破裂">
+<figcaption><span class="sno">23</span><span class="stitle">笼子能够生存多久？——把笼子放入水中，观察它何时破裂</span></figcaption>
+</figure>
+<figure class="slide" id="slide-24">
+<img src="slides/slide_24.png" alt="课件第24页 用Lindemann参数测量笼子寿命：δ=0.07定义破裂；研究发现温度低则寿命长、充填甲烷的比空笼子寿命长、笼子形状不影响寿命（Guo et al., 2004, JCP）">
+<figcaption><span class="sno">24</span><span class="stitle">用Lindemann参数测量笼子寿命：δ=0.07定义破裂；研究发现温度低则寿命长、充填甲烷的比空笼子寿命长、笼子形状不影响寿命（Guo et al., 2004, JCP）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-25">
+<img src="slides/slide_25.png" alt="课件第25页 笼子的氢键拓扑结构对寿命无影响：ST2五点水模型制备不同氢键拓扑的D笼子与T笼子（2个反式强氢键 vs 3个顺式弱氢键）">
+<figcaption><span class="sno">25</span><span class="stitle">笼子的氢键拓扑结构对寿命无影响：ST2五点水模型制备不同氢键拓扑的D笼子与T笼子（2个反式强氢键 vs 3个顺式弱氢键）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-26">
+<img src="slides/slide_26.png" alt="课件第26页 笼子的寿命分布：统计1200个寿命数据，服从对数正态分布；长寿命笼子确实有机会出现（Guo et al., 2005, CPL）">
+<figcaption><span class="sno">26</span><span class="stitle">笼子的寿命分布：统计1200个寿命数据，服从对数正态分布；长寿命笼子确实有机会出现（Guo et al., 2005, CPL）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>笼子能活多久：首篇论文的验证</h2>
+        <div class="sec-meta"><span class="time">录音：第 5 段</span><span class="chip">课件 23</span><span class="chip">课件 24</span><span class="chip">课件 25</span><span class="chip">课件 26</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>我接手水合物研究后，先做的是：用水分子拼成五角十二面体笼子，在水中挖去一个圆球区域、移除水分子，把笼子移植到水分子体系里；放入客体分子后观察笼子是否待得住、何时破裂，记录它的寿命。用什么测寿命？Lindemann 参数——取笼子 20 个顶点水分子的质心或氧原子坐标，计算均方位移的起伏，δ 随时间逐渐升高，定义 δ=0.07 时为破裂。破裂时 δ 约 0.17，也可以同时用非球面性或氢键比观测，都有突变。</p><p>结果发表在我关于水合物的首篇论文上（J. Chem. Phys., 2004）：温度低则笼子寿命长，充填甲烷的笼子比空笼子寿命长，笼子的形状不影响寿命。后来我意识到，笼子形成后氢键是有方向的——两个水分子形成氢键，有时是反式强氢键，有时是顺式弱氢键，相当于氢键排布的旋转转角不同。为了模拟这个，我选了 SPC/E 五点水模型，设计了 6 种笼子，外观相似但内部氢键方向不同：有的强氢键数是 0，有的达到 21 个。造了 3 个 D 笼子和 3 个 T 笼子，强氢键越多应该越稳定——结果一做，寿命全都一样，直方图都差不多。有点失望，但也算一个结论：氢键平面拓扑对笼子寿命没有影响。</p><p>编辑更希望看到有影响的结果，没影响人家会质疑研究的必要性。我想了个办法：把每一头做的 200 次测量加起来统计平均，一共 1200 个寿命数据——统计出来曲线挺好看。这个分布不是对称的正态分布：先用威布尔分布去试，蓝色线描述得不好；然后用对数正态分布拟合，效果很好。所以我发现笼子寿命服从对数正态分布，这就是这份工作的发现。它的意义在于：尽管长寿命这边发生概率小，但长寿命的笼子确实有机会存在。一开始想验证笼子能不能在水里待住——现在告诉你，能，但是概率不大：大多数笼子仅坚持 20 皮秒就散掉，但确实有一些笼子在水里坚持了 120 皮秒。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>定义了δ=0.07时为破裂。因笼子在水中扭动松散、形状歪曲直至破裂。</p><p>结果一做，寿命都一样。看不出差别来，直方图都长得差不多。</p><p>有时候想要一个东西没要着，却得到了另一个，这也很好。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-cage-adsorption">
+  <div class="slides"><figure class="slide" id="slide-27">
+<img src="slides/slide_27.png" alt="课件第27页 观测笼子-甲烷之间的距离，发现水笼子能够吸附溶解甲烷：绿线靠近但没吸附、蓝线吸附又解吸、红线成功吸附——400个实验仅7条红线">
+<figcaption><span class="sno">27</span><span class="stitle">观测笼子-甲烷之间的距离，发现水笼子能够吸附溶解甲烷：绿线靠近但没吸附、蓝线吸附又解吸、红线成功吸附——400个实验仅7条红线</span></figcaption>
+</figure>
+<figure class="slide" id="slide-28">
+<img src="slides/slide_28.png" alt="课件第28页 吸附甲烷能够延长笼子寿命：统计1400个寿命数据，吸附6个甲烷的笼子寿命从8ps增长到300ps（指数拟合 R²=0.9967）">
+<figcaption><span class="sno">28</span><span class="stitle">吸附甲烷能够延长笼子寿命：统计1400个寿命数据，吸附6个甲烷的笼子寿命从8ps增长到300ps（指数拟合 R²=0.9967）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-29">
+<img src="slides/slide_29.png" alt="课件第29页 吸附甲烷诱导相邻水分子形成新笼子（Guo et al., 2007, JPCC）">
+<figcaption><span class="sno">29</span><span class="stitle">吸附甲烷诱导相邻水分子形成新笼子（Guo et al., 2007, JPCC）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>笼子能吸附甲烷：寿命延长与诱导成笼</h2>
+        <div class="sec-meta"><span class="time">录音：第 6 段</span><span class="chip">课件 27</span><span class="chip">课件 28</span><span class="chip">课件 29</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>接着我设计实验，把笼子放入水中，在相距 1.8 纳米远处放置甲烷，确保它看不见笼子——我想验证笼子与游荡的甲烷会发生什么。让甲烷在水中游动、笼子静止，共做 450 次实验。分子模拟里做重复实验很简单，只需改变随机数种子：撒入 400 个不同种子，种子相同轨迹相同，不同则轨迹完全不同。结果显示：多数是绿线——甲烷靠近后又远离，无关联；部分蓝线——甲烷贴近笼子震动许久后跑掉，这是吸附后解吸；400 个实验中观察到 7 次红线——甲烷游到边上、坐在上面很长时间没离开，很蹊跷，被我看见了。</p><p>这让我想明白一件事：水合物的笼子基本单元是五角十二面体，能吸附甲烷。我设计实验让笼子周围吸附 0、2、4、6、8、10、12 个甲烷分子，观测吸附后笼子寿命的变化：未吸附时 8 皮秒笼子就垮掉，吸附 12 个甲烷后寿命增长到 300 皮秒——吸附甲烷后笼子在水里能存活。共做 7 个点、每点统计 200 次，共 1400 个数据。分子模拟的好处就是做重复实验不费力：批量提交任务、写脚本设置温度，一提交就开始跑。再观察周围变化：吸附的甲烷促使周围水结构调整，接近于笼子的形状——在这儿看着像半个笼子、那儿也像半个笼子，合起来有点儿像一个笼子。结论就是：吸附甲烷诱导笼子旁边的水分子形成新笼子（Guo et al., 2007, JPCC）。这系列工作做到 07 年，这项工作做得不错，我就升研究员了——从 2000 年博后出站，连续做水合物做了 7 年。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>400个实验中观察到7次红线。红线是指游泳时靠到边上，坐在他身上很长时间没离开，很蹊跷。这被我看见了。</p><p>吸附甲烷后笼子在水中能存活。共做7个点，每点统计200家，共1400个数据。</p><p>吸附甲烷，诱导这个笼子旁边的水分子形成新笼子。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-pmf-why-adsorb">
+  <div class="slides"><figure class="slide" id="slide-30">
+<img src="slides/slide_30.png" alt="课件第30页 水笼子为什么能够吸附甲烷？几个参考体系的RDF：纯水PW、甲烷溶液MS、笼子/水体系CW——笼子-甲烷RDF第一个峰位置准确但高度不准确">
+<figcaption><span class="sno">30</span><span class="stitle">水笼子为什么能够吸附甲烷？几个参考体系的RDF：纯水PW、甲烷溶液MS、笼子/水体系CW——笼子-甲烷RDF第一个峰位置准确但高度不准确</span></figcaption>
+</figure>
+<figure class="slide" id="slide-31">
+<img src="slides/slide_31.png" alt="课件第31页 通过平均力势能PMF计算径向分布函数RDF：g(r)=e^(-PMF(r)/kT)，用约束分子动力学做了46×20=920个runs（Guo et al., 2009, PCCP）">
+<figcaption><span class="sno">31</span><span class="stitle">通过平均力势能PMF计算径向分布函数RDF：g(r)=e^(-PMF(r)/kT)，用约束分子动力学做了46×20=920个runs（Guo et al., 2009, PCCP）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-32">
+<img src="slides/slide_32.png" alt="课件第32页 笼子和甲烷之间存在强吸附作用：Ea=16kJ/mol，不是氢键胜似氢键（EHB=10kJ/mol）；PMF显示6.2Å处势能最低、8.8Å处有势垒">
+<figcaption><span class="sno">32</span><span class="stitle">笼子和甲烷之间存在强吸附作用：Ea=16kJ/mol，不是氢键胜似氢键（EHB=10kJ/mol）；PMF显示6.2Å处势能最低、8.8Å处有势垒</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div class="sec-tt">
+        <h2>为什么能吸附：平均力势能 PMF</h2>
+        <div class="sec-meta"><span class="time">录音：第 7 段</span><span class="chip">课件 30</span><span class="chip">课件 31</span><span class="chip">课件 32</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>接下来的问题：水笼子为什么能吸附甲烷？这篇文章里头有个没做完的事儿——我算了一下结构：纯水里水分子之间的结构是一条黑线，甲烷溶液里甲烷和水之间的结构、甲烷和甲烷之间的结构，还有带笼子模型里甲烷和水分子之间的结构是那条蓝线。我就特别想知道 DWC（五角十二面体水簇）和甲烷分子之间是什么关系，想通过径向分布函数 RDF 表达出来。画出来之后我心里很清楚：第一个峰的位置肯定是准确的——在 6.1 或 6.2 埃处，就是笼子吸附甲烷的吸附点位。但是峰的高度不对：体系里只有一个笼子和一个甲烷，两者间取的样本很少，高度很不准。</p><p>为了把图做准，我用了 GROMACS 里的约束分子动力学：设定笼子和甲烷之间的距离固定，每设定一个值就固定住——固定后两者随意运动但中间距离恒定，像有根棍连接。约束分子动力学可以计算平均力势能 PMF：模型输出作用力，对 R 积分即得 PMF，代入公式可得 RDF。这条路很艰辛：5 埃到 14 埃范围、每隔 0.2 埃设一个约束距离点，共 45 个点、每点重复 20 次，总计 920 次模拟。最终得到甲烷与笼子之间的平均力势能曲线，代入方程得到带误差棒的 RDF 线——位置和含义跟原来一致，但高度修正了。</p><p>结果很有意思：PMF 显示 6.2 埃处势能最低，恰为水笼吸附甲烷的位置——吸附导致甲烷只能停留于此；从势阱到势垒的高度差有 16 kJ/mol——这种吸附力挺大的，氢键才不过 10 kJ/mol，比氢键的劲儿还大。这就回答了笼子为什么能吸附：它有很大的吸附力，胜似氢键。第二个关键信息：势垒的位置在 8.8 埃。由此我提出了“笼子吸附成核假说”：水笼对甲烷的作用强于氢键，吸附甲烷分子后水合笼子变稳定，甲烷促进周围水分子形成新笼子，循环往复——有一个笼子搁在这儿，甲烷慢慢吸附形成新笼子，再吸附周围的又长一圈，这样水合物就成了。而且我预测笼子形成时不一定是五角十二面体，形成 51264 或 51262 笼子也行；如果杂七杂八堆到一块儿，那就是非晶态水合物——这是第一个重要预测。第二个预测：8.8 埃的势垒意味着甲烷分子在水里平均分不开，假如甲烷浓度使得分子间距离小于 8.8 埃，就自然而然突破了势垒开始成核——从 8.8 埃可以计算出一个临界浓度。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这个峰的位置在哪儿呢？就是笼子吸附甲烷的吸附点位，即6.6Å或6.1和6.2Å处的峰。</p><p>这种吸附力挺大的，氢键才不过10kJ/mol，比氢键的劲儿还大。</p><p>这个市垒的位置是8.8。我提出了一个叫做笼子吸附成核假说。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-critical-concentration">
+  <div class="slides"><figure class="slide" id="slide-33">
+<img src="slides/slide_33.png" alt="课件第33页 笼子吸附成核假说（Cage adsorption hypothesis）：水笼子对甲烷存在强于氢键的吸附作用，吸附甲烷后变稳定，甲烷促进周边水分子形成新笼子，循环往复（Guo et al., 2009, PCCP）">
+<figcaption><span class="sno">33</span><span class="stitle">笼子吸附成核假说（Cage adsorption hypothesis）：水笼子对甲烷存在强于氢键的吸附作用，吸附甲烷后变稳定，甲烷促进周边水分子形成新笼子，循环往复（Guo et al., 2009, PCCP）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-34">
+<img src="slides/slide_34.png" alt="课件第34页 水合物成核的临界浓度：精心设计7种体系3个系列，考虑优化的交叉组合规则，箭头指向参数升高">
+<figcaption><span class="sno">34</span><span class="stitle">水合物成核的临界浓度：精心设计7种体系3个系列，考虑优化的交叉组合规则，箭头指向参数升高</span></figcaption>
+</figure>
+<figure class="slide" id="slide-35">
+<img src="slides/slide_35.png" alt="课件第35页 水合物成核的临界浓度：成核临界甲烷溶解度为0.05摩尔分数，对应甲烷平均间距8.4Å（水膜中甲烷溶解度剖面与时间演化，Guo et al., 2013, JPCB）">
+<figcaption><span class="sno">35</span><span class="stitle">水合物成核的临界浓度：成核临界甲烷溶解度为0.05摩尔分数，对应甲烷平均间距8.4Å（水膜中甲烷溶解度剖面与时间演化，Guo et al., 2013, JPCB）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-36">
+<img src="slides/slide_36.png" alt="课件第36页 国际上第一条水合物自发成核分子模拟轨迹：从甲烷/水界面出发，先形成甲烷气泡，再出现笼子，笼子越来越多，最后形成非晶相水合物；模拟时长2微秒，是当时普通分子模拟的十倍（Walsh et al, 2009, Science）">
+<figcaption><span class="sno">36</span><span class="stitle">国际上第一条水合物自发成核分子模拟轨迹：从甲烷/水界面出发，先形成甲烷气泡，再出现笼子，笼子越来越多，最后形成非晶相水合物；模拟时长2微秒，是当时普通分子模拟的十倍（Walsh et al, 2009, Science）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-37">
+<img src="slides/slide_37.png" alt="课件第37页 水合物形成的二步机制：气体分子形成高浓度局部区域先产生非晶相，再转变为结晶相（Jacobson et al., 2010, JACS）；气体水溶液先产生非晶相再经退火转结晶相（Vatamanu and Kusalik, 2010, PCCP）">
+<figcaption><span class="sno">37</span><span class="stitle">水合物形成的二步机制：气体分子形成高浓度局部区域先产生非晶相，再转变为结晶相（Jacobson et al., 2010, JACS）；气体水溶液先产生非晶相再经退火转结晶相（Vatamanu and Kusalik, 2010, PCCP）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">08</span>
+      <div class="sec-tt">
+        <h2>临界浓度验证与 Science 成核轨迹</h2>
+        <div class="sec-meta"><span class="time">录音：第 8 段</span><span class="chip">课件 33</span><span class="chip">课件 34</span><span class="chip">课件 35</span><span class="chip">课件 36</span><span class="chip">课件 37</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>为了验证这两个预测，我又设计了一个实验：做一个水的长方体，按周期边界上下无限延伸，把它当一层水膜，水膜两边搁上甲烷气体。反应器开始是空的，一声 run 开始跑任务，甲烷就往里溶解——溶解量真不大。为了验证到底多少算临界浓度，我设计了三类路线：保证其他不变让压力增高；让温度降低；人为增大溶解度。以 C 作为中心点，总共设了 7 个体系——这就像我们前头研究 sigma 和 epsilon 变化一样，控制变量法，目的就是让甲烷浓度尽可能提高，看看会发生什么事。</p><p>结果就是两张图：一张是水膜中甲烷溶解度的剖面图——A 浓度很低，B、C、D 逐渐提高，到 G 的时候出事了：这一头有两个浓度在大约 0.05 的状态，剩下的一下子达到了 0.1、接近 0.11，几乎是两倍多——这意味着水合物已经成核了。因为水合物是 1 个甲烷配 5.75 个水，理想比例应该是 0.146；没成核时大约 0.05，成核后到 0.11。另一张图是浓度随时间的变化：A 逐渐平了，B、C、D 也是逐渐抬高，到 G 时体积分数 0.05 左右，然后突然窜上去奔着 0.12 去了。这个工作说明：甲烷的临界浓度可能就是 0.05 摩尔分数——此时对应的平均距离是 8.4 埃，已经小于我前面预测的 8.8 埃，跨过了势垒。</p><p>当时提出笼状吸附假说是 2009 年（论文 2009 年 10 月 6 号发表）。结果 2009 年 10 月 8 号，我们在 Science 上发表了国际上第一条水合物自发成核的分子动力学轨迹——这条轨迹惊人之处是模拟时间从 0 算到 2000 纳秒、达到两个微秒，当时大家普遍的分子模拟水平也就一二百纳秒，它做到了 10 倍。在 1.2 微秒时体系发生成核结晶：开始是气液两相，势能降低代表演化成一个气体的球；到 1.3 微秒时好像有笼子形成了；再往后笼子越来越多，能看出笼子的结构——他们认为水合物形成了。其实还有一条轨迹算到了 5 个微秒。当时你敢不敢算下去？甲烷一放、丢进计算机就算，算一两个月出来——就因为一个意外，丢上去忘了，最后发现跑了这么长，算成了。第二年又有两个组也算成水合物成核，大家都认第一，谁先算长谁厉害，于是都往长了算。</p><p>由此有人提出二步机制：气体分子先形成高浓度局部区域，形成非晶相水合物，再转变成结晶相水合物——Wales 组也是从气液界面先上非晶相，再经退火形成结晶相。我看你们都算出来了，但我 09 年就预测过非晶相——我一看这肯定不是结晶相水合物。我向 Wales 要了轨迹来分析。后来 Wales 来中国访问，好像是 18 年进博会时。他们要过轨迹后认为 2 微秒最后一帧已结晶，当时他们搜索的笼子形状只有 7 种，只看到了一些局部的 sI 结构、sII 结构的片段，并不完整。要看清里头的笼子，首先得把笼子识别出来。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这工作说明了一件事，甲烷的临界浓度可能就是0.05摩尔分数。</p><p>这条轨迹惊人的地方就是它把模拟时间从0一直算到了2000nm，达到了两个微秒。</p><p>就因为一个意外，丢上去忘了，最后发现跑了这么长，算成了。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-fsica-cage-identification">
+  <div class="slides"><figure class="slide" id="slide-38">
+<img src="slides/slide_38.png" alt="课件第38页 笼子识别是研究水合物成核结晶的必备工具：sI结构、sII结构；甲烷水合物2μs成核轨迹的最后一帧（Walsh et al., 2011, PCCP）">
+<figcaption><span class="sno">38</span><span class="stitle">笼子识别是研究水合物成核结晶的必备工具：sI结构、sII结构；甲烷水合物2μs成核轨迹的最后一帧（Walsh et al., 2011, PCCP）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-39">
+<img src="slides/slide_39.png" alt="课件第39页 甲烷水合壳像笼子吗？有多像？——Swaminathan 1978 被Sloan引用多次；Vatamanu 2006 也说没看到">
+<figcaption><span class="sno">39</span><span class="stitle">甲烷水合壳像笼子吗？有多像？——Swaminathan 1978 被Sloan引用多次；Vatamanu 2006 也说没看到</span></figcaption>
+</figure>
+<figure class="slide" id="slide-40">
+<img src="slides/slide_40.png" alt="课件第40页 甲烷水合壳像笼子吗？一个纯粹的数学问题，类似于人脸识别，关键在于定量化，找到一两个参数来描述">
+<figcaption><span class="sno">40</span><span class="stitle">甲烷水合壳像笼子吗？一个纯粹的数学问题，类似于人脸识别，关键在于定量化，找到一两个参数来描述</span></figcaption>
+</figure>
+<figure class="slide" id="slide-41">
+<img src="slides/slide_41.png" alt="课件第41页 完整笼子(CC)有两个特征：棱饱和——每个顶点被至少三条棱共享；面饱和——每条棱被恰好两个面共享；面饱和决定了完整笼子没有洞，能封闭甲烷">
+<figcaption><span class="sno">41</span><span class="stitle">完整笼子(CC)有两个特征：棱饱和——每个顶点被至少三条棱共享；面饱和——每条棱被恰好两个面共享；面饱和决定了完整笼子没有洞，能封闭甲烷</span></figcaption>
+</figure>
+<figure class="slide" id="slide-42">
+<img src="slides/slide_42.png" alt="课件第42页 不完整笼子(IC)：面=3-6元水环，洞=7元水环及以上；棱饱和但面不饱和(22/22)(25/33)，面饱和但棱不饱和(10/15)(20/20)">
+<figcaption><span class="sno">42</span><span class="stitle">不完整笼子(IC)：面=3-6元水环，洞=7元水环及以上；棱饱和但面不饱和(22/22)(25/33)，面饱和但棱不饱和(10/15)(20/20)</span></figcaption>
+</figure>
+<figure class="slide" id="slide-43">
+<img src="slides/slide_43.png" alt="课件第43页 笼子面-甲烷的平均力势能计算：4-8面笼子与甲烷的约束构型及平均力势能（刘婵娟博士论文2013；Liu et al., 2013, CPL）">
+<figcaption><span class="sno">43</span><span class="stitle">笼子面-甲烷的平均力势能计算：4-8面笼子与甲烷的约束构型及平均力势能（刘婵娟博士论文2013；Liu et al., 2013, CPL）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-44">
+<img src="slides/slide_44.png" alt="课件第44页 定量描述IC相对于CC的笼形程度：棱饱和百分比ζV、面饱和棱百分比ζE、笼形度ζC=ζV·ζE，值取1意味着IC已变成CC">
+<figcaption><span class="sno">44</span><span class="stitle">定量描述IC相对于CC的笼形程度：棱饱和百分比ζV、面饱和棱百分比ζE、笼形度ζC=ζV·ζE，值取1意味着IC已变成CC</span></figcaption>
+</figure>
+<figure class="slide" id="slide-45">
+<img src="slides/slide_45.png" alt="课件第45页 笼形度示例：ζC=0、0.5、0.91对应的笼子类型435664、51262、435663（Guo et al., 2008, JCP）">
+<figcaption><span class="sno">45</span><span class="stitle">笼形度示例：ζC=0、0.5、0.91对应的笼子类型435664、51262、435663（Guo et al., 2008, JCP）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-46">
+<img src="slides/slide_46.png" alt="课件第46页 面饱和笼子分析(FSICA)：识别水-客体（或纯水）系统氢键网架中所有面饱和笼子成分（Guo et al., 2011, PCCP）">
+<figcaption><span class="sno">46</span><span class="stitle">面饱和笼子分析(FSICA)：识别水-客体（或纯水）系统氢键网架中所有面饱和笼子成分（Guo et al., 2011, PCCP）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-47">
+<img src="slides/slide_47.png" alt="课件第47页 怎样找到笼子的各个顶点：候选顶点到笼子内一点的连线不穿过任何笼子面则为笼子顶点——一网打尽">
+<figcaption><span class="sno">47</span><span class="stitle">怎样找到笼子的各个顶点：候选顶点到笼子内一点的连线不穿过任何笼子面则为笼子顶点——一网打尽</span></figcaption>
+</figure>
+<figure class="slide" id="slide-48">
+<img src="slides/slide_48.png" alt="课件第48页 用面饱和笼子分析定量确认模拟获得的是非晶相水合物：255 CCs + 93 FSICs，涵盖90个笼子类型，笼子水比例95%、占有率86%、结晶度16%">
+<figcaption><span class="sno">48</span><span class="stitle">用面饱和笼子分析定量确认模拟获得的是非晶相水合物：255 CCs + 93 FSICs，涵盖90个笼子类型，笼子水比例95%、占有率86%、结晶度16%</span></figcaption>
+</figure>
+<figure class="slide" id="slide-49">
+<img src="slides/slide_49.png" alt="课件第49页 从甲烷溶液到非晶相水合物几个有序参数的变化：笼子水百分数、笼子占有率、已充填甲烷的笼子百分数、结晶度随时间演化">
+<figcaption><span class="sno">49</span><span class="stitle">从甲烷溶液到非晶相水合物几个有序参数的变化：笼子水百分数、笼子占有率、已充填甲烷的笼子百分数、结晶度随时间演化</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">09</span>
+      <div class="sec-tt">
+        <h2>笼子识别：面饱和笼子分析（FSICA）</h2>
+        <div class="sec-meta"><span class="time">录音：第 9 段</span><span class="chip">课件 38</span><span class="chip">课件 39</span><span class="chip">课件 40</span><span class="chip">课件 41</span><span class="chip">课件 42</span><span class="chip">课件 43</span><span class="chip">课件 44</span><span class="chip">课件 45</span><span class="chip">课件 46</span><span class="chip">课件 47</span><span class="chip">课件 48</span><span class="chip">课件 49</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>怎么把笼子识别出来？早在 2007、2008 年我们就想过这个问题——甲烷待在水里，周围一定有一个水合壳，就看这个水合壳像不像一个笼子。光靠肉眼恐怕不够，得有一个定量的描述。这跟人脸识别一样，得找一两个或三个参数去描述它。2008 年我就开始编程，考虑搜索笼子的程序，观察五角十二面体，提出了两个指标：棱饱和和面饱和。棱饱和指每个顶点至少被三条棱共享；面饱和指每条棱正好被两个面共享。同时满足棱饱和和面饱和，才能形成完整笼子、把甲烷封在内部；若面有开口，甲烷会逸出。左侧模型结合紧密符合棱饱和，但底面为八边形环、孔洞过大导致面不饱和；右侧模型结合较松，但每条棱均有两面共享，实现面饱和与棱饱和，能锁住甲烷。</p><p>定义 3 至 6 元水环为面、7 元及以上为重环——这个定义需要计算验证。我指导博士生刘婵娟设计含不同环数的笼子，计算它们对甲烷的平均作用力：四环面、五环面、六环面是一道高墙，甲烷吸附到面上之后进不到笼子里头；但七环面和八环面的高墙，甲烷就能够进去。这就证明了 3~6 环算笼子的面、7 环以上算笼子的洞。刘婵娟的博士论文题目就是“控制天然气水合物笼子形成的课题”。有了这些定义，就可以计算棱饱和百分比和面饱和百分比，两者乘积定义为笼形度——笼形度取值为 1 就说明它已经是完整笼子了。</p><p>有了这个工具，09 年把 Wales 那条轨迹要过来之后，我说继续把这个软件编码、把轨迹分析了。2010 年这一年我花了一年时间写那个软件，目的就一个：把那条轨迹分析清楚。方法叫面饱和笼状分析法（FSICA）：针对不完整水分子结构的分析软件，功能强大，能识别各种网络中形态各异的笼状结构——包括含三个甲烷或三个水分子的复杂构型。具体方法是转化为二维多边形网格：在三维空间中构建网格，逐个筛查网格点是否位于笼状结构内部——若候选点到笼状顶点的连线不穿过任何笼面，则判定为有效顶点；通过搜索找到落在内部的点，以该点观察其他点是否穿面，未穿面的保留、穿面的剔除，最终留下的点构成一个笼状结构，经笼形度指标校验，达标就计入统计。</p><p>那一年我上班往那儿一坐就开始编程序调整——写那一段代码容易，把它调通、调正确不容易。现在有 AI 工具调得快一点，当时没有，我就坐那儿自己去调代码，调代码时要用到 GROMACS 的源程序，利用里头的公式和进程。反正搞了一年，对那条轨迹翻来覆去分析了很多遍。最后结果数出来了：这个轨迹最后一帧里有 255 个完整笼、93 个不完整笼，涵盖了 90 个笼子类型；笼子水比例 95%、笼子占有率 86%、水合物的结晶度只有 16%——分布最多的几种笼子都写出来了。结论只有一个：他们得到的这个轨迹不是水合物的结晶相，而是水合物的非晶相。看时间演化：笼子百分数最后 90% 多都变成了笼子、占有率也都提高了，但结晶度到了 0.16 就上不去了——说明这个水合物没有结晶，形成了非晶相。这个非晶相正是我 09 年在他们论文发表之前预测的。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>就跟人脸识别一样，得找一两个或三个参数去描述它。</p><p>当时没有那个东西，我就是坐那儿自己去调代码。反正搞了一年。</p><p>结论只有一个，就是他们得到的这个轨迹不是水合物的非结晶性，而是水合物的非晶性。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-nve-direct-crystallization">
+  <div class="slides"><figure class="slide" id="slide-50">
+<img src="slides/slide_50.png" alt="课件第50页 偶尔出现晶体片段，可能存在直接成核：NVE模拟短时长100ns（Walsh 2011）、NPT模拟长时间800ns（Liang and Kusalik 2013）">
+<figcaption><span class="sno">50</span><span class="stitle">偶尔出现晶体片段，可能存在直接成核：NVE模拟短时长100ns（Walsh 2011）、NPT模拟长时间800ns（Liang and Kusalik 2013）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-51">
+<img src="slides/slide_51.png" alt="课件第51页 精确控制NVE模拟中的能量守恒：计算精度问题导致能量漂移，一般很难保持守恒100ns以上；我们做到了1000ns内能量漂移小于万分之三">
+<figcaption><span class="sno">51</span><span class="stitle">精确控制NVE模拟中的能量守恒：计算精度问题导致能量漂移，一般很难保持守恒100ns以上；我们做到了1000ns内能量漂移小于万分之三</span></figcaption>
+</figure>
+<figure class="slide" id="slide-52">
+<img src="slides/slide_52.png" alt="课件第52页 代价：计算速度比平时慢6.5倍——控制能量守恒的4个方法：双精度编译Gromacs(./configure --enable-double)、PME+Switch长程库仑力、Shift短程范德华力、很大的截断半径">
+<figcaption><span class="sno">52</span><span class="stitle">代价：计算速度比平时慢6.5倍——控制能量守恒的4个方法：双精度编译Gromacs(./configure --enable-double)、PME+Switch长程库仑力、Shift短程范德华力、很大的截断半径</span></figcaption>
+</figure>
+<figure class="slide" id="slide-53">
+<img src="slides/slide_53.png" alt="课件第53页 甲烷水合物成核结晶的NVE模拟：六条甲烷-水系统NVE模拟轨迹时长1微秒；水合物形成放热引起温度升高，其中模拟C异常（张正财博士论文2015；Zhang et al, 2015, PCCP）">
+<figcaption><span class="sno">53</span><span class="stitle">甲烷水合物成核结晶的NVE模拟：六条甲烷-水系统NVE模拟轨迹时长1微秒；水合物形成放热引起温度升高，其中模拟C异常（张正财博士论文2015；Zhang et al, 2015, PCCP）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-54">
+<img src="slides/slide_54.png" alt="课件第54页 模拟A演化成水合物非晶相，模拟C演化成水合物结晶相（红:512、蓝:51262、绿:51263、灰:51264、青:甲烷）；虚线框显示sI结构典型片段">
+<figcaption><span class="sno">54</span><span class="stitle">模拟A演化成水合物非晶相，模拟C演化成水合物结晶相（红:512、蓝:51262、绿:51263、灰:51264、青:甲烷）；虚线框显示sI结构典型片段</span></figcaption>
+</figure>
+<figure class="slide" id="slide-55">
+<img src="slides/slide_55.png" alt="课件第55页 动画：模拟C演化成水合物结晶相，国际上首次获得sI结构，直接一步形成（Zhang et al., 2015, PCCP）">
+<figcaption><span class="sno">55</span><span class="stitle">动画：模拟C演化成水合物结晶相，国际上首次获得sI结构，直接一步形成（Zhang et al., 2015, PCCP）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-56">
+<img src="slides/slide_56.png" alt="课件第56页 模拟C获得的水合物具有sI结构（900ns）">
+<figcaption><span class="sno">56</span><span class="stitle">模拟C获得的水合物具有sI结构（900ns）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-57">
+<img src="slides/slide_57.png" alt="课件第57页 结晶度与笼子个数演化：模拟C直接成核不是二步机制，结晶度高达70%，笼子演化与模拟A的非晶相模式显著不同（Zhang et al., 2015, PCCP）">
+<figcaption><span class="sno">57</span><span class="stitle">结晶度与笼子个数演化：模拟C直接成核不是二步机制，结晶度高达70%，笼子演化与模拟A的非晶相模式显著不同（Zhang et al., 2015, PCCP）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-58">
+<img src="slides/slide_58.png" alt="课件第58页 水合物晶体中包含缺陷：位错和气体包裹体">
+<figcaption><span class="sno">58</span><span class="stitle">水合物晶体中包含缺陷：位错和气体包裹体</span></figcaption>
+</figure>
+<figure class="slide" id="slide-59">
+<img src="slides/slide_59.png" alt="课件第59页 sI结构水合物中的晶体缺陷：2条位错（面共享的512笼子链）、1个过剩甲烷气体包裹体">
+<figcaption><span class="sno">59</span><span class="stitle">sI结构水合物中的晶体缺陷：2条位错（面共享的512笼子链）、1个过剩甲烷气体包裹体</span></figcaption>
+</figure>
+<figure class="slide" id="slide-60">
+<img src="slides/slide_60.png" alt="课件第60页 晶体的多途径成核理论：原子分子/成核前簇→非晶相或直接结晶相；碳酸钙、磁铁矿都具有多途径成核特点，甲烷水合物也是这样（Baumgartner et al., 2013, Nature Materials）">
+<figcaption><span class="sno">60</span><span class="stitle">晶体的多途径成核理论：原子分子/成核前簇→非晶相或直接结晶相；碳酸钙、磁铁矿都具有多途径成核特点，甲烷水合物也是这样（Baumgartner et al., 2013, Nature Materials）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-61">
+<img src="slides/slide_61.png" alt="课件第61页 系综对水合物成核结晶的影响：NPT结晶度低、NVT中等、NVE高（Zhang et al., 2016, PCCP）">
+<figcaption><span class="sno">61</span><span class="stitle">系综对水合物成核结晶的影响：NPT结晶度低、NVT中等、NVE高（Zhang et al., 2016, PCCP）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">10</span>
+      <div class="sec-tt">
+        <h2>从非晶相到直接结晶：NVE 模拟的突破</h2>
+        <div class="sec-meta"><span class="time">录音：第 10 段</span><span class="chip">课件 50</span><span class="chip">课件 51</span><span class="chip">课件 52</span><span class="chip">课件 53</span><span class="chip">课件 54</span><span class="chip">课件 55</span><span class="chip">课件 56</span><span class="chip">课件 57</span><span class="chip">课件 58</span><span class="chip">课件 59</span><span class="chip">课件 60</span><span class="chip">课件 61</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>后来大家发现，只要算得长、达到微秒级模拟，就能形成水合物，于是大家分别又算了好多。算的时候偶尔会发现一些晶体片段，看着挺规整、真像水合物——但都是片段，说明水合物形成时不但能形成非晶相，而且有可能一次就形成结晶相，但这件事一直没有验证。我们受启发也决定干一把：他们用 NVE 模拟时，出现这种规整程度的概率大——对，我们也是 NVE 模拟。</p><p>说到 NVE 模拟，它很困难：要保证能量守恒。因为分子动力学模拟程序的精度问题，容易发生能量漂移——弄着弄着能量往上漂移或往下漂移，出发时 1 万、结果看时 9800，这种漂移让能量守恒名存实亡，很难保证 100 纳秒以上守恒——他们也就只做了 100 纳秒。我此前做粘度时用到 NVE，守恒也就几十皮秒，最多到 100 皮秒。我们想了个办法：做到了在 1000 纳秒之内控制能量漂移小于万分之三——这是博士生张正财做的，特别成功。当时费了很大劲：第一个要把 GROMACS 编译成双精度（单精度直接 ./config 运行即可，双精度要加 --enable-double）；第二个用 PME 算法处理长程静电作用，不让势能直接截断而是附加自然下滑曲线平滑过渡到零；第三个用 Shift 方法调整势能，使其自然平衡；第四个用较大的截断半径和邻居列表半径。这四种方法能让能量算得准，代价是计算速度比平时慢 6.5 倍，但我们觉得还是值的。</p><p>之后做了 6 个体系，由张正财在 2015 年完成。这 6 条轨迹的能量都守恒，但发现其中 5 条线的温度升高了——因为水合物结晶时像冰结晶一样放热，温度自然升高；但模拟 C 特别异常，温度升得很高。举例来看：模拟 A 最后形成了非晶相——笼子扎扎哇哇堆在一起，这是非晶相，没问题；但模拟 C 演化成了规规矩矩的晶体。看张正财做的动画，这就是国际上首次获得 sI 结构——红点是水，水如果连成氢键就是一根棍儿；把周期边界条件展开之后，盒子里全是笼子，确认结构是 sI 不是 sII。结晶度上：模拟 A 是典型的非晶相，模拟 C 结晶度达到 70%——再细看还有一点点缺陷、两个位错：本来这地方应该都是蓝色笼子排成 sI 结构的一列，但有两列是小笼子排成一列；水合物演化到最后还有一点甲烷没充填到所有笼子里头，形成了一个包裹体。</p><p>这个发现在当时有什么意义？当时大家流行晶体的多途径生长理论：晶体形成时，可以是原子分子或颗粒先形成非晶相、再转换为结晶相，也可以由它们直接形成结晶相。大家做实验发现碳酸钙水垢结晶既有非晶相也有结晶相，磁铁矿也都有这种现象。我们从分子模拟上验证：甲烷水合物也是多途径产物——模拟 C 直接一步形成结晶相。后来张正财毕业后做博后继续研究，发现 NPT 系综结晶度低、NVT 中等、NVE 结晶度高——随着温浴和压浴的总数变化，结晶度低但成核速度快，这很符合常理：结晶快的话晶体就长不好，要想长得完美就得慢慢结晶。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>能量漂移就是弄着弄着，有的往上漂移，有的往下漂移。</p><p>第四个是用较大的截断半径和邻居列表半径。这四种方法能让能量算得准。</p><p>这个就是国际上首次获得了S1结果。</p><p>当时大家做实验，比如碳酸钙水垢结晶，既有非晶相也有结晶相。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-kinetics-roadmap">
+  <div class="slides"><figure class="slide" id="slide-62">
+<img src="slides/slide_62.png" alt="课件第62页 CO2水合物的临界成核浓度异常高：CO2临界浓度0.088 vs 甲烷0.05（Liu et al., 2016, RSC Adv.; He et al., 2017, PCCP）">
+<figcaption><span class="sno">62</span><span class="stitle">CO2水合物的临界成核浓度异常高：CO2临界浓度0.088 vs 甲烷0.05（Liu et al., 2016, RSC Adv.; He et al., 2017, PCCP）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-63">
+<img src="slides/slide_63.png" alt="课件第63页 客体动力学控制水合物成核——临界扩散：不同客体临界浓度不同但具有相似临界扩散系数；随客体浓度升高水溶液熵减自由能升高（Zhang et al, 2018, PCCP）">
+<figcaption><span class="sno">63</span><span class="stitle">客体动力学控制水合物成核——临界扩散：不同客体临界浓度不同但具有相似临界扩散系数；随客体浓度升高水溶液熵减自由能升高（Zhang et al, 2018, PCCP）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-64">
+<img src="slides/slide_64.png" alt="课件第64页 推论：大分子客体有利于水合物成核——DMB（二甲基丁烷）大分子作为成核位点成功诱发甲烷水合物形成（Zhang et al, 2019, JPCC）">
+<figcaption><span class="sno">64</span><span class="stitle">推论：大分子客体有利于水合物成核——DMB（二甲基丁烷）大分子作为成核位点成功诱发甲烷水合物形成（Zhang et al, 2019, JPCC）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-65">
+<img src="slides/slide_65.png" alt="课件第65页 水合物成核研究的路线图：如何达到临界浓度？如何选择成核方向？如何预测临界晶核？非晶相如何转变结构？（Guo & Zhang, 2021, Comm. Chem.）">
+<figcaption><span class="sno">65</span><span class="stitle">水合物成核研究的路线图：如何达到临界浓度？如何选择成核方向？如何预测临界晶核？非晶相如何转变结构？（Guo & Zhang, 2021, Comm. Chem.）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">11</span>
+      <div class="sec-tt">
+        <h2>客体动力学与成核路线图</h2>
+        <div class="sec-meta"><span class="time">录音：第 11 段</span><span class="chip">课件 62</span><span class="chip">课件 63</span><span class="chip">课件 64</span><span class="chip">课件 65</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>后面还有一些工作。CO2 水合物的临界成核浓度异常高：甲烷是 0.05，CO2 要 0.088——不同客体分子临界浓度不同，但是它们成核时具有相似的临界扩散系数：随客体浓度升高，水溶液熵减、自由能升高，到达临界点时不同客体的浓度不同，但扩散性都要低至临界值，以便于笼子形成——这就是客体动力学控制水合物成核，即临界扩散（Zhang et al., 2018, PCCP）。由此可以推论：大分子客体有利于水合物成核——一个 DMB（二甲基丁烷）大分子作为成核位点，成功诱发了甲烷水合物形成，它较低的扩散活动性起到了至关重要的作用（Zhang et al., 2019, JPCC）。</p><p>最后我们用这张图展示水合物成核研究的路线图：随着甲烷浓度提高自由能升高，首先达到浓度的临界状态，其次达到客体分子扩散的临界状态；达到这个程度后从这里出发形成水合物——有两条路：一条绿线直接成核，另一条先形成非晶相、再由非晶相形成结晶相。按此路线图可以继续研究后续发展，使理论持续深入。未来的目标是发展出一个有定量预测能力的天然气水合物成核新理论（Guo & Zhang, 2021, Comm. Chem.）。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>到达临界点时，不同客体的浓度不同，但扩散性都要低至临界值，以便于笼子形成。</p><p>有两条路：一条是绿线直接成河；另一条是先形成非定向A，再由非定向形成结定向。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-summary-homework">
+  <div class="slides"><figure class="slide" id="slide-66">
+<img src="slides/slide_66.png" alt="课件第66页 小结：1.水合物通过水笼子吸附客体分子形成，客体浓度是热力学控制因素、扩散系数是动力学控制因素；2.形成是多途径的（非晶相二步机制或直接成核）；3.用分子模拟观测微观过程很好玩；4.盯着一个问题做到极致，要较真">
+<figcaption><span class="sno">66</span><span class="stitle">小结：1.水合物通过水笼子吸附客体分子形成，客体浓度是热力学控制因素、扩散系数是动力学控制因素；2.形成是多途径的（非晶相二步机制或直接成核）；3.用分子模拟观测微观过程很好玩；4.盯着一个问题做到极致，要较真</span></figcaption>
+</figure>
+<figure class="slide" id="slide-67">
+<img src="slides/slide_67.png" alt="课件第67页 作业提示：1.制作冰融化过程动画（30秒，可倍增体系、加密轨迹输出）；2.最后一节讨论课每人准备问题；3.各组务必在10月25日前提交MP3.4-3.6作业">
+<figcaption><span class="sno">67</span><span class="stitle">作业提示：1.制作冰融化过程动画（30秒，可倍增体系、加密轨迹输出）；2.最后一节讨论课每人准备问题；3.各组务必在10月25日前提交MP3.4-3.6作业</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">12</span>
+      <div class="sec-tt">
+        <h2>小结与作业提示</h2>
+        <div class="sec-meta"><span class="time">录音：第 12 段</span><span class="chip">课件 66</span><span class="chip">课件 67</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>最后小结一下：我们认为天然气水合物是通过水笼子吸附客体分子形成的——客体浓度是诱发成核的热力学控制因素，扩散系数是诱发成核的动力学控制因素；水合物形成是多途径的，既可通过非晶相以二步机制间接形成，也可以直接成核结晶。主要的科学内容就是这样，但我想告诉大家后面两点：用分子模拟观测微观过程，是一项有趣、充满想象力且挑战智慧的科研活动——很好玩；做研究时要盯着一个问题，用严密逻辑和坚实证据，力争做到极致——要较真。就像那个例子：峰位置准了但高度不准，让我魂牵梦绕地继续做、想办法解决，就是这种执念提出了笼子吸附假说。</p><p>你们回所后应与导师讨论、大量读文献，找好问题去做；找到问题后不要怕，投入时间和精力、不惜力地做下去，争取把问题做深入，在学术圈立住脚。作业情况提示一下：现在像王双他们组都交了两个作业了，韩海明你也交了一个作业是吧？后面大家尽快交，做完一个就交一个，不用推到最后一刻——越往后做越可能抢时间，最后提交任务时别的老师那边也提交，会出现排队，你就不一定能完成。务必在 25 号之前做完，我 26 号备课的时候做整理。最后一节讨论课是 27 号，每人准备一些问题，讨论热烈一些，不要长时间冷场。做动画的时候尽量做得漂亮一点——我给你们放的动画都是学生们费了力气在科研活动中做出来的，表现力比较强；你们看看能不能把冰融化的过程做得比较漂亮。今天的课就到这儿。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>客体浓度是诱发热力学方面的因素，扩散系统是诱发成核动力学方面的因素。</p><p>过程中要较真，否则工作坚持不下去，或无法深入考虑问题深度。</p><p>你们反正就是在这个过程中，你看看能不能把这个冰融化的过程做得比较漂亮。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（矿物物理学）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>

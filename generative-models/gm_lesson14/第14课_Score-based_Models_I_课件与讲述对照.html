@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>生成式模型与科学智能应用 · 第14节 Lecture 12 Score-based Models I：DDPM 噪声预测与训练/采样收尾、扩散模型层级 VAE 讨论与总结，能量模型、Score Function 与 Denoising Score Matching｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.videos{margin-top:14px;border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.video + .video{border-top:1px solid #e4e9f0;}
+.videos h4{font-size:12.5px;font-weight:700;color:#0a1f38;background:#f2f5f9;padding:8px 12px;border-bottom:1px solid #e4e9f0;}
+.videos video{display:block;width:100%;max-height:460px;background:#0b0f14;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>生成式模型与科学智能应用 · 第14节 Lecture 12 Score-based Models I：DDPM 噪声预测与训练/采样收尾、扩散模型层级 VAE 讨论与总结，能量模型、Score Function 与 Denoising Score Matching</h1>
+    <div class="sub">第14节 Lecture 12 Score-based Models I：DDPM 噪声预测与训练/采样收尾、扩散模型层级 VAE 讨论与总结，能量模型、Score Function 与 Denoising Score Matching ｜ 2026-10-27 ｜ 刘云帆</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 52 页 · 整理 6 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-ddpm-recap">01 上一课回顾，DDPM 核心回顾</option>
+<option value="sec-noise-param">02 从均值参数化到噪声参数化，DDPM 训练与采样</option>
+<option value="sec-discussion">03 扩散模型讨论，层级 VAE 噪声条件网络与隐空间</option>
+<option value="sec-energy">04 能量模型，灵活的概率分布参数化与配分函数难题</option>
+<option value="sec-score-func">05 Score Function，定义 配分函数消去与采样思想</option>
+<option value="sec-dsm">06 Denoising Score Matching，目标变换与计算复杂度</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 Lecture11_Diffusion_Models_upd.pdf; Lecture12_Score-based_Models.pdf 逐页渲染，转写原文见 record_20261027.txt。</div>
+<section class="sec" id="sec-ddpm-recap">
+  <div class="slides"><figure class="slide" id="slide-01">
+<img src="slides/slide_01.png" alt="课件第1页 Recap：前向过程（预定义马尔可夫加噪，单步与累积均为高斯、x_t 可由 x_0 一步写出）与反向过程（学习的去噪模型 p_θ(x_{t−1}|x_t) 高斯）回顾">
+<figcaption><span class="sno">01</span><span class="stitle">Recap：前向过程（预定义马尔可夫加噪，单步与累积均为高斯、x_t 可由 x_0 一步写出）与反向过程（学习的去噪模型 p_θ(x_{t−1}|x_t) 高斯）回顾</span></figcaption>
+</figure>
+<figure class="slide" id="slide-02">
+<img src="slides/slide_02.png" alt="课件第2页 Recap：最大似然学习——扩散模型 ELBO 与隐变量模型（VAE）对比；目标函数三项目标：Prior Matching、Latent Matching、Data Matching">
+<figcaption><span class="sno">02</span><span class="stitle">Recap：最大似然学习——扩散模型 ELBO 与隐变量模型（VAE）对比；目标函数三项目标：Prior Matching、Latent Matching、Data Matching</span></figcaption>
+</figure>
+<figure class="slide" id="slide-03">
+<img src="slides/slide_03.png" alt="课件第3页 Recap：可解析扩散损失——贝叶斯公式 + 马尔可夫性导出 q(x_{t−1}|x_t,x_0)，全部分量高斯，均值 μ̄_t(x_t,x_0) 与方差 β̄_t 具体表达式">
+<figcaption><span class="sno">03</span><span class="stitle">Recap：可解析扩散损失——贝叶斯公式 + 马尔可夫性导出 q(x_{t−1}|x_t,x_0)，全部分量高斯，均值 μ̄_t(x_t,x_0) 与方差 β̄_t 具体表达式</span></figcaption>
+</figure>
+<figure class="slide" id="slide-04">
+<img src="slides/slide_04.png" alt="课件第4页 Recap：均值参数化——建模可解析的后验 p_θ(x_{t−1}|x_t)=𝒩(x_{t−1}; μ_θ(x_t,t), β̄_tI)，用神经网络拟合均值">
+<figcaption><span class="sno">04</span><span class="stitle">Recap：均值参数化——建模可解析的后验 p_θ(x_{t−1}|x_t)=𝒩(x_{t−1}; μ_θ(x_t,t), β̄_tI)，用神经网络拟合均值</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>上一课回顾，DDPM 核心回顾</h2>
+        <div class="sec-meta"><span class="time">录音：前 20 分钟（复习，休息前）</span><span class="chip">课件 1</span><span class="chip">课件 2</span><span class="chip">课件 3</span><span class="chip">课件 4</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>同学们的时间差不多了，我们就开始上课。上课之前先把上一课讲的稍微复习一下，把一些推导的过程去掉，再捋一下整体的思路。</p><p>现在我们讲的扩散模型主要是一种比较经典的高斯模型：它包含一个前向过程和一个后向过程。</p><p>前向过程是一个预先定义好的马尔可夫加噪过程：给定没有加噪的干净数据 x_0，从 t=1 一直加噪到大 T；每一步给定 x_{t-1} 时 x_t 的分布是高斯分布。</p><p>通过迭代可以直接写出给定 x_0 时任意时刻 x_t 的表达式，多步加噪可以一步到位。</p><p>反向过程是一个学习的过程：学习一个跟加噪相反顺序的去噪模型，参数是模型的参数。从大 T 时刻（完全加噪、纯噪声）采样，经过每一步的条件分布、通过参数化模型不断采样，一直采到 t=1、还原到干净数据。</p><p>为什么能把要学习的反向分布建模成高斯？因为当加噪步数足够多、每步噪声足够小时，前向过程对应的反向过程中每个小步骤的分布也可以用高斯分布表示。</p><p>正因为这个结论成立，模型可以写成给定 x_t 时 x_{t-1} 的高斯条件分布，均值和方差都由参数建模。</p><p>学习方面还是用最大似然的思路：写样本的对数似然、对 x_1 到 x_T 积分。上节课讲了两种化简方法，最后用 Jensen 不等式放缩得到 ELBO。</p><p>把之前 VAE 的 ELBO 表达式放在一起对比，第一行是很相似的：都要把中间不可观测的数据对应上，隐变量在 VAE 里是 Z、在扩散模型里是 x_1 到 x_T 这一串加噪数据。</p><p>两者最大的不同是：扩散模型里 q(x_{1:T}|x_0) 是我们预设的、固定已知的高斯加噪分布，而 VAE 里的 q(Z) 是变分推断中从数据里学习出来的。</p><p>这可能就是隐变量模型和扩散模型最大的区别。</p><p>从 ELBO 出发推导目标函数，最终学习目标包含三项：先验匹配、中间步骤匹配、数据匹配。</p><p>先验匹配是让还原数据过程的 latent 与加噪过程最终噪声分布尽量接近；中间步骤匹配是让 T 大于 1 的中间步骤学习分布与反向去噪分布尽量相近；数据匹配是从最近隐状态恢复 x_0。</p><p>针对中间这一项，大家可能会问为什么非要用 x_0 条件：单步去噪分布 q(x_{t-1}|x_t) 因来源轨迹不同而不可知、是 intractable 的。</p><p>加上 x_0 条件后，用一步贝叶斯公式结合马尔可夫性可以推导出可解析的形式——每一步都是高斯，整体分布也是高斯，均值方差都已知。</p><p>DDPM 文章给出了具体形式：均值是 x_0 与 x_t 的加权求和混合形式，方差完全由加噪调度控制、可以直接算。</p><p>上一节课就讲到均值参数化：让模型拟合这个均值结构，方差无需参数，这就是上节课全过程的梳理。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>在上课之前呢，先把上一课讲的稍微复习一下，把一些推导的过程去掉，再捋一下整体的思路。</p><p>正是因为有两个结论成立，我们才能把要学习的模型也建模成一个高斯分布。</p><p>这可能就是隐变量模型和这个扩散模型最大的一个区别：一个是我们给定的预定义的一个加噪模型，另外一个是通过学习、通过变分学习去学习的一个过程。</p><p>现在我们学到的正是这个均值参数化……我们可以用模型去拟合这样一个结构。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-noise-param">
+  <div class="slides"><figure class="slide" id="slide-05">
+<img src="slides/slide_05.png" alt="课件第5页 噪声参数化：均值可解析计算；代入前向关系 x_0=(x_t−√(1−ᾱ_t)ε_t)/√ᾱ_t 消去 x_0，得到 μ̄_t 的等价形式（Ho et al., NeurIPS 2020）">
+<figcaption><span class="sno">05</span><span class="stitle">噪声参数化：均值可解析计算；代入前向关系 x_0=(x_t−√(1−ᾱ_t)ε_t)/√ᾱ_t 消去 x_0，得到 μ̄_t 的等价形式（Ho et al., NeurIPS 2020）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-06">
+<img src="slides/slide_06.png" alt="课件第6页 噪声参数化：把模型改为直接预测噪声——μ_θ(x_t,t)=(1/√α_t)(x_t−(1−α_t)/√(1−ᾱ_t)·ε_θ(x_t,t))，Noise-parameterization 即 ε_θ(x_t,t)→ε_t">
+<figcaption><span class="sno">06</span><span class="stitle">噪声参数化：把模型改为直接预测噪声——μ_θ(x_t,t)=(1/√α_t)(x_t−(1−α_t)/√(1−ᾱ_t)·ε_θ(x_t,t))，Noise-parameterization 即 ε_θ(x_t,t)→ε_t</span></figcaption>
+</figure>
+<figure class="slide" id="slide-07">
+<img src="slides/slide_07.png" alt="课件第7页 Noise Matching：L_t=D_KL(q(x_{t−1}|x_t,x_0)‖p_θ(x_{t−1}|x_t))——左侧 Derivation、右侧 Modeling，两侧高斯且方差一致、只需匹配均值">
+<figcaption><span class="sno">07</span><span class="stitle">Noise Matching：L_t=D_KL(q(x_{t−1}|x_t,x_0)‖p_θ(x_{t−1}|x_t))——左侧 Derivation、右侧 Modeling，两侧高斯且方差一致、只需匹配均值</span></figcaption>
+</figure>
+<figure class="slide" id="slide-08">
+<img src="slides/slide_08.png" alt="课件第8页 Noise Matching：均值参数化下的对应——μ̄(x_t,x_0)=(ᾱ_{t−1}β_t/(1−ᾱ_t))x_0+(α_t(1−ᾱ_{t−1})/(1−ᾱ_t))x_t，模型拟合 μ_θ(x_t,t)">
+<figcaption><span class="sno">08</span><span class="stitle">Noise Matching：均值参数化下的对应——μ̄(x_t,x_0)=(ᾱ_{t−1}β_t/(1−ᾱ_t))x_0+(α_t(1−ᾱ_{t−1})/(1−ᾱ_t))x_t，模型拟合 μ_θ(x_t,t)</span></figcaption>
+</figure>
+<figure class="slide" id="slide-09">
+<img src="slides/slide_09.png" alt="课件第9页 Noise Matching：代入前向关系 x_t=√ᾱ_t x_0+√(1−ᾱ_t)ε_t，μ̄_t 与 μ_θ 均化为 (x_t−√(1−ᾱ_t)ε)/√ᾱ_t 型加权形式">
+<figcaption><span class="sno">09</span><span class="stitle">Noise Matching：代入前向关系 x_t=√ᾱ_t x_0+√(1−ᾱ_t)ε_t，μ̄_t 与 μ_θ 均化为 (x_t−√(1−ᾱ_t)ε)/√ᾱ_t 型加权形式</span></figcaption>
+</figure>
+<figure class="slide" id="slide-10">
+<img src="slides/slide_10.png" alt="课件第10页 Noise Matching：噪声参数化——目标退化为匹配噪声 ε_t 与 ε_θ(x_t,t)">
+<figcaption><span class="sno">10</span><span class="stitle">Noise Matching：噪声参数化——目标退化为匹配噪声 ε_t 与 ε_θ(x_t,t)</span></figcaption>
+</figure>
+<figure class="slide" id="slide-11">
+<img src="slides/slide_11.png" alt="课件第11页 Noise Matching：对给定时间步 t 的损失系数——C1、C2 由 α_t、ᾱ_t、β_t 决定">
+<figcaption><span class="sno">11</span><span class="stitle">Noise Matching：对给定时间步 t 的损失系数——C1、C2 由 α_t、ᾱ_t、β_t 决定</span></figcaption>
+</figure>
+<figure class="slide" id="slide-12">
+<img src="slides/slide_12.png" alt="课件第12页 优化扩散损失 L_t：①从数据集采样 x_0 ②采样噪声 ε∼𝒩(0,I) ③生成 x_t=√ᾱ_t x_0+√(1−ᾱ_t)ε ④对 C2·‖ε_t−ε_θ(x_t,t)‖² 取梯度步">
+<figcaption><span class="sno">12</span><span class="stitle">优化扩散损失 L_t：①从数据集采样 x_0 ②采样噪声 ε∼𝒩(0,I) ③生成 x_t=√ᾱ_t x_0+√(1−ᾱ_t)ε ④对 C2·‖ε_t−ε_θ(x_t,t)‖² 取梯度步</span></figcaption>
+</figure>
+<figure class="slide" id="slide-13">
+<img src="slides/slide_13.png" alt="课件第13页 DDPM 训练与采样：损失权重设为 1——L=𝔼 C2·‖ε−ε_θ(x_t,t)‖² 与简化损失 L_simple=𝔼‖ε−ε_θ(x_t,t)‖²（原文称后者效果更好、FID 更小）">
+<figcaption><span class="sno">13</span><span class="stitle">DDPM 训练与采样：损失权重设为 1——L=𝔼 C2·‖ε−ε_θ(x_t,t)‖² 与简化损失 L_simple=𝔼‖ε−ε_θ(x_t,t)‖²（原文称后者效果更好、FID 更小）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-14">
+<img src="slides/slide_14.png" alt="课件第14页 DDPM 采样（祖先采样 Ancestral Sampling）：从估计高斯 𝒩(x_{t−1}; μ_θ(x_t,t), σ_t²I) 采样；均值 μ_θ=(1/√α_t)(x_t−(1−α_t)/√(1−ᾱ_t)ε_θ(x_t,t))，标准差设 σ_t=√β̄_t">
+<figcaption><span class="sno">14</span><span class="stitle">DDPM 采样（祖先采样 Ancestral Sampling）：从估计高斯 𝒩(x_{t−1}; μ_θ(x_t,t), σ_t²I) 采样；均值 μ_θ=(1/√α_t)(x_t−(1−α_t)/√(1−ᾱ_t)ε_θ(x_t,t))，标准差设 σ_t=√β̄_t</span></figcaption>
+</figure>
+<figure class="slide" id="slide-15">
+<img src="slides/slide_15.png" alt="课件第15页 DDPM 生成结果（Ho et al. 2020 首图）：人脸与自然图像生成，当时与 GAN 水平相当、部分场景优于 GAN">
+<figcaption><span class="sno">15</span><span class="stitle">DDPM 生成结果（Ho et al. 2020 首图）：人脸与自然图像生成，当时与 GAN 水平相当、部分场景优于 GAN</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>从均值参数化到噪声参数化，DDPM 训练与采样</h2>
+        <div class="sec-meta"><span class="time">录音：前 20 分钟（复习，休息前）</span><span class="chip">课件 5</span><span class="chip">课件 6</span><span class="chip">课件 7</span><span class="chip">课件 8</span><span class="chip">课件 9</span><span class="chip">课件 10</span><span class="chip">课件 11</span><span class="chip">课件 12</span><span class="chip">课件 13</span><span class="chip">课件 14</span><span class="chip">课件 15</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>这节课接着上节课的内容讲。刚才讲到要拟合的分布是均值和方差都已知的高斯，均值公式里同时包含 x_0 和 x_t。</p><p>但 x_0 和 x_t 不是独立的两回事：给定 x_0 可以算出 x_t（有显式表达式），反过来通过代数变换也能从 x_t 把 x_0 表示出来。</p><p>把这关系带入均值表达式、消去 x_0，就得到最终形式：表达式依然包含 x_t、不含 x_0，引入了从 x_0 到 x_t 的噪声项，两者完全等价。这是完全的代数运算，没有别的技巧。</p><p>之前均值参数化是让模型直接拟合含 x_0 的表达式，现在换成拟合等价的、不含 x_0 的表达式，两者完全一致。</p><p>新的目标里很多量都是已知的：α_t 已知、x_t 已知（去噪时你知道当前含噪变量）、ᾱ_t 已知——其实未知的只有那个噪声 ε。</p><p>换句话说，我们可以让模型去拟合这个噪声：如果模型能在给定 x_t 和 t 的情况下拟合出噪声，就能算出后验分布。</p><p>含参模型具体拟合均值还是拟合噪声是一回事，得任意一个、另一个就能算出来；选择用模型去拟合噪声的做法就叫 noise prediction（噪声预测）——这是 DDPM 在 2020 年提出的。</p><p>为什么效果这么好、要预测噪声？有一些解释角度：如果用模型去拟合均值目标，相当于是以 x_t 作为输入、输出目标里还包含 x_t 的一部分，会浪费模型的一些容量。</p><p>直接拟合噪声的话，输出目标就不包含 x_t 这些变量。当然最关键的原因还是他们在实验中发现效果好，大家可以去看看原文是怎么解释的。</p><p>基于噪声参数化，之前的 loss 可以做一些变化：从最原始的 L_T 出发，均值参数化下损失可以写成让参数化均值模型输出均值、拟合该均值做 MSE，前面的系数 C1 是直接算出的常数。</p><p>如果基于含噪数据和时间步预测对应噪声，系数变成 C2。最小化两个高斯分布的 KL 散度、方差一致时，就等价于让均值尽量接近、即最小化均值差。</p><p>训练步骤具体化：先从数据集采样一个数据点 x_0，再采样噪声 ε——因为要处理期望，这是蒙特卡洛思想。</p><p>给定 x_0 和噪声，直接用公式计算含噪的 x_t；对某时刻 t，loss 里 t 已知，就可以得到该时刻的含噪 x_t，用模型从 x_t 和 t 预测噪声，跟目标加噪数据做 MSE、乘系数 C2。</p><p>得到最终目标函数，对 θ 求导、梯度下降。换句话说，就是用模型在给定含噪数据的情况下预测对应的加噪噪声——这和 DDPM 文章里的训练方法是一样的。</p><p>原文的细节：从真实数据分布 q(x_0) 中采样一个样本，训练时还要从不同的加噪步中随机选择一个 t，再从标准高斯分布里选一个 ε；有了 t 和 x_0 就可以算出 x_t，模型从 x_t 和 t 预测噪声，做均方误差。</p><p>他们的模型对任意时刻 t 都要能预测当时的加噪噪声。跟我们刚才推导的目标函数相比有一个非常大的不同：原文把去噪目标前面的权重 C2 直接设为 1，称为简化 L（simple objective）。</p><p>文章中说把权重设为 1、以 MC 损失为目标时效果最好，FID 比不设 1 时小很多。一个简单的解释：带上权重时不同时刻 t 的去噪权重一致且被平均。</p><p>去掉后不同时间的权重相对不一致，模型可能隐含地让较小 t 时权重更大、较大 t 时权重更小。</p><p>采样过程（祖先采样）：先从标准高斯分布采样得到先验 x_T；加噪是从 1 到 T，去噪则从 T 反向逐步进行。</p><p>每步去噪遵循前述形式：用模型根据 x_t 预测噪声，再从当前信号中减去该噪声得到均值 μ_θ，再加上后面这一项高斯噪声——这其实是从以 μ_θ 为均值、σ_t 为方差的高斯分布中采样。</p><p>不断迭代、从 T 一直去噪到 1，这样的去噪结果一般叫祖先采样。训练和采样过程都非常简单：训练就是每一步预测对应的噪声，采样就是从随机高斯中不断把噪声减去、从去噪过程中采样。</p><p>虽然之前的推导非常复杂——从建模、ELBO 再推导到 loss——但最终推导到最后是一个比较简单的算法。</p><p>这是这篇文章的首图，2020 年他们就展示出这样的生成结果。当时 GAN 还非常火，但这个项目跟当时的 GAN 水平差不多。</p><p>而且不光人脸生成得比较好，自然图像和生活场景也能比 GAN 好一点。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这都是完全代数运算。现在的目标是用模型去拟合这样一个形式，大家可以看到里面其实很多量都是已知的。</p><p>选择用模型去拟合噪声的这个做法，叫做noise预测。</p><p>当然最关键的一个原因是他们发现这个效果好，这是最关键的一因。</p><p>训练和采样过程其实都是非常简单的——虽然我们之前推导非常复杂，但最终推导到最后，这其实是一个比较简单的算法。</p><p>而且它不光人脸生成得比较好，对于自然图像和生活的一些场景，能比GAN好一点。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-discussion">
+  <div class="slides"><figure class="slide" id="slide-16">
+<img src="slides/slide_16.png" alt="课件第16页 Discussion：扩散模型是层级 VAE——L_T（先验匹配）、L_t（中间隐层 KL）、L_0（重构）三项与 VAE 对应">
+<figcaption><span class="sno">16</span><span class="stitle">Discussion：扩散模型是层级 VAE——L_T（先验匹配）、L_t（中间隐层 KL）、L_0（重构）三项与 VAE 对应</span></figcaption>
+</figure>
+<figure class="slide" id="slide-17">
+<img src="slides/slide_17.png" alt="课件第17页 Discussion：扩散模型是隐变量模型、与 ELBO 相似——只是 q 固定、不参数化">
+<figcaption><span class="sno">17</span><span class="stitle">Discussion：扩散模型是隐变量模型、与 ELBO 相似——只是 q 固定、不参数化</span></figcaption>
+</figure>
+<figure class="slide" id="slide-18">
+<img src="slides/slide_18.png" alt="课件第18页 Discussion：如果把去噪步数设为一步，扩散模型的 ELBO 就退化为标准 VAE 的 ELBO">
+<figcaption><span class="sno">18</span><span class="stitle">Discussion：如果把去噪步数设为一步，扩散模型的 ELBO 就退化为标准 VAE 的 ELBO</span></figcaption>
+</figure>
+<figure class="slide" id="slide-19">
+<img src="slides/slide_19.png" alt="课件第19页 Discussion：p(x_T) 设为高斯时 L_T 为常数；与 VAE 不同，这里的 q 不参数化">
+<figcaption><span class="sno">19</span><span class="stitle">Discussion：p(x_T) 设为高斯时 L_T 为常数；与 VAE 不同，这里的 q 不参数化</span></figcaption>
+</figure>
+<figure class="slide" id="slide-20">
+<img src="slides/slide_20.png" alt="课件第20页 Discussion：重构损失 L_0 与 VAE 类似——从最近（含噪最少）隐状态恢复 x_0">
+<figcaption><span class="sno">20</span><span class="stitle">Discussion：重构损失 L_0 与 VAE 类似——从最近（含噪最少）隐状态恢复 x_0</span></figcaption>
+</figure>
+<figure class="slide" id="slide-21">
+<img src="slides/slide_21.png" alt="课件第21页 Discussion：中间层损失是 KL 散度，噪声参数化下退化为对噪声的 L2 损失">
+<figcaption><span class="sno">21</span><span class="stitle">Discussion：中间层损失是 KL 散度，噪声参数化下退化为对噪声的 L2 损失</span></figcaption>
+</figure>
+<figure class="slide" id="slide-22">
+<img src="slides/slide_22.png" alt="课件第22页 Discussion：扩散模型把一个复杂分布分解为许多简单分布——需要 T 个模型拟合每步，或用单一网络以噪声水平 t 为条件">
+<figcaption><span class="sno">22</span><span class="stitle">Discussion：扩散模型把一个复杂分布分解为许多简单分布——需要 T 个模型拟合每步，或用单一网络以噪声水平 t 为条件</span></figcaption>
+</figure>
+<figure class="slide" id="slide-23">
+<img src="slides/slide_23.png" alt="课件第23页 Discussion：噪声条件网络——模型 ε_θ(x_t,t) 以含噪图像 x_t 和时间步 t 为输入，Unet/ViT 自编码器架构、输出与数据同尺寸">
+<figcaption><span class="sno">23</span><span class="stitle">Discussion：噪声条件网络——模型 ε_θ(x_t,t) 以含噪图像 x_t 和时间步 t 为输入，Unet/ViT 自编码器架构、输出与数据同尺寸</span></figcaption>
+</figure>
+<figure class="slide" id="slide-24">
+<img src="slides/slide_24.png" alt="课件第24页 Discussion：干净数据估计——给定前向关系与噪声预测模型，从任意含噪状态估计干净数据 x̂_0=(x_t−√(1−ᾱ_t)ε_θ(x_t,t))/√ᾱ_t">
+<figcaption><span class="sno">24</span><span class="stitle">Discussion：干净数据估计——给定前向关系与噪声预测模型，从任意含噪状态估计干净数据 x̂_0=(x_t−√(1−ᾱ_t)ε_θ(x_t,t))/√ᾱ_t</span></figcaption>
+</figure>
+<figure class="slide" id="slide-25">
+<img src="slides/slide_25.png" alt="课件第25页 Discussion：去噪过程中的干净数据估计（t=T 到 t=0）——先生成整体结构、再补充细节，最后的去噪步贡献小（启发加速）">
+<figcaption><span class="sno">25</span><span class="stitle">Discussion：去噪过程中的干净数据估计（t=T 到 t=0）——先生成整体结构、再补充细节，最后的去噪步贡献小（启发加速）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-26">
+<img src="slides/slide_26.png" alt="课件第26页 Discussion：扩散模型的隐状态——不同时间步 t 的含噪/采样结果（如 T=750/500/250/60 的去噪实验，早期步决定结构）">
+<figcaption><span class="sno">26</span><span class="stitle">Discussion：扩散模型的隐状态——不同时间步 t 的含噪/采样结果（如 T=750/500/250/60 的去噪实验，早期步决定结构）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-27">
+<img src="slides/slide_27.png" alt="课件第27页 Discussion：隐空间插值——两原图 A、B 映射到 x_t 隐空间、按 λ 插值再映射回图像，得到连续真实的过渡（可用于图像编辑）">
+<figcaption><span class="sno">27</span><span class="stitle">Discussion：隐空间插值——两原图 A、B 映射到 x_t 隐空间、按 λ 插值再映射回图像，得到连续真实的过渡（可用于图像编辑）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-28">
+<img src="slides/slide_28.png" alt="课件第28页 Summary：扩散模型优点（训练目标稳定、比 GAN 少模式坍塌、易于条件/可控生成、与 score matching/流模型天然联系）与缺点（迭代采样慢、计算成本高、离散数据不直接适用）">
+<figcaption><span class="sno">28</span><span class="stitle">Summary：扩散模型优点（训练目标稳定、比 GAN 少模式坍塌、易于条件/可控生成、与 score matching/流模型天然联系）与缺点（迭代采样慢、计算成本高、离散数据不直接适用）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>扩散模型讨论，层级 VAE 噪声条件网络与隐空间</h2>
+        <div class="sec-meta"><span class="time">录音：前 20 分钟（复习，休息前）</span><span class="chip">课件 16</span><span class="chip">课件 17</span><span class="chip">课件 18</span><span class="chip">课件 19</span><span class="chip">课件 20</span><span class="chip">课件 21</span><span class="chip">课件 22</span><span class="chip">课件 23</span><span class="chip">课件 24</span><span class="chip">课件 25</span><span class="chip">课件 26</span><span class="chip">课件 27</span><span class="chip">课件 28</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>最后这部分是对 DDPM 算法的一些介绍和讨论，包括比较通用的整个扩散模型框架，大家听一下就可以了。</p><p>上面是整体从左加噪到右去噪的框架，中间是推导出的从高斯噪声到数据的中间步骤——中间这一项本质上还是 ELBO 形式、是一个可优化的目标函数。</p><p>如果把 x_1 到 x_T 写成一个流，当 x_1 到 x_T 一步到位时，中间的 diffusion loss 就没有了，相当于一步去噪结构——这种情况下扩散模型其实和 VAE 是等价的：扩散模型就是一个多步的 VAE。</p><p>对应看三个损失：prior loss 是先验图片的损失，类似于 VAE 里隐变量空间的 KL 散度——希望隐变量的先验分布和我们推断的后验分布差异非常小。</p><p>reconstruction loss 是唯一的重建损失，和 VAE 的重构项类似。不同之处在于：扩散模型每一步隐变量的维度都一样、和输入数据一致。</p><p>而 VAE 里隐变量维度比输入数据低，是特征提取的结果——扩散模型中的特征提取不是本能学习得到的。</p><p>扩散模型把数据分布拆分成许多小的条件分布，用模型拟合每一步反向去噪过程。理论上每步去噪分布不同、应该用不同的模型，但实践上 T=1000 时训练 1000 个模型不可行。</p><p>所以实际采用以时间步 t 为条件变量的单一模型：模型接收含噪数据 x_t 和 t 两个输入，把 t 作为条件变量去建模去噪过程——这样一个模型、两个输入，就可以建模不同时刻的去噪过程。</p><p>具体用什么实现（PyTorch 还是 JAX）都可以，只要保证输入输出维度一致；t 具体怎么加进网络、怎么处理，是具体的模型设计问题。</p><p>用噪声预测还是预测干净样本？从已有公式可以推断它们是等价的：前向扩散有 x_t 与 x_0 的通项公式，去噪时从 x_t 预测加性噪声，再通过代数运算（简单移项）算出对应的 x_0。</p><p>给定含噪图像后，既可以看作预测噪声，也可以看作直接从含噪样本预测干净的 x_0——都完全等价，只不过实践中有不同的效果。</p><p>看一个实验：因为不同时刻的噪声是由该时刻的特征采样造成的，从 t=T 一直去噪到 t=1 时图像会怎么变化？</p><p>注意中间每一步显示的图像不是 x_t、也不是去噪得到的噪声，而是给定当前 x_t 时预测重建的干净图像——相当于每个时刻都在预测最终的 x_0。</p><p>可以看到从最高噪声去噪的过程中，图像逐渐走向真实图像：中间变化比较大，整体结构先显现出来、再不断补充细节。</p><p>比如最后生成的是青蛙头，但中间可能像马的形状——模型在切换过程中有随机性，但它先还原图像整体信号、再补充细节。</p><p>另外最后的图像变化并不大，也就是说最后几步去噪可能没什么贡献——这个观察对加速算法的设计有启发。</p><p>中间含噪图像还有一些应用。比如插值：扩散模型可视为隐变量模型，对两个原图像 x_0^A、x_0^B 分别加上对应噪声得到 x_t^A、x_t^B。</p><p>对看似无意义的噪声进行插值（λ 线性插值），再映射回图像，得到连续真实的变化——最左最右是原图，中间每一步插值映射后都是较真实的图像。</p><p>这说明隐空间有对应的语义信息、且具有较好的结构性，可用于图像编辑等任务。不同加噪步数映射到不同深度，结果差异很大。</p><p>反映到最原始的噪声空间就不带原图的一点信息，插到中间形式就包含原图信息、插值效果比较自然连续。这就是扩散模型学习到的中间含噪图像作为隐变量的应用展示。</p><p>以上就是扩散模型这部分的全部基础内容，总结一下优缺点。优点：它提出时跟 GAN 大概同时，相比 GAN 有较好的训练和生成过程稳定性。</p><p>没有 GAN 模型的一些模式坍塌问题；可以进行很简单的条件控制（控制策略最后可能讲到）；之后会讲到扩散模型和 Score Matching、流模型有很深的内在联系。</p><p>问题：首先采样很慢——去噪过程要从纯噪声迭代采样到图像，相比之下 GAN 一步就能生成，扩散模型的计算成本非常高。</p><p>另外不太好直接应用到离散变量的系统，比如语言这种模态——语言是离散数据，直接对离散数据加噪没有太大意义，离散扩散模型是当前比较活跃的研究方向。</p><p>这些就是扩散模型的内容，我们可以先稍微休息一会儿、休息二十分钟左右，然后接着来讲下一个部分。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>它其实也是跟我们之前的变分模型一样的，通过最大似然算法去得到这个ELBO。本质上还是一个ELBO形式。</p><p>但在VAE中，隐变量维度比输入数据低，是特征提取的结果。特征提取并非本能学习。</p><p>通过一些简单的移项可以把X0放在一边……给定噪声，既可以看作预测噪声，也可以看作直接从含噪的样本预测对应干净的X0，其实这都是完全等价的。</p><p>最后去噪的步骤可能没有什么贡献。通过加速，这样的观察对加速算法的设计可能有一些启发。</p><p>插值到比较中间的形式，就会包含原图的一些信息，然后有一个比较好的插值效果，所以比较自然和连续、平缓。</p><p>我们可以先稍微休息一会儿，休息个20分钟左右，然后接着来讲下一个部分。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-energy">
+  <div class="slides"><figure class="slide" id="slide-29">
+<img src="slides/slide_29.png" alt="课件第29页 封面：Generative Models & AI4S Applications，Lecture 12 Score-based Models（刘云帆，Fall 2026）">
+<figcaption><span class="sno">29</span><span class="stitle">封面：Generative Models & AI4S Applications，Lecture 12 Score-based Models（刘云帆，Fall 2026）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-30">
+<img src="slides/slide_30.png" alt="课件第30页 Energy-based Models：回顾基于似然的模型（自回归、VAE/扩散、Normalizing Flow）与似然自由的 GAN">
+<figcaption><span class="sno">30</span><span class="stitle">Energy-based Models：回顾基于似然的模型（自回归、VAE/扩散、Normalizing Flow）与似然自由的 GAN</span></figcaption>
+</figure>
+<figure class="slide" id="slide-31">
+<img src="slides/slide_31.png" alt="课件第31页 重新思考参数化概率分布：p_θ(x) 需满足非负性与归一化——能否用任意网络 f_θ 通过变换 g(f_θ(x)) 灵活构造 p_θ(x)？">
+<figcaption><span class="sno">31</span><span class="stitle">重新思考参数化概率分布：p_θ(x) 需满足非负性与归一化——能否用任意网络 f_θ 通过变换 g(f_θ(x)) 灵活构造 p_θ(x)？</span></figcaption>
+</figure>
+<figure class="slide" id="slide-32">
+<img src="slides/slide_32.png" alt="课件第32页 非负性容易满足——g_θ(x)=f_θ²(x) 或 exp(f_θ(x)) 都非负，但一般 Σ_x g_θ(x) 不等于 1、不是合法密度">
+<figcaption><span class="sno">32</span><span class="stitle">非负性容易满足——g_θ(x)=f_θ²(x) 或 exp(f_θ(x)) 都非负，但一般 Σ_x g_θ(x) 不等于 1、不是合法密度</span></figcaption>
+</figure>
+<figure class="slide" id="slide-33">
+<img src="slides/slide_33.png" alt="课件第33页 归一化困难得多——p_θ(x) 不是简单给数据点打分，而是把固定的概率质量总量分配给整个空间；最大似然鼓励把高质量放在训练数据上">
+<figcaption><span class="sno">33</span><span class="stitle">归一化困难得多——p_θ(x) 不是简单给数据点打分，而是把固定的概率质量总量分配给整个空间；最大似然鼓励把高质量放在训练数据上</span></figcaption>
+</figure>
+<figure class="slide" id="slide-34">
+<img src="slides/slide_34.png" alt="课件第34页 Energy-based Models 定义——p_θ(x)=(1/Z_θ)exp(f_θ(x))，Z_θ 是归一化常数/配分函数（partition function）；用指数形式保证正性、网络直接建模对数密度">
+<figcaption><span class="sno">34</span><span class="stitle">Energy-based Models 定义——p_θ(x)=(1/Z_θ)exp(f_θ(x))，Z_θ 是归一化常数/配分函数（partition function）；用指数形式保证正性、网络直接建模对数密度</span></figcaption>
+</figure>
+<figure class="slide" id="slide-35">
+<img src="slides/slide_35.png" alt="课件第35页 指数形式的第三个原因——与统计物理中“能量”概念的连接，借用物理思想设计能量函数">
+<figcaption><span class="sno">35</span><span class="stitle">指数形式的第三个原因——与统计物理中“能量”概念的连接，借用物理思想设计能量函数</span></figcaption>
+</figure>
+<figure class="slide" id="slide-36">
+<img src="slides/slide_36.png" alt="课件第36页 EBM 优缺点——优点：极度灵活、f_θ 可为任意网络；缺点：配分函数 Z_θ 无法计算（intractable），精确似然评估与最大似然训练困难——能否在不计算 Z_θ 的前提下使用这类模型？">
+<figcaption><span class="sno">36</span><span class="stitle">EBM 优缺点——优点：极度灵活、f_θ 可为任意网络；缺点：配分函数 Z_θ 无法计算（intractable），精确似然评估与最大似然训练困难——能否在不计算 Z_θ 的前提下使用这类模型？</span></figcaption>
+</figure>
+<figure class="slide" id="slide-37">
+<img src="slides/slide_37.png" alt="课件第37页 Reading List：能量模型补充材料——LeCun 2006（Energy-Based Learning）、Hinton 2002、Hyvärinen 2005（Score Matching）、NCE 2010、Vincent 2011（DSM）、Song & Ermon 2019 等">
+<figcaption><span class="sno">37</span><span class="stitle">Reading List：能量模型补充材料——LeCun 2006（Energy-Based Learning）、Hinton 2002、Hyvärinen 2005（Score Matching）、NCE 2010、Vincent 2011（DSM）、Song & Ermon 2019 等</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>能量模型，灵活的概率分布参数化与配分函数难题</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（前 25 分钟）</span><span class="chip">课件 29</span><span class="chip">课件 30</span><span class="chip">课件 31</span><span class="chip">课件 32</span><span class="chip">课件 33</span><span class="chip">课件 34</span><span class="chip">课件 35</span><span class="chip">课件 36</span><span class="chip">课件 37</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>（休息后）咱们这一章的安排是：首先介绍一种传统的基于能量的模型框架——不要求大家深入掌握、只需要了解背景，因为后续提出的 Score Matching 算法很大程度上是为了解决能量模型的设计和优化问题。</p><p>之后介绍 Score Matching，再看如何把得分匹配模型转化为可采样的生成模型；最后会发现该模型与之前讲的扩散模型有一定联系。</p><p>先回顾：我们的核心思想是从数据中学习一个分布、使其尽量接近真实数据分布。之前学过的模型大概分两类：基于似然的模型和不基于似然的模型。</p><p>基于似然的模型有自回归、VAE、Normalizing Flow，扩散模型也可以归到基于似然的模型，它能用似然表示、且表达式与 VAE 很相似；不基于似然的模型只有一种，即基于能量的模型。</p><p>不同模型为了得到似然表达式都非常复杂，比如流模型要写出样本的似然表达式、还要对函数不断求变换，最后形成一个可优化的函数。</p><p>引入能量模型的很大原因，就是我们想要一种很简单、很灵活的方法去建模概率分布。</p><p>从概率分布建模的角度看，关键内容是如何表示 p(x)：它只要满足两个条件——对任意 x 概率密度非负、对所有 x 求和或积分概率质量总和为 1——就是一个合理的概率分布。</p><p>能量模型就是想考虑：能不能有一个通用、灵活的框架，用任意网络结构（比如任意全连接网络 FC）构造一个满足这两个条件的 p(x)？</p><p>非负性比较好满足：把网络输出做平方、或带到指数函数 exp(·) 的形式，输出都是非负的；但一般来说这样的输出求和不一定等于 1、不是归一化形式，所以还不能作为合法的概率密度。</p><p>那具体怎么办？最简单的方法就是把你的输出除以它整体的积分（总概率质量），归一化之后整体再积分就肯定是 1。</p><p>这个归一化参数一般写成 Z，英文叫 partition function、中文叫配分函数——它就是整体输出的一个归一化参数。</p><p>所以能量模型就是一个用网络构造概率模型的框架：对任意网络，把它的输出带到指数函数的形式、再除以归一化参数，得到的就是一个概率分布。</p><p>它不是某一种具体的模型或方法，而是一个整体框架，在图像分割、识别等领域都可以应用。</p><p>为什么要用指数函数？第一点，指数函数肯定是非负的；第二点，如果取 log 处理密度或似然，log p_θ(x) 可以写成 f_θ(x)−log Z_θ 的形式。</p><p>后面这一项对 x 来说是常数，对数似然就等于网络的输出减去配分函数项，优化时网络实际上直接拟合的是能量形式，而且 Z_θ 和这些数据点 x 完全无关。</p><p>为什么叫能量函数？这是由一些做物理的人在很早以前提出的方法，能量函数和统计物理里的能量概念相关、是为了解释统计物理中的一些问题，我们只是借用了这种形式。</p><p>针对不同的问题或数据可以设计不同的能量函数，使整体框架适用于任务模型。</p><p>这样的模型有何好处？首先非常灵活，f_θ 可以是任意网络形式；它可以表达概率密度，含义上不用再像之前的模型那样受限制。</p><p>但最大的问题是无法毫无代价地设计出这种灵活好用的东西——代价就是配分函数 Z_θ 的形式是 intractable、无法计算的：虽然能用网络形式表达，但实际上没法计算，因为无法对所有可能的 x 进行积分。</p><p>所以这个模型有点问题，似然没法计算，仅是理论上的形式。模型提出后有很多研究尝试改进，比如 RBM 等模型，在各种实现上体现如何利用能量模型、设计规避 Z_θ 的计算。</p><p>顺带说一下补充材料：如果大家对能量模型这块感兴趣的话，可以再给大家提供一些阅读材料。可以看到最早的一篇是 2006 年的能量学习教程，其实能量模型是很早以前就有的一个大概介绍，大家了解到这里就可以了。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>接下来我们讲今天的主要的内容。首先我来讲一个传统的框架，叫基于能量的模型（energy based model）。</p><p>这个模型呢，嗯，不是要求大家深入掌握的，你只要有一个background，知道它在干什么就行。</p><p>因为后续我们提出了一个叫Score Matching的算法，很大程度上就是为了解决这个能量模型的设计和优化的问题。</p><p>我们想要的一种方法，就是说想要一种很简单、很灵活的方法，去建模这种概率分布。</p><p>如果把它带进去之后，它的整体积分再积一下，那肯定就是1。</p><p>后面这一项对x来说是一个常数，所以你优化的实际上……这个网络实际上就直接拟合的是它的能量形式。</p><p>最大的问题在于说它的那个Z是没有办法去计算的，这个Z的形式是intractable的。</p><p>后来有很多的研究，都想办法去改进这个模型，比如RBM等一系列模型……在各种实现上体现怎么去利用能量模型、怎么去设计规避掉这个Z_θ的计算。</p><p>如果大家对能量模型这块比较感兴趣的话，可以再给大家提供一些阅读材料。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-score-func">
+  <div class="slides"><figure class="slide" id="slide-38">
+<img src="slides/slide_38.png" alt="课件第38页 Score Function 定义——给定密度 p_θ(x)，其 score function 为 ∇_x log p_θ(x)：对输入样本 x 求梯度，区别于训练时对参数 θ 的梯度">
+<figcaption><span class="sno">38</span><span class="stitle">Score Function 定义——给定密度 p_θ(x)，其 score function 为 ∇_x log p_θ(x)：对输入样本 x 求梯度，区别于训练时对参数 θ 的梯度</span></figcaption>
+</figure>
+<figure class="slide" id="slide-39">
+<img src="slides/slide_39.png" alt="课件第39页 EBM 的 score function——∇_x log p_θ(x)=∇_x(f_θ(x)−log Z_θ)=∇_x f_θ(x)：配分函数在求梯度时消去，可用 score 表示模型而无需计算 Z_θ">
+<figcaption><span class="sno">39</span><span class="stitle">EBM 的 score function——∇_x log p_θ(x)=∇_x(f_θ(x)−log Z_θ)=∇_x f_θ(x)：配分函数在求梯度时消去，可用 score 表示模型而无需计算 Z_θ</span></figcaption>
+</figure>
+<figure class="slide" id="slide-40">
+<img src="slides/slide_40.png" alt="课件第40页 Score Function 可视化（MIT 6.S978）：训练时降低能量使 x 符合数据分布；推断时沿 score 场/能量下降方向生成">
+<figcaption><span class="sno">40</span><span class="stitle">Score Function 可视化（MIT 6.S978）：训练时降低能量使 x 符合数据分布；推断时沿 score 场/能量下降方向生成</span></figcaption>
+</figure>
+<figure class="slide" id="slide-41">
+<img src="slides/slide_41.png" alt="课件第41页 可视化：−∇_x E(x)=∇_x log p_θ(x)——能量下降方向与概率密度上升方向互为对应">
+<figcaption><span class="sno">41</span><span class="stitle">可视化：−∇_x E(x)=∇_x log p_θ(x)——能量下降方向与概率密度上升方向互为对应</span></figcaption>
+</figure>
+<figure class="slide" id="slide-42">
+<img src="slides/slide_42.png" alt="课件第42页 动机：推断时沿学习的 score 场 ∇_x log p_θ(x) 采样生成样本，无需显式评估 p_θ(x)">
+<figcaption><span class="sno">42</span><span class="stitle">动机：推断时沿学习的 score 场 ∇_x log p_θ(x) 采样生成样本，无需显式评估 p_θ(x)</span></figcaption>
+</figure>
+<figure class="slide" id="slide-43">
+<img src="slides/slide_43.png" alt="课件第43页 怎么学 Score Function——给定数据集 D={x_1,…,x_n}，学习 s_θ(x)≈∇_x log p_data(x)；对应概率密度、i.i.d. 样本与 score 场">
+<figcaption><span class="sno">43</span><span class="stitle">怎么学 Score Function——给定数据集 D={x_1,…,x_n}，学习 s_θ(x)≈∇_x log p_data(x)；对应概率密度、i.i.d. 样本与 score 场</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>Score Function，定义 配分函数消去与采样思想</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（中）</span><span class="chip">课件 38</span><span class="chip">课件 39</span><span class="chip">课件 40</span><span class="chip">课件 41</span><span class="chip">课件 42</span><span class="chip">课件 43</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>接下来讲 Score-based Model 的内容，第一个内容就是 score function。直接给出定义：假设现在有一个概率密度 p(x)（比如 p_data），它的 score function 是这样写的——先对这个概率密度取对数、再对样本 x 求梯度。</p><p>这看起来稍微有点抽象，看右边这个例子：样本空间是一个二维平面，里面深颜色的地方代表概率密度较高的区域，可以看到这个分布是一个双峰分布。</p><p>对这个 log p(x) 对 x 求梯度，得到的就是类似于箭头的形式——梯度就是对应 log p(x) 上升最快的方向，沿着它走就不断接近概率密度比较高的地方。</p><p>换句话说，score function 是概率密度变化的一个模式，在图中定义为向量。</p><p>需要说明的是：这种定义是对 x 求导，而不是对之前优化的参数 θ 求导——对 θ 求导是在优化参数时、得到关于 θ 的梯度后再做梯度下降；而 score function 是对样本结构 x 求导，描述样本变化及其取值概率密度的变化。</p><p>为什么定义 score function？能量模型是上次提出的、为了解决能量模型的问题。看能量模型的 score function 是什么样子：把 p_θ(x) 的表达式代入定义求梯度。</p><p>对 p(x) 取 log 相当于 f_θ(x)−log Z_θ，再对这个差值对 x 求梯度；因为 Z_θ 与 x 无关，求梯度时它就消去了。</p><p>这是一个消去 Z 的方法：如果模型训练好后、系统可以直接用 score function，就摆脱了难以计算的归一化常数——可以用 score function 的梯度形式间接地表达建模的概率密度，而不用再去处理 Z_θ。</p><p>后续会看到，虽然它是一个梯度形式，但不耽误我们把它当作生成模型来采样。</p><p>可视化一下能量模型和 score 的关系。在生成模型里能量模型一般这样定义：对概率密度比较低的地方（比如噪声），通过设计让它的能量比较高；对真实的样本，让它的能量比较低。</p><p>训练好模型后，采样时就可以沿着能量下降的方向不断下降，最终得到一个真实的样本。</p><p>能量模型的梯度跟 score function 的关系：对能量函数求负梯度得到的就是 ∇_x log p(x) 的对应——能量下降的方向对应概率分布上升的方向，两者是相逆的关系。</p><p>所以前面说能量下降是一个生成过程，那我们学习到的 score 场上升过程也是一个生成过程。</p><p>如果我们有的不是分布本身、而是梯度场的话，采样就可以从一个概率比较低的点开始，沿着梯度场的微分方程一步一步往上升，得到密度比较高、比较符合真实数据分布的样子。</p><p>既然得到 score function 以后就可以采样，下一个问题就是怎么从真实数据中的样本去学对应的 score function——怎么用一个模型 s_θ(x) 逼近真实分布对应的 score。</p><p>设计是这样的：给定 n 个样本，建模一个参数化的模型去逼近真实样本对应分布（双峰分布）的得分函数。</p><p>从真实分布中采样得到训练样本，想从这些零零散散的样本中恢复出对应的向量场；恢复出向量场以后，随机采样一点、沿着向量走，就可以得到符合这个分布的样本。</p><p>这就是 score function / Score-based Model 最基本的理论思想。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>接下来我们讲这个Score-based Model的内容，第一个内容就是score function。我们直接给出它的定义。</p><p>这种定义是对x求导，而不是对之前优化的参数θ求导——之前对θ求导是在优化参数时，得到关于θ的梯度再做梯度下降。</p><p>而score function是对样本结构x求导，描述样本变化以及取这个值的概率密度的变化。</p><p>这是一个消去Z的方法：如果模型训练好之后，系统可以直接用score function，就摆脱了这个难以计算的归一化常数。</p><p>这个梯度跟score function的关系：对能量函数求负梯度得到的就是score，能量下降的方向对应概率分布上升的方向，两者是相逆的关系。</p><p>如果我们有的不是分布本身、而是这个梯度场的话，采样就可以从一个概率比较低的点开始，沿着梯度场的微分方程一步一步往上升。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-dsm">
+  <div class="slides"><figure class="slide" id="slide-44">
+<img src="slides/slide_44.png" alt="课件第44页 Denoising Score Matching：回顾生成建模——目标是对齐数据分布与模型分布的密度值">
+<figcaption><span class="sno">44</span><span class="stitle">Denoising Score Matching：回顾生成建模——目标是对齐数据分布与模型分布的密度值</span></figcaption>
+</figure>
+<figure class="slide" id="slide-45">
+<img src="slides/slide_45.png" alt="课件第45页 Score Matching：改为对齐数据与模型的 score 函数（向量场）——密度曲面匹配退化为向量场匹配">
+<figcaption><span class="sno">45</span><span class="stitle">Score Matching：改为对齐数据与模型的 score 函数（向量场）——密度曲面匹配退化为向量场匹配</span></figcaption>
+</figure>
+<figure class="slide" id="slide-46">
+<img src="slides/slide_46.png" alt="课件第46页 Score Matching 学习目标——Fisher 散度：两向量欧氏距离在所有 x 上的平均；当且仅当 s_θ(x)≈∇_x log p_data(x) 时为零">
+<figcaption><span class="sno">46</span><span class="stitle">Score Matching 学习目标——Fisher 散度：两向量欧氏距离在所有 x 上的平均；当且仅当 s_θ(x)≈∇_x log p_data(x) 时为零</span></figcaption>
+</figure>
+<figure class="slide" id="slide-47">
+<img src="slides/slide_47.png" alt="课件第47页 从 Fisher 散度到 Score Matching——log p_data 与 ∇_x log p_data 都未知；得到 surprising 的等价目标：去掉未知数据 score，仅含 ‖s_θ‖² 与 Jacobian 迹，期望可用蒙特卡洛近似（Hyvärinen, JMLR 2005）">
+<figcaption><span class="sno">47</span><span class="stitle">从 Fisher 散度到 Score Matching——log p_data 与 ∇_x log p_data 都未知；得到 surprising 的等价目标：去掉未知数据 score，仅含 ‖s_θ‖² 与 Jacobian 迹，期望可用蒙特卡洛近似（Hyvärinen, JMLR 2005）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-48">
+<img src="slides/slide_48.png" alt="课件第48页 Score Matching 目标——含 Jacobian 的迹 tr(∇_x s_θ(x))；不能很好扩展：高维数据（d 大）与高阶导数（∇_θ∇_x s_θ）带来极高计算复杂度">
+<figcaption><span class="sno">48</span><span class="stitle">Score Matching 目标——含 Jacobian 的迹 tr(∇_x s_θ(x))；不能很好扩展：高维数据（d 大）与高阶导数（∇_θ∇_x s_θ）带来极高计算复杂度</span></figcaption>
+</figure>
+<figure class="slide" id="slide-49">
+<img src="slides/slide_49.png" alt="课件第49页 Denoising Score Matching 动机——通过可解的去噪目标高效学习 s_θ：考虑干净数据加噪后的分布 q_σ(x̃)，近似其与 s_θ 的 Fisher 散度">
+<figcaption><span class="sno">49</span><span class="stitle">Denoising Score Matching 动机——通过可解的去噪目标高效学习 s_θ：考虑干净数据加噪后的分布 q_σ(x̃)，近似其与 s_θ 的 Fisher 散度</span></figcaption>
+</figure>
+<figure class="slide" id="slide-50">
+<img src="slides/slide_50.png" alt="课件第50页 DSM 条件形式——等价于条件 score 匹配；高斯噪声下 ∇log q_σ(x̃|x)=(x̃−x)/σ²，若 x̃=x+σε、ε∼𝒩(0,I) 则退化为 −ε/σ，易于计算（Vincent 2011）">
+<figcaption><span class="sno">50</span><span class="stitle">DSM 条件形式——等价于条件 score 匹配；高斯噪声下 ∇log q_σ(x̃|x)=(x̃−x)/σ²，若 x̃=x+σε、ε∼𝒩(0,I) 则退化为 −ε/σ，易于计算（Vincent 2011）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-51">
+<img src="slides/slide_51.png" alt="课件第51页 DSM 学习算法——初始化 θ 与噪声水平 σ，循环：采样 x_i 并加噪 x̃_i=x_i+σε_i、计算梯度 ∇_θ J(θ)、取梯度步；注意 s_θ 估计的是扰动分布 q_σ 而非 q_data（为什么？）">
+<figcaption><span class="sno">51</span><span class="stitle">DSM 学习算法——初始化 θ 与噪声水平 σ，循环：采样 x_i 并加噪 x̃_i=x_i+σε_i、计算梯度 ∇_θ J(θ)、取梯度步；注意 s_θ 估计的是扰动分布 q_σ 而非 q_data（为什么？）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-52">
+<img src="slides/slide_52.png" alt="课件第52页 Summary：Denoising Score Matching——score function ∇_x log p_θ(x)、参数化 s_θ≈∇_x log p_data、Score Matching（Fisher 散度、难扩展）、DSM（条件形式在高斯下易算）">
+<figcaption><span class="sno">52</span><span class="stitle">Summary：Denoising Score Matching——score function ∇_x log p_θ(x)、参数化 s_θ≈∇_x log p_data、Score Matching（Fisher 散度、难扩展）、DSM（条件形式在高斯下易算）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>Denoising Score Matching，目标变换与计算复杂度</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（后，下课前）</span><span class="chip">课件 44</span><span class="chip">课件 45</span><span class="chip">课件 46</span><span class="chip">课件 47</span><span class="chip">课件 48</span><span class="chip">课件 49</span><span class="chip">课件 50</span><span class="chip">课件 51</span><span class="chip">课件 52</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>接下来在下课之前，稍微讲一讲 score 方程到底怎么学。之前讲的所有生成模型，要做的就是匹配两个分布：真实数据分布和建模分布，构造这两个分布之间的一个距离或损失参数，然后优化。</p><p>引入 score 概念以后可以退而求其次：不匹配两个密度曲面，让两个向量场匹配也可以——如果两个向量场匹配，从学习得到的向量场采样，和从真实分布采样是一样的意思。</p><p>之前学的很多模型都是类似的思想：不再建模整个曲面，而是建模其中的一部分。</p><p>最直接的思想：让真实数据对应的 score 场（∇log p_data）和模型建模的向量场（s_θ）直接比对、求一个 MSE——也就是建模它们两个的 L2 范数，这叫 Fisher 散度，是一个非常直接的目标。</p><p>它的意义非常直观：直接衡量模型输出和目标向量场之间平均的欧式距离；优化这个目标函数，当且仅当这个范数等于零时，模型输出和目标向量才完全一致。</p><p>但有个问题：学习过程中我们不知道 p_data、不知道 log p_data 是多少、更不知道它的梯度是多少——既不知道要拟合的量，也不知道我们的模型应该输出什么。</p><p>怎么解决？底下标的是 Hyvärinen 2005 年一个非常早的工作，通过复杂推导进行转化，得到一个 surprising 的目标：优化这个直接的目标函数，等价于让模型与未知目标对比——推导就不讲了，感兴趣可以看原文章。</p><p>这个目标包含两项：一项是向量场本身的模 ‖s_θ(x)‖²，另一项是模型输出对 x 梯度的 Jacobian 矩阵的 trace。</p><p>这样做最大的贡献是消去了目标函数中未知的 p_data 项——虽然它在求期望处还存在，但可以用蒙特卡洛采样真实样本、计算平均值来处理。</p><p>但实际操作中存在一个问题：求 trace 这一项的自然复杂度非常高，和之前在 Flow Matching 层面提到的问题类似——雅可比矩阵求迹的操作复杂度高。</p><p>求迹需要对矩阵所有对角线元素求和，当数据维度 d 非常大时矩阵很大，求梯度或 trace 的计算量极高，与数据维度密切相关。</p><p>除了计算复杂度高，还有一点需要注意：目标函数算完后还要对 θ 做后续处理——你优化的目标是 θ，求完目标函数后还要对 θ 再求一次导数、得到相对于 θ 的导数才能更新参数。</p><p>也就是说，目标里对 x 求导的部分隐含地要求对 θ 求导，这一项的计算方法会更高。</p><p>所以虽然通过变换把一个没法求解的目标函数变成了一个可以构建的目标函数，但这个目标函数还是有本身复杂度太高的问题。</p><p>那具体怎么办呢？为了解决刚才的问题，需要引入一个操作——Denoising（去噪/加噪平滑）的思想：刚才讲的是用模型输出的向量直接匹配数据分布本身的向量场。</p><p>Smoothing 的思想是让模型输出的向量不直接去匹配数据分布，而是匹配一个加噪后的分布。为什么要这么做、对 Score Model 的训练到底有什么贡献，这节课先不讲，下一课再给大家讲。</p><p>咱们今天的课程就到这儿了，大家可以下课了。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>接下来在下课之前，稍微讲一讲这个score方程到底怎么学。</p><p>之前讲的所有生成模型，要做的其实都是匹配两个分布：真实数据分布和建模分布，构造这两个分布之间的一个距离或损失参数，然后去优化。</p><p>现在引入score概念之后，就可以退而求其次：不匹配两个密度曲面，让两个向量场匹配也可以。</p><p>最直接的思想：让真实数据对应的score场和模型建模的向量场直接比对、求一个MSE——也就是建模它们两个的L2范数，这叫Fisher散度，是一个非常直接的目标。</p><p>但是有一个问题：学习过程中我们不知道p_data、不知道log p_data是多少、更不知道它的梯度是多少。</p><p>底下标的是Hyvärinen 2005年一个非常早的工作，通过复杂推导进行转化，得到一个surprising的目标。</p><p>这个目标包含两项：一项是向量场本身的模，另一项是模型输出对x梯度的Jacobian矩阵的trace。</p><p>这样做最大的贡献是消去了目标函数中未知的p_data项。</p><p>但实际操作中存在一个问题：求trace这一项的自然复杂度非常高，和之前提到的类似问题一样，雅可比矩阵求迹的操作复杂度高。</p><p>除了计算复杂度高，还有一点需要注意：目标函数算完以后还要对θ做后续处理，所以这一项的计算方法会更高。</p><p>为了解决刚才的问题，需要引入一个操作——Denoising加噪平滑的思想，这节课先不讲，下一课再给大家讲。</p><p>咱们今天的课程就到这儿了，大家可以下课了。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（生成式模型与科学智能应用）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>
