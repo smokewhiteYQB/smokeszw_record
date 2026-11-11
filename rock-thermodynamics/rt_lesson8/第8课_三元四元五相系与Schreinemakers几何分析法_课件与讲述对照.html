@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>岩石热力学 · 第8课 三元与四元五相系收尾、Schreinemakers 几何分析法——相图法理检验与单变线排列｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.videos{margin-top:14px;border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.video + .video{border-top:1px solid #e4e9f0;}
+.videos h4{font-size:12.5px;font-weight:700;color:#0a1f38;background:#f2f5f9;padding:8px 12px;border-bottom:1px solid #e4e9f0;}
+.videos video{display:block;width:100%;max-height:460px;background:#0b0f14;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>岩石热力学 · 第8课 三元与四元五相系收尾、Schreinemakers 几何分析法——相图法理检验与单变线排列</h1>
+    <div class="sub">第8课 三元与四元五相系收尾、Schreinemakers 几何分析法——相图法理检验与单变线排列 ｜ 2026-11-05 ｜ 授课教师（岩石热力学）</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 49 页 · 整理 10 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-ternary-5">01 三元五相系的三种构型：五边形、四边形加内点、三角形加两个内点</option>
+<option value="sec-quaternary-5">02 四元五相系：四面体里的第五相与三峡截流的故事</option>
+<option value="sec-ch3-open">03 第3章开场：相图“法理”上对不对，和它的三种来源</option>
+<option value="sec-marker-rule1">04 标记法：缺谁标谁；法则一：扇形区不超过 180°</option>
+<option value="sec-rule1-3">05 介稳延长线、法则二与法则三：检验相图的三把尺</option>
+<option value="sec-arrange-binary">06 单变线排列格式与二组分系统：四张图里只有一张是真的</option>
+<option value="sec-ternary-topo">07 三组分系统：矿物工程图解与 I／II／III 型拓扑</option>
+<option value="sec-quaternary-topo">08 四元系相图的两种拓扑</option>
+<option value="sec-steps-apps">09 分析步骤与两个应用实例：从组分到真图</option>
+<option value="sec-final-figure">10 法理上正确的相图是怎么做出来的</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 第2章 岩石学相律.pdf（p071–079）＋第3章 多相平衡关系的Schreinemakers几何分析法（p001–043） 逐页渲染，转写原文见 record_20261105.txt。</div>
+<section class="sec" id="sec-ternary-5">
+  <div class="slides"><figure class="slide" id="slide-01">
+<img src="slides/slide_01.png" alt="课件第1页 第2章 三组分系统—三元五相系构成的含一个内点的多边形">
+<figcaption><span class="sno">01</span><span class="stitle">第2章 三组分系统—三元五相系构成的含一个内点的多边形</span></figcaption>
+</figure>
+<figure class="slide" id="slide-02">
+<img src="slides/slide_02.png" alt="课件第2页 第2章 三组分系统—三元五相系构成的含两个内点的多边形">
+<figcaption><span class="sno">02</span><span class="stitle">第2章 三组分系统—三元五相系构成的含两个内点的多边形</span></figcaption>
+</figure>
+<figure class="slide" id="slide-03">
+<img src="slides/slide_03.png" alt="课件第3页 第2章 三元五相系相图（I 型）">
+<figcaption><span class="sno">03</span><span class="stitle">第2章 三元五相系相图（I 型）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-04">
+<img src="slides/slide_04.png" alt="课件第4页 第2章 三元五相系相图（II 型）">
+<figcaption><span class="sno">04</span><span class="stitle">第2章 三元五相系相图（II 型）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-05">
+<img src="slides/slide_05.png" alt="课件第5页 第2章 三元五相系相图（III 型）">
+<figcaption><span class="sno">05</span><span class="stitle">第2章 三元五相系相图（III 型）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>三元五相系的三种构型：五边形、四边形加内点、三角形加两个内点</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 1</span><span class="chip">课件 2</span><span class="chip">课件 3</span><span class="chip">课件 4</span><span class="chip">课件 5</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>三元系统用三角形表示，三组分浓度代数和为 1，它不是笛卡尔坐标。C=3，由 3−P+2≥0 得 P≤5：三元系统最多五相平衡共存，此时自由度为零。任意取 4 相就构成一个单变度组合，C(5,4)=5，所以五相系最多有 5 个单变度组合；双变度组合是任取 3 相，C(5,3)=10 个。</p><p>五相系只有三种形式，不会再有第四种：①五相构成凸五边形；②四相构成凸四边形、第五相落在内部；③三相构成三角形、另两相落在内部。</p><p>在凸五边形上按质量平衡找 5 个单变度反应：A+M 与 S+B 的连线交叉，说明 A+M 可以合成 S+B；A+M 与 S+N 交叉，又能写出 A+M→S+N；照此把 5 条找齐，找不到第六条——硬找出来的必然与前五条之一相同。“单变度组合”和“单变度反应”是同义词：这四相严格共生于同一条单变度线上，谁也不多谁也不少，就像冰和水共存于那条平衡线上，压力定了温度就定。</p><p>四边形的情形：A+C 既可转变为 B+D，也可转变为 B+E；还要看第五相落在哪个三角形里（比如落在 ADC 内），课堂上就让大家上去找剩下的组合，像小时候玩“找三角形”的游戏。三角形加两内点的情形同理，B+D→C+E、第五相落在 A、C、E 三角内。</p><p>真实例子是拉布拉多接触变质带里干麻粒岩的矿物组合变化：靠肉眼观察的矿物组合，配合相图解释反应过程。课件左右两图外貌明显不同，说明变质反应之后共生关系变了。左下角由两相围成的区域是双变度区，三元系里双变度组合由三种相构成；全岩成分落在哪个小三角里，就对应哪三种矿物共生，越线就“别马腿”了。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>三种系统的表示方法用三角形，代表三组分浓度代数和为1。</p><p>三元五项系统一定是无变度系统，有三种形式。</p><p>但你找不出第六种，若找出则一定与前五种之一相同。</p><p>注意我用了一个同义词：单变度组合即单变度反应。</p><p>儿童的功夫都用上。这是实际研究实例：拉布拉多接触变质带中干麻粒岩的矿物组合变化。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-quaternary-5">
+  <div class="slides"><figure class="slide" id="slide-06">
+<img src="slides/slide_06.png" alt="课件第6页 第2章 四元五相系相图（I 型）">
+<figcaption><span class="sno">06</span><span class="stitle">第2章 四元五相系相图（I 型）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-07">
+<img src="slides/slide_07.png" alt="课件第7页 第2章 四元五相系相图（II 型）">
+<figcaption><span class="sno">07</span><span class="stitle">第2章 四元五相系相图（II 型）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>四元五相系：四面体里的第五相与三峡截流的故事</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 6</span><span class="chip">课件 7</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>四元系 C=4，自由度为零时 P=6，四元五相系 F=1，是单变度系统。图上画成一个立体四面体（画得不太立体）：第五相 1 位于 ABCD 构成的四面体内部，1 可以转变为 ABCD 四相，反过来四相也能合成 1；单变度反应走完，1 就消失了。</p><p>另一种画法是 ABE 作底面、C 作顶点，1 的连线穿过 ABC 面、与 ADC 面相交，按质量平衡写出单变度反应。课堂在这里卡了一下：到底是几面体？ABE、ABC 折起来就是 6 个面；还有 ABE 共面或 ADC 共面的特殊情况。</p><p>讲到四面体，老师插了一段 1988 年三峡截流：用四面体混凝土块往长江里倒，水太急，倒下去就冲走，现场力学家建议浇筑时在顶点预埋钢钩、用钢丝把四面体串起来再扔，就不会被冲走——施工前谁都没想到。</p><p>反应结束后进入四元系的双变度组合：F=2，四相构成一个双变度组合，比如 A+B+C、A+B+E；组合法则一样适用。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这是四元五项，四元五项是几遍做的？4-5+2。</p><p>1位于ABCD构成的四面体内，即1可转变为ABCD的4种项。</p><p>想起1988年三峡截流修水电站…截流时用四面体混凝土，类似硅氧四面体的块往长江里倒。</p><p>假定先排除ABB1是一个平面，那么也就是ABB和AB1是折起来的…6个，好，那就6个。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-ch3-open">
+  <div class="slides"><figure class="slide" id="slide-08">
+<img src="slides/slide_08.png" alt="课件第8页 第3章 多相平衡关系的 Schreinemakers 几何分析法（章封面）">
+<figcaption><span class="sno">08</span><span class="stitle">第3章 多相平衡关系的 Schreinemakers 几何分析法（章封面）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-09">
+<img src="slides/slide_09.png" alt="课件第9页 该相图“法理”上是否正确？">
+<figcaption><span class="sno">09</span><span class="stitle">该相图“法理”上是否正确？</span></figcaption>
+</figure>
+<figure class="slide" id="slide-10">
+<img src="slides/slide_10.png" alt="课件第10页 单变度平衡曲线：实验测定还是计算得到">
+<figcaption><span class="sno">10</span><span class="stitle">单变度平衡曲线：实验测定还是计算得到</span></figcaption>
+</figure>
+<figure class="slide" id="slide-11">
+<img src="slides/slide_11.png" alt="课件第11页 科学问题（1）：能否由已测曲线推出未测曲线">
+<figcaption><span class="sno">11</span><span class="stitle">科学问题（1）：能否由已测曲线推出未测曲线</span></figcaption>
+</figure>
+<figure class="slide" id="slide-12">
+<img src="slides/slide_12.png" alt="课件第12页 科学问题（3）：完全未做实验的体系能否预测">
+<figcaption><span class="sno">12</span><span class="stitle">科学问题（3）：完全未做实验的体系能否预测</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>第3章开场：相图“法理”上对不对，和它的三种来源</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 8</span><span class="chip">课件 9</span><span class="chip">课件 10</span><span class="chip">课件 11</span><span class="chip">课件 12</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第2章到此结束，第3章讲多相平衡关系的 Schreinemakers 几何分析法——“这章貌似很复杂，实际上特简单”。它和吉布斯相律一样，是保证相图正确的必要条件，而不是充分条件。这门课到处是不对称性。</p><p>相图是用强度变量（温度、压力，也可以是温度-浓度、压力-浓度、化学势-温度）表示相平衡关系的图。随便画一张蜘蛛网状的相图，法理上都对，你挑不出毛病；可落到具体体系，就不一定对——这正是这些法则的用处：判断你做的相图对不对。</p><p>单变线的平衡位置有三种来源：一是实验已经测出来（但不是每个体系都测过）；二是测了，不知道准不准；三是根本不做实验，直接拿数据库算——现在数据库比较完善，第6章学完你们就有本事算。可问题在于：数据库没问题、计算也没问题，算出来的就一定对吗？</p><p>课件举了两个反例。二元四相的例子，同学用别人的数据库算出来，计算过程没问题，但两根线的斜率挨得太近，位置准不准全看数据库里每相的摩尔标准生成焓、熵、体积和热容准不准。高温高压实验也一样：仪器压力误差能到 1000 个大气压（核潜艇下潜 350 米才 35 个大气压），斜率又很平，两根线互换位置从技术上也看不出来。有经验的专家不用听解释，一看图就知道你错了。</p><p>所以这些法则的本事是：对完全没做过实验的体系，能预测单变线的相对排布方式；已知三条线，能预测第四、第五条大致落在哪两条线之间——这样设实验的温压条件就不是瞎试，而是有目的。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>第2章是三相律，第3章我们来讲多相平衡关系的Thermakers几何分析法。这一章貌似很复杂，实际上特简单。</p><p>那么吉布斯法则是干啥用的呢？也是保证相图正确的必要条件，而不是充分条件。</p><p>他肯定是正确的，为啥？你找不出毛病，我乱画。但是要落实到具体的相图上，这样的图一定正确吗？不见得啊。</p><p>这5条单变线里面，比如说我知道了3条了，我可以预测第4条和第5条大概的位置。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-marker-rule1">
+  <div class="slides"><figure class="slide" id="slide-13">
+<img src="slides/slide_13.png" alt="课件第13页 变质泥质岩系 KFMASH 体系">
+<figcaption><span class="sno">13</span><span class="stitle">变质泥质岩系 KFMASH 体系</span></figcaption>
+</figure>
+<figure class="slide" id="slide-14">
+<img src="slides/slide_14.png" alt="课件第14页 Schreinemakers 标记法">
+<figcaption><span class="sno">14</span><span class="stitle">Schreinemakers 标记法</span></figcaption>
+</figure>
+<figure class="slide" id="slide-15">
+<img src="slides/slide_15.png" alt="课件第15页 Schreinemakers 方法基本公理">
+<figcaption><span class="sno">15</span><span class="stitle">Schreinemakers 方法基本公理</span></figcaption>
+</figure>
+<figure class="slide" id="slide-16">
+<img src="slides/slide_16.png" alt="课件第16页 Morey–Schreinemakers 法则（一）">
+<figcaption><span class="sno">16</span><span class="stitle">Morey–Schreinemakers 法则（一）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>标记法：缺谁标谁；法则一：扇形区不超过 180°</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 13</span><span class="chip">课件 14</span><span class="chip">课件 15</span><span class="chip">课件 16</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>先从泥质变质岩的 KFMASH 体系说起，再讲 Schreinemakers 标记法。看水的相图：某个区域标着 vapor、S（括弧里），意思是这个区域里没有 vapor、没有 ice，只有水；冰的稳定区标“无 vapor、无 water”；水-汽平衡线上没有冰，冰-水平衡线上没有汽。规则很简单——缺谁标上谁，标上谁谁就不在。对单相区显得啰嗦，对多项平衡就非常省事。</p><p>为什么一个组合只能在一侧稳定？看吉布斯自由能面：两个矿物组合各有一张 G 面，相交出一条线；交线以上哪个组合 G 高就不稳定，以下哪个 G 低就稳定。投影到 P-T 图上，这条交线就是一条单变线，线的一侧 A 组合稳定、另一侧 B 组合稳定，A 不可能两侧同时稳定。</p><p>这就是法则一：一个双变度组合在无变度点周围占的扇形区间，最多不超过 180°。若它两侧都稳定，逻辑上就矛盾了。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>你注意它咋标记的，它标记为vaporS，用括弧表示。</p><p>这个标记法是缺谁标上谁，标上谁谁不在。</p><p>在同样的温压条件下，两种组合谁的自由能低，谁稳定。</p><p>一个双变度组合在无变度点周围占成的扇形区间，最多不能超过180°。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-rule1-3">
+  <div class="slides"><figure class="slide" id="slide-17">
+<img src="slides/slide_17.png" alt="课件第17页 Morey–Schreinemakers 法则（二）">
+<figcaption><span class="sno">17</span><span class="stitle">Morey–Schreinemakers 法则（二）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-18">
+<img src="slides/slide_18.png" alt="课件第18页 Morey–Schreinemakers 法则（三）">
+<figcaption><span class="sno">18</span><span class="stitle">Morey–Schreinemakers 法则（三）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-19">
+<img src="slides/slide_19.png" alt="课件第19页 Morey–Schreinemakers 法则（四）">
+<figcaption><span class="sno">19</span><span class="stitle">Morey–Schreinemakers 法则（四）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-20">
+<img src="slides/slide_20.png" alt="课件第20页 Morey–Schreinemakers 法则（五）">
+<figcaption><span class="sno">20</span><span class="stitle">Morey–Schreinemakers 法则（五）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-21">
+<img src="slides/slide_21.png" alt="课件第21页 Morey–Schreinemakers 法则（六）">
+<figcaption><span class="sno">21</span><span class="stitle">Morey–Schreinemakers 法则（六）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-22">
+<img src="slides/slide_22.png" alt="课件第22页 单变度曲线的排列">
+<figcaption><span class="sno">22</span><span class="stitle">单变度曲线的排列</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>介稳延长线、法则二与法则三：检验相图的三把尺</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 17</span><span class="chip">课件 18</span><span class="chip">课件 19</span><span class="chip">课件 20</span><span class="chip">课件 21</span><span class="chip">课件 22</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>法则一还有等价的表现形式：单变度曲线上的反应，也可以看作它介稳延长线上的反应。水-汽线的反向延长段，是介稳态的水与介稳态的汽的平衡；冰-水线的延长段，是介稳态冰与介稳态水的平衡。课堂在这里出了个小错：先说成“过冷水”，同学当场纠正——延长段落在温度更高的一侧，应该是“过热冰”。老师认错并夸了这位同学（徐仁杰），当场发“免死金牌”：这门课保证不挂。</p><p>法则一的另一条推论：对某一相不存在的单变度线，它的介稳延长线必定落在该相稳定存在的范围之内。冰-水线延长必进汽的稳定区，水-汽线延长必进冰的稳定区——本质上仍是“稳定域不能超过 180°”。拿这条去查那张二元四相的图，一眼就能看出双变度稳定域超过了 180°，根本不用细究。所以做实验不能闷头做，要边做边用相律检验。</p><p>法则二：在任意两条单变度曲线夹持的、小于 180° 的扇形区域内，除这两条线各自缺失项之外的其余相构成的双变度组合，是这个扇形区独有的组合——不管这两条线是否相邻。用“别马腿”来记：跨过去就要出现反应。二元系里 A+B、B+C、C+D 各自只属于一个扇形，绝不会有 A+C、B+D。</p><p>法则三：凡是跨越某缺失项的单变度线（无论稳定段还是介稳延长线）的双变度组合，一定含有该缺失项；反过来不成立——含有某项，不代表它的稳定域一定跨过那根线。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>发生在单变度曲线上的反应，也可以看作是它结尾延长线上的反应。</p><p>你说得特别好，他已经超过了。我说错了，不是过冷水，所以一不小心就讲错。</p><p>首先确保你不会出现不及格，交白卷我都给你及格，拿到一个免死金牌。</p><p>在任意两条单面度曲线所夹持的小于180°的三角形区域内，它必须小于180°。</p><p>跨越它，无论它是稳定线还是健位线。他一定还有的，但倒过来不成立。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-arrange-binary">
+  <div class="slides"><figure class="slide" id="slide-23">
+<img src="slides/slide_23.png" alt="课件第23页 单变度曲线的排列（续）">
+<figcaption><span class="sno">23</span><span class="stitle">单变度曲线的排列（续）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-24">
+<img src="slides/slide_24.png" alt="课件第24页 二组分系统：1 个无变度点、4 条单变度线">
+<figcaption><span class="sno">24</span><span class="stitle">二组分系统：1 个无变度点、4 条单变度线</span></figcaption>
+</figure>
+<figure class="slide" id="slide-25">
+<img src="slides/slide_25.png" alt="课件第25页 二组分系统 矿物共生图解">
+<figcaption><span class="sno">25</span><span class="stitle">二组分系统 矿物共生图解</span></figcaption>
+</figure>
+<figure class="slide" id="slide-26">
+<img src="slides/slide_26.png" alt="课件第26页 二组分系统 加上双变度组合的稳定域范围">
+<figcaption><span class="sno">26</span><span class="stitle">二组分系统 加上双变度组合的稳定域范围</span></figcaption>
+</figure>
+<figure class="slide" id="slide-27">
+<img src="slides/slide_27.png" alt="课件第27页 二元四相系的单变度曲线">
+<figcaption><span class="sno">27</span><span class="stitle">二元四相系的单变度曲线</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>单变线排列格式与二组分系统：四张图里只有一张是真的</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 23</span><span class="chip">课件 24</span><span class="chip">课件 25</span><span class="chip">课件 26</span><span class="chip">课件 27</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>单变线的排列格式和矿物反应方程式一一对应：反应物写在左侧（第一种到第 N 种矿物），产物写在右侧，缺失项定参考线；只要写出反应式，就能排出格式。这套东西是拓扑学家推出来的，我们拿来用，就是 Schreinemakers 几何分析法。</p><p>一个反应能排出四种都成立的图：原图、镜像图、把稳定段与介稳延长段互换、以及镜像之后再互换。四条都对，但真相只有一个——要靠数据（ΔS、ΔV、斜率）和实验来定，法则的作用是先把可能性收敛到这四种。</p><p>二组分系统：F=1 时 3 相构成单变度组合，4 相时 F=0 是一个无变度点、4 条单变度线；任取两相构成双变度组合，C(4,2)=6 种，图上最多 6 个双变度区。</p><p>课堂留了一个“挖坑”的问题：有没有穿越三条单变线的双变度区域？留给大家讨论。另外，无变度点周围四根线整体逆时针或顺时针转任意角度、实线虚线互换、取镜像，从相律看都正确。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>所以只要你能写出一个矿物反应，你就能对应地把单变线排列格式排出来。</p><p>它就相当于我把这个方程式左右颠倒一下。也没问题是吧…这是和稀泥的两种排布方式，都正确。</p><p>到底哪一条是最准确的呢？这四张图是可能性，但真相只有一个。</p><p>现在提出一个问题：穿越了三条单变线的双变量区域有没有？这个我不讲，留给大家讨论一下。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-ternary-topo">
+  <div class="slides"><figure class="slide" id="slide-28">
+<img src="slides/slide_28.png" alt="课件第28页 三组分系统 无组成简并的三元五相系化学-矿物共生图解">
+<figcaption><span class="sno">28</span><span class="stitle">三组分系统 无组成简并的三元五相系化学-矿物共生图解</span></figcaption>
+</figure>
+<figure class="slide" id="slide-29">
+<img src="slides/slide_29.png" alt="课件第29页 矿物反应式与单变度曲线排列格式">
+<figcaption><span class="sno">29</span><span class="stitle">矿物反应式与单变度曲线排列格式</span></figcaption>
+</figure>
+<figure class="slide" id="slide-30">
+<img src="slides/slide_30.png" alt="课件第30页 三元五相系 I 型">
+<figcaption><span class="sno">30</span><span class="stitle">三元五相系 I 型</span></figcaption>
+</figure>
+<figure class="slide" id="slide-31">
+<img src="slides/slide_31.png" alt="课件第31页 三元系相图（拓扑 I 型）">
+<figcaption><span class="sno">31</span><span class="stitle">三元系相图（拓扑 I 型）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-32">
+<img src="slides/slide_32.png" alt="课件第32页 矿物反应式与单变度曲线排列格式">
+<figcaption><span class="sno">32</span><span class="stitle">矿物反应式与单变度曲线排列格式</span></figcaption>
+</figure>
+<figure class="slide" id="slide-33">
+<img src="slides/slide_33.png" alt="课件第33页 三元五相系 II 型">
+<figcaption><span class="sno">33</span><span class="stitle">三元五相系 II 型</span></figcaption>
+</figure>
+<figure class="slide" id="slide-34">
+<img src="slides/slide_34.png" alt="课件第34页 三元系相图（拓扑 II 型）">
+<figcaption><span class="sno">34</span><span class="stitle">三元系相图（拓扑 II 型）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-35">
+<img src="slides/slide_35.png" alt="课件第35页 矿物反应式与单变度曲线排列格式">
+<figcaption><span class="sno">35</span><span class="stitle">矿物反应式与单变度曲线排列格式</span></figcaption>
+</figure>
+<figure class="slide" id="slide-36">
+<img src="slides/slide_36.png" alt="课件第36页 三元五相系 III 型">
+<figcaption><span class="sno">36</span><span class="stitle">三元五相系 III 型</span></figcaption>
+</figure>
+<figure class="slide" id="slide-37">
+<img src="slides/slide_37.png" alt="课件第37页 三元系相图（拓扑 III 型）">
+<figcaption><span class="sno">37</span><span class="stitle">三元系相图（拓扑 III 型）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div class="sec-tt">
+        <h2>三组分系统：矿物工程图解与 I／II／III 型拓扑</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 28</span><span class="chip">课件 29</span><span class="chip">课件 30</span><span class="chip">课件 31</span><span class="chip">课件 32</span><span class="chip">课件 33</span><span class="chip">课件 34</span><span class="chip">课件 35</span><span class="chip">课件 36</span><span class="chip">课件 37</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>三组分无组成简并的三元五相系，先画化学成分-矿物共生图解，再写 5 个单变度反应，每个反应对应一种排列格式，最后得到三种拓扑型：I 型五相成凸五边形、II 型四相成四边形加一个内点、III 型三相成三角形加两个内点。</p><p>每种型都要用排列格式逐条检查是否“别马腿”：例如 II 型的五个格式 Ca-A-B-D-C、A-C-B-D-E、E-A-C-B-D、E-D-B-C-A 等，只要有一条违反，整张图就是错的。</p><p>这一套的用处是：在完全没有实验数据时，先把 5 条线的相对排布定下来；再结合少量热力学数据，就能判断四种可能性里哪一种是真图。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>第二型，四种相构成一个凸四边形，还有一个内点，对应的5根单变度反应是这样。</p><p>我们检验一下Ca-A-B-D-C、A-C-B-D-E有没有变马腿儿？没有。</p><p>所以它满足了5个单变线排列格式，这张图有可能是正确的，如果不满足，一定是错的。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-quaternary-topo">
+  <div class="slides"><figure class="slide" id="slide-38">
+<img src="slides/slide_38.png" alt="课件第38页 四元系相图（I 型）">
+<figcaption><span class="sno">38</span><span class="stitle">四元系相图（I 型）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-39">
+<img src="slides/slide_39.png" alt="课件第39页 四元系相图（II 型）">
+<figcaption><span class="sno">39</span><span class="stitle">四元系相图（II 型）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">08</span>
+      <div class="sec-tt">
+        <h2>四元系相图的两种拓扑</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 38</span><span class="chip">课件 39</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>四元系的两种拓扑：I 型是第五相落在四面体内部，反应走完 1 消失；II 型是反应走完 D 与 E 不再共生。两种都对应一组单变线与双变度组合，检查方法与三元系完全一致。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>4元系第一型，刚才我们看过在A-B-C-D四边体制内，反应完1消失。第二句，反应完D和E不再共生。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-steps-apps">
+  <div class="slides"><figure class="slide" id="slide-40">
+<img src="slides/slide_40.png" alt="课件第40页 Schreinemakers 方法分析步骤（一）">
+<figcaption><span class="sno">40</span><span class="stitle">Schreinemakers 方法分析步骤（一）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-41">
+<img src="slides/slide_41.png" alt="课件第41页 Schreinemakers 方法分析步骤（二）">
+<figcaption><span class="sno">41</span><span class="stitle">Schreinemakers 方法分析步骤（二）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-42">
+<img src="slides/slide_42.png" alt="课件第42页 应用-1：三元 FeO–Al2O3–SiO2 五相（铁辉石–铁橄榄石–石英–铁铝榴石–铁尖晶石）">
+<figcaption><span class="sno">42</span><span class="stitle">应用-1：三元 FeO–Al2O3–SiO2 五相（铁辉石–铁橄榄石–石英–铁铝榴石–铁尖晶石）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-43">
+<img src="slides/slide_43.png" alt="课件第43页 应用-1（续）：五个单变度反应">
+<figcaption><span class="sno">43</span><span class="stitle">应用-1（续）：五个单变度反应</span></figcaption>
+</figure>
+<figure class="slide" id="slide-44">
+<img src="slides/slide_44.png" alt="课件第44页 应用-1（续）：单变度曲线排列格式">
+<figcaption><span class="sno">44</span><span class="stitle">应用-1（续）：单变度曲线排列格式</span></figcaption>
+</figure>
+<figure class="slide" id="slide-45">
+<img src="slides/slide_45.png" alt="课件第45页 应用-1（续）：由热力学数据定斜率与稳定侧">
+<figcaption><span class="sno">45</span><span class="stitle">应用-1（续）：由热力学数据定斜率与稳定侧</span></figcaption>
+</figure>
+<figure class="slide" id="slide-46">
+<img src="slides/slide_46.png" alt="课件第46页 应用-2：三元 Al2O3–SiO2–H2O 五相（红柱石–蓝晶石–夕线石等）">
+<figcaption><span class="sno">46</span><span class="stitle">应用-2：三元 Al2O3–SiO2–H2O 五相（红柱石–蓝晶石–夕线石等）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-47">
+<img src="slides/slide_47.png" alt="课件第47页 应用-2（续）：单变度曲线排列">
+<figcaption><span class="sno">47</span><span class="stitle">应用-2（续）：单变度曲线排列</span></figcaption>
+</figure>
+<figure class="slide" id="slide-48">
+<img src="slides/slide_48.png" alt="课件第48页 应用-2（续）：四种可能的排列格式">
+<figcaption><span class="sno">48</span><span class="stitle">应用-2（续）：四种可能的排列格式</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">09</span>
+      <div class="sec-tt">
+        <h2>分析步骤与两个应用实例：从组分到真图</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中后）</span><span class="chip">课件 40</span><span class="chip">课件 41</span><span class="chip">课件 42</span><span class="chip">课件 43</span><span class="chip">课件 44</span><span class="chip">课件 45</span><span class="chip">课件 46</span><span class="chip">课件 47</span><span class="chip">课件 48</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>分析步骤四步。①确定系统组分和相。以花岗岩为例：早结晶的斜长石与晚结晶的钾长石不平衡；如果地表看到斜长石有强烈环带、边部与钾长石不平衡，说明这不是平衡共生组合，相律和几何分析法都不适用——不是理论没用，是方法有边界。大型花岗岩体结晶后缓慢降温、钾钠扩散，最终矿物组合可以达到平衡，所以大岩体反而能用平衡热力学分析。</p><p>岩石含的元素很多，但相图极限只能画四元；五组分以上画不出来，只能靠数学描述。所以实际做法是简化到 2–3 组分再做化学组分统计。这会不会失真？把九组分体系投影到三组分，线性代数论证过不会造成矿物关系的扭曲，可以大胆简化。</p><p>②按组合公式算出单变度反应的最大数目，写出这些反应。③用 Schreinemakers 几何分析法排出单变线格式。④用热力学数据（各相的标准摩尔生成焓、熵、体积）定出唯一正确的那张图。</p><p>应用-1：三元 FeO–Al2O3–SiO2 体系，五相为铁辉石、铁橄榄石、石英、铁铝榴石、铁尖晶石，位置已在三角图上标出。5 个单变度反应（配平）对应 5 种排列格式。按克拉伯龙方程，P-T 图斜率 = ΔS/ΔV，算出 6.7、9.0、8.38 几个斜率非常接近——高温高压实验根本区分不开这几根线。</p><p>判稳定侧的规则：反应熵 ΔS 大（产物熵减反应物熵为正），产物组合在高温侧；ΔS 小则在低温侧。ΔV 为正（产物体积更大），产物在低压侧；ΔV 为负则在高压侧。用这套数据就能从四种可能里挑出真图。</p><p>应用-2：三元 Al2O3–SiO2–H2O 五相（红柱石、蓝晶石、夕线石那一套），同样排格式、四种可能、按数据收敛。老师最后说“丢了一张图”——最终正确的图把稳定段和介稳段区分开，是这样的图纸。今天超时一分钟，剩下时间自由提问。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>若在地表看到的花岗岩体中，斜长石有强烈环带且边部与钾长石不平衡，这说明不是平衡共生矿物组合。</p><p>五组分以上无法绘图，只能靠数学方法描述，几何方法已经失效。</p><p>根据克拉伯龙方程，P-T图的斜率就是反应的熵除以反应的体积。</p><p>反应的熵如果大的话，产物组合应该位于高温侧。</p><p>真抱歉，这个丢了一张图，最终的一张图不是这个样子的。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-final-figure">
+  <div class="slides"><figure class="slide" id="slide-49">
+<img src="slides/slide_49.png" alt="课件第49页 法理上正确相图的制作：逐点厘定各无变度点周边的单变线">
+<figcaption><span class="sno">49</span><span class="stitle">法理上正确相图的制作：逐点厘定各无变度点周边的单变线</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">10</span>
+      <div class="sec-tt">
+        <h2>法理上正确的相图是怎么做出来的</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）</span><span class="chip">课件 49</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>把每个无变度点周边的单变线都厘定正确，整张蜘蛛网就织成了。这就是本章的落脚点：法则负责收敛可能性，数据负责定唯一答案，实验负责验证——三者缺一不可。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>法理上正确相图的制作，基于所有无变度点周边各个单变线的准确厘定。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（岩石热力学）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>矿物物理学 · 第17课 第一性原理计算应用（5.3）——布里奇曼石建模、VASP参数、状态方程与相图｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.videos{margin-top:14px;border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.video + .video{border-top:1px solid #e4e9f0;}
+.videos h4{font-size:12.5px;font-weight:700;color:#0a1f38;background:#f2f5f9;padding:8px 12px;border-bottom:1px solid #e4e9f0;}
+.videos video{display:block;width:100%;max-height:460px;background:#0b0f14;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>矿物物理学 · 第17课 第一性原理计算应用（5.3）——布里奇曼石建模、VASP参数、状态方程与相图</h1>
+    <div class="sub">第17课 第一性原理计算应用（5.3）——布里奇曼石建模、VASP参数、状态方程与相图 ｜ 2026-11-05 ｜ 张志刚（矿物物理学）</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 19 页 · 整理 8 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-recap-plan">01 开场：上节课回顾与本节课任务</option>
+<option value="sec-mantle-minerals-database">02 地幔矿物组合、命名规则与晶体数据库</option>
+<option value="sec-vesta-build">03 用 VESTA 搭建布里奇曼石单胞</option>
+<option value="sec-export-poscar-potcar">04 多面体显示、导出 POSCAR 与拼接 POTCAR</option>
+<option value="sec-incar-submit">05 INCAR 参数、提交任务与读取输出</option>
+<option value="sec-eos">06 状态方程：从数据点到热力学自洽体系</option>
+<option value="sec-phase-diagram">07 相图判据、自由能与后钙钛矿</option>
+<option value="sec-homework">08 课后作业与提交要求</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 矿物物理2026-5.3.pdf 逐页渲染，转写原文见 record_20261105.txt。</div>
+<section class="sec" id="sec-recap-plan">
+  <div class="slides"><figure class="slide" id="slide-01">
+<img src="slides/slide_01.png" alt="课件第1页 2026《矿物物理学》课程——第一性原理计算（授课人：张志刚，中国科学院地质与地球物理研究所）">
+<figcaption><span class="sno">01</span><span class="stitle">2026《矿物物理学》课程——第一性原理计算（授课人：张志刚，中国科学院地质与地球物理研究所）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-02">
+<img src="slides/slide_02.png" alt="课件第2页 330GPa单质铁的密度是多少？（铁的第一性原理计算_课后操作指南.pdf）">
+<figcaption><span class="sno">02</span><span class="stitle">330GPa单质铁的密度是多少？（铁的第一性原理计算_课后操作指南.pdf）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-03">
+<img src="slides/slide_03.png" alt="课件第3页 80GPa布里奇曼石的密度是多少？（布里奇曼石_80GPa_操作指南.pdf）">
+<figcaption><span class="sno">03</span><span class="stitle">80GPa布里奇曼石的密度是多少？（布里奇曼石_80GPa_操作指南.pdf）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>开场：上节课回顾与本节课任务</h2>
+        <div class="sec-meta"><span class="time">00:00:00–03:20</span><span class="chip">课件 1</span><span class="chip">课件 2</span><span class="chip">课件 3</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>上课前先提醒一句：课程网站上下载的赝势和结构文件都有版权，仅供我们自己学习使用，不要外传，也不要去改动文件夹里的内容，保持原样就好。上节课课后我给大家写了一个操作指南，现在大概收了12位同学的作业，做得都挺好，课前也问了几位同学，基本没有问题；有同学遇到文件问题，课后再重新提交一下。</p><p>上节课我们算的是330GPa单质铁的密度，这节课换成80GPa布里奇曼石的密度。问题的形式一模一样，但体系复杂了：铁是单质，布里奇曼石是镁、硅、氧三种元素。整个课程是从慢到快，如果这节课能把这个问题走通，后面更复杂的问题大家慢慢就能找到感觉。</p><p>先把这个问题的前提说清楚：整个模拟里我们都假设原子的结构不变——这个结构可能来自前面的工作，可能来自实验，也可能来自计算。定好结构之后，才用第一性原理去算它的能量、密度和各种性质。一个盒子里就是一个单胞，原子的排布理论上可以有无限多种；在某个温压条件下为什么采用这一种结构，恰恰是这几年矿物物理的重大突破之一——把机器学习、各种推荐性的方法用进来，给定若干种原子就能预测出可能的结构。上节课展示过氯化钠：生活中食盐是一氯一钠，但第一性原理可以预测出很多很奇怪的结构，比如三氯一钠；在极端温压条件下原子排布会发生变化。为什么会变，根本原理就是这节课要讲的。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这个文件最好不要外传，这是有版权的文件，仅供我们自己学习使用。</p><p>整个课程是从慢到快。如果这节课能把这个问题解决，后面更复杂的问题大家慢慢地就可以找到感觉了。</p><p>整个模拟或者计算里边，原子的结构是不变的。</p><p>在极限温压条件下，这些原子的排布都会发生变化。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-mantle-minerals-database">
+  <div class="slides"><figure class="slide" id="slide-04">
+<img src="slides/slide_04.png" alt="课件第4页 常见地幔矿物的成分与结构如何？——Forsterite/Wadsleyite/Ringwoodite（Mg2SiO4）、Enstatite/Diopside/Bridgmanite/Post-Perovskite（MgSiO3）、Pyrope（Mg3Al2Si3O12）、Majorite、Periclase（MgO）、Calcium Silicate Perovskite（CaSiO3）">
+<figcaption><span class="sno">04</span><span class="stitle">常见地幔矿物的成分与结构如何？——Forsterite/Wadsleyite/Ringwoodite（Mg2SiO4）、Enstatite/Diopside/Bridgmanite/Post-Perovskite（MgSiO3）、Pyrope（Mg3Al2Si3O12）、Majorite、Periclase（MgO）、Calcium Silicate Perovskite（CaSiO3）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-07">
+<img src="slides/slide_07.png" alt="课件第7页 其他晶体数据库：American Mineralogist Crystal Structure Database（rruff.geo.arizona.edu/AMS/amcsd.php）、Crystallography Open Database（crystallography.net/cod）、THE RRUFF DATABASE（rruff.net）">
+<figcaption><span class="sno">07</span><span class="stitle">其他晶体数据库：American Mineralogist Crystal Structure Database（rruff.geo.arizona.edu/AMS/amcsd.php）、Crystallography Open Database（crystallography.net/cod）、THE RRUFF DATABASE（rruff.net）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>地幔矿物组合、命名规则与晶体数据库</h2>
+        <div class="sec-meta"><span class="time">03:20–13:25</span><span class="chip">课件 4</span><span class="chip">课件 7</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>先看地幔的相图。随着深度从地表往地幔深处走，实验和计算都能告诉我们主要矿物大概占多少、晶体结构是什么。上地幔大致是橄榄石、辉石加石榴石，其中橄榄石能占到六成左右；温度压力升高，在大约410公里处橄榄石变成瓦兹利石，再往深处（约520公里）变成林伍德石；到了下地幔，主角就换成布里奇曼石、镁方铁矿和钙硅钙钛矿，D'' 层里还有后钙钛矿。这些名字大家可能觉得奇怪——为什么都像人名？</p><p>这正是国际矿物学界的习惯：矿物名多以 ite 结尾，而且必须有在自然界找到的真实样品。拿到样品、解出结构、把成分和性质分析清楚的人，才有权提出命名建议，再由国际矿物学联合会审定。所以文献里那些只在计算或高温高压人工合成里出现的相，往往还没有正式名字，只能用结构类型来称呼——比如布里奇曼石在找到天然样品之前，大家一直叫它“钙钛矿”，因为它的结构非常接近 CaTiO3。布里奇曼本人是高压物理的先驱、拿过诺贝尔物理学奖；林伍德是澳大利亚著名的地球物理学家。这些名字背后都是这个领域的学术大家。</p><p>要建这些矿物的结构，靠的是晶体学数据库。课上用的是俄罗斯的 IEM 网站（database.iem.ac.ru），这几年上课用下来比较稳定——现在很多晶体学数据库因为各种原因访问不了。它的检索方式很直接：按化学元素筛选，比如布里奇曼石就输入 Mg、Si、O 三种元素，逗号隔开，勾选“只有这几种元素”，就能把相关卡片都列出来。每一张卡片相当于从文献里抠出来的一组数据，可能适用不同的温压条件，我们要挑一个跟目标条件接近的。卡片第一栏是简表：化学式、晶系、空间群、晶格参数、Z 值，点开“For information”才是完整数据。除了 IEM，还有美国的 AMCSD（rruff.geo.arizona.edu/AMS/amcsd.php）、Crystallography Open Database（crystallography.net/cod）和 RRUFF 数据库（rruff.net），都是常用的结构来源。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>橄榄石随着温度和压力的升高，主要在410公里到520公里这个地方，会从浅部的橄榄石变成瓦兹利石。</p><p>这些所有有名称的矿物，实际上是需要你在自然界里边找到真实的样子，而不是人工合成的。</p><p>在发现天然样品之前，文献里都用“钙钛矿”这个名字来命名这种矿物。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-vesta-build">
+  <div class="slides"><figure class="slide" id="slide-05">
+<img src="slides/slide_05.png" alt="课件第5页 更复杂晶体的建模：利用晶体数据库——Space Group、Lattice Parameters、Wyckoff Positions（database.iem.ac.ru）">
+<figcaption><span class="sno">05</span><span class="stitle">更复杂晶体的建模：利用晶体数据库——Space Group、Lattice Parameters、Wyckoff Positions（database.iem.ac.ru）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-06">
+<img src="slides/slide_06.png" alt="课件第6页 更复杂晶体的建模：VESTA（jp-minerals.org/vesta/en）——Bridgemanite 布里奇曼石">
+<figcaption><span class="sno">06</span><span class="stitle">更复杂晶体的建模：VESTA（jp-minerals.org/vesta/en）——Bridgemanite 布里奇曼石</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>用 VESTA 搭建布里奇曼石单胞</h2>
+        <div class="sec-meta"><span class="time">13:25–28:08</span><span class="chip">课件 5</span><span class="chip">课件 6</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>建模用 VESTA（jp-minerals.org/vesta/en），官网可以直接下载，课上也带大家装一遍。打开后 File → New Structure，第一张卡片先给结构起个名字，写个自己能记住的编码就行——它只是提醒你这是什么结构。接着进入单胞定义：上节课建铁的时候，第三到第五行定义的是平行六面体，这里同理，只是布里奇曼石是正交晶系，三个轴互相垂直。</p><p>空间群要选第62号。结晶学里一共只有230个空间群，所有晶体结构都落在这230种里。VESTA 的列表里，62号有 Pnma 和 Pbnm 两种写法——它们是同一个空间群的不同设置（标准设置与轴变换），就像普通话和方言，意思一样。我们选列表里对应的那一项即可。选完空间群，晶格参数按数据库卡片填：a=4.7321、b=4.892、c=6.36，单位是 Å；因为是正交晶系，α、β、γ 都是90度，数据库里显示的也是90度，不用改。</p><p>下一步定义原子位置，点 Structure parameters。卡片上写 Z=4，一个化学式 MgSiO3 有5个原子，所以一个单胞里是 4×5=20 个原子；但通过对称性约化之后，独立的原子只有4个：Mg 一种、Si 一种、O 两种。我们就在表里把这4个原子逐行录进去：元素、label（两个氧要区分，写成 O1、O2）、Wyckoff 位置、分数坐标 x/y/z。这一步比较繁琐，小数点也多，一定要睁大眼睛跟数据库逐个核对。还有一个操作细节：输完数字要把鼠标焦点移到别处，值才会真正写进表里——刚才有人输完 0.25 没进去，就是因为焦点还在输入框里。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>整个有230个非标空间群，所有的这个晶体结构里面只有230种。</p><p>它实际上代表的是跟PNMA是同一个空间群，但是习惯上朝向不一样。</p><p>虽然单胞里有20个原子，但通过对称性扣减，最后独立的原子只有四个。</p><p>把焦点一换，0.25就进到里面去，这代表输入成功。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-export-poscar-potcar">
+  <div class="slides"><figure class="slide" id="slide-08">
+<img src="slides/slide_08.png" alt="课件第8页 POTCAR：cat ~/POTPAW/LDA/Mg/POTCAR ~/POTPAW/LDA/Si/POTCAR ~/POTPAW/LDA/O/POTCAR > POTCAR；grep “TITEL”/“ZVAL”/“ENMAX” POTCAR">
+<figcaption><span class="sno">08</span><span class="stitle">POTCAR：cat ~/POTPAW/LDA/Mg/POTCAR ~/POTPAW/LDA/Si/POTCAR ~/POTPAW/LDA/O/POTCAR > POTCAR；grep “TITEL”/“ZVAL”/“ENMAX” POTCAR</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>多面体显示、导出 POSCAR 与拼接 POTCAR</h2>
+        <div class="sec-meta"><span class="time">28:08–38:00</span><span class="chip">课件 8</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>结构建好点 OK，默认显示是一堆小球，不太像课件里那样好看。这时要定义成键：在边界（Bounding）里把盒子调大一点，再设 Si–O 的键长阈值，比如先取1.6 Å，再放到1.8 Å，晶体骨架就出来了。文献里常用多面体表达，所以再把硅氧四面体、镁氧八面体显示成多面体，调一下透明度，就能看清里面的排布。</p><p>显示满意后导出：File → Export data，数据类型很多，选 .xsf 后缀直接输出；回到桌面就多了一个文件，用文本编辑器打开，它就是刚才那套结构数据——程序从数据库提取数据后自动生成的，形式上就是一个 POSCAR。以后处理石英、石榴石这类一般矿物，原始数据比这个多得多，但流程一样。把文件拷到服务器上新建的目录里，重命名为 POSCAR，第一个关键输入文件就准备好了。</p><p>和我们上节课不一样的地方在于，这次体系有三种元素，POTCAR 要把三个元素的赝势拼成一个长文件：cat Mg/POTCAR Si/POTCAR O/POTCAR > POTCAR。这里最容易出问题，包括我自己都犯过：拼接顺序必须和 POSCAR 第六行的元素顺序一一对应。程序并不认元素符号，它认的是顺序——你把 Mg 写成别的字母它也不管，它只按顺序把第一段赝势配给第一种元素。顺序一错，它不会报错，只会把你的结果算得很奇怪。所以养成习惯：拼完用 grep “TITEL” POTCAR、grep “ZVAL” POTCAR、grep “ENMAX” POTCAR 核对一遍。还有一个经验：硅酸盐体系里 LDA 的赝势更接近实验数据，课件里用的就是 LDA。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>文献中经常用多面体的形式来表达，所以我们将硅氧四面体和八面体进行显示。</p><p>这个文件可以用文本编辑器打开。这就是刚才生成的数据。</p><p>一不小心就会搞错，只能说是上一代就留下来的inconvenient。</p><p>它并不认你这个符号，也不认这个Mg作为镁，它认的是所有的里面的数字。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-incar-submit">
+  <div class="slides"><figure class="slide" id="slide-09">
+<img src="slides/slide_09.png" alt="课件第9页 INCAR（vasp.at/wiki/index.php/INCAR）——不要盲目相信、不要傻瓜式操作：ENCUT=500、EDIFF=1e-6、KSPACING=0.3 …">
+<figcaption><span class="sno">09</span><span class="stitle">INCAR（vasp.at/wiki/index.php/INCAR）——不要盲目相信、不要傻瓜式操作：ENCUT=500、EDIFF=1e-6、KSPACING=0.3 …</span></figcaption>
+</figure>
+<figure class="slide" id="slide-10">
+<img src="slides/slide_10.png" alt="课件第10页 INCAR 参数：ISTART=0、NPAR=4、ENCUT=500、KSPACING=0.3、IBRION=2、NSW=100、PSTRESS=800、ISYM=2、ISIF=3；对比 CONTCAR 和 POSCAR">
+<figcaption><span class="sno">10</span><span class="stitle">INCAR 参数：ISTART=0、NPAR=4、ENCUT=500、KSPACING=0.3、IBRION=2、NSW=100、PSTRESS=800、ISYM=2、ISIF=3；对比 CONTCAR 和 POSCAR</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>INCAR 参数、提交任务与读取输出</h2>
+        <div class="sec-meta"><span class="time">38:00–52:00</span><span class="chip">课件 9</span><span class="chip">课件 10</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>INCAR 是最容易被“傻瓜式操作”带偏的地方。官网上参数有几百个，每个都有默认值，但不要盲目相信默认值，也不要照着模板无脑复制。这节课的 INCAR 写的是：ISTART=0（全新计算，不从中间文件续算，避免断电或算错后读到脏数据）、NPAR=4（并行参数，经验是把分配核数开根号取整，24核取4或6，效率最高；取1或24都会慢不少）、ENCUT=500（平面波截断能，越大越贵）、KSPACING=0.3（倒空间 k 点间距，值越小网格越密、计算量越大）、IBRION=2（共轭梯度结构优化）、NSW=100（最大优化步数）、PSTRESS=800、ISYM=2（保持初始对称性；取0则打破对称性去试更多可能）、ISIF=3。</p><p>PSTRESS 的单位是 kbar，1 GPa = 10 kbar，所以80GPa 写作 800，330GPa 写作 3300，单位换算一定不能错。ISIF 决定优化哪些自由度：取3时原子位置、晶胞三个边长和体积一起变，自由度最大，能一次性收敛到目标压力下的晶格参数；取2时只动原子、晶胞固定，相当于实验里“夹住”样品；取4时体积固定但形状可变，可以调出静水压状态——压力张量对角线三个分量接近相等、非对角接近零。每个参数都像一个按钮，理解含义比记住数值重要。</p><p>输入文件齐了，把上节课的任务调度脚本也拷过来，课前请超算管理员预留了机器，在脚本里加一句 reservation=physic_chip_1105，排队时间会短很多，然后 sbatch 提交。算完先确认是收敛结束而不是被中断，再看 OSZICAR 最后一行——前面迭代过程中会出现很多中间值，只取最后收敛的那一行。OSZICAR 里有两个能量：E0 是零温下的电子能量，E 则包含电子熵的贡献（E = E0 + TS），判断结构稳定性要用收敛后的能量。OUTCAR 是信息最全的输出，常用 grep “external pressure”、grep “in kB”、grep “volume of cell”、grep “TOTEN” 把关键量提出来。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>不要盲目相信、不要傻瓜式操作。</p><p>经验取法是：若任务脚本中分配核数为24，对该数开根号取整，效率较高。</p><p>注意它的单位是千巴，1GPa等于10个千巴，大家需做单位换算。</p><p>只取最后一行，因为前面它还会出现中间数。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-eos">
+  <div class="slides"><figure class="slide" id="slide-11">
+<img src="slides/slide_11.png" alt="课件第11页 状态方程（Equation of State, EOS）：状态变量之间的关系——理想气体、维里方程、一般形式">
+<figcaption><span class="sno">11</span><span class="stitle">状态方程（Equation of State, EOS）：状态变量之间的关系——理想气体、维里方程、一般形式</span></figcaption>
+</figure>
+<figure class="slide" id="slide-12">
+<img src="slides/slide_12.png" alt="课件第12页 固体、熔体状态方程：Murnaghan EOS、Birch-Murnaghan EOS、Vinet EOS、Mie-Gruneisen EOS（Cold Part + Thermal Part）、Debye EOS">
+<figcaption><span class="sno">12</span><span class="stitle">固体、熔体状态方程：Murnaghan EOS、Birch-Murnaghan EOS、Vinet EOS、Mie-Gruneisen EOS（Cold Part + Thermal Part）、Debye EOS</span></figcaption>
+</figure>
+<figure class="slide" id="slide-13">
+<img src="slides/slide_13.png" alt="课件第13页 相变、状态方程、弹性性质密切关联（Stixrude & Lithgow-Bertelloni, 2005, GJI；Zhang et al., 2013, EPSL）">
+<figcaption><span class="sno">13</span><span class="stitle">相变、状态方程、弹性性质密切关联（Stixrude & Lithgow-Bertelloni, 2005, GJI；Zhang et al., 2013, EPSL）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>状态方程：从数据点到热力学自洽体系</h2>
+        <div class="sec-meta"><span class="time">52:00–01:04:00</span><span class="chip">课件 11</span><span class="chip">课件 12</span><span class="chip">课件 13</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>我们每个人算一个体积点、得到一个能量，把点连起来拟合成曲线——但拟合本身不是目的，目的是它背后的偏导关系。自由能对体积的一阶偏导就是压力，二阶偏导对应体弹模量；这套热力学理论被爱因斯坦称为最漂亮的理论体系之一，因为所有偏导关系都是自洽的。每个实验给出一个数据点，我们则用带参数的物理表达式去描述这些点，这就是状态方程（EOS）。</p><p>状态方程的一般形式，是把温度、压力、体积、成分这些关键物理量联系起来。最简单的出发点是理想气体 PV=nRT，它完全不考虑原子间相互作用；考虑相互作用就把高阶项一项项加上去，得到维里方程。固体和熔体常用的是另一组：Murnaghan、Birch-Murnaghan、Vinet、Mie-Grüneisen（分冷项和热项）、Debye。岩石学和矿物物理的模拟程序里，用的基本都是这一类形式。</p><p>为什么不用多项式？多项式点数够多总能拟合得很好，但那是过拟合——一旦外推到数据范围之外，或者拿去做微分、积分，就会出现很荒唐的结果。Birch-Murnaghan 这类 EOS 只有三个参数：V0 是零压体积、K0 是零压体积模量、K0' 是体积模量对压力的导数，三个参数三个点就能定出整条曲线，而且从极限条件推导出来，物理意义清楚，做微分积分都稳。学有余力的同学可以用 Python 拿布里奇曼石的三到五个点拟合一下 V0，试试看。</p><p>再往上走一层：从自由能出发，一阶变分得压力，二阶变分得体弹模量，再结合剪切模量就能算出地震波速。这套方程既能算相变、相平衡，又能算弹性性质，实际上把地球物理和地球化学在最底层接了起来。这些参数非常依赖高压实验和第一性原理计算，而它又是比第一性原理更高一层的理论框架；第六章讲上地幔、下地幔矿物组合怎么出来，用的就是这套自洽方法。同样的思路不只适用于地球，火星、月球这些类地行星内部的矿物组合和物质随深度的变化，都可以这样推。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我们这个作用不仅仅是拟合而已，而我们关注的是它这个偏导关系。</p><p>每个状态方程跟咱们刚刚才一直练习的这个POSCAR文件一样的，它可以用一套形式对不同的物质产生一堆参数。</p><p>3个数据点，只要3个数据点就可以得到整个曲线。</p><p>这套方程实际上实现了地球物理和地球化学的一个最底层的连接。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-phase-diagram">
+  <div class="slides"><figure class="slide" id="slide-14">
+<img src="slides/slide_14.png" alt="课件第14页 相变与相图：物质科学的“藏宝图”——冰-Ih（P63/mmc）">
+<figcaption><span class="sno">14</span><span class="stitle">相变与相图：物质科学的“藏宝图”——冰-Ih（P63/mmc）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-15">
+<img src="slides/slide_15.png" alt="课件第15页 相变的底层物理原理：自由能与化学势——水往低处流、球在曲面的稳定性、热、物质相变与反应">
+<figcaption><span class="sno">15</span><span class="stitle">相变的底层物理原理：自由能与化学势——水往低处流、球在曲面的稳定性、热、物质相变与反应</span></figcaption>
+</figure>
+<figure class="slide" id="slide-16">
+<img src="slides/slide_16.png" alt="课件第16页 相变的底层物理原理：自由能与化学势（示意图）">
+<figcaption><span class="sno">16</span><span class="stitle">相变的底层物理原理：自由能与化学势（示意图）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-17">
+<img src="slides/slide_17.png" alt="课件第17页 矿物物理重要发现：后钙钛矿（post-perovskite）">
+<figcaption><span class="sno">17</span><span class="stitle">矿物物理重要发现：后钙钛矿（post-perovskite）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-18">
+<img src="slides/slide_18.png" alt="课件第18页 布里奇曼石（钙钛矿）与后钙钛矿——思考：如何比较两种结构的稳定性？（Oganov & Ono, 2004, Nature 430: 445-448，后钙钛矿结构参数在该文献中查找）">
+<figcaption><span class="sno">18</span><span class="stitle">布里奇曼石（钙钛矿）与后钙钛矿——思考：如何比较两种结构的稳定性？（Oganov & Ono, 2004, Nature 430: 445-448，后钙钛矿结构参数在该文献中查找）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div class="sec-tt">
+        <h2>相图判据、自由能与后钙钛矿</h2>
+        <div class="sec-meta"><span class="time">01:04:00–01:14:00</span><span class="chip">课件 14</span><span class="chip">课件 15</span><span class="chip">课件 16</span><span class="chip">课件 17</span><span class="chip">课件 18</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>相图是物质科学的“藏宝图”。水的相图大家最熟：什么温度压力下冰升华成气、液体沸腾、高压下形成新的冰相；每条线都是两相共存的边界，每个区域是一种稳定相。冰-Ih 是六方结构（P63/mmc），高压下还有 Ice II、VI、VII 等等。矿物也一样：红柱石、蓝晶石、夕线石的界线为什么这么斜，为什么某个温压区间里这种结构最稳定，判据是什么？</p><p>判据就是自由能。固定温度、改变压力，把 A 相和 B 相的自由能同时算出来比较：哪一相的自由能低，哪一相就稳定。高压下 B 相的体积小，PV 项随压力增长得慢，所以越过交点之后 B 更稳定——这就是相变压力。如果固定压力改温度，或者用 T–V 做自变量比较亥姆霍兹自由能，道理一样。</p><p>这里要特别注意 G 的定义：G = U + PV − TS。我们现在的第一性原理计算是0 K、没有温度，TS 项为零，所以实际比较的是 U + PV，也就是焓 H。做作业时比较两相稳定性，就可以把两个相的 H 随压力画成两条曲线，交点就是相变压力；也可以固定压力看温度，或者从其他热力学量出发看高温下的相态。</p><p>这套方法最有名的成果之一就是后钙钛矿。布里奇曼石（钙钛矿结构）是下地幔最主要的矿物，但 Oganov 和 Ono 在2004年发表在 Nature 上的工作指出，在 D'' 层更高的压力下，MgSiO3 会转变成后钙钛矿结构（CaIrO3 型，空间群 Cmcm）——这个发现改变了我们对下地幔底部和地幔对流方式的认识，后钙钛矿的结构参数就是在那篇文献里找。课后练习就是拿这两个相，算0到140GPa 的能量变化：A 相取钙钛矿、B 相取后钙钛矿，画出两条曲线，看交点落在哪里，就能判断高压下到底哪个相更稳定。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>相图是物质科学的“藏宝图”。</p><p>为什么在这样一个温压条件下，这个气液体就会变成气体？它的判据是什么？</p><p>G实际上等于U+PV减去TS，也就是G=U+PV−TS。</p><p>目前这个温度是没有的，所以这一项是没有的，实际上就是U+PV。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-homework">
+  <div class="slides"><figure class="slide" id="slide-19">
+<img src="slides/slide_19.png" alt="课件第19页 课后作业：1、继续熟悉VASP的输入输出；2、构建典型地幔矿物的POSCAR文件；3、用VASP计算0~140GPa的MgSiO3-pv和MgSiO3-ppv的性质（11.8周日晚20:00截止，send2me.cn）">
+<figcaption><span class="sno">19</span><span class="stitle">课后作业：1、继续熟悉VASP的输入输出；2、构建典型地幔矿物的POSCAR文件；3、用VASP计算0~140GPa的MgSiO3-pv和MgSiO3-ppv的性质（11.8周日晚20:00截止，send2me.cn）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">08</span>
+      <div class="sec-tt">
+        <h2>课后作业与提交要求</h2>
+        <div class="sec-meta"><span class="time">01:14:00–结束</span><span class="chip">课件 19</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>这周的作业有三项：第一，继续熟悉 VASP 的输入输出，把 POSCAR、POTCAR、INCAR、KPOINTS 和 OUTCAR、OSZICAR 里该看的量都走一遍；第二，构建典型地幔矿物的 POSCAR 文件，橄榄石、瓦兹利石、林伍德石、顽火辉石、透辉石、石榴石、镁方铁矿、布里奇曼石、后钙钛矿、钙硅钙钛矿都可以练；第三，用 VASP 计算0到140GPa 的 MgSiO3-pv 和 MgSiO3-ppv 的性质，把两条能量曲线画出来。</p><p>提交截止时间是11月8日周日晚上20:00，链接在课件上（send2me.cn）。操作指南已经传到课程网站，每一步都有，课上没跟上的同学课后照着走一遍就行。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>11.8（周日）晚20:00截止。</p><p>用VASP计算0~140GPa的MgSiO3-pv和MgSiO3-ppv的性质。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（矿物物理学）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>

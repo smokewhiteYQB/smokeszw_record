@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>显微共焦拉曼光谱学 · 第17课 第二次习题课——第4至6章作业讲解（仪器与技术、材料物性、石墨烯）｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.videos{margin-top:14px;border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.video + .video{border-top:1px solid #e4e9f0;}
+.videos h4{font-size:12.5px;font-weight:700;color:#0a1f38;background:#f2f5f9;padding:8px 12px;border-bottom:1px solid #e4e9f0;}
+.videos video{display:block;width:100%;max-height:460px;background:#0b0f14;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>显微共焦拉曼光谱学 · 第17课 第二次习题课——第4至6章作业讲解（仪器与技术、材料物性、石墨烯）</h1>
+    <div class="sub">第17课 第二次习题课——第4至6章作业讲解（仪器与技术、材料物性、石墨烯） ｜ 2026-11-10 ｜ 林妙玲（中国科学院半导体研究所）</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 53 页 · 整理 18 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-open-ch4">01 开场：第4至6章作业课怎么上</option>
+<option value="sec-q1-structure">02 第1题：现代显微拉曼光谱仪的结构与光路</option>
+<option value="sec-q2-resolution">03 第2题(1)：提高光谱分辨率的四条路径</option>
+<option value="sec-q2-spatial">04 第2题(2)：提高横向空间分辨率的手段</option>
+<option value="sec-q3-linewidth">05 第3题：激光线宽与 3 cm⁻¹ 双峰能否分辨</option>
+<option value="sec-q4-confocal">06 第4题：共焦条件下金刚石 1332 cm⁻¹ 的横向分辨率</option>
+<option value="sec-q5-a">07 第5题(1)—(3)：共焦、共振与超低波数拉曼</option>
+<option value="sec-q5-b">08 第5题(4)—(6)：紫外、SERS 与 TERS</option>
+<option value="sec-q6-filter">09 第6题：滤光片组合与最低可测波数</option>
+<option value="sec-q7-9">10 第7—9题：强度四次方、滤光片换波长、分束器位移</option>
+<option value="sec-hw1-breathing">11 第5章作业1：5 层 MoS₂ 的呼吸模频率与拉曼活性</option>
+<option value="sec-hw2-4">12 第5章作业2—4：量子限制、折叠声子与纳米晶尺寸</option>
+<option value="sec-hw5-6">13 第5章作业5—6：晶粒尺寸判断与偏振配置</option>
+<option value="sec-hw7-9">14 第5章作业7—9：合金、异质结与 hBN 包覆</option>
+<option value="sec-ch6-d2d">15 第6章题1—3：D 模、2D 模与层数相关的线型</option>
+<option value="sec-ch6-doping-fano">16 第6章题4—5：掺杂、量子干涉与 Fano 共振</option>
+<option value="sec-ch6-layer">17 第6章题6—8：层数表征三法、温度线宽与转角石墨烯</option>
+<option value="sec-exam">18 收尾：考试安排</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 习题课2.pdf 逐页渲染，转写原文见 record_20261110.txt。</div>
+<section class="sec" id="sec-open-ch4">
+  <div class="slides"><figure class="slide" id="slide-01">
+<img src="slides/slide_01.png" alt="课件第1页 第二次习题课（林妙玲，20261110，中国科学院半导体研究所）">
+<figcaption><span class="sno">01</span><span class="stitle">第二次习题课（林妙玲，20261110，中国科学院半导体研究所）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-02">
+<img src="slides/slide_02.png" alt="课件第2页 第4章 拉曼散射测量仪器与技术：发展史、结构与组成、显微模块搭建、测试常见问题、常用技术">
+<figcaption><span class="sno">02</span><span class="stitle">第4章 拉曼散射测量仪器与技术：发展史、结构与组成、显微模块搭建、测试常见问题、常用技术</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>开场：第4至6章作业课怎么上</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前）</span><span class="chip">课件 1</span><span class="chip">课件 2</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>这节课主要讲第4到6章作业里的 PPT 题，具体怎么思考、怎么解答；顺便把第4到6章的大概内容过一遍，包括基本知识点和需要掌握的部分。前三章学的都是理论知识，而拉曼光谱学是一门实验课程——大家日常生活中都会用到这类设备，首先要知怎么去用它、要调哪些参数、关注哪些参数，才能达到想要的测量效果。</p><p>第4章讲拉曼散射测量仪器与技术：拉曼光谱仪发展史、光栅光谱仪的结构和组成、显微拉曼模块的搭建、光谱测试采集的常见问题、常用测试技术。第5、6章是例子，告诉大家拿到光谱之后怎么做分析：有哪些因素影响拉曼光谱的特征，希望大家能用到自己的研究课题里，去判断观察到的变化可能是哪些原因、哪些原因可以排除、通过什么实验可以排除。</p><p>做实验之前要先了解整个设备的构造，包含哪些部分。原则上每个光学元件都要了解它的功能、作用、原理，才能得到更好的测试效果。第二章讲过信噪比，高信噪比对拉曼谱图有帮助，第4章后面的内容就是围绕这些展开。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>主要这节课讲第4到6章作业的PPT题，具体怎么思考或解答。</p><p>前三章学的都是理论知识，而拉曼光谱学是一门实验课程。</p><p>做实验之前要先了解整个设备的构造，包含哪些部分。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-q1-structure">
+  <div class="slides"><figure class="slide" id="slide-03">
+<img src="slides/slide_03.png" alt="课件第3页 第1题：绘制现代显微拉曼光谱仪的结构组成与光路示意图——激光纯化、聚焦、样品、收集、滤除、波长选择、探测器、计算机">
+<figcaption><span class="sno">03</span><span class="stitle">第1题：绘制现代显微拉曼光谱仪的结构组成与光路示意图——激光纯化、聚焦、样品、收集、滤除、波长选择、探测器、计算机</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>第1题：现代显微拉曼光谱仪的结构与光路</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 3</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第一部分回顾拉曼光谱仪的发展过程：从太阳光、汞灯发展到激光，探测器从钢板成像发展而来，现在普遍使用集成电路与光纤分光。拉曼光谱仪属色散型，光栅性价比高；若用干涉仪则是非色散型。</p><p>第二部分的重点是光栅光谱仪的结构组成，要从激光光源开始构建整个光路：激光照射样品产生拉曼散射，收集信号并把光信号转为电信号。脑子里要有光路回路的概念——光源之后经反射镜和激光纯化元件；显微部分用物镜照射并收集样品信号；进入谱仪之前要过拉曼滤光片，把瑞利散射光滤掉，只留拉曼散射光进入光谱仪；谱仪内由光栅分光，光线聚焦到光栅上，还需要两个凹面镜配合，最后聚焦到 CCD 上，CCD 把光信号转成电信号，再由电脑读出来。</p><p>按这条光路，可以把拉曼光谱仪分成几部分，每一部分都有重要的光学元件，这些元件有各自的功能，也有选择标准。后面的很多内容和习题都涉及这些概念及进一步计算，比如测斯托克斯和反斯托克斯时怎么计算能测到多少个波数，就涉及第二章的单位换算。</p><p>课件给的实例是 Horiba 的 iHR 系列，属现代化集成化产品，实验室有三套，其中两套前身是 HR800，功能和构造没有特别大的变化。HR800 早期都是手动的，开激光、切换模块要靠机械盒子；iHR Evolution 把机械模块都集成到电路里，全部在电脑界面上完成。它的谱仪焦长 800 mm（80 cm），里面其实很空——就是一个架子，放两条凹面镜加一块光栅，长焦长正是为了提高光谱分辨率；一般有三个出口，可以搭配不同的探测器，上面两个三通道探测器（如 CCD、InGaAs）通常液氮制冷，侧边是 EMCCD（半导体制冷）。光从第二块凹面镜出来后，靠反射镜转角切换到不同探测器：走第二个探测器时第一块反射镜自动回缩、第二块伸出；走侧边探测器时两块都撤掉，光直接通过。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>首先要知道怎么去用它，要调哪些参数，关注哪些参数。</p><p>脑中要有光路回路概念。光源后经反射镜和纯化器件。</p><p>滤波片滤掉瑞利散射光。只留下拉曼散射光进入光谱仪。</p><p>它其实里面是很空的，它就是一个架子，然后它主要是要实现这样的一个长焦长的这么一个功能。</p><p>上面有两个三通道探测器，一般用液氮制冷，如CCD、InGaAs等。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-q2-resolution">
+  <div class="slides"><figure class="slide" id="slide-04">
+<img src="slides/slide_04.png" alt="课件第4页 第2题(1)：简述提高光谱分辨率的方法——光谱仪光路与各部分元件">
+<figcaption><span class="sno">04</span><span class="stitle">第2题(1)：简述提高光谱分辨率的方法——光谱仪光路与各部分元件</span></figcaption>
+</figure>
+<figure class="slide" id="slide-05">
+<img src="slides/slide_05.png" alt="课件第5页 第2题(1)：光谱仪焦长与分辨率、光栅刻线数与分辨率的关系（F1=300mm、F2=800mm）">
+<figcaption><span class="sno">05</span><span class="stitle">第2题(1)：光谱仪焦长与分辨率、光栅刻线数与分辨率的关系（F1=300mm、F2=800mm）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-06">
+<img src="slides/slide_06.png" alt="课件第6页 第2题(1)：光谱仪分辨率公式（F：焦长；N：刻线数）与四条提高分辨率的策略">
+<figcaption><span class="sno">06</span><span class="stitle">第2题(1)：光谱仪分辨率公式（F：焦长；N：刻线数）与四条提高分辨率的策略</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>第2题(1)：提高光谱分辨率的四条路径</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段末至第 2 段初</span><span class="chip">课件 4</span><span class="chip">课件 5</span><span class="chip">课件 6</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第二道题解释提高光谱分辨率的方法。先说清楚：并非每次拉曼测试都要用最高分辨率，这取决于你关注什么。如果关注峰位、且对峰位敏感——比如看样品随温度或成分改变时的峰位变化、做器件 mapping 看应变——就要尽可能提高分辨率，因为分辨率越高峰位测得越准。但如果你关注的不是峰位而是强度（比如看峰强随激发波长的变化，或变温、共振位置偏移时强度怎么变），就不用特别高的分辨率，因为提高分辨率往往会损失强度。</p><p>影响光谱分辨率的因素在哪里？激光部分不会影响——前面都是聚焦到样品、再收集，只要焦聚好就行。真正决定分辨率的是谱仪后段：光栅、焦长这些。本质是“分光效果”：CCD 阵列的像素数是固定的（比如 1024 个），同样的像素数去承接越窄的波段，分辨得就越细。把 500—800 nm 成像到整个 CCD 上，和把 700—800 nm 成像到同样的像素上，后者每个像素对应的波长范围窄得多，分辨率自然更高。</p><p>所以两条几何路径：光栅刻线数越多，同样入射角下色散角越大，一定距离上分得越开——600 线与 1800 线相比，后者色散角更大；焦长越长，光在探测器上铺得越开。光谱分辨率与焦长、光栅刻线数成正比（课件写作 F×N 的形式，F 为焦长、N 为刻线数）。此外探测器像元越小（1024 对 2048），能捕捉的波长变化越细，分辨率越高。</p><p>还有波长的选择：光栅的适用波长与刻线数相关，刻线数越大适用的波长越短，目前最高 3600 线的光栅只适用于 500 nm 左右，用 532 nm 激发就没法用 3600 线，只能选 300 线或 2400 线。分辨率以频率计，Δν̃ = 10⁷·Δλ/λ²，短波长处同样的 Δλ 对应的频率间隔更大，所以“合适波长”要结合实验目的来选。总结成四条：增加光谱仪焦长、使用高质量高刻线数光栅、使用小阵元探测器、选择合适的激光波长。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>光谱分辨率对测试很重要，但并非每次拉曼光谱都要用最高分辨率，这取决于关注因素。</p><p>如果你的分辨率没有那么好，比如说你用600K的光栅…你也做不好你这个一阶数的这个技术。</p><p>我的CCD的阵列是一定的…如果我一个窄的波段沉降到这样的一个CCD上，那么我的这个灯光的效果肯定是更好。</p><p>光谱分辨率与焦长及光栅刻线数成正比。</p><p>光栅刻线数越大，适用波长越短。目前最高3600线的光栅，仅适用于500nm左右波长。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-q2-spatial">
+  <div class="slides"><figure class="slide" id="slide-07">
+<img src="slides/slide_07.png" alt="课件第7页 第2题(2)：说明如何提高拉曼光谱仪的横向空间分辨率——油镜、近场光学（TERS）、STED">
+<figcaption><span class="sno">07</span><span class="stitle">第2题(2)：说明如何提高拉曼光谱仪的横向空间分辨率——油镜、近场光学（TERS）、STED</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>第2题(2)：提高横向空间分辨率的手段</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）</span><span class="chip">课件 7</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第二个问题是横向空间分辨率。前面讨论的是光谱分辨率，空间分辨率则与物镜聚焦部分有关，按瑞利判据由衍射极限决定，因此跟波长和 NA 都相关。提高 NA 可以提升分辨率，例如用油镜：把物镜浸润在高折射率透明液体中，n 从空气的 1 提高，NA 相应变大。</p><p>用更短波长的光激发原则上也能提高空间分辨率，因为衍射极限与波长成正比。要突破衍射极限，则要外加辅助手段：一是近场光学，把 AFM、近场光纤等与显微拉曼联用，如针尖增强拉曼（TERS）；二是受激辐射损耗显微技术（STED），用两束激光、靠荧光分子的能级操控把有效发光区域缩小。这些手段的特点是通过外加辅助显著提高空间分辨率，功能是突破衍射极限、实现纳米级分辨率。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>第二个问题是横向空间分辨率。此前讨论的是光谱分辨率，而空间分辨率与物镜聚焦部分有关。</p><p>我们在课上讲过，用瑞利判据来说，它与衍射极限相关，因此跟波长和NA都有关系。</p><p>若要突破衍射极限，需结合近场光学技术，包括表面增强拉曼散射。</p><p>还有另一种利用荧光的技术，叫做受激辐射损耗显微技术。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-q3-linewidth">
+  <div class="slides"><figure class="slide" id="slide-08">
+<img src="slides/slide_08.png" alt="课件第8页 第3题：两台激光器线宽均 0.10 nm（532 nm 与 785 nm），能否分辨相距 3 cm⁻¹、本征线宽 1 cm⁻¹ 的两个峰">
+<figcaption><span class="sno">08</span><span class="stitle">第3题：两台激光器线宽均 0.10 nm（532 nm 与 785 nm），能否分辨相距 3 cm⁻¹、本征线宽 1 cm⁻¹ 的两个峰</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>第3题：激光线宽与 3 cm⁻¹ 双峰能否分辨</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（前）</span><span class="chip">课件 8</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>这台激光器的波长线宽是 0.10 nm，也就是激光本身有展宽。这一点很要紧：做拉曼的激发光不是随便买个激光器就行，对波长线宽要求很高——展宽太大、不是单纵模，基本没法做拉曼。激光器的模式由腔尺寸决定，要靠增益和损耗曲线让增益只落在某一个模式上、其余都损耗掉。若有两个纵模，激发光就有两条线，每条都会激发样品，谱上就会出现多个拉曼峰：单模激发只在 520.7 cm⁻¹ 看到一个峰，双模就会看到两个，两者之差正是两个纵模的频率差。做拉曼一定要单波长单模、展宽窄；用窄带滤波片问题不大，用陷波片则线宽太宽就滤不掉。</p><p>换算：ν̃ = 10⁷/λ，Δν̃ = 10⁷·Δλ/λ²。532 nm、Δλ=0.10 nm 时 Δν̃ ≈ 3.53 cm⁻¹；785 nm 时 Δν̃ ≈ 1.62 cm⁻¹。光谱观测到的总有效线宽是激光器线宽与样品本征峰宽的卷积，这里用近似算法：两者平方和开平方，Γ_total = √(Γ_laser² + Γ_intrinsic²)。于是 532 nm：√(3.53²+1²)=3.67 cm⁻¹；785 nm：√(1.62²+1²)=1.90 cm⁻¹。</p><p>按瑞利判据，两个等高强度洛伦兹峰要能分辨，峰间距必须大于总半高宽。目标间距是 3 cm⁻¹：532 nm 的 3.67 cm⁻¹ 大于 3，分辨不了；785 nm 的 1.90 cm⁻¹ 小于 3，可以分辨。所以 785 nm 激光能达到这个目标，532 nm 不能。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>因为我们平时用的激发光，不是随便买一个激光器就能做拉曼光谱的。因为拉曼光谱对激发光波长的线宽要求很高。</p><p>如果我有多个波长，激发光出来就有多条线…在拉曼光谱上会看到非常多的峰。</p><p>那么德尔塔V1跟德尔塔兰姆达之间它是有一个换算关系的…就要对这个公式进行求导。</p><p>即两者平方和开平方，视为光笔测出的总线宽。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-q4-confocal">
+  <div class="slides"><figure class="slide" id="slide-09">
+<img src="slides/slide_09.png" alt="课件第9页 第4题：100 倍物镜 NA=0.9、532 nm 激发金刚石 1332 cm⁻¹，计算共焦条件下横向空间分辨率（264 nm）">
+<figcaption><span class="sno">09</span><span class="stitle">第4题：100 倍物镜 NA=0.9、532 nm 激发金刚石 1332 cm⁻¹，计算共焦条件下横向空间分辨率（264 nm）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>第4题：共焦条件下金刚石 1332 cm⁻¹ 的横向分辨率</h2>
+        <div class="sec-meta"><span class="time">录音：第 3 段（前）</span><span class="chip">课件 9</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>这题的前提是共焦拉曼，共焦的衍射极限与普通瑞利判据不一样：普通情形是 0.61λ/NA，共焦系统前面还要乘一项与激发波长、探测波长比值有关的因子，横向分辨率写作 (0.61λ_ex/NA)/√(1+(λ_ex/λ_det)²)。一般情况下探测波长很接近激发波长——拉曼信号就贴在激发线旁边——所以 λ_ex/λ_det≈1，这一项约等于 1/√2，也就是说共焦能把横向分辨率提高约 √2 倍，这正是课上讲的“共焦技术提高空间分辨率”的来源。</p><p>代入数值：λ_ex=532 nm，ν̃_ex=10⁷/532=18797 cm⁻¹；金刚石峰在 1332 cm⁻¹，散射光波数 18797−1332=17465 cm⁻¹，对应 λ_det=10⁷/17465≈572.57 nm。NA=0.9。于是 0.61×532/0.9≈360.6 nm，再乘 1/√(1+(532/572.57)²)≈0.733，得 LSR≈264 nm。</p><p>课件还提醒：共焦要真正测到极限分辨率，针孔必须足够小；针孔过大时实测分辨率约为理论值的 √2 倍，就跟普通衍射极限差不多了。所以比较时要注明是共焦还是非共焦条件。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>当然我们要注意这个前提是共焦的拉曼光谱，就是普通的。这是瑞利的衍射极限，跟我们共焦拉曼光谱的衍射极限是不一样的。</p><p>那么大家可以看到这一项就是1，所以它比普通的瑞利没有共焦情况下的衍射极限多了一个根号1/2。</p><p>共焦技术需控制针孔较小，才能测得极限分辨率。若针孔过大，实测分辨率为理论值乘以√2倍。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-q5-a">
+  <div class="slides"><figure class="slide" id="slide-10">
+<img src="slides/slide_10.png" alt="课件第10页 第5题(1)：共焦拉曼技术——引入针孔、共焦条件，提高纵横分辨率并减少荧光">
+<figcaption><span class="sno">10</span><span class="stitle">第5题(1)：共焦拉曼技术——引入针孔、共焦条件，提高纵横分辨率并减少荧光</span></figcaption>
+</figure>
+<figure class="slide" id="slide-11">
+<img src="slides/slide_11.png" alt="课件第11页 第5题(2)：共振拉曼技术——信号显著增强，需多种能量的激光获取共振线型">
+<figcaption><span class="sno">11</span><span class="stitle">第5题(2)：共振拉曼技术——信号显著增强，需多种能量的激光获取共振线型</span></figcaption>
+</figure>
+<figure class="slide" id="slide-12">
+<img src="slides/slide_12.png" alt="课件第12页 第5题(3)：超低波数拉曼技术——三光栅空间滤波（相减/相加模式）与体布拉格光栅（VBG）">
+<figcaption><span class="sno">12</span><span class="stitle">第5题(3)：超低波数拉曼技术——三光栅空间滤波（相减/相加模式）与体布拉格光栅（VBG）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div class="sec-tt">
+        <h2>第5题(1)—(3)：共焦、共振与超低波数拉曼</h2>
+        <div class="sec-meta"><span class="time">录音：第 3 段（前中）</span><span class="chip">课件 10</span><span class="chip">课件 11</span><span class="chip">课件 12</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>共焦拉曼的核心是针孔与样品成像位置共轭：焦点经物镜聚焦后，由透镜成像在针孔位置，针孔的位置和大小直接决定系统性能。它的优势是极大提高纵向分辨率（约 2 μm）、横向分辨率做到小于 1 μm，并有效减少荧光干扰。当激光斑较大地偏离针孔在样品表面的共轭像点时，谱仪就收不到样品的拉曼和荧光信号——所以现代谱仪普遍配自动控制的共焦孔径，光路调节就非常重要。</p><p>共振拉曼是靠入射激发光与电子能级跃迁匹配，使拉曼信号显著增强：一方面增强常规拉曼散射，另一方面能拿到常规条件下看不到的弱信号。代价是常常需要多种不同能量的激光才能把共振线型测出来。</p><p>超低波数拉曼有两种实现。第一种是三光栅空间滤波：相减模式下先分光，在中心瑞利线位置放挡板把光挡住，合并后再做第三次分光，测到的信号完全没有瑞利线干扰、也不需要滤波片；相加模式是三个光栅正串联，分光更精确、光栅越多分辨率越高，但每过一次都有损耗，信号通常较弱。第二种是基于体布拉格光栅（VBG）：在极窄带宽内选频，把中心波长也挡掉，能做到 OD9—OD12（10⁻⁹—10⁻¹²），正好对应拉曼信号比瑞利线弱 9—12 个量级的水平；早期一片只能到 OD3，所以要 3—4 片组合，现在厂家能做到 OD5—6，带宽也从 8—10 个波数缩到 5 个波数（一侧斯托克斯两个波数、反斯托克斯两个波数），488 nm 上曾做到两个波数。这类技术的特点是信号强度较低，但能测到低于 10 cm⁻¹ 的拉曼信号，用于二维材料及其异质结的剪切/呼吸模。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>首先是共焦拉曼技术，核心在于小孔与样品成像位置共轭。</p><p>第二个技术是共振拉曼技术，通过入射激发光与电子能级跃迁匹配，显著增强拉曼信号。</p><p>第一种是3光栅空间滤波技术，利用相减模式：分光后在中心波长瑞利线位置放置挡板挡住光。</p><p>但3光栅每次经过都会有损耗，导致测到的信号通常较弱。</p><p>它能把中心线波能达到10的-9~10的-12次方，就是OD9到OD12这样的一个形式。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-q5-b">
+  <div class="slides"><figure class="slide" id="slide-13">
+<img src="slides/slide_13.png" alt="课件第13页 第5题(4)：紫外拉曼技术——紫外激光能量大、穿透深度小，测薄膜与宽带隙半导体">
+<figcaption><span class="sno">13</span><span class="stitle">第5题(4)：紫外拉曼技术——紫外激光能量大、穿透深度小，测薄膜与宽带隙半导体</span></figcaption>
+</figure>
+<figure class="slide" id="slide-14">
+<img src="slides/slide_14.png" alt="课件第14页 第5题(5)：表面增强拉曼（SERS）——物理增强与化学增强，不突破衍射极限">
+<figcaption><span class="sno">14</span><span class="stitle">第5题(5)：表面增强拉曼（SERS）——物理增强与化学增强，不突破衍射极限</span></figcaption>
+</figure>
+<figure class="slide" id="slide-15">
+<img src="slides/slide_15.png" alt="课件第15页 第5题(6)：针尖增强拉曼（TERS）——AFM 金属针尖的局域等离激元、镜面电荷与避雷针效应，突破衍射极限">
+<figcaption><span class="sno">15</span><span class="stitle">第5题(6)：针尖增强拉曼（TERS）——AFM 金属针尖的局域等离激元、镜面电荷与避雷针效应，突破衍射极限</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">08</span>
+      <div class="sec-tt">
+        <h2>第5题(4)—(6)：紫外、SERS 与 TERS</h2>
+        <div class="sec-meta"><span class="time">录音：第 3 段（中）</span><span class="chip">课件 13</span><span class="chip">课件 14</span><span class="chip">课件 15</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>紫外拉曼很简单，就是把激发光波长换到紫外。紫外激光能量大、穿透深度小，所以测到的是表面信号而不是样品内部更深的信号，适合薄膜（包括现在一些铁电、铁磁薄膜很薄的一层），也适合氮化硼这类宽带隙材料——只有用更接近其带隙的光才能测到更好效果，或靠特定光学组合在紫外区实现增强。这主要针对特定应用场景。</p><p>表面增强拉曼（SERS）用金银纳米颗粒放在物质上，靠两种机制增强：物理增强是金属纳米颗粒受激光激发产生局域表面等离激元共振；化学增强是分子与金属之间发生电荷转移导致极化率变化。课件上的例子是在金银颗粒与物质之间垫一层氧化铝：直接接触（厚度趋零）时等离激元增强最强，随氧化铝变厚，增强场影响不到探测分子，信号不断衰减。SERS 显著提高信号强度，但没有突破光学衍射极限，主要用于物质分子检测。</p><p>针尖增强拉曼（TERS）是 SERS 的演变：用 AFM 或 STM 的金属针尖产生局域等离激元，增强机制包括针尖的局域表面等离激元共振、镜面电荷效应和避雷针效应。它同时提高信号强度和空间分辨率，突破衍射极限，用于材料局部的性质如缺陷、边界。目前基于 STM 报道的最好空间分辨率是 0.5 nm，基于 AFM 大概 1—2 nm；课上举的例子是用 AFM 探测二硫化钼边界，观察到新边界产生的高阶拉曼峰（双共振过程），间接探测能带结构与声子重整化。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>然后就是一个紫外拉曼的技术，这个比较简单，其实就是把你的激发光波长换成紫外的形式。</p><p>SERS是用金银颗粒放在物质上。通过局域电场增强或电荷转移导致极化率变化。</p><p>另一种由SERS演变而来的是TERS。即Tip-Enhanced Raman Spectroscopy。</p><p>目前基于STM报道的最好空间分辨率是0.5nm。基于AFM大概能到1-2nm的尺度。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-q6-filter">
+  <div class="slides"><figure class="slide" id="slide-16">
+<img src="slides/slide_16.png" alt="课件第16页 第6题(1)：532 nm 激光未纯化时的滤光片组合——只测 Stokes、只测 anti-Stokes、同时测两者">
+<figcaption><span class="sno">16</span><span class="stitle">第6题(1)：532 nm 激光未纯化时的滤光片组合——只测 Stokes、只测 anti-Stokes、同时测两者</span></figcaption>
+</figure>
+<figure class="slide" id="slide-17">
+<img src="slides/slide_17.png" alt="课件第17页 第6题(2)：532 nm 带通 + 短通边带（50% 位于 528 nm），计算可测最低波数 142.4 cm⁻¹（anti-Stokes）">
+<figcaption><span class="sno">17</span><span class="stitle">第6题(2)：532 nm 带通 + 短通边带（50% 位于 528 nm），计算可测最低波数 142.4 cm⁻¹（anti-Stokes）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">09</span>
+      <div class="sec-tt">
+        <h2>第6题：滤光片组合与最低可测波数</h2>
+        <div class="sec-meta"><span class="time">录音：第 3 段（中）</span><span class="chip">课件 16</span><span class="chip">课件 17</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>用 532 nm 激光测试、未经纯化存在激光杂线，要先把杂线滤掉。光路里有两类滤光片：激光纯化段（在样品前）和激光滤除段（在谱仪前）。只测斯托克斯（波长比激发光长）时：方案一是窄带通（BPF，只让 532 nm 通过）加长通边带（LEF）；方案二是短通边带（SEF，把长波截掉、让激光通过）加长通——前者滤掉长通端的杂线，后者让激光通过、再由后面的长通片把短通端杂线滤掉，两种组合都能测到斯托克斯。只测反斯托克斯则反过来，需要短通边带，前面用带通或长通（二者是“或”的关系）。同时测斯托克斯和反斯托克斯，后面必须是陷波滤光片（BNF），前面用带通。</p><p>第二问：工作波长 532 nm 的带通滤光片配短通边带滤光片，短通片透过率 50% 的位置在 528 nm，求能测到的最低波数、并说明测的是斯托克斯还是反斯托克斯。计算：10⁷/532=18797 cm⁻¹，10⁷/528=18939 cm⁻¹，两者之差约 142.4 cm⁻¹。因为短通片让短于 528 nm 的光通过，测得的是能量高于瑞利线的短波信号，即反斯托克斯，最低波数约 142.4 cm⁻¹。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>若只测斯托克斯信号，其波长比激发波长长，需用长通滤光片。</p><p>简单选择是用带通滤波片，只让激光线通过，两侧都不要。</p><p>如果要测量斯托克斯跟反斯托克斯信号，后面肯定是陷波滤波片，前面肯定是带通滤波片。</p><p>需计算532nm与528nm之间的绝对波数差，得到能探测到的最低波数。因是短通，测出的是斯托克斯信号。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-q7-9">
+  <div class="slides"><figure class="slide" id="slide-18">
+<img src="slides/slide_18.png" alt="课件第18页 第7题：金刚石 1332 cm⁻¹ 在 632 nm 与 325 nm 激发下的强度比——散射强度与频率四次方成正比（0.06）">
+<figcaption><span class="sno">18</span><span class="stitle">第7题：金刚石 1332 cm⁻¹ 在 632 nm 与 325 nm 激发下的强度比——散射强度与频率四次方成正比（0.06）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-19">
+<img src="slides/slide_19.png" alt="课件第19页 第8题：532 nm 下可测 115 cm⁻¹ 的长通边带滤光片，改用 514.5 nm 激发后最低波数为 754 cm⁻¹">
+<figcaption><span class="sno">19</span><span class="stitle">第8题：532 nm 下可测 115 cm⁻¹ 的长通边带滤光片，改用 514.5 nm 激发后最低波数为 754 cm⁻¹</span></figcaption>
+</figure>
+<figure class="slide" id="slide-20">
+<img src="slides/slide_20.png" alt="课件第20页 第9题：3 mm 厚、n=2.08 平行平板分束器，45° 入射的横向偏移量（1.92 mm）">
+<figcaption><span class="sno">20</span><span class="stitle">第9题：3 mm 厚、n=2.08 平行平板分束器，45° 入射的横向偏移量（1.92 mm）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">10</span>
+      <div class="sec-tt">
+        <h2>第7—9题：强度四次方、滤光片换波长、分束器位移</h2>
+        <div class="sec-meta"><span class="time">录音：第 3 段（中后）</span><span class="chip">课件 18</span><span class="chip">课件 19</span><span class="chip">课件 20</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第7题只考虑波长变化、忽略其他因素。回到电偶极辐射：散射强度与散射光频率的四次方成正比，即与波长四次方成反比。金刚石峰 1332 cm⁻¹：632 nm 激发时散射光波长约 690.1 nm，325 nm 激发时约 339.7 nm。对应波数 14491 与 29437 cm⁻¹，强度比 I_632/I_325=(14491/29437)⁴≈0.06。</p><p>第8题：一块长通边带滤光片，532 nm 激发时刚好能测到 115 cm⁻¹ 的斯托克斯信号，说明滤光片的截止带边在 18797−115=18682 cm⁻¹。改用 514.5 nm 激发，激发波数 10⁷/514.5≈19436 cm⁻¹，同一块片子截止带边不动，最低可测斯托克斯位移就是 19436−18682≈754 cm⁻¹。注意这是滤波片角度不动、只换波长的结果；实际光路调试时可以把滤光片倾斜，边带位置会移动，能测得更低波数——不必每个波长都买新片子，测一片膜片从正入射到最大倾角的位置，就是它的调谐范围。</p><p>第9题是几何光学：光从空气以 45° 入射到厚度 3 mm、折射率 2.08 的平行平板分束器。由斯涅尔定律，sinθ₂=sin45°/2.08≈0.34，θ₂≈19.9°；板内横向位移 x₂=3×tan(0.34)≈1.08 mm；若不考虑折射、直接在空气中走过 3 mm，横向位移 x₁=3×tan45°=3 mm；实际偏移量 Δx=x₂−x₁ 的绝对值约 1.92 mm。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>回到电偶极辐射，强度与散射光频率四次方成正比，即与波长四次方成反比。</p><p>需计算532nm与528nm之间的绝对波数差，得到能探测到的最低波数。</p><p>若发现滤波片角度可倾斜，滤除边带位置可移动，从而测得更低波数。</p><p>第九个是简单的几何光学问题。光经过玻璃介质发生折射，计算横向偏移量。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-hw1-breathing">
+  <div class="slides"><figure class="slide" id="slide-21">
+<img src="slides/slide_21.png" alt="课件第21页 第5章 材料物性的拉曼光谱研究：15 个主题（对称性、材料体系、元激发、外场与数据处理）">
+<figcaption><span class="sno">21</span><span class="stitle">第5章 材料物性的拉曼光谱研究：15 个主题（对称性、材料体系、元激发、外场与数据处理）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-22">
+<img src="slides/slide_22.png" alt="课件第22页 作业1：N 层 2H-MoS₂ 呼吸模频率公式与原子位移（Tan et al., Nanoscale 2016）">
+<figcaption><span class="sno">22</span><span class="stitle">作业1：N 层 2H-MoS₂ 呼吸模频率公式与原子位移（Tan et al., Nanoscale 2016）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-23">
+<img src="slides/slide_23.png" alt="课件第23页 作业1：5 层 MoS₂ 呼吸模 17.5/33.3/45.8/53.8 cm⁻¹，中心反演对称性决定只有 LB5,4 与 LB5,2 拉曼活性">
+<figcaption><span class="sno">23</span><span class="stitle">作业1：5 层 MoS₂ 呼吸模 17.5/33.3/45.8/53.8 cm⁻¹，中心反演对称性决定只有 LB5,4 与 LB5,2 拉曼活性</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">11</span>
+      <div class="sec-tt">
+        <h2>第5章作业1：5 层 MoS₂ 的呼吸模频率与拉曼活性</h2>
+        <div class="sec-meta"><span class="time">录音：第 3 段（后）</span><span class="chip">课件 21</span><span class="chip">课件 22</span><span class="chip">课件 23</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第5章先给一张 15 个主题的地图：对称性决定拉曼光谱是本征；材料体系包括本征范德华晶体、范德华合金、二维异质结；元激发包括表面声子、折叠声子与莫尔声子、受限声子、声子-等离激元极化激元、电子拉曼散射；外场与数据处理包括相变、偏振、共振、温度、应力、数据处理。大家研究的体系或多或少都能在这张图里找到对应思路。</p><p>作业1：已知双层 2H 相 MoS₂ 的呼吸模频率 40 cm⁻¹，求 5 层 MoS₂ 的呼吸模频率、判断哪些具备拉曼活性。双层可以看成两个原子用一个弹簧相连，体材料频率是它的 √2 倍。有限层体系等价于一维单原子链，只是没有周期性边界、有边界条件，解出来频率可写成解析式：ω_LB(N,N−i)=√2·ω_LB(2,1)·sin(iπ/2N)，i=1…N−1。</p><p>代入 N=5、ω(2,1)=40 cm⁻¹：√2×40≈56.57，乘 sin(iπ/10) 得 i=1:17.5、i=2:33.3、i=3:45.8、i=4:53.8 cm⁻¹。5 层有 4 个呼吸模。判断活性看中心反演对称性：j 为偶数时对称中心等效电荷恒为零，偶极矩不变、极化率改变，是拉曼活性；j 为奇数时偶极矩变化，是红外活性。所以实验上只能观测到 LB5,4 和 LB5,2 两支。各层振动形式也能写出来：LB5 是中间层不动、两两相对振动，LB3 是三层同向、上下反向，LB4 是上下相对、中间不动，幅度由同一公式给出。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>那么我们讲这个本征的二硫化钼，那它的呼吸双层的这个频率是40个波数，然后要计算五层的这个呼吸模的频率。</p><p>那么其实它跟体材料就是一个√2倍的这个关系对吧？</p><p>对于N层材料，有N-1个呼吸声子。</p><p>如果是LB5，那么就是中间那一层不动，然后两两相对震动。</p><p>如果J是偶数值…1和3是能看到的，然后2、4应该是看不到。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-hw2-4">
+  <div class="slides"><figure class="slide" id="slide-24">
+<img src="slides/slide_24.png" alt="课件第24页 作业2(1)(2)：声子量子限制效应的物理本质与可观察体系、拉曼特征">
+<figcaption><span class="sno">24</span><span class="stitle">作业2(1)(2)：声子量子限制效应的物理本质与可观察体系、拉曼特征</span></figcaption>
+</figure>
+<figure class="slide" id="slide-25">
+<img src="slides/slide_25.png" alt="课件第25页 作业3：折叠声子——超晶格使原布里渊区缩小、声子支增多">
+<figcaption><span class="sno">25</span><span class="stitle">作业3：折叠声子——超晶格使原布里渊区缩小、声子支增多</span></figcaption>
+</figure>
+<figure class="slide" id="slide-26">
+<img src="slides/slide_26.png" alt="课件第26页 作业3：莫尔超晶格与莫尔声子，L_M = L_C/(2sin(θ/2))">
+<figcaption><span class="sno">26</span><span class="stitle">作业3：莫尔超晶格与莫尔声子，L_M = L_C/(2sin(θ/2))</span></figcaption>
+</figure>
+<figure class="slide" id="slide-27">
+<img src="slides/slide_27.png" alt="课件第27页 作业4：一维晶体 ω(Γ)=960、ω(π/a)=560 cm⁻¹、a=3.0 Å，由 959 cm⁻¹ 峰位估计纳米微晶尺寸（1.9 nm）">
+<figcaption><span class="sno">27</span><span class="stitle">作业4：一维晶体 ω(Γ)=960、ω(π/a)=560 cm⁻¹、a=3.0 Å，由 959 cm⁻¹ 峰位估计纳米微晶尺寸（1.9 nm）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">12</span>
+      <div class="sec-tt">
+        <h2>第5章作业2—4：量子限制、折叠声子与纳米晶尺寸</h2>
+        <div class="sec-meta"><span class="time">录音：第 3 段末至第 4 段初</span><span class="chip">课件 24</span><span class="chip">课件 25</span><span class="chip">课件 26</span><span class="chip">课件 27</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>作业2：声子量子限制效应的物理本质是不确定原理。材料几何尺度在某一方向受限 ΔL 时，波矢不确定度 Δq~1/ΔL 变大，动量守恒松弛，非布里渊区中心的声子也能参与拉曼散射。可观察的体系包括：非晶态（原子排列无序）、周期性晶格中的缺陷与杂质、亚铁磁/顺磁相的自旋无序（温度变化）、层间无序（如 NH₄Br）。拉曼特征有四条：峰位移动、峰的非对称展宽、出现表面/界面声子、出现高阶拉曼模。</p><p>作业3：折叠声子来自周期性。原来晶格是小周期，人为加一个大周期（超晶格）后，大布里渊区折叠成小布里渊区，原布里渊区内部的声子折叠到中心，测量到的声子支数目增多；若两种组分色散差别不大（声学支和部分光学支），超晶格晶胞的存在就使原布里渊区缩小而发生折叠。二维情形就是莫尔超晶格：转角变化时平面内出现亮暗相间的条纹，莫尔晶格常数 L_M=L_C/(2sin(θ/2))，其周期决定折叠布里渊区的特性，这类折叠态被命名为莫尔声子/摩尔态；改变角度能连续看到随角度变化的态，动量 Q 随角度变化，于是能观察到布里渊区内部不同点的拉曼强度。</p><p>作业4：一维晶体 Γ 点声子 960 cm⁻¹、边界 ω(π/a)=560 cm⁻¹、a=3.0 Å，色散用抛物线拟合 ω(q)=ω(0)+Bq²，得 B=−400(a/π)² cm⁻¹·Å²。纳米微晶的峰在 959 cm⁻¹，相对体材料移了 1 cm⁻¹，由 1=B·Δq² 解出 Δq=(1/20)(π/a)。再由不确定关系 ΔL≈1/Δq≈19 Å=1.9 nm，即平均晶粒尺寸约 1.9 nm。注意这是统计量级，不必纠结 2π；要精确算晶粒尺寸，得先确定是三维、二维还是一维受限（决定 Δq 是三次方、二次方还是一次方），再把整条声子色散曲线代入积分、用峰形拟合去定积分上下限。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>量子限制效应源于尺寸缩小，导致动量空间展宽。</p><p>折叠声子的话，主要还是一个周期性变化的问题…这个时候原来的大的布里渊区就要折叠成小的布里渊区。</p><p>研究发现它不严格服从对称性，但大致有粗略对称性。这种摩尔超晶格的周期性，决定了折叠布里渊区的特性。</p><p>因为德尔塔Q（动量空间）与德尔塔L基本成反比。这是为了满足不确定关系原理。</p><p>当然这是一个统计的数量级，不是真正精确的晶粒尺寸级别。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-hw5-6">
+  <div class="slides"><figure class="slide" id="slide-28">
+<img src="slides/slide_28.png" alt="课件第28页 作业5(1)：由峰形展宽判断哪个纳米晶粒尺寸更小，A1′/E′ 峰位随尺寸减小红移">
+<figcaption><span class="sno">28</span><span class="stitle">作业5(1)：由峰形展宽判断哪个纳米晶粒尺寸更小，A1′/E′ 峰位随尺寸减小红移</span></figcaption>
+</figure>
+<figure class="slide" id="slide-29">
+<img src="slides/slide_29.png" alt="课件第29页 作业5(2)：受限体系中 M 点二阶拉曼峰 E′(M)、A1′(M) 被激活的原因">
+<figcaption><span class="sno">29</span><span class="stitle">作业5(2)：受限体系中 M 点二阶拉曼峰 E′(M)、A1′(M) 被激活的原因</span></figcaption>
+</figure>
+<figure class="slide" id="slide-30">
+<img src="slides/slide_30.png" alt="课件第30页 作业6：角分辨偏振拉曼的三种配置及各自优势">
+<figcaption><span class="sno">30</span><span class="stitle">作业6：角分辨偏振拉曼的三种配置及各自优势</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">13</span>
+      <div class="sec-tt">
+        <h2>第5章作业5—6：晶粒尺寸判断与偏振配置</h2>
+        <div class="sec-meta"><span class="time">录音：第 4 段（前中）</span><span class="chip">课件 28</span><span class="chip">课件 29</span><span class="chip">课件 30</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>作业5(1)：纳米晶晶粒越小，拉曼峰的（反对称）展宽越明显，所以展宽更大的那条谱对应更小的晶粒（#7 的晶粒尺寸更小）；随微晶尺寸减小，A1′ 与 E′ 两个模式的峰位都红移，趋势与对应声子支的色散变化一致。作业5(2)：通常一阶拉曼只能看到 Γ 点声子，但晶粒很小时量子限制导致波矢不确定度大、动量守恒松弛，M 点的二阶拉曼峰 E′(M)、A1′(M) 也被激活，于是谱上多出这些峰。</p><p>作业6：角分辨偏振拉曼有三种配置。第一种固定散射光偏振、改变入射光偏振转一圈：中间张量和散射偏振不变，只让 E_i 变，可算出角分辨光谱，判断测得模式属于哪种对称性、对应什么拉曼张量形式，优点是操作简单、省时间。第二种固定入射与散射偏振、旋转样品：相当于连续改变入射/散射的相对取向（平行或交叉），可测样品取向，但显微样品旋转后不易复位。第三种在入射与散射的共同光路上加半波片，起偏器与检偏器固定、样品不动，靠转半波片等效地同时旋转入射与散射偏振——与前一种基本等价，但样品不动，可以对 μm 尺寸样品在同一点做连续测试，这也是发展它的原因。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>纳米晶晶粒的尺寸越小，拉曼峰的（反对称）展宽越明显。</p><p>纳米晶的晶粒尺寸很小时，由于量子限制效应导致的波矢不确定度较大…从而导致二阶拉曼模式被激活。</p><p>第一种较简单：改变入射光偏振方向转一圈，固定散射光偏振方向不变。</p><p>对于小的样品的话很难去对焦到同一个点去测试…所以我们就发展了第三种。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-hw7-9">
+  <div class="slides"><figure class="slide" id="slide-31">
+<img src="slides/slide_31.png" alt="课件第31页 作业7：多层范德华合金——高频层内模明显展宽、低频 C 模线宽不变，线性链模型仍可用">
+<figcaption><span class="sno">31</span><span class="stitle">作业7：多层范德华合金——高频层内模明显展宽、低频 C 模线宽不变，线性链模型仍可用</span></figcaption>
+</figure>
+<figure class="slide" id="slide-32">
+<img src="slides/slide_32.png" alt="课件第32页 作业8：范德华异质结——剪切模局域在 MoS₂ 双层、呼吸模随石墨烯层数移动">
+<figcaption><span class="sno">32</span><span class="stitle">作业8：范德华异质结——剪切模局域在 MoS₂ 双层、呼吸模随石墨烯层数移动</span></figcaption>
+</figure>
+<figure class="slide" id="slide-33">
+<img src="slides/slide_33.png" alt="课件第33页 作业9(1)：FWHM 温度依赖 Γ(T)=Γ_defect+Γ_epc(T)+Γ_anh(T)，hBN 包覆使线宽变窄">
+<figcaption><span class="sno">33</span><span class="stitle">作业9(1)：FWHM 温度依赖 Γ(T)=Γ_defect+Γ_epc(T)+Γ_anh(T)，hBN 包覆使线宽变窄</span></figcaption>
+</figure>
+<figure class="slide" id="slide-34">
+<img src="slides/slide_34.png" alt="课件第34页 作业9(2)：532 nm 激发硅 520 cm⁻¹ 的 Stokes/anti-Stokes 强度比（300 K 约 9.4，50 K 约 2.5）">
+<figcaption><span class="sno">34</span><span class="stitle">作业9(2)：532 nm 激发硅 520 cm⁻¹ 的 Stokes/anti-Stokes 强度比（300 K 约 9.4，50 K 约 2.5）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">14</span>
+      <div class="sec-tt">
+        <h2>第5章作业7—9：合金、异质结与 hBN 包覆</h2>
+        <div class="sec-meta"><span class="time">录音：第 4 段（中）</span><span class="chip">课件 31</span><span class="chip">课件 32</span><span class="chip">课件 33</span><span class="chip">课件 34</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>作业7：多层范德华合金的拉曼光谱，高频的层内模（本征模与合金模）明显展宽，还会多出 M 点、K 点声子被激发的模式和一些高阶峰；低频的层间 C（LB）模峰宽和线形基本不变。说明面内无序只影响层内振动，对层间振动影响可忽略，线性链模型仍可用来解释低频模——体材料 S21 约 28.8 cm⁻¹，合金 S21 约 20.2 cm⁻¹。同样的道理见于温度/同位素实验：同位素质量无序会让层内模显著展宽，而层间模几乎不受影响，4 K 下接近自然线宽。</p><p>作业8：范德华异质结（如 MoS₂/石墨烯）。层间剪切模局域在两层 MoS₂ 内部，改变石墨烯层数时它仍停在两层 MoS₂ 的位置、不移动；N 层石墨烯自身也有局域剪切模，但很弱，这里看不到。呼吸模则要整体考虑：MoS₂ 与石墨烯之间有界面耦合力，两者可整体或相对振动，因此呼吸模频率随石墨烯层数增加而移动。</p><p>作业9(1)：实际晶体中 FWHM 的温度依赖是 Γ(T)=Γ_defect+Γ_epc(T)+Γ_anh(T)。理想晶体里由电子-声子相互作用与非简谐效应（三声子、四声子衰变）决定；此外同位素、杂质、缺陷贡献一个与温度无关的残余线宽 Γ_defect，低温下声子衰变冻结时 FWHM 趋于它，其大小直接反映晶体质量。用 hBN 包覆二维材料，等于加了一层惰性、无缺陷的范德华衬底/包覆层，隔绝外界吸附杂质、屏蔽衬底电荷转移与应力扰动，降低缺陷散射、减少声子弛豫通道，所以拉曼峰更窄；这也让 FWHM 的温度依赖更“纯粹”地反映非简谐衰变通道。</p><p>作业9(2)：532 nm 激发晶体硅 520 cm⁻¹ 的 Stokes 与 anti-Stokes 强度比。I_S/I_AS=[(ω_L−ω_ph)/(ω_L+ω_ph)]⁴·exp(ħω_ph/k_BT)。ω_L 对应 1240/532≈2.331 eV，ω_ph=520/8065≈0.064 eV；300 K 时 k_BT≈0.026 eV，算得约 9.4；50 K 时约 2.5。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>在高频区域，观察到由于无序效应导致的明显展宽…在低频区域，C模的线宽和体材料的类似。</p><p>剪切模式局域在两层二硫化钼里，未发生移动。</p><p>另一模式是呼吸模，随石墨烯层数增加频率移动。体系需整体考虑。</p><p>若用钝化包覆的二维材料，表面悬挂键消失，也不会有其他物质吸附…使半高宽变窄。</p><p>关于温度效应及强度比值，主要是能量换算和指数计算。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-ch6-d2d">
+  <div class="slides"><figure class="slide" id="slide-35">
+<img src="slides/slide_35.png" alt="课件第35页 第6章 石墨烯材料拉曼光谱研究进展：单层、多层、转角多层与国家标准">
+<figcaption><span class="sno">35</span><span class="stitle">第6章 石墨烯材料拉曼光谱研究进展：单层、多层、转角多层与国家标准</span></figcaption>
+</figure>
+<figure class="slide" id="slide-36">
+<img src="slides/slide_36.png" alt="课件第36页 第1题：D 模是缺陷与声子参与的双共振过程，四种散射路径给出 D1、D2">
+<figcaption><span class="sno">36</span><span class="stitle">第1题：D 模是缺陷与声子参与的双共振过程，四种散射路径给出 D1、D2</span></figcaption>
+</figure>
+<figure class="slide" id="slide-37">
+<img src="slides/slide_37.png" alt="课件第37页 第1题：2D 模是两个声子参与的三共振过程，本征单层石墨烯即可观察到">
+<figcaption><span class="sno">37</span><span class="stitle">第1题：2D 模是两个声子参与的三共振过程，本征单层石墨烯即可观察到</span></figcaption>
+</figure>
+<figure class="slide" id="slide-38">
+<img src="slides/slide_38.png" alt="课件第38页 第2题：单层 2D 模为单洛伦兹峰；双层能带劈裂出四组散射通道，需四个子峰拟合">
+<figcaption><span class="sno">38</span><span class="stitle">第2题：单层 2D 模为单洛伦兹峰；双层能带劈裂出四组散射通道，需四个子峰拟合</span></figcaption>
+</figure>
+<figure class="slide" id="slide-39">
+<img src="slides/slide_39.png" alt="课件第39页 第3题：短波长激发离 K 点更远的声子、2D 频率更大；anti-Stokes 的频率比 Stokes 更大">
+<figcaption><span class="sno">39</span><span class="stitle">第3题：短波长激发离 K 点更远的声子、2D 频率更大；anti-Stokes 的频率比 Stokes 更大</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">15</span>
+      <div class="sec-tt">
+        <h2>第6章题1—3：D 模、2D 模与层数相关的线型</h2>
+        <div class="sec-meta"><span class="time">录音：第 4 段（中后）</span><span class="chip">课件 35</span><span class="chip">课件 36</span><span class="chip">课件 37</span><span class="chip">课件 38</span><span class="chip">课件 39</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第6章以单层石墨烯为例讲共振拉曼：单共振、双共振、三共振、多共振与量子干涉共振，石墨烯体系能把所有类型都体现出来。单层讲完讲多层，涉及 D、D′、2D 峰，从单层到多层能带结构变化导致线形多样；再过渡到转角多层，讲层间声子、堆垛方式鉴定与剪切模的 Fano 共振，最后落到国家标准式的层数表征。</p><p>题1：D 模是缺陷与声子参与的双共振拉曼模，不是“缺陷本身的拉曼”。缺陷提供动量补偿，激发 K 点附近的 LO/TO 声子，共有四种散射路径；缺陷与声子的散射次序相同时入射共振与出射共振等价、峰频相同，次序不同时参与的声子不同，对应 D1 与 D2 两个峰，所以单层石墨烯的 D 模常需双峰拟合。2D 模则是两个声子参与的三共振过程，不需要缺陷激活，本征单层石墨烯里就能观察到；本征区看不到 D 模，而边界处因有缺陷可见 D 模，2D 模则总是可见，单层时有时比 G 模还强。</p><p>题2：单层石墨烯是线性色散，只有一套电子跃迁通道，2D 模表现为单洛伦兹峰；双层能带发生劈裂，形成四组散射通道，双共振过程产生 4 个子峰叠加，表现为多峰轮廓，需用 4 个峰拟合取包络。三层理论上有 9 条路径，通常难分辨，实践中用 2、4、6 个峰拟合，结合特征肩峰判断层数；1—5 层基本可由 2D 线形判断。</p><p>题3：短波长激光激发离 K 点更远的声子波矢，2D 模频率更大；anti-Stokes 过程激发的声子波矢也比 Stokes 更远离 K 点，所以 anti-Stokes 的 2D 频率比 Stokes 更大。激发能量越大，狄拉克锥上参与散射的圈越大、ΔQ 越小、探测点越远离 K 点，频率越高。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>D峰是缺陷诱导的拉曼模式，而非缺陷的拉曼散射。缺陷补偿动量守恒，从而激发K点的LO和TO声子。</p><p>2D模是两个声子参与的双共振或三共振过程。此时无需额外缺陷补偿动量。</p><p>双层石墨烯的2D模为何有四个峰？因其能带结构从单层的狄拉克锥变为抛物线型。</p><p>波长越短、能量越大，2D峰频率越大。斯托克斯和反斯托克斯同理。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-ch6-doping-fano">
+  <div class="slides"><figure class="slide" id="slide-40">
+<img src="slides/slide_40.png" alt="课件第40页 第4题：掺杂石墨烯——G 模蓝移、线宽变窄（电声耦合减弱）">
+<figcaption><span class="sno">40</span><span class="stitle">第4题：掺杂石墨烯——G 模蓝移、线宽变窄（电声耦合减弱）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-41">
+<img src="slides/slide_41.png" alt="课件第41页 第4题：掺杂后的量子干涉路径被阻断，费米能级附近出现强度增强">
+<figcaption><span class="sno">41</span><span class="stitle">第4题：掺杂后的量子干涉路径被阻断，费米能级附近出现强度增强</span></figcaption>
+</figure>
+<figure class="slide" id="slide-42">
+<img src="slides/slide_42.png" alt="课件第42页 第4题：G 模强度的量子干涉路径求和表达式">
+<figcaption><span class="sno">42</span><span class="stitle">第4题：G 模强度的量子干涉路径求和表达式</span></figcaption>
+</figure>
+<figure class="slide" id="slide-43">
+<img src="slides/slide_43.png" alt="课件第43页 第5题：Fano 共振的物理图像与 Breit-Wigner-Fano 线型公式">
+<figcaption><span class="sno">43</span><span class="stitle">第5题：Fano 共振的物理图像与 Breit-Wigner-Fano 线型公式</span></figcaption>
+</figure>
+<figure class="slide" id="slide-44">
+<img src="slides/slide_44.png" alt="课件第44页 第5题：Fano 共振（同页重复排版，线型公式与参数说明）">
+<figcaption><span class="sno">44</span><span class="stitle">第5题：Fano 共振（同页重复排版，线型公式与参数说明）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-45">
+<img src="slides/slide_45.png" alt="课件第45页 第5题：多层石墨烯 C 模的 Fano 共振——连续电子态与分立声子态耦合，4LG 在 E_F=0 附近">
+<figcaption><span class="sno">45</span><span class="stitle">第5题：多层石墨烯 C 模的 Fano 共振——连续电子态与分立声子态耦合，4LG 在 E_F=0 附近</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">16</span>
+      <div class="sec-tt">
+        <h2>第6章题4—5：掺杂、量子干涉与 Fano 共振</h2>
+        <div class="sec-meta"><span class="time">录音：第 4 段（后）</span><span class="chip">课件 40</span><span class="chip">课件 41</span><span class="chip">课件 42</span><span class="chip">课件 43</span><span class="chip">课件 44</span><span class="chip">课件 45</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>题4：掺杂石墨烯的拉曼变化主要是 G 模蓝移、线宽变窄。根源是电声耦合变弱：电声耦合的散射路径取决于声子能否激发电子-空穴对，湮灭一个声子、产生一个电子-空穴对时耦合强；掺杂后出现空态，低能量下无法产生电子-空穴对，耦合变弱，于是线宽变窄、频率蓝移。强度方面还会看到量子干涉：本征石墨烯里所有量子干涉路径相互抵消，强度不随激发波长明显变化，只剩 λ⁻⁴ 的反比关系；掺杂后部分路径被泡利阻塞，正反路径不再等价，费米能级附近出现强度增强。G 模强度可写成各路径振幅求和 I_G=|ΣR_k|²，R_k 的分母含 (E_L−E_k+iγ)(E_L−ħω_G−E_k+iγ)。</p><p>题5：Fano 共振是连续态与分立态之间的耦合。多层石墨烯薄膜里的 C 模能量很小，它激发的电子-空穴对在费米能级附近是连续的；能量匹配时连续电子激发态与分立声子态耦合，谱线出现反常的非对称线形，用 Breit-Wigner-Fano 公式描述：I(ω)=I0·[(q+(ω−ω0)/Γ)²+...]/(1+[(ω−ω0)/(Γ/2)]²) 这一类形式，其中 ω0 为未耦合频率、Γ 为展宽、q 为耦合系数（1/|q| 表示耦合强度）；q→∞ 回到洛伦兹线形，q→0 变成反共振的凹陷。4LG 在 E_F=0 附近、ħω 与 |E_F| 可比的条件下能观察到这种线形，层数不同电子激发不同，Fano 参数也不同。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>掺杂后出现空态，影响了电声耦合的散射路径。</p><p>此时电声耦合变弱，导致线宽变窄，频率发生蓝移。</p><p>若未掺杂，所有量子相干路径相互抵消，强度无明显变化。</p><p>法诺共振就是连续态和分离态之间的耦合。</p><p>在多层石墨烯薄膜中，这是一个能量很小的模式。它的电声耦合激发的是费米能级附近的电子空穴对。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-ch6-layer">
+  <div class="slides"><figure class="slide" id="slide-46">
+<img src="slides/slide_46.png" alt="课件第46页 第6题：少层石墨烯层数表征方法一——2D 模线型（机械剥离 1LG 单洛伦兹峰）">
+<figcaption><span class="sno">46</span><span class="stitle">第6题：少层石墨烯层数表征方法一——2D 模线型（机械剥离 1LG 单洛伦兹峰）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-47">
+<img src="slides/slide_47.png" alt="课件第47页 第6题：AB 堆垛 2—4 层石墨烯 2D 模线型对照（单层 24 cm⁻¹、双层四峰、三层/四层肩峰）">
+<figcaption><span class="sno">47</span><span class="stitle">第6题：AB 堆垛 2—4 层石墨烯 2D 模线型对照（单层 24 cm⁻¹、双层四峰、三层/四层肩峰）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-48">
+<img src="slides/slide_48.png" alt="课件第48页 第6题：方法二——SiO₂/Si 衬底硅拉曼模强度比 I_G(Si)/I_0(Si)，可定 1—10 层">
+<figcaption><span class="sno">48</span><span class="stitle">第6题：方法二——SiO₂/Si 衬底硅拉曼模强度比 I_G(Si)/I_0(Si)，可定 1—10 层</span></figcaption>
+</figure>
+<figure class="slide" id="slide-49">
+<img src="slides/slide_49.png" alt="课件第49页 第6题：方法三——G 模强度比 I_NLG(G)/I_1LG(G)">
+<figcaption><span class="sno">49</span><span class="stitle">第6题：方法三——G 模强度比 I_NLG(G)/I_1LG(G)</span></figcaption>
+</figure>
+<figure class="slide" id="slide-50">
+<img src="slides/slide_50.png" alt="课件第50页 第7题：体石墨 G 模与单层 MoS₂ A1′ 模半高宽随温度变化的差异及原因">
+<figcaption><span class="sno">50</span><span class="stitle">第7题：体石墨 G 模与单层 MoS₂ A1′ 模半高宽随温度变化的差异及原因</span></figcaption>
+</figure>
+<figure class="slide" id="slide-51">
+<img src="slides/slide_51.png" alt="课件第51页 第8题(1)：转角石墨烯 G 模在 1.8 eV 与 2.0 eV 的共振增强——入射共振与出射共振">
+<figcaption><span class="sno">51</span><span class="stitle">第8题(1)：转角石墨烯 G 模在 1.8 eV 与 2.0 eV 的共振增强——入射共振与出射共振</span></figcaption>
+</figure>
+<figure class="slide" id="slide-52">
+<img src="slides/slide_52.png" alt="课件第52页 第8题(2)：转角石墨烯各组分层数的鉴别——剪切模定子系统层数、呼吸模定总层数">
+<figcaption><span class="sno">52</span><span class="stitle">第8题(2)：转角石墨烯各组分层数的鉴别——剪切模定子系统层数、呼吸模定总层数</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">17</span>
+      <div class="sec-tt">
+        <h2>第6章题6—8：层数表征三法、温度线宽与转角石墨烯</h2>
+        <div class="sec-meta"><span class="time">录音：第 4 段（后）</span><span class="chip">课件 46</span><span class="chip">课件 47</span><span class="chip">课件 48</span><span class="chip">课件 49</span><span class="chip">课件 50</span><span class="chip">课件 51</span><span class="chip">课件 52</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>题6要给出表征少层石墨烯层数的三种方法。方法一：看 2D 模线型。机械剥离单层石墨烯的 2D 模是单个洛伦兹峰（峰宽约 24 cm⁻¹），不受衬底选择影响，可作为 1LG 的特征；AB 堆垛 2—4 层的 2D 线型随层数变化：双层可用四个洛伦兹峰拟合、左边峰位约 2600 cm⁻¹；三层左边有两个肩峰（2575、2612 cm⁻¹），最高两个子峰强度基本相等；四层左边有三个肩峰（2543、2586、2621 cm⁻¹），低频子峰较强。与这套线型比对即可定层数；不符则说明不是 AB 堆垛或超过 4 层（对 ABC 堆垛的 3LG、4LG 无效）。</p><p>方法二：SiO₂/Si 衬底的硅拉曼模强度比 I_G(Si)/I_0(Si)。用 532 nm、NA 小于 0.55 的 50 倍长工作距离物镜，先对 Si 衬底峰做洛伦兹拟合得到 I_G(Si)、I_0(Si)，该比值与层数单调相关，可定 1—10 层、精度优于 10%（四舍五入）。关键是先在 NLG 附近聚焦取得最佳 Si 强度 I_0(Si)，再平移至 NLG 区域直接测 I_G(Si)，此时不能再重新聚焦。方法三（参考方法）：G 模强度比 I_NLG(G)/I_1LG(G)，在 I_G(Si)/I_0(Si)>0.45 的条件下，用 N 层与已表征单层石墨烯的 G 峰拟合，按层数依赖关系定层，精度可达 10%；但层数一多（18—20 层附近）该比值会转而下降，无法单值判断，所以只适用于已确认少层的情形。</p><p>题7：体石墨 G 模的 FWHM 随温度先下降再上升，而单层 MoS₂ 的 A1′ 模一路随温度上升。因为石墨是半金属、有狄拉克点，很小的能量就能激发电子-空穴对，电声耦合强，升温初期电声耦合使线宽变窄，温度再高非谐效应占优、线宽增大，观测到的是两者竞争的结果；MoS₂ 是宽带隙半导体，深处能量难以激发电子-空穴对，本征样品电声耦合弱到可忽略，只剩非谐效应，线宽随温度单调增加。</p><p>题8：转角石墨烯的 G 模（约 196 meV）强度在 1.8 eV 与 2.0 eV 出现两个增强峰，而联合态密度只有一个范霍夫奇点。原因是两个峰分别对应入射共振与出射共振：1.8 eV 是入射共振，2.0 eV 是出射共振——激发上去后放出一个 0.25 eV 的 G 模声子，正好与联合态密度的范霍夫奇点匹配。鉴别各组分层数的方法与异质结类似：先用光学衬度确定范霍夫奇点能量范围，选靠近它的激光共振激发 C 模和 LB 模；剪切模反映子系统层数，呼吸模反映总层数。与半导体异质结不同的是，这里靠范霍夫奇点（光学跃迁允许的态密度奇点）而不是激子能级来共振，且范霍夫能量随转角变化。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>由于机械剥离单层石墨烯的2D模只显示出单个洛伦兹线型的拉曼峰，不受衬底选择影响。</p><p>特别注意：测试时，先在NLG附近聚焦，获得最佳Si拉曼强度，平移至NLG区域，直接测，此时不能再次聚焦。</p><p>对于石墨来说，我们知道它有狄拉克锥…所以这个时候随着温度的升高，你的电声耦合可以使你的这个半高宽先变窄。</p><p>刚好他们这个刚好是0.25eV，也就是G模的这个峰位的这个能量。所以这个说明我们其中一个应该是入射共振，一个是出射共振。</p><p>剪切模->子系统层数，呼吸模->总层数。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-exam">
+  <div class="slides"><figure class="slide" id="slide-53">
+<img src="slides/slide_53.png" alt="课件第53页 Thanks（课件结束页）">
+<figcaption><span class="sno">53</span><span class="stitle">Thanks（课件结束页）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">18</span>
+      <div class="sec-tt">
+        <h2>收尾：考试安排</h2>
+        <div class="sec-meta"><span class="time">录音：第 4 段（末）</span><span class="chip">课件 53</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>这就是全部作业，下节课有考试。考试地点在 209 教室，可能比这个教室大一点，到时候看情况，大家尽量围着一个座位坐，坐不下就没办法了。考试要求和平时一样：不能带手机；Pad 和电脑可以带，但不要被我们发现联网，联网不行、借别的工具也不行；计算器可以带。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这就是我们全部的作业，下节课有考试。</p><p>还有就是我们考试的时候还是一样要求，不能带手机。</p><p>pad跟电脑是可以带，但是不要被我们发现你联网了，联网是不行的，借助别的工具也是不行的，但是计算器是可以带的。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（显微共焦拉曼光谱学）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>

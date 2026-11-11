@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>矿物物理学 · 第18课 第一性原理计算应用（5.4）——矿物弹性性质计算｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.videos{margin-top:14px;border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.video + .video{border-top:1px solid #e4e9f0;}
+.videos h4{font-size:12.5px;font-weight:700;color:#0a1f38;background:#f2f5f9;padding:8px 12px;border-bottom:1px solid #e4e9f0;}
+.videos video{display:block;width:100%;max-height:460px;background:#0b0f14;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>矿物物理学 · 第18课 第一性原理计算应用（5.4）——矿物弹性性质计算</h1>
+    <div class="sub">第18课 第一性原理计算应用（5.4）——矿物弹性性质计算 ｜ 2026-11-10 ｜ 张志刚（矿物物理学）</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 25 页 · 整理 10 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-eos-to-elastic">01 从状态方程到弹性响应：施加微扰看响应</option>
+<option value="sec-hooke-law">02 胡克定律与线性近似：从弹簧到晶体</option>
+<option value="sec-elastic-quantities">03 弹性系数能给出什么</option>
+<option value="sec-seismology-key">04 地震观测这把“金钥匙”与正演—反演闭环</option>
+<option value="sec-stress-strain-tensor">05 应力、应变张量与 81 → 36 的第一次简化</option>
+<option value="sec-voigt-21">06 写成 6×6 矩阵：36 → 21 个独立系数</option>
+<option value="sec-nye-diagrams">07 读 Nye 图：七个晶系的矩阵各有几个独立量</option>
+<option value="sec-strain-design">08 应变-应力法与“如何更聪明地设计应变”</option>
+<option value="sec-workflow-slides">09 课件后段：转换矩阵、MgO 算例与 VASP 流程（录音未覆盖）</option>
+<option value="sec-aggregate-wave-homework">10 集合体平均、波速各向异性与课后作业（录音未覆盖）</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 矿物物理2026-5.4.pdf 逐页渲染，转写原文见 record_20261110.txt。</div>
+<section class="sec" id="sec-eos-to-elastic">
+  <div class="slides"><figure class="slide" id="slide-01">
+<img src="slides/slide_01.png" alt="课件第1页 2026《矿物物理学》课程——第一性原理计算（授课人：张志刚，中国科学院地质与地球物理研究所）">
+<figcaption><span class="sno">01</span><span class="stitle">2026《矿物物理学》课程——第一性原理计算（授课人：张志刚，中国科学院地质与地球物理研究所）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-02">
+<img src="slides/slide_02.png" alt="课件第2页 第一性原理计算四次课安排：1 第一性原理方法（10月29日）；2 计算软件实践（11月3日）；3 应用：状态方程与相图计算（11月5日）；4 应用：矿物弹性性质计算（11月10日）">
+<figcaption><span class="sno">02</span><span class="stitle">第一性原理计算四次课安排：1 第一性原理方法（10月29日）；2 计算软件实践（11月3日）；3 应用：状态方程与相图计算（11月5日）；4 应用：矿物弹性性质计算（11月10日）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-03">
+<img src="slides/slide_03.png" alt="课件第3页 从状态方程到弹性响应——80 GPa 下压力稍微变化，体积怎样变化？一个状态 P、V，一个响应 ∂P/∂V；K_T = −V(∂P/∂V)_T；改变一个条件，观察体系的响应（高压实验、成矿流体、地球物理）">
+<figcaption><span class="sno">03</span><span class="stitle">从状态方程到弹性响应——80 GPa 下压力稍微变化，体积怎样变化？一个状态 P、V，一个响应 ∂P/∂V；K_T = −V(∂P/∂V)_T；改变一个条件，观察体系的响应（高压实验、成矿流体、地球物理）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>从状态方程到弹性响应：施加微扰看响应</h2>
+        <div class="sec-meta"><span class="time">00:00:01–04:42</span><span class="chip">课件 1</span><span class="chip">课件 2</span><span class="chip">课件 3</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>上节课我们一直在讲状态方程，现在换一个角度：如果我们知道一个一阶量，处在一个状态上，要去求它的偏导数，一般怎么做？从微积分看，偏导是无限小的变化引起的变化；但在实验和计算里，我们可以用差分法——给研究的系统施加一个微小的扰动，看状态改变后相比原状态的变化量，两者做比值，就得到一个高阶量。体积模量也可以这样做，不需要复杂的理论推导，只要扰动足够小，在同一个温度下做有限差分是成立的。</p><p>为什么这件事重要？因为很多物理量我们能观测到的，恰恰是这种“变化的关系”。热力学里最根本的一阶量是亥姆霍兹自由能、吉布斯自由能和内能，这些量很难直接测；但我们可以观测它们随条件的变化——比如压力变化过程中吉布斯自由能的变化量本身就是可观测量；反过来，知道初始值，要对新温压条件下的自由能做积分就能得到。于是最基本的量可以通过高阶量获取，而高阶量往往正是实验和计算能给出的。</p><p>课件上的例子：80 GPa 下压力稍微变化，体积怎样变化？一个状态（P、V），一个响应（压力随体积变化的快慢），就是 K_T = −V(∂P/∂V)_T。同样的问题框架可以套到很多地方：高压实验里温压变化体积怎么变、成矿流体里条件变化溶解度怎么变、地球物理里施加微小形变应力怎么变。核心都是“改变一个条件，观察体系的响应”。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>大家理解一下，给研究的系统施加一个微小的影响，看状态改变后相比原状态的变化量。</p><p>往往一阶量很难得到。如热力学中，最根本的一阶量是亥姆霍兹自由能和吉布斯自由能，甚至内能。</p><p>改变一个条件，观察体系的响应。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-hooke-law">
+  <div class="slides"><figure class="slide" id="slide-04">
+<img src="slides/slide_04.png" alt="课件第4页 胡克定律 F = −kx → σ = Eε：应力、弹性模量、应变；弹簧拉伸实验的力—位移线性关系">
+<figcaption><span class="sno">04</span><span class="stitle">胡克定律 F = −kx → σ = Eε：应力、弹性模量、应变；弹簧拉伸实验的力—位移线性关系</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>胡克定律与线性近似：从弹簧到晶体</h2>
+        <div class="sec-meta"><span class="time">04:42–07:30</span><span class="chip">课件 4</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>最简单的例子是弹簧：根据胡克定律 F = −kx，拉伸长度和受力之间是线性关系。只要形变不是太大，就可以用线性关系近似；在数据变化过程中，最靠近中心点的地方做线性一阶近似，系数在很小范围内可以当成常数。做若干组长度变形和力的测量，线性回归就能得到斜率——这是一个近似但非常直观的关系，也对应课件上 σ = Eε 里的应力、弹性模量、应变三个量。</p><p>今天要讲的晶体材料比这难一层：往一个方向压，看它抵抗形变的能力，形式上跟弹簧类似；但晶体在不同方向上表现不同，施加的形变和力之间的关系在不同方向上有不同的对应。把这些对应关系抽象出来，就是弹性系数矩阵——它的地位就相当于胡克定律里的那个比例系数。理解了这个抽象关系，所有跟晶体弹性有关的东西都可以用这套技术获取。</p><p>这也是矿物物理里发展最快的一个方向：90年代有一段时间，做矿物弹性性质的第一性原理计算是整个领域里最活跃的地方，产生了不少高影响的文章。它的意义在于：对矿物施加各种形变、给出受力，或者给它受力得到形变，就能推出各种可观测量——P波、S波速度、横波纵波、各向异性，都可以从这套关系里推出来。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>如果形变不是太大，可以用线性关系近似。</p><p>但晶体在不同方向表现不同，施加的形变与力之间的关系在不同方向上有不同对应。</p><p>做矿物弹性性质的第一性原理计算，是这里边发展最为迅速的一个地方。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-elastic-quantities">
+  <div class="slides"><figure class="slide" id="slide-05">
+<img src="slides/slide_05.png" alt="课件第5页 弹性系数：获得晶体的体模量 K、剪切模量 G、泊松系数 ν、波速 VS/VP；判断晶体结构的机械稳定性；反映各向异性的力学性质">
+<figcaption><span class="sno">05</span><span class="stitle">弹性系数：获得晶体的体模量 K、剪切模量 G、泊松系数 ν、波速 VS/VP；判断晶体结构的机械稳定性；反映各向异性的力学性质</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>弹性系数能给出什么</h2>
+        <div class="sec-meta"><span class="time">07:30–09:00</span><span class="chip">课件 5</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>弹性系数不是一个孤立的数，它是一整套性质的入口。从弹性系数矩阵出发，可以得到晶体的体模量 K、剪切模量 G、泊松系数 ν，以及纵波速度 VP 和横波速度 VS；可以判断一个晶体结构的机械稳定性——某些组合的弹性常数如果越界，说明这个结构在力学上不稳定，根本不可能存在；还能反映各向异性的力学性质，也就是不同方向上弹性响应的差别。</p><p>这些量正好是地球物理最需要的量。矿物物理和地震学之间的接口，很大程度上就是弹性系数：地下物质的波速，本质上由它所组成矿物的弹性系数决定，而波速又是地震观测能直接给出的量。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>获得晶体的体模量、剪切模量、泊松系数、波速等。</p><p>判断晶体结构的机械稳定性。</p><p>反映各向异性的力学性质。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-seismology-key">
+  <div class="slides"><figure class="slide" id="slide-06">
+<img src="slides/slide_06.png" alt="课件第6页 地震观测：揭示地球与行星内部的“金钥匙”">
+<figcaption><span class="sno">06</span><span class="stitle">地震观测：揭示地球与行星内部的“金钥匙”</span></figcaption>
+</figure>
+<figure class="slide" id="slide-07">
+<img src="slides/slide_07.png" alt="课件第7页 从地震观测数据，咱们可以获知地球内部是什么样的矿物组成呢？（Birch, 1952, J. Geophys. Res., 57: 227-286）">
+<figcaption><span class="sno">07</span><span class="stitle">从地震观测数据，咱们可以获知地球内部是什么样的矿物组成呢？（Birch, 1952, J. Geophys. Res., 57: 227-286）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-08">
+<img src="slides/slide_08.png" alt="课件第8页 反演：地震观测 → 矿物组成 → 演化；正演：矿物组成 → 地震观测">
+<figcaption><span class="sno">08</span><span class="stitle">反演：地震观测 → 矿物组成 → 演化；正演：矿物组成 → 地震观测</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>地震观测这把“金钥匙”与正演—反演闭环</h2>
+        <div class="sec-meta"><span class="time">09:00–14:13</span><span class="chip">课件 6</span><span class="chip">课件 7</span><span class="chip">课件 8</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>要探索地球和行星内部，地震学是一把金钥匙。地球是被研究得最多的对象，有密集的地震台网，有大量来自深部震源的信号；信号在不同深度传播，从震源到接收点经历的时间是可以测的。介质波速快，信号到达就早；反过来，知道了距离、路径和到达时间，就能得到波速的信息——所有深部信号都是一些波动，我们从里面把有用的量提取出来。</p><p>但这些信息只回答“波速是多少”，真正要问的是：里面到底是什么物质？代表什么样的圈层结构？有没有液体、有没有熔融、有没有固态内核、有没有上下分层？1952年 Birch 就提出了这条思路（J. Geophys. Res. 57: 227-286）：用地地震学方法得到可观测量（比如 S 波速度），再从物质的角度、从地球或行星可能的物质组成出发做正向推导。</p><p>这就是正演和反演的闭环。正演：给定温度、压力、成分三个变量，看哪些矿物组合能稳定存在，每个矿物再用计算或实验给出它的波速，加权得到整个集合体的波速，与地震观测比对；反演：从地震观测得到的波速、各向异性出发，反推物质组成，再往上连接到地球动力学模拟，讨论行星系统的演化，并用重力、化学元素等信息交叉验证。每个端元矿物都可以通过第一性原理或实验拿到它的弹性数据，这是整个链条里最基础的一步，也是下节课之后第六章要用的东西。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我们要去探索这个地球和行星的内部，那肯定是地震学是一个金钥匙。</p><p>1952年地球物理学家就提出了这种思路。</p><p>从地震观测得到的波速、各向异性等信息，考虑其中包含的物质。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-stress-strain-tensor">
+  <div class="slides"><figure class="slide" id="slide-09">
+<img src="slides/slide_09.png" alt="课件第9页 如何计算某种矿物的弹性系数？——弹性系数长啥样？有啥特点？是不是可以简化？如何快速预测？">
+<figcaption><span class="sno">09</span><span class="stitle">如何计算某种矿物的弹性系数？——弹性系数长啥样？有啥特点？是不是可以简化？如何快速预测？</span></figcaption>
+</figure>
+<figure class="slide" id="slide-10">
+<img src="slides/slide_10.png" alt="课件第10页 三维应力应变关系 σij = Cijkl εkl（i,j,k,l = 1,2,3）：3×3 应力张量与应变张量、四阶张量 Cijkl 共 81 个分量">
+<figcaption><span class="sno">10</span><span class="stitle">三维应力应变关系 σij = Cijkl εkl（i,j,k,l = 1,2,3）：3×3 应力张量与应变张量、四阶张量 Cijkl 共 81 个分量</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>应力、应变张量与 81 → 36 的第一次简化</h2>
+        <div class="sec-meta"><span class="time">14:13–21:39</span><span class="chip">课件 9</span><span class="chip">课件 10</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>先问四个问题：弹性系数长啥样？有什么特点？能不能简化？能不能快速预测？我们从最简单的单元矿物入手——作业列表里的主要地幔矿物，有的简单（比如方解石），有的复杂（比如辉石，单胞里原子数多），含稀土的更复杂；但理论体系是通用的，用简单例子就能讲清楚。</p><p>三维情况和一维不同：每个 σ 代表一个面上的应力，垂直于 X 轴的面上的三个分量记为 σ11、σ21、σ31——第一个下标是与哪个轴垂直的面，第二个下标是受力方向；同理还有 σ12、σ13、σ22、σ23、σ32、σ33。应变也一样：一维是拉长后长度与原长之比；三维里不只是某个方向变长，剪切会让晶胞变成菱形、夹角发生变化，所以应力和应变都是 3×3 的矩阵。</p><p>如果应力和应变各有 9 个分量，按说系数要有 81 个（四阶张量 Cijkl，i、j、k、l 各取 1、2、3）。这显然太复杂，第一步降维靠对称性：应力张量对角线两侧相等（σ31 = σ13 等），否则体系会持续旋转；应变张量同理。于是 9 个分量减到 6 个独立的，81 个系数随之减到 36 个。这是纯靠对称性做的第一次简化。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这个矩阵世界的矩阵是多少个元素？按理说是不是81个？</p><p>对于矿物晶体，简化的方式是利用对称性。</p><p>3×3矩阵原有9个分量。考虑对称后，独立分量剩6个。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-voigt-21">
+  <div class="slides"><figure class="slide" id="slide-11">
+<img src="slides/slide_11.png" alt="课件第11页 σij = Cijkl εkl 的简化：Tensor 11 22 33 23 32 13 31 12 21 → Matrix 1 2 3 4 4 5 5 6 6；σi = Cij εj（i,j = 1,…,6），6×6 弹性系数矩阵">
+<figcaption><span class="sno">11</span><span class="stitle">σij = Cijkl εkl 的简化：Tensor 11 22 33 23 32 13 31 12 21 → Matrix 1 2 3 4 4 5 5 6 6；σi = Cij εj（i,j = 1,…,6），6×6 弹性系数矩阵</span></figcaption>
+</figure>
+<figure class="slide" id="slide-12">
+<img src="slides/slide_12.png" alt="课件第12页 正交晶系——不同晶系矿物的弹性系数矩阵（Nye, 1985）">
+<figcaption><span class="sno">12</span><span class="stitle">正交晶系——不同晶系矿物的弹性系数矩阵（Nye, 1985）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>写成 6×6 矩阵：36 → 21 个独立系数</h2>
+        <div class="sec-meta"><span class="time">21:39–27:09</span><span class="chip">课件 11</span><span class="chip">课件 12</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>把 3×3 的应力、应变按固定顺序排成一维向量，就可以把四阶张量写成 6×6 的矩阵：11→1、22→2、33→3、23 和 32→4、13 和 31→5、12 和 21→6（课件上 Tensor 一行、Matrix 一行就是这么对应的）。这样 σi = Cij εj（i, j = 1,…,6），信息量没有变，只是换了一种更好处理的形式。</p><p>接着用系数的对称性：Cijkl = Cjikl（应力对称）且 Cijkl = Cijlk（应变对称），6×6 矩阵的上下三角相等，C61 = C16、C65 = C56。于是 36 个元素里独立的只剩 21 个——这就是三斜晶系、完全没有对称性时最复杂的情况。从 81 到 21，问题的规模一下降下来了。</p><p>对具体矿物，晶系对称性还会继续简化。立方晶系只有 3 个独立分量：C11、C12、C44，非对角上半部分相等、其余为零；正交晶系有 9 个；六方晶系有 5 个：C11 = C22、C33、C13 = C23、C12，C44 = C55，还有一个 C66 = (C11 − C12)/2 不是独立量；三方晶系更特殊，有些分量相等、有些互为相反数。Nye（1985）用一张符号图把所有七个晶系的矩阵形式都表达了出来，大家课后要会读这张图。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这样的话，这是一个6×6的方阵。但通过分析发现它是对称的。</p><p>我们一下就把问题从刚才一开始的81个变量，变成了21个。</p><p>对一些高对称的，比如说立方晶系，我们在一般矿物里面经常看的正交晶系。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-nye-diagrams">
+  <div class="slides"><figure class="slide" id="slide-13">
+<img src="slides/slide_13.png" alt="课件第13页 不同晶系矿物的弹性系数矩阵（Nye, 1985）：立方、六方、三方等晶系的独立分量与相等关系">
+<figcaption><span class="sno">13</span><span class="stitle">不同晶系矿物的弹性系数矩阵（Nye, 1985）：立方、六方、三方等晶系的独立分量与相等关系</span></figcaption>
+</figure>
+<figure class="slide" id="slide-14">
+<img src="slides/slide_14.png" alt="课件第14页 Nye, 1985：用符号图表示各晶系弹性系数矩阵中哪些分量相等、哪些为零">
+<figcaption><span class="sno">14</span><span class="stitle">Nye, 1985：用符号图表示各晶系弹性系数矩阵中哪些分量相等、哪些为零</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div class="sec-tt">
+        <h2>读 Nye 图：七个晶系的矩阵各有几个独立量</h2>
+        <div class="sec-meta"><span class="time">27:09–32:00</span><span class="chip">课件 13</span><span class="chip">课件 14</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>Nye 的图看起来是一堆圆点和连线，但读法是固定的：没画点的部分与已画部分对称；画出来的小圆点不要忽略；粗线连起来的圆点代表这些分量相等；叉号代表它不是独立变量，而是别的量的组合。按这个规则数：立方晶系 3 个独立系数，正交晶系 9 个，六方晶系 5 个，三方晶系再多几个。</p><p>六方晶系的叉就是这个意思：C66 = (C11 − C12)/2，只要 C11 和 C12 定了，它也就定了。三方晶系里大圆圈套小黑点表示一组相等的量，另外还有 C14 与 −C14 这样的关系。掌握了这张图，拿到任意一个矿物，先看它属于哪个晶系，就能立刻写出弹性系数矩阵的形式、知道有几个未知量、哪些量之间有关系——这是后面设计应变实验的依据。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>粗线连起来的圆点代表它们相等。</p><p>它用一个非常巧妙的方法，把晶体里边总共七个晶系中所有可能的弹性系数矩阵形式表达出来了。</p><p>当C11和C12确定的时候，这个量是确定的。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-strain-design">
+  <div class="slides"><figure class="slide" id="slide-15">
+<img src="slides/slide_15.png" alt="课件第15页 应变-应力法求解弹性系数：σ = Cε 的 6×6 形式；思考与讨论——如何更聪明地设计应变？">
+<figcaption><span class="sno">15</span><span class="stitle">应变-应力法求解弹性系数：σ = Cε 的 6×6 形式；思考与讨论——如何更聪明地设计应变？</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">08</span>
+      <div class="sec-tt">
+        <h2>应变-应力法与“如何更聪明地设计应变”</h2>
+        <div class="sec-meta"><span class="time">32:00–38:38</span><span class="chip">课件 15</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>有了矩阵形式，怎么用计算把它填满？用应变-应力法：给晶体施加一个已知的应变 ε，算一次应力 σ，由 σ = Cε 就能解出对应的系数。一次只让一个应变分量非零（比如 ε1 取一个小量、其余为 0），得到的 σ1 到 σ6 就直接给出矩阵的第一列六个系数（再借助对称性得到第一行）；依次做下去，六次应变就能把 36 个元素全部拿到。这就是“最笨但一定可行”的方案。</p><p>但对高对称晶体完全不需要六次。立方晶系只有三个独立量，正应变一次就能同时给出 C11 和 C12，剪应变一次给出 C44——两次就够。正交晶系、六方晶系也各有更省的做法。所以课件上留了一个思考与讨论：如何更聪明地设计应变？关键就是用前面 Nye 图给出的相等关系和为零的分量，把一次计算能同时确定的系数尽量凑在一起，用最少的计算量拿到全部独立系数。</p><p>课上让大家分组讨论这个问题，就是为了后面真正动手时不至于依葫芦画瓢——不理解这一块，照着指南一步步点，最后也不知道自己算出来的矩阵为什么长这样。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>如果要得到弹性系数矩阵，最多只需要经过几次应变？</p><p>我一次就能得到其中的6个，我最多多少次？</p><p>因为如果你不理解这一块的话，后面即使大家跟着一起练，那也只是一个依葫芦画瓢而已。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-workflow-slides">
+  <div class="slides"><figure class="slide" id="slide-16">
+<img src="slides/slide_16.png" alt="课件第16页 转换矩阵——如何实施应变？由应变到晶胞参数，通过矩阵变换修改晶格向量">
+<figcaption><span class="sno">16</span><span class="stitle">转换矩阵——如何实施应变？由应变到晶胞参数，通过矩阵变换修改晶格向量</span></figcaption>
+</figure>
+<figure class="slide" id="slide-17">
+<img src="slides/slide_17.png" alt="课件第17页 如何得到应力？压强张量的六个分量顺序 1 6 5 / 2 4 / 3">
+<figcaption><span class="sno">17</span><span class="stitle">如何得到应力？压强张量的六个分量顺序 1 6 5 / 2 4 / 3</span></figcaption>
+</figure>
+<figure class="slide" id="slide-18">
+<img src="slides/slide_18.png" alt="课件第18页 MgO 算例：1、60 GPa 下优化晶体结构（PSTRESS=600、ISIF=3）；2、施加应变计算应力（ISIF=2）">
+<figcaption><span class="sno">18</span><span class="stitle">MgO 算例：1、60 GPa 下优化晶体结构（PSTRESS=600、ISIF=3）；2、施加应变计算应力（ISIF=2）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-19">
+<img src="slides/slide_19.png" alt="课件第19页 注意压强张量分量的顺序：1 2 3 6 4 5">
+<figcaption><span class="sno">19</span><span class="stitle">注意压强张量分量的顺序：1 2 3 6 4 5</span></figcaption>
+</figure>
+<figure class="slide" id="slide-20">
+<img src="slides/slide_20.png" alt="课件第20页 MgO 弹性系数结果：C11 = 832.35、C12 = 180.04、C44 = 189.52；计算参数 PREC=Accurate、ENCUT=1000、EDIFF=1e-6、KSPACING=0.4、IALGO=38、LREAL=.FALSE.、ADDGRID=.TRUE.">
+<figcaption><span class="sno">20</span><span class="stitle">MgO 弹性系数结果：C11 = 832.35、C12 = 180.04、C44 = 189.52；计算参数 PREC=Accurate、ENCUT=1000、EDIFF=1e-6、KSPACING=0.4、IALGO=38、LREAL=.FALSE.、ADDGRID=.TRUE.</span></figcaption>
+</figure>
+<figure class="slide" id="slide-21">
+<img src="slides/slide_21.png" alt="课件第21页 VASP 计算静态下弹性系数流程（七步：建模、结构弛豫、按对称性设计应变、每种应变取 ±0.01、ISIF=2 限定弛豫、grep “in kB” 取压强张量、应变-应力关系求系数）">
+<figcaption><span class="sno">21</span><span class="stitle">VASP 计算静态下弹性系数流程（七步：建模、结构弛豫、按对称性设计应变、每种应变取 ±0.01、ISIF=2 限定弛豫、grep “in kB” 取压强张量、应变-应力关系求系数）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">09</span>
+      <div class="sec-tt">
+        <h2>课件后段：转换矩阵、MgO 算例与 VASP 流程（录音未覆盖）</h2>
+        <div class="sec-meta"><span class="time">录音：本节无对应片段（转写止于 38:38 的小组讨论）</span><span class="chip">课件 16</span><span class="chip">课件 17</span><span class="chip">课件 18</span><span class="chip">课件 19</span><span class="chip">课件 20</span><span class="chip">课件 21</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>说明：原始录音转写在本节之前结束（止于分组讨论），以下页面按课件内容整理，没有原声可对照。</p><p>如何把“应变”真正施加到晶体上？课件给出转换矩阵的思路：应变作用在晶胞上，等价于对三个晶格向量做矩阵变换，把变换后的晶格向量写回 POSCAR 的第 3–5 行，晶胞参数就随应变了。这一步是应变-应力法在 VASP 里的具体实现方式。</p><p>应力怎么取？算完之后用 grep “in kB” OUTCAR 提取压强张量的六个分量，注意分量顺序是 1、2、3、6、4、5（课件第19页专门标了这一点，顺序搞错后面的系数全错），再与零应变状态下的分量相减，得到这次应变引起的应力。</p><p>课件给了一个 MgO 的完整算例：第一步在 60 GPa 下做结构弛豫（PSTRESS=600、ISIF=3），拿到该压力下的晶胞参数；第二步固定晶胞、只让原子弛豫（ISIF=2）逐个施加应变、算应力。最后得到 C11 = 832.35、C12 = 180.04、C44 = 189.52（单位 GPa），计算时用了 PREC=Accurate、ENCUT=1000、EDIFF=1e-6、KSPACING=0.4、IALGO=38、LREAL=.FALSE.、ADDGRID=.TRUE. 这一组更严格的参数。</p><p>把上面的步骤串起来就是课件的七步流程：1、利用矿物数据库建模；2、设 PSTRESS 和 ISIF，选合适的 EDIFF、PREC、ENCUT、NSW 做结构弛豫，得到目标压力下的晶胞参数；3、按晶体对称性写出弹性系数矩阵形式，设计最省计算量的若干种应变；4、每种应变取两个应变量（如 +0.01 和 −0.01），各建一个文件夹，拷结构优化后的 CONTCAR 并改名为 POSCAR，按应变修改第 3–5 行，其余不动；5、INCAR 设 ISIF=2，做限定晶胞参数的结构弛豫；6、grep “in kB” OUTCAR 取压强张量六个分量，与第2步的值相减得应力；7、用应变-应力关系算出各弹性系数。每种应变取正负两个量，是为了消掉线性项之外的误差。</p></div>
+  </div>
+</section>
+<section class="sec" id="sec-aggregate-wave-homework">
+  <div class="slides"><figure class="slide" id="slide-22">
+<img src="slides/slide_22.png" alt="课件第22页 Mineral Aggregation：Voigt approximation、Reuss approximation、Hill averaging">
+<figcaption><span class="sno">22</span><span class="stitle">Mineral Aggregation：Voigt approximation、Reuss approximation、Hill averaging</span></figcaption>
+</figure>
+<figure class="slide" id="slide-23">
+<img src="slides/slide_23.png" alt="课件第23页 矿物集合体弹性性质示意（Voigt/Reuss/Hill 平均）">
+<figcaption><span class="sno">23</span><span class="stitle">矿物集合体弹性性质示意（Voigt/Reuss/Hill 平均）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-24">
+<img src="slides/slide_24.png" alt="课件第24页 波速与各向异性：MgSiO3-ppv（Iitaka et al., 2004, Nature）；MgSiO3-Majorite（Lou et al., 2020, PEPI）">
+<figcaption><span class="sno">24</span><span class="stitle">波速与各向异性：MgSiO3-ppv（Iitaka et al., 2004, Nature）；MgSiO3-Majorite（Lou et al., 2020, PEPI）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-25">
+<img src="slides/slide_25.png" alt="课件第25页 课后作业：1、计算 Bridgmanite（MgSiO3, LDA, 120 GPa）与 Post-Perovskite（MgSiO3, LDA, 120 GPa）的弹性性质；2、（选做）2500 K、120 GPa 条件下上述任一矿物的弹性性质；整理成简短报告（word 或 pdf），多人完成注明分工（11月15日周日晚20:00截止）">
+<figcaption><span class="sno">25</span><span class="stitle">课后作业：1、计算 Bridgmanite（MgSiO3, LDA, 120 GPa）与 Post-Perovskite（MgSiO3, LDA, 120 GPa）的弹性性质；2、（选做）2500 K、120 GPa 条件下上述任一矿物的弹性性质；整理成简短报告（word 或 pdf），多人完成注明分工（11月15日周日晚20:00截止）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">10</span>
+      <div class="sec-tt">
+        <h2>集合体平均、波速各向异性与课后作业（录音未覆盖）</h2>
+        <div class="sec-meta"><span class="time">录音：本节无对应片段（课件页）</span><span class="chip">课件 22</span><span class="chip">课件 23</span><span class="chip">课件 24</span><span class="chip">课件 25</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>说明：本节同样没有录音覆盖，内容按课件页面整理。</p><p>单晶的弹性系数算出来之后，还要处理“矿物集合体”——地幔岩石是多晶集合体，各个晶粒取向不同。课件给了三种平均方式：Voigt 假设各晶粒应变相同，给出弹性系数的上界；Reuss 假设应力相同，给出下界；Hill 取两者的算术平均，是最常用的估计。把单矿物的系数按体积分数加权，就得到整个岩石的弹性性质。</p><p>有了集合体的 K 和 G，就能算波速：VP = sqrt((K + 4G/3)/ρ)，VS = sqrt(G/ρ)。不同矿物的波速和各向异性差别很大，课件举了两个例子：MgSiO3-ppv（Iitaka et al., 2004, Nature）和 MgSiO3-Majorite（Lou et al., 2020, PEPI）。后钙钛矿的各向异性对 D'' 层的地震观测解释非常关键，这也是当年后钙钛矿发现之后紧接着被大量研究的原因。</p><p>课后作业两项：第一，计算 Bridgmanite（MgSiO3，LDA，120 GPa）和 Post-Perovskite（MgSiO3，LDA，120 GPa）的弹性性质，这两个相正好对应上节课相图里的 pv 和 ppv；第二（选做），算 2500 K、120 GPa 条件下上述任一矿物的弹性性质，这一项要考虑温度效应。把数据和图表整理成简短报告（word 或 pdf）上传，多人合作要标明分工。截止时间是11月15日周日晚上20:00，链接在课件上。</p></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（矿物物理学）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>

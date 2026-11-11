@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>生成式模型与科学智能应用 · 第18课 Lecture 15 Model Evaluation——似然评估、样本质量指标与潜表征评估｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.videos{margin-top:14px;border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.video + .video{border-top:1px solid #e4e9f0;}
+.videos h4{font-size:12.5px;font-weight:700;color:#0a1f38;background:#f2f5f9;padding:8px 12px;border-bottom:1px solid #e4e9f0;}
+.videos video{display:block;width:100%;max-height:460px;background:#0b0f14;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>生成式模型与科学智能应用 · 第18课 Lecture 15 Model Evaluation——似然评估、样本质量指标与潜表征评估</h1>
+    <div class="sub">第18课 Lecture 15 Model Evaluation——似然评估、样本质量指标与潜表征评估 ｜ 2026-11-10 ｜ 刘云帆（生成式模型与科学智能应用）</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 50 页 · 整理 13 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-announce">01 课前通知：作业、期末考试与分组任务</option>
+<option value="sec-why-eval">02 为什么生成模型没有统一指标：三类功能，三套标准</option>
+<option value="sec-likelihood">03 密度估计评估（一）：最大似然与测试集似然</option>
+<option value="sec-elbo-is">04 密度估计评估（二）：ELBO 下界与重要性采样</option>
+<option value="sec-kde">05 密度估计评估（三）：直方图的 bin 宽度困境与核密度估计</option>
+<option value="sec-likelihood-vs-quality">06 似然不等于样本质量：两个反例</option>
+<option value="sec-human">07 人工评估：从微信群问卷到 HYPE 指标</option>
+<option value="sec-is">08 Inception Score：清晰度、多样性与互信息</option>
+<option value="sec-fid-kid">09 FID 与 KID：特征空间里的两个分布距离</option>
+<option value="sec-task-metrics">10 任务相关的综合指标</option>
+<option value="sec-latent-cluster">11 潜表征评估（一）：什么算“好”的表征，以及聚类指标</option>
+<option value="sec-latent-compress">12 潜表征评估（二）：压缩与解耦</option>
+<option value="sec-supp">13 延伸材料与阅读清单</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 Lecture15_Evaluation.pdf 逐页渲染，转写原文见 record_20261110.txt。</div>
+<section class="sec" id="sec-announce">
+  <div class="slides"><figure class="slide" id="slide-01">
+<img src="slides/slide_01.png" alt="课件第1页 封面：Lecture 15 Model Evaluation（Fall 2026，刘云帆）">
+<figcaption><span class="sno">01</span><span class="stitle">封面：Lecture 15 Model Evaluation（Fall 2026，刘云帆）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-02">
+<img src="slides/slide_02.png" alt="课件第2页 Announcements：作业 2 截止 11/22、期末 11/17 15:25–17:00、作业 3 待发布">
+<figcaption><span class="sno">02</span><span class="stitle">Announcements：作业 2 截止 11/22、期末 11/17 15:25–17:00、作业 3 待发布</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>课前通知：作业、期末考试与分组任务</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（前）</span><span class="chip">课件 1</span><span class="chip">课件 2</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>作业 2 在 11 月 22 日截止，大家复习一下。期末考试在下周六 15:25—17:00（课件写作 11 月 17 日），考场分 104 和 204 两个教室，具体座位已经在群里用表格分配好，需要岔开坐，考试时长一个半小时。</p><p>只能带纸质材料，数量不限，不允许带电子设备。第三组的任务是训练一个小 GPT 模型并观察训练过程，作为期末评定依据，时间还比较充裕。题型只有理解题和简答题，没有选择题和计算题，难度适中，把纸质材料准备好就能作答。下次课会做整体复习并讲题。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>作业在22号截止，希望大家复习一下。</p><p>期末考试在下周六3:25~5点。不允许带电子设备，只能带纸质材料，数量不限。</p><p>考场分104和204教室，具体座位已在群内表格分配。需岔开坐，考试时长一个半小时。</p><p>第三组任务是训练小GPT模型并观察过程，作为期末评定依据，时间充裕。</p><p>考试题型仅含理解题和简答题，无选择题和计算题。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-why-eval">
+  <div class="slides"><figure class="slide" id="slide-03">
+<img src="slides/slide_03.png" alt="课件第3页 Recap：已讲过的生成模型与应用（生成 / 密度估计 / 表征学习）">
+<figcaption><span class="sno">03</span><span class="stitle">Recap：已讲过的生成模型与应用（生成 / 密度估计 / 表征学习）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-04">
+<img src="slides/slide_04.png" alt="课件第4页 Recap：这些生成模型该怎么评估？">
+<figcaption><span class="sno">04</span><span class="stitle">Recap：这些生成模型该怎么评估？</span></figcaption>
+</figure>
+<figure class="slide" id="slide-05">
+<img src="slides/slide_05.png" alt="课件第5页 Recap：评估驱动研究进展，判别模型指标清楚，生成模型没有统一指标">
+<figcaption><span class="sno">05</span><span class="stitle">Recap：评估驱动研究进展，判别模型指标清楚，生成模型没有统一指标</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>为什么生成模型没有统一指标：三类功能，三套标准</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（前）</span><span class="chip">课件 3</span><span class="chip">课件 4</span><span class="chip">课件 5</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>先把这一学期讲过的模型摆一遍：自回归、VAE、归一化流、GAN、扩散／score-based 模型、连续归一化流（CNF）。它们对应三类功能——生成新样本（AR、VAE、Flow、GAN、扩散、CNF）、密度估计（AR、Flow、CNF）、表征学习（VAE 这类隐变量模型）。既然功能不同，评估指标就只能跟最终要完成的任务挂钩：生成、估计还是学表征，各有一套说法；多任务或者图像翻译这类下游定制任务又是另一套。</p><p>对比一下判别模型：分类看 accuracy，回归看误差，还有召回率、精确度、PR 曲线、ROC 曲线，指标设计清楚也简单。生成模型这里没有单一、普适的指标——这正是今天要讲的东西。评估本身又是推动领域进展的核心，所以这块研究一直很活跃。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>今天收尾介绍生成模型的三类功能：生成新样本、估计数据概率等。</p><p>还有一个就是做密度估计，那我们所有的模型都可以归在这三类。</p><p>但是在生成模型里面，没有一个单一的普适性指标。</p><p>Evaluation drives progress.</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-likelihood">
+  <div class="slides"><figure class="slide" id="slide-06">
+<img src="slides/slide_06.png" alt="课件第6页 Lecture Outline：密度估计评估 / 采样质量评估 / 潜表征评估">
+<figcaption><span class="sno">06</span><span class="stitle">Lecture Outline：密度估计评估 / 采样质量评估 / 潜表征评估</span></figcaption>
+</figure>
+<figure class="slide" id="slide-07">
+<img src="slides/slide_07.png" alt="课件第7页 Lecture Outline（同前，逐条展开）">
+<figcaption><span class="sno">07</span><span class="stitle">Lecture Outline（同前，逐条展开）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-08">
+<img src="slides/slide_08.png" alt="课件第8页 Evaluating Density Estimation：最大似然逼近 p_data，用测试集似然衡量">
+<figcaption><span class="sno">08</span><span class="stitle">Evaluating Density Estimation：最大似然逼近 p_data，用测试集似然衡量</span></figcaption>
+</figure>
+<figure class="slide" id="slide-09">
+<img src="slides/slide_09.png" alt="课件第9页 体重生成的玩具例子：训练/验证/测试划分，报告测试集似然">
+<figcaption><span class="sno">09</span><span class="stitle">体重生成的玩具例子：训练/验证/测试划分，报告测试集似然</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>密度估计评估（一）：最大似然与测试集似然</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（中）</span><span class="chip">课件 6</span><span class="chip">课件 7</span><span class="chip">课件 8</span><span class="chip">课件 9</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>本节三条线：密度估计评估、采样质量评估、潜表征评估。先看第一条。密度估计的目标是用最大似然让 p_θ 逼近 p_data，所以衡量模型好坏的直接办法就是看在测试集（x∼p_data）上的似然。课件的玩具例子是体重生成：采样出 [64, 69, 73, 78, 84] 比较合理，[31, 44, 72, 105, 128] 就不太像人。</p><p>对可以直接算似然的模型（比如自回归）流程很标准：把数据划成训练、验证、测试三份；在训练集上学 p_θ；在验证集上调超参；最后在测试集上报告 E[log p_θ(x)] 作为泛化性能。测试集同样服从真实分布，似然越高说明模型对没见过的真实样本给出的概率越大，性能越好。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这要学习它的一些特性，OK。如果大家还记得我们在系统讲的一个例子对吧，就是我们想用这个把我们这个8位体重的一个生成的过程或者拟合的过程。</p><p>如果生成模型训练可视为最大似然估计问题，便可用基于似然的指标评估模型。</p><p>以可直接计算似然的AR模型为例，其特点是可以直接计算数据似然。</p><p>似然值越高，代表模型性能越好。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-elbo-is">
+  <div class="slides"><figure class="slide" id="slide-10">
+<img src="slides/slide_10.png" alt="课件第10页 没有可解似然的模型：VAE 用 ELBO 作为 log-likelihood 的可解代理">
+<figcaption><span class="sno">10</span><span class="stitle">没有可解似然的模型：VAE 用 ELBO 作为 log-likelihood 的可解代理</span></figcaption>
+</figure>
+<figure class="slide" id="slide-11">
+<img src="slides/slide_11.png" alt="课件第11页 重要性采样：p(x)=E_q[p(x,z)/q(z)] 与蒙特卡洛估计">
+<figcaption><span class="sno">11</span><span class="stitle">重要性采样：p(x)=E_q[p(x,z)/q(z)] 与蒙特卡洛估计</span></figcaption>
+</figure>
+<figure class="slide" id="slide-12">
+<img src="slides/slide_12.png" alt="课件第12页 GAN 这类隐式模型：基于样本的非参数密度估计">
+<figcaption><span class="sno">12</span><span class="stitle">GAN 这类隐式模型：基于样本的非参数密度估计</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>密度估计评估（二）：ELBO 下界与重要性采样</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（中）</span><span class="chip">课件 10</span><span class="chip">课件 11</span><span class="chip">课件 12</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>VAE 这类隐变量模型算不出精确似然，就用 ELBO 作为可计算的代理：ELBO(x) ≤ log p_θ(x)。问题是它只是下界，和真似然之间还差一个 KL(q(z|x)‖p(z|x))；如果两个模型的后验分布差距差不多，比 ELBO 才能近似比似然，差距不知道就没法直接下结论。很多变分方法正是拿这个当性能指标。</p><p>第二条路是重要性采样：p_θ(x)=Σ_z p_θ(x,z)=Σ_z q(z)·p_θ(x,z)/q(z)=E_{z∼q}[p_θ(x,z)/q(z)]，再对这一期望做蒙特卡洛估计——从 q 里采 k 个 z，算 p(x,z_j)/q(z_j) 求平均。这样得到的是似然的近似值而不是下界，代价是方差。</p><p>第三条路针对 GAN 这类隐式模型：它们给不出似然，那就退一步，只从样本出发做非参数密度估计。课件在这里留了一句提醒：这些方法在实践中并不总是容易、可靠。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我们虽然没法去计算这个对于任一样本这个似然或者对数自然。但是我们可以去直接计算它的这个ELBO。</p><p>因为我们在课上讲，我们这个对数自然之间还差着一个KL散度。</p><p>就是我们在计算我们这个含有隐变量的这个模型的自然的时候，我们要对所有的一变量进行求和。</p><p>前者数学精确但是下界，无法直接比较；后者通过估计近似自然对数似然的值。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-kde">
+  <div class="slides"><figure class="slide" id="slide-13">
+<img src="slides/slide_13.png" alt="课件第13页 非参数密度估计（一）：直方图，−0.5 不在样本集怎么估">
+<figcaption><span class="sno">13</span><span class="stitle">非参数密度估计（一）：直方图，−0.5 不在样本集怎么估</span></figcaption>
+</figure>
+<figure class="slide" id="slide-14">
+<img src="slides/slide_14.png" alt="课件第14页 非参数密度估计（二）：不同 bin 宽度得到的直方图">
+<figcaption><span class="sno">14</span><span class="stitle">非参数密度估计（二）：不同 bin 宽度得到的直方图</span></figcaption>
+</figure>
+<figure class="slide" id="slide-15">
+<img src="slides/slide_15.png" alt="课件第15页 核密度估计：p(x)=(1/n)ΣK((x−x_i)/σ)，直方图与高斯核对比">
+<figcaption><span class="sno">15</span><span class="stitle">核密度估计：p(x)=(1/n)ΣK((x−x_i)/σ)，直方图与高斯核对比</span></figcaption>
+</figure>
+<figure class="slide" id="slide-16">
+<img src="slides/slide_16.png" alt="课件第16页 核函数的定义：归一化与对称；核＝相似度，带宽＝平滑度">
+<figcaption><span class="sno">16</span><span class="stitle">核函数的定义：归一化与对称；核＝相似度，带宽＝平滑度</span></figcaption>
+</figure>
+<figure class="slide" id="slide-17">
+<img src="slides/slide_17.png" alt="课件第17页 注意：这些方法在实践中并不总是容易、可靠">
+<figcaption><span class="sno">17</span><span class="stitle">注意：这些方法在实践中并不总是容易、可靠</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>密度估计评估（三）：直方图的 bin 宽度困境与核密度估计</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（中）</span><span class="chip">课件 13</span><span class="chip">课件 14</span><span class="chip">课件 15</span><span class="chip">课件 16</span><span class="chip">课件 17</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>只有样本时怎么估 p(x)？先看一个朴素的反例：样本集里没有 −0.5，按“没采到就是 0”算它的似然是 0，这显然不合理——既然 −0.4 能采到，−0.5 附近总该有概率。中学就学过的办法是直方图：把取值范围切成宽度为 bin 的格子，数每格的样本数，再用总数归一化得到密度。课件例子 bin 宽取 2、最小高度 1/12。</p><p>直方图最大的问题是 bin 宽度怎么定。宽度 0.04 太细，有些格子没有样本落进去，估出来就是 0，而那里真实密度其实不低；分得太宽又太粗，和真实分布差很远。必须挑一个合适的宽度才行。</p><p>核密度估计（KDE）就是来修这个问题的：p(x)=(1/n)Σ_i K((x−x_i)/σ)，对每个样本把核函数平移到该样本位置、按带宽缩放，再把所有核加起来取平均。用高斯核时，每个样本贡献一条高斯曲线，叠起来就是最后那条平滑曲线。物理含义很清楚：核函数描述“点与点的相似度”，离样本越远贡献越小，不像直方图那样一个样本只给自己所在的格子记 1、别处记 0。</p><p>核不必是高斯：只要满足归一化（∫K(u)du=1）和对称（K(u)=K(−u)）就行，三角核、方框核都可以，选不同的核对同样样本估出的密度不同。带宽 σ 控制平滑程度。估出密度后就能比较不同模型的似然。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>假如要求一个新样本，比如1单位，它在样本空间里没有。我想知道这个样本的似然。</p><p>当bin过细时，有些bin可能没有样本落入。如果没有样本落入，估计值就为零。</p><p>为了解决这个问题，常用方法叫做Kernel Density Estimation，即核密度估计。</p><p>如果大家学过信号处理，就知道这其实是把样本进行平移和缩放。</p><p>只要满足归一化且对称，就可以定义各种各样的核函数。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-likelihood-vs-quality">
+  <div class="slides"><figure class="slide" id="slide-18">
+<img src="slides/slide_18.png" alt="课件第18页 Lecture Outline：进入采样质量评估">
+<figcaption><span class="sno">18</span><span class="stitle">Lecture Outline：进入采样质量评估</span></figcaption>
+</figure>
+<figure class="slide" id="slide-19">
+<img src="slides/slide_19.png" alt="课件第19页 高似然 ⇏ 好样本：0.01 p_data + 0.99 p_noise 的例子与上下界">
+<figcaption><span class="sno">19</span><span class="stitle">高似然 ⇏ 好样本：0.01 p_data + 0.99 p_noise 的例子与上下界</span></figcaption>
+</figure>
+<figure class="slide" id="slide-20">
+<img src="slides/slide_20.png" alt="课件第20页 好样本 ⇏ 高似然：只记忆训练集的模型">
+<figcaption><span class="sno">20</span><span class="stitle">好样本 ⇏ 高似然：只记忆训练集的模型</span></figcaption>
+</figure>
+<figure class="slide" id="slide-21">
+<img src="slides/slide_21.png" alt="课件第21页 基于样本的评估：这两组生成样本哪一组“看起来”更好？">
+<figcaption><span class="sno">21</span><span class="stitle">基于样本的评估：这两组生成样本哪一组“看起来”更好？</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>似然不等于样本质量：两个反例</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（后）</span><span class="chip">课件 18</span><span class="chip">课件 19</span><span class="chip">课件 20</span><span class="chip">课件 21</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>反例一：构造 p_θ=0.01 p_data+0.99 p_noise。取对数有 log p_θ(x) ≥ log 0.01 p_data(x) = log p_data(x) − log 100，所以测试集似然只比真分布低一个常数 log 100；可采样时 99% 出来的是噪声，质量很差。再取期望，上下界都只差这个常数；如果把数据维度升高，E[log p_θ] 会几乎贴住 E[log p_data]——似然看起来很好，样本依旧很糟。</p><p>反例二反过来：一个模型干脆把训练集背下来。采样结果质量完美（就是真实训练数据），但测试集上的概率是 0，测试似然最差。两个反例合起来的结论是：似然和样本质量应该解耦，样本质量得用 likelihood-free 的指标来评——这些目标本身不直接依赖似然。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这两页PPT就是我们在讲GAN的时候跟大家讲过对吧？</p><p>高的自然并不一定等于好的这个样本的质量。相反也是一样的。</p><p>Consider a model that simply memorizes the training set.</p><p>所以第二个阶就我们从样本的质量来得到样本的质量去评价你平面的这个模型的一个模块。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-human">
+  <div class="slides"><figure class="slide" id="slide-22">
+<img src="slides/slide_22.png" alt="课件第22页 Human Evaluation：人类偏好是样本质量的金标准">
+<figcaption><span class="sno">22</span><span class="stitle">Human Evaluation：人类偏好是样本质量的金标准</span></figcaption>
+</figure>
+<figure class="slide" id="slide-23">
+<img src="slides/slide_23.png" alt="课件第23页 Human Evaluation：HYPEtime 与 HYPE∞ 两项行为学指标">
+<figcaption><span class="sno">23</span><span class="stitle">Human Evaluation：HYPEtime 与 HYPE∞ 两项行为学指标</span></figcaption>
+</figure>
+<figure class="slide" id="slide-24">
+<img src="slides/slide_24.png" alt="课件第24页 Human Evaluation 的局限：昂贵、有偏、难复现、难评估泛化">
+<figcaption><span class="sno">24</span><span class="stitle">Human Evaluation 的局限：昂贵、有偏、难复现、难评估泛化</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div class="sec-tt">
+        <h2>人工评估：从微信群问卷到 HYPE 指标</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（后）</span><span class="chip">课件 22</span><span class="chip">课件 23</span><span class="chip">课件 24</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>最直接的办法是 Human Evaluation。论文里常见的是在微信群里发问卷，收上来一批粗糙的主观打分；要严谨一些就上 Amazon Mechanical Turk 这类第三方平台，自己设计前端界面让工人打分或标注。但工人可能敷衍，质量难保证，通常要在每组里插几个已知标注的样本，用它来检验工人靠不靠谱。</p><p>现在也常用大模型替代人工。李飞飞等人做了更客观的版本：HYPEtime 统计人判断真假样本所需的最短时间，生成越好越难分辨、时间越长；HYPE∞ 则不限时，统计能骗过人的样本比例，错判率越高说明生成越好。这把人类评价转成了可定量、可重复的指标——毕竟纯人工评估昂贵、带偏见、难以复现，也很难评估泛化。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>一般大家怎么采，一般就是通过这个在微信群里面发一些调查问卷。</p><p>比如说这个MTurk…利用MTurk工人对结果打分或标注数据。</p><p>通常每组插入已知标注样本，以此评估工人表现。</p><p>如Hi和Hitime，衡量用户区分真假样本的最少时间。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-is">
+  <div class="slides"><figure class="slide" id="slide-25">
+<img src="slides/slide_25.png" alt="课件第25页 Inception Score：两个前提假设与清晰度／多样性两条标准">
+<figcaption><span class="sno">25</span><span class="stitle">Inception Score：两个前提假设与清晰度／多样性两条标准</span></figcaption>
+</figure>
+<figure class="slide" id="slide-26">
+<img src="slides/slide_26.png" alt="课件第26页 IS 的 Sharpness：用分类器预测分布的熵 S=exp(−H)">
+<figcaption><span class="sno">26</span><span class="stitle">IS 的 Sharpness：用分类器预测分布的熵 S=exp(−H)</span></figcaption>
+</figure>
+<figure class="slide" id="slide-27">
+<img src="slides/slide_27.png" alt="课件第27页 IS 的 Diversity：边缘类别分布熵 D=exp(H)，IS=D×S">
+<figcaption><span class="sno">27</span><span class="stitle">IS 的 Diversity：边缘类别分布熵 D=exp(H)，IS=D×S</span></figcaption>
+</figure>
+<figure class="slide" id="slide-28">
+<img src="slides/slide_28.png" alt="课件第28页 IS 展开为 KL 散度，等价于互信息 I(X;Y)">
+<figcaption><span class="sno">28</span><span class="stitle">IS 展开为 KL 散度，等价于互信息 I(X;Y)</span></figcaption>
+</figure>
+<figure class="slide" id="slide-29">
+<img src="slides/slide_29.png" alt="课件第29页 IS 的局限：无真实数据参照、依赖分类器、只反映类间多样性等">
+<figcaption><span class="sno">29</span><span class="stitle">IS 的局限：无真实数据参照、依赖分类器、只反映类间多样性等</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">08</span>
+      <div class="sec-tt">
+        <h2>Inception Score：清晰度、多样性与互信息</h2>
+        <div class="sec-meta"><span class="time">录音：第 2 段（后）</span><span class="chip">课件 25</span><span class="chip">课件 26</span><span class="chip">课件 27</span><span class="chip">课件 28</span><span class="chip">课件 29</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>IS 有两个前提：生成模型要在有明确语义类别的数据集上训练（比如 MNIST 手写数字），并且手里有一个预训练的概率分类器 c(y|x)。好模型要同时满足清晰（sharpness）和多样（diversity）。清晰度用分类器来量：清晰样本会被以高置信度分到某一类，预测分布的熵低，所以 S=exp(E_{x∼p_g}[−H(c(y|x))])；模糊样本熵高，S 就低。</p><p>多样性看边缘类别分布 c(y)=E_{x∼p_g}[c(y|x)] 的熵，D=exp(H(c(y)))：生成的样本类别铺得越开越好。两者相乘得 IS=D×S=exp(E_{x∼p_g} D_KL(c(y|x)‖c(y)))，再往下推就是互信息 I(X;Y)=H(Y)−H(Y|X)。直观上就是“给定样本后类别分布比先验集中多少”，信息量越大分越高。实践中 IS 与人的判断相关性还不错。</p><p>局限也很明确：一是完全不引入真实数据，只在生成数据内部打转，IS 高也可能离 p_data 很远；二是依赖分类器，训练有成本、数据未必有标签、领域不匹配时结果不可靠；三是只反映类间多样性，类内变化看不到；四是对“背训练集”这类记忆检测很弱；五是分类器高置信度地把糟糕样本分对类，也能拿到高分。所以 FID 出来之后 IS 用得就少了。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>计算IS指标时有两个先验假设。</p><p>对于清晰度，直观上右侧生成结果比左侧更清晰。</p><p>若Label的熵较高则重要性较好；若熵较低，说明生成的样本类别非常集中。</p><p>代入具体表达式相乘后…可得到X其实是CY与X和CY之间的KL散度。</p><p>第一，T3S未引入真实数据信息。仅在生成数据内部解释。</p><p>最后就是它没法反映生成模型的泛化程度。比如生成模型简单记住训练集。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-fid-kid">
+  <div class="slides"><figure class="slide" id="slide-30">
+<img src="slides/slide_30.png" alt="课件第30页 FID：在特征空间比较 p_θ 与 p_data，四步计算与 Fréchet 距离">
+<figcaption><span class="sno">30</span><span class="stitle">FID：在特征空间比较 p_θ 与 p_data，四步计算与 Fréchet 距离</span></figcaption>
+</figure>
+<figure class="slide" id="slide-31">
+<img src="slides/slide_31.png" alt="课件第31页 KID：最大均值差异 MMD 的三项结构">
+<figcaption><span class="sno">31</span><span class="stitle">KID：最大均值差异 MMD 的三项结构</span></figcaption>
+</figure>
+<figure class="slide" id="slide-32">
+<img src="slides/slide_32.png" alt="课件第32页 KID：把 MMD 用在生成／真实特征上，无需高斯假设">
+<figcaption><span class="sno">32</span><span class="stitle">KID：把 MMD 用在生成／真实特征上，无需高斯假设</span></figcaption>
+</figure>
+<figure class="slide" id="slide-33">
+<img src="slides/slide_33.png" alt="课件第33页 MMD 的含义：分布内相似度与跨分布相似度的比较">
+<figcaption><span class="sno">33</span><span class="stitle">MMD 的含义：分布内相似度与跨分布相似度的比较</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">09</span>
+      <div class="sec-tt">
+        <h2>FID 与 KID：特征空间里的两个分布距离</h2>
+        <div class="sec-meta"><span class="time">录音：无（课件页，课末未讲）</span><span class="chip">课件 30</span><span class="chip">课件 31</span><span class="chip">课件 32</span><span class="chip">课件 33</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>本节内容在课件里，但课堂录音到 IS 的局限就结束了，老师说明 FID 下次课再讲，以下按课件页面整理。</p><p>FID 的目标是在特征空间里量 p_θ 与 p_data 的相似度，四步：准备生成样本 𝒢 与真实样本 𝒯；用 Inception 之类的网络抽特征 F_𝒢、F_𝒯；对两组特征各拟一个多元高斯，得 (μ_𝒢, Σ_𝒢) 与 (μ_𝒯, Σ_𝒯)；取两个高斯之间的 Fréchet 距离 FID=‖μ_𝒯−μ_𝒢‖²+Tr(Σ_𝒯+Σ_𝒢−2(Σ_𝒯Σ_𝒢)^{1/2})。越低越好。</p><p>KID 换了个思路：不假设高斯，直接用最大均值差异 MMD²(p,q)=E_{x,x'∼p}K(x,x')+E_{y,y'∼q}K(y,y')−2E_{x∼p,y∼q}K(x,y)，即“p 内部相似度 + q 内部相似度 − 两倍跨分布相似度”；把 F_𝒢、F_𝒯 代进去就是 KID，常用的核是多项式核 k(u,v)=((uᵀv)/d+1)³。直觉是：两个分布相同时，分布内相似度应该和跨分布相似度一致，差得越多说明两个分布越不像。</p></div>
+  </div>
+</section>
+<section class="sec" id="sec-task-metrics">
+  <div class="slides"><figure class="slide" id="slide-34">
+<img src="slides/slide_34.png" alt="课件第34页 任务相关的综合指标：评估只在具体任务语境下有意义（HELM）">
+<figcaption><span class="sno">34</span><span class="stitle">任务相关的综合指标：评估只在具体任务语境下有意义（HELM）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-35">
+<img src="slides/slide_35.png" alt="课件第35页 任务相关的综合指标：CLIPScore 对齐文本、YOLOScore 对齐布局">
+<figcaption><span class="sno">35</span><span class="stitle">任务相关的综合指标：CLIPScore 对齐文本、YOLOScore 对齐布局</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">10</span>
+      <div class="sec-tt">
+        <h2>任务相关的综合指标</h2>
+        <div class="sec-meta"><span class="time">录音：无（课件页，课末未讲）</span><span class="chip">课件 34</span><span class="chip">课件 35</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>评估指标只有在具体任务语境里才有意义。课件引的是 HELM（Holistic Evaluation of Text-to-Image Models，Lee et al., NeurIPS 2023）那套多维评测框架，把对齐、质量、多样性等拆成多个维度分别打分。</p><p>具体到两个常用对齐指标：CLIPScore 量文本与图像的语义对齐；YOLOScore 量物体与布局的一致性——前者问“画的是不是你要的”，后者问“摆的位置对不对”。</p></div>
+  </div>
+</section>
+<section class="sec" id="sec-latent-cluster">
+  <div class="slides"><figure class="slide" id="slide-36">
+<img src="slides/slide_36.png" alt="课件第36页 Lecture Outline：进入潜表征评估">
+<figcaption><span class="sno">36</span><span class="stitle">Lecture Outline：进入潜表征评估</span></figcaption>
+</figure>
+<figure class="slide" id="slide-37">
+<img src="slides/slide_37.png" alt="课件第37页 潜表征：什么叫“好”的表征？无监督任务没有标准答案">
+<figcaption><span class="sno">37</span><span class="stitle">潜表征：什么叫“好”的表征？无监督任务没有标准答案</span></figcaption>
+</figure>
+<figure class="slide" id="slide-38">
+<img src="slides/slide_38.png" alt="课件第38页 潜表征：好表征应服务于任务；三个常用概念——聚类／压缩／解耦">
+<figcaption><span class="sno">38</span><span class="stitle">潜表征：好表征应服务于任务；三个常用概念——聚类／压缩／解耦</span></figcaption>
+</figure>
+<figure class="slide" id="slide-39">
+<img src="slides/slide_39.png" alt="课件第39页 聚类：潜空间中语义相近的样本是否聚在一起（MNIST 示意）">
+<figcaption><span class="sno">39</span><span class="stitle">聚类：潜空间中语义相近的样本是否聚在一起（MNIST 示意）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-40">
+<img src="slides/slide_40.png" alt="课件第40页 聚类的定量指标：completeness、homogeneity、V-measure">
+<figcaption><span class="sno">40</span><span class="stitle">聚类的定量指标：completeness、homogeneity、V-measure</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">11</span>
+      <div class="sec-tt">
+        <h2>潜表征评估（一）：什么算“好”的表征，以及聚类指标</h2>
+        <div class="sec-meta"><span class="time">录音：无（课件页，课末未讲）</span><span class="chip">课件 36</span><span class="chip">课件 37</span><span class="chip">课件 38</span><span class="chip">课件 39</span><span class="chip">课件 40</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第三条线是潜表征。什么叫学到了“好”的表征？无监督任务上没有标准答案，得看任务：去噪／修复看生成质量加语义一致性，分类看识别准确率，等等。课件列了三个常用概念：聚类（clustering）、压缩（compression）、解耦（disentanglement）。</p><p>聚类：能语义分组的潜空间通常有用。MNIST 的例子把潜空间里的点按真实标签上色，看类是否各自成团。定量上借 sklearn 的三个分数：completeness（同一真实类的样本是否被分进同一个簇）、homogeneity（每个簇是否只含一个真实类）、V-measure（两者的调和平均，兼顾两个目标）。</p></div>
+  </div>
+</section>
+<section class="sec" id="sec-latent-compress">
+  <div class="slides"><figure class="slide" id="slide-41">
+<img src="slides/slide_41.png" alt="课件第41页 压缩：好的潜码既要紧凑又要信息充分">
+<figcaption><span class="sno">41</span><span class="stitle">压缩：好的潜码既要紧凑又要信息充分</span></figcaption>
+</figure>
+<figure class="slide" id="slide-42">
+<img src="slides/slide_42.png" alt="课件第42页 压缩的定量指标：MSE、PSNR、SSIM">
+<figcaption><span class="sno">42</span><span class="stitle">压缩的定量指标：MSE、PSNR、SSIM</span></figcaption>
+</figure>
+<figure class="slide" id="slide-43">
+<img src="slides/slide_43.png" alt="课件第43页 解耦：希望各维对应独立、可解释的属性（Z1 固定与改变）">
+<figcaption><span class="sno">43</span><span class="stitle">解耦：希望各维对应独立、可解释的属性（Z1 固定与改变）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-44">
+<img src="slides/slide_44.png" alt="课件第44页 解耦的定量指标：DCI 的解耦／完备／可预测三性">
+<figcaption><span class="sno">44</span><span class="stitle">解耦的定量指标：DCI 的解耦／完备／可预测三性</span></figcaption>
+</figure>
+<figure class="slide" id="slide-45">
+<img src="slides/slide_45.png" alt="课件第45页 解耦的其他指标：Beta-VAE、Factor-VAE、MIG、SAP；没有完美指标">
+<figcaption><span class="sno">45</span><span class="stitle">解耦的其他指标：Beta-VAE、Factor-VAE、MIG、SAP；没有完美指标</span></figcaption>
+</figure>
+<figure class="slide" id="slide-46">
+<img src="slides/slide_46.png" alt="课件第46页 解耦的定义本身仍不清楚（有无胡子的例子）">
+<figcaption><span class="sno">46</span><span class="stitle">解耦的定义本身仍不清楚（有无胡子的例子）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-47">
+<img src="slides/slide_47.png" alt="课件第47页 解耦的定义本身仍不清楚（年龄的例子）">
+<figcaption><span class="sno">47</span><span class="stitle">解耦的定义本身仍不清楚（年龄的例子）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">12</span>
+      <div class="sec-tt">
+        <h2>潜表征评估（二）：压缩与解耦</h2>
+        <div class="sec-meta"><span class="time">录音：无（课件页，课末未讲）</span><span class="chip">课件 41</span><span class="chip">课件 42</span><span class="chip">课件 43</span><span class="chip">课件 44</span><span class="chip">课件 45</span><span class="chip">课件 46</span><span class="chip">课件 47</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>压缩：好的潜码要既紧凑又保留信息，评价标准就是“在不显著损失的前提下能压到多小”。常用指标是 MSE、PSNR、SSIM——重建像不像、结构保不保。</p><p>解耦：希望潜空间的每一维对应数据里独立、可解释的属性。示例很直观：固定 z1，生成物体的大小不变；只改 z1，变化也仅限于大小。定量上 DCI（Eastwood & Williams, ICLR 2018）要求潜因子以解耦（disentangled）、完备（complete）、可预测（predictive）的方式编码；此外还有 Beta-VAE 指标、Factor-VAE 指标、互信息差（MIG）、SAP score。</p><p>但要注意两点：这些指标没有一个是完美的，不存在普适度量；而且“解耦”本身的定义都还不清楚——课件用“有胡子／没胡子”“年龄”两组图说明，不同人心里的解耦标准并不一致。</p></div>
+  </div>
+</section>
+<section class="sec" id="sec-supp">
+  <div class="slides"><figure class="slide" id="slide-48">
+<img src="slides/slide_48.png" alt="课件第48页 Lecture Outline：三条线收束">
+<figcaption><span class="sno">48</span><span class="stitle">Lecture Outline：三条线收束</span></figcaption>
+</figure>
+<figure class="slide" id="slide-49">
+<img src="slides/slide_49.png" alt="课件第49页 Supplementary Material：Stanford CS236 Lec15、Cornell CS6785 Lec14">
+<figcaption><span class="sno">49</span><span class="stitle">Supplementary Material：Stanford CS236 Lec15、Cornell CS6785 Lec14</span></figcaption>
+</figure>
+<figure class="slide" id="slide-50">
+<img src="slides/slide_50.png" alt="课件第50页 Reading List：十篇评估相关原始文献">
+<figcaption><span class="sno">50</span><span class="stitle">Reading List：十篇评估相关原始文献</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">13</span>
+      <div class="sec-tt">
+        <h2>延伸材料与阅读清单</h2>
+        <div class="sec-meta"><span class="time">录音：无（课件页，课末未讲）</span><span class="chip">课件 48</span><span class="chip">课件 49</span><span class="chip">课件 50</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>补充材料：Stanford CS236 的 Lecture 15 与 Cornell CS6785 的 Lecture 14，两门课都把生成模型评估讲得比较细。</p><p>阅读清单十篇：Theis et al. ICLR 2016（生成模型评估的经典讨论）、Borji CVIU 2019 与 2022 两篇（GAN 评估指标的利弊综述）、Salimans et al. NeurIPS 2016（IS 出处）、Heusel et al. NeurIPS 2017（FID 出处）、Sajjadi et al. NeurIPS 2018 与 Kynkäänniemi et al. NeurIPS 2019（precision/recall 视角）、Naeem et al. ICML 2020（更可靠的保真度与多样性度量）、Zhou et al. NeurIPS 2019（HYPE 人类感知基准）、Lee et al. NeurIPS 2023（HELM）、Parmar et al. CVPR 2022（重采样对 GAN 评估的隐藏影响）。</p></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（生成式模型与科学智能应用）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>

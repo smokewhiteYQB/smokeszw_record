@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>岩石热力学 · 第9课 简并系统、稀释原理与第4章 溶液热力学基础｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.videos{margin-top:14px;border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.video + .video{border-top:1px solid #e4e9f0;}
+.videos h4{font-size:12.5px;font-weight:700;color:#0a1f38;background:#f2f5f9;padding:8px 12px;border-bottom:1px solid #e4e9f0;}
+.videos video{display:block;width:100%;max-height:460px;background:#0b0f14;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>岩石热力学 · 第9课 简并系统、稀释原理与第4章 溶液热力学基础</h1>
+    <div class="sub">第9课 简并系统、稀释原理与第4章 溶液热力学基础 ｜ 2026-11-10 ｜ 授课教师（岩石热力学）</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 49 页 · 整理 11 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-degenerate">01 简并系统：同质多象与绝对惰性相</option>
+<option value="sec-inert">02 奇异相、相对惰性相与重合规律</option>
+<option value="sec-lechatelier">03 水相图上的稀释：冰水加盐、水汽加气、沸点升高</option>
+<option value="sec-lechatelier-multi">04 多组分体系：稀释蒸汽与稀释熔体，移动方向落在两线夹角内</option>
+<option value="sec-gibbs-duhem">05 第4章开场：开放系统、Gibbs-Duhem 方程与偏摩尔量</option>
+<option value="sec-solution">06 溶液与固溶体：类质同象与碱性长石</option>
+<option value="sec-concentration">07 摩尔浓度与理想溶液的两个条件</option>
+<option value="sec-mixing-entropy">08 理想混合熵：从 Boltzmann 到 −RΣx ln x</option>
+<option value="sec-mixing-gibbs">09 理想溶液的混合自由能与温度</option>
+<option value="sec-chemical-potential">10 稀溶液近似、标准态与化学势</option>
+<option value="sec-raoult">11 气体蒸汽相的化学势、Henry 与 Raoult 定律，和茅台酒的蒸气压</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 第3章 多相平衡关系的Schreinemakers几何分析法（p044–063）＋第4章 溶液热力学基础（p001–030） 逐页渲染，转写原文见 record_20261110.txt。</div>
+<section class="sec" id="sec-degenerate">
+  <div class="slides"><figure class="slide" id="slide-01">
+<img src="slides/slide_01.png" alt="课件第1页 第3章 出现简并系统的情况">
+<figcaption><span class="sno">01</span><span class="stitle">第3章 出现简并系统的情况</span></figcaption>
+</figure>
+<figure class="slide" id="slide-02">
+<img src="slides/slide_02.png" alt="课件第2页 这些情况下某些相的组合在组成上重合、相关单变线退化">
+<figcaption><span class="sno">02</span><span class="stitle">这些情况下某些相的组合在组成上重合、相关单变线退化</span></figcaption>
+</figure>
+<figure class="slide" id="slide-03">
+<img src="slides/slide_03.png" alt="课件第3页 矿物反应（平衡组合）之一">
+<figcaption><span class="sno">03</span><span class="stitle">矿物反应（平衡组合）之一</span></figcaption>
+</figure>
+<figure class="slide" id="slide-04">
+<img src="slides/slide_04.png" alt="课件第4页 矿物反应（平衡组合）之二">
+<figcaption><span class="sno">04</span><span class="stitle">矿物反应（平衡组合）之二</span></figcaption>
+</figure>
+<figure class="slide" id="slide-05">
+<img src="slides/slide_05.png" alt="课件第5页 简并情形一：[1] 2 + 4 = 3">
+<figcaption><span class="sno">05</span><span class="stitle">简并情形一：[1] 2 + 4 = 3</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>简并系统：同质多象与绝对惰性相</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（开场复习后）</span><span class="chip">课件 1</span><span class="chip">课件 2</span><span class="chip">课件 3</span><span class="chip">课件 4</span><span class="chip">课件 5</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>开场先把上节的账结清：无变度点周围几根单变线，用组合公式就能算；第 4 次作业是二元四相系排列，“有多种排法，只要排出来都给满分”，但注意给了斜率后线不能乱画——那个斜率在三角函数里就是正切，童子功都用得上。</p><p>在任意画的一张岩石相图上，无变度点很多，有的未必稳定，不稳定的相在相图上是不能表现的。把所有相都当成稳定共生组合去算自由度，会算出负值，这种形式叫复系系统（多体系）。用组合公式，可以算出它最多有几个无变度点、几根单变线、几个双变度组合。</p><p>稳定共生组合自由度最小为零，所以稳定共生的相数不超过 C+2：F=0 时 P=C+2，F=1 时 P=C+1，F=2 时 P=C。以复系系统为例，7 种相里每 C+2 个构成一个无变度组合，组合数就是全部可能的无变度点。以四元系为例：C=4，最多 6 相共生，任取 5 相构成一个单变度组合，C(6,5)=6，所以一个点周围最多 6 根单变线——画不出第 7 根。整张图上“最多有几个点、几根线”也能这样估出来，但算出来的点线里包含介稳态，稳定态只是其中一部分。</p><p>相图是干什么用的？一块绿片岩原岩是玄武岩，温度升高变成角闪岩、再高变麻粒岩，压力升高变蓝片岩、再高变榴辉岩。有了相图，不用算具体温压，只要知道岩石里的矿物组合：石榴子石＋钙质辉石＋斜长石＋石英是典型高压麻粒岩，它的稳定域在地图上就是这个区。相图就是地图——先粗略限定（知道你是研究生），再用温度计压力计细限定（知道你是硕士还是博士、读到几年）。这就是为什么说“不要管图怎么画出来，把它当地图用就行”。</p><p>接下来讲简并。简并是指相图的一个维度上，两个或两个以上相具有相同的组成（同质多象），或者三根以上线共线、四个以上线共面等等。以二组分系统为例有四种情况：第一，1、2、3 成分相同（蓝晶石与红柱石、α 石英与 β 石英、方解石与文石）；第四相和它们不搭界。1、2、3 与 4 之间没有质量平衡关系，就写不出任何矿物反应——4 孤僻得很，和谁都不打交道。</p><p>标记法在这里就显威力了：缺 1 的反应是 2 与 3 的相变，缺 1 缺 4 的线是 2、3 之间的反应，括号里标谁就表示谁不存在。二组分 F=1 时三相，四条线本该有 C(4,3)=4 条，图上却“倒退”成 3 条单变线——因为 4 不参与任何反应，所以标记为“缺失 4”的线全在：它和谁都不打交道。</p><p>顺着这个讲了一段职业气质：学地质的不能弄成书呆子、跟谁都不打交道；全国地质队到一个小山村，半年就把村里的柴鸡吃光——所以都叫“吃鸡队”。这个绝对惰性相 4 就像不参加任何社团的人，在社团名单上只能“标记法”：每个社团都标“没有他”。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>今天布置第四个作业：二元四项体。你来排一遍。有多种方式，只要排出来都能得满分。</p><p>在这种相图上有很多个无变度点…一旦你把不稳定的当成稳定的来表现，这个相图大概率错误百出了。</p><p>相图就是地图，当地图用。就像你们读研究生，我知道你是研究生，这是粗略限定。</p><p>第四种相和它不搭界…拉不上关系意味着啥呢？不可能有什么矿物反应。</p><p>4孤僻得很…由于和谁都不打交道，那就很难成为地理学家了。</p><p>全国的地质队都叫吃鸡队…到了一个小山村，要不了半年，这个村养的鸡都吃光了。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-inert">
+  <div class="slides"><figure class="slide" id="slide-06">
+<img src="slides/slide_06.png" alt="课件第6页 简并情形一：[1] 2 = 3">
+<figcaption><span class="sno">06</span><span class="stitle">简并情形一：[1] 2 = 3</span></figcaption>
+</figure>
+<figure class="slide" id="slide-07">
+<img src="slides/slide_07.png" alt="课件第7页 定义：凡是由少于 C 个组分即可关联起来的相（奇异相）">
+<figcaption><span class="sno">07</span><span class="stitle">定义：凡是由少于 C 个组分即可关联起来的相（奇异相）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-08">
+<img src="slides/slide_08.png" alt="课件第8页 重合规律（the coincidence rule）">
+<figcaption><span class="sno">08</span><span class="stitle">重合规律（the coincidence rule）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-09">
+<img src="slides/slide_09.png" alt="课件第9页 重合规律（续）">
+<figcaption><span class="sno">09</span><span class="stitle">重合规律（续）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-10">
+<img src="slides/slide_10.png" alt="课件第10页 Le Châtelier 原理（一）">
+<figcaption><span class="sno">10</span><span class="stitle">Le Châtelier 原理（一）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-11">
+<img src="slides/slide_11.png" alt="课件第11页 Le Châtelier 原理（二）">
+<figcaption><span class="sno">11</span><span class="stitle">Le Châtelier 原理（二）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-12">
+<img src="slides/slide_12.png" alt="课件第12页 Le Châtelier 原理（三）">
+<figcaption><span class="sno">12</span><span class="stitle">Le Châtelier 原理（三）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>奇异相、相对惰性相与重合规律</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（前中）</span><span class="chip">课件 6</span><span class="chip">课件 7</span><span class="chip">课件 8</span><span class="chip">课件 9</span><span class="chip">课件 10</span><span class="chip">课件 11</span><span class="chip">课件 12</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第二种情况：1 和 2 是同质多象，3 和 4 也是同质多象。1、2 之间可以有相变，3、4 之间也可以，但 1、2 与 3、4 之间没有关系。这时相图结结实实还是四根线：缺 3 时是 1、2 相变，缺 4 时是 3 的相变，1、2 与 4 无关。第三种情况：2、3 同质多象，缺 2 时 3 转变为 1+4，缺 3 时 2 转变为 1+4，线又退化为三根。</p><p>由此给出定义：系统中凡是由少于 C 个组分即可关联起来的相，叫奇异相——实际上就是同质多象。第一张图里 1、2、3 是奇异相，第二张图里 1、2、3、4 都是奇异相，第三张图里是 1、2，第四张里是 2、3。其余不参与矿物反应的相叫惰性相。</p><p>惰性相又分两种：绝对惰性相（第一张图里的 4，和谁都不打交道）和相对惰性相（第三、四张图里的 3 或 4，只参与部分反应）。绝对惰性相由于不参与任何反应，必然出现在所有单变线里——标“它不存在”的那条线全在，这正是前面看到的现象。</p><p>重合规律：两个惰性相位于奇异项的同一侧时，标记为惰性相的单变度反应，彼此的稳定段与介稳段发生重合；反过来，两个相对惰性相分列奇异项两侧时，它们在相图上位于同一侧，稳定段与介稳段不重合，分列无变度点两侧。课上时间不够，这部分留给大家课下自己看。</p><p>接着进入稀释原理（Le Châtelier 原理）。前面讲的相全是纯物质，可自然界研究的矿物都不纯。稀释原理本身很简单：一个处在平衡状态的体系，总是力图阻止其温度、压力、浓度发生变化，维持自身平衡不被破坏——就像免疫系统。打疫苗就是注入微量病毒或细菌，身体产生抗体，下次同种病毒入侵就被干掉。</p><p>生活里的例子：包饺子、做韭菜盒子要先撒盐“杀水”。韭菜表面的水（洗菜残留）本来是纯水，浓度算 1；撒盐后表面水的浓度小于 1，渗透压出现，韭菜细胞里的水就渗出来，力图把浓度补回 1——和免疫反应是一个道理。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这种情况下，1、2是同质多相，3、4是同质多相…这个相图可是结结实实的四根线。</p><p>系统中凡是有组分数小于其组分就可使际关联起来的项叫做奇异项，实际上它就是同质多相。</p><p>绝对惰性相由于不参与任何反应，因此它必然出现在所有的单变线里。</p><p>两个惰性项位于奇异项的同一侧的时候…稳定部分同接稳部分的重合。</p><p>那个沙滩的原理很简单。一个处在平衡状态的体系，总是力图阻止其温度、压力、浓度等发生变化，类似于免疫系统。</p><p>切韭菜时注意，它虽是湿的但看不见水…撒盐后浓度小于1。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-lechatelier">
+  <div class="slides"><figure class="slide" id="slide-13">
+<img src="slides/slide_13.png" alt="课件第13页 Le Châtelier 原理（四）：稀释水与稀释蒸汽">
+<figcaption><span class="sno">13</span><span class="stitle">Le Châtelier 原理（四）：稀释水与稀释蒸汽</span></figcaption>
+</figure>
+<figure class="slide" id="slide-14">
+<img src="slides/slide_14.png" alt="课件第14页 推论一：三相点的移动只与稀释剂的溶解能力有关">
+<figcaption><span class="sno">14</span><span class="stitle">推论一：三相点的移动只与稀释剂的溶解能力有关</span></figcaption>
+</figure>
+<figure class="slide" id="slide-15">
+<img src="slides/slide_15.png" alt="课件第15页 海水为什么不能喝？">
+<figcaption><span class="sno">15</span><span class="stitle">海水为什么不能喝？</span></figcaption>
+</figure>
+<figure class="slide" id="slide-16">
+<img src="slides/slide_16.png" alt="课件第16页 Le Châtelier 原理应用于多组分体系">
+<figcaption><span class="sno">16</span><span class="stitle">Le Châtelier 原理应用于多组分体系</span></figcaption>
+</figure>
+<figure class="slide" id="slide-17">
+<img src="slides/slide_17.png" alt="课件第17页 Le Châtelier 原理与 Schreinemakers 定理（一）">
+<figcaption><span class="sno">17</span><span class="stitle">Le Châtelier 原理与 Schreinemakers 定理（一）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-18">
+<img src="slides/slide_18.png" alt="课件第18页 Le Châtelier 原理与 Schreinemakers 定理（二）">
+<figcaption><span class="sno">18</span><span class="stitle">Le Châtelier 原理与 Schreinemakers 定理（二）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-19">
+<img src="slides/slide_19.png" alt="课件第19页 Le Châtelier 原理与 Schreinemakers 定理（三）">
+<figcaption><span class="sno">19</span><span class="stitle">Le Châtelier 原理与 Schreinemakers 定理（三）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>水相图上的稀释：冰水加盐、水汽加气、沸点升高</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中）</span><span class="chip">课件 13</span><span class="chip">课件 14</span><span class="chip">课件 15</span><span class="chip">课件 16</span><span class="chip">课件 17</span><span class="chip">课件 18</span><span class="chip">课件 19</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>看水的相图。冰-水平衡线上只有冰和水、没有蒸汽。想象一杯冰水，往杯里撒少量氯化钠：原来水的浓度是 1，撒盐后变成稀盐水，水的浓度小于 1。渗透作用开始，为了“救水兄弟”，一部分冰化成水以提高水的浓度。</p><p>会不会一直化下去？不会。夏天放室外化了是因为吸了外界热量；这里假定不与外界交换物质和能量，冰化成水要吸热，吸热使系统自身温度降低，所以只融化一部分，最终停在一个新的平衡位置——这就是冰水加盐后温度降低、冰反而融化的道理。</p><p>再看水与水蒸气：往蒸汽里注入甲烷或二氧化碳，蒸汽里水蒸气的浓度从 1 变得小于 1，水就蒸发以挽救蒸汽相。蒸发要放热，整个系统温度升高一点——老师特意纠正自己：这里写错了，不是降低而是升高。若往水汽系统里加盐（用盐稀释水），则蒸汽要液化一部分，最终导致沸点升高。</p><p>把这三种情形合起来：那根“不存在水”的单变线，它的反向延长线就是水的稳定域。Le Châtelier 原理的结论是——单元平衡系统中某一相被稀释时，三相点沿着“缺失该相”的那条单变线，向背离该相稳定域的方向移动。这里被稀释的是水，所以三相点沿缺失水的线、背着水的稳定域走。</p><p>推论一：三相点的移动只与掺入杂质的溶解能力有关，与其他性质无关；不仅对三相点有效，对多相无变度点同样适用。</p><p>海水为什么不能喝？盐稀释了水，水相的三相点移动，冰点降低、沸点升高，蒸馏时水更难汽化——这套相图逻辑能解释生活经验。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>想象一杯冰水。往杯中撒少量氯化钠…为了拯救他的水兄弟要牺牲掉一部分化成水。</p><p>我们现在考虑水和水蒸气这个题，我往气体里注入一点其他气体…他写错了，不是降低，是升高一点。</p><p>当单元平衡系统中某一项被稀释的时候，它的三相点将沿着缺失该项的那条单边线向背离这个稳定的存区域移动。</p><p>推论一，三相点的移动除了去啊这个掺入的杂质的溶解能力有关，与其他性质无关。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-lechatelier-multi">
+  <div class="slides"><figure class="slide" id="slide-20">
+<img src="slides/slide_20.png" alt="课件第20页 第4章 溶液热力学基础（章封面）">
+<figcaption><span class="sno">20</span><span class="stitle">第4章 溶液热力学基础（章封面）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>多组分体系：稀释蒸汽与稀释熔体，移动方向落在两线夹角内</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（中后）</span><span class="chip">课件 20</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>推广到多组分：C=4 时最多 6 相共生，6 种相里任取 5 种构成一个单变度组合，所以单变度组合有 6 条。“无变度组合”与“无变度点”、“单变度组合”与“单变度反应”是同义词：无变度指强度变量（温度、压力、各相浓度）全被定死。</p><p>课件这个例子：在这根单变度线上，白云母、石英、正长石、黑云母与水共存。现在用二氧化碳稀释蒸汽相，则无变度点沿“蒸汽不存在”的单变线、向背离蒸汽稳定域的方向移动；再对熔体稀释，则沿“熔体不存在”的单变线移动。同时稀释两个相时，移动方向落在两条线的夹角范围内（中间扇形区）。</p><p>夹角不是任意的，由蒸汽与熔体中稀释剂的相对比例决定；具体夹角多大，要学完第6章才有能力算。</p><p>这套原理怎么用到真实岩石？课件上的相图都是纯矿物：石英就是二氧化硅，白云母却是含钾、铁、镁的固溶体，相当于铁离子被稀释。把纯物质相图按稀释原理整体移动，就能用到真实岩石体系。虽然现在用数值计算可以直接算，但这条曾经必须掌握的规则还是要讲。本章到此结束。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>四元系最多共生六条线…从六种里任选五种构成一个单变量组合。</p><p>在这根单变量线上，白云母、石英、正长石、黑云母与水共生。</p><p>稀释时，边界点移动方向在两线围定范围内。综合结果是在中间扇形区方向。</p><p>这张相图由纯矿物构成…白云母若含钾、铁、镁不同比例混合，相当于铁离子被稀释。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-gibbs-duhem">
+  <div class="slides"><figure class="slide" id="slide-21">
+<img src="slides/slide_21.png" alt="课件第21页 Gibbs-Duhem 方程（一）">
+<figcaption><span class="sno">21</span><span class="stitle">Gibbs-Duhem 方程（一）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-22">
+<img src="slides/slide_22.png" alt="课件第22页 Gibbs-Duhem 方程（二）">
+<figcaption><span class="sno">22</span><span class="stitle">Gibbs-Duhem 方程（二）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-23">
+<img src="slides/slide_23.png" alt="课件第23页 Gibbs-Duhem 方程（三）">
+<figcaption><span class="sno">23</span><span class="stitle">Gibbs-Duhem 方程（三）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-24">
+<img src="slides/slide_24.png" alt="课件第24页 溶液（solution）">
+<figcaption><span class="sno">24</span><span class="stitle">溶液（solution）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>第4章开场：开放系统、Gibbs-Duhem 方程与偏摩尔量</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）</span><span class="chip">课件 21</span><span class="chip">课件 22</span><span class="chip">课件 23</span><span class="chip">课件 24</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>第4章进入溶液热力学基础。第4、5 章讲液体、固体和气体溶液。上一章已经给出开放系统吉布斯自由能改变量的表达式；系统达到平衡时温度、压力和各组分数量都不再变化，最后一项为零。</p><p>由 G 的全微分出发做微分运算，就得到 Σn_i dμ_i = 0（恒温恒压），这就是 Gibbs-Duhem 方程。老师明说不考名字：“你不用记名字，我也不考，知道怎么回事就行。”</p><p>例子：橄榄石和石英不能共生，碰到一起会转变成辉石。按 2:1:1 的数量关系写出平衡条件：2 倍橄榄石化学式 + 石英化学式 = 顽火辉石化学式。教科书不严谨，严格的顽火辉石应写成 Mg2Si2O6，因为两个镁处于不同的结晶位置、热力学性质不同；这样写之后平衡条件就是镁橄榄石 + 石英 = 顽火辉石。</p><p>这里的摩尔吉布斯自由能，也有人叫偏摩尔吉布斯自由能。“偏”的意思是：固定其他物种数量不变，仅由该物质改变引起的系统自由能贡献。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>上章已知开放系统吉布斯自由能改变量的表达。系统达平衡时，温压及吉布斯自由能不再改变。</p><p>这个式子称为吉布斯-杜亥姆方程。你不用记名字，我也不考。</p><p>准确讲顽火辉石应写为Mg₂Si₂O₆，因两个镁处于不同结晶位置。</p><p>“偏”指固定其他物种数量不变，仅由该物质改变引起的系统内能或吉布斯自由能贡献。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-solution">
+  <div class="slides"><figure class="slide" id="slide-25">
+<img src="slides/slide_25.png" alt="课件第25页 斜方辉石固溶体 (Mg, Fe)2Si2O6">
+<figcaption><span class="sno">25</span><span class="stitle">斜方辉石固溶体 (Mg, Fe)2Si2O6</span></figcaption>
+</figure>
+<figure class="slide" id="slide-26">
+<img src="slides/slide_26.png" alt="课件第26页 类质同相：完全与不完全固溶体">
+<figcaption><span class="sno">26</span><span class="stitle">类质同相：完全与不完全固溶体</span></figcaption>
+</figure>
+<figure class="slide" id="slide-27">
+<img src="slides/slide_27.png" alt="课件第27页 碱性长石固溶体：973 K 以上稳定">
+<figcaption><span class="sno">27</span><span class="stitle">碱性长石固溶体：973 K 以上稳定</span></figcaption>
+</figure>
+<figure class="slide" id="slide-28">
+<img src="slides/slide_28.png" alt="课件第28页 溶液的摩尔浓度">
+<figcaption><span class="sno">28</span><span class="stitle">溶液的摩尔浓度</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>溶液与固溶体：类质同象与碱性长石</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）</span><span class="chip">课件 25</span><span class="chip">课件 26</span><span class="chip">课件 27</span><span class="chip">课件 28</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>溶液是混合均匀的物相，可以是混合气体、液体溶液；矿物不纯净时叫结晶溶液或固溶体。</p><p>斜方辉石是典型固溶体：纯铁端员叫铁辉石，纯镁端员叫顽火辉石，天然斜方辉石中镁、铁都有——铁和镁在八面体位置混合，成 (Mg, Fe)2Si2O6。根源是类质同象：亚铁离子和镁离子电价一样、个头差不多，可以互相置换。“比如前排这两个小伙子，个头差不多、体重差不多，可以互相置换。”</p><p>类质同象要求同电价离子占据同样的结晶位置。碱性长石就是钾、钠在四面体层之间那一层互相置换，既不是纯钾长石也不是纯钠长石；α/β 石英、方解石/文石属于同质多象。固溶体稳定还需要温度条件：常压下碱性长石固溶体在 973 K（约 700 ℃）以上稳定，以下是分解。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>天然斜方辉石中既有镁又有铁…这是铁和镁在八面体位置的混合。</p><p>个头差不多，大概可以互相置换。比如前排这两个小伙子…可以互相置换。</p><p>比如通常压力之下，这个700°C以上固溶体稳定，700°C以下不再稳定发生分解。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-concentration">
+  <div class="slides"><figure class="slide" id="slide-29">
+<img src="slides/slide_29.png" alt="课件第29页 理想溶液（ideal solution）">
+<figcaption><span class="sno">29</span><span class="stitle">理想溶液（ideal solution）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-30">
+<img src="slides/slide_30.png" alt="课件第30页 乙醇的水溶液，是理想溶液吗？">
+<figcaption><span class="sno">30</span><span class="stitle">乙醇的水溶液，是理想溶液吗？</span></figcaption>
+</figure>
+<figure class="slide" id="slide-31">
+<img src="slides/slide_31.png" alt="课件第31页 理想溶液的混合热力学">
+<figcaption><span class="sno">31</span><span class="stitle">理想溶液的混合热力学</span></figcaption>
+</figure>
+<figure class="slide" id="slide-32">
+<img src="slides/slide_32.png" alt="课件第32页 理想混合熵：熵由三部分构成">
+<figcaption><span class="sno">32</span><span class="stitle">理想混合熵：熵由三部分构成</span></figcaption>
+</figure>
+<figure class="slide" id="slide-33">
+<img src="slides/slide_33.png" alt="课件第33页 Boltzmann 定律：混合熵与量子态数">
+<figcaption><span class="sno">33</span><span class="stitle">Boltzmann 定律：混合熵与量子态数</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div class="sec-tt">
+        <h2>摩尔浓度与理想溶液的两个条件</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）</span><span class="chip">课件 29</span><span class="chip">课件 30</span><span class="chip">课件 31</span><span class="chip">课件 32</span><span class="chip">课件 33</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>描述溶液要知道浓度，用摩尔分数：二元系两摩尔分数之和为 1，三元系为 1，N 元系也为 1。</p><p>理想溶液要同时满足两条：①混合时没有热效应（既不吸热也不放热）；②总体积等于混合前各组分体积之和（混合后体积不变）。固体溶液叫理想固溶体，还要求两个端员在结晶学上连续相同（纯钾长石到纯钠长石就是）、两端摩尔体积相近（差别一般 ±15% 以内，这个数不是死数）。</p><p>乙醇的水溶液是理想溶液吗？配硫酸溶液会放热，说明水和硫酸混合有热效应，不是理想溶液。酒和水混合体积会缩小：10° 的酒，混合前 92.67 mL 水加 90.36 mL 乙醇 = 103.03 mL，混合后 101.84 mL，缩小 1.19 mL、收缩率 1.16%；酒度升高，收缩率增大，到 50° 左右达到最大，再高又递减。</p><p>那它还能当理想溶液吗？老师说可以“当理想”处理——水和乙醇混合既不吸热也不放热，体积变的这一点在能容忍的误差内，就可以当理想溶液算。“咱们这门课自始至终有两条线在交织着，一个是理论，一个是允许的误差，能妥协就行，不能妥协那就是非理想。”</p><p>小时候偷糖泡糖水的经验：水杯满满的，一点点加糖也不会溢出来——糖溶于水体积缩小。白糖水严格说也不是理想溶液，但作为理想处理，定义 ΔV_ideal = 0、ΔH_mix = 0。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>第一个混合的时候没有热效应，第二个总体积为混合之前各种组分体积之和。</p><p>配置硫酸溶液的时候…它会放热。这就是水和硫酸溶液在混合时候有热效应。</p><p>10°的酒就是含酒精10%的酒。混合之前，92.67ml水，90.36ml…缩小了1.16%。</p><p>我能容忍这个误差，我就可以把它当理想…咱们这门课自始至终有两条线在交织着，一个是理论，一个是公理的误差。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-mixing-entropy">
+  <div class="slides"><figure class="slide" id="slide-34">
+<img src="slides/slide_34.png" alt="课件第34页 ΔS_mix = k lnΩ：排列数的组合公式">
+<figcaption><span class="sno">34</span><span class="stitle">ΔS_mix = k lnΩ：排列数的组合公式</span></figcaption>
+</figure>
+<figure class="slide" id="slide-35">
+<img src="slides/slide_35.png" alt="课件第35页 用 Stirling 公式化简">
+<figcaption><span class="sno">35</span><span class="stitle">用 Stirling 公式化简</span></figcaption>
+</figure>
+<figure class="slide" id="slide-36">
+<img src="slides/slide_36.png" alt="课件第36页 溶液的熵由两部分组成">
+<figcaption><span class="sno">36</span><span class="stitle">溶液的熵由两部分组成</span></figcaption>
+</figure>
+<figure class="slide" id="slide-37">
+<img src="slides/slide_37.png" alt="课件第37页 Gibbs 方程：混合自由能">
+<figcaption><span class="sno">37</span><span class="stitle">Gibbs 方程：混合自由能</span></figcaption>
+</figure>
+<figure class="slide" id="slide-38">
+<img src="slides/slide_38.png" alt="课件第38页 理想溶液的混合热力学性质">
+<figcaption><span class="sno">38</span><span class="stitle">理想溶液的混合热力学性质</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">08</span>
+      <div class="sec-tt">
+        <h2>理想混合熵：从 Boltzmann 到 −RΣx ln x</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）</span><span class="chip">课件 34</span><span class="chip">课件 35</span><span class="chip">课件 36</span><span class="chip">课件 37</span><span class="chip">课件 38</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>混合是自发过程：左边白分子（溶剂）、右边黑分子（溶质），一混合混乱度必然增加，熵一定增加。所以溶液的熵 = 混合前溶质与溶剂的熵之和 + 混合熵；理想溶液的这一项叫理想混合熵，一定是正的。混合自发，则混合后吉布斯自由能必然低于混合前两者之和（ΔG_mix = ΔH_mix − TΔS_mix，理想溶液 ΔH_mix = 0，所以 ΔG_mix = −TΔS_mix）。</p><p>怎么算？用 Boltzmann 关系 ΔS = k lnΩ，Ω 是分子排列数。假定溶液总量 1 mol，含 N_A 个 A 分子、N_B 个 B 分子，排列数就是组合数 N!/(N_A! N_B!)。</p><p>直接算阶乘是天文数字，用 Stirling 公式 ln N! ≈ N ln N − N 化简，再用 k_B·N_A = R，得到 ΔS_mix = −R(x_A ln x_A + x_B ln x_B)。因为 x 都小于 1、对数为负，前面再加负号，结果必为正——混合熵恒正，与物态无关，气、液、固溶液都适用。</p><p>以橄榄石固溶体为例：天然橄榄石成分在图上对应一个高度，那是机械混合熵（各端员熵按浓度线性加和，“凑份子”）；两点之间的差值才是理想混合熵——混合过程新增的那部分。总熵 = 机械混合熵 + 理想混合熵。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>混合之后，他们的混乱程度是不是增加了？对，熵一定存在，而且是增加了。</p><p>Ω即分子排列数。早年译作“正则系综”，名称拗口且易混。</p><p>利用斯特林公式处理阶乘…玻尔兹曼常数乘阿伏伽德罗常数，恰等于理想气体常数。</p><p>整个这个橄榄石固溶体的熵，就是纯的镁橄榄石的熵乘以镁橄榄石的浓度，加上铁橄榄石的熵。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-mixing-gibbs">
+  <div class="slides"><figure class="slide" id="slide-39">
+<img src="slides/slide_39.png" alt="课件第39页 理想溶液的化学势（一）">
+<figcaption><span class="sno">39</span><span class="stitle">理想溶液的化学势（一）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-40">
+<img src="slides/slide_40.png" alt="课件第40页 理想溶液的化学势（二）：ΔG_mix = RT lnX 的形式">
+<figcaption><span class="sno">40</span><span class="stitle">理想溶液的化学势（二）：ΔG_mix = RT lnX 的形式</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">09</span>
+      <div class="sec-tt">
+        <h2>理想溶液的混合自由能与温度</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后）</span><span class="chip">课件 39</span><span class="chip">课件 40</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>把混合熵代入 Gibbs 方程：理想溶液混合无热效应，ΔG_mix = −TΔS_mix。理想混合熵与温度无关，但理想混合自由能与温度有关——温度越高，−TΔS 越负，溶液越稳定。这就从原理上解释了为什么温度高时固溶体更稳定、低温下才出溶（碱性长石 973 K 以下分解）。</p><p>总结理想溶液的混合热力学性质：ΔV_mix = 0，ΔH_mix = 0，ΔS_mix > 0 且与温度无关，ΔG_mix < 0 且随温度升高更负。整个溶液的摩尔吉布斯自由能 = 机械混合自由能 + 理想混合自由能，后者本质就是第二种组分的化学势。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>理想混合熵与温度无关，但理想混合自由能与温度有关。温度越高，自由能越负。</p><p>总结理想溶液的混合热力学性质：混合体积为0，混合焓为0，混合熵为正值且与温度无关。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-chemical-potential">
+  <div class="slides"><figure class="slide" id="slide-41">
+<img src="slides/slide_41.png" alt="课件第41页 理想溶液的化学势（三）">
+<figcaption><span class="sno">41</span><span class="stitle">理想溶液的化学势（三）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-42">
+<img src="slides/slide_42.png" alt="课件第42页 Henry 定律与 Raoult 定律（一）">
+<figcaption><span class="sno">42</span><span class="stitle">Henry 定律与 Raoult 定律（一）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-43">
+<img src="slides/slide_43.png" alt="课件第43页 Henry 定律与 Raoult 定律（二）">
+<figcaption><span class="sno">43</span><span class="stitle">Henry 定律与 Raoult 定律（二）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-44">
+<img src="slides/slide_44.png" alt="课件第44页 Henry 定律与 Raoult 定律（三）">
+<figcaption><span class="sno">44</span><span class="stitle">Henry 定律与 Raoult 定律（三）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">10</span>
+      <div class="sec-tt">
+        <h2>稀溶液近似、标准态与化学势</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（后段）</span><span class="chip">课件 41</span><span class="chip">课件 42</span><span class="chip">课件 43</span><span class="chip">课件 44</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>讨论化学势前要加一个假设：稀溶液。溶质 A 含量极低时，可把它想象成盐——加一点点不显著改变浓度，浓度可近似看作常数。一盆盐水浓度万分之一摩尔，加 1 mg 盐变成万分之 1.00005，差异极小，所以可以用约等号。</p><p>理想混合自由能 = 整个溶液自由能 − 机械混合自由能。对盐的摩尔数求导，得到的就是盐的化学势：在任意温压下给溶液加 1 mol 盐或减 1 mol 盐，对系统自由能的改变量。对极限混合自由能求导，得到标准态化学势——标准态就是纯物质，1 mol 纯盐的自由能。</p><p>所以稀溶液中 μ_i = μ_i° + RT ln x_i。氯化钠、氯化钾同时微量存在于水里时，两者都按这个式子写；因为它们稀，符合理想溶液的标准（无热效应、无体积变化）。</p><p>“完美溶液”是指浓度从 0 到 1 全区间都符合这个式子。氯化钠在水中溶不了那么多，用酒精说：52 度茅台兑水到 13 度都能当理想溶液，0% 是纯水也能理解，100% 是纯乙醇也行——但要求从 0 到 100% 全符合就是强人所难，所以完美溶液不存在。地质问题上，只要计算结果在你能容忍的误差内，就可以这样用。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>当溶质A含量特别低时，可将其想象成盐…加入1mg盐后，浓度虽升高至万分之1.00005，但与原值差异极小。</p><p>啥叫标准？纯物质…一摩尔纯盐的基本自由能。</p><p>整个溶液浓度从0到1的区间内都符合这个式子的话，叫完美溶液。</p><p>我给他买来一瓶茅台…52度，经过我注水之后变成13%到52%都是理想。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-raoult">
+  <div class="slides"><figure class="slide" id="slide-45">
+<img src="slides/slide_45.png" alt="课件第45页 Henry 定律与 Raoult 定律（四）">
+<figcaption><span class="sno">45</span><span class="stitle">Henry 定律与 Raoult 定律（四）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-46">
+<img src="slides/slide_46.png" alt="课件第46页 Henry 定律与 Raoult 定律（五）">
+<figcaption><span class="sno">46</span><span class="stitle">Henry 定律与 Raoult 定律（五）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-47">
+<img src="slides/slide_47.png" alt="课件第47页 Henry 定律与 Raoult 定律（六）">
+<figcaption><span class="sno">47</span><span class="stitle">Henry 定律与 Raoult 定律（六）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-48">
+<img src="slides/slide_48.png" alt="课件第48页 Henry 定律与 Raoult 定律（七）">
+<figcaption><span class="sno">48</span><span class="stitle">Henry 定律与 Raoult 定律（七）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-49">
+<img src="slides/slide_49.png" alt="课件第49页 气体蒸汽相中组分的化学势与茅台酒的蒸气压">
+<figcaption><span class="sno">49</span><span class="stitle">气体蒸汽相中组分的化学势与茅台酒的蒸气压</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">11</span>
+      <div class="sec-tt">
+        <h2>气体蒸汽相的化学势、Henry 与 Raoult 定律，和茅台酒的蒸气压</h2>
+        <div class="sec-meta"><span class="time">录音：第 1 段（末）</span><span class="chip">课件 45</span><span class="chip">课件 46</span><span class="chip">课件 47</span><span class="chip">课件 48</span><span class="chip">课件 49</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>溶液上有蒸汽时，蒸汽相中第 i 种气体的化学势 μ_i = μ_i° + RT ln(P_i/P_total)：标准态是纯气体在该温压下的化学势，P_i/P_total 是分压比，无量纲。这是仿照理想溶液中组分化学势写出来的。</p><p>茅台酒的蒸汽里有什么？水、乙醇，还有微量香味物质。52 度茅台的蒸汽里乙醇大约占 52%、水占 48%——按 Raoult 定律，P_i 就是 0.52。若加温加压，这个比例就不一定还是 52% 了。</p><p>于是回到上节课留下的问题：常温常压下茅台酒的蒸气压是多少？同学猜“十个大气压”，老师说 10^8 Pa 会把瓶子压碎（1 atm 才 101325 Pa）。这里有两个逻辑打架：酒灌装时是一个大气压，密封后瓶内就应当接近一个大气压；可另一方面密封后有一部分空气溶入酒中，饱和蒸气压又达不到一个大气压。</p><p>这个“很有哲理”的问题课上没讲完——老师说明下节课接着聊，也欢迎在微信群里继续讨论：在真空里灌装和在常压空气里灌装，结果不一样，关键看灌装环境。</p><p>课末提问还有两问：投影图与剖面图的区别——沿 P-T 切一刀的剖面图全岩成分不变，投影图是从高维空间投影下来、线上每点全岩成分都不同；无变度点的位置怎么定——由相交两根线的克拉伯龙斜率交点定，斜率 = ΔS/ΔV，理想情况下交于一点，考虑误差后是一个很小的区域。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>蒸汽相里边其中第i种气体的化学势…分压力与总压力之比。</p><p>我敢猜，52度的茅台酒蒸汽里边乙醇占了52%，水占了48%。</p><p>十个炮。我告诉你，10个8有多小…10个怕你的瓶子不给你压碎才怪呢。</p><p>这个问题值得逻辑上再探究…因为课时到了，这个问题下节课我们接着聊。</p><p>考虑到误差，这个点交叉为一个非常小范围的区域。</p></details></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（岩石热力学）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>

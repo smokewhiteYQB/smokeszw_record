@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>生成式模型与科学智能应用 · 第17课 Lecture 14 Advanced Topics on Diffusion Models——流模型复习、Flow Matching 等价性证明与采样加速｜课件与讲述对照</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d4a017%22/%3E%3Crect%20x%3D%2217%22%20y%3D%221%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%230a1f38%22/%3E%3Crect%20x%3D%221%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%23d64545%22/%3E%3Crect%20x%3D%2217%22%20y%3D%2217%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%222%22%20fill%3D%22%233d7edb%22/%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+  background:#eef1f6;color:#24303c;line-height:1.7;}
+
+/* ===== 顶栏 ===== */
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;padding:12px 22px;background:#0a1f38;color:#fff;
+  box-shadow:0 2px 10px rgba(6,20,38,.35);}
+.brand h1{font-size:17px;font-weight:700;letter-spacing:.4px;}
+.brand .sub{font-size:12.5px;color:#c3d2e5;margin-top:3px;}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.count{font-size:12.5px;color:#c3d2e5;}
+.toc{height:32px;border:none;border-radius:6px;padding:0 10px;font-size:13px;color:#0a1f38;cursor:pointer;max-width:300px;}
+
+/* ===== 主体 ===== */
+main{max-width:1520px;margin:0 auto;padding:18px 22px 44px;}
+.note{background:#fff;border:1px solid #e2e7ee;border-radius:8px;padding:10px 16px;
+  font-size:12.5px;color:#6b7686;margin-bottom:18px;}
+
+/* ===== 每节：左课件 / 右讲述 ===== */
+.sec{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);gap:22px;
+  background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 1px 3px rgba(10,31,56,.05);}
+.slides{display:flex;flex-direction:column;gap:14px;min-width:0;}
+.slide{border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.slide img{display:block;width:100%;height:auto;}
+.slide figcaption{display:flex;gap:8px;align-items:baseline;padding:6px 12px;font-size:12.5px;
+  color:#4a5665;background:#f2f5f9;border-top:1px solid #e4e9f0;}
+.slide figcaption .sno{font-weight:700;color:#b8860b;}
+
+.text{min-width:0;}
+.sec-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.sec-no{flex:none;width:32px;height:32px;border-radius:8px;background:#0a1f38;color:#ffd97a;
+  font-weight:700;font-size:13.5px;display:flex;align-items:center;justify-content:center;}
+.sec-tt{min-width:0;}
+.sec-tt h2{font-size:16.5px;font-weight:700;color:#0a1f38;line-height:1.45;
+  border-left:4px solid #d4a017;padding-left:10px;}
+.sec-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:7px;}
+.time{font-size:12px;color:#7a8594;}
+.chip{display:inline-block;border:1px solid #c3d2e6;background:#eef3fa;color:#1c4a8a;
+  border-radius:16px;padding:0 10px;font-size:11.5px;line-height:20px;}
+
+.sec-body p{font-size:14px;line-height:1.95;color:#2a3644;text-align:justify;margin-top:9px;}
+.sec-body b{color:#14365f;}
+.videos{margin-top:14px;border:1px solid #dce2ea;border-radius:8px;overflow:hidden;background:#f7f9fc;}
+.video + .video{border-top:1px solid #e4e9f0;}
+.videos h4{font-size:12.5px;font-weight:700;color:#0a1f38;background:#f2f5f9;padding:8px 12px;border-bottom:1px solid #e4e9f0;}
+.videos video{display:block;width:100%;max-height:460px;background:#0b0f14;}
+.raw{margin-top:12px;border-top:1px dashed #dde3ea;padding-top:9px;}
+.raw summary{cursor:pointer;font-size:12px;color:#7a8594;user-select:none;list-style:none;}
+.raw summary::-webkit-details-marker{display:none;}
+.raw summary::before{content:"▸ ";color:#b8860b;}
+.raw[open] summary::before{content:"▾ ";}
+.raw p{margin:8px 0 0 0;font-size:12.5px;line-height:1.8;color:#8a93a1;text-align:left;}
+
+footer{padding:14px 22px 30px;text-align:center;font-size:12px;color:#8a93a1;line-height:1.8;}
+
+@media (max-width:900px){
+  .topbar{padding:10px 14px;}
+  .brand h1{font-size:15.5px;}
+  .toc{max-width:210px;}
+  main{padding:12px 12px 36px;}
+  .sec{grid-template-columns:1fr;padding:14px;}
+  .slides{flex-direction:row;overflow-x:auto;gap:12px;padding-bottom:6px;}
+  .slide{width:78%;flex:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>生成式模型与科学智能应用 · 第17课 Lecture 14 Advanced Topics on Diffusion Models——流模型复习、Flow Matching 等价性证明与采样加速</h1>
+    <div class="sub">第17课 Lecture 14 Advanced Topics on Diffusion Models——流模型复习、Flow Matching 等价性证明与采样加速 ｜ 2026-11-05 ｜ 刘云帆（生成式模型与科学智能应用）</div>
+  </div>
+  <div class="controls">
+    <span class="count">课件 60 页 · 整理 17 节</span>
+    <select id="toc" class="toc" aria-label="跳转到讲述小节"
+      onchange="if(this.value)document.getElementById(this.value).scrollIntoView({behavior:'smooth'})">
+      <option value="">目录：跳转到小节…</option>
+      <option value="sec-recap-continuous">01 复习：连续时间流模型、连续性方程与速度场</option>
+<option value="sec-cond-marginal">02 两组概念：Conditional 与 Marginal 的概率路径和速度场</option>
+<option value="sec-cfm-baseline">03 条件速度匹配：线性插值的朴素设计</option>
+<option value="sec-design-space">04 扩散模型是一个“设计空间”，不是单一算法</option>
+<option value="sec-ddpm-slow">05 朴素 DDPM 为什么慢：1000 步与不能跳步</option>
+<option value="sec-skip-steps">06 另一种去噪目标：先重建 x0，再确定性跳步</option>
+<option value="sec-ddim">07 把随机性加回来：DDIM</option>
+<option value="sec-distillation">08 让训练参与加速：蒸馏、渐进蒸馏与一致性模型</option>
+<option value="sec-ode-solver">09 把采样当数学问题：ODE 求解器加速（DPM-Solver）</option>
+<option value="sec-snr">10 训练设计（一）：噪声水平与信噪比决定任务难度</option>
+<option value="sec-objectives">11 训练设计（二）：x0 与 ε 参数化只是时间步加权不同</option>
+<option value="sec-noise-schedule">12 训练设计（三）：噪声调度塑造 SNR 轨迹</option>
+<option value="sec-reparam">13 训练设计（四）：重参数化与速度参数化</option>
+<option value="sec-model-space">14 模型设计（一）：设计空间与维度灾难</option>
+<option value="sec-ldm">15 模型设计（二）：自编码器与潜空间扩散（LDM）</option>
+<option value="sec-dit">16 模型设计（三）：从 U-Net 到 Diffusion Transformer</option>
+<option value="sec-summary-reading">17 总结与延伸阅读</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <div class="note">整理说明：原始录音转写由语音识别自动生成，说话人标签与断句较乱（多为同一教师被切分为多人）。本页已结合课件内容对转写进行合并、纠错与润色；每节标注对应课件页码与录音时间段，并附原声片段供核对。 课件图片为 Lecture14_Advanced_Topics_on_D.pdf 逐页渲染，转写原文见 record_20261105.txt。</div>
+<section class="sec" id="sec-recap-continuous">
+  <div class="slides"><figure class="slide" id="slide-01">
+<img src="slides/slide_01.png" alt="课件第1页 Lecture 14 Advanced Topics on Diffusion Models（Fall 2026，刘云帆）">
+<figcaption><span class="sno">01</span><span class="stitle">Lecture 14 Advanced Topics on Diffusion Models（Fall 2026，刘云帆）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-02">
+<img src="slides/slide_02.png" alt="课件第2页 Recap：Score SDE——连续时间下的前向与反向过程（Song et al., ICLR 2021）">
+<figcaption><span class="sno">02</span><span class="stitle">Recap：Score SDE——连续时间下的前向与反向过程（Song et al., ICLR 2021）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-03">
+<img src="slides/slide_03.png" alt="课件第3页 Recap：Flow Model 与 Diffusion/Score-based Model 的对应——初值、动力学（ODE 与 Score SDE）、采样即模拟 ODE/SDE">
+<figcaption><span class="sno">03</span><span class="stitle">Recap：Flow Model 与 Diffusion/Score-based Model 的对应——初值、动力学（ODE 与 Score SDE）、采样即模拟 ODE/SDE</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div class="sec-tt">
+        <h2>复习：连续时间流模型、连续性方程与速度场</h2>
+        <div class="sec-meta"><span class="time">录音：前半（课首复习）</span><span class="chip">课件 1</span><span class="chip">课件 2</span><span class="chip">课件 3</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>上半节课先把流模型这一块讲完。正式进入新内容之前，先把上节课的东西复习一遍：我们通过 ODE 的方式做了一个连续时间的流模型，它用最优传输（OT）的思路，让样本沿着一条比较“匀速”的路径从噪声走到数据。对这样的模型，给定采样得到的纯噪声，对速度做积分就能得到任意时刻噪声的样子；我们还通过连续性方程推出了概率密度随时间演化的方程，把符号明确了一下。</p><p>有了这个描述，就可以做积分，从某个时刻算出任意时刻样本的对数似然，进而得到 T=1（干净样本）时的似然，再用最大似然去训练。但上节课也说过，这种做法计算成本非常高：给定 x1 之后要不断求解 ODE，才能得到对应的 x0，再积分回 x1，整条 ODE 路径的开销很大。</p><p>解决办法是注意到积分项里都有同一个速度 v，这跟 Score-based Model 的想法类似：模型不去直接建模概率密度或数据分布，而是建模这个速度场。得到速度场之后，仍然可以通过积分采样、算出任意时刻的量，最终的学习目标就是用含参模型 v_θ 去拟合真实的边际速度 u_t。但这里留下一个问题：作为监督信号的真实速度其实是不知道的，怎么把学习目标转化成可求解的目标，就是接下来要推导的内容。</p><p>课件把两种连续时间模型并排放在一起：Flow Model 从 x0~p0 出发，动力学是 ODE dx_t = v_θ(x_t,t)dt；Diffusion/Score-based Model 从 x_T~p_prior 出发，动力学是 Score SDE，反向过程里多一个 score 项。两者的共同点是：采样就是从一个简单先验出发，模拟 ODE 或 SDE 到数据分布。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我们上节课通过这个ODE的方式，有一个叫连续时间规划流的模型。</p><p>给定X1后，需不断求解ODE，求得对应的X0，再求到X0后对该项积分，一直求到X1。</p><p>模型不直接建模概率密度或数据分布密度，而是建模其相反速度场。</p><p>但最后留下一个问题：作为监督信号的真实速度其实是不知道的。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-cond-marginal">
+  <div class="slides"><figure class="slide" id="slide-04">
+<img src="slides/slide_04.png" alt="课件第4页 Recap：Flow Matching 的两组概念——“Conditional”（单个数据点）与“Marginal”（整个数据分布）（MIT 6.S184）">
+<figcaption><span class="sno">04</span><span class="stitle">Recap：Flow Matching 的两组概念——“Conditional”（单个数据点）与“Marginal”（整个数据分布）（MIT 6.S184）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div class="sec-tt">
+        <h2>两组概念：Conditional 与 Marginal 的概率路径和速度场</h2>
+        <div class="sec-meta"><span class="time">录音：前半（概念与可视化）</span><span class="chip">课件 4</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>在推导之前，先介绍流模型里三组重要概念，每一组都有 Marginal 和 Conditional 两个版本。第一是概率路径（Probability Path）：它描述数据分布在 t 从0到1的演化过程，p_t(x) 是 Marginal 形式；给定某个终点 x1 之后的演化路径 p_t(x|x1)，是 Conditional 形式。第二是对应的速度场：u_t(x) 是 Marginal 速度场，u_t(x|x1) 是给定 x1 的条件速度场。第三是学习目标（loss），同样有 marginal 和 conditional 两个版本。</p><p>为什么要定义这两套？因为直接学边际的东西太难，而条件的东西是可控的。给定终点 x1，从高斯分布到这一个点的传输路径可以定义成一条高斯路径，对应的速度场是解析可写的；而不给定 x1、只看整个目标分布时，路径会复杂得多——比如目标是二维平面上的棋盘分布，从高斯出发的边际概率路径会经历复杂的演化，最后才收敛到棋盘形状。同样是从 p0 出发、同样的生成过程，给定与不给定 x1，定义的路径完全不同。</p><p>课上放了网站上的可视化：左边是条件概率路径，任意时刻都是一个分布（用采样点表示），从充满空间的高斯不断聚集到目标点；背景里的小箭头就是速度场，每个位置、每个时刻都有各自的速度，随 t 不断变化。右边是边际概率路径，不再指定终点，而是从高斯传输到整个目标分布，最终接近目标分布的形状。掌握这两个量，才能建立直观认识。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我们这边会给定大家一些可视化的结果，所以为了引入这两个概念给大家介绍一下，一个是全局的，一个是决定某一个特定数据点的概念。</p><p>给定X1和不给定X1时，定义的路径完全不同，尽管它们都基于同样的生成模型和基本过程。</p><p>可以看到背景中有许多小向量。这些向量随T不断变化，描述了速度的形态。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-cfm-baseline">
+  <div class="slides"><figure class="slide" id="slide-05">
+<img src="slides/slide_05.png" alt="课件第5页 Recap：Conditional Velocity Matching 的朴素设计——采样端点、线性插值构造路径、目标条件速度 x1−x0、学习目标 ℒ_CFM">
+<figcaption><span class="sno">05</span><span class="stitle">Recap：Conditional Velocity Matching 的朴素设计——采样端点、线性插值构造路径、目标条件速度 x1−x0、学习目标 ℒ_CFM</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div class="sec-tt">
+        <h2>条件速度匹配：线性插值的朴素设计</h2>
+        <div class="sec-meta"><span class="time">录音：前半（CFM 构造）</span><span class="chip">课件 5</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>最直接的做法是条件速度匹配（Conditional Velocity Matching）：把高斯分布变换到一个数据点，用线性插值构造路径。第一步采样两个端点，x0 从标准高斯采样、x1 从数据分布采样；第二步构造路径 x_t = t x1 + (1−t) x0，t 服从0到1的均匀分布；第三步写目标条件速度，对路径求导就是 u_t(x_t|x1) = x1 − x0，是个常数向量；第四步就是学习目标，让模型 v_θ(x_t,t) 去拟合 x1 − x0，写成均方误差 ℒ_CFM。</p><p>这个路径之所以简单，是因为它是直线：从噪声点到数据点的连线，方向固定、速度恒定，不需要解任何隐式的概率路径。课上强调，你也可以构造其他路径，但线性插值最简单，也最容易把目标算出来。这就把“拟合未知的真实速度”变成了“拟合一个能解析写出的条件速度”。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我整个的这个传输的路径，我可以假设它就是一个直线，这样一个直线的线性插值的一个路径。</p><p>如果是线性插值的路径的话，我们可以线性插值过程中任意一个点XT。</p><p>X1是你第一步里选的这个真实样子，X0是你随机采样的一个噪声点。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-design-space">
+  <div class="slides"><figure class="slide" id="slide-06">
+<img src="slides/slide_06.png" alt="课件第6页 Today's Plan：扩散模型包含前向与反向过程，目标函数由 ELBO 推出（L_T、L_t、L_0）">
+<figcaption><span class="sno">06</span><span class="stitle">Today's Plan：扩散模型包含前向与反向过程，目标函数由 ELBO 推出（L_T、L_t、L_0）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-07">
+<img src="slides/slide_07.png" alt="课件第7页 Today's Plan：去噪网络可用噪声参数化（DDPM）训练——噪声预测与迭代去噪（Ho et al., NeurIPS 2020）">
+<figcaption><span class="sno">07</span><span class="stitle">Today's Plan：去噪网络可用噪声参数化（DDPM）训练——噪声预测与迭代去噪（Ho et al., NeurIPS 2020）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-08">
+<img src="slides/slide_08.png" alt="课件第8页 Today's Plan：现代扩散模型不是单一算法，而是一个包含多方面选择的 design space">
+<figcaption><span class="sno">08</span><span class="stitle">Today's Plan：现代扩散模型不是单一算法，而是一个包含多方面选择的 design space</span></figcaption>
+</figure>
+<figure class="slide" id="slide-09">
+<img src="slides/slide_09.png" alt="课件第9页 Today's Plan：扩散模型的设计空间（Karras et al., NeurIPS 2022）">
+<figcaption><span class="sno">09</span><span class="stitle">Today's Plan：扩散模型的设计空间（Karras et al., NeurIPS 2022）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-10">
+<img src="slides/slide_10.png" alt="课件第10页 Lecture Outline：Sampling Acceleration / Training Procedure Design / Model Design for Stable and Scalable Generation">
+<figcaption><span class="sno">10</span><span class="stitle">Lecture Outline：Sampling Acceleration / Training Procedure Design / Model Design for Stable and Scalable Generation</span></figcaption>
+</figure>
+<figure class="slide" id="slide-11">
+<img src="slides/slide_11.png" alt="课件第11页 Lecture Outline（同前，三部分提纲）">
+<figcaption><span class="sno">11</span><span class="stitle">Lecture Outline（同前，三部分提纲）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div class="sec-tt">
+        <h2>扩散模型是一个“设计空间”，不是单一算法</h2>
+        <div class="sec-meta"><span class="time">录音：前半（课末转入新章节）</span><span class="chip">课件 6</span><span class="chip">课件 7</span><span class="chip">课件 8</span><span class="chip">课件 9</span><span class="chip">课件 10</span><span class="chip">课件 11</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>下半节课进入新章节：扩散模型有哪些地方可以扩展。先回顾：扩散模型包含前向和反向两个过程，目标函数由 ELBO 推出，可以拆成 L_T、L_t、L_0 三部分；去噪网络可以用噪声参数化（DDPM）来训练，也就是预测注入的噪声，再迭代去噪。</p><p>要建立一个关键认识：现代扩散模型不是一个单一算法，而是一个 design space，包含很多方面可以改。这套框架只提供概率建模的骨架，你选一种参数化方法、一种训练方法、一种采样方法，就对应一个具体的扩散模型算法。所以训练过程可以改进、模型本身可以改进、采样过程也可以单独特殊设计——即使不训练、不改模型，只改采样就能带来加速。</p><p>Karras 等人2022年的文章（Elucidating the Design Space of Diffusion-Based Generative Models）指出，此前很多改进其实是“unnecessary”，各种技巧卷积在一起非常乱，于是提出把这些设计理念系统地组织起来。课程会参考这篇文章，但不只讲它的内容。本章分三部分：采样加速、训练过程设计、面向稳定与可扩展生成的模型设计。这节课剩余时间主要讲采样加速，训练和模型设计留到下次。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>这个章节主要是给大家系统性地讲一下，我们这个扩展模型大概有哪些内容是可以去扩展的。</p><p>它其实只是给大家提供一种概率建模的框架，它并不是指某一个特定的算法。</p><p>2022年的文章摘要指出，扩散模型的改进多为unnecessary，即非常不必要，卷积在一起非常乱。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-ddpm-slow">
+  <div class="slides"><figure class="slide" id="slide-12">
+<img src="slides/slide_12.png" alt="课件第12页 Sampling Acceleration：朴素 DDPM 的问题——生成一张图要 T=1000 步，步数减少质量严重下降，难以扩展到高分辨率/视频与实时应用">
+<figcaption><span class="sno">12</span><span class="stitle">Sampling Acceleration：朴素 DDPM 的问题——生成一张图要 T=1000 步，步数减少质量严重下降，难以扩展到高分辨率/视频与实时应用</span></figcaption>
+</figure>
+<figure class="slide" id="slide-13">
+<img src="slides/slide_13.png" alt="课件第13页 Sampling Acceleration：DDPM 采样的直观图——从 p_θ(x_{t−1}|x_t) = N(x_{t−1}; μ_θ(x_t,t), σ_t²I) 采样">
+<figcaption><span class="sno">13</span><span class="stitle">Sampling Acceleration：DDPM 采样的直观图——从 p_θ(x_{t−1}|x_t) = N(x_{t−1}; μ_θ(x_t,t), σ_t²I) 采样</span></figcaption>
+</figure>
+<figure class="slide" id="slide-14">
+<img src="slides/slide_14.png" alt="课件第14页 Sampling Acceleration：直观图（续）——p_θ(x_{t−1}|x_t) 的均值可写成 score 与噪声预测的关系 s_θ = −ε_θ/√(1−ᾱ_t)">
+<figcaption><span class="sno">14</span><span class="stitle">Sampling Acceleration：直观图（续）——p_θ(x_{t−1}|x_t) 的均值可写成 score 与噪声预测的关系 s_θ = −ε_θ/√(1−ᾱ_t)</span></figcaption>
+</figure>
+<figure class="slide" id="slide-15">
+<img src="slides/slide_15.png" alt="课件第15页 Sampling Acceleration：直观图（续）——“有没有更快的采样方式？”">
+<figcaption><span class="sno">15</span><span class="stitle">Sampling Acceleration：直观图（续）——“有没有更快的采样方式？”</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div class="sec-tt">
+        <h2>朴素 DDPM 为什么慢：1000 步与不能跳步</h2>
+        <div class="sec-meta"><span class="time">录音：后半（采样加速·问题）</span><span class="chip">课件 12</span><span class="chip">课件 13</span><span class="chip">课件 14</span><span class="chip">课件 15</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>先说问题：朴素 DDPM 采样极慢。生成一张图要 T=1000 步，步数一减少质量就严重下降；高分辨率、视频生成很难 scale，实时应用更不可能。为什么会这样？因为训练时 T 必须足够大，每一步加的噪声才足够小，对应的后验分布才近似高斯，扩散模型的训练（反向也按高斯采样）才成立。</p><p>看直观图：采样就是不断地从 p_θ(x_{t−1}|x_t) = N(x_{t−1}; μ_θ(x_t,t), σ_t²I) 里取一个点。均值 μ_θ 可以写成 score 与噪声预测的关系：s_θ(x_t,t) = −ε_θ(x_t,t)/√(1−ᾱ_t)，而 score 又近似等于 ∇ log q_t(x_t)。所以每一步本质上就是“用模型预测的噪声，把当前点往数据分布的方向推一点，再加一点方差”。</p><p>问题在于，反向采样只定义了 x_t 与 x_{t−1} 相邻两步之间的关系。想跳过若干步，公式上并没有直接的办法——这就是“没法把算法分解、让生成实时化”的根本原因。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>对T步加噪过程，需提供同样步数的去噪过程。</p><p>因为T足够大时，每一步加的噪声才足够小，对应的后验分布才是近似高斯。</p><p>反向采样只定义了Xt跟Xt-1相邻部分之间的关系。怎么跳过一些步骤，就没有办法直接得到结果。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-skip-steps">
+  <div class="slides"><figure class="slide" id="slide-16">
+<img src="slides/slide_16.png" alt="课件第16页 Sampling Acceleration：另一种去噪目标——由一步加噪关系反解干净数据 x0|t，再确定性估计 x_{t−1}（复用同一噪声）">
+<figcaption><span class="sno">16</span><span class="stitle">Sampling Acceleration：另一种去噪目标——由一步加噪关系反解干净数据 x0|t，再确定性估计 x_{t−1}（复用同一噪声）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-17">
+<img src="slides/slide_17.png" alt="课件第17页 Sampling Acceleration：另一种去噪过程——x_{t−1} ≈ √(ᾱ_{t−1}) x0|t + √(1−ᾱ_{t−1}) ε_θ(x_t,t)">
+<figcaption><span class="sno">17</span><span class="stitle">Sampling Acceleration：另一种去噪过程——x_{t−1} ≈ √(ᾱ_{t−1}) x0|t + √(1−ᾱ_{t−1}) ε_θ(x_t,t)</span></figcaption>
+</figure>
+<figure class="slide" id="slide-18">
+<img src="slides/slide_18.png" alt="课件第18页 Sampling Acceleration：另一种去噪过程（续）——仍然需要 T 步去噪吗？">
+<figcaption><span class="sno">18</span><span class="stitle">Sampling Acceleration：另一种去噪过程（续）——仍然需要 T 步去噪吗？</span></figcaption>
+</figure>
+<figure class="slide" id="slide-19">
+<img src="slides/slide_19.png" alt="课件第19页 Sampling Acceleration：跳过中间去噪步骤——给定 x0|t 可以直接算 x_{t−2}，提供了一条替代的采样轨迹">
+<figcaption><span class="sno">19</span><span class="stitle">Sampling Acceleration：跳过中间去噪步骤——给定 x0|t 可以直接算 x_{t−2}，提供了一条替代的采样轨迹</span></figcaption>
+</figure>
+<figure class="slide" id="slide-20">
+<img src="slides/slide_20.png" alt="课件第20页 Sampling Acceleration：跳过中间步骤可带来 10 倍加速">
+<figcaption><span class="sno">20</span><span class="stitle">Sampling Acceleration：跳过中间步骤可带来 10 倍加速</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div class="sec-tt">
+        <h2>另一种去噪目标：先重建 x0，再确定性跳步</h2>
+        <div class="sec-meta"><span class="time">录音：后半（DDIM 直观推导）</span><span class="chip">课件 16</span><span class="chip">课件 17</span><span class="chip">课件 18</span><span class="chip">课件 19</span><span class="chip">课件 20</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>换一个去噪目标就能跳步。前向过程有两个关系：逐步加噪 x_t = √(α_t) x_{t−1} + √(1−α_t) ε，以及一步到位 x_t = √(ᾱ_t) x0 + √(1−ᾱ_t) ε。既然 DDPM 学的是 ε_θ(x_t,t)，就可以反解出干净数据的估计：x0|t ≈ (x_t − √(1−ᾱ_t) ε_θ(x_t,t))/√(ᾱ_t)。</p><p>有了 x0|t，再代回一步加噪的公式，就得到 x_{t−1} 的确定性估计：x_{t−1} ≈ √(ᾱ_{t−1}) x0|t + √(1−ᾱ_{t−1}) ε_θ(x_t,t)——注意这里复用了同一个噪声预测，没有重新采样随机噪声，所以是确定性的。形式上它跟加噪一步几乎一样，只是噪声是从当前点估计出来的。</p><p>关键的一步：既然 x0|t 已经估出来了，为什么还要经过 x_{t−1}？可以直接算 x_{t−2} = √(ᾱ_{t−2}) x0|t + √(1−ᾱ_{t−2}) ε_θ(x_t,t)，甚至跳更多步。因为 ᾱ 都是预设的噪声调度参数，跳步只需要换系数。每次跳10步，原本1000步就变成100步，10倍加速。这条确定性轨迹就是 DDIM 加速的最基本形式。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>从Xt去噪即估计干净数据。</p><p>这个时候我们不计算这个随机的噪声，我们直接用XT时候的噪声。</p><p>因为知道X0与T-20的关系，就了解了内部系统。若每次跳10步，可直接从X5到S。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-ddim">
+  <div class="slides"><figure class="slide" id="slide-21">
+<img src="slides/slide_21.png" alt="课件第21页 Sampling Acceleration：重新引入随机性（可选）——方差保持的随机项 σ_t z">
+<figcaption><span class="sno">21</span><span class="stitle">Sampling Acceleration：重新引入随机性（可选）——方差保持的随机项 σ_t z</span></figcaption>
+</figure>
+<figure class="slide" id="slide-22">
+<img src="slides/slide_22.png" alt="课件第22页 Sampling Acceleration：带随机性地跳步——This gives you DDIM!">
+<figcaption><span class="sno">22</span><span class="stitle">Sampling Acceleration：带随机性地跳步——This gives you DDIM!</span></figcaption>
+</figure>
+<figure class="slide" id="slide-23">
+<img src="slides/slide_23.png" alt="课件第23页 Sampling Acceleration：DDIM（Denoising Diffusion Implicit Models）——直观引入；严格推导见非马尔可夫过程文献（Song et al., ICLR 2021）">
+<figcaption><span class="sno">23</span><span class="stitle">Sampling Acceleration：DDIM（Denoising Diffusion Implicit Models）——直观引入；严格推导见非马尔可夫过程文献（Song et al., ICLR 2021）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">07</span>
+      <div class="sec-tt">
+        <h2>把随机性加回来：DDIM</h2>
+        <div class="sec-meta"><span class="time">录音：后半（DDIM 与随机性）</span><span class="chip">课件 21</span><span class="chip">课件 22</span><span class="chip">课件 23</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>纯确定性的跳步有一个副作用：从同一个噪声点出发只能得到同一条轨迹，样本多样性受限。把随机性加回来就得到 DDIM：在确定性估计上加一项 σ_t z，z~N(0,I)，同时把系数调整为 √(1−ᾱ_{t−1}−σ_t²)，保证在目标噪声水平上方差保持（variance-preserving）。</p><p>于是采样公式变成 x_{t−1} ≈ √(ᾱ_{t−1}) x0|t + √(1−ᾱ_{t−1}−σ_t²) ε_θ(x_t,t) + σ_t z。σ_t 取0就退化成确定性采样，取特定值就回到 DDPM 的随机采样；介于两者之间，可以连续调节随机性。配上跳步，就是 DDIM。</p><p>课件特别说明：这里给的是 DDIM 的直观引入，严格推导要看原文（Song、Meng、Ermon，ICLR 2021）。它的正式理解是去掉马尔可夫链的要求，但保证每个 x_t 在去噪过程中的边缘分布不变——边缘分布不变，就可以复用同一套预训练模型，任意跳时间采样。这个角度比直观推导复杂，但论文写得很好。DDIM 的重要性在于：加速过程不需要重新训练，只在采样阶段改，采样步数就能少很多。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>如果加上噪声的话呢，它就是变成了一个这样稍微复杂一点。</p><p>这个是一个加入随机系统之后的。</p><p>DDPM它的一个理解的角度，就是我消去掉这个马尔可夫性的要求。但同时保证呢，我每一个XT它在去噪过程中边缘分布是不变的。</p><p>它加速的过程没有训练参与，只是在采样过程中进行了一些变化。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-distillation">
+  <div class="slides"><figure class="slide" id="slide-24">
+<img src="slides/slide_24.png" alt="课件第24页 Sampling Acceleration：能否把训练也纳入进来进一步加速？">
+<figcaption><span class="sno">24</span><span class="stitle">Sampling Acceleration：能否把训练也纳入进来进一步加速？</span></figcaption>
+</figure>
+<figure class="slide" id="slide-25">
+<img src="slides/slide_25.png" alt="课件第25页 Sampling Acceleration：基于蒸馏的加速——把慢的多步采样器压缩成快的少步采样器，学生模型匹配教师模型的多步轨迹">
+<figcaption><span class="sno">25</span><span class="stitle">Sampling Acceleration：基于蒸馏的加速——把慢的多步采样器压缩成快的少步采样器，学生模型匹配教师模型的多步轨迹</span></figcaption>
+</figure>
+<figure class="slide" id="slide-26">
+<img src="slides/slide_26.png" alt="课件第26页 Sampling Acceleration：Progressive Distillation——用多级学生模型逐级模拟更多步（Salimans & Ho, ICLR 2022）">
+<figcaption><span class="sno">26</span><span class="stitle">Sampling Acceleration：Progressive Distillation——用多级学生模型逐级模拟更多步（Salimans & Ho, ICLR 2022）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-27">
+<img src="slides/slide_27.png" alt="课件第27页 Sampling Acceleration：Consistency Model——给定预训练扩散模型的 Probability Flow ODE，新模型在任意两点给出相同预测（Song et al., ICML 2023）">
+<figcaption><span class="sno">27</span><span class="stitle">Sampling Acceleration：Consistency Model——给定预训练扩散模型的 Probability Flow ODE，新模型在任意两点给出相同预测（Song et al., ICML 2023）</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">08</span>
+      <div class="sec-tt">
+        <h2>让训练参与加速：蒸馏、渐进蒸馏与一致性模型</h2>
+        <div class="sec-meta"><span class="time">录音：后半（训练参与的加速）</span><span class="chip">课件 24</span><span class="chip">课件 25</span><span class="chip">课件 26</span><span class="chip">课件 27</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>如果不满足于“只改采样”，把训练也加进来，可以进一步减少步数。最直观的是蒸馏：教师是一个训练好、参数量大的多步模型，学生是一个更轻量的小模型；让两者从同一个噪声点出发，学生一步的输出去匹配教师两步之后的输出——学生一步实现两步去噪，参数量还更小。</p><p>在此之上做 progressive distillation：再引入一个新的学生，让它的一步去匹配上一个学生两步的结果，逐级把步数减半。为什么不直接从噪声一步到位？因为时间隔得越久，中间变化越复杂、非线性越强；逐级蒸馏每一步的损失更小，训练更稳。</p><p>一致性模型（Consistency Model）走得更远：给定预训练扩散模型的 Probability Flow ODE，要求新模型在这条轨迹上任意两点给出相同的预测——也就是把整条 ODE 的终点“提前”学到手，从而可以一步或极少数步生成。它不一定非要通过蒸馏实现，也可以从头训练。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>我选一个小模型去对它进行蒸馏。</p><p>让小模型一步就可以实现两步去噪功能。</p><p>因为时间隔得越久，中间的变化越复杂。所以在细胞统计的O1中，它的非线性更强。</p><p>我让这个模型从轨迹上任意一点去预测，输出都是一样的。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-ode-solver">
+  <div class="slides"><figure class="slide" id="slide-28">
+<img src="slides/slide_28.png" alt="课件第28页 Sampling Acceleration：基于 ODE 求解器的加速——线性漂移项解析求解、非线性项泰勒展开（DPM-Solver, Lu et al., NeurIPS 2022）">
+<figcaption><span class="sno">28</span><span class="stitle">Sampling Acceleration：基于 ODE 求解器的加速——线性漂移项解析求解、非线性项泰勒展开（DPM-Solver, Lu et al., NeurIPS 2022）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-29">
+<img src="slides/slide_29.png" alt="课件第29页 Sampling Acceleration：求解器对比——FID 衡量生成质量（越低越好），NFE 为每个样本调用网络的次数">
+<figcaption><span class="sno">29</span><span class="stitle">Sampling Acceleration：求解器对比——FID 衡量生成质量（越低越好），NFE 为每个样本调用网络的次数</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">09</span>
+      <div class="sec-tt">
+        <h2>把采样当数学问题：ODE 求解器加速（DPM-Solver）</h2>
+        <div class="sec-meta"><span class="time">录音：后半（ODE 求解器）</span><span class="chip">课件 28</span><span class="chip">课件 29</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>最后一个加速视角：既然扩散模型可以写成 ODE，采样就是一个数学问题，可以用更好的数值求解器。概率流 ODE 里，漂移项 f(x_t,t) 在 DDPM 这类模型里是线性的（与 x 成比例），这部分可以解析求解，不用数值积分；剩下由模型学出来的 score 项，用泰勒展开做局部线性化。这样就把原来复杂的 ODE 变成结构更好、更简单的 ODE，从而用更少的求解器调用达到同样的精度。</p><p>DPM-Solver（Lu et al., NeurIPS 2022）就是这么做的，号称十步左右就能出好结果。课件用两张图对比：横轴是 NFE（每个样本调用网络的次数），纵轴是 FID（生成质量，越低越好）。固定一个 FID 画横线，新方法在更少的 NFE 下就能达到——同样12次调用，效果明显好于 DDPM 基线；连续时间版本对比 Euler solver 也是同样趋势。这就是“借 ODE 动力学的做法，用经过设计的采样器实现更高级的采样”。</p><details class="raw"><summary>原声转写（节选，未整理）</summary><p>从ODE或SDE来讲，你可以把生成模型的设计或采样过程完全看成一个数学问题。</p><p>假设X这个漂移系统是线性的。对应扩散模型的DDPM，它其实就是线性的。</p><p>解析方法可以处理这一部分。</p><p>他们的这种方法也是可以有更小的调用，实现较快的速度。</p></details></div>
+  </div>
+</section>
+<section class="sec" id="sec-snr">
+  <div class="slides"><figure class="slide" id="slide-30">
+<img src="slides/slide_30.png" alt="课件第30页 Lecture Outline：Sampling Acceleration / Training Procedure Design / Model Design（转入选训练过程设计）">
+<figcaption><span class="sno">30</span><span class="stitle">Lecture Outline：Sampling Acceleration / Training Procedure Design / Model Design（转入选训练过程设计）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-31">
+<img src="slides/slide_31.png" alt="课件第31页 Training Procedure Design：噪声水平决定任务难度——一步加噪 x_t = √(ᾱ_t) x0 + √(1−ᾱ_t) ε">
+<figcaption><span class="sno">31</span><span class="stitle">Training Procedure Design：噪声水平决定任务难度——一步加噪 x_t = √(ᾱ_t) x0 + √(1−ᾱ_t) ε</span></figcaption>
+</figure>
+<figure class="slide" id="slide-32">
+<img src="slides/slide_32.png" alt="课件第32页 Training Procedure Design：信噪比 SNR(t) = ᾱ_t/(1−ᾱ_t)">
+<figcaption><span class="sno">32</span><span class="stitle">Training Procedure Design：信噪比 SNR(t) = ᾱ_t/(1−ᾱ_t)</span></figcaption>
+</figure>
+<figure class="slide" id="slide-33">
+<img src="slides/slide_33.png" alt="课件第33页 Training Procedure Design：t→0 低噪高 SNR 易预测 x0；t 居中信号与噪声混合、两个目标都难；t→T 高噪低 SNR 易预测 ε">
+<figcaption><span class="sno">33</span><span class="stitle">Training Procedure Design：t→0 低噪高 SNR 易预测 x0；t 居中信号与噪声混合、两个目标都难；t→T 高噪低 SNR 易预测 ε</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">10</span>
+      <div class="sec-tt">
+        <h2>训练设计（一）：噪声水平与信噪比决定任务难度</h2>
+        <div class="sec-meta"><span class="time">录音：无（课件页，课上未展开）</span><span class="chip">课件 30</span><span class="chip">课件 31</span><span class="chip">课件 32</span><span class="chip">课件 33</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>说明：本节内容出现在课件中，但课堂录音在此前已结束（教师说明训练与模型设计留到下次课），以下按课件页面整理，没有原声可对照。</p><p>训练过程的第一个设计维度是噪声水平。一步加噪写成 x_t = √(ᾱ_t) x0 + √(1−ᾱ_t) ε，信噪比定义为 SNR(t) = ᾱ_t/(1−ᾱ_t)。它决定了这个时间步上任务有多难：t→0 时噪声很低、SNR 很高，x_t≈x0，预测干净数据很容易、预测噪声很难；t 居中时信号与噪声混合，两个目标都难；t→T 时噪声很高、SNR 很低，x_t≈ε，预测噪声容易、预测干净数据难。</p><p>这条“难度随噪声水平变化”的曲线，是后面所有训练设计选择的出发点：参数化选什么、损失怎么加权、噪声调度怎么设，本质上都是在处理这条 SNR 轨迹。</p></div>
+  </div>
+</section>
+<section class="sec" id="sec-objectives">
+  <div class="slides"><figure class="slide" id="slide-34">
+<img src="slides/slide_34.png" alt="课件第34页 Training Procedure Design：不同学习目标之间的关系——x0-参数化与 ε-参数化的估计误差换算">
+<figcaption><span class="sno">34</span><span class="stitle">Training Procedure Design：不同学习目标之间的关系——x0-参数化与 ε-参数化的估计误差换算</span></figcaption>
+</figure>
+<figure class="slide" id="slide-35">
+<img src="slides/slide_35.png" alt="课件第35页 Training Procedure Design：不同学习目标对应不同的时间步加权">
+<figcaption><span class="sno">35</span><span class="stitle">Training Procedure Design：不同学习目标对应不同的时间步加权</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">11</span>
+      <div class="sec-tt">
+        <h2>训练设计（二）：x0 与 ε 参数化只是时间步加权不同</h2>
+        <div class="sec-meta"><span class="time">录音：无（课件页，课上未展开）</span><span class="chip">课件 34</span><span class="chip">课件 35</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>把 x_t 写成 a_t x0 + b_t ε（a_t = √(ᾱ_t)，b_t = √(1−ᾱ_t)），两种参数化可以互相换算：给定 x0-预测，ε = (x_t − a_t x0)/b_t；给定 ε-预测，x0 = (x_t − b_t ε)/a_t。相应地，估计误差之间也差一个系数：ε − ε̂ = −(a_t/b_t)(x0 − x̂0)。</p><p>把这个系数平方带进损失，就会发现两种学习目标只差一个时间步权重：ℒ_ε = E[‖ε − ε_θ‖²]，ℒ_x0 = E[SNR(t)·‖x0 − x0,θ‖²]。也就是说，用 ε 参数化训练，等价于对 x0 目标按 SNR 加权。选哪种参数化，实际上是在选“哪些噪声水平更重要”。</p></div>
+  </div>
+</section>
+<section class="sec" id="sec-noise-schedule">
+  <div class="slides"><figure class="slide" id="slide-36">
+<img src="slides/slide_36.png" alt="课件第36页 Training Procedure Design：噪声调度塑造 SNR 轨迹——线性和余弦调度的区别（Nichol & Dhariwal, ICML 2021）">
+<figcaption><span class="sno">36</span><span class="stitle">Training Procedure Design：噪声调度塑造 SNR 轨迹——线性和余弦调度的区别（Nichol & Dhariwal, ICML 2021）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-37">
+<img src="slides/slide_37.png" alt="课件第37页 Training Procedure Design：余弦调度比线性调度更久地保留有用信号；调度应塑造 SNR 轨迹而不只是 ᾱ_t">
+<figcaption><span class="sno">37</span><span class="stitle">Training Procedure Design：余弦调度比线性调度更久地保留有用信号；调度应塑造 SNR 轨迹而不只是 ᾱ_t</span></figcaption>
+</figure>
+<figure class="slide" id="slide-38">
+<img src="slides/slide_38.png" alt="课件第38页 Training Procedure Design：把噪声调度当作学习目标——对 t~U(0,T)、ε~N(0,I) 最小化 diffusion loss 的方差（Kingma et al., NeurIPS 2021）">
+<figcaption><span class="sno">38</span><span class="stitle">Training Procedure Design：把噪声调度当作学习目标——对 t~U(0,T)、ε~N(0,I) 最小化 diffusion loss 的方差（Kingma et al., NeurIPS 2021）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-39">
+<img src="slides/slide_39.png" alt="课件第39页 Training Procedure Design：噪声调度作为学习目标（续）——先验损失、扩散损失、重建损失">
+<figcaption><span class="sno">39</span><span class="stitle">Training Procedure Design：噪声调度作为学习目标（续）——先验损失、扩散损失、重建损失</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">12</span>
+      <div class="sec-tt">
+        <h2>训练设计（三）：噪声调度塑造 SNR 轨迹</h2>
+        <div class="sec-meta"><span class="time">录音：无（课件页，课上未展开）</span><span class="chip">课件 36</span><span class="chip">课件 37</span><span class="chip">课件 38</span><span class="chip">课件 39</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>噪声调度（noise schedule）决定信号 x0 被破坏得多快，也就决定 SNR 轨迹怎么走。课件对比线性调度与余弦调度：余弦调度能比线性调度更久地保留有用信号，在中间噪声段的表现更好。关键认识是：调度应该去塑造 SNR 轨迹，而不只是塑造 ᾱ_t 本身。</p><p>更进一步，可以把噪声调度本身当成可学习的目标：把调度参数化，然后对 t~U(0,T)、ε~N(0,I) 最小化扩散损失 ℒ_t 的方差。Variational Diffusion Models（Kingma et al., NeurIPS 2021）就是这么做的，ELBO 可以拆成先验损失、扩散损失、重建损失三部分，调度通过最小化扩散损失的方差来学。</p></div>
+  </div>
+</section>
+<section class="sec" id="sec-reparam">
+  <div class="slides"><figure class="slide" id="slide-40">
+<img src="slides/slide_40.png" alt="课件第40页 Training Procedure Design：噪声水平决定任务难度——低噪时预测干净信号容易、预测噪声难；高噪时相反">
+<figcaption><span class="sno">40</span><span class="stitle">Training Procedure Design：噪声水平决定任务难度——低噪时预测干净信号容易、预测噪声难；高噪时相反</span></figcaption>
+</figure>
+<figure class="slide" id="slide-41">
+<img src="slides/slide_41.png" alt="课件第41页 Training Procedure Design：重参数化——预测 x0 与 ε 的混合，平衡两端难度">
+<figcaption><span class="sno">41</span><span class="stitle">Training Procedure Design：重参数化——预测 x0 与 ε 的混合，平衡两端难度</span></figcaption>
+</figure>
+<figure class="slide" id="slide-42">
+<img src="slides/slide_42.png" alt="课件第42页 Training Procedure Design：速度参数化——把 x_t 视为干净信号与噪声的混合，预测沿混合路径的变化方向 v">
+<figcaption><span class="sno">42</span><span class="stitle">Training Procedure Design：速度参数化——把 x_t 视为干净信号与噪声的混合，预测沿混合路径的变化方向 v</span></figcaption>
+</figure>
+<figure class="slide" id="slide-43">
+<img src="slides/slide_43.png" alt="课件第43页 Training Procedure Design：速度参数化（续）——v = −σ_t x0 + α_t ε，兼顾信号与噪声预测，在现代扩散模型中常用">
+<figcaption><span class="sno">43</span><span class="stitle">Training Procedure Design：速度参数化（续）——v = −σ_t x0 + α_t ε，兼顾信号与噪声预测，在现代扩散模型中常用</span></figcaption>
+</figure>
+<figure class="slide" id="slide-44">
+<img src="slides/slide_44.png" alt="课件第44页 Training Procedure Design：SNR 也指导其他设计——采样在更难的噪声级多花步数、条件用 σ 或 log σ 而非 t、训练按 SNR 加权采样">
+<figcaption><span class="sno">44</span><span class="stitle">Training Procedure Design：SNR 也指导其他设计——采样在更难的噪声级多花步数、条件用 σ 或 log σ 而非 t、训练按 SNR 加权采样</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">13</span>
+      <div class="sec-tt">
+        <h2>训练设计（四）：重参数化与速度参数化</h2>
+        <div class="sec-meta"><span class="time">录音：无（课件页，课上未展开）</span><span class="chip">课件 40</span><span class="chip">课件 41</span><span class="chip">课件 42</span><span class="chip">课件 43</span><span class="chip">课件 44</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>既然预测 x0 在低噪时容易、预测 ε 在高噪时容易，中间段两者都难，那就预测两者的混合——这是重参数化（re-parameterization）的思路，用同一个网络在不同噪声水平上平衡两种目标。Progressive Distillation 用的就是这个做法。</p><p>速度参数化（velocity parameterization）把 x_t 看成干净信号与噪声的混合 x_t = α_t x0 + σ_t ε，其中 α_t² + σ_t² = 1，等价于 x_t = cos φ_t x0 + sin φ_t ε；要预测的是沿这条混合路径的变化方向 v = dx_t/dφ_t = −σ_t x0 + α_t ε。它有两点好处：一是在信号与噪声预测之间取得平衡，二是跨 SNR 更稳定；而且可以由 v 反解 x0 = α_t x_t − σ_t v、ε = σ_t x_t + α_t v，误差关系是 ‖v − v̂‖² = ‖x0 − x̂0‖² + ‖ε − ε̂‖²。现代扩散模型大多用这种参数化。</p><p>SNR 还指导其他设计：采样时在更难的噪声级多花步数；条件注入用 σ 或 log σ 而不是原始时间步索引 t（对时间调度不变、连续取值更灵活、log σ 数值尺度更好）；训练时更频繁地采样“有信息量”的噪声级，并按 SNR 加权。</p></div>
+  </div>
+</section>
+<section class="sec" id="sec-model-space">
+  <div class="slides"><figure class="slide" id="slide-45">
+<img src="slides/slide_45.png" alt="课件第45页 Lecture Outline：Sampling Acceleration / Training Procedure Design / Model Design（转入模型设计）">
+<figcaption><span class="sno">45</span><span class="stitle">Lecture Outline：Sampling Acceleration / Training Procedure Design / Model Design（转入模型设计）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-46">
+<img src="slides/slide_46.png" alt="课件第46页 Model Design：模型设计空间——预测什么（μ/ε/x0/v）、在哪里扩散（像素→潜空间）、如何去噪（CNN→Transformer、U-Net→DiT）">
+<figcaption><span class="sno">46</span><span class="stitle">Model Design：模型设计空间——预测什么（μ/ε/x0/v）、在哪里扩散（像素→潜空间）、如何去噪（CNN→Transformer、U-Net→DiT）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-47">
+<img src="slides/slide_47.png" alt="课件第47页 Model Design：维度灾难——DDPM 在 256×256 像素空间扩散，4k 图像怎么办？像素空间扩散随分辨率扩展性很差">
+<figcaption><span class="sno">47</span><span class="stitle">Model Design：维度灾难——DDPM 在 256×256 像素空间扩散，4k 图像怎么办？像素空间扩散随分辨率扩展性很差</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">14</span>
+      <div class="sec-tt">
+        <h2>模型设计（一）：设计空间与维度灾难</h2>
+        <div class="sec-meta"><span class="time">录音：无（课件页，课上未展开）</span><span class="chip">课件 45</span><span class="chip">课件 46</span><span class="chip">课件 47</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>模型设计有三个问题：预测什么（μ/ε/x0/v 四种参数化）；在哪里扩散（像素空间还是潜空间）；如何去噪（CNN 还是 Transformer、U-Net 还是 DiT）。这三条构成了模型层面的设计空间。</p><p>为什么不能一直在像素空间做？DDPM 在 256×256 的像素空间扩散，去噪网络的输入输出都是同样尺寸的张量；如果想训练 4k 图像，网络要处理的张量尺寸随分辨率平方增长，像素空间扩散的扩展性很差——这就是维度灾难。</p></div>
+  </div>
+</section>
+<section class="sec" id="sec-ldm">
+  <div class="slides"><figure class="slide" id="slide-48">
+<img src="slides/slide_48.png" alt="课件第48页 Model Design：自编码器回顾——用编码器压缩、解码器重建，扩散在潜空间进行">
+<figcaption><span class="sno">48</span><span class="stitle">Model Design：自编码器回顾——用编码器压缩、解码器重建，扩散在潜空间进行</span></figcaption>
+</figure>
+<figure class="slide" id="slide-49">
+<img src="slides/slide_49.png" alt="课件第49页 Model Design：Latent Diffusion Model——前向过程在潜空间加噪 z_t = √(ᾱ_t) z0 + √(1−ᾱ_t) ε">
+<figcaption><span class="sno">49</span><span class="stitle">Model Design：Latent Diffusion Model——前向过程在潜空间加噪 z_t = √(ᾱ_t) z0 + √(1−ᾱ_t) ε</span></figcaption>
+</figure>
+<figure class="slide" id="slide-50">
+<img src="slides/slide_50.png" alt="课件第50页 Model Design：Latent Diffusion Model——反向过程在潜空间去噪，再由解码器生成图像">
+<figcaption><span class="sno">50</span><span class="stitle">Model Design：Latent Diffusion Model——反向过程在潜空间去噪，再由解码器生成图像</span></figcaption>
+</figure>
+<figure class="slide" id="slide-51">
+<img src="slides/slide_51.png" alt="课件第51页 Model Design：Latent Diffusion Model（Rombach et al., CVPR 2022）">
+<figcaption><span class="sno">51</span><span class="stitle">Model Design：Latent Diffusion Model（Rombach et al., CVPR 2022）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-52">
+<img src="slides/slide_52.png" alt="课件第52页 Model Design：LDM 两阶段训练——第一预训练自编码器，第二在对应潜空间训练扩散模型">
+<figcaption><span class="sno">52</span><span class="stitle">Model Design：LDM 两阶段训练——第一预训练自编码器，第二在对应潜空间训练扩散模型</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">15</span>
+      <div class="sec-tt">
+        <h2>模型设计（二）：自编码器与潜空间扩散（LDM）</h2>
+        <div class="sec-meta"><span class="time">录音：无（课件页，课上未展开）</span><span class="chip">课件 48</span><span class="chip">课件 49</span><span class="chip">课件 50</span><span class="chip">课件 51</span><span class="chip">课件 52</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>解决思路是用自编码器压缩：编码器 q_φ 把图像压到潜空间 z0，解码器 p_θ 再重建图像；扩散过程完全在潜空间里做——前向是 z_t = √(ᾱ_t) z0 + √(1−ᾱ_t) ε，反向从 z_T 去噪到 z0，最后解码成图像。这就是 Latent Diffusion Model（Rombach et al., CVPR 2022）。</p><p>LDM 的训练分两步：第一步在数据集上预训练自编码器（重建质量要好）；第二步固定自编码器，在对应的潜空间里训练扩散模型。因为潜空间维度远低于像素空间，同样的网络容量可以处理更高分辨率的图像，这也是 Stable Diffusion 这类模型的基础。</p></div>
+  </div>
+</section>
+<section class="sec" id="sec-dit">
+  <div class="slides"><figure class="slide" id="slide-53">
+<img src="slides/slide_53.png" alt="课件第53页 Model Design：U-Net——多尺度特征与跳跃连接保留空间细节，输入噪声、输出同尺寸预测">
+<figcaption><span class="sno">53</span><span class="stitle">Model Design：U-Net——多尺度特征与跳跃连接保留空间细节，输入噪声、输出同尺寸预测</span></figcaption>
+</figure>
+<figure class="slide" id="slide-54">
+<img src="slides/slide_54.png" alt="课件第54页 Model Design：架构设计——用更具扩展性的 Transformer 作为去噪主干（Peebles & Xie, ICCV 2023）">
+<figcaption><span class="sno">54</span><span class="stitle">Model Design：架构设计——用更具扩展性的 Transformer 作为去噪主干（Peebles & Xie, ICCV 2023）</span></figcaption>
+</figure>
+<figure class="slide" id="slide-55">
+<img src="slides/slide_55.png" alt="课件第55页 Model Design：DiT——VAE 编码、加噪、切分成 token">
+<figcaption><span class="sno">55</span><span class="stitle">Model Design：DiT——VAE 编码、加噪、切分成 token</span></figcaption>
+</figure>
+<figure class="slide" id="slide-56">
+<img src="slides/slide_56.png" alt="课件第56页 Model Design：DiT——通过 AdaLN 注入时间步/类别条件">
+<figcaption><span class="sno">56</span><span class="stitle">Model Design：DiT——通过 AdaLN 注入时间步/类别条件</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">16</span>
+      <div class="sec-tt">
+        <h2>模型设计（三）：从 U-Net 到 Diffusion Transformer</h2>
+        <div class="sec-meta"><span class="time">录音：无（课件页，课上未展开）</span><span class="chip">课件 53</span><span class="chip">课件 54</span><span class="chip">课件 55</span><span class="chip">课件 56</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>去噪网络的经典结构是 U-Net：编码器逐级下采样提取多尺度特征，解码器逐级上采样恢复分辨率，同级之间用跳跃连接把细节传过去，从而在输入噪声张量的同时输出同尺寸的噪声预测。U-Net 在图像扩散里长期是主力。</p><p>更 scalable 的选择是 Transformer：DiT（Peebles & Xie, ICCV 2023）用 VAE 编码图像、加噪、切分成 token，交给 Transformer 去预测噪声（同时输出后验方差），时间步与类别条件通过 AdaLN 注入。模型越大、token 越多，生成质量越好，这条 scaling law 让扩散模型也能像大语言模型一样“堆规模”。</p></div>
+  </div>
+</section>
+<section class="sec" id="sec-summary-reading">
+  <div class="slides"><figure class="slide" id="slide-57">
+<img src="slides/slide_57.png" alt="课件第57页 Lecture Outline：三部分提纲收束">
+<figcaption><span class="sno">57</span><span class="stitle">Lecture Outline：三部分提纲收束</span></figcaption>
+</figure>
+<figure class="slide" id="slide-58">
+<img src="slides/slide_58.png" alt="课件第58页 Summary：现代扩散模型不是单一算法，而是一个包含多方面选择的 design space">
+<figcaption><span class="sno">58</span><span class="stitle">Summary：现代扩散模型不是单一算法，而是一个包含多方面选择的 design space</span></figcaption>
+</figure>
+<figure class="slide" id="slide-59">
+<img src="slides/slide_59.png" alt="课件第59页 Supplementary Material：CMU 10-799 Lecture 6 & 9；The Principles of Diffusion Models 第 B.9、B.10 章">
+<figcaption><span class="sno">59</span><span class="stitle">Supplementary Material：CMU 10-799 Lecture 6 & 9；The Principles of Diffusion Models 第 B.9、B.10 章</span></figcaption>
+</figure>
+<figure class="slide" id="slide-60">
+<img src="slides/slide_60.png" alt="课件第60页 Reading List：DDIM、Improved DDPM、EDM、Progressive Distillation、Consistency Models、LDM、DiT、VDM、DPM-Solver">
+<figcaption><span class="sno">60</span><span class="stitle">Reading List：DDIM、Improved DDPM、EDM、Progressive Distillation、Consistency Models、LDM、DiT、VDM、DPM-Solver</span></figcaption>
+</figure></div>
+  <div class="text">
+    <div class="sec-head">
+      <span class="sec-no">17</span>
+      <div class="sec-tt">
+        <h2>总结与延伸阅读</h2>
+        <div class="sec-meta"><span class="time">录音：无（课件页，课上未展开）</span><span class="chip">课件 57</span><span class="chip">课件 58</span><span class="chip">课件 59</span><span class="chip">课件 60</span></div>
+      </div>
+    </div>
+    <div class="sec-body"><p>本章的核心结论：现代扩散模型不是单一算法，而是一个 design space——采样加速、训练过程、模型结构三条线各自都能改，而且很多改进是可以叠加的。这节课讲完了采样加速（跳步/DDIM、蒸馏与一致性模型、ODE 求解器），训练设计与模型设计留到下一次。</p><p>延伸材料：CMU 10-799 的 Lecture 6 和 Lecture 9（视频链接在课件上），以及《The Principles of Diffusion Models》第 B.9 章（Sophisticated Solvers for Fast Sampling）和第 B.10 章（Distillation-Based Methods for Fast Sampling）。阅读清单包括 DDIM、Improved DDPM、EDM、Progressive Distillation、Consistency Models、LDM、DiT、VDM、DPM-Solver 九篇，都是这条线上绕不开的原始文献。</p></div>
+  </div>
+</section>
+</main>
+
+<footer>矿物物理学（生成式模型与科学智能应用）课程复习辅助页 · 文字为整理稿，原声转写可按节展开核对</footer>
+</body>
+</html>
