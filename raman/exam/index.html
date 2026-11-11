@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>显微拉曼 · 考场速查台（本地离线）</title>
+<style>
+:root{
+  --navy:#0a1f38; --navy2:#122c4d; --ink:#24303c; --line:#dbe3ec;
+  --gold:#b8860b; --gold2:#ffd97a; --red:#c0392b; --bg:#eef1f6; --card:#fff;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;background:var(--bg);color:var(--ink);
+  font-size:14px;line-height:1.65;overflow:hidden;}
+button{font-family:inherit;cursor:pointer;}
+.app{display:flex;flex-direction:column;height:100vh;}
+
+/* ===== 顶栏 ===== */
+header{flex:none;background:var(--navy);color:#fff;padding:10px 16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  box-shadow:0 2px 12px rgba(6,20,38,.35);z-index:20;}
+.brand{display:flex;flex-direction:column;gap:1px;min-width:150px;}
+.brand b{font-size:15.5px;letter-spacing:.5px;}
+.brand span{font-size:11.5px;color:#a9bdd6;}
+.searchbox{flex:1;min-width:260px;position:relative;display:flex;align-items:center;gap:8px;}
+.searchbox input{flex:1;height:40px;border-radius:9px;border:2px solid transparent;padding:0 14px 0 40px;font-size:15px;
+  outline:none;background:#fff;color:#0a1f38;}
+.searchbox input:focus{border-color:var(--gold2);}
+.searchbox .ico{position:absolute;left:13px;top:11px;font-size:15px;color:#8aa0b8;pointer-events:none;}
+.searchbox .kbd{position:absolute;right:10px;top:11px;font-size:11px;color:#8aa0b8;border:1px solid #c9d5e3;
+  border-radius:4px;padding:1px 5px;pointer-events:none;}
+.hbtns{display:flex;gap:6px;align-items:center;flex-wrap:wrap;}
+.chipbtn{background:#1d3f66;color:#dbe7f5;border:1px solid #2e5580;border-radius:999px;padding:5px 11px;font-size:12.5px;}
+.chipbtn.on{background:var(--gold2);color:#3a2a00;border-color:var(--gold2);font-weight:700;}
+.chipbtn:hover{border-color:var(--gold2);}
+.chipbtn.small{padding:3px 8px;font-size:11.5px;}
+select.f{background:#1d3f66;color:#e8f0fa;border:1px solid #2e5580;border-radius:8px;padding:6px 8px;font-size:12.5px;outline:none;}
+
+/* ===== 主体三栏 ===== */
+.body{flex:1;display:flex;min-height:0;}
+aside{flex:none;width:296px;background:#fff;border-right:1px solid var(--line);display:flex;flex-direction:column;min-height:0;}
+.tabs{display:flex;flex:none;border-bottom:1px solid var(--line);}
+.tabs button{flex:1;background:none;border:none;padding:10px 4px;font-size:13px;color:#6b7686;border-bottom:2px solid transparent;}
+.tabs button.on{color:var(--navy);font-weight:700;border-bottom-color:var(--gold);}
+.panel{flex:1;overflow:auto;padding:10px 8px 30px;}
+.panel.hide{display:none;}
+
+/* 目录树 */
+.lesson{margin-bottom:2px;}
+.lesson>.lh{display:flex;gap:6px;align-items:baseline;padding:7px 8px;border-radius:6px;cursor:pointer;}
+.lesson>.lh:hover{background:#f2f6fb;}
+.lesson.open>.lh{background:#eaf1fa;}
+.lesson .no{flex:none;font-size:11px;color:#fff;background:var(--navy2);border-radius:4px;padding:1px 5px;font-weight:700;}
+.lesson .lt{font-size:12.8px;line-height:1.45;color:#22303f;}
+.secs{display:none;padding:2px 0 6px 22px;}
+.lesson.open .secs{display:block;}
+.secs a{display:block;font-size:12.4px;color:#40505f;text-decoration:none;padding:4px 7px;border-radius:5px;border-left:2px solid #e4eaf2;}
+.secs a:hover{background:#fff7e2;color:#5a3f00;border-left-color:var(--gold);}
+.secs a .p{color:#93a3b5;font-size:11px;margin-left:4px;}
+/* 作业列表 */
+.hwgroup{margin:6px 0 14px;}
+.hwgroup h4{font-size:12.5px;color:var(--gold);margin:0 0 6px 6px;letter-spacing:.5px;}
+.hwitem{border:1px solid var(--line);border-radius:8px;padding:8px 9px;margin:0 2px 8px;background:#fbfcfe;cursor:pointer;}
+.hwitem:hover{border-color:var(--gold);background:#fffaf0;}
+.hwitem .t{font-size:12.8px;font-weight:700;color:#22303f;}
+.hwitem .s{font-size:11.5px;color:#7b8797;margin-top:3px;}
+.hwitem .acts{display:flex;gap:6px;margin-top:7px;flex-wrap:wrap;}
+.mini{font-size:11.5px;border:1px solid #cfdae8;background:#fff;color:#2f4a68;border-radius:6px;padding:3px 8px;}
+.mini:hover{border-color:var(--gold);color:#7a5600;}
+.mini.primary{background:var(--navy);color:#fff;border-color:var(--navy);}
+.mini.primary:hover{background:#12335c;color:#ffd97a;}
+
+/* 帮助 */
+.help{padding:6px 10px;font-size:12.6px;color:#42505f;}
+.help h4{font-size:13px;color:var(--navy);margin:12px 0 6px;}
+.help ol,.help ul{margin-left:18px;}
+.help li{margin:4px 0;}
+.help code{background:#f1f4f9;border:1px solid #e2e8f0;border-radius:4px;padding:0 4px;font-size:11.5px;}
+.help .warn{background:#fff6e5;border:1px solid #f2d9a6;border-radius:7px;padding:8px 10px;margin-top:10px;color:#7a5300;}
+
+/* ===== 结果区 ===== */
+main{flex:1;min-width:0;overflow:auto;padding:14px 18px 60px;}
+.hint{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px;align-items:center;}
+.hint .tag{font-size:12px;color:#5b6b7d;background:#fff;border:1px solid var(--line);border-radius:999px;padding:3px 10px;}
+.hint .tag b{color:var(--navy);}
+.meta-line{font-size:12px;color:#7b8797;margin-bottom:10px;}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:10px;}
+.lcard{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 12px;cursor:pointer;
+  box-shadow:0 1px 2px rgba(10,31,56,.04);}
+.lcard:hover{border-color:var(--gold);box-shadow:0 3px 10px rgba(184,134,11,.15);}
+.lcard .n{font-size:11.5px;color:#fff;background:var(--navy2);border-radius:4px;padding:1px 6px;display:inline-block;}
+.lcard h3{font-size:13.4px;margin:7px 0 4px;color:#1d2c3b;line-height:1.45;}
+.lcard .d{font-size:11.6px;color:#8b97a6;}
+
+.card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 13px;margin-bottom:10px;cursor:pointer;
+  transition:border-color .12s, box-shadow .12s;}
+.card:hover{border-color:#c9d8ea;}
+.card.active{border-color:var(--gold);box-shadow:0 0 0 2px rgba(255,217,122,.55);}
+.card .top{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:11.8px;color:#7b8797;}
+.badge{font-size:11px;border-radius:5px;padding:1px 7px;font-weight:700;}
+.badge.sec{background:#e8f0fb;color:#1f4e86;}
+.badge.slide{background:#fdf1e0;color:#8a5a00;}
+.badge.sol{background:#eaf7ef;color:#1d6b3d;}
+.badge.hw{background:#fdeaea;color:#9c2b2b;}
+.card h3{font-size:14.2px;color:#1a2938;margin:6px 0 5px;line-height:1.5;}
+.card .snip{font-size:12.8px;color:#4d5b6b;background:#f8fafd;border-left:3px solid #dbe6f2;border-radius:4px;
+  padding:6px 9px;margin:6px 0;white-space:pre-wrap;max-height:8.4em;overflow:hidden;}
+.card .snip mark{background:#ffe9a8;color:#5a3f00;padding:0 1px;font-weight:700;border-radius:2px;}
+.card .acts{display:flex;gap:7px;flex-wrap:wrap;margin-top:7px;align-items:center;}
+.card .pages{font-size:11.6px;color:#8b97a6;}
+.card .thumbs{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;}
+.card .thumbs img{height:92px;border:1px solid #e0e7f0;border-radius:5px;background:#fff;cursor:zoom-in;}
+.empty{background:#fff;border:1px dashed #cfdae8;border-radius:10px;padding:26px;text-align:center;color:#7b8797;font-size:13px;}
+
+/* ===== 预览栏 ===== */
+.preview{flex:none;width:min(46vw,620px);background:#fff;border-left:1px solid var(--line);display:flex;flex-direction:column;min-height:0;}
+.preview.hide{display:none;}
+.preview .ph{flex:none;display:flex;align-items:center;gap:8px;padding:9px 12px;border-bottom:1px solid var(--line);background:#f7f9fc;}
+.preview .ph b{font-size:12.8px;color:var(--navy);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.preview .pbody{flex:1;overflow:auto;padding:12px 14px 40px;}
+.preview .ptitle{font-size:15px;font-weight:700;color:#12202f;margin-bottom:4px;}
+.preview .pmeta{font-size:11.8px;color:#8b97a6;margin-bottom:10px;}
+.preview .slides img{display:block;width:100%;height:auto;border:1px solid #e2e8f0;border-radius:7px;margin:0 0 10px;background:#fff;}
+.preview .slides .cap{font-size:11.4px;color:#8b97a6;margin:-6px 0 12px;}
+.preview .ptext{font-size:13px;color:#39485a;}
+.preview .ptext p{margin:0 0 8px;}
+
+/* 遮挡层：大图 */
+.lightbox{position:fixed;inset:0;background:rgba(8,16,28,.92);z-index:99;display:none;align-items:center;justify-content:center;padding:20px;}
+.lightbox.on{display:flex;}
+.lightbox img{max-width:96vw;max-height:92vh;border-radius:6px;background:#fff;}
+.lightbox .close{position:absolute;top:14px;right:18px;color:#fff;font-size:26px;cursor:pointer;line-height:1;}
+
+footer{flex:none;background:#fff;border-top:1px solid var(--line);padding:5px 14px;font-size:11.5px;color:#8b97a6;
+  display:flex;gap:14px;flex-wrap:wrap;}
+@media (max-width:1180px){ .preview{width:min(52vw,520px);} }
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="brand"><b>显微拉曼 · 考场速查台</b><span>本地离线 · 全 17 讲 · 286 节 · 922 页课件</span></div>
+    <div class="searchbox">
+      <span class="ico">🔍</span>
+      <input id="q" type="search" placeholder="输入题目关键词：如 选择定则 / 范霍夫奇点 / 信噪比 / G峰 / 层间呼吸模 / 偏振" autocomplete="off" spellcheck="false">
+      <span class="kbd">/ 或 Ctrl+K</span>
+    </div>
+    <div class="hbtns">
+      <button class="chipbtn on" data-kind="all">全部</button>
+      <button class="chipbtn" data-kind="sec">讲述</button>
+      <button class="chipbtn" data-kind="slide">课件页</button>
+      <button class="chipbtn" data-kind="hw">作业</button>
+      <button class="chipbtn" data-kind="sol">解答</button>
+      <select class="f" id="chapter">
+        <option value="0">全部章节</option>
+        <option value="1">第1章 晶体结构/晶格振动</option>
+        <option value="2">第2章 拉曼光谱学介绍</option>
+        <option value="3">第3章 拉曼散射理论</option>
+        <option value="4">第4章 仪器与技术</option>
+        <option value="5">第5章 材料物性</option>
+        <option value="6">第6章 石墨烯</option>
+      </select>
+    </div>
+  </header>
+
+  <div class="body">
+    <aside>
+      <div class="tabs">
+        <button class="on" data-tab="toc">目录</button>
+        <button data-tab="hw">作业速查</button>
+        <button data-tab="help">用法</button>
+      </div>
+      <div class="panel" id="p-toc"></div>
+      <div class="panel hide" id="p-hw"></div>
+      <div class="panel hide" id="p-help">
+        <div class="help">
+          <h4>考场三步</h4>
+          <ol>
+            <li>在顶部输入题目里的关键词（中文即可，多个词用空格隔开，全部命中才显示）。</li>
+            <li>看每条结果的「课件 pX–pY」——那是这张幻灯片在全课程页面里的页码，点<b>看课件</b>直达。</li>
+            <li>点卡片右侧「预览」把对应整节课件+老师原话调出来，边看边抄。</li>
+          </ol>
+          <h4>快捷键</h4>
+          <ul>
+            <li><code>/</code> 或 <code>Ctrl+K</code>：跳到搜索框</li>
+            <li><code>Esc</code>：清空搜索 / 关闭预览</li>
+            <li><code>↓</code> <code>↑</code>：在结果间移动，<code>Enter</code> 打开预览</li>
+            <li><code>Ctrl+Enter</code>：在新标签页打开该节原页面</li>
+          </ul>
+          <h4>三类结果</h4>
+          <ul>
+            <li><b>讲述</b>：老师讲这节课的原话整理（每节对应几张课件）。</li>
+            <li><b>课件页</b>：直接命中某一页幻灯片标题/内容索引，可缩略图预览。</li>
+            <li><b>解答</b>：六章课后作业解答全文，按题目检索。</li>
+          </ul>
+          <div class="warn">本页完全离线：不联网、无外部字体/CDN。图片直接读本地 <code>../rm_lessonN/slides/</code>。</div>
+        </div>
+      </div>
+    </aside>
+
+    <main id="main"></main>
+
+    <div class="preview hide" id="preview">
+      <div class="ph">
+        <b id="pv-title">预览</b>
+        <button class="mini" id="pv-prev">上一节</button>
+        <button class="mini" id="pv-next">下一节</button>
+        <button class="mini primary" id="pv-open">新窗口打开</button>
+        <button class="mini" id="pv-close">关闭</button>
+      </div>
+      <div class="pbody" id="pv-body"></div>
+    </div>
+  </div>
+
+  <footer>
+    <span>显微共焦拉曼光谱学（2026 秋）· 本地考试速查</span>
+    <span id="stat"></span>
+    <span>离线可用 · 无网络请求</span>
+  </footer>
+</div>
+<div class="lightbox" id="lightbox"><span class="close">×</span><img id="lightbox-img" alt=""></div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
